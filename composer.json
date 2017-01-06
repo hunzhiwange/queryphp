@@ -2,6 +2,7 @@
     "name": "hunzhiwange/queryphp",
     "description": "The QueryPHP Framework.",
     "keywords": ["framework", "queryphp"],
+    "type": "library",
     "license": "MIT",
     "homepage": "http://www.queryphp.com",
     "support": {
