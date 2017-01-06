@@ -863,7 +863,7 @@ class Q {
             $mixError = $arrTemp;
             unset ( $arrTemp );
         }
-        
+
         // 否则定向到错误页面
         if (! empty ( $GLOBALS ['option'] ['show_exception_redirect'] ) && $bDbError === FALSE && Q_DEBUG === FALSE) {
             self::urlRedirect ( self::url ( $GLOBALS ['option'] ['show_exception_redirect'] ) );
@@ -1282,7 +1282,8 @@ class Q {
                         '..',
                         '.svn',
                         '.git',
-                        'node_modules' 
+                        'node_modules',
+                        '.gitkeep'
                 ],
                 'filterext' => [ ] 
         ], $arrIn );
@@ -2144,15 +2145,20 @@ class Q {
                         '.git',
                         '~@~',
                         'www',
-                        'ignore' 
+                        'ignore',
+                        '.gitkeep' 
                 ] 
         ];
         
         if (isset ( $in ['ignore'] )) {
-            $arrDefault ['ignore'] = array_merge ( $arrDefault ['ignore'], $in ['ignore'] );
+            foreach ( $in ['ignore'] as $sIgnore ) {
+                if (! in_array ( $sIgnore, $arrDefault ['ignore'] )) {
+                    $arrDefault ['ignore'] [] = $sIgnore;
+                }
+            }
         }
         $in = $arrDefault;
-        unset ( $arrDefault );
+        unset ( $arrDefault );  
         
         $arrReturn = [ ];
         
@@ -2165,15 +2171,9 @@ class Q {
                 if (in_array ( $sFilename, $in ['ignore'] )) { // 排除特殊目录
                     continue;
                 } else {
-                    if ($in ['file'] === false) {
-                        $arrReturn [] = str_replace ( '/', '\\', $sPreFilename . $sFilename );
-                    }
-                    
                     // 递归子目录
                     $arrReturn = array_merge ( $arrReturn, self::scanNamespace ( $sPath, $sPreFilename . $sFilename . '/', $in ) );
                 }
-            } else {
-                self::throwException ( sprintf ( "\$sPath:%s is not a valid path", $sPath ) );
             }
         }
         
