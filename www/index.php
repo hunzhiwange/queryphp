@@ -1,13 +1,4 @@
 <?php
-/*
- * [$MyApp] (C)QueryPHP.COM Since 2016.11.19.
- * 应用程序入口
- *
- * @author dyhb<635750556@qq.com>
- * @version $$
- * @date 2016.11.19
- * @since 1.0
- */
 
 /**
  * 项目调试
