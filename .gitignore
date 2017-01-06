@@ -1,0 +1,11 @@
+.buildpath
+.project
+.metadata
+.classpath
+.settings/
+composer.lock
+composer.phar
+node_modules/
+.settings/
+vendor/
+~@~/

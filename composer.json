@@ -1,6 +1,7 @@
 {
     "name": "hunzhiwange/queryphp",
     "description": "The QueryPHP Framework.",
+    "version": "4.0.0",
     "keywords": ["framework", "queryphp"],
     "license": "MIT",
     "homepage": "http://www.queryphp.com",
