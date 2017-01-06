@@ -17,10 +17,9 @@
     "require": {
         "php": ">=5.3.0"
     },
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://packagist.phpcomposer.com"
+    "autoload": {
+        "psr-4": {
+            "Q\\": "src"
         }
-    }
+    } 
 }
