@@ -34,6 +34,7 @@ class app {
             'com_path' => '', // 公共组件
             'app_path' => '', // 应用基础路径
             'apppublic_path' => '', // 应用公共资源路径
+            'vendor_path' => '', // Composer 公共组件
             
             /**
              * 应用基本
@@ -131,6 +132,9 @@ class app {
                             'theme' 
                     ] 
             ] );
+            
+            // 尝试导入 Composer PSR-4
+            Q::importComposer ( $this->vendor_path );
             
             // 注册初始化应用
             self::registerApp ( $this, '~_~' );
@@ -259,7 +263,7 @@ class app {
             
             // 加载配置文件
             $this->loadOption_ ();
-
+            
             // 解析系统URL
             url::instance ()->parseUrl ();
             $this->in = $this->checkIn_ ( $_REQUEST );
@@ -301,9 +305,9 @@ class app {
     public function controller($sController = '', $sAction = '') {
         ! $sController && $sController = $this->controller_name;
         ! $sAction && $sAction = $this->action_name;
-            
+        
         // 是否已经注册过 action
-        if (!$this->hasAction ( $sController, $sAction )) {
+        if (! $this->hasAction ( $sController, $sAction )) {
             // 判断是否存在已注册的控制器
             if (($mixModule = $this->getController ( $sController ))) {
                 switch (true) {
@@ -339,7 +343,7 @@ class app {
                     case Q::varType ( $mixModule, 'array' ) :
                         if (isset ( $mixModule [$sAction] )) {
                             $this->registerAction ( $sController, $sAction, $mixModule [$sAction] );
-                        }else {
+                        } else {
                             Q::throwException ( sprintf ( '数组控制器不存在 %s 方法键值', $sAction ) );
                         }
                         break;
@@ -383,7 +387,7 @@ class app {
                     if (Q::classExists ( $sActionClass, false, true )) {
                         // 注册控制器
                         $this->registerController ( $sController, new controller ( $this, $this->in ) );
-
+                        
                         $oAction = new $sActionClass ( $this, $this->in );
                         if (Q::isKindOf ( $oAction, 'Q\base\action' )) {
                             // 注册方法
@@ -607,13 +611,13 @@ class app {
             if (! is_dir ( $this->optioncache_path )) {
                 Q::makeDir ( $this->optioncache_path );
             }
-                
+            
             // 缓存所有应用名字
             $arrOption ['~apps~'] = Q::listDir ( $this->app_path );
-
+            
             if (! file_put_contents ( $sOptionCache, "<?php\n /* Option Cache */ \n return " . var_export ( $arrOption, true ) . "\n?>" )) {
                 Q::errorMessage ( sprintf ( 'Dir %s Do not have permission.', $this->optioncache_path ) );
-            }  
+            }
             
             $GLOBALS ['option'] = Q::option ( $arrOption );
             unset ( $arrOption, $sAppOptionPath );
@@ -734,8 +738,10 @@ class app {
                 'app_path' => 'app', // app
                 'com_path' => 'com', // com
                 'runtime_path' => '~@~', // runtime
-                'apppublic_path' => 'www/public' 
-        ]; // public
+                'apppublic_path' => 'www/public', // public
+                'vendor_path' => 'lib/vendor' 
+        ]; // vendor
+
         
         foreach ( $arrDefault as $sKey => $sPath ) {
             ! isset ( $in [$sKey] ) && $in [$sKey] = $this->project_path . '/' . $sPath;

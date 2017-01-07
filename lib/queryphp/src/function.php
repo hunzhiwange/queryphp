@@ -216,39 +216,19 @@ class Q {
         }
     }
     
-    // 注册composer自动加载
-    private static function registerComposerLoader()
-    {
-//         if (is_file(VENDOR_PATH . 'composer/autoload_namespaces.php')) {
-//             $map = require VENDOR_PATH . 'composer/autoload_namespaces.php';
-//             foreach ($map as $namespace => $path) {
-//                 self::addPsr0($namespace, $path);
-//             }
-//         }
-    
-        if (is_file(VENDOR_PATH . 'composer/autoload_psr4.php')) {
-            $map = require VENDOR_PATH . 'composer/autoload_psr4.php';
-            foreach ($map as $namespace => $path) {
-                self::addPsr4($namespace, $path);
+    /**
+     * 导入 Composer PSR-4
+     *
+     * @param string $strVendor            
+     * @return void
+     */
+    public static function importComposer($strVendor) {
+        if (is_file ( $strVendor . '/composer/autoload_psr4.php' )) {
+            $arrMap = require $strVendor . '/composer/autoload_psr4.php';
+            foreach ( $arrMap as $sNamespace => $sPath ) {
+                self::addNamespace ( $sNamespace, $sPath );
             }
         }
-    
-//         if (is_file(VENDOR_PATH . 'composer/autoload_classmap.php')) {
-//             $classMap = require VENDOR_PATH . 'composer/autoload_classmap.php';
-//             if ($classMap) {
-//                 self::addClassMap($classMap);
-//             }
-//         }
-    
-//         if (is_file(VENDOR_PATH . 'composer/autoload_files.php')) {
-//             $includeFiles = require VENDOR_PATH . 'composer/autoload_files.php';
-//             foreach ($includeFiles as $fileIdentifier => $file) {
-//                 if (empty(self::$autoloadFiles[$fileIdentifier])) {
-//                     __require_file($file);
-//                     self::$autoloadFiles[$fileIdentifier] = true;
-//                 }
-//             }
-//         }
     }
     
     /**
@@ -898,7 +878,7 @@ class Q {
             $mixError = $arrTemp;
             unset ( $arrTemp );
         }
-
+        
         // 否则定向到错误页面
         if (! empty ( $GLOBALS ['option'] ['show_exception_redirect'] ) && $bDbError === FALSE && Q_DEBUG === FALSE) {
             self::urlRedirect ( self::url ( $GLOBALS ['option'] ['show_exception_redirect'] ) );
@@ -1318,7 +1298,7 @@ class Q {
                         '.svn',
                         '.git',
                         'node_modules',
-                        '.gitkeep'
+                        '.gitkeep' 
                 ],
                 'filterext' => [ ] 
         ], $arrIn );
@@ -1438,7 +1418,7 @@ class Q {
      *
      * @param string $sUrl            
      * @param number $nTime            
-     * @param string $sMsg       
+     * @param string $sMsg            
      */
     static public function urlRedirect($sUrl, $nTime = 0, $sMsg = '') {
         $sUrl = str_replace ( [ 
@@ -2193,7 +2173,7 @@ class Q {
             }
         }
         $in = $arrDefault;
-        unset ( $arrDefault );  
+        unset ( $arrDefault );
         
         $arrReturn = [ ];
         
