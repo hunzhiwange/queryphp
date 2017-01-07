@@ -216,6 +216,41 @@ class Q {
         }
     }
     
+    // 注册composer自动加载
+    private static function registerComposerLoader()
+    {
+//         if (is_file(VENDOR_PATH . 'composer/autoload_namespaces.php')) {
+//             $map = require VENDOR_PATH . 'composer/autoload_namespaces.php';
+//             foreach ($map as $namespace => $path) {
+//                 self::addPsr0($namespace, $path);
+//             }
+//         }
+    
+        if (is_file(VENDOR_PATH . 'composer/autoload_psr4.php')) {
+            $map = require VENDOR_PATH . 'composer/autoload_psr4.php';
+            foreach ($map as $namespace => $path) {
+                self::addPsr4($namespace, $path);
+            }
+        }
+    
+//         if (is_file(VENDOR_PATH . 'composer/autoload_classmap.php')) {
+//             $classMap = require VENDOR_PATH . 'composer/autoload_classmap.php';
+//             if ($classMap) {
+//                 self::addClassMap($classMap);
+//             }
+//         }
+    
+//         if (is_file(VENDOR_PATH . 'composer/autoload_files.php')) {
+//             $includeFiles = require VENDOR_PATH . 'composer/autoload_files.php';
+//             foreach ($includeFiles as $fileIdentifier => $file) {
+//                 if (empty(self::$autoloadFiles[$fileIdentifier])) {
+//                     __require_file($file);
+//                     self::$autoloadFiles[$fileIdentifier] = true;
+//                 }
+//             }
+//         }
+    }
+    
     /**
      * 设置自动载入是否启用
      *
