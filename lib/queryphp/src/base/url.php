@@ -1,10 +1,9 @@
 <?php
 /*
- * [$QueryPHP] (C)QueryPHP.COM Since 2016.11.17.
- * URL分析器
+ * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+ * ©2010-2017 http://queryphp.com All rights reserved.
  *
- * <The old is doyouhaobaby.com since 2010.10.04.>
- * @author dyhb<635750556@qq.com>
+ * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
  * @date 2016.11.18
  * @since 1.0
@@ -16,8 +15,7 @@ use Q;
 /**
  * URL分析器
  *
- * @since 2016年11月19日 上午11:14:07
- * @author dyhb
+ * @author Xiangmin Liu
  */
 class url {
     protected static $_oInstance;
@@ -42,36 +40,68 @@ class url {
         }
     }
     public function parseUrl() {
-        $_SERVER ['REQUEST_URI'] = isset ( $_SERVER ['REQUEST_URI'] ) ? $_SERVER ['REQUEST_URI'] : $_SERVER ["HTTP_X_REWRITE_URL"]; // For IIS
-        
-        $sDepr = $GLOBALS ['option'] ['url_pathinfo_depr'];
-        if ($GLOBALS ['option'] ['url_model'] == 'pathinfo') {
-            $this->filterPathInfo ();
-            if ($GLOBALS ['option'] ['url_start_router']) {
-                $arrRouterInfo = $this->getRouterInfo ();
-                if (empty ( $arrRouterInfo )) {
+        // 非命令行模式
+        if(!Q::isCli()) {
+            $_SERVER ['REQUEST_URI'] = isset ( $_SERVER ['REQUEST_URI'] ) ? $_SERVER ['REQUEST_URI'] : $_SERVER ["HTTP_X_REWRITE_URL"]; // For IIS
+            
+            $sDepr = $GLOBALS ['option'] ['url_pathinfo_depr'];
+            if ($GLOBALS ['option'] ['url_model'] == 'pathinfo') {
+                $this->filterPathInfo ();
+                if ($GLOBALS ['option'] ['url_start_router']) {
+                    $arrRouterInfo = $this->getRouterInfo ();
+                    if (empty ( $arrRouterInfo )) {
+                        $_GET = array_merge ( $this->parsePathInfo (), $_GET );
+                    } else {
+                        $_GET = array_merge ( $this->getRouterInfo (), $_GET );
+                    }
+                } else {
                     $_GET = array_merge ( $this->parsePathInfo (), $_GET );
-                } else {
-                    $_GET = array_merge ( $this->getRouterInfo (), $_GET );
                 }
             } else {
-                $_GET = array_merge ( $this->parsePathInfo (), $_GET );
-            }
-        } else {
-            if ($GLOBALS ['option'] ['url_start_router']) {
-                $arrRouterInfo = $this->getRouterInfo ();
-                if (! empty ( $arrRouterInfo )) {
-                    $_GET = array_merge ( $arrRouterInfo, $_GET );
+                if ($GLOBALS ['option'] ['url_start_router']) {
+                    $arrRouterInfo = $this->getRouterInfo ();
+                    if (! empty ( $arrRouterInfo )) {
+                        $_GET = array_merge ( $arrRouterInfo, $_GET );
+                    } else {
+                        $_GET = array_merge ( $this->getRouterInfo (), $_GET );
+                    }
                 } else {
-                    $_GET = array_merge ( $this->getRouterInfo (), $_GET );
+                    $_GET = array_merge ( $this->parsePathInfo (), $_GET );
                 }
-            } else {
-                $_GET = array_merge ( $this->parsePathInfo (), $_GET );
             }
+        }else{
+            // 第一个为脚本自身
+            if(isset($argv) && $argv) {
+            array_shift($argv);
+            
+              
+                if($argv) {
+                    
+                    if (in_array ( $argv [0], $GLOBALS ['option'] ['~apps~'] )) {
+                        $_GET ['app']  = array_shift ( $argv );
+                    }
+                    
+                    if ($argv) { // 还没有定义控制器名称
+                        $_GET ['c'] = array_shift ( argv );
+                    }
+                    
+                    if ($argv) { // 还没有定义控制器名称
+                        $_GET ['a'] = array_shift ( argv );
+                    }
+                    
+                    for($nI = 0, $nCnt = count ( $argv ); $nI < $nCnt; $nI ++) {
+                        if (isset ( $argv [$nI + 1] )) {
+                            $_GET [$argv [$nI]] = ( string ) $argv [++ $nI];
+                        } elseif ($nI == 0) {
+                            $_GET [$_GET ['a']] = ( string ) $argv [$nI];
+                        }
+                    }
+                } 
+             }
         }
-        
+
         // 行为标签
-        Q::tag ( 'url' );
+        //Q::tag ( 'url' );
         
         // 解析URL
         $oApp = Q::app ();

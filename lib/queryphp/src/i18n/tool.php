@@ -1,10 +1,9 @@
 <?php
 /*
- * [$QueryPHP] (C)QueryPHP.COM Since 2016.11.17.
- * 语言工具包
+ * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+ * ©2010-2017 http://queryphp.com All rights reserved.
  *
- * <The old is doyouhaobaby.com since 2010.10.04.>
- * @author dyhb<635750556@qq.com>
+ * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
  * @date 2016.11.25
  * @since 1.0
@@ -16,8 +15,7 @@ use Q;
 /**
  * 语言包工具类
  *
- * @since 2016年11月25日 上午12:00:32
- * @author dyhb
+ * @author Xiangmin Liu
  */
 class tool {
     

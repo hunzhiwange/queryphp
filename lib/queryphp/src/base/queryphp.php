@@ -1,13 +1,17 @@
 <?php
 /*
- * [$QueryPHP] (C)QueryPHP.COM Since 2016.11.17.
- * 全局函数集
+ * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
  *
- * <The old is doyouhaobaby.com since 2010.10.04.>
- * @author dyhb<635750556@qq.com>
+ * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
  * @date 2016.11.19
  * @since 1.0
+ */
+
+/**
+ * 全局静态函数库
+ * 
+ * @author Xiangmin Liu
  */
 use Q\base\app, Q\helper\cookie, Q\helper\xml;
 
@@ -24,7 +28,7 @@ Q::import ( 'Q', Q_PATH, [
  * 自动载入、异常和基础服务
  *
  * @since 2016年11月18日 上午12:49:09
- * @author dyhb
+ * @author Xiangmin Liu
  */
 class Q {
     

@@ -1,13 +1,17 @@
 <?php
 /*
- * [$QueryPHP] (C)QueryPHP.COM Since 2016.11.17.
- * 基础初始化文件
+ * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
  *
- * <The old is doyouhaobaby.com since 2010.10.04.>
- * @author dyhb<635750556@qq.com>
+ * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
  * @date 2016.11.17
  * @since 1.0
+ */
+
+/**
+ * 框架引导文件
+ * 
+ * @author Xiangmin Liu
  */
 if (version_compare ( PHP_VERSION, '5.3.0', '<' ))
     die ( 'PHP5.3 OR Higher' );
@@ -41,7 +45,7 @@ define ( 'Q_VER', '1.0' );
 /**
  * QueryPHP 核心函数库和一些公用函数
  */
-require_once Q_PATH . '/function.php';
+require_once Q_PATH . '/base/queryphp.php';
 
 /**
  * QueryPHP 自动载入

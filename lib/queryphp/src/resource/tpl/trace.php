@@ -1,15 +1,20 @@
 <?php
 /*
- * [$QueryPHP] (C)QueryPHP.COM Since 2016.11.17.
- * 系统调试模版
- *
- * <The old is doyouhaobaby.com since 2010.10.04.>
- * @author dyhb<635750556@qq.com>
+ * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+ * ©2010-2017 http://queryphp.com All rights reserved.
+ * 
+ * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
  * @date 2016.12.18
  * @since 1.0
  */
 ! defined ( 'Q_PATH' ) && exit ();
+
+/**
+ * 系统调试模版
+ * 
+ * @author Xiangmin Liu
+ */
 ?>
 <script type="text/javascript">
 console.log( '%c Query Yet Simple [trace] %c(http://www.queryphp.com)', 'color: #8A2BE2;', 'color: #528B8B;' );

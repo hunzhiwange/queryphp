@@ -1,10 +1,8 @@
 <?php
 /*
- * [$QueryPHP] (C)QueryPHP.COM Since 2016.11.17.
- * 分析模板
+ * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
  *
- * <The old is doyouhaobaby.com since 2010.10.04.>
- * @author dyhb<635750556@qq.com>
+ * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
  * @date 2016.11.19
  * @since 1.0
@@ -16,8 +14,7 @@ use Q, Q\ds\stack;
 /**
  * 分析模板
  *
- * @since 2016年11月19日 下午7:25:28
- * @author dyhb
+ * @author Xiangmin Liu
  */
 class parsers {
     

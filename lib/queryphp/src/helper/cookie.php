@@ -1,10 +1,9 @@
 <?php
 /*
- * [$QueryPHP] (C)QueryPHP.COM Since 2016.11.17.
- * 对 PHP 原生Cookie 函数库的封装
+ * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+ * ©2010-2017 http://queryphp.com All rights reserved.
  *
- * <The old is doyouhaobaby.com since 2010.10.04.>
- * @author dyhb<635750556@qq.com>
+ * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
  * @date 2016.11.19
  * @since 1.0
@@ -14,8 +13,7 @@ namespace Q\helper;
 /**
  * 对 PHP 原生Cookie 函数库的封装
  *
- * @since 2016年11月19日 下午12:11:52
- * @author dyhb
+ * @author Xiangmin Liu
  */
 class cookie {
     

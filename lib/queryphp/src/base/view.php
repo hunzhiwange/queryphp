@@ -1,10 +1,9 @@
 <?php
 /*
- * [$QueryPHP] (C)QueryPHP.COM Since 2016.11.17.
- * 视图
+ * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+ * ©2010-2017 http://queryphp.com All rights reserved.
  *
- * <The old is doyouhaobaby.com since 2010.10.04.>
- * @author dyhb<635750556@qq.com>
+ * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
  * @date 2016.11.19
  * @since 1.0
@@ -16,8 +15,7 @@ use Q, Q\theme\theme;
 /**
  * 视图
  *
- * @since 2016年11月19日 下午4:28:17
- * @author dyhb
+ * @author Xiangmin Liu
  */
 class view {
     
@@ -124,9 +122,11 @@ class view {
         ], $in );
         
         // 设置 header
-        header ( "Content-Type:" . $in ['content_type'] . "; charset=" . $in ['charset'] );
-        header ( "Cache-control: private" ); // 支持页面回跳
-                                             
+        if (! headers_sent ()) {
+            header ( "Content-Type:" . $in ['content_type'] . "; charset=" . $in ['charset'] );
+            header ( "Cache-control: private" ); // 支持页面回跳
+        }
+        
         // 加载视图文件
         if (! is_file ( $sFile )) {
             $sFile = self::parseFile ( $sFile );

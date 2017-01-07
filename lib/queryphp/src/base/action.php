@@ -1,10 +1,9 @@
 <?php
 /*
- * [$QueryPHP] (C)QueryPHP.COM Since 2016.11.17.
- * 基类方法
+ * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+ * ©2010-2017 http://queryphp.com All rights reserved.
  *
- * <The old is doyouhaobaby.com since 2010.10.04.>
- * @author dyhb<635750556@qq.com>
+ * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
  * @date 2016.11.19
  * @since 1.0
@@ -16,14 +15,13 @@ use Q;
 /**
  * 基类控制器
  *
- * @since 2016年11月19日 下午1:45:56
- * @author dyhb
+ * @author Xiangmin Liu
  */
 abstract class action {
     
     /**
      * 父控制器
-     * 
+     *
      * @var Q\base\controller
      */
     protected $objController = null;
@@ -84,8 +82,8 @@ abstract class action {
     /**
      * 实现 isPost,isGet等
      *
-     * @param 方法名 $sMethod            
-     * @param 参数 $arrArgs            
+     * @param string $sMethod            
+     * @param array $arrArgs            
      * @return boolean
      */
     public function __call($sMethod, $arrArgs) {
