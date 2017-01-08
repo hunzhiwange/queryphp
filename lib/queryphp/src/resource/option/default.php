@@ -2,16 +2,18 @@
 /*
  * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
  * ©2010-2017 http://queryphp.com All rights reserved.
- * 系统默认配置文件
- *
-
+ * 
  * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
  * @date 2016.11.19
  * @since 1.0
  */
 
-
+/**
+ * 系统默认配置文件
+ *
+ * @author Xiangmin Liu
+ */
 return [ 
         
         'default_app' => 'home', // 默认应用
