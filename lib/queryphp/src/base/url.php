@@ -51,12 +51,12 @@ class url {
      */
     public function __construct() {
         // 非命令行模式
-        if (Q::isCli ()) {
+        if (! Q::isCli ()) {
             $this->parseUrlWeb_ ();
         } else {
             $this->parseUrlCli_ ();
         }
-    
+
         // 解析URL
         $oApp = Q::app ();
         $oApp->app_name = $this->getApp_ ( 'app' );
@@ -104,8 +104,10 @@ class url {
         // 分析 pathinfo
         if ($GLOBALS ['option'] ['url_model'] == 'pathinfo') {
             $this->filterPathInfo_ ();
-            $this->parsePathInfo_ ();
+            $_GET = array_merge ( $this->parsePathInfo_ (), $_GET );
         }
+        
+        
         
 
 //         if ($GLOBALS ['option'] ['url_model'] == 'pathinfo') {
