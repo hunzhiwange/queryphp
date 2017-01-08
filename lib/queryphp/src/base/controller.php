@@ -56,9 +56,9 @@ class controller {
         }
         
         // 是否已注册
-        //if ($oApp->getController ( $oApp->controller_name )) {
-           // return;
-        //}
+        // if ($oApp->getController ( $oApp->controller_name )) {
+        // return;
+        // }
         
         $this->oApp = $oApp;
         
@@ -100,14 +100,14 @@ class controller {
      */
     public function action($sActionName, $arrArgs = []) {
         // 判断方法是否存在
-        if(method_exists($this,$sActionName)) {
-            $this->$sActionName();
-        }else{
-        
-        // 判断是否已经注册过
-        //if (($objAction = $this->oApp->getAction ( $this->oApp->controller_name, $sActionName ))) {
-            //$this->oApp->action ( $this->oApp->controller_name, $sActionName );
-        //} else {
+        if (method_exists ( $this, $sActionName )) {
+            $this->$sActionName ();
+        } else {
+            
+            // 判断是否已经注册过
+            // if (($objAction = $this->oApp->getAction ( $this->oApp->controller_name, $sActionName ))) {
+            // $this->oApp->action ( $this->oApp->controller_name, $sActionName );
+            // } else {
             $sActionNameOld = $sActionName;
             $sActionName = get_class ( $this ) . '\\' . $sActionName;
             
@@ -259,7 +259,7 @@ class controller {
                 'time' => 0 
         ], $in );
         
-        Q::urlRedirect ( Q::url ( $sUrl, $arrParams ), $in ['time'], $in ['message'] );
+        Q::urlRedirect ( Q::url ( $sUrl, $in ['params'] ), $in ['time'], $in ['message'] );
     }
     
     /**

@@ -86,7 +86,7 @@ return [
         'url_model' => 'pathinfo', // default=普通，pathinfo=pathinfo模式
         'url_rewrite' => FALSE, // 是否开启重写
         'url_pathinfo_depr' => '/', // url分割符
-        'url_html_suffix' => '', // 伪静态后缀
+        'url_html_suffix' => '.html', // 伪静态后缀
         'url_app_parentdir' => FALSE, // 应用名字为父级的目录
         'url_pro_var' => 'Q', // URL生成受保护参数
         'url_start_router' => FALSE, // 是否开启URL路由

@@ -18,111 +18,178 @@ use Q;
  * @author Xiangmin Liu
  */
 class url {
-    protected static $_oInstance;
+    
+    /**
+     * url 分析实例
+     *
+     * @var Q\base\url
+     */
+    protected static $oInstance = null;
     protected $_sLastRouterName = null;
     protected $_arrLastRouteInfo = [ ];
-    private static $_sBaseUrl;
-    private static $_sBaseDir;
-    private static $_sRequestUrl;
     private $_oRouter = null;
     private $_arrPathInfo = [ ];
     
     /**
-     * 创建URL分析器
+     * 基础 url
      *
-     * @return url
+     * @var string
      */
-    static public function instance() {
-        if (self::$_oInstance) {
-            return self::$_oInstance;
-        } else {
-            return self::$_oInstance = new self ();
-        }
-    }
-    public function parseUrl() {
+    private static $sBaseUrl;
+    
+    /**
+     * 请求 url
+     *
+     * @var string
+     */
+    private static $sRequestUrl;
+    
+    /**
+     * 构造函数
+     *
+     * @return void
+     */
+    public function __construct() {
         // 非命令行模式
-        if(!Q::isCli()) {
-            $_SERVER ['REQUEST_URI'] = isset ( $_SERVER ['REQUEST_URI'] ) ? $_SERVER ['REQUEST_URI'] : $_SERVER ["HTTP_X_REWRITE_URL"]; // For IIS
-            
-            $sDepr = $GLOBALS ['option'] ['url_pathinfo_depr'];
-            if ($GLOBALS ['option'] ['url_model'] == 'pathinfo') {
-                $this->filterPathInfo ();
-                if ($GLOBALS ['option'] ['url_start_router']) {
-                    $arrRouterInfo = $this->getRouterInfo ();
-                    if (empty ( $arrRouterInfo )) {
-                        $_GET = array_merge ( $this->parsePathInfo (), $_GET );
-                    } else {
-                        $_GET = array_merge ( $this->getRouterInfo (), $_GET );
-                    }
-                } else {
-                    $_GET = array_merge ( $this->parsePathInfo (), $_GET );
-                }
-            } else {
-                if ($GLOBALS ['option'] ['url_start_router']) {
-                    $arrRouterInfo = $this->getRouterInfo ();
-                    if (! empty ( $arrRouterInfo )) {
-                        $_GET = array_merge ( $arrRouterInfo, $_GET );
-                    } else {
-                        $_GET = array_merge ( $this->getRouterInfo (), $_GET );
-                    }
-                } else {
-                    $_GET = array_merge ( $this->parsePathInfo (), $_GET );
-                }
-            }
-        }else{
-            // 第一个为脚本自身
-            if(isset($argv) && $argv) {
-            array_shift($argv);
-            
-              
-                if($argv) {
-                    
-                    if (in_array ( $argv [0], $GLOBALS ['option'] ['~apps~'] )) {
-                        $_GET ['app']  = array_shift ( $argv );
-                    }
-                    
-                    if ($argv) { // 还没有定义控制器名称
-                        $_GET ['c'] = array_shift ( argv );
-                    }
-                    
-                    if ($argv) { // 还没有定义控制器名称
-                        $_GET ['a'] = array_shift ( argv );
-                    }
-                    
-                    for($nI = 0, $nCnt = count ( $argv ); $nI < $nCnt; $nI ++) {
-                        if (isset ( $argv [$nI + 1] )) {
-                            $_GET [$argv [$nI]] = ( string ) $argv [++ $nI];
-                        } elseif ($nI == 0) {
-                            $_GET [$_GET ['a']] = ( string ) $argv [$nI];
-                        }
-                    }
-                } 
-             }
+        if (Q::isCli ()) {
+            $this->parseUrlWeb_ ();
+        } else {
+            $this->parseUrlCli_ ();
         }
-
-        // 行为标签
-        //Q::tag ( 'url' );
-        
+    
         // 解析URL
         $oApp = Q::app ();
-        $oApp->app_name = $_GET ['app'] = $this->getApp ( 'app' );
-        $oApp->controller_name = $_GET ['c'] = $this->getController ( 'c' );
-        $oApp->action_name = $_GET ['a'] = $this->getAction ( 'a' );
-        
+        $oApp->app_name = $this->getApp_ ( 'app' );
+        $oApp->controller_name = $this->getController_ ( 'c' );
+        $oApp->action_name = $this->getAction_ ( 'a' );
+    
         // 解析应用 URL 路径
-        $this->parseAppPath ();
-        
+        if (! Q::isCli ()) {
+            $this->parseAppPath_ ();
+        }
+    
         $_REQUEST = array_merge ( $_POST, $_GET );
     }
-    public function parseAppPath() {
-        // 命令行模式直接返回
-        if (Q::isCli ()) {
+
+    /**
+     * 创建 url 分析器
+     *
+     * @return Q\base\url
+     */
+    static public function run() {
+        if (self::$oInstance) {
+            return self::$oInstance;
+        } else {
+            return self::$oInstance = new self ();
+        }
+    }
+    
+    /**
+     * 返回 in 参数
+     *
+     * @return array
+     */
+    public function in() {
+        return $_REQUEST;
+    }
+
+    /**
+     * web 分析 url 参数
+     *
+     * @return void
+     */
+    protected function parseUrlWeb_() {
+        $_SERVER ['REQUEST_URI'] = isset ( $_SERVER ['REQUEST_URI'] ) ? $_SERVER ['REQUEST_URI'] : $_SERVER ["HTTP_X_REWRITE_URL"]; // For IIS
+        
+        // 分析 pathinfo
+        if ($GLOBALS ['option'] ['url_model'] == 'pathinfo') {
+            $this->filterPathInfo_ ();
+            $this->parsePathInfo_ ();
+        }
+        
+
+//         if ($GLOBALS ['option'] ['url_model'] == 'pathinfo') {
+            
+//             $this->filterPathInfo_ ();
+            
+//             if ($GLOBALS ['option'] ['url_start_router']) {
+//                 $arrRouterInfo = $this->getRouterInfo ();
+//                 if (empty ( $arrRouterInfo )) {
+//                     $_GET = array_merge ( $this->parsePathInfo (), $_GET );
+//                 } else {
+//                     $_GET = array_merge ( $this->getRouterInfo (), $_GET );
+//                 }
+//             } else {
+//                 $_GET = array_merge ( $this->parsePathInfo (), $_GET );
+//             }
+//         } else {
+//             if ($GLOBALS ['option'] ['url_start_router']) {
+//                 $arrRouterInfo = $this->getRouterInfo ();
+//                 if (! empty ( $arrRouterInfo )) {
+//                     $_GET = array_merge ( $arrRouterInfo, $_GET );
+//                 } else {
+//                     $_GET = array_merge ( $this->getRouterInfo (), $_GET );
+//                 }
+//             } else {
+//                 $_GET = array_merge ( $this->parsePathInfo (), $_GET );
+//             }
+//         }
+    }
+    
+    /**
+     * 分析 cli 参数
+     *
+     * @return void
+     */
+    protected function parseUrlCli_() {
+        // phpunit 等不存在 $argv
+        if (! isset ( $argv ) || empty ( $argv )) {
             return;
         }
         
+        // 第一个为脚本自身
+        array_shift ( $argv );
+        
+        // 继续分析
+        if ($argv) {
+            
+            // app
+            if (in_array ( $argv [0], $GLOBALS ['option'] ['~apps~'] )) {
+                $_GET ['app'] = array_shift ( $argv );
+            }
+            
+            // controller
+            if ($argv) {
+                $_GET ['c'] = array_shift ( argv );
+            }
+            
+            // 方法
+            if ($argv) {
+                $_GET ['a'] = array_shift ( argv );
+            }
+            
+            // 剩余参数
+            if ($argv) {
+                for($nI = 0, $nCnt = count ( $argv ); $nI < $nCnt; $nI ++) {
+                    if (isset ( $argv [$nI + 1] )) {
+                        $_GET [$argv [$nI]] = ( string ) $argv [++ $nI];
+                    } elseif ($nI == 0) {
+                        $_GET [$_GET ['a']] = ( string ) $argv [$nI];
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * 解析 web url 路径地址
+     *
+     * @return void
+     */
+    protected function parseAppPath_() {
         $oApp = Q::app ();
         
-        // 分析 php入口文件路径
+        // 分析 php 入口文件路径
         $sAppBak = $sApp = $oApp->url_app;
         if (! $sApp) {
             /**
@@ -171,132 +238,31 @@ class url {
         $oApp->url_public = $sPublic;
         unset ( $sApp, $sAppBak, $sRoot, $sPublic );
     }
-    private function getRouterInfo() {
-        if (is_null ( $this->_oRouter )) {
-            $this->_oRouter = new Router ( $this );
-        }
-        
-        $this->_oRouter->import (); // 导入路由规则
-        $this->_arrLastRouteInfo = $this->_oRouter->G (); // 获取路由信息
-        $this->_sLastRouterName = $this->_oRouter->getLastRouterName ();
-        return $this->_arrLastRouteInfo;
-    }
-    public function getLastRouterName() {
-        return $this->_sLastRouterName;
-    }
-    public function getLastRouterInfo() {
-        return $this->_arrLastRouteInfo;
-    }
-    public function requestUrl() {
-        if (self::$_sRequestUrl) {
-            return self::$_sRequestUrl;
-        }
-        
-        if (isset ( $_SERVER ['HTTP_X_REWRITE_URL'] )) {
-            $sUrl = $_SERVER ['HTTP_X_REWRITE_URL'];
-        } elseif (isset ( $_SERVER ['REQUEST_URI'] )) {
-            $sUrl = $_SERVER ['REQUEST_URI'];
-        } elseif (isset ( $_SERVER ['ORIG_PATH_INFO'] )) {
-            $sUrl = $_SERVER ['ORIG_PATH_INFO'];
-            if (! empty ( $_SERVER ['QUERY_STRING'] )) {
-                $sUrl .= '?' . $_SERVER ['QUERY_STRING'];
-            }
-        } else {
-            $sUrl = '';
-        }
-        
-        self::$_sRequestUrl = $sUrl;
-        return $sUrl;
-    }
-    public function baseDir() {
-        if (self::$_sBaseDir) {
-            return self::$_sBaseDir;
-        }
-        
-        $sBaseUrl = $this->baseUrl ();
-        if (substr ( $sBaseUrl, - 1, 1 ) == '/') {
-            $sBaseDir = $sBaseUrl;
-        } else {
-            $sBaseDir = dirname ( $sBaseUrl );
-        }
-        
-        self::$_sBaseDir = rtrim ( $sBaseDir, '/\\' ) . '/';
-        return self::$_sBaseDir;
-    }
-    public function baseUrl() {
-        if (self::$_sBaseUrl) {
-            return self::$_sBaseUrl;
-        }
-        
-        $sFileName = basename ( $_SERVER ['SCRIPT_FILENAME'] );
-        if (basename ( $_SERVER ['SCRIPT_NAME'] ) === $sFileName) {
-            $sUrl = $_SERVER ['SCRIPT_NAME'];
-        } elseif (basename ( $_SERVER ['PHP_SELF'] ) === $sFileName) {
-            $sUrl = $_SERVER ['PHP_SELF'];
-        } elseif (isset ( $_SERVER ['ORIG_SCRIPT_NAME'] ) && basename ( $_SERVER ['ORIG_SCRIPT_NAME'] ) === $sFileName) {
-            $sUrl = $_SERVER ['ORIG_SCRIPT_NAME'];
-        } else {
-            $sPath = $_SERVER ['PHP_SELF'];
-            $arrSegs = explode ( '/', trim ( $_SERVER ['SCRIPT_FILENAME'], '/' ) );
-            $arrSegs = array_reverse ( $arrSegs );
-            $nIndex = 0;
-            $nLast = count ( $arrSegs );
-            $sUrl = '';
-            do {
-                $sSeg = $arrSegs [$nIndex];
-                $sUrl = '/' . $sSeg . $sUrl;
-                ++ $nIndex;
-            } while ( ($nLast > $nIndex) && (false !== ($nPos = strpos ( $sPath, $sUrl ))) && (0 != $nPos) );
-        }
-        
-        $sRequestUrl = $this->requestUrl ();
-        if (0 === strpos ( $sRequestUrl, $sUrl )) {
-            self::$_sBaseUrl = $sUrl;
-            return self::$_sBaseUrl;
-        }
-        
-        if (0 === strpos ( $sRequestUrl, dirname ( $sUrl ) )) {
-            self::$_sBaseUrl = rtrim ( dirname ( $sUrl ), '/' ) . '/';
-            return self::$_sBaseUrl;
-        }
-        
-        if (! strpos ( $sRequestUrl, basename ( $sUrl ) )) {
-            return '';
-        }
-        
-        if ((strlen ( $sRequestUrl ) >= strlen ( $sUrl )) && ((false !== ($nPos = strpos ( $sRequestUrl, $sUrl ))) && ($nPos !== 0))) {
-            $sUrl = substr ( $sRequestUrl, 0, $nPos + strlen ( $sUrl ) );
-        }
-        
-        self::$_sBaseUrl = rtrim ( $sUrl, '/' ) . '/';
-        return self::$_sBaseUrl;
-    }
-    public function pathinfo() {
-        if (! empty ( $_SERVER ['PATH_INFO'] )) {
-            return $_SERVER ['PATH_INFO'];
-        }
-        
-        $sBaseUrl = $this->baseUrl ();
-        
-        if (null === ($sRequestUrl = $this->requestUrl ())) {
-            return '';
-        }
-        
-        if (($nPos = strpos ( $sRequestUrl, '?' )) > 0) {
-            $sRequestUrl = substr ( $sRequestUrl, 0, $nPos );
-        }
-        
-        if ((null !== $sBaseUrl) && (false === ($sPathinfo = substr ( $sRequestUrl, strlen ( $sBaseUrl ) )))) {
-            $sPathinfo = '';
-        } elseif (null === $sBaseUrl) {
-            $sPathinfo = $sRequestUrl;
-        }
-        
-        return $sPathinfo;
-    }
-    public function parsePathInfo() {
+    
+    // private function getRouterInfo() {
+    // if (is_null ( $this->_oRouter )) {
+    // $this->_oRouter = new Router ( $this );
+    // }
+    
+    // $this->_oRouter->import (); // 导入路由规则
+    // $this->_arrLastRouteInfo = $this->_oRouter->G (); // 获取路由信息
+    // $this->_sLastRouterName = $this->_oRouter->getLastRouterName ();
+    // return $this->_arrLastRouteInfo;
+    // }
+    // public function getLastRouterName() {
+    // return $this->_sLastRouterName;
+    // }
+    // public function getLastRouterInfo() {
+    // return $this->_arrLastRouteInfo;
+    // }
+    
+    /**
+     * 解析 pathinfo 参数
+     * @return array
+     */
+    public function parsePathInfo_() {
         $arrPathInfo = [ ];
-        $sPathInfo = &$_SERVER ['PATH_INFO'];
+        $sPathInfo = $_SERVER ['PATH_INFO'];
         $arrPaths = explode ( $GLOBALS ['option'] ['url_pathinfo_depr'], trim ( $sPathInfo, '/' ) );
         
         if (in_array ( $arrPaths [0], $GLOBALS ['option'] ['~apps~'] )) {
@@ -321,26 +287,177 @@ class url {
         
         return $arrPathInfo;
     }
-    protected function getController($sVar) {
-        return ! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_controller'];
+    
+    /**
+     * 取回应用名
+     *
+     * @param string $sVar            
+     * @return string
+     */
+    protected function getApp_($sVar) {
+        return  $_GET ['app']  = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_app']);
     }
-    protected function getAction($sVar) {
-        return ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_action']);
+    
+    /**
+     * 取回控制器名
+     *
+     * @param string $sVar            
+     * @return string
+     */
+    protected function getController_($sVar) {
+        return  $_GET ['controller']  = ! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_controller'];
     }
-    protected function getApp($sVar) {
-        return ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_app']);
+    
+    /**
+     * 取回方法名
+     *
+     * @param string $sVar            
+     * @return string
+     */
+    protected function getAction_($sVar) {
+        return  $_GET ['action']  = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_action']);
     }
-    public function filterPathInfo() {
-        $sPathInfo = $this->pathinfo ();
-        $sPathInfo = $this->clearHtmlSuffix ( $sPathInfo );
+    
+    // ######################################################
+    // ----------------- pathinfo 分析 start -----------------
+    // ######################################################
+    
+    /**
+     * pathinfo 解析入口
+     */
+    private function filterPathInfo_() {
+        $sPathInfo = $this->pathinfo_ ();
+        $sPathInfo = $this->clearHtmlSuffix_ ( $sPathInfo );
         $sPathInfo = empty ( $sPathInfo ) ? '/' : $sPathInfo;
         $_SERVER ['PATH_INFO'] = $sPathInfo;
     }
-    protected function clearHtmlSuffix($sVal) {
+    
+    /**
+     * pathinfo 兼容性分析
+     *
+     * @return string
+     */
+    private function pathinfo_() {
+        if (! empty ( $_SERVER ['PATH_INFO'] )) {
+            return $_SERVER ['PATH_INFO'];
+        }
+        
+        // 分析基础 url
+        $sBaseUrl = $this->baseUrl_ ();
+        
+        // 分析请求参数
+        if (null === ($sRequestUrl = $this->requestUrl_ ())) {
+            return '';
+        }
+        
+        if (($nPos = strpos ( $sRequestUrl, '?' )) > 0) {
+            $sRequestUrl = substr ( $sRequestUrl, 0, $nPos );
+        }
+        
+        if ((null !== $sBaseUrl) && (false === ($sPathinfo = substr ( $sRequestUrl, strlen ( $sBaseUrl ) )))) {
+            $sPathinfo = '';
+        } elseif (null === $sBaseUrl) {
+            $sPathinfo = $sRequestUrl;
+        }
+        
+        return $sPathinfo;
+    }
+    
+    /**
+     * 分析基础 url
+     *
+     * @return string
+     */
+    private function baseUrl_() {
+        // 存在返回
+        if (self::$sBaseUrl) {
+            return self::$sBaseUrl;
+        }
+        
+        // 兼容分析
+        $sFileName = basename ( $_SERVER ['SCRIPT_FILENAME'] );
+        if (basename ( $_SERVER ['SCRIPT_NAME'] ) === $sFileName) {
+            $sUrl = $_SERVER ['SCRIPT_NAME'];
+        } elseif (basename ( $_SERVER ['PHP_SELF'] ) === $sFileName) {
+            $sUrl = $_SERVER ['PHP_SELF'];
+        } elseif (isset ( $_SERVER ['ORIG_SCRIPT_NAME'] ) && basename ( $_SERVER ['ORIG_SCRIPT_NAME'] ) === $sFileName) {
+            $sUrl = $_SERVER ['ORIG_SCRIPT_NAME'];
+        } else {
+            $sPath = $_SERVER ['PHP_SELF'];
+            $arrSegs = explode ( '/', trim ( $_SERVER ['SCRIPT_FILENAME'], '/' ) );
+            $arrSegs = array_reverse ( $arrSegs );
+            $nIndex = 0;
+            $nLast = count ( $arrSegs );
+            $sUrl = '';
+            do {
+                $sSeg = $arrSegs [$nIndex];
+                $sUrl = '/' . $sSeg . $sUrl;
+                ++ $nIndex;
+            } while ( ($nLast > $nIndex) && (false !== ($nPos = strpos ( $sPath, $sUrl ))) && (0 != $nPos) );
+        }
+        
+        // 比对请求
+        $sRequestUrl = $this->requestUrl_ ();
+        if (0 === strpos ( $sRequestUrl, $sUrl )) {
+            return self::$sBaseUrl = $sUrl;
+        }
+        
+        if (0 === strpos ( $sRequestUrl, dirname ( $sUrl ) )) {
+            return self::$sBaseUrl = rtrim ( dirname ( $sUrl ), '/' ) . '/';
+        }
+        
+        if (! strpos ( $sRequestUrl, basename ( $sUrl ) )) {
+            return '';
+        }
+        
+        if ((strlen ( $sRequestUrl ) >= strlen ( $sUrl )) && ((false !== ($nPos = strpos ( $sRequestUrl, $sUrl ))) && ($nPos !== 0))) {
+            $sUrl = substr ( $sRequestUrl, 0, $nPos + strlen ( $sUrl ) );
+        }
+        
+        return self::$sBaseUrl = rtrim ( $sUrl, '/' ) . '/';
+    }
+    
+    /**
+     * 请求参数
+     *
+     * @return string
+     */
+    private function requestUrl_() {
+        if (self::$sRequestUrl) {
+            return self::$sRequestUrl;
+        }
+        
+        if (isset ( $_SERVER ['HTTP_X_REWRITE_URL'] )) {
+            $sUrl = $_SERVER ['HTTP_X_REWRITE_URL'];
+        } elseif (isset ( $_SERVER ['REQUEST_URI'] )) {
+            $sUrl = $_SERVER ['REQUEST_URI'];
+        } elseif (isset ( $_SERVER ['ORIG_PATH_INFO'] )) {
+            $sUrl = $_SERVER ['ORIG_PATH_INFO'];
+            if (! empty ( $_SERVER ['QUERY_STRING'] )) {
+                $sUrl .= '?' . $_SERVER ['QUERY_STRING'];
+            }
+        } else {
+            $sUrl = '';
+        }
+        
+        return self::$sRequestUrl = $sUrl;
+    }
+    
+    /**
+     * 清理 url 后缀
+     *
+     * @param string $sVal            
+     * @return string
+     */
+    private function clearHtmlSuffix_($sVal) {
         if ($GLOBALS ['option'] ['url_html_suffix'] && ! empty ( $sVal )) {
             $sSuffix = substr ( $GLOBALS ['option'] ['url_html_suffix'], 1 );
             $sVal = preg_replace ( '/\.' . $sSuffix . '$/', '', $sVal );
         }
         return $sVal;
     }
+    
+    // ######################################################
+    // ------------------ pathinfo 分析 end ------------------
+    // ######################################################
 }

@@ -263,8 +263,7 @@ class app {
             $this->loadOption_ ();
             
             // 解析系统URL
-            url::instance ()->parseUrl ();
-            $this->in = $this->checkIn_ ( $_REQUEST );
+            $this->in = $this->checkIn_ ( url::run ()->in() );
         } else {
             
             // 加载配置文件

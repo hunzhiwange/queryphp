@@ -50,4 +50,4 @@ require_once Q_PATH . '/base/queryphp.php';
 /**
  * QueryPHP 自动载入
  */
-require_once Q_PATH . '/autoload.php';
+require_once Q_PATH . '/base/autoload.php';

@@ -19,7 +19,7 @@ define ( 'PROJECT_PATH', dirname ( __DIR__ ) );
 /**
  * 执行项目
  */
-require_once PROJECT_PATH . '/lib/queryphp/src/run.php';
+require_once PROJECT_PATH . '/lib/queryphp/src/bootstrap.php';
 \Q\base\app::run ( [ 
         'project_path' => PROJECT_PATH 
 ] );
