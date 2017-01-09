@@ -217,15 +217,7 @@ class url {
         // 网站URL根目录
         $sRoot = $oApp->url_root;
         if (! $sRoot) {
-            if (strtoupper ( $_GET ['app'] ) == strtoupper ( basename ( $sAppBak ) )) {
-                if ($GLOBALS ['option'] ['url_app_parentdir'] === TRUE) {
-                    $sRoot = dirname ( $sAppBak );
-                } else {
-                    $sRoot = dirname ( dirname ( $sAppBak ) );
-                }
-            } else {
-                $sRoot = dirname ( $sAppBak );
-            }
+            $sRoot = dirname ( $sAppBak );
             $sRoot = ($sRoot == '/' || $sRoot == '\\') ? '' : $sRoot;
         }
         

@@ -815,7 +815,7 @@ class Q {
      *
      * @param Exception $oE            
      */
-    static public function exceptionHandler(Exception $oE) {
+    static public function exceptionHandler($oE) {
         $sErrstr = $oE->getMessage ();
         $sErrfile = $oE->getFile ();
         $nErrline = $oE->getLine ();
@@ -825,7 +825,7 @@ class Q {
         if ($GLOBALS ['option'] ['log_record'] && self::option ( 'log_must_record_exception' )) {
             Log::W ( $sErrstr, Log::EXCEPTION );
         }
-        
+
         if (method_exists ( $oE, 'formatException' )) {
             self::halt ( $oE->formatException (), $oE instanceof DbException );
         } else {
@@ -863,8 +863,8 @@ class Q {
      * @param string $sType            
      * @param number $nCode            
      */
-    static public function throwException($sMsg, $sType = 'QException', $nCode = 0) {
-        if (self::classExists ( $sType )) {
+    static public function throwException($sMsg, $sType = 'Q\base\exception', $nCode = 0) {
+        if (self::classExists ( $sType , false, true )) {
             throw new $sType ( $sMsg, $nCode );
         } else {
             self::halt ( $sMsg ); // 异常类型不存在则输出错误信息字串
