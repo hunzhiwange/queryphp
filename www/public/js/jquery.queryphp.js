@@ -1,49 +1,17 @@
 /*
- * [$QueryPHP] (C)QueryPHP.COM Since 2016.11.17.
- * QueryPHP Javascript V1.0
+ * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+ * ©2010-2017 http://queryphp.com All rights reserved.
  * 
- * <The old is doyouhaobaby.com since 2010.10.04.>
- * @author dyhb<635750556@qq.com>
+ * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
  * @date 2016.11.23
  * @since 1.0
  */
 
 /**
- * 封装 queryphp
+ * QueryPHP Javascript V1.0
  * 
- * <  // code is here !
- *    var $Q = $.fn.queryphp({
- *        app_name:"myapp",
- *        controller_name:"home",
- *        action_name:"index",
- *        enter:"",
- *        root:"/",
- *        i18n:"en-us"
- *    });
- *    console.log($Q.url('blog/get_detail?id=45',{is_ajax:1,category_id:45}));
- *    // 同名用法，以下相同 console.log($.fn.queryphp('url','blog/get_detail?id=45',{is_ajax:1,category_id:45}));
- *    // /?c=blog&a=get_detail&id=45&is_ajax=1&category_id=45
- *    
- *    console.log($Q.sprintf("老夫喜欢敲 <%s>, 复制粘贴 <%s> 就是干!",'代码','拿起来'));
- *    // 老夫喜欢敲 <代码>, 复制粘贴 <拿起来> 就是干!
- *    
- *    console.log($Q.i18n("老夫喜欢敲 <%s>, 为软件产品提供 <%s> 国际化语言解决方案!",'代码','Javascript'));
- *    // 老夫喜欢敲 <代码>, 为软件产品提供 <Javascript> 国际化语言解决方案!
- *    
- *    // 提供英文语言包
- *    $Q.i18nPackage('en-us',
- *        {
- *            "老夫喜欢敲 <%s>, 为软件产品提供 <%s> 国际化语言解决方案!" : "Old lady likes to knock <%s>, software products for the <%s> international language solutions!",
- *            "欢迎使用 %s ，Query Yet Simple！" : "Welcome to use %s ，Query Yet Simple！"
- *        });
- *    console.log($Q.i18n("欢迎使用 %s ，Query Yet Simple！",'QeePHP'));
- *    console.log($Q.i18n("老夫喜欢敲 <%s>, 为软件产品提供 <%s> 国际化语言解决方案!",'代码','Javascript'));
- *    // Welcome to use QeePHP ，Query Yet Simple！
- *    // Old lady likes to knock <代码>, software products for the <Javascript> international language solutions!
- *  >
- *  
- *  @return
+ * @author Xiangmin Liu
  */
 
 /**

@@ -2,7 +2,7 @@
 
 namespace home\controller;
 
-use Q, Q\base\controller;
+use Q, Q\mvc\controller;
 
 class index extends controller {
     
@@ -12,4 +12,5 @@ class index extends controller {
     public function index() {
         $this->display ();
     }
+    
 }

@@ -45,9 +45,9 @@ define ( 'Q_VER', '1.0' );
 /**
  * QueryPHP 核心函数库和一些公用函数
  */
-require_once Q_PATH . '/base/queryphp.php';
+require_once Q_PATH . '/~@~/bootstrap/queryphp.php';
 
 /**
  * QueryPHP 自动载入
  */
-require_once Q_PATH . '/base/autoload.php';
+require_once Q_PATH . '/~@~/bootstrap/autoload.php';
