@@ -11,7 +11,7 @@
 
 /**
  * 全局静态函数库
- * 
+ *
  * @author Xiangmin Liu
  */
 use Q\mvc\app, Q\cookie\cookie, Q\xml\xml;
@@ -513,23 +513,6 @@ class Q {
     }
     
     /**
-     * 返回完整 URL 地址
-     *
-     * @param string $sDomain            
-     * @param string $sHttpPrefix            
-     * @param string $sHttpSuffix            
-     * @return string
-     */
-    static public function urlFull($sDomain = '', $sHttpPrefix = '', $sHttpSuffix = '') {
-        static $sHttpPrefix = '', $sHttpSuffix = '';
-        if (! $sHttpPrefix) {
-            $sHttpPrefix = self::isSsl () ? 'https://' : 'http://';
-            $sHttpSuffix = $GLOBALS ['option'] ['url_domain_top'] . $GLOBALS ['option'] ['url_domain_suffix'];
-        }
-        return $sHttpPrefix . ($sDomain && $sDomain != '*' ? $sDomain . '.' : '') . $sHttpSuffix;
-    }
-    
-    /**
      * 生成路由地址
      *
      * @param string $sUrl            
@@ -729,7 +712,7 @@ class Q {
                 $sDomainUrl = '';
             }
             if ($sDomainUrl) {
-                $sDomainUrl = self::urlFull ( $sDomainUrl );
+                $sDomainUrl = self::urlFull_ ( $sDomainUrl );
             }
         } elseif ($GLOBALS ['option'] ['url_domain_on'] === true) { // URL加上域名
             $sDomainUrl = $GLOBALS ['option'] ['url_domain'];
@@ -825,7 +808,7 @@ class Q {
         if ($GLOBALS ['option'] ['log_record'] && self::option ( 'log_must_record_exception' )) {
             Log::W ( $sErrstr, Log::EXCEPTION );
         }
-
+        
         if (method_exists ( $oE, 'formatException' )) {
             self::halt ( $oE->formatException (), $oE instanceof DbException );
         } else {
@@ -864,7 +847,7 @@ class Q {
      * @param number $nCode            
      */
     static public function throwException($sMsg, $sType = 'Q\base\exception', $nCode = 0) {
-        if (self::classExists ( $sType , false, true )) {
+        if (self::classExists ( $sType, false, true )) {
             throw new $sType ( $sMsg, $nCode );
         } else {
             self::halt ( $sMsg ); // 异常类型不存在则输出错误信息字串
@@ -1453,6 +1436,82 @@ class Q {
     }
     
     /**
+     * 分析 url 数据
+     * like [home://blog/index?arg1=1&arg2=2]
+     *
+     * @param string $sUrl            
+     * @return array
+     */
+    static public function parseMvcUrl($sUrl) {
+        $arrData = [ ];
+        
+        // 解析 url
+        if (strpos ( $sUrl, '://' ) === false) {
+            $sUrl = 'QueryPHP://' . $sUrl;
+        }
+        $sUrl = parse_url ( $sUrl );
+        
+        // 应用
+        if ($sUrl ['scheme'] != 'QueryPHP') {
+            $arrData ['app'] = $sUrl ['scheme'];
+        }
+        
+        // 控制器
+        $arrData ['c'] = $sUrl ['host'];
+        
+        // 方法
+        if (isset ( $sUrl ['path'] ) && $sUrl ['path'] != '/') {
+            $arrData ['a'] = ltrim ( $sUrl ['path'], '/' );
+        }
+        
+        // 额外参数
+        if (isset ( $sUrl ['query'] )) {
+            foreach ( explode ( '&', $sUrl ['query'] ) as $strQuery ) {
+                $strQuery = explode ( '=', $strQuery );
+                $arrData [$strQuery [0]] = $strQuery [1];
+            }
+        }
+        
+        return $arrData;
+    }
+    
+    /**
+     * 返回当前 URL 地址
+     *
+     * @return string
+     */
+    static public function getCurrentUrl() {
+        return (self::isSsl () ? 'https://' : 'http://') . $_SERVER ['HTTP_HOST'] . $_SERVER ['REQUEST_URI'];
+    }
+    
+    /**
+     * 系统提供的 xml 序列化
+     *
+     * @param string $sText
+     *            待过滤的字符串
+     * @return string
+     */
+    static public function xmlEncode($arrData = []) {
+        return xml::xmlSerialize ( $arrData );
+    }
+    
+    /**
+     * JSON 编码
+     *
+     * PHP_VERSION >= 5.4
+     *
+     * @param 待编码的数据 $arrData            
+     * @param boo $booUnescaped
+     *            JSON 是否编码
+     * @return string
+     */
+    static public function jsonEncode($arrData, $booUnescaped = true) {
+        if (version_compare ( PHP_VERSION, '5.4.0', '<' ))
+            $booUnescaped = false;
+        return $booUnescaped === true ? json_encode ( $arrData, JSON_UNESCAPED_UNICODE ) : json_encode ( $arrData );
+    }
+    
+    /**
      * 日期格式化
      *
      * @param int $nDateTemp            
@@ -1943,42 +2002,6 @@ class Q {
     // -------------------- 系统安全相关 end ------ -------------
     // ######################################################
     
-    /**
-     * 返回当前 URL 地址
-     *
-     * @return string
-     */
-    static public function getCurrentUrl() {
-        return (self::isSsl () ? 'https://' : 'http://') . $_SERVER ['HTTP_HOST'] . $_SERVER ['REQUEST_URI'];
-    }
-    
-    /**
-     * 系统提供的 xml 序列化
-     *
-     * @param string $sText
-     *            待过滤的字符串
-     * @return string
-     */
-    static public function xmlEncode($arrData = []) {
-        return xml::xmlSerialize ( $arrData );
-    }
-    
-    /**
-     * JSON 编码
-     *
-     * PHP_VERSION >= 5.4
-     *
-     * @param 待编码的数据 $arrData            
-     * @param boo $booUnescaped
-     *            JSON 是否编码
-     * @return string
-     */
-    static public function jsonEncode($arrData, $booUnescaped = true) {
-        if (version_compare ( PHP_VERSION, '5.4.0', '<' ))
-            $booUnescaped = false;
-        return $booUnescaped === true ? json_encode ( $arrData, JSON_UNESCAPED_UNICODE ) : json_encode ( $arrData );
-    }
-    
     // ######################################################
     // -------------------- 运行状态 start --------------------
     // ######################################################
@@ -2238,6 +2261,23 @@ class Q {
         } else {
             return self::in ( $sValue );
         }
+    }
+    
+    /**
+     * 返回完整 URL 地址
+     *
+     * @param string $sDomain            
+     * @param string $sHttpPrefix            
+     * @param string $sHttpSuffix            
+     * @return string
+     */
+    private function urlFull_($sDomain = '', $sHttpPrefix = '', $sHttpSuffix = '') {
+        static $sHttpPrefix = '', $sHttpSuffix = '';
+        if (! $sHttpPrefix) {
+            $sHttpPrefix = self::isSsl () ? 'https://' : 'http://';
+            $sHttpSuffix = $GLOBALS ['option'] ['url_domain_top'] . $GLOBALS ['option'] ['url_domain_suffix'];
+        }
+        return $sHttpPrefix . ($sDomain && $sDomain != '*' ? $sDomain . '.' : '') . $sHttpSuffix;
     }
     
     // ######################################################

@@ -56,21 +56,21 @@ class url {
         } else {
             $this->parseUrlCli_ ();
         }
-
+        
         // 解析URL
         $oApp = Q::app ();
         $oApp->app_name = $this->getApp_ ( 'app' );
         $oApp->controller_name = $this->getController_ ( 'c' );
         $oApp->action_name = $this->getAction_ ( 'a' );
-    
+        
         // 解析应用 URL 路径
         if (! Q::isCli ()) {
             $this->parseAppPath_ ();
         }
-    
+        
         $_REQUEST = array_merge ( $_POST, $_GET );
     }
-
+    
     /**
      * 创建 url 分析器
      *
@@ -92,7 +92,7 @@ class url {
     public function in() {
         return $_REQUEST;
     }
-
+    
     /**
      * web 分析 url 参数
      *
@@ -100,42 +100,15 @@ class url {
      */
     protected function parseUrlWeb_() {
         $_SERVER ['REQUEST_URI'] = isset ( $_SERVER ['REQUEST_URI'] ) ? $_SERVER ['REQUEST_URI'] : $_SERVER ["HTTP_X_REWRITE_URL"]; // For IIS
-        
+                                                                                                                                    
         // 分析 pathinfo
         if ($GLOBALS ['option'] ['url_model'] == 'pathinfo') {
+            // 分析pathinfo
             $this->filterPathInfo_ ();
-            $_GET = array_merge ( $this->parsePathInfo_ (), $_GET );
+            
+            // 解析结果
+            $_GET = array_merge ( $_GET, $GLOBALS ['option'] ['url_start_router'] === true && ($arrRouter = router::parse ()) ? $arrRouter : $this->parsePathInfo_ () );
         }
-        
-        
-        
-
-//         if ($GLOBALS ['option'] ['url_model'] == 'pathinfo') {
-            
-//             $this->filterPathInfo_ ();
-            
-//             if ($GLOBALS ['option'] ['url_start_router']) {
-//                 $arrRouterInfo = $this->getRouterInfo ();
-//                 if (empty ( $arrRouterInfo )) {
-//                     $_GET = array_merge ( $this->parsePathInfo (), $_GET );
-//                 } else {
-//                     $_GET = array_merge ( $this->getRouterInfo (), $_GET );
-//                 }
-//             } else {
-//                 $_GET = array_merge ( $this->parsePathInfo (), $_GET );
-//             }
-//         } else {
-//             if ($GLOBALS ['option'] ['url_start_router']) {
-//                 $arrRouterInfo = $this->getRouterInfo ();
-//                 if (! empty ( $arrRouterInfo )) {
-//                     $_GET = array_merge ( $arrRouterInfo, $_GET );
-//                 } else {
-//                     $_GET = array_merge ( $this->getRouterInfo (), $_GET );
-//                 }
-//             } else {
-//                 $_GET = array_merge ( $this->parsePathInfo (), $_GET );
-//             }
-//         }
     }
     
     /**
@@ -252,6 +225,7 @@ class url {
     
     /**
      * 解析 pathinfo 参数
+     *
      * @return array
      */
     public function parsePathInfo_() {
@@ -289,7 +263,7 @@ class url {
      * @return string
      */
     protected function getApp_($sVar) {
-        return  $_GET ['app']  = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_app']);
+        return $_GET ['app'] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_app']);
     }
     
     /**
@@ -299,7 +273,7 @@ class url {
      * @return string
      */
     protected function getController_($sVar) {
-        return  $_GET ['c']  = ! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_controller'];
+        return $_GET ['c'] = ! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_controller'];
     }
     
     /**
@@ -309,7 +283,7 @@ class url {
      * @return string
      */
     protected function getAction_($sVar) {
-        return  $_GET ['a']  = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_action']);
+        return $_GET ['a'] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_action']);
     }
     
     // ######################################################

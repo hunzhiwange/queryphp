@@ -200,121 +200,48 @@ class router {
     }
     
     /**
-     * 默认方法
+     * 匹配路由
      */
-    public function index() {
-        //self::regex('id', '[0-9]+');
+    public static function parse() {
+        // 解析域名
+        
+        // 解析路由
+        return self::parseRouter ();
+    }
     
-    
-    
-        //  self::import('company\/{args1}-{args2}-{hello}','',[
-        //         'where' => ['x'=>'y','name' => '[a-z]+']
-        // ]);
-    
-        self::import('user/{id}', /*'home://blog/show?hello=world'*/'think://xxx/ss?sdfsdfs=222&ssss=2',[
-    
-                'params' => [ 'hello' => 'xxxxx','tetsss' => 'xxx' ]
-        ]);
-    
-        // self::import('^map$','shop/map');
-        // self::import('^contact$','shop/contact');
-    
-        //self::import('/','22222/xxxxx');
-    
-        //          self::group(['prefix' => 'admin'],[
-        //                 [ '^join$','public/join',[]],
-        //                 ['^tools$','tools/index',[]]
-        //          ]);
-    
-    
-        //self::group(['prefix' => 'admin'],function($in = []){
-    
-    
-        // self::group(['domain' => 'adminxx.cn'],[
-        //       [ '^join$','public/join',[]],
-        //      ['^tools$','tools/index',[]]
-        //  ]);
-        //
-        // });
-         
-         
-        // self::import('hello','xxxx/uuu');
-        // self::import('/','22222/xxxxx');
-    
-         
-        //         self::domain('blog','blog');
-    
-        //         self::domain('admin.queryphp.com','admin/test');
-    
-        //         self::domain('114.23.4.5','admin');
-    
-        //         self::domain('{subdomain}','xxxxxxs');
-    
-        //         self::domain('{subdomain}.user','sdfsdf/sdfsdfsdf');
-    
-        //  $echo $_SERVER ['PATH_INFO'];
-    
-                $sPathinfo = '/user/233sss';
-    
-                foreach(self::$arrRouters as $sKey=>$arrRouters) {
-                foreach($arrRouters as $arrRouter) {
-                $sss=     '/'.str_replace('/','\/',$arrRouter['regex']).'/';
-            echo $sss;
-            //   echo '/user\/([0-9]+)/';
-                //  "/{$arrRouter['regex']}/isx"
-                if( preg_match_all ( $sss, $sPathinfo, $arrRes ) )  {
-                print_r($arrRes);
-    
-            // 解析 url
-            if(strpos($arrRouter['url'],'://') === false) {
-            $arrRouter['url'] = 'QueryPHP://'.$arrRouter['url'];
-            }
-            $arrUrls = parse_url($arrRouter['url']);
-    
-            if($arrUrls['scheme'] != 'QueryPHP') {
-                $_GET['app'] = $arrUrls['scheme'];
-            }
-    
-    
-                    $_GET['c'] = $arrUrls['host'];
-    
-    
-    
-                    if(isset($arrUrls['path']) && $arrUrls['path']!='/') {
-                    $_GET['a'] = ltrim($arrUrls['path'],'/');
+    /**
+     * 解析路由规格
+     * 
+     * @return array
+     */
+    private static function parseRouter() {
+        $arrData = [ ];
+        $sPathinfo = $_SERVER ['PATH_INFO'];
+        
+        // 匹配路由
+        foreach ( self::$arrRouters as $sKey => $arrRouters ) {
+            foreach ( $arrRouters as $arrRouter ) {
+                $strRegex = '/' . str_replace ( '/', '\/', $arrRouter ['regex'] ) . '/';
+                
+                // 匹配成功
+                if (preg_match_all ( $strRegex, $sPathinfo, $arrRes )) {
+                    $arrData = Q::parseMvcUrl ( $arrRouter ['url'] );
+                    
+                    // 额外参数
+                    if (is_array ( $arrRouter ['params'] ) && $arrRouter ['params']) {
+                        $arrData = array_merge ( $arrData, $arrRouter ['params'] );
                     }
-    
-                    if(isset($arrUrls['query'])) {
-                    //echo $arrUrls['query'];
-                    foreach(explode('&',$arrUrls['query']) as $strQuery) {
-                    $strQuery = explode('=',$strQuery);
-                    $_GET[$strQuery[0]] = $strQuery[1];
+                    
+                    // 变量解析
+                    foreach ( $arrRouter ['args'] as $intArgsKey => $strArgs ) {
+                        $arrData [$strArgs] = $arrRes [1] [$intArgsKey];
                     }
-                    }
-    
-    
-                            //print_r($arrParses);
-                             
-                            if($arrRouter['params']) {
-                                $_GET = array_merge($_GET, $arrRouter['params']);
-                            }
-    
-                                foreach($arrRouter['args'] as $intArgsKey=>$strArgs) {
-                                $_GET[$strArgs] = $arrRes[1][$intArgsKey];
-                            }
-                            break;
-            }else {
-            // echo '11';
+                    
+                    break;
+                }
             }
-            }
-            }
-    
-        print_r($_GET);
-    
-        print_r(self::$arrRouters);
-    
-    
-    
-        $this->display ();
+        }
+        
+        return $arrData;
     }
 }

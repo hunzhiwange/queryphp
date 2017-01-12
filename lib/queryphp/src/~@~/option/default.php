@@ -76,7 +76,7 @@ return [
         /**
          * cookie
          */
-        'cookie_prefix' => 'queryphp_', // cookie前缀
+        'cookie_prefix' => 'q_', // cookie前缀
         'cookie_langtheme_app' => TRUE, // 语言包和模板COOKIE是否包含应用名
         'cookie_domain' => '', // cookie域名
         'cookie_path' => '/', // cookie路径
@@ -93,9 +93,9 @@ return [
         'url_start_router' => FALSE, // 是否开启URL路由
         'url_router' => [ ], // 路由配置
         'url_domain_on' => true, // 是否开启域名
-        'url_domain' => '', // 域名，不为空将会被写入到生成的网址中，后面不能添加‘/’，如 http://myapp.qeephp.com
+        'url_domain' => '', // 域名，不为空将会被写入到生成的网址中，后面不能添加‘/’，如 http://myapp.queryphp.com
         'url_subdomain_on' => FALSE, // 是否开启多域名
-        'url_domain_top' => '', // 顶级域名，如 qeephp.com
+        'url_domain_top' => '', // 顶级域名，如 queryphp.com
         'url_domain_suffix' => '', // 子目录
         'url_public' => '', // 公共
         
