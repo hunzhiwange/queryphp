@@ -45,7 +45,7 @@ class router {
      *
      * @var string
      */
-    private static $strRegex = '\S+';
+    const DEFAULT_REGEX = '\S+';
     
     /**
      * 分组传递参数
@@ -55,18 +55,27 @@ class router {
     private static $arrGroupArgs = [ ];
     
     /**
+     * 配置文件路由
+     *
+     * @var string
+     */
+    private static $arrFileRouters = [ ];
+    
+    /**
      * 导入路由规则
      *
-     * @param string $strRouter            
+     * @param mixed $mixRouter            
      * @param string $strUrl            
      * @param arra $in
      *            domain 域名
      *            params 参数
      *            where 参数正则
      *            prepend 插入顺序
+     *            strict 严格模式，启用将在匹配正则 $
      * @return void
      */
-    static function import($strRouter, $strUrl, $in = []) {
+    static function import($mixRouter, $strUrl, $in = []) {
+        // 默认参数
         $in = array_merge ( [ 
                 'prepend' => false,
                 'where' => [ ],
@@ -74,40 +83,66 @@ class router {
                 'domain' => '' 
         ], self::$arrGroupArgs, $in );
         
-        $arrRouter = [ 
-                'url' => $strUrl,
-                'regex' => $strRouter,
-                'params' => $in ['params'],
-                'where' => self::$arrWheres,
-                'domain' => $in ['domain'] 
-        ];
-        
-        // 合并参数正则
-        if (! empty ( $in ['where'] ) && is_array ( $in ['where'] )) {
-            if (is_string ( key ( $in ['where'] ) )) {
-                $arrRouter ['where'] = array_merge ( $arrRouter ['where'], $in ['where'] );
-            } else {
-                $arrRouter ['where'] [$in ['where'] [0]] = $in ['where'] [1];
-            }
-        }
-        
-        // 分析 url 参数
-        if (preg_match_all ( "/{(.+?)}/isx", $strRouter, $arrRes )) {
-            foreach ( $arrRes [1] as $nIndex => $sWhere ) {
-                $arrRouter ['regex'] = str_replace ( '{' . $sWhere . '}', '(' . (isset ( $arrRouter ['where'] [$sWhere] ) ? $arrRouter ['where'] [$sWhere] : self::$strRegex) . ')', $arrRouter ['regex'] );
-            }
-            $arrRouter ['args'] = $arrRes [1];
-        }
-        
-        if (! isset ( self::$arrRouters [$strRouter] )) {
-            self::$arrRouters [$strRouter] = [ ];
-        }
-        
-        // 优先插入
-        if ($in ['prepend'] === true) {
-            array_unshift ( self::$arrRouters [$strRouter], $arrRouter );
+        // 支持数组传入
+        if (! is_array ( $mixRouter )) {
+            $strTemp = $mixRouter;
+            $mixRouter = [ ];
+            $mixRouter [] = [ 
+                    $strTemp,
+                    $strUrl,
+                    $in 
+            ];
         } else {
-            array_push ( self::$arrRouters [$strRouter], $arrRouter );
+            foreach ( $mixRouter as &$arrRouter ) {
+                if (count ( $arrRouter ) < 2) {
+                    continue;
+                }
+                if (! isset ( $arrRouter [2] )) {
+                    $arrRouter [2] = [ ];
+                }
+                if (! $arrRouter [1]) {
+                    $arrRouter [1] = $strUrl;
+                }
+                $arrRouter [2] = array_merge ( $arrRouter [2], $in );
+            }
+        }
+        
+        foreach ( $mixRouter as $arrArgs ) {
+            if (! isset ( $arrArgs [1] )) {
+                continue;
+            }
+            
+            $arrRouter = [ 
+                    'url' => $arrArgs [1],
+                    'regex' => $arrArgs [0],
+                    'params' => $arrArgs [2] ['params'],
+                    'where' => self::$arrWheres,
+                    'domain' => $arrArgs [2] ['domain'] 
+            ];
+            
+            if (isset ( $arrArgs [2] ['strict'] )) {
+                $arrRouter ['strict'] = $arrArgs [2] ['strict'];
+            }
+            
+            // 合并参数正则
+            if (! empty ( $arrArgs [2] ['where'] ) && is_array ( $arrArgs [2] ['where'] )) {
+                if (is_string ( key ( $arrArgs [2] ['where'] ) )) {
+                    $arrRouter ['where'] = array_merge ( $arrRouter ['where'], $arrArgs [2] ['where'] );
+                } else {
+                    $arrRouter ['where'] [$arrArgs [2] ['where'] [0]] = $arrArgs [2] ['where'] [1];
+                }
+            }
+            
+            if (! isset ( self::$arrRouters [$arrArgs [0]] )) {
+                self::$arrRouters [$arrArgs [0]] = [ ];
+            }
+            
+            // 优先插入
+            if ($arrArgs [2] ['prepend'] === true) {
+                array_unshift ( self::$arrRouters [$arrArgs [0]], $arrRouter );
+            } else {
+                array_push ( self::$arrRouters [$arrArgs [0]], $arrRouter );
+            }
         }
     }
     
@@ -188,7 +223,6 @@ class router {
         self::$arrGroupArgs = array_merge ( self::$arrGroupArgs, $in );
         
         if ($mixRouter instanceof \Closure) {
-            // var_dump($in);
             call_user_func_array ( $mixRouter, [ ] );
         } else {
             foreach ( $mixRouter as $arrVal ) {
@@ -197,6 +231,37 @@ class router {
         }
         
         self::$arrGroupArgs = [ ];
+    }
+    
+    /**
+     * 导入路由配置数据
+     *
+     * @param array $arrData
+     *            @retun void
+     */
+    static public function cache($arrData = []) {
+        if ($arrData) {
+            self::import ( $arrData, '' );
+        }
+    }
+    
+    /**
+     * 返回文件路由配置
+     *
+     * @return string
+     */
+    static public function getFileRouters() {
+        return self::$arrFileRouters;
+    }
+    
+    /**
+     * 设置文件路由配置
+     *
+     * @param array $arrData            
+     * @return void
+     */
+    static public function setFileRouters($arrData = []) {
+        self::$arrFileRouters = $arrData;
     }
     
     /**
@@ -211,7 +276,7 @@ class router {
     
     /**
      * 解析路由规格
-     * 
+     *
      * @return array
      */
     private static function parseRouter() {
@@ -221,10 +286,26 @@ class router {
         // 匹配路由
         foreach ( self::$arrRouters as $sKey => $arrRouters ) {
             foreach ( $arrRouters as $arrRouter ) {
-                $strRegex = '/' . str_replace ( '/', '\/', $arrRouter ['regex'] ) . '/';
                 
-                // 匹配成功
-                if (preg_match_all ( $strRegex, $sPathinfo, $arrRes )) {
+                $booFindFouter = false;
+                if (strpos ( $arrRouter ['regex'], '{' ) !== false && preg_match_all ( "/{(.+?)}/isx", $arrRouter ['regex'], $arrRes )) {
+                    // 解析匹配正则
+                    $arrRouter ['regex'] = self::formatRegex_ ( $arrRouter ['regex'] );
+                    foreach ( $arrRes [1] as $nIndex => $sWhere ) {
+                        $arrRouter ['regex'] = str_replace ( '{' . $sWhere . '}', '(' . (isset ( $arrRouter ['where'] [$sWhere] ) ? $arrRouter ['where'] [$sWhere] : self::DEFAULT_REGEX) . ')', $arrRouter ['regex'] );
+                    }
+                    $arrRouter ['regex'] = '/^\/' . $arrRouter ['regex'] . ((isset ( $arrRouter ['strict'] ) ? $arrRouter ['strict'] : $GLOBALS ['option'] ['url_router_strict']) ? '$' : '') . '/';
+                    $arrRouter ['args'] = $arrRes [1];
+                    
+                    // 匹配结果
+                    if (preg_match ( $arrRouter ['regex'], $sPathinfo, $arrRes )) {
+                        $booFindFouter = true;
+                    }
+                } else if ($arrRouter ['regex'] == $sPathinfo) {
+                    $booFindFouter = true;
+                }
+                
+                if ($booFindFouter === true) {
                     $arrData = Q::parseMvcUrl ( $arrRouter ['url'] );
                     
                     // 额外参数
@@ -233,15 +314,27 @@ class router {
                     }
                     
                     // 变量解析
-                    foreach ( $arrRouter ['args'] as $intArgsKey => $strArgs ) {
-                        $arrData [$strArgs] = $arrRes [1] [$intArgsKey];
+                    if (isset ( $arrRouter ['args'] )) {
+                        array_shift ( $arrRes );
+                        foreach ( $arrRouter ['args'] as $intArgsKey => $strArgs ) {
+                            $arrData [$strArgs] = $arrRes [$intArgsKey];
+                        }
                     }
-                    
-                    break;
+                    break 2;
                 }
             }
         }
         
         return $arrData;
+    }
+    
+    /**
+     * 格式化正则
+     *
+     * @param string $sRegex            
+     * @return string
+     */
+    private static function formatRegex_($sRegex) {
+        return str_replace ( '/', '\/', $sRegex );
     }
 }

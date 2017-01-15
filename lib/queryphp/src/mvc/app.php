@@ -10,7 +10,7 @@
  */
 namespace Q\mvc;
 
-use Q, Q\router\url, Q\i18n\i18n, Q\i18n\tool;
+use Q, Q\router\router, Q\i18n\i18n, Q\i18n\tool;
 
 /**
  * 应用程序对象
@@ -23,17 +23,6 @@ class app {
      * 应用程序属性
      */
     protected $arrProp = [ 
-            
-            /**
-             * 项目基本
-             */
-            // 'project_name' => '',
-            'project_path' => '',
-            'com_path' => '', // 公共组件
-            'app_path' => '', // 应用基础路径
-            'apppublic_path' => '', // 应用公共资源路径
-            'vendor_path' => '', // Composer 公共组件
-            
             /**
              * 应用基本
              */
@@ -50,16 +39,8 @@ class app {
             'appi18nextend_path' => [ ], // 国际化目录扩展，系统将会扫描这些目录
             
             /**
-             * URL 地址
-             */
-            'url_app' => '', // php文件所在 url 地址如 http://myapp.com/index.php
-            'url_root' => '', // 网站 root http://myapp.com
-            'url_public' => '', // 网站 public http://myapp.com/public
-            
-            /**
              * 缓存目录
              */
-            'runtime_path' => '',
             'cache_path' => '', // 默认缓存组件缓存目录
             'logcache_path' => '', // 默认日志目录
             'tablecache_path' => '', // 默认数据库表缓存目录
@@ -77,13 +58,6 @@ class app {
     public $in;
     
     /**
-     * 应用程序实例
-     *
-     * @var app
-     */
-    private static $arrApps = [ ];
-    
-    /**
      * 注册控制器
      *
      * @var mixed
@@ -98,61 +72,29 @@ class app {
     protected $arrActions = [ ];
     
     /**
+     * 当前项目
+     *
+     * @var Q\mvc\project
+     */
+    protected $objProject = null;
+    
+    /**
      * 构造函数
      *
      * @param array $in            
      * @param boolean $booRun            
      * @return app
      */
-    public function __construct($in = [], $bRun = true) {
+    public function __construct($objProject, $sApp, $in = []) {
+        // 带入项目
+        $this->objProject = $objProject;
         
-        /**
-         * 初始化
-         */
-        if (! self::getApp ( '~_~' )) {
-            /**
-             * 项目初始化设置
-             */
-            if (! isset ( $in ['project_path'] ) || ! is_dir ( $in ['project_path'] )) {
-                Q::errorMessage ( "project dir is not exists" );
-            }
-            $this->project_path = $in ['project_path'];
-            $this->app_name = '~_~';
-            
-            // 初始化
-            $this->initProject_ ( $in );
-            
-            // 注册公共组件命名空间
-            Q::import ( 'com', $this->com_path, [ 
-                    'ignore' => [ 
-                            'i18n',
-                            'option',
-                            'theme' 
-                    ] 
-            ] );
-            
-            // 尝试导入 Composer PSR-4
-            Q::importComposer ( $this->vendor_path );
-            
-            // 注册初始化应用
-            self::registerApp ( $this, '~_~' );
-            
-            // 执行项目初始化
-            $this->app ( true );
-        }
-        
-        /**
-         * 执行应用
-         */
-        if (isset ( self::$arrApps [$this->app_name] )) {
-            return;
-        }
-        
+        // 初始化应用
+        $this->app_name = $sApp;
         $this->initApp_ ( $in );
-        $oApp = self::registerApp ( $this, $this->app_name );
         
         // 注册命名空间
-        Q::import ( $this->app_name, $this->app_path . '/' . $this->app_name, [ 
+        Q::import ( $this->app_name, $this->objProject->app_path . '/' . $this->app_name, [ 
                 [ 
                         'i18n',
                         'option',
@@ -160,12 +102,11 @@ class app {
                 ] 
         ] );
         
-        if ($bRun === true) {
-            $this->app ();
-        }
+        // 加载配置文件
+        $this->loadOption_ ();
         
         unset ( $in );
-        return $oApp;
+        return $this;
     }
     
     /**
@@ -175,39 +116,8 @@ class app {
      * @param boolean $booRun            
      * @return app
      */
-    static public function run($in = [], $bRun = true) {
-        return new self ( $in, $bRun );
-    }
-    
-    /**
-     * 注册程序实例
-     *
-     * @param App $app
-     *            应用
-     * @param string $sAppName
-     *            应用名字
-     * @return void
-     */
-    static function registerApp(app $oApp, $sAppName) {
-        return self::$arrApps [$sAppName] = $oApp;
-    }
-    
-    /**
-     * 取得应用程序实例
-     *
-     * @return App
-     */
-    static public function getApp($sAppName = '') {
-        if ($sAppName) {
-            return isset ( self::$arrApps [$sAppName] ) ? self::$arrApps [$sAppName] : null;
-        } else {
-            if (self::$arrApps) {
-                foreach ( self::$arrApps as $oApp ) {
-                    return $oApp;
-                }
-            }
-            return null;
-        }
+    static public function run($objProject, $sApp, $in = [], $bRun = true) {
+        return new self ( $objProject, $sApp, $in, $bRun );
     }
     
     /**
@@ -247,49 +157,30 @@ class app {
     /**
      * 执行应用
      *
-     * @param bool $bInit
-     *            true 表示初始化应用
      * @return void
      */
-    public function app($bInit = false) {
-        if ($bInit === true) {
-            // 移除自动转义和过滤全局变量
-            Q::stripslashesMagicquotegpc ();
-            if (isset ( $_REQUEST ['GLOBALS'] ) or isset ( $_FILES ['GLOBALS'] )) {
-                Q::errorMessage ( 'GLOBALS not allowed!' );
-            }
-            
-            // 加载配置文件
-            $this->loadOption_ ();
-            
-            // 解析系统URL
-            $this->in = $this->checkIn_ ( url::run ()->in() );
+    public function app() {
+        // 初始化时区和GZIP压缩
+        if (function_exists ( 'date_default_timezone_set' )) {
+            date_default_timezone_set ( $GLOBALS ['option'] ['time_zone'] );
+        }
+        if ($GLOBALS ['option'] ['start_gzip'] && function_exists ( 'gz_handler' )) {
+            ob_start ( 'gz_handler' );
         } else {
-            
-            // 加载配置文件
-            $this->loadOption_ ();
-            
-            // 初始化时区和GZIP压缩
-            if (function_exists ( 'date_default_timezone_set' )) {
-                date_default_timezone_set ( $GLOBALS ['option'] ['time_zone'] );
-            }
-            if ($GLOBALS ['option'] ['start_gzip'] && function_exists ( 'gz_handler' )) {
-                ob_start ( 'gz_handler' );
-            } else {
-                ob_start ();
-            }
-            
-            // 检查语言包和模板以及定义系统常量
-            $this->initView_ ();
-            if ($GLOBALS ['option'] ['i18n_on']) {
-                $this->initI18n_ ();
-            }
-            
-            // 执行控制器
-            $this->controller ();
+            ob_start ();
         }
         
-        return;
+        // 检查语言包和模板以及定义系统常量
+        $this->initView_ ();
+        if ($GLOBALS ['option'] ['i18n_on']) {
+            $this->initI18n_ ();
+        }
+        
+        // 执行控制器
+        $this->in = project::$in;
+        $this->controller_name = $this->in ['c'];
+        $this->action_name = $this->in ['a'];
+        $this->controller ();
     }
     
     /**
@@ -493,7 +384,7 @@ class app {
                     break;
             }
         } else {
-            Q::throwException ( sprintf ( '方法 %s 未注册', $sAction ) );
+            Q::throwException ( Q::i18n ( '控制器 %s 的方法 %s 未注册', $sController, $sAction ) );
         }
     }
     
@@ -578,18 +469,31 @@ class app {
         // 开发模式不用读取缓存
         if (Q_DEVELOPMENT !== 'develop' && is_file ( $sOptionCache )) {
             $GLOBALS ['option'] = Q::option ( ( array ) (include $sOptionCache) );
+            if ($this->app_name == project::INIT_APP) {
+                router::setFileRouters ( $arrOption ['url_router_cache'] );
+            }
         } else {
             
             // 读取系统默认配置，并写入默认配置项
             $arrOption = ( array ) (include Q_PATH . '/~@~/option/default.php');
             
+            // 路由和配置扩展文件
+            $arrRouterExtend = array_filter ( array_unique ( explode ( ',', 'router' . ($arrOption ['url_router_extend'] ? ',' . $arrOption ['url_router_extend'] : '') ) ) );
+            $arrOptionExtend = array_filter ( array_unique ( explode ( ',', $arrOption ['option_extend'] . ($arrOption ['option_system_extend'] ? ',' . $arrOption ['option_system_extend'] : '') ) ) );
+            
+            if (! isset ( $arrOption ['~router~'] )) {
+                $arrOption ['~router~'] = [ ];
+            }
+            
             // 读取公共缓存和项目配置
             $arrOptionDir = [ 
                     $this->appoption_path 
             ];
-            if (is_dir ( $this->com_path . '/option' )) {
-                array_unshift ( $arrOptionDir, $this->com_path . '/option' );
+            
+            if (is_dir ( $this->objProject->com_path . '/option' )) {
+                array_unshift ( $arrOptionDir, $this->objProject->com_path . '/option' );
             }
+            
             foreach ( $arrOptionDir as $sDir ) {
                 // 合并数据，项目配置优先于系统惯性配置
                 if (is_file ( $sDir . '/' . $this->appoption_name . '.php' )) {
@@ -597,9 +501,8 @@ class app {
                 }
                 
                 // 读取扩展配置文件，扩展配置优先于项目配置
-                $arrOption ['option_extend'] .= ',' . $arrOption ['option_system_extend']; // 默认加载
-                foreach ( array_filter ( array_unique ( explode ( ',', $arrOption ['option_extend'] ) ) ) as $sVal ) {
-                    if (is_file ( $sDir . '/' . $sVal . '.php' )) {
+                foreach ( $arrOptionExtend as $sVal ) {
+                    if (! in_array ( $sVal, $arrRouterExtend ) && is_file ( $sDir . '/' . $sVal . '.php' )) {
                         $arrOption = array_merge ( $arrOption, ( array ) (include $sDir . '/' . $sVal . '.php') );
                     }
                 }
@@ -610,14 +513,37 @@ class app {
             }
             
             // 缓存所有应用名字
-            $arrOption ['~apps~'] = Q::listDir ( $this->app_path );
+            $arrOption ['~apps~'] = Q::listDir ( $this->objProject->app_path );
+            
+            if ($this->app_name == project::INIT_APP) {
+                
+                foreach ( $arrOption ['~apps~'] as $strApp ) {
+                    if ($strApp == project::INIT_APP) {
+                        continue;
+                    }
+                    $arrOptionDir [] = str_replace ( '/' . project::INIT_APP . '/', '/' . $strApp . '/', $this->appoption_path );
+                }
+                
+                $arrOption ['url_router_cache'] = [ ];
+                
+                foreach ( $arrOptionDir as $sDir ) {
+                    foreach ( $arrRouterExtend as $sVal ) {
+                        if (is_file ( $sDir . '/' . $sVal . '.php' )) {
+                            $arrOption ['url_router_cache'] = array_merge ( $arrOption ['url_router_cache'], ( array ) (include $sDir . '/' . $sVal . '.php') );
+                        }
+                    }
+                }
+                
+                router::cache ( $arrOption ['url_router_cache'] );
+                router::setFileRouters ( $arrOption ['url_router_cache'] );
+            }
             
             if (! file_put_contents ( $sOptionCache, "<?php\n /* option cache */ \n return " . var_export ( $arrOption, true ) . "\n?>" )) {
                 Q::errorMessage ( sprintf ( 'Dir %s Do not have permission.', $this->optioncache_path ) );
             }
             
             $GLOBALS ['option'] = Q::option ( $arrOption );
-            unset ( $arrOption, $sAppOptionPath );
+            unset ( $arrOption, $sAppOptionPath, $arrOptionDir, $arrOptionExtend, $arrRouterExtend );
         }
     }
     
@@ -720,58 +646,6 @@ class app {
     }
     
     /**
-     * 初始化项目
-     *
-     * @param array $in
-     *            参数
-     * @return void
-     */
-    protected function initProject_($in) {
-        
-        /**
-         * 项目基础目录
-         */
-        $arrDefault = [ 
-                'app_path' => 'app', // app
-                'com_path' => 'com', // com
-                'runtime_path' => '~@~', // runtime
-                'apppublic_path' => 'www/public', // public
-                'vendor_path' => 'lib/vendor' 
-        ]; // vendor
-
-        
-        foreach ( $arrDefault as $sKey => $sPath ) {
-            ! isset ( $in [$sKey] ) && $in [$sKey] = $this->project_path . '/' . $sPath;
-        }
-        
-        /**
-         * 项目基础应用参数
-         */
-        $sAppName = $this->app_name;
-        $sAppPath = $in ['app_path'] . '/' . $sAppName;
-        
-        $arrDefault = [ 
-                
-                /**
-                 * 缓存目录
-                 */
-                'cache_path' => $in ['runtime_path'] . '/cache', // 默认缓存组件缓存目录
-                'optioncache_path' => $in ['runtime_path'] . '/option', // 默认配置缓存目录
-                'optioncache_name' => $sAppName, // 默认缓存配置名字
-                
-                /**
-                 * 应用其他目录
-                 */
-                'appoption_path' => $sAppPath . '/option', // 默认配置目录
-                'appoption_name' => 'default' 
-        ]; // 默认配置名字
-        
-        $this->arrProp = array_merge ( $this->arrProp, $arrDefault, $in );
-        
-        unset ( $in, $arrDefault );
-    }
-    
-    /**
      * 初始化应用
      *
      * @param array $in
@@ -780,8 +654,8 @@ class app {
      */
     protected function initApp_($in) {
         $sAppName = $this->app_name;
-        $sAppPath = $this->app_path . '/' . $sAppName;
-        $sRuntime = $this->runtime_path;
+        $sAppPath = $this->objProject->app_path . '/' . $sAppName;
+        $sRuntime = $this->objProject->runtime_path;
         
         $arrDefault = [ 
                 
@@ -796,7 +670,7 @@ class app {
                 'optioncache_name' => $sAppName, // 默认缓存配置名字
                 'i18ncache_path' => $sRuntime . '/i18n', // 默认语言包缓存目录
                 'i18ncache_name' => $sAppName, // 默认缓存配置名字
-                'i18njscache_path' => $this->apppublic_path . '/js/i18n', // 默认 JS 语言包缓存目录
+                'i18njscache_path' => $this->objProject->apppublic_path . '/js/i18n', // 默认 JS 语言包缓存目录
                 
                 /**
                  * 应用其他目录
@@ -810,16 +684,6 @@ class app {
         
         $this->arrProp = array_merge ( $this->arrProp, $arrDefault, $in );
         unset ( $in, $arrDefault );
-    }
-    
-    /**
-     * 检查 URL 非法请求
-     *
-     * @param $in return
-     *            void
-     */
-    protected function checkIn_($in) {
-        return $in;
     }
     
     /**

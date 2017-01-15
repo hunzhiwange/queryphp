@@ -162,10 +162,6 @@ class view {
      * @return string
      */
     static public function setThemeDir($sDir) {
-        if (! is_dir ( $sDir ) && ! self::$sTheme) {
-            Q::throwException ( sprintf ( 'theme %s is not exists', $sDir ) );
-        }
-        
         return self::$sTheme = $sDir;
     }
     
@@ -176,9 +172,6 @@ class view {
      * @return string
      */
     static public function setThemeDefault($sDir) {
-        if (! is_dir ( $sDir ) && ! self::$sThemeDefault) {
-            Q::throwException ( sprintf ( 'theme %s is not exists', $sDir ) );
-        }
         return self::$sThemeDefault = $sDir;
     }
     

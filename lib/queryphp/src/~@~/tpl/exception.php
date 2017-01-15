@@ -57,7 +57,7 @@
 
 .queryphp-message-container .queryphp-message-detailtitle {
     margin: 5px 0 0px 20px;
-    color: #999;
+    color: #484848;
     text-decoration: none;
     font-size: 1.5em;
     font-weight: bold
@@ -80,11 +80,11 @@
     display: block;
     margin: 15px 0;
     padding: 10px;
-    width: 60%; border : 1px solid #ebebeb;
+    width: 60%;
+    border: 1px solid #ebebeb;
     border-radius: 0.3em;
     text-decoration: none;
-    color: #aeaeae;
-    cursor: pointer;
+    color: #666;
     border: 1px solid #ebebeb;
 }
 
@@ -94,13 +94,14 @@
 }
 
 .queryphp-message-container .queryphp-message-argstitle {
-    margin: 10px 0 10px 10px;
+    margin: 10px 0 10px 0px;
     color: #FFD700
 }
 
 .queryphp-message-container .queryphp-message-args {
-    margin-left: 10px;
+    margin-left: 0px;
     padding: 5px 10px;
+    width: 60%;
     border-radius: 3px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
     background: rgba(238, 238, 238, 0.35);
@@ -135,4 +136,13 @@
         <?php endif;?>
     </div>
 </body>
+
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('[data-toggle]').on('click',function(){
+        $('div.'+$(this).data('toggle')).toggle();
+    });
+});
+</script>
 </html>

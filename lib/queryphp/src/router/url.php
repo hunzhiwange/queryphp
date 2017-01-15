@@ -56,17 +56,11 @@ class url {
         } else {
             $this->parseUrlCli_ ();
         }
-        
+
         // 解析URL
-        $oApp = Q::app ();
-        $oApp->app_name = $this->getApp_ ( 'app' );
-        $oApp->controller_name = $this->getController_ ( 'c' );
-        $oApp->action_name = $this->getAction_ ( 'a' );
-        
-        // 解析应用 URL 路径
-        if (! Q::isCli ()) {
-            $this->parseAppPath_ ();
-        }
+        $this->getApp_ ( 'app' );
+        $this->getController_ ( 'c' );
+        $this->getAction_ ( 'a' );
         
         $_REQUEST = array_merge ( $_POST, $_GET );
     }
@@ -157,73 +151,6 @@ class url {
     }
     
     /**
-     * 解析 web url 路径地址
-     *
-     * @return void
-     */
-    protected function parseAppPath_() {
-        $oApp = Q::app ();
-        
-        // 分析 php 入口文件路径
-        $sAppBak = $sApp = $oApp->url_app;
-        if (! $sApp) {
-            /**
-             * PHP 文件
-             */
-            if (Q::isCgi ()) {
-                $arrTemp = explode ( '.php', $_SERVER ["PHP_SELF"] ); // CGI/FASTCGI模式下
-                $sApp = rtrim ( str_replace ( $_SERVER ["HTTP_HOST"], '', $arrTemp [0] . '.php' ), '/' );
-            } else {
-                $sApp = rtrim ( $_SERVER ["SCRIPT_NAME"], '/' );
-            }
-            $sAppBak = $sApp;
-            
-            // 如果为重写模式
-            if ($GLOBALS ['option'] ['url_rewrite'] === TRUE) {
-                $sApp = dirname ( $sApp );
-                if ($sApp == '\\') {
-                    $sApp = '/';
-                }
-            }
-        }
-        
-        // 网站URL根目录
-        $sRoot = $oApp->url_root;
-        if (! $sRoot) {
-            $sRoot = dirname ( $sAppBak );
-            $sRoot = ($sRoot == '/' || $sRoot == '\\') ? '' : $sRoot;
-        }
-        
-        // 网站公共文件目录
-        $sPublic = $oApp->url_public;
-        if (! $sPublic) {
-            $sPublic = $sRoot . '/public';
-        }
-        
-        $oApp->url_app = $sApp;
-        $oApp->url_root = $sRoot;
-        $oApp->url_public = $sPublic;
-        unset ( $sApp, $sAppBak, $sRoot, $sPublic );
-    }
-    
-    // private function getRouterInfo() {
-    // if (is_null ( $this->_oRouter )) {
-    // $this->_oRouter = new Router ( $this );
-    // }
-    
-    // $this->_oRouter->import (); // 导入路由规则
-    // $this->_arrLastRouteInfo = $this->_oRouter->G (); // 获取路由信息
-    // $this->_sLastRouterName = $this->_oRouter->getLastRouterName ();
-    // return $this->_arrLastRouteInfo;
-    // }
-    // public function getLastRouterName() {
-    // return $this->_sLastRouterName;
-    // }
-    // public function getLastRouterInfo() {
-    // return $this->_arrLastRouteInfo;
-    // }
-    
-    /**
      * 解析 pathinfo 参数
      *
      * @return array
@@ -248,8 +175,6 @@ class url {
         for($nI = 0, $nCnt = count ( $arrPaths ); $nI < $nCnt; $nI ++) {
             if (isset ( $arrPaths [$nI + 1] )) {
                 $arrPathInfo [$arrPaths [$nI]] = ( string ) $arrPaths [++ $nI];
-            } elseif ($nI == 0) {
-                $arrPathInfo [$arrPathInfo ['a']] = ( string ) $arrPaths [$nI];
             }
         }
         

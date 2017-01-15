@@ -91,6 +91,8 @@ return [
         'url_html_suffix' => '.html', // 伪静态后缀
         'url_pro_var' => 'Q', // URL生成受保护参数
         'url_start_router' => FALSE, // 是否开启URL路由
+        'url_router_strict' => false, // 是否启用严格 url 匹配模式 
+        'url_router_extend' => '',
         'url_router' => [ ], // 路由配置
         'url_domain_on' => true, // 是否开启域名
         'url_domain' => '', // 域名，不为空将会被写入到生成的网址中，后面不能添加‘/’，如 http://myapp.queryphp.com

@@ -85,10 +85,10 @@ class exception extends \exception {
                 }
                 
                 // 调试信息
-                $sTraceInfo .= "<li><a onclick=\"document.getElementById('queryphp-message-argsline-{$intKey}').style.display='block';\"><span>#{$arrVal['line']}</span> {$arrVal['file']} - {$arrVal['class']}{$arrVal['type']}{$arrVal['function']}( {$sArgsInfo} )</a>
-                    <div id=\"queryphp-message-argsline-{$intKey}\"] style=\"display:none;\">
+                $sTraceInfo .= "<li><a " . ($sArgsInfoDetail ? "data-toggle=\"queryphp-message-argsline-{$intKey}\" style=\"cursor: pointer;\"" : '') . "><span>#{$arrVal['line']}</span> {$arrVal['file']} - {$arrVal['class']}{$arrVal['type']}{$arrVal['function']}( {$sArgsInfo} )</a>
+                    " . ($sArgsInfoDetail ? "<div class=\"queryphp-message-argsline-{$intKey}\" style=\"display:none;\">
                         {$sArgsInfoDetail}
-                    </div>
+                    </div>" : '') . "
                 </li>";
                 
                 unset ( $sArgsInfo, $sArgsInfoDetail );
@@ -116,9 +116,8 @@ class exception extends \exception {
      * @return string
      */
     protected function safeFile($sFile) {
-        $sFile = str_replace ( Q::tidyPath ( Q_PATH ), '[Q_PATH]', Q::tidyPath ( $sFile ) );
-        $sFile = str_replace ( Q::tidyPath ( Q::app ()->app_path ), '[APP_PATH]', Q::tidyPath ( $sFile ) );
-        
+        // $sFile = str_replace ( Q::tidyPath ( Q_PATH ), '[Q_PATH]', Q::tidyPath ( $sFile ) );
+        // $sFile = str_replace ( Q::tidyPath ( Q::app ()->app_path ), '[APP_PATH]', Q::tidyPath ( $sFile ) );
         if (strpos ( $sFile, ':/' ) || strpos ( $sFile, ':\\' ) || strpos ( $sFile, '/' ) === 0) {
             $sFile = basename ( $sFile );
         }
