@@ -62,6 +62,13 @@ class router {
     private static $arrFileRouters = [ ];
     
     /**
+     * 路由绑定资源
+     *
+     * @var string
+     */
+    private static $arrBinds = [ ];
+    
+    /**
      * 导入路由规则
      *
      * @param mixed $mixRouter            
@@ -264,6 +271,42 @@ class router {
         self::$arrFileRouters = $arrData;
     }
     
+    /**
+     * 获取绑定资源
+     * 
+     * @param string $sBindName
+     * @return mixed
+     */
+    static public function getBind($sBindName) {
+        return isset ( self::$arrBinds[$sBindName] ) ? self::$arrBinds[$sBindName] : null;
+    }
+    
+    /**
+     * 判断是否绑定资源
+     * 
+     * @param string $sBindName
+     * @return boolean
+     */
+    static public function hasBind($sBindName) {
+        return isset ( self::$arrBinds[$sBindName] ) ? true : false;
+    }
+    
+    /**
+     * 注册绑定资源
+     * 
+     * [
+     *  注册控制器：router::bind( 'group://topic', $mixBind )
+     *  注册方法：router::bind( 'group://topic/index', $mixBind )
+     * ]
+     * 
+     * @param string $sBindName
+     * @param mixed $mixBind
+     * @return void
+     */
+    static public function bind($sBindName, $mixBind) {
+        self::$arrBinds[$sBindName] = $mixBind;
+    }
+
     /**
      * 匹配路由
      */
