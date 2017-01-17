@@ -107,6 +107,11 @@ class project {
         // 尝试导入 Composer PSR-4
         Q::importComposer ( $this->vendor_path );
         
+        // 载入 project 引导文件
+        if (is_file ( ($strBootstrap = $this->com_path . '/bootstrap.php') )) {
+            require $strBootstrap;
+        }
+        
         /**
          * 注册初始化应用
          */

@@ -25,10 +25,6 @@ class url {
      * @var Q\base\url
      */
     protected static $oInstance = null;
-    protected $_sLastRouterName = null;
-    protected $_arrLastRouteInfo = [ ];
-    private $_oRouter = null;
-    private $_arrPathInfo = [ ];
     
     /**
      * 基础 url

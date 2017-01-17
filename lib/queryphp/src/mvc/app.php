@@ -39,6 +39,13 @@ class app {
             'appi18nextend_path' => [ ], // 国际化目录扩展，系统将会扫描这些目录
             
             /**
+             * URL 地址
+             */
+            'url_enter' => '', // php 文件所在 url 地址如 http://myapp.com/index.php
+            'url_root' => '', // 网站 root http://myapp.com
+            'url_public' => '',
+            
+            /**
              * 缓存目录
              */
             'cache_path' => '', // 默认缓存组件缓存目录
@@ -74,6 +81,11 @@ class app {
     public function __construct($objProject, $sApp, $in = []) {
         // 带入项目
         $this->objProject = $objProject;
+        
+        // 公共 url 地址
+        $this->url_enter = $this->objProject->url_enter;
+        $this->url_root = $this->objProject->url_root;
+        $this->url_public = $this->objProject->url_public;
         
         // 初始化应用
         $this->app_name = $sApp;
@@ -147,7 +159,7 @@ class app {
      */
     public function app() {
         // 初始化时区和GZIP压缩
-        if (function_exists ( 'date_default_timezone_set' )) {
+        if (function_exists ( 'date_defaault_timezone_set' )) {
             date_default_timezone_set ( $GLOBALS ['option'] ['time_zone'] );
         }
         if ($GLOBALS ['option'] ['start_gzip'] && function_exists ( 'gz_handler' )) {
@@ -156,7 +168,12 @@ class app {
             ob_start ();
         }
         
-        // 检查语言包和模板以及定义系统常量
+        // 载入 app 引导文件
+        if (is_file ( ($strBootstrap = $this->objProject->app_path . '/' . $this->app_name . '/bootstrap.php') )) {
+            require $strBootstrap;
+        }
+        
+        // 检查语言包和模板
         $this->initView_ ();
         if ($GLOBALS ['option'] ['i18n_on']) {
             $this->initI18n_ ();
@@ -488,7 +505,7 @@ class app {
         // 开发模式不用读取缓存
         if (Q_DEVELOPMENT !== 'develop' && is_file ( $sOptionCache )) {
             $GLOBALS ['option'] = Q::option ( ( array ) (include $sOptionCache) );
-            if ($this->app_name == project::INIT_APP) {
+            if ($this->app_name == project::INIT_APP && $arrOption ['url_router_cache']) {
                 router::setFileRouters ( $arrOption ['url_router_cache'] );
             }
         } else {
@@ -548,13 +565,19 @@ class app {
                 foreach ( $arrOptionDir as $sDir ) {
                     foreach ( $arrRouterExtend as $sVal ) {
                         if (is_file ( $sDir . '/' . $sVal . '.php' )) {
+                            $arrRouter = include $sDir . '/' . $sVal . '.php';
+                            if ($arrRouter === 1) {
+                                continue;
+                            }
+                            
                             $arrOption ['url_router_cache'] = array_merge ( $arrOption ['url_router_cache'], ( array ) (include $sDir . '/' . $sVal . '.php') );
                         }
                     }
                 }
-                
-                router::cache ( $arrOption ['url_router_cache'] );
-                router::setFileRouters ( $arrOption ['url_router_cache'] );
+                if ($arrOption ['url_router_cache']) {
+                    router::cache ( $arrOption ['url_router_cache'] );
+                    router::setFileRouters ( $arrOption ['url_router_cache'] );
+                }
             }
             
             if (! file_put_contents ( $sOptionCache, "<?php\n /* option cache */ \n return " . var_export ( $arrOption, true ) . "\n?>" )) {

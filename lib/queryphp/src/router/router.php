@@ -81,7 +81,7 @@ class router {
      *            strict 严格模式，启用将在匹配正则 $
      * @return void
      */
-    static function import($mixRouter, $strUrl, $in = []) {
+    static function import($mixRouter, $strUrl = '', $in = []) {
         // 默认参数
         $in = array_merge ( [ 
                 'prepend' => false,
@@ -91,17 +91,27 @@ class router {
         ], self::$arrGroupArgs, $in );
         
         // 支持数组传入
-        if (! is_array ( $mixRouter )) {
+        if (! is_array ( $mixRouter ) || Q::oneImensionArray ( $mixRouter )) {
             $strTemp = $mixRouter;
             $mixRouter = [ ];
-            $mixRouter [] = [ 
-                    $strTemp,
-                    $strUrl,
-                    $in 
-            ];
+            if (is_string ( $strTemp )) {
+                $mixRouter [] = [ 
+                        $strTemp,
+                        $strUrl,
+                        $in 
+                ];
+            } else {
+                if ($strUrl || $strTemp [1]) {
+                    $mixRouter [] = [ 
+                            $strTemp [0],
+                            (! empty ( $strTemp [1] ) ? $strTemp [1] : $strUrl),
+                            $in 
+                    ];
+                }
+            }
         } else {
-            foreach ( $mixRouter as &$arrRouter ) {
-                if (count ( $arrRouter ) < 2) {
+            foreach ( $mixRouter as $intKey => $arrRouter ) {
+                if (! is_array ( $arrRouter ) || count ( $arrRouter ) < 2) {
                     continue;
                 }
                 if (! isset ( $arrRouter [2] )) {
@@ -110,15 +120,12 @@ class router {
                 if (! $arrRouter [1]) {
                     $arrRouter [1] = $strUrl;
                 }
-                $arrRouter [2] = array_merge ( $arrRouter [2], $in );
+                $arrRouter [2] = array_merge ( $in, $arrRouter [2] );
+                $mixRouter [$intKey] = $arrRouter;
             }
         }
         
         foreach ( $mixRouter as $arrArgs ) {
-            if (! isset ( $arrArgs [1] )) {
-                continue;
-            }
-            
             $arrRouter = [ 
                     'url' => $arrArgs [1],
                     'regex' => $arrArgs [0],
@@ -151,19 +158,26 @@ class router {
                 array_push ( self::$arrRouters [$arrArgs [0]], $arrRouter );
             }
         }
+        
+        print_r ( self::$arrRouters );
     }
     
     /**
      * 注册全局参数正则
      *
      * @param mixed $mixRegex            
+     * @param string $strValue            
      * @return void
      */
-    static public function regex($mixRegex) {
-        if (is_string ( key ( $mixRegex ) )) {
-            self::$arrWheres = array_merge ( self::$arrWheres, $mixRegex );
+    static public function regex($mixRegex, $strValue = '') {
+        if (is_string ( $mixRegex )) {
+            self::$arrWheres [$mixRegex] = $strValue;
         } else {
-            self::$arrWheres [$mixRegex [0]] = $mixRegex [1];
+            if (is_string ( key ( $mixRegex ) )) {
+                self::$arrWheres = array_merge ( self::$arrWheres, $mixRegex );
+            } else {
+                self::$arrWheres [$mixRegex [0]] = $mixRegex [1];
+            }
         }
     }
     
@@ -273,40 +287,40 @@ class router {
     
     /**
      * 获取绑定资源
-     * 
-     * @param string $sBindName
+     *
+     * @param string $sBindName            
      * @return mixed
      */
     static public function getBind($sBindName) {
-        return isset ( self::$arrBinds[$sBindName] ) ? self::$arrBinds[$sBindName] : null;
+        return isset ( self::$arrBinds [$sBindName] ) ? self::$arrBinds [$sBindName] : null;
     }
     
     /**
      * 判断是否绑定资源
-     * 
-     * @param string $sBindName
+     *
+     * @param string $sBindName            
      * @return boolean
      */
     static public function hasBind($sBindName) {
-        return isset ( self::$arrBinds[$sBindName] ) ? true : false;
+        return isset ( self::$arrBinds [$sBindName] ) ? true : false;
     }
     
     /**
      * 注册绑定资源
-     * 
+     *
      * [
-     *  注册控制器：router::bind( 'group://topic', $mixBind )
-     *  注册方法：router::bind( 'group://topic/index', $mixBind )
+     * 注册控制器：router::bind( 'group://topic', $mixBind )
+     * 注册方法：router::bind( 'group://topic/index', $mixBind )
      * ]
-     * 
-     * @param string $sBindName
-     * @param mixed $mixBind
+     *
+     * @param string $sBindName            
+     * @param mixed $mixBind            
      * @return void
      */
     static public function bind($sBindName, $mixBind) {
-        self::$arrBinds[$sBindName] = $mixBind;
+        self::$arrBinds [$sBindName] = $mixBind;
     }
-
+    
     /**
      * 匹配路由
      */
@@ -339,7 +353,7 @@ class router {
                     }
                     $arrRouter ['regex'] = '/^\/' . $arrRouter ['regex'] . ((isset ( $arrRouter ['strict'] ) ? $arrRouter ['strict'] : $GLOBALS ['option'] ['url_router_strict']) ? '$' : '') . '/';
                     $arrRouter ['args'] = $arrRes [1];
-                    
+                    //echo $arrRouter ['regex'];
                     // 匹配结果
                     if (preg_match ( $arrRouter ['regex'], $sPathinfo, $arrRes )) {
                         $booFindFouter = true;
