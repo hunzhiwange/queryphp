@@ -83,12 +83,12 @@ class router {
      */
     static function import($mixRouter, $strUrl = '', $in = []) {
         // 默认参数
-        $in = array_merge ( [ 
+        $in = self::mergeIn_ ( [ 
                 'prepend' => false,
                 'where' => [ ],
                 'params' => [ ],
                 'domain' => '' 
-        ], self::$arrGroupArgs, $in );
+        ], self::mergeIn_ ( self::$arrGroupArgs, $in ) );
         
         // 支持数组传入
         if (! is_array ( $mixRouter ) || Q::oneImensionArray ( $mixRouter )) {
@@ -120,7 +120,7 @@ class router {
                 if (! $arrRouter [1]) {
                     $arrRouter [1] = $strUrl;
                 }
-                $arrRouter [2] = array_merge ( $in, $arrRouter [2] );
+                $arrRouter [2] = self::mergeIn_ ( $in, $arrRouter [2] );
                 $mixRouter [$intKey] = $arrRouter;
             }
         }
@@ -140,11 +140,7 @@ class router {
             
             // 合并参数正则
             if (! empty ( $arrArgs [2] ['where'] ) && is_array ( $arrArgs [2] ['where'] )) {
-                if (is_string ( key ( $arrArgs [2] ['where'] ) )) {
-                    $arrRouter ['where'] = array_merge ( $arrRouter ['where'], $arrArgs [2] ['where'] );
-                } else {
-                    $arrRouter ['where'] [$arrArgs [2] ['where'] [0]] = $arrArgs [2] ['where'] [1];
-                }
+                $arrRouter ['where'] = self::mergeWhere_ ( $arrRouter ['where'], $arrArgs [2] ['where'] );
             }
             
             if (! isset ( self::$arrRouters [$arrArgs [0]] )) {
@@ -158,8 +154,6 @@ class router {
                 array_push ( self::$arrRouters [$arrArgs [0]], $arrRouter );
             }
         }
-        
-        print_r ( self::$arrRouters );
     }
     
     /**
@@ -173,11 +167,7 @@ class router {
         if (is_string ( $mixRegex )) {
             self::$arrWheres [$mixRegex] = $strValue;
         } else {
-            if (is_string ( key ( $mixRegex ) )) {
-                self::$arrWheres = array_merge ( self::$arrWheres, $mixRegex );
-            } else {
-                self::$arrWheres [$mixRegex [0]] = $mixRegex [1];
-            }
+            self::$arrWheres = self::mergeWhere_ ( self::$arrWheres, $mixRegex );
         }
     }
     
@@ -192,10 +182,11 @@ class router {
      * @return void
      */
     static public function domain($strDomain, $strUrl, $in = []) {
-        $in = array_merge ( [ 
+        // 默认参数
+        $in = self::mergeIn_ ( [ 
                 'prepend' => false,
                 'params' => [ ] 
-        ], self::$arrGroupArgs, $in );
+        ], self::mergeIn_ ( self::$arrGroupArgs, $in ) );
         
         // 闭包直接转接到分组
         if ($strUrl instanceof \Collator) {
@@ -237,7 +228,7 @@ class router {
      * @param mixed $mixRouter            
      * @return void
      */
-    static function group($in, $mixRouter) {
+    static function group(array $in, $mixRouter) {
         $strPrefix = isset ( $in ['prefix'] ) ? $in ['prefix'] : '';
         
         // 分组参数叠加
@@ -246,8 +237,22 @@ class router {
         if ($mixRouter instanceof \Closure) {
             call_user_func_array ( $mixRouter, [ ] );
         } else {
+            if (! is_array ( current ( $mixRouter ) )) {
+                $arrTemp = $mixRouter;
+                $mixRouter = [ ];
+                $mixRouter [] = $arrTemp;
+            }
+            
             foreach ( $mixRouter as $arrVal ) {
-                self::import ( $strPrefix . $arrVal [0], $arrVal [1], array_merge ( $in, $arrVal [2] ) );
+                if (! is_array ( $arrVal ) || count ( $arrVal ) < 2) {
+                    continue;
+                }
+                
+                if (! isset ( $arrVal [2] )) {
+                    $arrVal [2] = [ ];
+                }
+                
+                self::import ( $strPrefix . $arrVal [0], $arrVal [1], self::mergeIn_ ( $in, $arrVal [2] ) );
             }
         }
         
@@ -353,7 +358,7 @@ class router {
                     }
                     $arrRouter ['regex'] = '/^\/' . $arrRouter ['regex'] . ((isset ( $arrRouter ['strict'] ) ? $arrRouter ['strict'] : $GLOBALS ['option'] ['url_router_strict']) ? '$' : '') . '/';
                     $arrRouter ['args'] = $arrRes [1];
-                    //echo $arrRouter ['regex'];
+                    
                     // 匹配结果
                     if (preg_match ( $arrRouter ['regex'], $sPathinfo, $arrRes )) {
                         $booFindFouter = true;
@@ -393,5 +398,61 @@ class router {
      */
     private static function formatRegex_($sRegex) {
         return str_replace ( '/', '\/', $sRegex );
+    }
+    
+    /**
+     * 合并 in 参数
+     *
+     * @param array $in            
+     * @param array $arrExtend            
+     * @return array
+     */
+    private static function mergeIn_(array $in, array $arrExtend) {
+        // 合并特殊参数
+        foreach ( [ 
+                'params',
+                'where' 
+        ] as $strType ) {
+            if (! empty ( $arrExtend [$strType] ) && is_array ( $arrExtend [$strType] )) {
+                if (! empty ( $in [$strType] )) {
+                    $in [$strType] = array_merge ( $in [$strType], $arrExtend [$strType] );
+                } else {
+                    $in [$strType] = $arrExtend [$strType];
+                }
+            }
+        }
+        
+        // 合并额外参数
+        foreach ( [ 
+                'domain',
+                'prepend',
+                'strict' 
+        ] as $strType ) {
+            if (isset ( $arrExtend [$strType] )) {
+                $in [$strType] = $arrExtend [$strType];
+            }
+        }
+        
+        return $in;
+    }
+    
+    /**
+     * 合并 where 正则参数
+     *
+     * @param array $arrWhere            
+     * @param array $arrExtend            
+     * @return array
+     */
+    private static function mergeWhere_(array $arrWhere, array $arrExtend) {
+        // 合并参数正则
+        if (! empty ( $arrExtend ) && is_array ( $arrExtend )) {
+            if (is_string ( key ( $arrExtend ) )) {
+                $arrWhere = array_merge ( $arrWhere, $arrExtend );
+            } else {
+                $arrWhere [$arrExtend [0]] = $arrExtend [1];
+            }
+        }
+        
+        return $arrWhere;
     }
 }

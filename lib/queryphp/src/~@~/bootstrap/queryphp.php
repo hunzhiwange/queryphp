@@ -83,7 +83,7 @@ class Q {
      * 项目类管理
      */
     static public function project() {
-        return project::run ( );
+        return project::run ();
     }
     
     /**
@@ -465,12 +465,12 @@ class Q {
      */
     static public function i18n($sValue/*argvs*/){
         // 不开启
-        //if (! $GLOBALS ['option'] ['i18n_on'] || ! self::$booI18nOn) {
+        if (! $GLOBALS ['option'] ['i18n_on'] || ! self::$booI18nOn) {
             if (func_num_args () > 1) { // 代入参数
                 $sValue = call_user_func_array ( 'sprintf', func_get_args () );
             }
             return $sValue;
-       // }
+        }
         
         // 返回当地语句
         $sValue = call_user_func_array ( [ 
@@ -812,17 +812,17 @@ class Q {
         $nErrno = $oE->getCode ();
         $sErrorStr = "[$nErrno] $sErrstr " . basename ( $sErrfile ) . Q::i18n ( " 第 %d 行", $nErrline );
         
-        //if ($GLOBALS ['option'] ['log_record'] && self::option ( 'log_must_record_exception' )) {
-           // Log::W ( $sErrstr, Log::EXCEPTION );
-        //}
+        if ($GLOBALS ['option'] ['log_record'] && self::option ( 'log_must_record_exception' )) {
+            Log::W ( $sErrstr, Log::EXCEPTION );
+        }
         
         if (method_exists ( $oE, 'formatException' )) {
             self::halt ( $oE->formatException (), $oE instanceof DbException );
         } 
-        
-        //else {
-           // self::halt ( $oE->getMessage (), $oE instanceof DbException );
-        //}
+
+        else {
+            self::halt ( $oE->getMessage (), $oE instanceof DbException );
+        }
     }
     
     /**
@@ -880,16 +880,16 @@ class Q {
         if (! empty ( $GLOBALS ['option'] ['show_exception_redirect'] ) && $bDbError === FALSE && Q_DEBUG === FALSE) {
             self::urlRedirect ( self::url ( $GLOBALS ['option'] ['show_exception_redirect'] ) );
         } else {
-            //if ($GLOBALS ['option'] ['show_exception_show_message'] === false) {
-             //   $mixError ['message'] = $GLOBALS ['option'] ['show_exception_default_message'];
-           // }
+            if ($GLOBALS ['option'] ['show_exception_show_message'] === false) {
+                $mixError ['message'] = $GLOBALS ['option'] ['show_exception_default_message'];
+            }
             
             // 包含异常页面模板
-           // if ($GLOBALS ['option'] ['show_exception_tpl'] && is_file ( $GLOBALS ['option'] ['show_exception_tpl'] )) {
-           //     include ($GLOBALS ['option'] ['show_exception_tpl']);
-          //  } else {
+            if ($GLOBALS ['option'] ['show_exception_tpl'] && is_file ( $GLOBALS ['option'] ['show_exception_tpl'] )) {
+                include ($GLOBALS ['option'] ['show_exception_tpl']);
+            } else {
                 include (Q_PATH . '/~@~/tpl/exception.php');
-          //  }
+            }
         }
         
         exit ();

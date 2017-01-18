@@ -55,11 +55,6 @@ class controller {
             self::createShareView ();
         }
         
-        // 是否已注册
-        // if ($oApp->getController ( $oApp->controller_name )) {
-        // return;
-        // }
-        
         $this->oApp = $oApp;
         
         // 属性 && 赋值
