@@ -78,12 +78,7 @@ class exception extends \exception {
                         ob_end_clean ();
                     }
                 }
-                
-                // 安全过滤物理路径
-                if ($arrVal ['file']) {
-                    $arrVal ['file'] = $this->safeFile ( $arrVal ['file'] );
-                }
-                
+                    
                 // 调试信息
                 $sTraceInfo .= "<li><a " . ($sArgsInfoDetail ? "data-toggle=\"queryphp-message-argsline-{$intKey}\" style=\"cursor: pointer;\"" : '') . "><span>#{$arrVal['line']}</span> {$arrVal['file']} - {$arrVal['class']}{$arrVal['type']}{$arrVal['function']}( {$sArgsInfo} )</a>
                     " . ($sArgsInfoDetail ? "<div class=\"queryphp-message-argsline-{$intKey}\" style=\"display:none;\">
@@ -104,24 +99,8 @@ class exception extends \exception {
         $arrError ['code'] = $this->getCode ();
         $arrError ['function'] = isset ( $arrTrace ['0'] ['function'] ) ? $arrTrace ['0'] ['function'] : '';
         $arrError ['line'] = $this->line;
-        $arrError ['file'] = $this->safeFile ( $this->file );
         
         return $arrError;
     }
-    
-    /**
-     * 物理路径安全格式化
-     *
-     * @param string $sFile            
-     * @return string
-     */
-    protected function safeFile($sFile) {
-        $sFile = str_replace ( Q::tidyPath ( Q_PATH ), '[Q_PATH]', Q::tidyPath ( $sFile ) );
-        $sFile = str_replace ( Q::tidyPath ( Q::app ()->app_path ), '[APP_PATH]', Q::tidyPath ( $sFile ) );
-        if (strpos ( $sFile, ':/' ) || strpos ( $sFile, ':\\' ) || strpos ( $sFile, '/' ) === 0) {
-            $sFile = basename ( $sFile );
-        }
-        
-        return $sFile;
-    }
+
 }

@@ -79,6 +79,7 @@ class router {
      *            where 参数正则
      *            prepend 插入顺序
      *            strict 严格模式，启用将在匹配正则 $
+     *            prefix 前缀
      * @return void
      */
     static function import($mixRouter, $strUrl = '', $in = []) {
@@ -87,7 +88,8 @@ class router {
                 'prepend' => false,
                 'where' => [ ],
                 'params' => [ ],
-                'domain' => '' 
+                'domain' => '',
+                'prefix' => '' 
         ], self::mergeIn_ ( self::$arrGroupArgs, $in ) );
         
         // 支持数组传入
@@ -126,6 +128,9 @@ class router {
         }
         
         foreach ( $mixRouter as $arrArgs ) {
+            $strPrefix = ! empty ( $arrArgs [2] ['prefix'] ) ? $arrArgs [2] ['prefix'] : '';
+            $arrArgs [0] = $strPrefix . $arrArgs [0];
+            
             $arrRouter = [ 
                     'url' => $arrArgs [1],
                     'regex' => $arrArgs [0],
@@ -225,14 +230,13 @@ class router {
      *            params 参数
      *            where 参数正则
      *            prepend 插入顺序
+     *            strict 严格模式，启用将在匹配正则 $
      * @param mixed $mixRouter            
      * @return void
      */
     static function group(array $in, $mixRouter) {
-        $strPrefix = isset ( $in ['prefix'] ) ? $in ['prefix'] : '';
-        
         // 分组参数叠加
-        self::$arrGroupArgs = array_merge ( self::$arrGroupArgs, $in );
+        self::$arrGroupArgs = $in = self::mergeIn_ ( self::$arrGroupArgs, $in );
         
         if ($mixRouter instanceof \Closure) {
             call_user_func_array ( $mixRouter, [ ] );
@@ -414,16 +418,16 @@ class router {
                 'where' 
         ] as $strType ) {
             if (! empty ( $arrExtend [$strType] ) && is_array ( $arrExtend [$strType] )) {
-                if (! empty ( $in [$strType] )) {
-                    $in [$strType] = array_merge ( $in [$strType], $arrExtend [$strType] );
-                } else {
-                    $in [$strType] = $arrExtend [$strType];
+                if (! isset ( $in [$strType] )) {
+                    $in [$strType] = [ ];
                 }
+                $in [$strType] = self::mergeWhere_ ( $in [$strType], $arrExtend [$strType] );
             }
         }
         
         // 合并额外参数
         foreach ( [ 
+                'prefix',
                 'domain',
                 'prepend',
                 'strict' 
