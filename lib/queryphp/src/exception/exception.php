@@ -74,7 +74,7 @@ class exception extends \exception {
                         // 详细参数值
                         ob_start ();
                         Q::dump ( $mixArgsVal );
-                        $sArgsInfoDetail .= '<div class="queryphp-message-argstitle">第 ' . ($intArgsKey + 1) . ' 个参数</div><div class="queryphp-message-args">' . ob_get_contents () . '</div>';
+                        $sArgsInfoDetail .= '<div class="queryphp-message-argstitle">Args ' . ($intArgsKey + 1) . '</div><div class="queryphp-message-args">' . ob_get_contents () . '</div>';
                         ob_end_clean ();
                     }
                 }

@@ -858,42 +858,7 @@ class parsers {
      * @return string
      */
     static public function escapeCharacter($sTxt) {
-        $sTxt = str_replace ( [ 
-                '$',
-                '/',
-                '?',
-                '*',
-                '.',
-                '!',
-                '-',
-                '+',
-                '(',
-                ')',
-                '[',
-                ']',
-                ',',
-                '{',
-                '}',
-                '|' 
-        ], [ 
-                '\$',
-                '\/',
-                '\\?',
-                '\\*',
-                '\\.',
-                '\\!',
-                '\\-',
-                '\\+',
-                '\\(',
-                '\\)',
-                '\\[',
-                '\\]',
-                '\\,',
-                '\\{',
-                '\\}',
-                '\\|' 
-        ], $sTxt );
-        return $sTxt;
+        return Q::escapeRegexCharacter ( $sTxt );
     }
     
     // ######################################################
@@ -934,8 +899,8 @@ class parsers {
      * @param string $sCompiled            
      */
     protected function findNodeTag(&$sCompiled) {
-        $this->oNodeStack = new stack ( ); // 设置一个栈
-                                                   
+        $this->oNodeStack = new stack (); // 设置一个栈
+                                           
         // 判断是那种编译器
         $sNodeType = $this->bJsNode === true ? 'js' : 'node';
         
@@ -1108,5 +1073,4 @@ class parsers {
     // ######################################################
     // --------------------- 私有函数 end ---------------------
     // ######################################################
-    
 }

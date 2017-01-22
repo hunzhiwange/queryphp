@@ -20,7 +20,7 @@ use Q, Q\router\url;
 class project {
     
     /**
-     * 应用程序属性
+     * 项目属性
      */
     protected $arrProp = [ 
             
@@ -67,6 +67,41 @@ class project {
      * @var Q\mvc\object
      */
     private static $objProject = null;
+    
+    /**
+     * 应用参数名
+     *
+     * @var string
+     */
+    const ARGS_APP = 'app';
+    
+    /**
+     * 控制器参数名
+     *
+     * @var string
+     */
+    const ARGS_CONTROLLER = 'c';
+    
+    /**
+     * 方法参数名
+     *
+     * @var string
+     */
+    const ARGS_ACTION = 'a';
+    
+    /**
+     * 方法参数名
+     *
+     * @var string
+     */
+    const ARGS_THEME = '~theme~';
+    
+    /**
+     * 方法参数名
+     *
+     * @var string
+     */
+    const ARGS_I18N = '~i18n~';
     
     /**
      * 构造函数

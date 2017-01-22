@@ -1916,6 +1916,51 @@ class Q {
     }
     
     /**
+     * 转移正则表达式特殊字符
+     *
+     * @param string $sTxt            
+     * @return string
+     */
+    static public function escapeRegexCharacter($sTxt) {
+        $sTxt = str_replace ( [ 
+                '$',
+                '/',
+                '?',
+                '*',
+                '.',
+                '!',
+                '-',
+                '+',
+                '(',
+                ')',
+                '[',
+                ']',
+                ',',
+                '{',
+                '}',
+                '|' 
+        ], [ 
+                '\$',
+                '\/',
+                '\\?',
+                '\\*',
+                '\\.',
+                '\\!',
+                '\\-',
+                '\\+',
+                '\\(',
+                '\\)',
+                '\\[',
+                '\\]',
+                '\\,',
+                '\\{',
+                '\\}',
+                '\\|' 
+        ], $sTxt );
+        return $sTxt;
+    }
+    
+    /**
      * 过滤掉 javascript
      *
      * @param string $sText
@@ -2117,6 +2162,15 @@ class Q {
             return true;
         }
         return false;
+    }
+    
+    /**
+     * 获取 host
+     *
+     * @return boolean
+     */
+    static public function getHost() {
+        return isset ( $_SERVER ['HTTP_X_FORWARDED_HOST'] ) ? $_SERVER ['HTTP_X_FORWARDED_HOST'] : (isset ( $_SERVER ['HTTP_HOST'] ) ? $_SERVER ['HTTP_HOST'] : '');
     }
     
     // ######################################################

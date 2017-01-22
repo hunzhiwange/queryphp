@@ -41,6 +41,13 @@ class router {
     private static $arrWheres = [ ];
     
     /**
+     * 域名正则
+     *
+     * @var array
+     */
+    private static $arrDomainWheres = [ ];
+    
+    /**
      * 默认替换参数[字符串]
      *
      * @var string
@@ -67,6 +74,13 @@ class router {
      * @var string
      */
     private static $arrBinds = [ ];
+    
+    /**
+     * 域名匹配数据
+     *
+     * @var array
+     */
+    private static $arrDomainData = [ ];
     
     /**
      * 导入路由规则
@@ -158,6 +172,12 @@ class router {
             } else {
                 array_push ( self::$arrRouters [$arrArgs [0]], $arrRouter );
             }
+            
+            // 域名支持
+            if (! empty ( $arrRouter ['domain'] )) {
+                $in ['router'] = true;
+                self::domain ( $arrRouter ['domain'], $arrArgs [0], $in );
+            }
         }
     }
     
@@ -180,43 +200,53 @@ class router {
      * 注册域名
      *
      * @param string $strDomain            
-     * @param string $strUrl            
+     * @param mixed $mixUrl            
      * @param array $in
      *            params 扩展参数
      *            prepend 插入顺序
+     *            router 对应路由规则
      * @return void
      */
-    static public function domain($strDomain, $strUrl, $in = []) {
-        // 默认参数
+    static public function domain($strDomain, $mixUrl, $in = []) {
         $in = self::mergeIn_ ( [ 
                 'prepend' => false,
-                'params' => [ ] 
-        ], self::mergeIn_ ( self::$arrGroupArgs, $in ) );
+                'params' => [ ],
+                'router' => false 
+        ], $in );
         
         // 闭包直接转接到分组
-        if ($strUrl instanceof \Collator) {
-            self::group ( [ 
-                    'domain' => $strDomain 
-            ], $strUrl );
+        if ($mixUrl instanceof \Closure) {
+            $in ['domain'] = $strDomain;
+            self::group ( $in, $mixUrl );
         }         
 
         // 注册域名
         else {
             $arrDomain = [ 
-                    'url' => $strUrl,
+                    'url' => $mixUrl,
                     'params' => $in ['params'],
-                    'domain' => $strDomain 
+                    'router' => $in ['router'] 
             ];
             
+            // 主域名只有一个，路由可以有多个
+            $strDomainBox = $arrDomain ['router'] === false ? 'main' : 'rule';
             if (! isset ( self::$arrDomains [$strDomain] )) {
                 self::$arrDomains [$strDomain] = [ ];
             }
+            if (! isset ( self::$arrDomains [$strDomain] [$strDomainBox] )) {
+                self::$arrDomains [$strDomain] [$strDomainBox] = [ ];
+            }
             
-            // 优先插入
-            if ($in ['prepend'] === true) {
-                array_unshift ( self::$arrDomains [$strDomain], $arrDomain );
+            // 纯域名绑定只支持一个，可以被覆盖
+            if ($arrDomain ['router'] === false) {
+                self::$arrDomains [$strDomain] [$strDomainBox] = $arrDomain;
             } else {
-                array_push ( self::$arrDomains [$strDomain], $arrDomain );
+                // 优先插入
+                if ($in ['prepend'] === true) {
+                    array_unshift ( self::$arrDomains [$strDomain] [$strDomainBox], $arrDomain );
+                } else {
+                    array_push ( self::$arrDomains [$strDomain] [$strDomainBox], $arrDomain );
+                }
             }
         }
     }
@@ -317,10 +347,8 @@ class router {
     /**
      * 注册绑定资源
      *
-     * [
      * 注册控制器：router::bind( 'group://topic', $mixBind )
      * 注册方法：router::bind( 'group://topic/index', $mixBind )
-     * ]
      *
      * @param string $sBindName            
      * @param mixed $mixBind            
@@ -334,23 +362,105 @@ class router {
      * 匹配路由
      */
     public static function parse() {
+        $arrNextParse = [ ];
+        
         // 解析域名
+        if ($GLOBALS ['option'] ['url_domain_on'] === true) {
+            if (($arrParseData = self::parseDomain_ ( $arrNextParse )) !== false) {
+                return $arrParseData;
+            }
+        }
         
         // 解析路由
-        return self::parseRouter ();
+        $arrNextParse = $arrNextParse ? array_column ( $arrNextParse, 'url' ) : [ ];
+        return self::parseRouter_ ( $arrNextParse );
+    }
+    
+    /**
+     * 解析域名路由
+     *
+     * @param array $arrNextParse            
+     * @return void
+     */
+    private static function parseDomain_(&$arrNextParse) {
+        $strHost = Q::getHost ();
+        
+        $booFindDomain = false;
+        $arrDomainWheres = self::$arrDomainWheres;
+        foreach ( self::$arrDomains as $sKey => $arrDomains ) {
+            
+            // 直接匹配成功
+            if ($strHost === $sKey || $strHost === $sKey . '.' . $GLOBALS ['option'] ['url_domain_top']) {
+                $booFindDomain = true;
+            }            
+
+            // 域名参数支持
+            elseif (strpos ( $sKey, '{' ) !== false && preg_match_all ( "/{(.+?)}/isx", $sKey, $arrRes )) {
+                if (strpos ( $sKey, $GLOBALS ['option'] ['url_domain_top'] ) === false) {
+                    $sKey = $sKey . '.' . $GLOBALS ['option'] ['url_domain_top'];
+                }
+                
+                // 解析匹配正则
+                $sKey = self::formatRegex_ ( $sKey );
+                foreach ( $arrRes [1] as $nIndex => $sWhere ) {
+                    $sKey = str_replace ( '{' . $sWhere . '}', '(' . (isset ( $arrDomainWheres [$sWhere] ) ? $arrDomainWheres [$sWhere] : self::DEFAULT_REGEX) . ')', $sKey );
+                }
+                $sKey = '/^' . $sKey . '$/';
+                $arrDomains ['args'] = $arrRes [1];
+                
+                // 匹配结果
+                if (preg_match ( $sKey, $strHost, $arrRes )) {
+                    // 变量解析
+                    if (isset ( $arrDomains ['args'] )) {
+                        array_shift ( $arrRes );
+                        foreach ( $arrDomains ['args'] as $intArgsKey => $strArgs ) {
+                            self::$arrDomainData [$strArgs] = $arrRes [$intArgsKey];
+                        }
+                    }
+                    
+                    $booFindDomain = true;
+                }
+            }
+            
+            // 分析结果
+            if ($booFindDomain === true) { 
+                if (isset ( $arrDomains ['rule'] )) {
+                    $arrNextParse = $arrDomains ['rule'];
+                    return false;
+                } else {
+                    $arrData = Q::parseMvcUrl ( $arrDomains ['main'] ['url'] );
+                    
+                    // 额外参数[放入 GET]
+                    if (is_array ( $arrDomains ['main'] ['params'] ) && $arrDomains ['main'] ['params']) {
+                        $arrData = array_merge ( $arrData, $arrDomains ['main'] ['params'] );
+                    }
+                    
+                    // 合并域名匹配数据
+                    $arrData = array_merge ( self::$arrDomainData, $arrData );
+                    
+                    return $arrData;
+                }
+            }
+        }
     }
     
     /**
      * 解析路由规格
      *
+     * @param array $arrNextParse            
      * @return array
      */
-    private static function parseRouter() {
+    private static function parseRouter_($arrNextParse = []) {
         $arrData = [ ];
         $sPathinfo = $_SERVER ['PATH_INFO'];
         
         // 匹配路由
         foreach ( self::$arrRouters as $sKey => $arrRouters ) {
+            // 域名过掉无关路由
+            if ($arrNextParse && ! in_array ( $sKey, $arrNextParse )) {
+                continue;
+            }
+            
             foreach ( $arrRouters as $arrRouter ) {
                 
                 $booFindFouter = false;
@@ -391,6 +501,9 @@ class router {
             }
         }
         
+        // 合并域名匹配数据
+        $arrData = array_merge ( self::$arrDomainData, $arrData );
+        
         return $arrData;
     }
     
@@ -401,7 +514,16 @@ class router {
      * @return string
      */
     private static function formatRegex_($sRegex) {
-        return str_replace ( '/', '\/', $sRegex );
+        $sRegex = Q::escapeRegexCharacter ( $sRegex );
+        
+        // 还原变量特殊标记
+        return str_replace ( [ 
+                '\{',
+                '\}' 
+        ], [ 
+                '{',
+                '}' 
+        ], $sRegex );
     }
     
     /**
@@ -430,7 +552,8 @@ class router {
                 'prefix',
                 'domain',
                 'prepend',
-                'strict' 
+                'strict',
+                'router' 
         ] as $strType ) {
             if (isset ( $arrExtend [$strType] )) {
                 $in [$strType] = $arrExtend [$strType];

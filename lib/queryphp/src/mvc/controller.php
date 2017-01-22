@@ -280,7 +280,6 @@ class controller {
                 try {
                     $this->action ( $sMethod, $arrArgs );
                 } catch ( Exception $e ) {
-                    Q::throwException ( 'Can not find method.' );
                 }
         }
     }

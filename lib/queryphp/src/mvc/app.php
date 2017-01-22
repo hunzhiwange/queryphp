@@ -181,8 +181,8 @@ class app {
         
         // 执行控制器
         $this->in = project::$in;
-        $this->controller_name = $this->in ['c'];
-        $this->action_name = $this->in ['a'];
+        $this->controller_name = $this->in [project::ARGS_CONTROLLER];
+        $this->action_name = $this->in [project::ARGS_ACTION];
         $this->controller ();
     }
     
@@ -604,8 +604,8 @@ class app {
                 $sCookieName = 'theme';
             }
             
-            if (isset ( $_GET ['~theme~'] )) {
-                $sThemeSet = $_GET ['~theme~'];
+            if (isset ( $_GET [project::ARGS_THEME] )) {
+                $sThemeSet = $_GET [project::ARGS_THEME];
                 Q::cookie ( $sCookieName, $sThemeSet );
             } else {
                 if (Q::cookie ( $sCookieName )) {
@@ -736,7 +736,7 @@ class app {
      *
      */
     protected function filterArgs_($arrArgs) {
-        unset ( $arrArgs ['app'], $arrArgs ['c'], $arrArgs ['a'] );
+        unset ( $arrArgs [project::ARGS_APP], $arrArgs [project::ARGS_CONTROLLER], $arrArgs [project::ARGS_ACTION] );
         return $arrArgs;
     }
     

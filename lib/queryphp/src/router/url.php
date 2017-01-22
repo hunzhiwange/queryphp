@@ -10,7 +10,7 @@
  */
 namespace Q\router;
 
-use Q;
+use Q, Q\mvc\project;
 
 /**
  * URL分析器
@@ -52,11 +52,11 @@ class url {
         } else {
             $this->parseUrlCli_ ();
         }
-
+        
         // 解析URL
-        $this->getApp_ ( 'app' );
-        $this->getController_ ( 'c' );
-        $this->getAction_ ( 'a' );
+        $this->getApp_ ( project::ARGS_APP );
+        $this->getController_ ( project::ARGS_CONTROLLER );
+        $this->getAction_ ( project::ARGS_ACTION );
         
         $_REQUEST = array_merge ( $_POST, $_GET );
     }
@@ -120,17 +120,17 @@ class url {
             
             // app
             if (in_array ( $argv [0], $GLOBALS ['option'] ['~apps~'] )) {
-                $_GET ['app'] = array_shift ( $argv );
+                $_GET [project::ARGS_APP] = array_shift ( $argv );
             }
             
             // controller
             if ($argv) {
-                $_GET ['c'] = array_shift ( argv );
+                $_GET [project::ARGS_CONTROLLER] = array_shift ( argv );
             }
             
             // 方法
             if ($argv) {
-                $_GET ['a'] = array_shift ( argv );
+                $_GET [project::ARGS_ACTION] = array_shift ( argv );
             }
             
             // 剩余参数
@@ -139,7 +139,7 @@ class url {
                     if (isset ( $argv [$nI + 1] )) {
                         $_GET [$argv [$nI]] = ( string ) $argv [++ $nI];
                     } elseif ($nI == 0) {
-                        $_GET [$_GET ['a']] = ( string ) $argv [$nI];
+                        $_GET [$_GET [project::ARGS_ACTION]] = ( string ) $argv [$nI];
                     }
                 }
             }
@@ -157,15 +157,15 @@ class url {
         $arrPaths = explode ( $GLOBALS ['option'] ['url_pathinfo_depr'], trim ( $sPathInfo, '/' ) );
         
         if (in_array ( $arrPaths [0], $GLOBALS ['option'] ['~apps~'] )) {
-            $arrPathInfo ['app'] = array_shift ( $arrPaths );
+            $arrPathInfo [project::ARGS_APP] = array_shift ( $arrPaths );
         }
         
-        if (! isset ( $_GET ['c'] )) { // 还没有定义控制器名称
-            $arrPathInfo ['c'] = array_shift ( $arrPaths );
+        if (! isset ( $_GET [project::ARGS_CONTROLLER] )) { // 还没有定义控制器名称
+            $arrPathInfo [project::ARGS_CONTROLLER] = array_shift ( $arrPaths );
         }
         
-        if (! isset ( $_GET ['a'] )) { // 还没有定义方法名称
-            $arrPathInfo ['a'] = array_shift ( $arrPaths );
+        if (! isset ( $_GET [project::ARGS_ACTION] )) { // 还没有定义方法名称
+            $arrPathInfo [project::ARGS_ACTION] = array_shift ( $arrPaths );
         }
         
         for($nI = 0, $nCnt = count ( $arrPaths ); $nI < $nCnt; $nI ++) {
@@ -184,7 +184,7 @@ class url {
      * @return string
      */
     protected function getApp_($sVar) {
-        return $_GET ['app'] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_app']);
+        return $_GET [$sVar] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_app']);
     }
     
     /**
@@ -194,7 +194,7 @@ class url {
      * @return string
      */
     protected function getController_($sVar) {
-        return $_GET ['c'] = ! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_controller'];
+        return $_GET [$sVar] = ! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_controller'];
     }
     
     /**
@@ -204,7 +204,7 @@ class url {
      * @return string
      */
     protected function getAction_($sVar) {
-        return $_GET ['a'] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_action']);
+        return $_GET [$sVar] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_action']);
     }
     
     // ######################################################

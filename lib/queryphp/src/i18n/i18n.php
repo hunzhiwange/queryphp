@@ -10,7 +10,7 @@
  */
 namespace Q\i18n;
 
-use Q;
+use Q, Q\mvc\project;
 
 /**
  * 语言管理类
@@ -21,28 +21,28 @@ class i18n {
     
     /**
      * 当前语言上下文
-     * 
+     *
      * @var string
      */
     private static $sI18nName = NULL;
     
     /**
      * 默认语言上下文
-     * 
+     *
      * @var string
      */
     private static $sDefaultI18nName = 'zh-cn';
     
     /**
      * 语言数据
-     * 
+     *
      * @var array
      */
     private static $arrText = [ ];
     
     /**
      * 语言 cookie
-     * 
+     *
      * @var string
      */
     private static $sCookieName = 'i18n';
@@ -93,8 +93,8 @@ class i18n {
     static public function parseContext() {
         $sCookieName = self::getCookieName ();
         
-        if (isset ( $_GET ['~i18n~'] )) {
-            $sI18nSet = $_GET ['~i18n~'];
+        if (isset ( $_GET [project::ARGS_I18N] )) {
+            $sI18nSet = $_GET [project::ARGS_I18N];
             Q::cookie ( $sCookieName, $sI18nSet );
         } elseif ($sCookieName) {
             $sI18nSet = Q::cookie ( $sCookieName );
@@ -139,7 +139,7 @@ class i18n {
     
     /**
      * 设置 cookie 名字
-     * 
+     *
      * @param string $sCookieName
      *            cookie名字
      * @return

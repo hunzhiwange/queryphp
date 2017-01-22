@@ -13,7 +13,7 @@ namespace Q\mvc;
 use Q;
 
 /**
- * 基类控制器
+ * 基类方法器
  *
  * @author Xiangmin Liu
  */
