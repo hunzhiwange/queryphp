@@ -197,12 +197,28 @@ class router {
     }
     
     /**
+     * 注册全局域名参数正则
+     *
+     * @param mixed $mixRegex            
+     * @param string $strValue            
+     * @return void
+     */
+    static public function regexDomain($mixRegex, $strValue = '') {
+        if (is_string ( $mixRegex )) {
+            self::$arrDomainWheres [$mixRegex] = $strValue;
+        } else {
+            self::$arrDomainWheres = self::mergeWhere_ ( self::$arrDomainWheres, $mixRegex );
+        }
+    }
+    
+    /**
      * 注册域名
      *
      * @param string $strDomain            
      * @param mixed $mixUrl            
      * @param array $in
      *            params 扩展参数
+     *            domain_where 域名参数
      *            prepend 插入顺序
      *            router 对应路由规则
      * @return void
@@ -211,6 +227,7 @@ class router {
         $in = self::mergeIn_ ( [ 
                 'prepend' => false,
                 'params' => [ ],
+                'domain_where' => [ ],
                 'router' => false 
         ], $in );
         
@@ -228,11 +245,18 @@ class router {
                     'router' => $in ['router'] 
             ];
             
+            // 合并参数正则
+            $arrDomainWheres = self::$arrDomainWheres;
+            if (! empty ( $in ['domain_where'] ) && is_array ( $in ['domain_where'] )) {
+                $arrDomainWheres = self::mergeWhere_ ( $in ['domain_where'], $arrDomainWheres );
+            }
+            
             // 主域名只有一个，路由可以有多个
             $strDomainBox = $arrDomain ['router'] === false ? 'main' : 'rule';
             if (! isset ( self::$arrDomains [$strDomain] )) {
                 self::$arrDomains [$strDomain] = [ ];
             }
+            self::$arrDomains [$strDomain] ['domain_where'] = $arrDomainWheres;
             if (! isset ( self::$arrDomains [$strDomain] [$strDomainBox] )) {
                 self::$arrDomains [$strDomain] [$strDomainBox] = [ ];
             }
@@ -396,7 +420,6 @@ class router {
         $strHost = Q::getHost ();
         
         $booFindDomain = false;
-        $arrDomainWheres = self::$arrDomainWheres;
         foreach ( self::$arrDomains as $sKey => $arrDomains ) {
             
             // 直接匹配成功
@@ -413,7 +436,7 @@ class router {
                 // 解析匹配正则
                 $sKey = self::formatRegex_ ( $sKey );
                 foreach ( $arrRes [1] as $nIndex => $sWhere ) {
-                    $sKey = str_replace ( '{' . $sWhere . '}', '(' . (isset ( $arrDomainWheres [$sWhere] ) ? $arrDomainWheres [$sWhere] : self::DEFAULT_REGEX) . ')', $sKey );
+                    $sKey = str_replace ( '{' . $sWhere . '}', '(' . (isset ( $arrDomains ['domain_where'] [$sWhere] ) ? $arrDomains ['domain_where'] [$sWhere] : self::DEFAULT_REGEX) . ')', $sKey );
                 }
                 $sKey = '/^' . $sKey . '$/';
                 $arrDomains ['args'] = $arrRes [1];
@@ -547,7 +570,8 @@ class router {
         // 合并特殊参数
         foreach ( [ 
                 'params',
-                'where' 
+                'where',
+                'domain_where' 
         ] as $strType ) {
             if (! empty ( $arrExtend [$strType] ) && is_array ( $arrExtend [$strType] )) {
                 if (! isset ( $in [$strType] )) {
