@@ -299,9 +299,19 @@ class router {
      * @param array $arrData
      *            @retun void
      */
-    static public function cache($arrData = []) {
+    static public function cache($arrData) {
+        if (isset ( $arrData ['~domains~'] )) {
+            foreach ( $arrData ['~domains~'] as $arrVal ) {
+                if (is_array ( $arrVal ) && isset ( $arrVal [1] )) {
+                    empty ( $arrVal [2] ) && $arrVal [2] = [ ];
+                    self::domain ( $arrVal [0], $arrVal [1], $arrVal [2] );
+                }
+            }
+            unset ( $arrData ['~domains~'] );
+        }
+        
         if ($arrData) {
-            self::import ( $arrData, '' );
+            self::import ( $arrData );
         }
     }
     
@@ -423,7 +433,7 @@ class router {
             }
             
             // 分析结果
-            if ($booFindDomain === true) { 
+            if ($booFindDomain === true) {
                 if (isset ( $arrDomains ['rule'] )) {
                     $arrNextParse = $arrDomains ['rule'];
                     return false;

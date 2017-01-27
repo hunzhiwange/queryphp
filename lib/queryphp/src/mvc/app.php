@@ -570,12 +570,15 @@ class app {
                                 continue;
                             }
                             
-                            $arrOption ['url_router_cache'] = array_merge ( $arrOption ['url_router_cache'], ( array ) (include $sDir . '/' . $sVal . '.php') );
+                            $arrOption ['url_router_cache'] = $this->mergeRouter_ ( $arrOption ['url_router_cache'], ( array ) (include $sDir . '/' . $sVal . '.php') );
                         }
                     }
                 }
+                
                 if ($arrOption ['url_router_cache']) {
                     router::cache ( $arrOption ['url_router_cache'] );
+                    if (isset ( $arrOption ['url_router_cache'] ['~domains~'] ))
+                        unset ( $arrOption ['url_router_cache'] ['~domains~'] );
                     router::setFileRouters ( $arrOption ['url_router_cache'] );
                 }
             }
@@ -750,5 +753,26 @@ class app {
      */
     protected function packControllerAndAction_($strController, $strAction = '') {
         return $this->app_name . '://' . $strController . ($strAction ? '/' . $strAction : '');
+    }
+    
+    /**
+     * 合并 router 参数
+     *
+     * @param array $arrRouter            
+     * @param array $arrNewRouter            
+     * @return array
+     */
+    protected function mergeRouter_(array $arrRouter, array $arrNewRouter) {
+        // 合并域名参数
+        if (! empty ( $arrNewRouter ['~domains~'] ) && is_array ( $arrNewRouter ['~domains~'] )) {
+            if (! isset ( $arrRouter ['~domains~'] )) {
+                $arrRouter ['~domains~'] = [ ];
+            }
+            $arrMergeRouters = array_merge ( $arrRouter ['~domains~'], $arrNewRouter ['~domains~'] );
+            $arrRouter = array_merge ( $arrRouter, $arrNewRouter );
+            $arrRouter ['~domains~'] = $arrMergeRouters;
+        }
+        
+        return $arrRouter;
     }
 }
