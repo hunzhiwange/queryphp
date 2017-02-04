@@ -682,7 +682,7 @@ out += '";
         }
         
         // 子模板合并到主模板
-        if ($GLOBALS ['@option'] ['theme_cache_children']) {
+        if ($GLOBALS ['~@option'] ['theme_cache_children']) {
             $sMd5 = md5 ( $arrAttr ['file'] );
             $sCompiled = "<!--<####incl*" . $sMd5 . "*ude####>-->";
             $sCompiled .= '<?' . 'php $this->display( ' . $arrAttr ['file'] . ', true, __FILE__,\'' . $sMd5 . '\'   ); ?' . '>';
@@ -959,7 +959,7 @@ out += '";
                 }
                 
                 if ($bIsObject === FALSE) { // 非对象
-                    switch (strtolower ( $GLOBALS ['@option'] ['theme_var_identify'] )) {
+                    switch (strtolower ( $GLOBALS ['~@option'] ['theme_var_identify'] )) {
                         case 'array' : // 识别为数组
                             $sName = '$' . $arrVars [0] . '[\'' . $arrVars [1] . '\']' . ($this->arrayHandler_ ( $arrVars ));
                             break;
@@ -1003,7 +1003,7 @@ out += '";
     protected function parseVarFunction_($sName, $arrVar, $bJs = false) {
         $nLen = count ( $arrVar );
         // 取得模板禁止使用函数列表
-        $arrNot = explode ( ',', $GLOBALS ['@option'] ['theme_notallows_func' . ($bJs ? '' : '_js')] );
+        $arrNot = explode ( ',', $GLOBALS ['~@option'] ['theme_notallows_func' . ($bJs ? '' : '_js')] );
         for($nI = 0; $nI < $nLen; $nI ++) {
             if (0 === stripos ( $arrVar [$nI], 'default=' )) {
                 $arrArgs = explode ( '=', $arrVar [$nI], 2 );

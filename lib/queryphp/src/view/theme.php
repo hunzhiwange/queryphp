@@ -128,12 +128,12 @@ class theme {
         }
         
         // 编译过期时间为 -1 表示永不过期
-        if ($GLOBALS ['@option'] ['theme_cache_lifetime'] === - 1) {
+        if ($GLOBALS ['~@option'] ['theme_cache_lifetime'] === - 1) {
             return false;
         }
         
         // 缓存时间到期
-        if (filemtime ( $sCachePath ) + intval ( $GLOBALS ['@option'] ['theme_cache_lifetime'] ) < time ()) {
+        if (filemtime ( $sCachePath ) + intval ( $GLOBALS ['~@option'] ['theme_cache_lifetime'] ) < time ()) {
             return true;
         }
         

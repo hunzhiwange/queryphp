@@ -94,14 +94,14 @@ class project {
      *
      * @var string
      */
-    const ARGS_THEME = '@theme';
+    const ARGS_THEME = '~@theme';
     
     /**
      * 国际化参数名
      *
      * @var string
      */
-    const ARGS_I18N = '@i18n';
+    const ARGS_I18N = '~@i18n';
     
     /**
      * 构造函数
@@ -300,7 +300,7 @@ class project {
             $sEnterBak = $sEnter;
             
             // 如果为重写模式
-            if ($GLOBALS ['@option'] ['url_rewrite'] === TRUE) {
+            if ($GLOBALS ['~@option'] ['url_rewrite'] === TRUE) {
                 $sEnter = dirname ( $sEnter );
                 if ($sEnter == '\\') {
                     $sEnter = '/';

@@ -397,7 +397,7 @@ class router {
         $arrNextParse = [ ];
         
         // 解析域名
-        if ($GLOBALS ['@option'] ['url_domain_on'] === true) {
+        if ($GLOBALS ['~@option'] ['url_domain_on'] === true) {
             if (($arrParseData = self::parseDomain_ ( $arrNextParse )) !== false) {
                 return $arrParseData;
             }
@@ -421,14 +421,14 @@ class router {
         foreach ( self::$arrDomains as $sKey => $arrDomains ) {
             
             // 直接匹配成功
-            if ($strHost === $sKey || $strHost === $sKey . '.' . $GLOBALS ['@option'] ['url_domain_top']) {
+            if ($strHost === $sKey || $strHost === $sKey . '.' . $GLOBALS ['~@option'] ['url_domain_top']) {
                 $booFindDomain = true;
             }            
 
             // 域名参数支持
             elseif (strpos ( $sKey, '{' ) !== false && preg_match_all ( "/{(.+?)}/isx", $sKey, $arrRes )) {
-                if (strpos ( $sKey, $GLOBALS ['@option'] ['url_domain_top'] ) === false) {
-                    $sKey = $sKey . '.' . $GLOBALS ['@option'] ['url_domain_top'];
+                if (strpos ( $sKey, $GLOBALS ['~@option'] ['url_domain_top'] ) === false) {
+                    $sKey = $sKey . '.' . $GLOBALS ['~@option'] ['url_domain_top'];
                 }
                 
                 // 解析匹配正则
@@ -501,7 +501,7 @@ class router {
                     foreach ( $arrRes [1] as $nIndex => $sWhere ) {
                         $arrRouter ['regex'] = str_replace ( '{' . $sWhere . '}', '(' . (isset ( $arrRouter ['where'] [$sWhere] ) ? $arrRouter ['where'] [$sWhere] : self::DEFAULT_REGEX) . ')', $arrRouter ['regex'] );
                     }
-                    $arrRouter ['regex'] = '/^\/' . $arrRouter ['regex'] . ((isset ( $arrRouter ['strict'] ) ? $arrRouter ['strict'] : $GLOBALS ['@option'] ['url_router_strict']) ? '$' : '') . '/';
+                    $arrRouter ['regex'] = '/^\/' . $arrRouter ['regex'] . ((isset ( $arrRouter ['strict'] ) ? $arrRouter ['strict'] : $GLOBALS ['~@option'] ['url_router_strict']) ? '$' : '') . '/';
                     $arrRouter ['args'] = $arrRes [1];
                     
                     // 匹配结果

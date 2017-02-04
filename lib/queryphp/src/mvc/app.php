@@ -160,9 +160,9 @@ class app {
     public function app() {
         // 初始化时区和GZIP压缩
         if (function_exists ( 'date_defaault_timezone_set' )) {
-            date_default_timezone_set ( $GLOBALS ['@option'] ['time_zone'] );
+            date_default_timezone_set ( $GLOBALS ['~@option'] ['time_zone'] );
         }
-        if ($GLOBALS ['@option'] ['start_gzip'] && function_exists ( 'gz_handler' )) {
+        if ($GLOBALS ['~@option'] ['start_gzip'] && function_exists ( 'gz_handler' )) {
             ob_start ( 'gz_handler' );
         } else {
             ob_start ();
@@ -175,7 +175,7 @@ class app {
         
         // 检查语言包和模板
         $this->initView_ ();
-        if ($GLOBALS ['@option'] ['i18n_on']) {
+        if ($GLOBALS ['~@option'] ['i18n_on']) {
             $this->initI18n_ ();
         }
         
@@ -504,7 +504,7 @@ class app {
         
         // 开发模式不用读取缓存
         if (Q_DEVELOPMENT !== 'develop' && is_file ( $sOptionCache )) {
-            $GLOBALS ['@option'] = \Q::option ( ( array ) (include $sOptionCache) );
+            $GLOBALS ['~@option'] = \Q::option ( ( array ) (include $sOptionCache) );
             if ($this->app_name == \Q\mvc\project::INIT_APP && $arrOption ['url_router_cache']) {
                 router::setFileRouters ( $arrOption ['url_router_cache'] );
             }
@@ -586,7 +586,7 @@ class app {
                 \Q::errorMessage ( sprintf ( 'Dir %s Do not have permission.', $this->optioncache_path ) );
             }
             
-            $GLOBALS ['@option'] = \Q::option ( $arrOption );
+            $GLOBALS ['~@option'] = \Q::option ( $arrOption );
             unset ( $arrOption, $sAppOptionPath, $arrOptionDir, $arrOptionExtend, $arrRouterExtend );
         }
     }
@@ -597,10 +597,10 @@ class app {
      * @return void
      */
     protected function initView_() {
-        if (! $GLOBALS ['@option'] ['theme_switch']) {
-            $sThemeSet = $GLOBALS ['@option'] ['theme_default'];
+        if (! $GLOBALS ['~@option'] ['theme_switch']) {
+            $sThemeSet = $GLOBALS ['~@option'] ['theme_default'];
         } else {
-            if ($GLOBALS ['@option'] ['cookie_langtheme_app'] === TRUE) {
+            if ($GLOBALS ['~@option'] ['cookie_langtheme_app'] === TRUE) {
                 $sCookieName = $this->app_name . '_theme';
             } else {
                 $sCookieName = 'theme';
@@ -613,7 +613,7 @@ class app {
                 if (Q::cookie ( $sCookieName )) {
                     $sThemeSet = \Q::cookie ( $sCookieName );
                 } else {
-                    $sThemeSet = $GLOBALS ['@option'] ['theme_default'];
+                    $sThemeSet = $GLOBALS ['~@option'] ['theme_default'];
                 }
             }
         }
@@ -632,22 +632,22 @@ class app {
      * @return void
      */
     protected function initI18n_() {
-        if (! $GLOBALS ['@option'] ['i18n_switch']) {
-            $sI18nSet = $GLOBALS ['@option'] ['i18n_default'];
+        if (! $GLOBALS ['~@option'] ['i18n_switch']) {
+            $sI18nSet = $GLOBALS ['~@option'] ['i18n_default'];
             i18n::setContext ( $sI18nSet );
         } else {
-            if ($GLOBALS ['@option'] ['cookie_langtheme_app'] === TRUE) {
+            if ($GLOBALS ['~@option'] ['cookie_langtheme_app'] === TRUE) {
                 $sCookieName = $this->app_name . '_i18n';
             } else {
                 $sCookieName = 'i18n';
             }
             i18n::setCookieName ( $sCookieName );
-            i18n::setDefaultContext ( $GLOBALS ['@option'] ['i18n_default'] );
+            i18n::setDefaultContext ( $GLOBALS ['~@option'] ['i18n_default'] );
             $sI18nSet = i18n::parseContext ();
         }
         
         // 判断是否为默认主题，非默认主题载入语言包
-        if ($GLOBALS ['@option'] ['i18n_develop'] == $sI18nSet) {
+        if ($GLOBALS ['~@option'] ['i18n_develop'] == $sI18nSet) {
             return;
         }
         

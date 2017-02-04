@@ -188,7 +188,7 @@ class controller {
         ], $in );
         
         $this->assign ( $in );
-        $this->display ( $GLOBALS ['@option'] ['theme_action_fail'] );
+        $this->display ( $GLOBALS ['~@option'] ['theme_action_fail'] );
         exit ();
     }
     
@@ -211,7 +211,7 @@ class controller {
         ], $in );
         
         $this->assign ( $in );
-        $this->display ( $GLOBALS ['@option'] ['theme_action_success'] );
+        $this->display ( $GLOBALS ['~@option'] ['theme_action_success'] );
         exit ();
     }
     

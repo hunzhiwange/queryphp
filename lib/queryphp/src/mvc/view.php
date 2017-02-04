@@ -134,14 +134,14 @@ class view {
         $sContent = $this->getTheme ()->display ( $sFile, false );
         
         // 过滤编译文件子模板定位注释标签，防止在网页头部出现注释，导致 IE 浏览器不居中
-        if (Q_DEBUG === TRUE && $GLOBALS ['@option'] ['theme_cache_children'] === true) {
+        if (Q_DEBUG === TRUE && $GLOBALS ['~@option'] ['theme_cache_children'] === true) {
             $sContent = preg_replace ( "/<!--<\#\#\#\#incl\*(.*?)\*ude\#\#\#\#>-->/", '', $sContent );
             $sContent = preg_replace ( "/<!--<\/\#\#\#\#incl\*(.*?)\*ude\#\#\#\#\/>-->/", '', $sContent );
         }
         
         // 调试信息
         if (! \Q::isAjax ()) {
-            if (Q_DEBUG === TRUE && $GLOBALS ['@option'] ['show_page_trace']) {
+            if (Q_DEBUG === TRUE && $GLOBALS ['~@option'] ['show_page_trace']) {
                 $sContent .= $this->trace ();
             }
         }
@@ -243,7 +243,7 @@ class view {
             
             // 空取默认控制器和方法
             if ($sTpl == '') {
-                $sTpl = $objApp->controller_name . $GLOBALS ['@option'] ['theme_moduleaction_depr'] . $objApp->action_name;
+                $sTpl = $objApp->controller_name . $GLOBALS ['~@option'] ['theme_moduleaction_depr'] . $objApp->action_name;
             }
             
             if (strpos ( $sTpl, '@' )) { // 分析主题
@@ -256,9 +256,9 @@ class view {
             $sTpl = str_replace ( [ 
                     '+',
                     ':' 
-            ], $GLOBALS ['@option'] ['theme_moduleaction_depr'], $sTpl );
+            ], $GLOBALS ['~@option'] ['theme_moduleaction_depr'], $sTpl );
             
-            return $objApp->apptheme_path . '/' . (isset ( $sTheme ) ? $sTheme : $objApp->apptheme_name) . '/' . $sTpl . ($sExt ?  : $GLOBALS ['@option'] ['theme_suffix']);
+            return $objApp->apptheme_path . '/' . (isset ( $sTheme ) ? $sTheme : $objApp->apptheme_name) . '/' . $sTpl . ($sExt ?  : $GLOBALS ['~@option'] ['theme_suffix']);
         }
     }
     

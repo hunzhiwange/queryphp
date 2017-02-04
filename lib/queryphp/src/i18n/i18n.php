@@ -97,13 +97,13 @@ class i18n {
         } elseif ($sCookieName) {
             $sI18nSet = \Q::cookie ( $sCookieName );
             if (empty ( $sI18nSet )) {
-                $sI18nSet = $GLOBALS ['@option'] ['i18n_default'];
+                $sI18nSet = $GLOBALS ['~@option'] ['i18n_default'];
             }
-        } elseif ($GLOBALS ['@option'] ['i18n_auto_accept'] && isset ( $_SERVER ['HTTP_ACCEPT_LANGUAGE'] )) {
+        } elseif ($GLOBALS ['~@option'] ['i18n_auto_accept'] && isset ( $_SERVER ['HTTP_ACCEPT_LANGUAGE'] )) {
             preg_match ( '/^([a-z\-]+)/i', $_SERVER ['HTTP_ACCEPT_LANGUAGE'], $arrMatches );
             $sI18nSet = $arrMatches [1];
         } else {
-            $sI18nSet = $GLOBALS ['@option'] ['i18n_default'];
+            $sI18nSet = $GLOBALS ['~@option'] ['i18n_default'];
         }
         
         self::setContext ( $sI18nSet );

@@ -254,7 +254,7 @@ class parsers {
         }
         
         // 清理模板编译文件空格
-        if ($GLOBALS ['@option'] ['theme_strip_space'] === true) {
+        if ($GLOBALS ['~@option'] ['theme_strip_space'] === true) {
             
             /**
              * 清理 HTML 清除换行符,清除制表符,去掉注释标记
@@ -1067,7 +1067,7 @@ class parsers {
      * @return array
      */
     protected function getTag($sType) {
-        return $this->arrTag [$sType . ($GLOBALS ['@option'] ['theme_tag_note'] === true ? '_node' : '')];
+        return $this->arrTag [$sType . ($GLOBALS ['~@option'] ['theme_tag_note'] === true ? '_node' : '')];
     }
     
     // ######################################################
