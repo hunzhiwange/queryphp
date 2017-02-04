@@ -10,8 +10,6 @@
  */
 namespace Q\exception;
 
-use Q;
-
 /**
  * 异常捕获
  *
@@ -73,7 +71,7 @@ class exception extends \exception {
                         
                         // 详细参数值
                         ob_start ();
-                        Q::dump ( $mixArgsVal );
+                        \Q::dump ( $mixArgsVal );
                         $sArgsInfoDetail .= '<div class="queryphp-message-argstitle">Args ' . ($intArgsKey + 1) . '</div><div class="queryphp-message-args">' . ob_get_contents () . '</div>';
                         ob_end_clean ();
                     }

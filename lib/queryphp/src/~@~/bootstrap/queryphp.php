@@ -14,12 +14,12 @@
  *
  * @author Xiangmin Liu
  */
-use Q\mvc\project, Q\cookie\cookie, Q\xml\xml;
+use Q\cookie\cookie, Q\xml\xml;
 
 /**
  * 注册框架命名空间
  */
-Q::import ( 'Q', Q_PATH, [ 
+\Q::import ( 'Q', Q_PATH, [ 
         'ignore' => [ 
                 'resource' 
         ] 
@@ -83,14 +83,14 @@ class Q {
      * 项目类管理
      */
     static public function project() {
-        return project::run ();
+        return \Q\mvc\project::run ();
     }
     
     /**
      * 应用类管理
      */
     static public function app($sAppName = '') {
-        return project::getApp ( $sAppName );
+        return \Q\mvc\project::getApp ( $sAppName );
     }
     
     /**
@@ -345,9 +345,9 @@ class Q {
             $arrOption = [ ];
         }
         $arrOption = array_merge ( [ 
-                'cache_time' => self::cacheTime_ ( $sId ) ?  : $GLOBALS ['option'] ['runtime_cache_time'],
-                'cache_prefix' => $GLOBALS ['option'] ['runtime_cache_prefix'],
-                'cache_backend' => $GLOBALS ['option'] ['runtime_cache_backend'] 
+                'cache_time' => self::cacheTime_ ( $sId ) ?  : $GLOBALS ['@option'] ['runtime_cache_time'],
+                'cache_prefix' => $GLOBALS ['@option'] ['runtime_cache_prefix'],
+                'cache_backend' => $GLOBALS ['@option'] ['runtime_cache_backend'] 
         ], $arrOption );
         
         if (is_null ( $oObj )) {
@@ -360,7 +360,7 @@ class Q {
         
         if ($mixData === '') {
             // 强制刷新页面数据
-            if (self::in ( $GLOBALS ['option'] ['runtime_cache_force_name'] ) == 1) {
+            if (self::in ( $GLOBALS ['@option'] ['runtime_cache_force_name'] ) == 1) {
                 return false;
             }
             return $oObj->getCache ( $sId, $arrOption );
@@ -407,11 +407,11 @@ class Q {
             foreach ( $sName as $sKey => $mixValue ) {
                 self::option ( $sKey, $mixValue, $mixDefault );
             }
-            return $GLOBALS ['option'] = self::$arrOption;
+            return $GLOBALS ['@option'] = self::$arrOption;
         } else {
             if (! strpos ( $sName, '.' )) {
                 self::$arrOption [$sName] = $mixValue;
-                return $GLOBALS ['option'] = self::$arrOption;
+                return $GLOBALS ['@option'] = self::$arrOption;
             }
             
             $arrParts = explode ( '.', $sName );
@@ -429,7 +429,7 @@ class Q {
                 }
             }
             
-            return $GLOBALS ['option'] = self::$arrOption;
+            return $GLOBALS ['@option'] = self::$arrOption;
         }
         
         // 删除值
@@ -454,7 +454,7 @@ class Q {
             }
         }
         
-        return $GLOBALS ['option'] = self::$arrOption;
+        return $GLOBALS ['@option'] = self::$arrOption;
     }
     
     /**
@@ -465,7 +465,7 @@ class Q {
      */
     static public function i18n($sValue/*argvs*/){
         // 不开启
-        if (! $GLOBALS ['option'] ['i18n_on'] || ! self::$booI18nOn) {
+        if (! $GLOBALS ['@option'] ['i18n_on'] || ! self::$booI18nOn) {
             if (func_num_args () > 1) { // 代入参数
                 $sValue = call_user_func_array ( 'sprintf', func_get_args () );
             }
@@ -535,8 +535,8 @@ class Q {
         }, $sUrl );
         
         // 剔除受保护的额外参数
-        if ($GLOBALS ['option'] ['url_pro_var']) {
-            foreach ( explode ( ',', $GLOBALS ['option'] ['url_pro_var'] ) as $sTempVar ) {
+        if ($GLOBALS ['@option'] ['url_pro_var']) {
+            foreach ( explode ( ',', $GLOBALS ['@option'] ['url_pro_var'] ) as $sTempVar ) {
                 if (isset ( $arrParams [$sTempVar] )) {
                     unset ( $arrParams [$sTempVar] );
                 }
@@ -620,12 +620,12 @@ class Q {
         }
         
         // 如果开启了URL解析，则URL模式为非普通模式
-        if (($GLOBALS ['option'] ['url_model'] > 0 && $bNormalurl === false) || $bCustom === true) {
+        if (($GLOBALS ['@option'] ['url_model'] > 0 && $bNormalurl === false) || $bCustom === true) {
             $sDepr = '/';
             if (! empty ( $sRoute )) {
                 // 匹配路由参数
-                if (isset ( $GLOBALS ['option'] ['url_router'] [$sRoute] )) {
-                    $arrRouters = $GLOBALS ['option'] ['url_router'] [$sRoute];
+                if (isset ( $GLOBALS ['@option'] ['url_router'] [$sRoute] )) {
+                    $arrRouters = $GLOBALS ['@option'] ['url_router'] [$sRoute];
                     if (! empty ( $arrRouters [1] )) {
                         $arrRoutervalue = explode ( ',', $arrRouters [1] );
                         foreach ( $arrRoutervalue as $sRoutervalue ) {
@@ -643,7 +643,7 @@ class Q {
                 }
                 $sStr = substr ( $sStr, 0, - 1 );
                 
-                $sUrl = (__APP__ !== '/' ? __APP__ : '') . ($GLOBALS ['option'] ['default_app'] != $sApp ? '/app' . $sDepr . $sApp . $sDepr : '/') . $sRoute . $sStr;
+                $sUrl = (__APP__ !== '/' ? __APP__ : '') . ($GLOBALS ['@option'] ['default_app'] != $sApp ? '/app' . $sDepr . $sApp . $sDepr : '/') . $sRoute . $sStr;
             } else {
                 $sStr = $sDepr;
                 foreach ( $arrParams as $sVar => $sVal ) {
@@ -652,16 +652,16 @@ class Q {
                 $sStr = substr ( $sStr, 0, - 1 );
                 
                 if (! $bCustom) {
-                    $sUrl = (__APP__ !== '/' ? __APP__ : '') . ($GLOBALS ['option'] ['default_app'] != $sApp ? '/app' . $sDepr . $sApp . $sDepr : '/');
+                    $sUrl = (__APP__ !== '/' ? __APP__ : '') . ($GLOBALS ['@option'] ['default_app'] != $sApp ? '/app' . $sDepr . $sApp . $sDepr : '/');
                     
                     if ($sStr) {
                         $sUrl .= $sModule . $sDepr . $sAction . $sStr;
                     } else {
                         $sTemp = '';
-                        if ($GLOBALS ['option'] ['default_controller'] != $sModule || $GLOBALS ['option'] ['default_action'] != $sAction) {
+                        if ($GLOBALS ['@option'] ['default_controller'] != $sModule || $GLOBALS ['@option'] ['default_action'] != $sAction) {
                             $sTemp .= $sModule;
                         }
-                        if ($GLOBALS ['option'] ['default_action'] != $sAction) {
+                        if ($GLOBALS ['@option'] ['default_action'] != $sAction) {
                             $sTemp .= $sDepr . $sAction;
                         }
                         
@@ -677,7 +677,7 @@ class Q {
             }
             
             if ($mixSuffix && $sUrl) {
-                $sUrl .= $mixSuffix === true ? $GLOBALS ['option'] ['url_html_suffix'] : $mixSuffix;
+                $sUrl .= $mixSuffix === true ? $GLOBALS ['@option'] ['url_html_suffix'] : $mixSuffix;
             }
         } else {
             $sStr = '';
@@ -688,13 +688,13 @@ class Q {
             
             if (empty ( $sRoute )) {
                 $sTemp = '';
-                if ($bNormalurl === true || $GLOBALS ['option'] ['default_app'] != $sApp) {
+                if ($bNormalurl === true || $GLOBALS ['@option'] ['default_app'] != $sApp) {
                     $sTemp [] = 'app=' . $sApp;
                 }
-                if ($GLOBALS ['option'] ['default_controller'] != $sModule) {
+                if ($GLOBALS ['@option'] ['default_controller'] != $sModule) {
                     $sTemp [] = 'c=' . $sModule;
                 }
-                if ($GLOBALS ['option'] ['default_action'] != $sAction) {
+                if ($GLOBALS ['@option'] ['default_action'] != $sAction) {
                     $sTemp [] = 'a=' . $sAction;
                 }
                 if ($sStr) {
@@ -705,12 +705,12 @@ class Q {
                 }
                 $sUrl = ($bNormalurl === true || __APP__ !== '/' ? __APP__ : '') . $sTemp;
             } else {
-                $sUrl = ($bNormalurl === true || __APP__ !== '/' ? __APP__ : '') . ($bNormalurl === true || $GLOBALS ['option'] ['default_app'] != $sApp ? '?app=' . $sApp . '&' : '?') . ($sRoute ? 'r=' . $sRoute : '') . ($sStr ? '&' . $sStr : '');
+                $sUrl = ($bNormalurl === true || __APP__ !== '/' ? __APP__ : '') . ($bNormalurl === true || $GLOBALS ['@option'] ['default_app'] != $sApp ? '?app=' . $sApp . '&' : '?') . ($sRoute ? 'r=' . $sRoute : '') . ($sStr ? '&' . $sStr : '');
             }
         }
         
         // 子域名支持
-        if ($GLOBALS ['option'] ['url_subdomain_on'] === true) {
+        if ($GLOBALS ['@option'] ['url_subdomain_on'] === true) {
             if ($sDomainUrl === false) {
                 $sDomainUrl = 'www';
             } elseif ($sDomainUrl == '') {
@@ -721,8 +721,8 @@ class Q {
             if ($sDomainUrl) {
                 $sDomainUrl = self::urlFull_ ( $sDomainUrl );
             }
-        } elseif ($GLOBALS ['option'] ['url_domain_on'] === true) { // URL加上域名
-            $sDomainUrl = $GLOBALS ['option'] ['url_domain'];
+        } elseif ($GLOBALS ['@option'] ['url_domain_on'] === true) { // URL加上域名
+            $sDomainUrl = $GLOBALS ['@option'] ['url_domain'];
         } else {
             $sDomainUrl = '';
         }
@@ -737,12 +737,12 @@ class Q {
      * @param string $sTag            
      */
     static public function tag($sTag) {
-        if (array_key_exists ( $sTag, $GLOBALS ['option'] ['globals_tags'] )) {
-            if (is_array ( $GLOBALS ['option'] ['globals_tags'] [$sTag] )) {
-                $arrOption = $GLOBALS ['option'] ['globals_tags'] [$sTag];
+        if (array_key_exists ( $sTag, $GLOBALS ['@option'] ['globals_tags'] )) {
+            if (is_array ( $GLOBALS ['@option'] ['globals_tags'] [$sTag] )) {
+                $arrOption = $GLOBALS ['@option'] ['globals_tags'] [$sTag];
             } else {
                 $arrOption = [ 
-                        $GLOBALS ['option'] ['globals_tags'] [$sTag],
+                        $GLOBALS ['@option'] ['globals_tags'] [$sTag],
                         [ ] 
                 ];
             }
@@ -810,9 +810,9 @@ class Q {
         $sErrfile = $oE->getFile ();
         $nErrline = $oE->getLine ();
         $nErrno = $oE->getCode ();
-        $sErrorStr = "[$nErrno] $sErrstr " . basename ( $sErrfile ) . Q::i18n ( " 第 %d 行", $nErrline );
+        $sErrorStr = "[$nErrno] $sErrstr " . basename ( $sErrfile ) . \Q::i18n ( " 第 %d 行", $nErrline );
         
-        if ($GLOBALS ['option'] ['log_record'] && self::option ( 'log_must_record_exception' )) {
+        if ($GLOBALS ['@option'] ['log_record'] && self::option ( 'log_must_record_exception' )) {
             Log::W ( $sErrstr, Log::EXCEPTION );
         }
         
@@ -877,16 +877,16 @@ class Q {
         }
         
         // 否则定向到错误页面
-        if (! empty ( $GLOBALS ['option'] ['show_exception_redirect'] ) && $bDbError === FALSE && Q_DEBUG === FALSE) {
-            self::urlRedirect ( self::url ( $GLOBALS ['option'] ['show_exception_redirect'] ) );
+        if (! empty ( $GLOBALS ['@option'] ['show_exception_redirect'] ) && $bDbError === FALSE && Q_DEBUG === FALSE) {
+            self::urlRedirect ( self::url ( $GLOBALS ['@option'] ['show_exception_redirect'] ) );
         } else {
-            if ($GLOBALS ['option'] ['show_exception_show_message'] === false) {
-                $mixError ['message'] = $GLOBALS ['option'] ['show_exception_default_message'];
+            if ($GLOBALS ['@option'] ['show_exception_show_message'] === false) {
+                $mixError ['message'] = $GLOBALS ['@option'] ['show_exception_default_message'];
             }
             
             // 包含异常页面模板
-            if ($GLOBALS ['option'] ['show_exception_tpl'] && is_file ( $GLOBALS ['option'] ['show_exception_tpl'] )) {
-                include ($GLOBALS ['option'] ['show_exception_tpl']);
+            if ($GLOBALS ['@option'] ['show_exception_tpl'] && is_file ( $GLOBALS ['@option'] ['show_exception_tpl'] )) {
+                include ($GLOBALS ['@option'] ['show_exception_tpl']);
             } else {
                 include (Q_PATH . '/~@~/tpl/exception.php');
             }
@@ -1000,7 +1000,7 @@ class Q {
         if (! self::varType ( $mixTypes, 'string' ) && ! self::checkArray ( $mixTypes, [ 
                 'string' 
         ] )) {
-            self::throwException ( Q::i18n ( '正确格式:参数必须为 string 或 各项元素为 string 的数组' ) );
+            self::throwException ( \Q::i18n ( '正确格式:参数必须为 string 或 各项元素为 string 的数组' ) );
         }
         
         if (is_string ( $mixTypes )) {
@@ -1535,12 +1535,12 @@ class Q {
         if ($nHover == 0) {
             $nMin = floor ( $nSec / 60 );
             if ($nMin == 0) {
-                $sReturn = $nSec . ' ' . Q::i18n ( "秒前" );
+                $sReturn = $nSec . ' ' . \Q::i18n ( "秒前" );
             } else {
-                $sReturn = $nMin . ' ' . Q::i18n ( "分钟前" );
+                $sReturn = $nMin . ' ' . \Q::i18n ( "分钟前" );
             }
         } elseif ($nHover < 24) {
-            $sReturn = Q::i18n ( "大约 %d 小时前", $nHover );
+            $sReturn = \Q::i18n ( "大约 %d 小时前", $nHover );
         } else {
             $sReturn = date ( $sDateFormat, $nDateTemp );
         }
@@ -1564,7 +1564,7 @@ class Q {
         } elseif ($nFileSize >= 1024) {
             $nFileSize = round ( $nFileSize / 1024, 2 ) . ($booUnit ? 'KB' : '');
         } else {
-            $nFileSize = $nFileSize . ($booUnit ? Q::i18n ( '字节' ) : '');
+            $nFileSize = $nFileSize . ($booUnit ? \Q::i18n ( '字节' ) : '');
         }
         
         return $nFileSize;
@@ -1825,7 +1825,7 @@ class Q {
     static public function authcode($string, $operation = TRUE, $key = null, $expiry = 0) {
         $ckey_length = 4;
         
-        $key = md5 ( $key ? $key : $GLOBALS ['option'] ['q_auth_key'] );
+        $key = md5 ( $key ? $key : $GLOBALS ['@option'] ['q_auth_key'] );
         $keya = md5 ( substr ( $key, 0, 16 ) );
         $keyb = md5 ( substr ( $key, 16, 16 ) );
         $keyc = $ckey_length ? ($operation === TRUE ? substr ( $string, 0, $ckey_length ) : substr ( md5 ( microtime () ), - $ckey_length )) : '';
@@ -2294,15 +2294,15 @@ class Q {
      */
     static private function cacheTime_($sId) {
         $nCacheTime = 0;
-        if (! empty ( $GLOBALS ['option'] ['runtime_cache_times'] [$sId] )) {
-            $nCacheTime = intval ( $GLOBALS ['option'] ['runtime_cache_times'] [$sId] );
+        if (! empty ( $GLOBALS ['@option'] ['runtime_cache_times'] [$sId] )) {
+            $nCacheTime = intval ( $GLOBALS ['@option'] ['runtime_cache_times'] [$sId] );
             return $nCacheTime;
         }
         
-        foreach ( $GLOBALS ['option'] ['runtime_cache_times'] as $sKey => $nValue ) {
+        foreach ( $GLOBALS ['@option'] ['runtime_cache_times'] as $sKey => $nValue ) {
             $sKeyCache = str_replace ( '_*', '', $sKey );
             if ($sKeyCache == $sId) {
-                return $GLOBALS ['option'] ['runtime_cache_times'] [$sKey];
+                return $GLOBALS ['@option'] ['runtime_cache_times'] [$sKey];
                 break;
             }
         }
@@ -2338,7 +2338,7 @@ class Q {
         static $sHttpPrefix = '', $sHttpSuffix = '';
         if (! $sHttpPrefix) {
             $sHttpPrefix = self::isSsl () ? 'https://' : 'http://';
-            $sHttpSuffix = $GLOBALS ['option'] ['url_domain_top'] . $GLOBALS ['option'] ['url_domain_suffix'];
+            $sHttpSuffix = $GLOBALS ['@option'] ['url_domain_top'] . $GLOBALS ['@option'] ['url_domain_suffix'];
         }
         return $sHttpPrefix . ($sDomain && $sDomain != '*' ? $sDomain . '.' : '') . $sHttpSuffix;
     }

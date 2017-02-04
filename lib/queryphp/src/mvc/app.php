@@ -10,7 +10,7 @@
  */
 namespace Q\mvc;
 
-use Q, Q\router\router, Q\i18n\i18n, Q\i18n\tool;
+use Q\router\router, Q\i18n\i18n, Q\i18n\tool;
 
 /**
  * 应用程序对象
@@ -92,7 +92,7 @@ class app {
         $this->initApp_ ( $in );
         
         // 注册命名空间
-        Q::import ( $this->app_name, $this->objProject->app_path . '/' . $this->app_name, [ 
+        \Q::import ( $this->app_name, $this->objProject->app_path . '/' . $this->app_name, [ 
                 [ 
                         'i18n',
                         'option',
@@ -129,7 +129,7 @@ class app {
         if (array_key_exists ( $sName, $this->arrProp )) {
             return $this->arrProp [$sName];
         } else {
-            Q::throwException ( sprintf ( 'The prop %s is disallowed when you get!', $sName ) );
+            \Q::throwException ( sprintf ( 'The prop %s is disallowed when you get!', $sName ) );
         }
     }
     
@@ -148,7 +148,7 @@ class app {
             $this->arrProp [$sName] = $sVal;
             return $sOld;
         } else {
-            Q::throwException ( sprintf ( 'The prop %s is disallowed when you set!', $sName ) );
+            \Q::throwException ( sprintf ( 'The prop %s is disallowed when you set!', $sName ) );
         }
     }
     
@@ -160,9 +160,9 @@ class app {
     public function app() {
         // 初始化时区和GZIP压缩
         if (function_exists ( 'date_defaault_timezone_set' )) {
-            date_default_timezone_set ( $GLOBALS ['option'] ['time_zone'] );
+            date_default_timezone_set ( $GLOBALS ['@option'] ['time_zone'] );
         }
-        if ($GLOBALS ['option'] ['start_gzip'] && function_exists ( 'gz_handler' )) {
+        if ($GLOBALS ['@option'] ['start_gzip'] && function_exists ( 'gz_handler' )) {
             ob_start ( 'gz_handler' );
         } else {
             ob_start ();
@@ -175,14 +175,14 @@ class app {
         
         // 检查语言包和模板
         $this->initView_ ();
-        if ($GLOBALS ['option'] ['i18n_on']) {
+        if ($GLOBALS ['@option'] ['i18n_on']) {
             $this->initI18n_ ();
         }
         
         // 执行控制器
         $this->in = project::$in;
-        $this->controller_name = $this->in [project::ARGS_CONTROLLER];
-        $this->action_name = $this->in [project::ARGS_ACTION];
+        $this->controller_name = $this->in [\Q\mvc\project::ARGS_CONTROLLER];
+        $this->action_name = $this->in [\Q\mvc\project::ARGS_ACTION];
         $this->controller ();
     }
     
@@ -203,12 +203,12 @@ class app {
             if (($mixModule = $this->getController ( $sController ))) {
                 switch (true) {
                     // 判断是否为回调
-                    case Q::varType ( $mixModule, 'callback' ) :
+                    case \Q::varType ( $mixModule, 'callback' ) :
                         $this->registerAction ( $sController, $sAction, $mixModule );
                         break;
                     
                     // 如果为方法则注册为方法
-                    case Q::isKindOf ( $mixModule, 'Q\mvc\action' ) :
+                    case \Q::isKindOf ( $mixModule, 'Q\mvc\action' ) :
                         $this->registerAction ( $sController, $sAction, [ 
                                 $mixModule,
                                 'run' 
@@ -216,11 +216,11 @@ class app {
                         break;
                     
                     // 如果为控制器实例，注册为回调
-                    case Q::isKindOf ( $mixModule, 'Q\mvc\controller' ) :
+                    case \Q::isKindOf ( $mixModule, 'Q\mvc\controller' ) :
                     // 实例回调
-                    case Q::varType ( $mixModule, 'object' ) :
+                    case \Q::varType ( $mixModule, 'object' ) :
                     // 静态类回调
-                    case Q::varType ( $mixModule, 'string' ) && Q::varType ( [ 
+                    case \Q::varType ( $mixModule, 'string' ) && \Q::varType ( [ 
                             $mixModule,
                             $sAction 
                     ], 'callback' ) :
@@ -231,16 +231,16 @@ class app {
                         break;
                     
                     // 数组支持,方法名即数组的键值,注册方法
-                    case Q::varType ( $mixModule, 'array' ) :
+                    case \Q::varType ( $mixModule, 'array' ) :
                         if (isset ( $mixModule [$sAction] )) {
                             $this->registerAction ( $sController, $sAction, $mixModule [$sAction] );
                         } else {
-                            Q::throwException ( sprintf ( '数组控制器不存在 %s 方法键值', $sAction ) );
+                            \Q::throwException ( sprintf ( '数组控制器不存在 %s 方法键值', $sAction ) );
                         }
                         break;
                     
                     // 简单数据直接输出
-                    case Q::isThese ( $mixModule, [ 
+                    case \Q::isThese ( $mixModule, [ 
                             'string',
                             'integer',
                             'int',
@@ -255,13 +255,13 @@ class app {
                         break;
                     
                     default :
-                        Q::throwException ( sprintf ( '注册的控制器类型 %s 不受支持', $sController ) );
+                        \Q::throwException ( sprintf ( '注册的控制器类型 %s 不受支持', $sController ) );
                         break;
                 }
             } else {
                 // 尝试读取默认控制器
                 $sModuleClass = '\\' . $this->app_name . '\\controller\\' . $sController;
-                if (Q::classExists ( $sModuleClass, false, true )) {
+                if (\Q::classExists ( $sModuleClass, false, true )) {
                     $oModule = new $sModuleClass ( $this, $this->in );
                     
                     // 注册控制器
@@ -275,19 +275,19 @@ class app {
                 } else {
                     // 默认控制器不存在，尝试直接读取方法
                     $sActionClass = '\\' . $this->app_name . '\\controller\\' . $sController . '\\' . $sAction;
-                    if (Q::classExists ( $sActionClass, false, true )) {
+                    if (\Q::classExists ( $sActionClass, false, true )) {
                         // 注册控制器
                         $this->registerController ( $sController, new controller ( $this, $this->in ) );
                         
                         $oAction = new $sActionClass ( $this, $this->in );
-                        if (Q::isKindOf ( $oAction, 'Q\mvc\action' )) {
+                        if (\Q::isKindOf ( $oAction, 'Q\mvc\action' )) {
                             // 注册方法
                             $this->registerAction ( $sController, $sAction, [ 
                                     $oAction,
                                     'run' 
                             ] );
                         } else {
-                            Q::throwException ( Q::i18n ( '方法 %s 必须为  Q\base\action 实例', $sAction ) );
+                            \Q::throwException ( \Q::i18n ( '方法 %s 必须为  Q\base\action 实例', $sAction ) );
                         }
                     }
                 }
@@ -314,9 +314,9 @@ class app {
         if ($mixAction !== null) {
             switch (true) {
                 // 如果为控制器实例，注册为回调
-                case Q::varType ( $mixAction, 'array' ) && isset ( $mixAction [0] ) && Q::isKindOf ( $mixAction [0], 'Q\mvc\controller' ) :
+                case \Q::varType ( $mixAction, 'array' ) && isset ( $mixAction [0] ) && \Q::isKindOf ( $mixAction [0], 'Q\mvc\controller' ) :
                     try {
-                        if (Q::hasPublicMethod ( $mixAction [0], $mixAction [1] )) {
+                        if (\Q::hasPublicMethod ( $mixAction [0], $mixAction [1] )) {
                             // 执行控制器公用初始化函数
                             if (method_exists ( $mixAction [0], '__init' )) {
                                 call_user_func_array ( [ 
@@ -330,7 +330,7 @@ class app {
                                     $mixAction [1] 
                             ], $this->filterArgs_ ( $this->in ) );
                         } else {
-                            Q::throwException ( Q::i18n ( '控制器 %s 的方法 %s 不存在', $sController, $sAction ) );
+                            \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', $sController, $sAction ) );
                         }
                     } catch ( \ReflectionException $oE ) {
                         $mixAction [0]->__call ( $sAction, $this->filterArgs_ ( $this->in ) );
@@ -338,7 +338,7 @@ class app {
                     break;
                 
                 // 判断是否为回调
-                case Q::varType ( $mixAction, 'callback' ) :
+                case \Q::varType ( $mixAction, 'callback' ) :
                     call_user_func_array ( $mixAction, [ 
                             $this,
                             $this->in 
@@ -346,8 +346,8 @@ class app {
                     break;
                 
                 // 如果为方法则注册为方法
-                case Q::isKindOf ( $mixAction, 'Q\mvc\action' ) :
-                case Q::varType ( $mixAction, 'object' ) :
+                case \Q::isKindOf ( $mixAction, 'Q\mvc\action' ) :
+                case \Q::varType ( $mixAction, 'object' ) :
                     if (method_exists ( $mixAction, 'run' )) {
                         call_user_func_array ( [ 
                                 $mixAction,
@@ -357,18 +357,18 @@ class app {
                                 $this->in 
                         ] );
                     } else {
-                        Q::throwException ( '方法对象不存在执行入口  run' );
+                        \Q::throwException ( '方法对象不存在执行入口  run' );
                     }
                     break;
                 
                 // 静态类回调
                 // 数组支持,方法名即数组的键值,注册方法
-                case Q::varType ( $mixAction, 'array' ) :
-                    echo Q::jsonEncode ( $mixAction );
+                case \Q::varType ( $mixAction, 'array' ) :
+                    echo \Q::jsonEncode ( $mixAction );
                     break;
                 
                 // 简单数据直接输出
-                case Q::isThese ( $mixAction, [ 
+                case \Q::isThese ( $mixAction, [ 
                         'string',
                         'integer',
                         'int',
@@ -383,11 +383,11 @@ class app {
                     break;
                 
                 default :
-                    Q::throwException ( sprintf ( '注册的方法类型 %s 不受支持', $sAction ) );
+                    \Q::throwException ( \Q::i18n ( '注册的方法类型 %s 不受支持', $sAction ) );
                     break;
             }
         } else {
-            Q::throwException ( Q::i18n ( '控制器 %s 的方法 %s 未注册', $sController, $sAction ) );
+            \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 未注册', $sController, $sAction ) );
         }
     }
     
@@ -504,8 +504,8 @@ class app {
         
         // 开发模式不用读取缓存
         if (Q_DEVELOPMENT !== 'develop' && is_file ( $sOptionCache )) {
-            $GLOBALS ['option'] = Q::option ( ( array ) (include $sOptionCache) );
-            if ($this->app_name == project::INIT_APP && $arrOption ['url_router_cache']) {
+            $GLOBALS ['@option'] = \Q::option ( ( array ) (include $sOptionCache) );
+            if ($this->app_name == \Q\mvc\project::INIT_APP && $arrOption ['url_router_cache']) {
                 router::setFileRouters ( $arrOption ['url_router_cache'] );
             }
         } else {
@@ -545,19 +545,18 @@ class app {
             }
             
             if (! is_dir ( $this->optioncache_path )) {
-                Q::makeDir ( $this->optioncache_path );
+                \Q::makeDir ( $this->optioncache_path );
             }
             
             // 缓存所有应用名字
-            $arrOption ['~apps~'] = Q::listDir ( $this->objProject->app_path );
+            $arrOption ['~apps~'] = \Q::listDir ( $this->objProject->app_path );
             
-            if ($this->app_name == project::INIT_APP) {
-                
+            if ($this->app_name == \Q\mvc\project::INIT_APP) {
                 foreach ( $arrOption ['~apps~'] as $strApp ) {
-                    if ($strApp == project::INIT_APP) {
+                    if ($strApp == \Q\mvc\project::INIT_APP) {
                         continue;
                     }
-                    $arrOptionDir [] = str_replace ( '/' . project::INIT_APP . '/', '/' . $strApp . '/', $this->appoption_path );
+                    $arrOptionDir [] = str_replace ( '/' . \Q\mvc\project::INIT_APP . '/', '/' . $strApp . '/', $this->appoption_path );
                 }
                 
                 $arrOption ['url_router_cache'] = [ ];
@@ -584,10 +583,10 @@ class app {
             }
             
             if (! file_put_contents ( $sOptionCache, "<?php\n /* option cache */ \n return " . var_export ( $arrOption, true ) . "\n?>" )) {
-                Q::errorMessage ( sprintf ( 'Dir %s Do not have permission.', $this->optioncache_path ) );
+                \Q::errorMessage ( sprintf ( 'Dir %s Do not have permission.', $this->optioncache_path ) );
             }
             
-            $GLOBALS ['option'] = Q::option ( $arrOption );
+            $GLOBALS ['@option'] = \Q::option ( $arrOption );
             unset ( $arrOption, $sAppOptionPath, $arrOptionDir, $arrOptionExtend, $arrRouterExtend );
         }
     }
@@ -598,23 +597,23 @@ class app {
      * @return void
      */
     protected function initView_() {
-        if (! $GLOBALS ['option'] ['theme_switch']) {
-            $sThemeSet = $GLOBALS ['option'] ['theme_default'];
+        if (! $GLOBALS ['@option'] ['theme_switch']) {
+            $sThemeSet = $GLOBALS ['@option'] ['theme_default'];
         } else {
-            if ($GLOBALS ['option'] ['cookie_langtheme_app'] === TRUE) {
+            if ($GLOBALS ['@option'] ['cookie_langtheme_app'] === TRUE) {
                 $sCookieName = $this->app_name . '_theme';
             } else {
                 $sCookieName = 'theme';
             }
             
-            if (isset ( $_GET [project::ARGS_THEME] )) {
-                $sThemeSet = $_GET [project::ARGS_THEME];
-                Q::cookie ( $sCookieName, $sThemeSet );
+            if (isset ( $_GET [\Q\mvc\project::ARGS_THEME] )) {
+                $sThemeSet = $_GET [\Q\mvc\project::ARGS_THEME];
+                \Q::cookie ( $sCookieName, $sThemeSet );
             } else {
                 if (Q::cookie ( $sCookieName )) {
-                    $sThemeSet = Q::cookie ( $sCookieName );
+                    $sThemeSet = \Q::cookie ( $sCookieName );
                 } else {
-                    $sThemeSet = $GLOBALS ['option'] ['theme_default'];
+                    $sThemeSet = $GLOBALS ['@option'] ['theme_default'];
                 }
             }
         }
@@ -633,27 +632,27 @@ class app {
      * @return void
      */
     protected function initI18n_() {
-        if (! $GLOBALS ['option'] ['i18n_switch']) {
-            $sI18nSet = $GLOBALS ['option'] ['i18n_default'];
+        if (! $GLOBALS ['@option'] ['i18n_switch']) {
+            $sI18nSet = $GLOBALS ['@option'] ['i18n_default'];
             i18n::setContext ( $sI18nSet );
         } else {
-            if ($GLOBALS ['option'] ['cookie_langtheme_app'] === TRUE) {
+            if ($GLOBALS ['@option'] ['cookie_langtheme_app'] === TRUE) {
                 $sCookieName = $this->app_name . '_i18n';
             } else {
                 $sCookieName = 'i18n';
             }
             i18n::setCookieName ( $sCookieName );
-            i18n::setDefaultContext ( $GLOBALS ['option'] ['i18n_default'] );
+            i18n::setDefaultContext ( $GLOBALS ['@option'] ['i18n_default'] );
             $sI18nSet = i18n::parseContext ();
         }
         
         // 判断是否为默认主题，非默认主题载入语言包
-        if ($GLOBALS ['option'] ['i18n_develop'] == $sI18nSet) {
+        if ($GLOBALS ['@option'] ['i18n_develop'] == $sI18nSet) {
             return;
         }
         
         $this->appi18n_name = $sI18nSet;
-        Q::$booI18nOn = TRUE; // 开启语言
+        \Q::$booI18nOn = TRUE; // 开启语言
         $sCacheFile = '/' . $sI18nSet . '/' . $this->i18ncache_name . '.php';
         
         // 开发模式不用读取缓存
@@ -739,7 +738,7 @@ class app {
      *
      */
     protected function filterArgs_($arrArgs) {
-        unset ( $arrArgs [project::ARGS_APP], $arrArgs [project::ARGS_CONTROLLER], $arrArgs [project::ARGS_ACTION] );
+        unset ( $arrArgs [\Q\mvc\project::ARGS_APP], $arrArgs [\Q\mvc\project::ARGS_CONTROLLER], $arrArgs [\Q\mvc\project::ARGS_ACTION] );
         return $arrArgs;
     }
     

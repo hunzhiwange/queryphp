@@ -35,7 +35,7 @@ class cookie {
                 'http_only' => false 
         ], $in );
         
-        $sName = ($in ['prefix'] ? $GLOBALS ['option'] ['cookie_prefix'] : '') . $sName;
+        $sName = ($in ['prefix'] ? $GLOBALS ['@option'] ['cookie_prefix'] : '') . $sName;
         
         if ($mixValue === null || $nLife < 0) {
             $nLife = - 1;
@@ -45,13 +45,13 @@ class cookie {
         } else {
             $_COOKIE [$sName] = $mixValue;
             if ($nLife !== NULL && $nLife == 0) {
-                $nLife = $GLOBALS ['option'] ['cookie_expire'];
+                $nLife = $GLOBALS ['@option'] ['cookie_expire'];
             }
         }
         
         $nLife = $nLife > 0 ? time () + $nLife : ($nLife < 0 ? time () - 31536000 : null);
-        $sPath = $in ['http_only'] && PHP_VERSION < '5.2.0' ? $GLOBALS ['option'] ['cookie_path'] . ';HttpOnly' : $GLOBALS ['option'] ['cookie_path'];
-        $in ['cookie_domain'] = $in ['cookie_domain'] !== null ? $in ['cookie_domain'] : $GLOBALS ['option'] ['cookie_domain'];
+        $sPath = $in ['http_only'] && PHP_VERSION < '5.2.0' ? $GLOBALS ['@option'] ['cookie_path'] . ';HttpOnly' : $GLOBALS ['@option'] ['cookie_path'];
+        $in ['cookie_domain'] = $in ['cookie_domain'] !== null ? $in ['cookie_domain'] : $GLOBALS ['@option'] ['cookie_domain'];
         
         $nSecure = $_SERVER ['SERVER_PORT'] == 443 ? 1 : 0;
         if (PHP_VERSION < '5.2.0') {
@@ -69,7 +69,7 @@ class cookie {
      * @return mixed
      */
     public static function getCookie($sName, $bPrefix = true) {
-        $sName = ($bPrefix ? $GLOBALS ['option'] ['cookie_prefix'] : '') . $sName;
+        $sName = ($bPrefix ? $GLOBALS ['@option'] ['cookie_prefix'] : '') . $sName;
         return isset ( $_COOKIE [$sName] ) ? $_COOKIE [$sName] : null;
     }
     
@@ -97,8 +97,8 @@ class cookie {
     public static function clearCookie($bOnlyDeletePrefix = true, $sCookieDomain = null) {
         $nCookie = count ( $_COOKIE );
         foreach ( $_COOKIE as $sKey => $Val ) {
-            if ($bOnlyDeletePrefix === true && $GLOBALS ['option'] ['cookie_prefix']) {
-                if (strpos ( $sKey, $GLOBALS ['option'] ['cookie_prefix'] ) === 0) {
+            if ($bOnlyDeletePrefix === true && $GLOBALS ['@option'] ['cookie_prefix']) {
+                if (strpos ( $sKey, $GLOBALS ['@option'] ['cookie_prefix'] ) === 0) {
                     self::deleteCookie ( $sKey, $sCookieDomain, false );
                 }
             } else {

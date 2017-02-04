@@ -10,7 +10,7 @@
  */
 namespace Q\view;
 
-use Q, Q\view\parsers, Q\mvc\view;
+use Q\view\parsers, Q\mvc\view;
 
 /**
  * 模板处理类
@@ -41,7 +41,7 @@ class theme {
             $sFile = view::parseDefaultFile ( $sFile );
         }
         if (! is_file ( $sFile )) {
-            Q::throwException ( Q::i18n ( '模板文件 %s 不存在', $sFile ) );
+            \Q::throwException ( \Q::i18n ( '模板文件 %s 不存在', $sFile ) );
         }
         
         // 变量赋值
@@ -62,12 +62,12 @@ class theme {
                 $sChildCache = file_get_contents ( $sCachePath );
                 
                 // 替换
-                $sTargetContent = preg_replace ( "/<!--<\#\#\#\#incl\*" . $sMd5 . "\*ude\#\#\#\#>-->(.*?)<!--<\/\#\#\#\#incl\*" . $sMd5 . "\*ude\#\#\#\#\/>-->/s", substr ( $sChildCache, strpos ( $sChildCache, Q::osNewline () ) - 1 ), $sTargetContent );
+                $sTargetContent = preg_replace ( "/<!--<\#\#\#\#incl\*" . $sMd5 . "\*ude\#\#\#\#>-->(.*?)<!--<\/\#\#\#\#incl\*" . $sMd5 . "\*ude\#\#\#\#\/>-->/s", substr ( $sChildCache, strpos ( $sChildCache, \Q::osNewline () ) - 1 ), $sTargetContent );
                 file_put_contents ( $sTargetCache, $sTargetContent );
                 
                 unset ( $sChildCache, $sTargetContent );
             } else {
-                Q::throwException ( sprintf ( 'source %s and target cache %s is not a valid path', $sFile, $sTargetCache ) );
+                \Q::throwException ( sprintf ( 'source %s and target cache %s is not a valid path', $sFile, $sTargetCache ) );
             }
         }
 
@@ -128,12 +128,12 @@ class theme {
         }
         
         // 编译过期时间为 -1 表示永不过期
-        if ($GLOBALS ['option'] ['theme_cache_lifetime'] === - 1) {
+        if ($GLOBALS ['@option'] ['theme_cache_lifetime'] === - 1) {
             return false;
         }
         
         // 缓存时间到期
-        if (filemtime ( $sCachePath ) + intval ( $GLOBALS ['option'] ['theme_cache_lifetime'] ) < time ()) {
+        if (filemtime ( $sCachePath ) + intval ( $GLOBALS ['@option'] ['theme_cache_lifetime'] ) < time ()) {
             return true;
         }
         
@@ -157,9 +157,9 @@ class theme {
         $sFile = str_replace ( '//', '/', $sFile );
         
         // 统一缓存文件
-        $sFile = basename ( $sFile, '.' . Q::getExtName ( $sFile ) ) . '.' . md5 ( $sFile ) . '.php';
+        $sFile = basename ( $sFile, '.' . \Q::getExtName ( $sFile ) ) . '.' . md5 ( $sFile ) . '.php';
         
         // 返回真实路径
-        return Q::app ()->themecache_path . '/' . $sFile;
+        return \Q::app ()->themecache_path . '/' . $sFile;
     }
 }

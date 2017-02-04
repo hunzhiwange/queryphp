@@ -10,7 +10,7 @@
  */
 namespace Q\view;
 
-use Q, Q\mvc\view;
+use Q\mvc\view;
 
 /**
  * 编译器列表
@@ -317,7 +317,7 @@ class compilers {
                 } elseif ($nNum == 3) {
                     $sResult = "\${$arrArray[1]} => \${$arrArray[2]}";
                 } else {
-                    Q::throwException ( Q::i18n ( '参数错误' ) );
+                    \Q::throwException ( \Q::i18n ( '参数错误' ) );
                 }
                 
                 return "if (is_array ( \${$arrArray[0]} ) ) : foreach( \${$arrArray[0]} as $sResult )";
@@ -677,12 +677,12 @@ out += '";
         // 替换一下，防止迁移的时候由于物理路径的原因，需要重新生成编译文件
         $arrAttr ['file'] = view::parseFile ( $arrAttr ['file'], $arrAttr ['ext'] );
         if (strpos ( $arrAttr ['file'], '$' ) !== 0 && strpos ( $arrAttr ['file'], '(' ) === false) {
-            $arrAttr ['file'] = str_replace ( Q::tidyPath ( Q::app ()->apptheme_path . '/' . Q::app ()->apptheme_name ), '$APP->apptheme_path.\'/\'.$APP->apptheme_name.\'', Q::tidyPath ( $arrAttr ['file'] ) );
+            $arrAttr ['file'] = str_replace ( \Q::tidyPath ( \Q::app ()->apptheme_path . '/' . \Q::app ()->apptheme_name ), '$APP->apptheme_path.\'/\'.$APP->apptheme_name.\'', \Q::tidyPath ( $arrAttr ['file'] ) );
             $arrAttr ['file'] = (strpos ( $arrAttr ['file'], '$' ) === 0 ? '' : '\'') . $arrAttr ['file'] . '\'';
         }
         
         // 子模板合并到主模板
-        if ($GLOBALS ['option'] ['theme_cache_children']) {
+        if ($GLOBALS ['@option'] ['theme_cache_children']) {
             $sMd5 = md5 ( $arrAttr ['file'] );
             $sCompiled = "<!--<####incl*" . $sMd5 . "*ude####>-->";
             $sCompiled .= '<?' . 'php $this->display( ' . $arrAttr ['file'] . ', true, __FILE__,\'' . $sMd5 . '\'   ); ?' . '>';
@@ -959,7 +959,7 @@ out += '";
                 }
                 
                 if ($bIsObject === FALSE) { // 非对象
-                    switch (strtolower ( $GLOBALS ['option'] ['theme_var_identify'] )) {
+                    switch (strtolower ( $GLOBALS ['@option'] ['theme_var_identify'] )) {
                         case 'array' : // 识别为数组
                             $sName = '$' . $arrVars [0] . '[\'' . $arrVars [1] . '\']' . ($this->arrayHandler_ ( $arrVars ));
                             break;
@@ -1003,7 +1003,7 @@ out += '";
     protected function parseVarFunction_($sName, $arrVar, $bJs = false) {
         $nLen = count ( $arrVar );
         // 取得模板禁止使用函数列表
-        $arrNot = explode ( ',', $GLOBALS ['option'] ['theme_notallows_func' . ($bJs ? '' : '_js')] );
+        $arrNot = explode ( ',', $GLOBALS ['@option'] ['theme_notallows_func' . ($bJs ? '' : '_js')] );
         for($nI = 0; $nI < $nLen; $nI ++) {
             if (0 === stripos ( $arrVar [$nI], 'default=' )) {
                 $arrArgs = explode ( '=', $arrVar [$nI], 2 );
@@ -1121,19 +1121,19 @@ out += '";
         
         // 验证标签的属性值
         if ($arrAttribute ['is_attribute'] !== true) {
-            Q::throwException ( Q::i18n ( '标签属性类型验证失败' ) );
+            \Q::throwException ( \Q::i18n ( '标签属性类型验证失败' ) );
         }
         
         // 验证必要属性
         $arrTag = $bJsNode === true ? self::$arrJsTag : self::$arrNodeTag;
         if (! isset ( $arrTag [$arrTheme ['name']] )) {
-            Q::throwException ( Q::i18n ( '标签 %s 未定义', $arrTheme ['name'] ) );
+            \Q::throwException ( \Q::i18n ( '标签 %s 未定义', $arrTheme ['name'] ) );
         }
         
         foreach ( $arrTag [$arrTheme ['name']] ['required'] as $sName ) {
             $sName = strtolower ( $sName );
             if (! isset ( $arrAttribute ['attribute_list'] [$sName] )) {
-                Q::throwException ( Q::i18n ( '节点 “%s” 缺少必须的属性：“%s”', $arrTheme ['name'], $sName ) );
+                \Q::throwException ( \Q::i18n ( '节点 “%s” 缺少必须的属性：“%s”', $arrTheme ['name'], $sName ) );
             }
         }
         
@@ -1181,7 +1181,7 @@ out += '";
      *
      */
     static protected function escapeCharacter_(&$sTxt, $bEsc = true) {
-        $sTxt = Q::escapeCharacter ( $sTxt, $bEsc );
+        $sTxt = \Q::escapeCharacter ( $sTxt, $bEsc );
         if (! $bEsc) {
             $sTxt = str_replace ( [ 
                     ' nheq ',

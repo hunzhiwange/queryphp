@@ -10,8 +10,6 @@
  */
 namespace Q\structure;
 
-use Q;
-
 /**
  * 数组转对象
  *
@@ -49,7 +47,7 @@ class object implements Iterator, ArrayAccess, Countable {
      * @param array $arrArgs            
      */
     public function __call($sMethod, $arrArgs) {
-        Q::throwException ( sprintf ( 'Method %s is not implemented', $sMethod ) );
+        \Q::throwException ( sprintf ( 'Method %s is not implemented', $sMethod ) );
     }
     
     /**
@@ -210,7 +208,7 @@ class object implements Iterator, ArrayAccess, Countable {
     public function each() {
         $arrArgs = func_get_args ();
         if (empty ( $arrArgs [0] ) || ! is_callable ( $arrArgs [0] )) {
-            Q::throwException ( 'The first parameter must be a callback' );
+            \Q::throwException ( 'The first parameter must be a callback' );
         }
         
         if (! empty ( $arrArgs [1] ) && is_string ( $arrArgs [1] )) {

@@ -2,7 +2,7 @@
 
 namespace home\controller;
 
-use Q, Q\mvc\controller;
+use Q\mvc\controller;
 
 class topic extends controller {
     

@@ -10,8 +10,6 @@
  */
 namespace Q\i18n;
 
-use Q, Q\mvc\project;
-
 /**
  * 语言管理类
  *
@@ -75,7 +73,7 @@ class i18n {
      */
     static public function addI18n($sI18nName, $arrData = []) {
         if (! $sI18nName || ! is_string ( $sI18nName )) {
-            Q::errorMessage ( 'I18n name not allowed empty!' );
+            \Q::errorMessage ( 'I18n name not allowed empty!' );
         }
         
         if (array_key_exists ( $sI18nName, self::$arrText )) {
@@ -93,19 +91,19 @@ class i18n {
     static public function parseContext() {
         $sCookieName = self::getCookieName ();
         
-        if (isset ( $_GET [project::ARGS_I18N] )) {
-            $sI18nSet = $_GET [project::ARGS_I18N];
-            Q::cookie ( $sCookieName, $sI18nSet );
+        if (isset ( $_GET [\Q\mvc\project::ARGS_I18N] )) {
+            $sI18nSet = $_GET [\Q\mvc\project::ARGS_I18N];
+            \Q::cookie ( $sCookieName, $sI18nSet );
         } elseif ($sCookieName) {
-            $sI18nSet = Q::cookie ( $sCookieName );
+            $sI18nSet = \Q::cookie ( $sCookieName );
             if (empty ( $sI18nSet )) {
-                $sI18nSet = $GLOBALS ['option'] ['i18n_default'];
+                $sI18nSet = $GLOBALS ['@option'] ['i18n_default'];
             }
-        } elseif ($GLOBALS ['option'] ['i18n_auto_accept'] && isset ( $_SERVER ['HTTP_ACCEPT_LANGUAGE'] )) {
+        } elseif ($GLOBALS ['@option'] ['i18n_auto_accept'] && isset ( $_SERVER ['HTTP_ACCEPT_LANGUAGE'] )) {
             preg_match ( '/^([a-z\-]+)/i', $_SERVER ['HTTP_ACCEPT_LANGUAGE'], $arrMatches );
             $sI18nSet = $arrMatches [1];
         } else {
-            $sI18nSet = $GLOBALS ['option'] ['i18n_default'];
+            $sI18nSet = $GLOBALS ['@option'] ['i18n_default'];
         }
         
         self::setContext ( $sI18nSet );

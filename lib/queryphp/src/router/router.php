@@ -10,8 +10,6 @@
  */
 namespace Q\router;
 
-use Q;
-
 /**
  * 路由解析
  *
@@ -107,7 +105,7 @@ class router {
         ], self::mergeIn_ ( self::$arrGroupArgs, $in ) );
         
         // 支持数组传入
-        if (! is_array ( $mixRouter ) || Q::oneImensionArray ( $mixRouter )) {
+        if (! is_array ( $mixRouter ) || \Q::oneImensionArray ( $mixRouter )) {
             $strTemp = $mixRouter;
             $mixRouter = [ ];
             if (is_string ( $strTemp )) {
@@ -399,7 +397,7 @@ class router {
         $arrNextParse = [ ];
         
         // 解析域名
-        if ($GLOBALS ['option'] ['url_domain_on'] === true) {
+        if ($GLOBALS ['@option'] ['url_domain_on'] === true) {
             if (($arrParseData = self::parseDomain_ ( $arrNextParse )) !== false) {
                 return $arrParseData;
             }
@@ -417,20 +415,20 @@ class router {
      * @return void
      */
     private static function parseDomain_(&$arrNextParse) {
-        $strHost = Q::getHost ();
+        $strHost = \Q::getHost ();
         
         $booFindDomain = false;
         foreach ( self::$arrDomains as $sKey => $arrDomains ) {
             
             // 直接匹配成功
-            if ($strHost === $sKey || $strHost === $sKey . '.' . $GLOBALS ['option'] ['url_domain_top']) {
+            if ($strHost === $sKey || $strHost === $sKey . '.' . $GLOBALS ['@option'] ['url_domain_top']) {
                 $booFindDomain = true;
             }            
 
             // 域名参数支持
             elseif (strpos ( $sKey, '{' ) !== false && preg_match_all ( "/{(.+?)}/isx", $sKey, $arrRes )) {
-                if (strpos ( $sKey, $GLOBALS ['option'] ['url_domain_top'] ) === false) {
-                    $sKey = $sKey . '.' . $GLOBALS ['option'] ['url_domain_top'];
+                if (strpos ( $sKey, $GLOBALS ['@option'] ['url_domain_top'] ) === false) {
+                    $sKey = $sKey . '.' . $GLOBALS ['@option'] ['url_domain_top'];
                 }
                 
                 // 解析匹配正则
@@ -461,7 +459,7 @@ class router {
                     $arrNextParse = $arrDomains ['rule'];
                     return false;
                 } else {
-                    $arrData = Q::parseMvcUrl ( $arrDomains ['main'] ['url'] );
+                    $arrData = \Q::parseMvcUrl ( $arrDomains ['main'] ['url'] );
                     
                     // 额外参数[放入 GET]
                     if (is_array ( $arrDomains ['main'] ['params'] ) && $arrDomains ['main'] ['params']) {
@@ -503,7 +501,7 @@ class router {
                     foreach ( $arrRes [1] as $nIndex => $sWhere ) {
                         $arrRouter ['regex'] = str_replace ( '{' . $sWhere . '}', '(' . (isset ( $arrRouter ['where'] [$sWhere] ) ? $arrRouter ['where'] [$sWhere] : self::DEFAULT_REGEX) . ')', $arrRouter ['regex'] );
                     }
-                    $arrRouter ['regex'] = '/^\/' . $arrRouter ['regex'] . ((isset ( $arrRouter ['strict'] ) ? $arrRouter ['strict'] : $GLOBALS ['option'] ['url_router_strict']) ? '$' : '') . '/';
+                    $arrRouter ['regex'] = '/^\/' . $arrRouter ['regex'] . ((isset ( $arrRouter ['strict'] ) ? $arrRouter ['strict'] : $GLOBALS ['@option'] ['url_router_strict']) ? '$' : '') . '/';
                     $arrRouter ['args'] = $arrRes [1];
                     
                     // 匹配结果
@@ -515,7 +513,7 @@ class router {
                 }
                 
                 if ($booFindFouter === true) {
-                    $arrData = Q::parseMvcUrl ( $arrRouter ['url'] );
+                    $arrData = \Q::parseMvcUrl ( $arrRouter ['url'] );
                     
                     // 额外参数
                     if (is_array ( $arrRouter ['params'] ) && $arrRouter ['params']) {
@@ -547,7 +545,7 @@ class router {
      * @return string
      */
     private static function formatRegex_($sRegex) {
-        $sRegex = Q::escapeRegexCharacter ( $sRegex );
+        $sRegex = \Q::escapeRegexCharacter ( $sRegex );
         
         // 还原变量特殊标记
         return str_replace ( [ 

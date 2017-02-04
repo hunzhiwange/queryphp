@@ -10,8 +10,6 @@
  */
 namespace Q\mvc;
 
-use Q;
-
 /**
  * 基类方法器
  *
@@ -33,7 +31,7 @@ abstract class action {
      * @param 过滤后参数 $in            
      */
     public function __construct($oApp = null, $in = []) {
-        ! $oApp && $oApp = Q::app ();
+        ! $oApp && $oApp = \Q::app ();
         if (! ($this->objController = $oApp->getController ( $oApp->controller_name ))) {
             $this->objController = new controller ( $oApp, $in );
         }

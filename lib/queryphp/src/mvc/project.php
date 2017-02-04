@@ -10,7 +10,7 @@
  */
 namespace Q\mvc;
 
-use Q, Q\router\url;
+use Q\router\url;
 
 /**
  * 项目管理
@@ -90,18 +90,18 @@ class project {
     const ARGS_ACTION = 'a';
     
     /**
-     * 方法参数名
+     * 主题参数名
      *
      * @var string
      */
-    const ARGS_THEME = '~theme~';
+    const ARGS_THEME = '@theme';
     
     /**
-     * 方法参数名
+     * 国际化参数名
      *
      * @var string
      */
-    const ARGS_I18N = '~i18n~';
+    const ARGS_I18N = '@i18n';
     
     /**
      * 构造函数
@@ -117,13 +117,13 @@ class project {
          */
         
         // 移除自动转义和过滤全局变量
-        Q::stripslashesMagicquotegpc ();
+        \Q::stripslashesMagicquotegpc ();
         if (isset ( $_REQUEST ['GLOBALS'] ) or isset ( $_FILES ['GLOBALS'] )) {
-            Q::errorMessage ( 'GLOBALS not allowed!' );
+            \Q::errorMessage ( 'GLOBALS not allowed!' );
         }
         
         if (! isset ( $in ['project_path'] ) || ! is_dir ( $in ['project_path'] )) {
-            Q::errorMessage ( "project dir is not exists" );
+            \Q::errorMessage ( "project dir is not exists" );
         }
         $this->project_path = $in ['project_path'];
         
@@ -131,7 +131,7 @@ class project {
         $this->initProject_ ( $in );
         
         // 注册公共组件命名空间
-        Q::import ( 'com', $this->com_path, [ 
+        \Q::import ( 'com', $this->com_path, [ 
                 'ignore' => [ 
                         'i18n',
                         'option',
@@ -140,7 +140,7 @@ class project {
         ] );
         
         // 尝试导入 Composer PSR-4
-        Q::importComposer ( $this->vendor_path );
+        \Q::importComposer ( $this->vendor_path );
         
         // 载入 project 引导文件
         if (is_file ( ($strBootstrap = $this->com_path . '/bootstrap.php') )) {
@@ -158,7 +158,7 @@ class project {
         self::$in = $this->checkIn_ ( url::run ()->in () );
         
         // 解析应用 URL 路径
-        if (! Q::isCli ()) {
+        if (! \Q::isCli ()) {
             $this->initUrl_ ();
         }
         
@@ -170,7 +170,7 @@ class project {
         }
         
         // 创建 & 注册
-        self::registerApp ( $objApp = app::run ( $this, self::$in ['app'], $in ), self::$in ['app'] );
+        self::registerApp ( ($objApp = app::run ( $this, self::$in ['app'], $in )), self::$in ['app'] );
         
         // 执行
         $objApp->app ();
@@ -203,7 +203,7 @@ class project {
         if (array_key_exists ( $sName, $this->arrProp )) {
             return $this->arrProp [$sName];
         } else {
-            Q::throwException ( sprintf ( 'The prop %s is disallowed when you get!', $sName ) );
+            \Q::throwException ( sprintf ( 'The prop %s is disallowed when you get!', $sName ) );
         }
     }
     
@@ -222,7 +222,7 @@ class project {
             $this->arrProp [$sName] = $sVal;
             return $sOld;
         } else {
-            Q::throwException ( sprintf ( 'The prop %s is disallowed when you set!', $sName ) );
+            \Q::throwException ( sprintf ( 'The prop %s is disallowed when you set!', $sName ) );
         }
     }
     
@@ -291,7 +291,7 @@ class project {
         $sEnterBak = $sEnter = $this->url_enter;
         if (! $sEnter) {
             // php 文件
-            if (Q::isCgi ()) {
+            if (\Q::isCgi ()) {
                 $arrTemp = explode ( '.php', $_SERVER ["PHP_SELF"] ); // CGI/FASTCGI模式下
                 $sEnter = rtrim ( str_replace ( $_SERVER ["HTTP_HOST"], '', $arrTemp [0] . '.php' ), '/' );
             } else {
@@ -300,7 +300,7 @@ class project {
             $sEnterBak = $sEnter;
             
             // 如果为重写模式
-            if ($GLOBALS ['option'] ['url_rewrite'] === TRUE) {
+            if ($GLOBALS ['@option'] ['url_rewrite'] === TRUE) {
                 $sEnter = dirname ( $sEnter );
                 if ($sEnter == '\\') {
                     $sEnter = '/';

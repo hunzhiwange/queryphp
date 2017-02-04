@@ -10,8 +10,6 @@
  */
 namespace Q\mvc;
 
-use Q;
-
 /**
  * 基类控制器
  *
@@ -49,7 +47,7 @@ class controller {
     public function __construct($oApp = null, $in = []) {
         // 检查视图和APP
         if (! $oApp) {
-            $oApp = Q::app ();
+            $oApp = \Q::app ();
         }
         if (! self::$oShareView) {
             self::createShareView ();
@@ -106,7 +104,7 @@ class controller {
             $sActionNameOld = $sActionName;
             $sActionName = get_class ( $this ) . '\\' . $sActionName;
             
-            if (Q::classExists ( $sActionName, false, true )) {
+            if (\Q::classExists ( $sActionName, false, true )) {
                 $oAction = new $sActionName ();
                 if (method_exists ( $oAction, 'run' )) {
                     $oAction = [ 
@@ -120,10 +118,10 @@ class controller {
                     // 执行
                     call_user_func_array ( $oAction, $arrArgs );
                 } else {
-                    Q::throwException ( Q::i18n ( 'Q\mvc\action 对象不存在执行入口  run' ) );
+                    \Q::throwException ( \Q::i18n ( 'Q\mvc\action 对象不存在执行入口  run' ) );
                 }
             } else {
-                Q::throwException ( Q::i18n ( '方法 %s 不存在', $sActionNameOld ) );
+                \Q::throwException ( \Q::i18n ( '方法 %s 不存在', $sActionNameOld ) );
             }
         }
     }
@@ -184,13 +182,13 @@ class controller {
      */
     protected function errorMessage($sMessage = '', $in = []) {
         $in = array_merge ( [ 
-                'message' => $sMessage ?  : Q::i18n ( '操作失败' ),
+                'message' => $sMessage ?  : \Q::i18n ( '操作失败' ),
                 'url' => '',
                 'time' => 3 
         ], $in );
         
         $this->assign ( $in );
-        $this->display ( $GLOBALS ['option'] ['theme_action_fail'] );
+        $this->display ( $GLOBALS ['@option'] ['theme_action_fail'] );
         exit ();
     }
     
@@ -207,13 +205,13 @@ class controller {
      */
     protected function successMessage($sMessage = '', $in = []) {
         $in = array_merge ( [ 
-                'message' => $sMessage ?  : Q::i18n ( '操作成功' ),
+                'message' => $sMessage ?  : \Q::i18n ( '操作成功' ),
                 'url' => '',
                 'time' => 1 
         ], $in );
         
         $this->assign ( $in );
-        $this->display ( $GLOBALS ['option'] ['theme_action_success'] );
+        $this->display ( $GLOBALS ['@option'] ['theme_action_success'] );
         exit ();
     }
     
@@ -234,7 +232,7 @@ class controller {
         ], $in );
         
         header ( "Content-Type:text/html; charset=utf-8" );
-        exit ( Q::jsonEncode ( $in ) );
+        exit ( \Q::jsonEncode ( $in ) );
     }
     
     /**
@@ -254,7 +252,7 @@ class controller {
                 'time' => 0 
         ], $in );
         
-        Q::urlRedirect ( Q::url ( $sUrl, $in ['params'] ), $in ['time'], $in ['message'] );
+        \Q::urlRedirect ( \Q::url ( $sUrl, $in ['params'] ), $in ['time'], $in ['message'] );
     }
     
     /**
@@ -267,14 +265,14 @@ class controller {
     public function __call($sMethod = '', $arrArgs = []) {
         switch ($sMethod) {
             case 'isPost' :
-                return Q::isPost ();
+                return \Q::isPost ();
             case 'isGet' :
-                return Q::isGet ();
+                return \Q::isGet ();
             case 'in' :
                 if (! empty ( $arrArgs [0] )) {
-                    return Q::in ( $arrArgs [0], isset ( $arrArgs [1] ) ? $arrArgs [1] : 'R' );
+                    return \Q::in ( $arrArgs [0], isset ( $arrArgs [1] ) ? $arrArgs [1] : 'R' );
                 } else {
-                    Q::throwException ( 'Can not find method.' );
+                    \Q::throwException ( 'Can not find method.' );
                 }
             default :
                 try {

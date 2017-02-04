@@ -48,6 +48,6 @@ if (function_exists ( 'spl_autoload_register' )) {
     ] );
 } else {
     function __autoload($sClassName) {
-        Q::autoLoad ( $sClassName );
+        \Q::autoLoad ( $sClassName );
     }
 }

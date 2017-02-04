@@ -10,8 +10,6 @@
  */
 namespace Q\router;
 
-use Q, Q\mvc\project;
-
 /**
  * URL分析器
  *
@@ -47,16 +45,16 @@ class url {
      */
     public function __construct() {
         // 非命令行模式
-        if (! Q::isCli ()) {
+        if (! \Q::isCli ()) {
             $this->parseUrlWeb_ ();
         } else {
             $this->parseUrlCli_ ();
         }
         
         // 解析URL
-        $this->getApp_ ( project::ARGS_APP );
-        $this->getController_ ( project::ARGS_CONTROLLER );
-        $this->getAction_ ( project::ARGS_ACTION );
+        $this->getApp_ ( \Q\mvc\project::ARGS_APP );
+        $this->getController_ ( \Q\mvc\project::ARGS_CONTROLLER );
+        $this->getAction_ ( \Q\mvc\project::ARGS_ACTION );
         
         $_REQUEST = array_merge ( $_POST, $_GET );
     }
@@ -92,12 +90,12 @@ class url {
         $_SERVER ['REQUEST_URI'] = isset ( $_SERVER ['REQUEST_URI'] ) ? $_SERVER ['REQUEST_URI'] : $_SERVER ["HTTP_X_REWRITE_URL"]; // For IIS
                                                                                                                                     
         // 分析 pathinfo
-        if ($GLOBALS ['option'] ['url_model'] == 'pathinfo') {
+        if ($GLOBALS ['@option'] ['url_model'] == 'pathinfo') {
             // 分析pathinfo
             $this->filterPathInfo_ ();
             
             // 解析结果
-            $_GET = array_merge ( $_GET, $GLOBALS ['option'] ['url_start_router'] === true && ($arrRouter = router::parse ()) ? $arrRouter : $this->parsePathInfo_ () );
+            $_GET = array_merge ( $_GET, $GLOBALS ['@option'] ['url_start_router'] === true && ($arrRouter = router::parse ()) ? $arrRouter : $this->parsePathInfo_ () );
         }
     }
     
@@ -119,18 +117,18 @@ class url {
         if ($argv) {
             
             // app
-            if (in_array ( $argv [0], $GLOBALS ['option'] ['~apps~'] )) {
-                $_GET [project::ARGS_APP] = array_shift ( $argv );
+            if (in_array ( $argv [0], $GLOBALS ['@option'] ['~apps~'] )) {
+                $_GET [\Q\mvc\project::ARGS_APP] = array_shift ( $argv );
             }
             
             // controller
             if ($argv) {
-                $_GET [project::ARGS_CONTROLLER] = array_shift ( argv );
+                $_GET [\Q\mvc\project::ARGS_CONTROLLER] = array_shift ( argv );
             }
             
             // 方法
             if ($argv) {
-                $_GET [project::ARGS_ACTION] = array_shift ( argv );
+                $_GET [\Q\mvc\project::ARGS_ACTION] = array_shift ( argv );
             }
             
             // 剩余参数
@@ -139,7 +137,7 @@ class url {
                     if (isset ( $argv [$nI + 1] )) {
                         $_GET [$argv [$nI]] = ( string ) $argv [++ $nI];
                     } elseif ($nI == 0) {
-                        $_GET [$_GET [project::ARGS_ACTION]] = ( string ) $argv [$nI];
+                        $_GET [$_GET [\Q\mvc\project::ARGS_ACTION]] = ( string ) $argv [$nI];
                     }
                 }
             }
@@ -154,18 +152,18 @@ class url {
     public function parsePathInfo_() {
         $arrPathInfo = [ ];
         $sPathInfo = $_SERVER ['PATH_INFO'];
-        $arrPaths = explode ( $GLOBALS ['option'] ['url_pathinfo_depr'], trim ( $sPathInfo, '/' ) );
+        $arrPaths = explode ( $GLOBALS ['@option'] ['url_pathinfo_depr'], trim ( $sPathInfo, '/' ) );
         
-        if (in_array ( $arrPaths [0], $GLOBALS ['option'] ['~apps~'] )) {
-            $arrPathInfo [project::ARGS_APP] = array_shift ( $arrPaths );
+        if (in_array ( $arrPaths [0], $GLOBALS ['@option'] ['~apps~'] )) {
+            $arrPathInfo [\Q\mvc\project::ARGS_APP] = array_shift ( $arrPaths );
         }
         
-        if (! isset ( $_GET [project::ARGS_CONTROLLER] )) { // 还没有定义控制器名称
-            $arrPathInfo [project::ARGS_CONTROLLER] = array_shift ( $arrPaths );
+        if (! isset ( $_GET [\Q\mvc\project::ARGS_CONTROLLER] )) { // 还没有定义控制器名称
+            $arrPathInfo [\Q\mvc\project::ARGS_CONTROLLER] = array_shift ( $arrPaths );
         }
         
-        if (! isset ( $_GET [project::ARGS_ACTION] )) { // 还没有定义方法名称
-            $arrPathInfo [project::ARGS_ACTION] = array_shift ( $arrPaths );
+        if (! isset ( $_GET [\Q\mvc\project::ARGS_ACTION] )) { // 还没有定义方法名称
+            $arrPathInfo [\Q\mvc\project::ARGS_ACTION] = array_shift ( $arrPaths );
         }
         
         for($nI = 0, $nCnt = count ( $arrPaths ); $nI < $nCnt; $nI ++) {
@@ -184,7 +182,7 @@ class url {
      * @return string
      */
     protected function getApp_($sVar) {
-        return $_GET [$sVar] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_app']);
+        return $_GET [$sVar] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['@option'] ['default_app']);
     }
     
     /**
@@ -194,7 +192,7 @@ class url {
      * @return string
      */
     protected function getController_($sVar) {
-        return $_GET [$sVar] = ! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_controller'];
+        return $_GET [$sVar] = ! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['@option'] ['default_controller'];
     }
     
     /**
@@ -204,7 +202,7 @@ class url {
      * @return string
      */
     protected function getAction_($sVar) {
-        return $_GET [$sVar] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['option'] ['default_action']);
+        return $_GET [$sVar] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['@option'] ['default_action']);
     }
     
     // ######################################################
@@ -339,8 +337,8 @@ class url {
      * @return string
      */
     private function clearHtmlSuffix_($sVal) {
-        if ($GLOBALS ['option'] ['url_html_suffix'] && ! empty ( $sVal )) {
-            $sSuffix = substr ( $GLOBALS ['option'] ['url_html_suffix'], 1 );
+        if ($GLOBALS ['@option'] ['url_html_suffix'] && ! empty ( $sVal )) {
+            $sSuffix = substr ( $GLOBALS ['@option'] ['url_html_suffix'], 1 );
             $sVal = preg_replace ( '/\.' . $sSuffix . '$/', '', $sVal );
         }
         return $sVal;

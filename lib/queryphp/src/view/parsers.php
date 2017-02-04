@@ -10,7 +10,7 @@
  */
 namespace Q\view;
 
-use Q, Q\structure\stack;
+use Q\structure\stack;
 
 /**
  * 分析模板
@@ -226,7 +226,7 @@ class parsers {
      */
     public function doCombile($sFile, $sCachePath, $bReturn = false) {
         if (! is_file ( $sFile )) {
-            Q::throwException ( printf ( 'file %s is not exits', $sFile ) );
+            \Q::throwException ( printf ( 'file %s is not exits', $sFile ) );
         }
         
         // 源码
@@ -254,7 +254,7 @@ class parsers {
         }
         
         // 清理模板编译文件空格
-        if ($GLOBALS ['option'] ['theme_strip_space'] === true) {
+        if ($GLOBALS ['@option'] ['theme_strip_space'] === true) {
             
             /**
              * 清理 HTML 清除换行符,清除制表符,去掉注释标记
@@ -286,7 +286,7 @@ class parsers {
         }
         
         // 返回编译文件
-        $sOsNewline = Q::osNewline ();
+        $sOsNewline = \Q::osNewline ();
         $sCache = "<?php !defined('Q_PATH') && exit; /* QeePHP Cache " . date ( 'Y-m-d H:i:s', time () ) . "  */ ?>" . $sOsNewline . $sCache;
         
         // 解决不同操作系统源代码换行混乱
@@ -725,7 +725,7 @@ class parsers {
         /**
          * 交叉（两个时间段相互关系）
          */
-        Q::throwException ( Q::i18n ( '标签库不支持交叉' ) );
+        \Q::throwException ( \Q::i18n ( '标签库不支持交叉' ) );
     }
     
     /**
@@ -858,7 +858,7 @@ class parsers {
      * @return string
      */
     static public function escapeCharacter($sTxt) {
-        return Q::escapeRegexCharacter ( $sTxt );
+        return \Q::escapeRegexCharacter ( $sTxt );
     }
     
     // ######################################################
@@ -889,7 +889,7 @@ class parsers {
      * @return void
      */
     protected function makeCacheFile($sCachePath, &$sCompiled) {
-        ! is_file ( $sCachePath ) && ! is_dir ( dirname ( $sCachePath ) ) && Q::makeDir ( dirname ( $sCachePath ) );
+        ! is_file ( $sCachePath ) && ! is_dir ( dirname ( $sCachePath ) ) && \Q::makeDir ( dirname ( $sCachePath ) );
         file_put_contents ( $sCachePath, $sCompiled );
     }
     
@@ -981,7 +981,7 @@ class parsers {
             if (! $arrTailTag or ! $this->findHeadTag ( $arrTag, $arrTailTag )) { // 单标签节点
                 
                 if ($arrNodeTag [$arrTag ['name']] ['single'] !== true) {
-                    Q::throwException ( Q::i18n ( '%s 类型节点 必须成对使用，没有找到对应的尾标签', $arrTag ['name'] ) );
+                    \Q::throwException ( \Q::i18n ( '%s 类型节点 必须成对使用，没有找到对应的尾标签', $arrTag ['name'] ) );
                 }
                 if ($arrTailTag) { // 退回栈中
                     $oTailStack->in ( $arrTailTag );
@@ -1055,7 +1055,7 @@ class parsers {
      */
     protected function findHeadTag($arrTag, $arrTailTag) {
         if ($arrTailTag ['type'] != 'tail') {
-            Q::throwException ( Q::i18n ( '参数必须是一个尾标签' ) );
+            \Q::throwException ( \Q::i18n ( '参数必须是一个尾标签' ) );
         }
         return preg_match ( "/^{$arrTailTag['name']}/i", $arrTag ['name'] );
     }
@@ -1067,7 +1067,7 @@ class parsers {
      * @return array
      */
     protected function getTag($sType) {
-        return $this->arrTag [$sType . ($GLOBALS ['option'] ['theme_tag_note'] === true ? '_node' : '')];
+        return $this->arrTag [$sType . ($GLOBALS ['@option'] ['theme_tag_note'] === true ? '_node' : '')];
     }
     
     // ######################################################

@@ -10,8 +10,6 @@
  */
 namespace Q\image;
 
-use Q;
-
 /**
  * 图像处理
  *
@@ -199,10 +197,10 @@ class image {
                     $oBackgroundIm = @imagecreatefrompng ( $sBackgroundPath );
                     break;
                 default :
-                    return Q::i18n ( "错误的图像格式" );
+                    return \Q::i18n ( "错误的图像格式" );
             }
         } else {
-            return Q::i18n ( "图像 %s 为空或者不存在", $sBackgroundPath );
+            return \Q::i18n ( "图像 %s 为空或者不存在", $sBackgroundPath );
         }
         
         @imagealphablending ( $oBackgroundIm, true ); // 设定图像的混色模式
@@ -230,13 +228,13 @@ class image {
                         $oWaterIm = @imagecreatefrompng ( $arrWaterArgs ['path'] );
                         break;
                     default :
-                        return Q::i18n ( "错误的图像格式" );
+                        return \Q::i18n ( "错误的图像格式" );
                 }
             } elseif ($arrWaterArgs ['type'] === 'text' && $arrWaterArgs ['content'] != '') {
                 $sFontfileTemp = $sFontfile = isset ( $arrWaterArgs ['textFile'] ) && ! empty ( $arrWaterArgs ['textFile'] ) ? $arrWaterArgs ['textFile'] : 'Microsoft YaHei.ttf';
-                $sFontfile = (! empty ( $arrWaterArgs ['textPath'] ) ? Q::tidyPath ( $arrWaterArgs ['textPath'] ) : 'C:\WINDOWS\Fonts') . '/' . $sFontfile;
+                $sFontfile = (! empty ( $arrWaterArgs ['textPath'] ) ? \Q::tidyPath ( $arrWaterArgs ['textPath'] ) : 'C:\WINDOWS\Fonts') . '/' . $sFontfile;
                 if (! is_file ( $sFontfile )) {
-                    return Q::i18n ( "字体文件 %s 无法找到", $sFontfile );
+                    return \Q::i18n ( "字体文件 %s 无法找到", $sFontfile );
                 }
                 
                 $sWaterText = $arrWaterArgs ['content'];
@@ -249,10 +247,10 @@ class image {
                 $nWaterHeight = $arrTemp [3] - $arrTemp [7];
                 unset ( $arrTemp );
             } else {
-                return Q::i18n ( "水印参数 type 不为 img 和 text" );
+                return \Q::i18n ( "水印参数 type 不为 img 和 text" );
             }
         } else {
-            return Q::i18n ( "水印参数必须为一个数组" );
+            return \Q::i18n ( "水印参数必须为一个数组" );
         }
         
         if (($nGroundWidth < ($nWaterWidth * 2)) || ($nGroundHeight < ($nWaterHeight * 2))) { // 如果水印占了原图一半就不搞水印了.影响浏览.抵制影响正常浏览的广告
@@ -312,7 +310,7 @@ class image {
                 $G = hexdec ( substr ( $sTextColor, 3, 2 ) );
                 $B = hexdec ( substr ( $sTextColor, 5 ) );
             } else {
-                return Q::i18n ( "水印文字颜色错误" );
+                return \Q::i18n ( "水印文字颜色错误" );
             }
             @imagettftext ( $oBackgroundIm, $nTextFont, 0, $nPosX, $nPosY, @imagecolorallocate ( $oBackgroundIm, $R, $G, $B ), $sFontfile, $sWaterText );
         }
@@ -332,7 +330,7 @@ class image {
                 @imagepng ( $oBackgroundIm, $sBackgroundPath );
                 break;
             default :
-                return Q::i18n ( "错误的图像格式" );
+                return \Q::i18n ( "错误的图像格式" );
         }
         
         if (isset ( $oWaterIm )) {
@@ -377,7 +375,7 @@ class image {
         
         // 创建文件
         if (! is_dir ( dirname ( $sFilename ) )) {
-            Q::makeDir ( dirname ( $sFilename ) );
+            \Q::makeDir ( dirname ( $sFilename ) );
         }
         
         // 写入文件
