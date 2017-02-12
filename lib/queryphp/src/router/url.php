@@ -95,7 +95,7 @@ class url {
             $this->filterPathInfo_ ();
             
             // 解析结果
-            $_GET = array_merge ( $_GET, $GLOBALS ['~@option'] ['url_start_router'] === true && ($arrRouter = router::parse ()) ? $arrRouter : $this->parsePathInfo_ () );
+            $_GET = array_merge ( $_GET, $GLOBALS ['~@option'] ['url_router_on'] === true && ($arrRouter = router::parse ()) ? $arrRouter : $this->parsePathInfo_ () );
         }
     }
     

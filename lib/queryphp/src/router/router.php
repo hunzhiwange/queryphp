@@ -338,25 +338,6 @@ class router {
     }
     
     /**
-     * 返回文件路由配置
-     *
-     * @return string
-     */
-    static public function getFileRouters() {
-        return self::$arrFileRouters;
-    }
-    
-    /**
-     * 设置文件路由配置
-     *
-     * @param array $arrData            
-     * @return void
-     */
-    static public function setFileRouters($arrData = []) {
-        self::$arrFileRouters = $arrData;
-    }
-    
-    /**
      * 获取绑定资源
      *
      * @param string $sBindName            
@@ -397,7 +378,7 @@ class router {
         $arrNextParse = [ ];
         
         // 解析域名
-        if ($GLOBALS ['~@option'] ['url_domain_on'] === true) {
+        if ($GLOBALS ['~@option'] ['url_router_domain_on'] === true) {
             if (($arrParseData = self::parseDomain_ ( $arrNextParse )) !== false) {
                 return $arrParseData;
             }
@@ -421,14 +402,14 @@ class router {
         foreach ( self::$arrDomains as $sKey => $arrDomains ) {
             
             // 直接匹配成功
-            if ($strHost === $sKey || $strHost === $sKey . '.' . $GLOBALS ['~@option'] ['url_domain_top']) {
+            if ($strHost === $sKey || $strHost === $sKey . '.' . $GLOBALS ['~@option'] ['url_router_domain_top']) {
                 $booFindDomain = true;
             }            
 
             // 域名参数支持
             elseif (strpos ( $sKey, '{' ) !== false && preg_match_all ( "/{(.+?)}/isx", $sKey, $arrRes )) {
-                if (strpos ( $sKey, $GLOBALS ['~@option'] ['url_domain_top'] ) === false) {
-                    $sKey = $sKey . '.' . $GLOBALS ['~@option'] ['url_domain_top'];
+                if (strpos ( $sKey, $GLOBALS ['~@option'] ['url_router_domain_top'] ) === false) {
+                    $sKey = $sKey . '.' . $GLOBALS ['~@option'] ['url_router_domain_top'];
                 }
                 
                 // 解析匹配正则
@@ -493,7 +474,6 @@ class router {
             }
             
             foreach ( $arrRouters as $arrRouter ) {
-                
                 $booFindFouter = false;
                 if (strpos ( $arrRouter ['regex'], '{' ) !== false && preg_match_all ( "/{(.+?)}/isx", $arrRouter ['regex'], $arrRes )) {
                     // 解析匹配正则

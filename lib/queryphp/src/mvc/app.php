@@ -506,7 +506,9 @@ class app {
         if (Q_DEVELOPMENT !== 'develop' && is_file ( $sOptionCache )) {
             $GLOBALS ['~@option'] = \Q::option ( ( array ) (include $sOptionCache) );
             if ($this->app_name == \Q\mvc\project::INIT_APP && $arrOption ['url_router_cache']) {
-                router::setFileRouters ( $arrOption ['url_router_cache'] );
+                if (! empty ( $arrOption ['url_router_cache'] )) {
+                    router::cache ( $arrOption ['url_router_cache'] );
+                }
             }
         } else {
             
@@ -550,7 +552,6 @@ class app {
             
             // 缓存所有应用名字
             $arrOption ['~apps~'] = \Q::listDir ( $this->objProject->app_path );
-            
             if ($this->app_name == \Q\mvc\project::INIT_APP) {
                 foreach ( $arrOption ['~apps~'] as $strApp ) {
                     if ($strApp == \Q\mvc\project::INIT_APP) {
@@ -574,11 +575,8 @@ class app {
                     }
                 }
                 
-                if ($arrOption ['url_router_cache']) {
+                if (! empty ( $arrOption ['url_router_cache'] )) {
                     router::cache ( $arrOption ['url_router_cache'] );
-                    if (isset ( $arrOption ['url_router_cache'] ['~domains~'] ))
-                        unset ( $arrOption ['url_router_cache'] ['~domains~'] );
-                    router::setFileRouters ( $arrOption ['url_router_cache'] );
                 }
             }
             
@@ -770,8 +768,9 @@ class app {
             $arrMergeRouters = array_merge ( $arrRouter ['~domains~'], $arrNewRouter ['~domains~'] );
             $arrRouter = array_merge ( $arrRouter, $arrNewRouter );
             $arrRouter ['~domains~'] = $arrMergeRouters;
+        } else {
+            $arrRouter = array_merge ( $arrRouter, $arrNewRouter );
         }
-        
         return $arrRouter;
     }
 }

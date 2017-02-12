@@ -524,90 +524,75 @@ class Q {
      *
      * @param string $sUrl            
      * @param array $arrParams            
-     * @param mixed $mixSuffix            
-     * @param boolean $bNormalurl            
+     * @param array $in
+     *            suffix boolean 是否包含后缀
+     *            normal boolean 是否为普通 url
+     *            subdomain string 子域名
      * @return string
      */
-    static public function url($sUrl, $arrParams = [], $mixSuffix = true, $bNormalurl = false) {
-        // URL支持[var]风格模式替换
-        $sUrl = preg_replace_callback ( "/\[([0-9a-zA-Z\_\-\:\.\/]+)\]/", function ($arrMatches) {
-            return self::parseUrl_ ( $arrMatches [1] );
-        }, $sUrl );
+    static public function url($sUrl, $arrParams = [], $in = []) {
+        $in = array_merge ( [ 
+                'suffix' => true,
+                'normal' => false,
+                'subdomain' => 'www' 
+        ], $in );
         
-        // 剔除受保护的额外参数
-        if ($GLOBALS ['~@option'] ['url_pro_var']) {
-            foreach ( explode ( ',', $GLOBALS ['~@option'] ['url_pro_var'] ) as $sTempVar ) {
-                if (isset ( $arrParams [$sTempVar] )) {
-                    unset ( $arrParams [$sTempVar] );
-                }
-            }
-        }
+        $in ['args_app'] = \Q\mvc\project::ARGS_APP;
+        $in ['args_controller'] = \Q\mvc\project::ARGS_CONTROLLER;
+        $in ['args_action'] = \Q\mvc\project::ARGS_ACTION;
         
-        // 剥离子域名
-        $sDomainUrl = '';
-        if (strpos ( $sUrl, '~@' ) !== false) {
-            $sUrl = explode ( '~@', $sUrl );
-            $sDomainUrl = $sUrl [0];
-            $sUrl = $sUrl [1];
-        } else {
-            $sDomainUrl = false;
-        }
-        
-        // 以“/”开头的为自定义URL
-        $bCustom = false;
+        // 以 “/” 开头的为自定义URL
+        $in ['custom'] = false;
         if (0 === strpos ( $sUrl, '/' )) {
-            $bCustom = true;
-        } else {
+            $in ['custom'] = true;
+        }         
+
+        // 普通 url
+        else {
             if ($sUrl != '') {
                 if (! strpos ( $sUrl, '://' )) {
-                    $sUrl = APP_NAME . '://' . $sUrl;
-                }
-                if (stripos ( $sUrl, '@?' )) {
-                    $sUrl = str_replace ( '@?', '@QueryPHP?', $sUrl );
-                } elseif (stripos ( $sUrl, '@' )) {
-                    $sUrl = $sUrl . MODULE_NAME;
+                    $sUrl = $_GET [$in ['args_app']] . '://' . $sUrl;
                 }
                 
-                // app && 路由
+                // 解析 url
                 $arrArray = parse_url ( $sUrl );
             } else {
                 $arrArray = [ ];
             }
             
-            $sApp = isset ( $arrArray ['scheme'] ) ? $arrArray ['scheme'] : APP_NAME; // APP
-            $sRoute = isset ( $arrArray ['user'] ) ? $arrArray ['user'] : ''; // 路由
-                                                                              
+            $in ['app'] = isset ( $arrArray ['scheme'] ) ? $arrArray ['scheme'] : $_GET [$in ['args_app']]; // APP
+                                                                                                            
             // 分析获取模块和操作(应用)
-            if (! empty ( $arrParams ['app'] )) {
-                $sApp = strtolower ( $arrParams ['app'] );
-                unset ( $arrParams ['app'] );
+            if (! empty ( $arrParams [$in ['args_app']] )) {
+                $in ['app'] = $arrParams [$in ['args_app']];
+                unset ( $arrParams [$in ['args_app']] );
             }
-            if (! empty ( $arrParams ['c'] )) {
-                $sModule = strtolower ( $arrParams ['c'] );
-                unset ( $arrParams ['c'] );
+            if (! empty ( $arrParams [$in ['args_controller']] )) {
+                $in ['controller'] = $arrParams [$in ['args_controller']];
+                unset ( $arrParams [$in ['args_controller']] );
             }
-            if (! empty ( $arrParams ['a'] )) {
-                $sAction = strtolower ( $arrParams ['a'] );
-                unset ( $arrParams ['a'] );
+            if (! empty ( $arrParams [$in ['args_action']] )) {
+                $in ['action'] = $arrParams [$in ['args_action']];
+                unset ( $arrParams [$in ['args_action']] );
             }
             if (isset ( $arrArray ['path'] )) {
-                if (! isset ( $sModule )) {
+                if (! isset ( $in ['controller'] )) {
                     if (! isset ( $arrArray ['host'] )) {
-                        $sModule = MODULE_NAME;
+                        $in ['controller'] = $_GET [\Q\mvc\project::ARGS_CONTROLLER];
                     } else {
-                        $sModule = $arrArray ['host'];
+                        $in ['controller'] = $arrArray ['host'];
                     }
                 }
                 
-                if (! isset ( $sAction )) {
-                    $sAction = substr ( $arrArray ['path'], 1 );
+                if (! isset ( $in ['action'] )) {
+                    $in ['action'] = substr ( $arrArray ['path'], 1 );
                 }
             } else {
-                if (! isset ( $sModule )) {
-                    $sModule = MODULE_NAME;
+                if (! isset ( $in ['controller'] )) {
+                    $in ['controller'] = $_GET [\Q\mvc\project::ARGS_CONTROLLER];
                 }
-                if (! isset ( $sAction )) {
-                    $sAction = $arrArray ['host'];
+                if (! isset ( $in ['action'] )) {
+                    $in ['action'] = $arrArray ['host'];
                 }
             }
             
@@ -620,113 +605,103 @@ class Q {
         }
         
         // 如果开启了URL解析，则URL模式为非普通模式
-        if (($GLOBALS ['~@option'] ['url_model'] > 0 && $bNormalurl === false) || $bCustom === true) {
-            $sDepr = '/';
-            if (! empty ( $sRoute )) {
-                // 匹配路由参数
-                if (isset ( $GLOBALS ['~@option'] ['url_router'] [$sRoute] )) {
-                    $arrRouters = $GLOBALS ['~@option'] ['url_router'] [$sRoute];
-                    if (! empty ( $arrRouters [1] )) {
-                        $arrRoutervalue = explode ( ',', $arrRouters [1] );
-                        foreach ( $arrRoutervalue as $sRoutervalue ) {
-                            if (array_key_exists ( $sRoutervalue, $arrParams )) {
-                                $sRoute .= $sDepr . urlencode ( $arrParams [$sRoutervalue] );
-                                unset ( $arrParams [$sRoutervalue] );
-                            }
-                        }
-                    }
-                }
-                
-                $sStr = $sDepr;
+        if (($GLOBALS ['~@option'] ['url_model'] == 'pathinfo' && $in ['normal'] === false) || $in ['custom'] === true) {
+            // 非自定义 url
+            if ($in ['custom'] === false) {
+                // 额外参数
+                $sStr = '/';
                 foreach ( $arrParams as $sVar => $sVal ) {
-                    $sStr .= $sVar . $sDepr . urlencode ( $sVal ) . $sDepr;
+                    $sStr .= $sVar . '/' . urlencode ( $sVal ) . '/';
                 }
                 $sStr = substr ( $sStr, 0, - 1 );
                 
-                $sUrl = (__APP__ !== '/' ? __APP__ : '') . ($GLOBALS ['~@option'] ['default_app'] != $sApp ? '/app' . $sDepr . $sApp . $sDepr : '/') . $sRoute . $sStr;
-            } else {
-                $sStr = $sDepr;
-                foreach ( $arrParams as $sVar => $sVal ) {
-                    $sStr .= $sVar . $sDepr . urlencode ( $sVal ) . $sDepr;
-                }
-                $sStr = substr ( $sStr, 0, - 1 );
+                // 分析 url
+                $sUrl = ($GLOBALS ['~@url'] ['url_enter'] !== '/' ? $GLOBALS ['~@url'] ['url_enter'] : '') . ($GLOBALS ['~@option'] ['default_app'] != $in ['app'] ? '/' . $in ['app'] . '/' : '/');
                 
-                if (! $bCustom) {
-                    $sUrl = (__APP__ !== '/' ? __APP__ : '') . ($GLOBALS ['~@option'] ['default_app'] != $sApp ? '/app' . $sDepr . $sApp . $sDepr : '/');
-                    
-                    if ($sStr) {
-                        $sUrl .= $sModule . $sDepr . $sAction . $sStr;
-                    } else {
-                        $sTemp = '';
-                        if ($GLOBALS ['~@option'] ['default_controller'] != $sModule || $GLOBALS ['~@option'] ['default_action'] != $sAction) {
-                            $sTemp .= $sModule;
-                        }
-                        if ($GLOBALS ['~@option'] ['default_action'] != $sAction) {
-                            $sTemp .= $sDepr . $sAction;
-                        }
-                        
-                        if ($sTemp == '') {
-                            $sUrl = rtrim ( $sUrl, '/' . $sDepr );
-                        } else {
-                            $sUrl .= $sTemp;
-                        }
-                    }
+                if ($sStr) {
+                    $sUrl .= $in ['controller'] . '/' . $in ['action'] . $sStr;
                 } else {
-                    $sUrl .= $sStr;
+                    $sTemp = '';
+                    if ($GLOBALS ['~@option'] ['default_controller'] != $in ['controller'] || $GLOBALS ['~@option'] ['default_action'] != $in ['action']) {
+                        $sTemp .= $in ['controller'];
+                    }
+                    if ($GLOBALS ['~@option'] ['default_action'] != $in ['action']) {
+                        $sTemp .= '/' . $in ['action'];
+                    }
+                    
+                    if ($sTemp == '') {
+                        $sUrl = rtrim ( $sUrl, '/' . '/' );
+                    } else {
+                        $sUrl .= $sTemp;
+                    }
+                    unset ( $sTemp );
                 }
+            }             
+
+            // 自定义 url
+            else {
+                // 自定义支持参数变量替换
+                if (strpos ( $sUrl, '{' ) !== false) {
+                    $sUrl = preg_replace_callback ( "/{(.+?)}/", function ($arrMatches) use(&$arrParams) {
+                        if (isset ( $arrParams [$arrMatches [1]] )) {
+                            $sReturn = $arrParams [$arrMatches [1]];
+                            unset ( $arrParams [$arrMatches [1]] );
+                        } else {
+                            $sReturn = $arrMatches [1];
+                        }
+                        return $sReturn;
+                    }, $sUrl );
+                }
+                
+                // 额外参数
+                $sStr = '/';
+                foreach ( $arrParams as $sVar => $sVal ) {
+                    $sStr .= $sVar . '/' . urlencode ( $sVal ) . '/';
+                }
+                $sStr = substr ( $sStr, 0, - 1 );
+                
+                $sUrl .= $sStr;
             }
             
-            if ($mixSuffix && $sUrl) {
-                $sUrl .= $mixSuffix === true ? $GLOBALS ['~@option'] ['url_html_suffix'] : $mixSuffix;
+            if ($in ['suffix'] && $sUrl) {
+                $sUrl .= $in ['suffix'] === true ? $GLOBALS ['~@option'] ['url_html_suffix'] : $in ['suffix'];
             }
-        } else {
+        }         
+
+        // 普通url模式
+        else {
             $sStr = '';
             foreach ( $arrParams as $sVar => $sVal ) {
                 $sStr .= $sVar . '=' . urlencode ( $sVal ) . '&';
             }
             $sStr = rtrim ( $sStr, '&' );
             
-            if (empty ( $sRoute )) {
-                $sTemp = '';
-                if ($bNormalurl === true || $GLOBALS ['~@option'] ['default_app'] != $sApp) {
-                    $sTemp [] = 'app=' . $sApp;
-                }
-                if ($GLOBALS ['~@option'] ['default_controller'] != $sModule) {
-                    $sTemp [] = 'c=' . $sModule;
-                }
-                if ($GLOBALS ['~@option'] ['default_action'] != $sAction) {
-                    $sTemp [] = 'a=' . $sAction;
-                }
-                if ($sStr) {
-                    $sTemp [] = $sStr;
-                }
-                if (! empty ( $sTemp )) {
-                    $sTemp = '?' . implode ( '&', $sTemp );
-                }
-                $sUrl = ($bNormalurl === true || __APP__ !== '/' ? __APP__ : '') . $sTemp;
-            } else {
-                $sUrl = ($bNormalurl === true || __APP__ !== '/' ? __APP__ : '') . ($bNormalurl === true || $GLOBALS ['~@option'] ['default_app'] != $sApp ? '?app=' . $sApp . '&' : '?') . ($sRoute ? 'r=' . $sRoute : '') . ($sStr ? '&' . $sStr : '');
+            $sTemp = '';
+            if ($in ['normal'] === true || $GLOBALS ['~@option'] ['default_app'] != $in ['app']) {
+                $sTemp [] = $in ['args_app'] . '=' . $in ['app'];
             }
+            if ($GLOBALS ['~@option'] ['default_controller'] != $in ['controller']) {
+                $sTemp [] = $in ['args_controller'] . '=' . $in ['controller'];
+            }
+            if ($GLOBALS ['~@option'] ['default_action'] != $in ['action']) {
+                $sTemp [] = $in ['args_action'] . '=' . $in ['action'];
+            }
+            if ($sStr) {
+                $sTemp [] = $sStr;
+            }
+            if (! empty ( $sTemp )) {
+                $sTemp = '?' . implode ( '&', $sTemp );
+            }
+            $sUrl = ($in ['normal'] === true || $GLOBALS ['~@url'] ['url_enter'] !== '/' ? $GLOBALS ['~@url'] ['url_enter'] : '') . $sTemp;
+            unset ( $sTemp );
         }
         
         // 子域名支持
-        if ($GLOBALS ['~@option'] ['url_subdomain_on'] === true) {
-            if ($sDomainUrl === false) {
-                $sDomainUrl = 'www';
-            } elseif ($sDomainUrl == '') {
-                $sDomainUrl = '*';
-            } elseif ($sDomainUrl == '*') {
-                $sDomainUrl = '';
+        if ($GLOBALS ['~@option'] ['url_make_subdomain_on'] === true) {
+            if ($in ['subdomain']) {
+                $sUrl = self::urlFull_ ( $in ['subdomain'] ) . $sUrl;
             }
-            if ($sDomainUrl) {
-                $sDomainUrl = self::urlFull_ ( $sDomainUrl );
-            }
-        } elseif ($GLOBALS ['~@option'] ['url_domain_on'] === true) { // URL加上域名
-            $sDomainUrl = $GLOBALS ['~@option'] ['url_domain'];
-        } else {
-            $sDomainUrl = '';
         }
-        $sUrl = $sDomainUrl . $sUrl;
         
         return $sUrl;
     }
@@ -2311,22 +2286,6 @@ class Q {
     }
     
     /**
-     * 分析 in 中参数
-     *
-     * @param string $sValue            
-     * @return
-     *
-     */
-    static private function parseUrl_($sValue) {
-        if (strpos ( $sValue, ':' ) !== false) {
-            $sValue = explode ( ':', $sValue );
-            return self::in ( $sValue [0] ) !== null ? self::in ( $sValue [0] ) : $sValue [1];
-        } else {
-            return self::in ( $sValue );
-        }
-    }
-    
-    /**
      * 返回完整 URL 地址
      *
      * @param string $sDomain            
@@ -2334,11 +2293,11 @@ class Q {
      * @param string $sHttpSuffix            
      * @return string
      */
-    private function urlFull_($sDomain = '', $sHttpPrefix = '', $sHttpSuffix = '') {
+    static private function urlFull_($sDomain = '', $sHttpPrefix = '', $sHttpSuffix = '') {
         static $sHttpPrefix = '', $sHttpSuffix = '';
         if (! $sHttpPrefix) {
             $sHttpPrefix = self::isSsl () ? 'https://' : 'http://';
-            $sHttpSuffix = $GLOBALS ['~@option'] ['url_domain_top'] . $GLOBALS ['~@option'] ['url_domain_suffix'];
+            $sHttpSuffix = $GLOBALS ['~@option'] ['url_router_domain_top'];
         }
         return $sHttpPrefix . ($sDomain && $sDomain != '*' ? $sDomain . '.' : '') . $sHttpSuffix;
     }

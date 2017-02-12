@@ -62,11 +62,11 @@ class project {
     const INIT_APP = '~_~';
     
     /**
-     * 项目对象
+     * 项目是否已经初始化
      *
-     * @var Q\mvc\object
+     * @var boolean
      */
-    private static $objProject = null;
+    private static $booInit = false;
     
     /**
      * 应用参数名
@@ -107,10 +107,14 @@ class project {
      * 构造函数
      *
      * @param array $in            
-     * @param boolean $booRun            
      * @return app
      */
-    public function __construct($in = [], $bRun = true) {
+    public function __construct($in = []) {
+        // 项目只允许初始化一次
+        if (self::$booInit === true) {
+            return $this;
+        }
+        self::$booInit = true;
         
         /**
          * 项目初始化
@@ -182,14 +186,10 @@ class project {
      * APP 入口
      *
      * @param array $in            
-     * @param boolean $booRun            
      * @return app
      */
-    static public function run($in = [], $bRun = true) {
-        if (self::$objProject) {
-            return self::$objProject;
-        }
-        return self::$objProject = new self ( $in, $bRun );
+    static public function run($in = []) {
+        return new self ( $in );
     }
     
     /**
@@ -321,9 +321,9 @@ class project {
             $sPublic = $sRoot . '/public';
         }
         
-        $this->url_enter = $sEnter;
-        $this->url_root = $sRoot;
-        $this->url_public = $sPublic;
+        $GLOBALS ['~@url'] ['url_enter'] = $this->url_enter = $sEnter;
+        $GLOBALS ['~@url'] ['url_root'] = $this->url_root = $sRoot;
+        $GLOBALS ['~@url'] ['url_public'] = $this->url_public = $sPublic;
         unset ( $sEnter, $sEnterBak, $sRoot, $sPublic );
     }
     

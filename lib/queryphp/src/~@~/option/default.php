@@ -2,7 +2,7 @@
 /*
  * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
  * ©2010-2017 http://queryphp.com All rights reserved.
- * 
+ *
  * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
  * @date 2016.11.19
@@ -24,8 +24,8 @@ return [
         /**
          * 杂项
          */
-        'option_extend' => '', //主题扩展项，
-        'option_system_extend' => 'db,theme,i18n,cookie,url,log,debug,cache,router',//隐性默认加载 db,theme,i18n,cookie,url,log,debug,cache,router
+        'option_extend' => '', // 主题扩展项，
+        'option_system_extend' => 'db,theme,i18n,cookie,url,log,debug,cache,router', // 隐性默认加载 db,theme,i18n,cookie,url,log,debug,cache,router
         'globals_tags' => [ ], // 全局标签
         'start_gzip' => TRUE, // Gzip压缩
         'time_zone' => 'Asia/Shanghai', // 时区
@@ -89,18 +89,12 @@ return [
         'url_rewrite' => FALSE, // 是否开启重写
         'url_pathinfo_depr' => '/', // url分割符
         'url_html_suffix' => '.html', // 伪静态后缀
-        'url_pro_var' => 'Q', // URL生成受保护参数
-        'url_start_router' => FALSE, // 是否开启URL路由
-        'url_router_strict' => false, // 是否启用严格 url 匹配模式 
-        'url_router_extend' => '',// 路由扩展支持文件
-        'url_domain_on' => false, // 是否开启域名
-        'url_domain_top' => '', // 顶级域名，如 queryphp.com
-
-        //'url_router' => [ ], // 路由配置
-        //'url_domain' => '', // 域名，不为空将会被写入到生成的网址中，后面不能添加‘/’，如 http://myapp.queryphp.com
-        //'url_subdomain_on' => FALSE, // 是否开启多域名
-        // 'url_domain_suffix' => '', // 子目录
-        //'url_public' => '', // 公共
+        'url_router_on' => FALSE, // 是否开启URL路由
+        'url_router_strict' => false, // 是否启用严格 url 匹配模式
+        'url_router_extend' => '', // 路由扩展支持文件
+        'url_router_domain_on' => false, // 是否开启域名路由解析
+        'url_router_domain_top' => '', // 顶级域名，如 queryphp.com
+        'url_make_subdomain_on' => FALSE, // 是否开启子域名
         
         /**
          * 日志 && 调试
@@ -129,5 +123,5 @@ return [
         'runtime_memcache_port' => 11211, // Memcache默认缓存服务器端口
         'runtime_memcache_compressed' => false, // Memcache是否压缩缓存数据
         'runtime_memcache_persistent' => true 
-] // Memcache是否使用持久连接
-;
+]; // Memcache是否使用持久连接
+
