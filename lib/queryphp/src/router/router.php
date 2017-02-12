@@ -407,18 +407,18 @@ class router {
             }            
 
             // 域名参数支持
-            elseif (strpos ( $sKey, '{' ) !== false && preg_match_all ( "/{(.+?)}/isx", $sKey, $arrRes )) {
+            elseif (strpos ( $sKey, '{' ) !== false) {
                 if (strpos ( $sKey, $GLOBALS ['~@option'] ['url_router_domain_top'] ) === false) {
                     $sKey = $sKey . '.' . $GLOBALS ['~@option'] ['url_router_domain_top'];
                 }
                 
                 // 解析匹配正则
                 $sKey = self::formatRegex_ ( $sKey );
-                foreach ( $arrRes [1] as $nIndex => $sWhere ) {
-                    $sKey = str_replace ( '{' . $sWhere . '}', '(' . (isset ( $arrDomains ['domain_where'] [$sWhere] ) ? $arrDomains ['domain_where'] [$sWhere] : self::DEFAULT_REGEX) . ')', $sKey );
-                }
+                $sKey = preg_replace_callback ( "/{(.+?)}/", function ($arrMatches) use(&$arrDomains) {
+                    $arrDomains ['args'] [] = $arrMatches [1];
+                    return '(' . (isset ( $arrDomains ['domain_where'] [$arrMatches [1]] ) ? $arrDomains ['domain_where'] [$arrMatches [1]] : self::DEFAULT_REGEX) . ')';
+                }, $sKey );
                 $sKey = '/^' . $sKey . '$/';
-                $arrDomains ['args'] = $arrRes [1];
                 
                 // 匹配结果
                 if (preg_match ( $sKey, $strHost, $arrRes )) {
@@ -474,24 +474,26 @@ class router {
             }
             
             foreach ( $arrRouters as $arrRouter ) {
+                // 尝试匹配
                 $booFindFouter = false;
-                if (strpos ( $arrRouter ['regex'], '{' ) !== false && preg_match_all ( "/{(.+?)}/isx", $arrRouter ['regex'], $arrRes )) {
+                if ($arrRouter ['regex'] == $sPathinfo) {
+                    $booFindFouter = true;
+                } else {
                     // 解析匹配正则
                     $arrRouter ['regex'] = self::formatRegex_ ( $arrRouter ['regex'] );
-                    foreach ( $arrRes [1] as $nIndex => $sWhere ) {
-                        $arrRouter ['regex'] = str_replace ( '{' . $sWhere . '}', '(' . (isset ( $arrRouter ['where'] [$sWhere] ) ? $arrRouter ['where'] [$sWhere] : self::DEFAULT_REGEX) . ')', $arrRouter ['regex'] );
-                    }
+                    $arrRouter ['regex'] = preg_replace_callback ( "/{(.+?)}/", function ($arrMatches) use(&$arrRouter) {
+                        $arrRouter ['args'] [] = $arrMatches [1];
+                        return '(' . (isset ( $arrRouter ['where'] [$arrMatches [1]] ) ? $arrRouter ['where'] [$arrMatches [1]] : self::DEFAULT_REGEX) . ')';
+                    }, $arrRouter ['regex'] );
                     $arrRouter ['regex'] = '/^\/' . $arrRouter ['regex'] . ((isset ( $arrRouter ['strict'] ) ? $arrRouter ['strict'] : $GLOBALS ['~@option'] ['url_router_strict']) ? '$' : '') . '/';
-                    $arrRouter ['args'] = $arrRes [1];
                     
                     // 匹配结果
                     if (preg_match ( $arrRouter ['regex'], $sPathinfo, $arrRes )) {
                         $booFindFouter = true;
                     }
-                } else if ($arrRouter ['regex'] == $sPathinfo) {
-                    $booFindFouter = true;
                 }
                 
+                // 分析结果
                 if ($booFindFouter === true) {
                     $arrData = \Q::parseMvcUrl ( $arrRouter ['url'] );
                     
