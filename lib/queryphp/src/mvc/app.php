@@ -511,7 +511,6 @@ class app {
                 }
             }
         } else {
-            
             // 读取系统默认配置，并写入默认配置项
             $arrOption = ( array ) (include Q_PATH . '/~@~/option/default.php');
             

@@ -14,7 +14,7 @@
  *
  * @author Xiangmin Liu
  */
-use Q\cookie\cookie, Q\xml\xml;
+use Q\cookie\cookie, Q\xml\xml, Q\option\option;
 
 /**
  * 注册框架命名空间
@@ -338,7 +338,7 @@ class Q {
      * @param string $sBackendClass            
      * @return boolean
      */
-    static public function cache($sId, $mixData = '', array $arrOption = null, $sBackendClass = null) {
+    static public function cache($sId, $mixData = '', $arrOption = null, $sBackendClass = null) {
         static $oObj = null;
         
         if (! is_array ( $arrOption )) {
@@ -374,87 +374,24 @@ class Q {
     /**
      * 读取、设置、删除配置值
      *
-     * @param string $sName            
+     * @param mixed $mixName            
      * @param mixed $mixValue            
      * @param mixed $mixDefault            
      * @return mixed
      */
-    static public function option($sName = '', $mixValue = NULL, $mixDefault = null) {
+    static public function option($mixName = '', $mixValue = '', $mixDefault = null) {
         // 返回配置数据
-        if (is_string ( $sName ) && ! empty ( $sName ) && $mixValue === null) {
-            if (! strpos ( $sName, '.' )) {
-                return array_key_exists ( $sName, self::$arrOption ) ? self::$arrOption [$sName] : $mixDefault;
-            }
-            
-            $arrParts = explode ( '.', $sName );
-            $arrOption = &self::$arrOption;
-            foreach ( $arrParts as $sPart ) {
-                if (! isset ( $arrOption [$sPart] )) {
-                    return $mixDefault;
-                }
-                $arrOption = &$arrOption [$sPart];
-            }
-            return $arrOption;
-        }
-        
-        // 返回所有配置值
-        if ($sName === '' && $mixValue === null) {
-            return self::$arrOption;
-        }
-        
-        // 设置值
-        if (is_array ( $sName )) {
-            foreach ( $sName as $sKey => $mixValue ) {
-                self::option ( $sKey, $mixValue, $mixDefault );
-            }
-            return $GLOBALS ['~@option'] = self::$arrOption;
-        } else {
-            if (! strpos ( $sName, '.' )) {
-                self::$arrOption [$sName] = $mixValue;
-                return $GLOBALS ['~@option'] = self::$arrOption;
-            }
-            
-            $arrParts = explode ( '.', $sName );
-            $nMax = count ( $arrParts ) - 1;
-            $arrOption = &self::$arrOption;
-            for($nI = 0; $nI <= $nMax; $nI ++) {
-                $sPart = $arrParts [$nI];
-                if ($nI < $nMax) {
-                    if (! isset ( $arrOption [$sPart] )) {
-                        $arrOption [$sPart] = [ ];
-                    }
-                    $arrOption = &$arrOption [$sPart];
-                } else {
-                    $arrOption [$sPart] = $mixValue;
-                }
-            }
-            
-            return $GLOBALS ['~@option'] = self::$arrOption;
+        if (is_string ( $mixName ) && $mixValue === '') {
+            return option::get ( $mixName, $mixDefault );
         }
         
         // 删除值
-        if ($sName === null) {
-            self::$arrOption = [ ];
-        } elseif (! strpos ( $sName, '.' )) {
-            unset ( self::$arrOption [$sName] );
-        } else {
-            $arrParts = explode ( '.', $sName );
-            $nMax = count ( $arrParts ) - 1;
-            $arrOption = &self::$arrOption;
-            for($nI = 0; $nI <= $nMax; $nI ++) {
-                $sPart = $arrParts [$nI];
-                if ($nI < $nMax) {
-                    if (! isset ( $arrOption [$sPart] )) {
-                        $arrOption [$sPart] = [ ];
-                    }
-                    $arrOption = &$arrOption [$sPart];
-                } else {
-                    unset ( $arrOption [$sPart] );
-                }
-            }
+        if ($mixValue === null) {
+            return option::delete ( $mixValue );
         }
         
-        return $GLOBALS ['~@option'] = self::$arrOption;
+        // 设置值
+        return option::set ( $mixName, $mixValue, $mixDefault );
     }
     
     /**
