@@ -355,6 +355,7 @@ class Q {
             if (is_null ( $sBackendClass )) {
                 $sBackendClass = $arrOption ['cache_backend'];
             }
+            $sBackendClass = 'Q\cache\\' . $sBackendClass;
             $oObj = self::instance ( $sBackendClass );
         }
         
@@ -363,12 +364,12 @@ class Q {
             if (self::in ( $GLOBALS ['~@option'] ['runtime_cache_force_name'] ) == 1) {
                 return false;
             }
-            return $oObj->getCache ( $sId, $arrOption );
+            return $oObj->get ( $sId, $arrOption );
         }
         if ($mixData === null) {
-            return $oObj->deleleCache ( $sId, $arrOption );
+            return $oObj->delele ( $sId, $arrOption );
         }
-        return $oObj->setCache ( $sId, $mixData, $arrOption );
+        return $oObj->set ( $sId, $mixData, $arrOption );
     }
     
     /**

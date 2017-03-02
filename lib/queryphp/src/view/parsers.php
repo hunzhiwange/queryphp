@@ -824,6 +824,8 @@ class parsers {
     
     /**
      * 取得默认模板项结构
+     *
+     * @return array
      */
     public function getDefaultStruct() {
         return $this->arrThemeStruct;
@@ -900,7 +902,7 @@ class parsers {
      */
     protected function findNodeTag(&$sCompiled) {
         $this->oNodeStack = new stack (); // 设置一个栈
-                                           
+                                          
         // 判断是那种编译器
         $sNodeType = $this->bJsNode === true ? 'js' : 'node';
         

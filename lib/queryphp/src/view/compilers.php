@@ -304,7 +304,6 @@ class compilers {
      * @param array $arrTheme            
      */
     public function foreachCodeCompiler(&$arrTheme) {
-        
         // 分析foreach
         $calHelp = function ($sContent) {
             preg_match_all ( '/\\$([\S]+)/', $sContent, $arrArray );
@@ -397,7 +396,6 @@ class compilers {
      * @param array $arrTheme            
      */
     public function endtagCodeCompiler(&$arrTheme) {
-        
         // 尾标签
         $calHelp = function ($sContent) {
             $sContent = ltrim ( trim ( $sContent ), '/' );

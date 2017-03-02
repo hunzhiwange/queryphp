@@ -113,15 +113,16 @@ return [
         /**
          * 缓存系统
          */
-        'runtime_cache_force_name' => 'update_cache',
-        'runtime_cache_backend' => 'FileCache', // 程序运行指定缓存,例如 MemcacheCache
+        'runtime_cache_backend' => 'file', // 程序运行指定缓存
+        'runtime_cache_force_name' => '~@update_cache',// 缓存调试 GET 参数，强制不启用缓存
         'runtime_cache_time' => 86400, // 程序缓存时间
         'runtime_cache_prefix' => '~@', // 缓存键值前缀
         'runtime_cache_times' => [ ], // 缓存时间预植,键值=缓存值，键值不带前缀 array('option'=>60)
-        'runtime_memcache_servers' => [ ], // Memcache多台服务器
-        'runtime_memcache_host' => '127.0.0.1', // Memcache默认缓存服务器
-        'runtime_memcache_port' => 11211, // Memcache默认缓存服务器端口
-        'runtime_memcache_compressed' => false, // Memcache是否压缩缓存数据
+        'runtime_file_path' => '',// 文件缓存路径
+        'runtime_memcache_servers' => [ ], // memcache多台服务器
+        'runtime_memcache_host' => '127.0.0.1', // memcache默认缓存服务器
+        'runtime_memcache_port' => 11211, // memcache默认缓存服务器端口
+        'runtime_memcache_compressed' => false, // memcache是否压缩缓存数据
         'runtime_memcache_persistent' => true 
 ]; // Memcache是否使用持久连接
 

@@ -468,7 +468,7 @@ class router {
         
         // 匹配路由
         foreach ( self::$arrRouters as $sKey => $arrRouters ) {
-            // 域名过掉掉无关路由
+            // 域名过滤掉无关路由
             if ($arrNextParse && ! in_array ( $sKey, $arrNextParse )) {
                 continue;
             }
