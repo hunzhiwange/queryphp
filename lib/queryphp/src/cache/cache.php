@@ -28,6 +28,34 @@ abstract class cache {
     ];
     
     /**
+     * 获取缓存
+     *
+     * @param string $sCacheName            
+     * @param array $arrOption            
+     * @return mixed
+     */
+    abstract public function get($sCacheName, array $arrOption = []);
+    
+    /**
+     * 设置缓存
+     *
+     * @param string $sCacheName            
+     * @param mixed $mixData            
+     * @param array $arrOption            
+     * @return void
+     */
+    abstract public function set($sCacheName, $mixData, array $arrOption = []);
+    
+    /**
+     * 清除缓存
+     *
+     * @param string $sCacheName            
+     * @param array $arrOption            
+     * @return void
+     */
+    abstract public function delele($sCacheName, array $arrOption = []);
+    
+    /**
      * 修改配置
      *
      * @param mixed $mixName            
