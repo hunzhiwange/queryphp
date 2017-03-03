@@ -14,7 +14,7 @@
  *
  * @author Xiangmin Liu
  */
-use Q\cookie\cookie, Q\xml\xml, Q\option\option;
+use Q\cookie\cookie, Q\xml\xml, Q\option\option, Q\log\log;
 
 /**
  * 注册框架命名空间
@@ -396,6 +396,24 @@ class Q {
     }
     
     /**
+     * 日志统一入口
+     *
+     * @param string $strMessage
+     *            应该被记录的错误信息
+     * @param string $strLevel
+     *            日志错误类型，例如 error,sql,custom
+     * @param int $intMessageType
+     *            参考 error_log 参数 $message_type
+     * @param string $strDestination
+     *            参考 error_log 参数 $destination
+     * @param string $strExtraHeaders
+     *            参考 error_log 参数 $extra_headers
+     */
+    static public function log($strMessage, $strLevel = 'error', $intMessageType = 3, $strDestination = '', $strExtraHeaders = '') {
+        log::run ( $strMessage, $strLevel, $intMessageType, $strDestination, $strExtraHeaders );
+    }
+    
+    /**
      * 产品国际化支持
      *
      * @param 语言 $sValue            
@@ -745,6 +763,7 @@ class Q {
      * @param string $sErrStr            
      * @param string $sErrFile            
      * @param int $nErrLine            
+     * @return oid
      */
     static public function errorHandel($nErrorNo, $sErrStr, $sErrFile, $nErrLine) {
         if ($nErrorNo) {
@@ -754,6 +773,8 @@ class Q {
     
     /**
      * 接管 PHP 致命错误
+     *
+     * @return oid
      */
     static public function shutdownHandel() {
         if (($arrError = error_get_last ()) && ! empty ( $arrError ['type'] )) {
@@ -767,6 +788,7 @@ class Q {
      * @param string $sMsg            
      * @param string $sType            
      * @param number $nCode            
+     * @return oid
      */
     static public function throwException($sMsg, $sType = 'Q\exception\exception', $nCode = 0) {
         if (self::classExists ( $sType, false, true )) {
@@ -781,6 +803,7 @@ class Q {
      *
      * @param mixed $mixError            
      * @param boolean $bDbError            
+     * @return oid
      */
     static public function halt($mixError, $bDbError = FALSE) {
         if (! is_array ( $mixError )) {
@@ -812,6 +835,7 @@ class Q {
      * 输出一个致命错误
      *
      * @param string $sMessage            
+     * @return oid
      */
     static public function errorMessage($sMessage) {
         require_once (Q_PATH . '/~@~/tpl/error.php');
@@ -1375,15 +1399,15 @@ class Q {
         
         // 应用
         if ($sUrl ['scheme'] != 'QueryPHP') {
-            $arrData ['app'] = $sUrl ['scheme'];
+            $arrData [\Q\mvc\project::ARGS_APP] = $sUrl ['scheme'];
         }
         
         // 控制器
-        $arrData ['c'] = $sUrl ['host'];
+        $arrData [\Q\mvc\project::ARGS_CONTROLLER] = $sUrl ['host'];
         
         // 方法
         if (isset ( $sUrl ['path'] ) && $sUrl ['path'] != '/') {
-            $arrData ['a'] = ltrim ( $sUrl ['path'], '/' );
+            $arrData [\Q\mvc\project::ARGS_ACTION] = ltrim ( $sUrl ['path'], '/' );
         }
         
         // 额外参数

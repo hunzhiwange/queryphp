@@ -99,11 +99,13 @@ return [
         /**
          * 日志 && 调试
          */
-        'log_record' => FALSE, // 默认不记录日志
+        'log_enabled' => FALSE, // 默认不记录日志
+        'log_level' => 'error,sql', // 允许记录的日志级别，随意自定义 error 和 sql 为系统内部使用
+        'log_error_enabled' => FALSE, // 是否记录系统中的错误日志
+        'log_sql_enabled' => FALSE, // 是否记录系统中的 SQL日志
         'log_file_size' => 2097152, // 日志文件大小限制
-        'log_record_level' => 'EMERG|ALERT|CRIT|ERR', // 允许记录的日志级别
-        'log_must_record_exception' => FALSE, // 是否强制记录异常
-        'log_sql_enabled' => FALSE, // 是否记录数据中的日志
+        'log_file_name' => 'Y-m-d H', // 日志文件名时间格式化
+        'log_time_format' => '【Y-m-d H:i】', // 日志时间格式化
         'show_page_trace' => FALSE, // 显示页面调式信息
         'show_exception_redirect' => '', // 重定向错误页面
         'show_exception_tpl' => '', // 自定义错误模板
