@@ -11,7 +11,7 @@
 
 /**
  * 系统致命错误模版
- * 
+ *
  * @author Xiangmin Liu
  */
 ?>
@@ -58,16 +58,18 @@
 <body>
     <div class="queryphp-message-container">
         <div class="queryphp-message-title">Fatal Error</div>
-        <div class="queryphp-message-subtitle">Please solve this problem before do next.</div>
+        <div class="queryphp-message-subtitle">Please solve this problem
+            before do next.</div>
         <div class="queryphp-message-content">
             <?php echo $sMessage; ?>
         </div>
     </div>
 
-<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
-<script type="text/javascript">
+    <script type="text/javascript"
+        src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+    <script type="text/javascript">
 $(function(){
-    var objMeta = $('meta'), objTitle=$('title'),objStyle=$('style'),objContainer = $('.queryphp-message-container');
+    var objMeta = $('meta'),objTitle=$('title'),objStyle=$('style'),objContainer = $('.queryphp-message-container');
     $('head').append(objMeta).append(objTitle).append(objStyle);
     $('body').html('').append(objContainer);
 });
