@@ -10,6 +10,8 @@
  */
 namespace Q\log;
 
+use phpDocumentor\Reflection\Types\Callable_;
+
 /**
  * 日志
  *
@@ -23,6 +25,20 @@ class log {
      * @var array
      */
     public static $arrLog = [ ];
+    
+    /**
+     * 日志过滤器
+     *
+     * @var callable
+     */
+    private static $calFilter = null;
+    
+    /**
+     * 日志处理器
+     *
+     * @var callable
+     */
+    private static $calProcessor = null;
     
     /**
      * 记录错误消息
@@ -54,13 +70,21 @@ class log {
             return;
         }
         
+        // 注册过滤器
+        if (self::$calFilter !== null && call_user_func_array ( self::$calFilter, [ 
+                $strMessage,
+                $strLevel 
+        ] ) === false) {
+            return;
+        }
+        
         // 日志消息
-        $strMessage = date ( $GLOBALS ['~@option'] ['log_time_format'] ) . "[{$strLevel}]{$strMessage}\r\n";
+        $strMessage = date ( $GLOBALS ['~@option'] ['log_time_format'] ) . $strMessage . "\r\n";
         
         // 保存日志
-        $strDestination = self::getLogPath_ ( $strLevel, $strDestination );
+        $strDestination = self::getPath_ ( $strLevel, $strDestination );
         if ($intMessageType == 3) {
-            self::checkLogSize_ ( $strDestination );
+            self::checkSize_ ( $strDestination );
         }
         
         // 记录到系统
@@ -71,6 +95,40 @@ class log {
             self::$arrLog [$strLevel] = [ ];
         }
         self::$arrLog [$strLevel] [] = $strMessage;
+        
+        // 注册处理器
+        if (self::$calProcessor !== null) {
+            call_user_func_array ( self::$calProcessor, [ 
+                    $strMessage,
+                    $strLevel 
+            ] );
+        }
+    }
+    
+    /**
+     * 注册日志过滤器
+     *
+     * @param callable $calFilter            
+     * @return void
+     */
+    static public function registerFilter($calFilter) {
+        if (! \Q::varType ( $calFilter, 'callback' )) {
+            \Q::throwException ( \Q::i18n ( '日志过滤器必须为一个回调类型' ) );
+        }
+        self::$calFilter = $calFilter;
+    }
+    
+    /**
+     * 注册日志处理器
+     *
+     * @param callable $calProcessor            
+     * @return void
+     */
+    static public function registerProcessor($calProcessor) {
+        if (! \Q::varType ( $calProcessor, 'callback' )) {
+            \Q::throwException ( \Q::i18n ( '日志处理器必须为一个回调类型' ) );
+        }
+        self::$calProcessor = $calProcessor;
     }
     
     /**
@@ -85,11 +143,20 @@ class log {
     }
     
     /**
+     * 获取日志记录
+     *
+     * @return array
+     */
+    static public function get() {
+        return self::$arrLog;
+    }
+    
+    /**
      * 获取日志记录数量
      *
      * @return number
      */
-    static public function getCount() {
+    static public function count() {
         return count ( self::$arrLog );
     }
     
@@ -99,7 +166,7 @@ class log {
      * @param string $sFilePath            
      * @return void
      */
-    static private function checkLogSize_($sFilePath) {
+    static private function checkSize_($sFilePath) {
         // 如果不是文件，则创建
         if (! is_file ( $sFilePath ) && ! is_dir ( dirname ( $sFilePath ) ) && ! \Q::makeDir ( dirname ( $sFilePath ) )) {
             \Q::throwException ( \Q::i18n ( '无法创建日志文件：“%s”', $sFilePath ) );
@@ -118,7 +185,7 @@ class log {
      * @param string $sFilePath            
      * @return string
      */
-    static private function getLogPath_($strLevel, $sFilePath = '') {
+    static private function getPath_($strLevel, $sFilePath = '') {
         // 不存在路径，则直接使用项目默认路径
         if (empty ( $sFilePath )) {
             $sFilePath = \Q::app ()->logcache_path . '/' . $strLevel . '/' . date ( $GLOBALS ['~@option'] ['log_file_name'] ) . ".log";

@@ -100,7 +100,7 @@ return [
          * 日志 && 调试
          */
         'log_enabled' => FALSE, // 默认不记录日志
-        'log_level' => 'error,sql', // 允许记录的日志级别，随意自定义 error 和 sql 为系统内部使用
+        'log_level' => 'error,sql,debug,info', // 允许记录的日志级别，随意自定义 error 和 sql 为系统内部使用
         'log_error_enabled' => FALSE, // 是否记录系统中的错误日志
         'log_sql_enabled' => FALSE, // 是否记录系统中的 sql 日志
         'log_file_size' => 2097152, // 日志文件大小限制
