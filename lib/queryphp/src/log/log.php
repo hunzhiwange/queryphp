@@ -10,8 +10,6 @@
  */
 namespace Q\log;
 
-use phpDocumentor\Reflection\Types\Callable_;
-
 /**
  * 日志
  *
