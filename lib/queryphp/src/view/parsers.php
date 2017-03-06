@@ -22,14 +22,14 @@ class parsers {
     /**
      * 分析器
      *
-     * @var Q\theme\parsers
+     * @var Q\view\parsers
      */
     private static $objParsers = null;
     
     /**
      * 编译器
      *
-     * @var Q\theme\compilers
+     * @var Q\view\compilers
      */
     private static $objCompilers = null;
     
@@ -106,7 +106,7 @@ class parsers {
     /**
      * 模板树结构
      *
-     * @var unknown
+     * @var array
      */
     protected $arrThemeTree = [ ];
     
