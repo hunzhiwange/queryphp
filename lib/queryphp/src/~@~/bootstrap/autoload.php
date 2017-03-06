@@ -11,7 +11,7 @@
 
 /**
  * 自动载入、接管系统异常
- * 
+ *
  * @author Xiangmin Liu
  */
 namespace Q;

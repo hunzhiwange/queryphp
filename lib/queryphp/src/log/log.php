@@ -30,7 +30,7 @@ class log {
      * @param string $strMessage
      *            应该被记录的错误信息
      * @param string $strLevel
-     *            日志错误类型，例如 error,sql,custom
+     *            日志错误类型，系统日志 error,sql,自定义其它日志 custom
      * @param int $intMessageType
      *            参考 error_log 参数 $message_type
      * @param string $strDestination
@@ -44,19 +44,33 @@ class log {
             return;
         }
         
-        // 只记录系统允许的日志级别
-        if (in_array ( $strLevel, explode ( ',', $GLOBALS ['~@option'] ['log_level'] ) )) {
-            // 日志消息
-            $strMessage = date ( $GLOBALS ['~@option'] ['log_time_format'] ) . "[{$strLevel}]{$strMessage}\r\n";
-            
-            // 保存日志
-            $strDestination = self::getLogPath_ ( $strLevel, $strDestination );
-            if ($intMessageType == 3) {
-                self::checkLogSize_ ( $strDestination );
-            }
-            error_log ( $strMessage, $intMessageType, $strDestination, $strExtraHeaders );
-            self::$arrLog [] = $strMessage;
+        // 错误日志和 sql 日志
+        if ((! $GLOBALS ['~@option'] ['log_error_enabled'] && $strLevel == 'error') || (! $GLOBALS ['~@option'] ['log_sql_enabled'] && $strLevel == 'sql')) {
+            return;
         }
+        
+        // 只记录系统允许的日志级别
+        if (! in_array ( $strLevel, explode ( ',', $GLOBALS ['~@option'] ['log_level'] ) )) {
+            return;
+        }
+        
+        // 日志消息
+        $strMessage = date ( $GLOBALS ['~@option'] ['log_time_format'] ) . "[{$strLevel}]{$strMessage}\r\n";
+        
+        // 保存日志
+        $strDestination = self::getLogPath_ ( $strLevel, $strDestination );
+        if ($intMessageType == 3) {
+            self::checkLogSize_ ( $strDestination );
+        }
+        
+        // 记录到系统
+        error_log ( $strMessage, $intMessageType, $strDestination, $strExtraHeaders );
+        
+        // 记录到内存方便后期调用
+        if (! isset ( self::$arrLog [$strLevel] )) {
+            self::$arrLog [$strLevel] = [ ];
+        }
+        self::$arrLog [$strLevel] [] = $strMessage;
     }
     
     /**

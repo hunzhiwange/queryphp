@@ -24,12 +24,12 @@ return [
         /**
          * 杂项
          */
-        'option_extend' => '', // 主题扩展项，
+        'option_extend' => '', // 主题扩展项
         'option_system_extend' => 'db,theme,i18n,cookie,url,log,debug,cache,router', // 隐性默认加载 db,theme,i18n,cookie,url,log,debug,cache,router
         'globals_tags' => [ ], // 全局标签
-        'start_gzip' => TRUE, // Gzip压缩
+        'start_gzip' => TRUE, // Gzip 压缩
         'time_zone' => 'Asia/Shanghai', // 时区
-        'q_auth_key' => 'queryphp-872-028-111-222-sn7i', // 安全key
+        'q_auth_key' => 'queryphp-872-028-111-222-sn7i', // 安全 key
         'upload_file_rule' => 'time', // 文件上传保存文件名函数
         
         /**
@@ -48,14 +48,14 @@ return [
         'db_meta_cached' => TRUE, // 数据库元是否缓存
         'db_distributed' => FALSE, // 是否采用分布式
         'db_rw_separate' => FALSE, // 数据库读写是否分离主从式有效
-        'db_dsn' => 'mysql://username:password@localhost:3306/dbname', // 数据dsn解析
+        'db_dsn' => 'mysql://username:password@localhost:3306/dbname', // 数据 dsn 解析
         'db_params' => [ ], // 数据库连接参数
         
         /**
          * 主题 && 语言包
          */
-        'theme_cache_lifetime' => - 1, // 模板编译缓存时间,单位秒,-1表示永不过期
-        'theme_cache_children' => FALSE, // 模板编译是否将子模板的缓存写入父模板以达到降低IO开销
+        'theme_cache_lifetime' => - 1, // 模板编译缓存时间,单位秒,-1 表示永不过期
+        'theme_cache_children' => FALSE, // 模板编译是否将子模板的缓存写入父模板以达到降低 IO 开销
         'theme_switch' => FALSE, // 是否允许模板切换
         'theme_default' => 'default', // 模板默认主题
         'theme_tag_note' => FALSE, // 注释版标签风格
@@ -76,20 +76,20 @@ return [
         /**
          * cookie
          */
-        'cookie_prefix' => 'q_', // cookie前缀
-        'cookie_langtheme_app' => TRUE, // 语言包和模板COOKIE是否包含应用名
-        'cookie_domain' => '', // cookie域名
-        'cookie_path' => '/', // cookie路径
-        'cookie_expire' => 86400, // cookie默认过期时间一天
+        'cookie_prefix' => 'q_', // cookie 前缀
+        'cookie_langtheme_app' => TRUE, // 语言包和模板 cookie 是否包含应用名
+        'cookie_domain' => '', // cookie 域名
+        'cookie_path' => '/', // cookie 路径
+        'cookie_expire' => 86400, // cookie 默认过期时间一天
         
         /**
          * Url相关
          */
-        'url_model' => 'pathinfo', // default=普通，pathinfo=pathinfo模式
+        'url_model' => 'pathinfo', // default = 普通，pathinfo = pathinfo 模式
         'url_rewrite' => FALSE, // 是否开启重写
-        'url_pathinfo_depr' => '/', // url分割符
+        'url_pathinfo_depr' => '/', // url 分割符
         'url_html_suffix' => '.html', // 伪静态后缀
-        'url_router_on' => FALSE, // 是否开启URL路由
+        'url_router_on' => FALSE, // 是否开启 url 路由
         'url_router_strict' => false, // 是否启用严格 url 匹配模式
         'url_router_extend' => '', // 路由扩展支持文件
         'url_router_domain_on' => false, // 是否开启域名路由解析
@@ -102,7 +102,7 @@ return [
         'log_enabled' => FALSE, // 默认不记录日志
         'log_level' => 'error,sql', // 允许记录的日志级别，随意自定义 error 和 sql 为系统内部使用
         'log_error_enabled' => FALSE, // 是否记录系统中的错误日志
-        'log_sql_enabled' => FALSE, // 是否记录系统中的 SQL日志
+        'log_sql_enabled' => FALSE, // 是否记录系统中的 sql 日志
         'log_file_size' => 2097152, // 日志文件大小限制
         'log_file_name' => 'Y-m-d H', // 日志文件名时间格式化
         'log_time_format' => '【Y-m-d H:i】', // 日志时间格式化
@@ -116,15 +116,15 @@ return [
          * 缓存系统
          */
         'runtime_cache_backend' => 'file', // 程序运行指定缓存
-        'runtime_cache_force_name' => '~@update_cache',// 缓存调试 GET 参数，强制不启用缓存
+        'runtime_cache_force_name' => '~@update_cache', // 缓存调试 GET 参数，强制不启用缓存
         'runtime_cache_time' => 86400, // 程序缓存时间
         'runtime_cache_prefix' => '~@', // 缓存键值前缀
-        'runtime_cache_times' => [ ], // 缓存时间预植,键值=缓存值，键值不带前缀 array('option'=>60)
-        'runtime_file_path' => '',// 文件缓存路径
-        'runtime_memcache_servers' => [ ], // memcache多台服务器
-        'runtime_memcache_host' => '127.0.0.1', // memcache默认缓存服务器
-        'runtime_memcache_port' => 11211, // memcache默认缓存服务器端口
-        'runtime_memcache_compressed' => false, // memcache是否压缩缓存数据
+        'runtime_cache_times' => [ ], // 缓存时间预植,键值=缓存值，键值不带前缀 ['option' => 60]
+        'runtime_file_path' => '', // 文件缓存路径
+        'runtime_memcache_servers' => [ ], // memcache 多台服务器
+        'runtime_memcache_host' => '127.0.0.1', // memcache 默认缓存服务器
+        'runtime_memcache_port' => 11211, // memcache 默认缓存服务器端口
+        'runtime_memcache_compressed' => false, // memcache 是否压缩缓存数据
         'runtime_memcache_persistent' => true 
-]; // Memcache是否使用持久连接
+]; // memcache 是否使用持久连接
 

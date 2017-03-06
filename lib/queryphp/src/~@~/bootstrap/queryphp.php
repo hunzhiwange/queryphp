@@ -743,15 +743,13 @@ class Q {
         $nErrno = $oE->getCode ();
         $sErrorStr = "[$nErrno] $sErrstr " . basename ( $sErrfile ) . \Q::i18n ( " 第 %d 行", $nErrline );
         
-        if ($GLOBALS ['~@option'] ['log_record'] && self::option ( 'log_must_record_exception' )) {
-            Log::W ( $sErrstr, Log::EXCEPTION );
+        if ($GLOBALS ['~@option'] ['log_error_enabled']) {
+            self::log ( $sErrstr, 'error' );
         }
         
         if (method_exists ( $oE, 'formatException' )) {
             self::halt ( $oE->formatException (), $oE instanceof DbException );
-        } 
-
-        else {
+        } else {
             self::halt ( $oE->getMessage (), $oE instanceof DbException );
         }
     }
@@ -767,7 +765,11 @@ class Q {
      */
     static public function errorHandel($nErrorNo, $sErrStr, $sErrFile, $nErrLine) {
         if ($nErrorNo) {
-            self::errorMessage ( "[{$nErrorNo}]: {$sErrStr}<br> File: {$sErrFile}<br> Line: {$nErrLine}" );
+            $sMessage = "[{$nErrorNo}]: {$sErrStr}<br> File: {$sErrFile}<br> Line: {$nErrLine}";
+            if ($GLOBALS ['~@option'] ['log_error_enabled']) {
+                self::log ( $sMessage, 'error' );
+            }
+            self::errorMessage ( $sMessage );
         }
     }
     
@@ -778,7 +780,11 @@ class Q {
      */
     static public function shutdownHandel() {
         if (($arrError = error_get_last ()) && ! empty ( $arrError ['type'] )) {
-            self::errorMessage ( "[{$arrError['type']}]: {$arrError['message']} <br> File: {$arrError['file']} <br> Line: {$arrError['line']}" );
+            $sMessage = "[{$arrError['type']}]: {$arrError['message']} <br> File: {$arrError['file']} <br> Line: {$arrError['line']}";
+            if ($GLOBALS ['~@option'] ['log_error_enabled']) {
+                self::log ( $sMessage, 'error' );
+            }
+            self::errorMessage ( $sMessage );
         }
     }
     
