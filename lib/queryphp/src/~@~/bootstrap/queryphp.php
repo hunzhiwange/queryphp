@@ -345,7 +345,7 @@ class Q {
             $arrOption = [ ];
         }
         $arrOption = array_merge ( [ 
-                'cache_time' => self::cacheTime_ ( $sId ) ?  : $GLOBALS ['~@option'] ['runtime_cache_time'],
+                'cache_time' => self::cacheTime_ ( $sId, $GLOBALS ['~@option'] ['runtime_cache_time'] ),
                 'cache_prefix' => $GLOBALS ['~@option'] ['runtime_cache_prefix'],
                 'cache_backend' => $GLOBALS ['~@option'] ['runtime_cache_backend'] 
         ], $arrOption );
@@ -2233,24 +2233,22 @@ class Q {
      * 读取缓存时间配置
      *
      * @param string $sId            
+     * @param int $intDefaultTime            
      * @return number
      */
-    static private function cacheTime_($sId) {
-        $nCacheTime = 0;
-        if (! empty ( $GLOBALS ['~@option'] ['runtime_cache_times'] [$sId] )) {
-            $nCacheTime = intval ( $GLOBALS ['~@option'] ['runtime_cache_times'] [$sId] );
-            return $nCacheTime;
+    static private function cacheTime_($sId, $intDefaultTime = 0) {
+        if (isset ( $GLOBALS ['~@option'] ['runtime_cache_times'] [$sId] )) {
+            return $GLOBALS ['~@option'] ['runtime_cache_times'] [$sId];
         }
         
         foreach ( $GLOBALS ['~@option'] ['runtime_cache_times'] as $sKey => $nValue ) {
-            $sKeyCache = str_replace ( '_*', '', $sKey );
-            if ($sKeyCache == $sId) {
+            $sKeyCache = '/^' . str_replace ( '*', '(\S+)', $sKey ) . '$/';
+            if (preg_match ( $sKeyCache, $sId, $arrRes )) {
                 return $GLOBALS ['~@option'] ['runtime_cache_times'] [$sKey];
-                break;
             }
         }
         
-        return $nCacheTime;
+        return $intDefaultTime;
     }
     
     /**
