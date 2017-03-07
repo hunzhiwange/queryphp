@@ -114,7 +114,7 @@ class file extends cache {
         
         // 解码
         if ($arrOption ['json']) {
-            $strData = json_decode ( $strData );
+            $strData = json_decode ( $strData, true );
         }
         
         return $strData;
