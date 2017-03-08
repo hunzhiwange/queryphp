@@ -35,6 +35,11 @@ class cookie {
                 'http_only' => false 
         ], $in );
         
+        // 验证 cookie 值是不是一个标量
+        if ($mixValue !== null && ! \Q::varType ( $mixValue, 'scalar' )) {
+            \Q::throwException ( \Q::i18n ( 'cookie 值必须是一个 PHP 标量' ) );
+        }
+        
         $sName = ($in ['prefix'] ? $GLOBALS ['~@option'] ['cookie_prefix'] : '') . $sName;
         
         if ($mixValue === null || $nLife < 0) {
@@ -50,15 +55,9 @@ class cookie {
         }
         
         $nLife = $nLife > 0 ? time () + $nLife : ($nLife < 0 ? time () - 31536000 : null);
-        $sPath = $in ['http_only'] && PHP_VERSION < '5.2.0' ? $GLOBALS ['~@option'] ['cookie_path'] . ';HttpOnly' : $GLOBALS ['~@option'] ['cookie_path'];
         $in ['cookie_domain'] = $in ['cookie_domain'] !== null ? $in ['cookie_domain'] : $GLOBALS ['~@option'] ['cookie_domain'];
-        
         $nSecure = $_SERVER ['SERVER_PORT'] == 443 ? 1 : 0;
-        if (PHP_VERSION < '5.2.0') {
-            setcookie ( $sName, $mixValue, $nLife, $sPath, $in ['cookie_domain'], $nSecure );
-        } else {
-            setcookie ( $sName, $mixValue, $nLife, $sPath, $in ['cookie_domain'], $nSecure, $in ['http_only'] );
-        }
+        setcookie ( $sName, $mixValue, $nLife, $GLOBALS ['~@option'] ['cookie_path'], $in ['cookie_domain'], $nSecure, $in ['http_only'] );
     }
     
     /**
