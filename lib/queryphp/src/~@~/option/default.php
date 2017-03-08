@@ -25,7 +25,7 @@ return [
          * 杂项
          */
         'option_extend' => '', // 配置扩展项
-        'option_system_extend' => 'db,theme,i18n,cookie,url,log,debug,cache,router', // 隐性默认加载 db,theme,i18n,cookie,url,log,debug,cache,router
+        'option_system_extend' => 'db,theme,i18n,cookie,url,log,debug,cache', // 隐性默认加载 db,theme,i18n,cookie,url,log,debug,cache
         'globals_tags' => [ ], // 全局标签
         'start_gzip' => TRUE, // Gzip 压缩
         'time_zone' => 'Asia/Shanghai', // 时区
