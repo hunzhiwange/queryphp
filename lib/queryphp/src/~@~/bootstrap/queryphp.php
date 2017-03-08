@@ -440,16 +440,17 @@ class Q {
      * cookie 统一入口
      *
      * @param string $sName            
-     * @param mixed $mixValue            
-     * @param number $nLife            
+     * @param mixed $mixValue                      
      * @param array $in
+     *            life 过期时间
      *            cookie_domain 是否启用域名
      *            prefix 是否开启前缀
      *            http_only
      *            only_delete_prefix
      */
-    static public function cookie($sName, $mixValue = '', $nLife = 0, array $in = []) {
+    static public function cookie($sName, $mixValue = '', array $in = []) {
         $in = array_merge ( [ 
+                'life' => 0,
                 'cookie_domain' => null,
                 'prefix' => true,
                 'http_only' => false,
@@ -466,12 +467,12 @@ class Q {
         }
         
         // 如果值为null，则删除指定COOKIE
-        if ($nLife < 0 || $mixValue === null) {
+        if ($in ['life'] < 0 || $mixValue === null) {
             cookie::deleteCookie ( $sName, $in ['cookie_domain'], $in ['prefix'] );
-        } elseif ($mixValue == '' && $nLife >= 0) { // 如果值为空，则获取cookie
+        } elseif ($mixValue == '' && $in ['life'] >= 0) { // 如果值为空，则获取cookie
             return cookie::getCookie ( $sName, $in ['prefix'] );
         } else { // 设置COOKIE
-            cookie::setCookie ( $sName, $mixValue, $nLife, $in );
+            cookie::setCookie ( $sName, $mixValue, $in );
         }
     }
     

@@ -21,15 +21,16 @@ class cookie {
      * 设置 COOKIE
      *
      * @param string $sName            
-     * @param string $mixValue            
-     * @param number $nLife            
+     * @param string $mixValue                      
      * @param array $in
+     *            life 过期时间
      *            cookie_domain 是否启用域名
      *            prefix 是否开启前缀
      *            http_only
      */
-    public static function setCookie($sName, $mixValue = '', $nLife = 0, array $in = []) {
+    public static function setCookie($sName, $mixValue = '', array $in = []) {
         $in = array_merge ( [ 
+                'life' => 0,
                 'cookie_domain' => null,
                 'prefix' => true,
                 'http_only' => false 
@@ -42,22 +43,21 @@ class cookie {
         
         $sName = ($in ['prefix'] ? $GLOBALS ['~@option'] ['cookie_prefix'] : '') . $sName;
         
-        if ($mixValue === null || $nLife < 0) {
-            $nLife = - 1;
+        if ($mixValue === null || $in ['life'] < 0) {
+            $in ['life'] = - 1;
             if (isset ( $_COOKIE [$sName] )) {
                 unset ( $_COOKIE [$sName] );
             }
         } else {
             $_COOKIE [$sName] = $mixValue;
-            if ($nLife !== NULL && $nLife == 0) {
-                $nLife = $GLOBALS ['~@option'] ['cookie_expire'];
+            if ($in ['life'] !== NULL && $in ['life'] === 0) {
+                $in ['life'] = $GLOBALS ['~@option'] ['cookie_expire'];
             }
         }
         
-        $nLife = $nLife > 0 ? time () + $nLife : ($nLife < 0 ? time () - 31536000 : null);
+        $in ['life'] = $in ['life'] > 0 ? time () + $in ['life'] : ($in ['life'] < 0 ? time () - 31536000 : null);
         $in ['cookie_domain'] = $in ['cookie_domain'] !== null ? $in ['cookie_domain'] : $GLOBALS ['~@option'] ['cookie_domain'];
-        $nSecure = $_SERVER ['SERVER_PORT'] == 443 ? 1 : 0;
-        setcookie ( $sName, $mixValue, $nLife, $GLOBALS ['~@option'] ['cookie_path'], $in ['cookie_domain'], $nSecure, $in ['http_only'] );
+        setcookie ( $sName, $mixValue, $in ['life'], $GLOBALS ['~@option'] ['cookie_path'], $in ['cookie_domain'], $_SERVER ['SERVER_PORT'] == 443 ? 1 : 0, $in ['http_only'] );
     }
     
     /**
@@ -80,7 +80,8 @@ class cookie {
      * @param string $bPrefix            
      */
     public static function deleteCookie($sName, $sCookieDomain = null, $bPrefix = true) {
-        self::setCookie ( $sName, null, - 1, [ 
+        self::setCookie ( $sName, null, [ 
+                'life' => - 1,
                 'cookie_domain' => $sCookieDomain,
                 'prefix' => $bPrefix 
         ] );
