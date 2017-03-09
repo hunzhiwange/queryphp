@@ -388,7 +388,7 @@ class Q {
         
         // 删除值
         if ($mixValue === null) {
-            return option::delete ( $mixValue );
+            return option::delete ( $mixName );
         }
         
         // 设置值

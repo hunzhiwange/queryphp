@@ -105,7 +105,9 @@ class option {
         if ($mixName === null) {
             self::$arrOption = [ ];
         } elseif (! strpos ( $mixName, '.' )) {
-            unset ( self::$arrOption [$mixName] );
+            if (isset ( self::$arrOption [$mixName] )) {
+                unset ( self::$arrOption [$mixName] );
+            }
         } else {
             $arrParts = explode ( '.', $mixName );
             $nMax = count ( $arrParts ) - 1;
@@ -118,7 +120,9 @@ class option {
                     }
                     $arrOption = &$arrOption [$sPart];
                 } else {
-                    unset ( $arrOption [$sPart] );
+                    if (isset ( $arrOption [$sPart] )) {
+                        unset ( $arrOption [$sPart] );
+                    }
                 }
             }
         }
