@@ -97,14 +97,12 @@ class option {
     /**
      * 删除配置
      *
-     * @param mixed $mixName
+     * @param string $mixName
      *            配置键值
      * @return string
      */
-    static public function delete($mixName = null) {
-        if ($mixName === null) {
-            self::$arrOption = [ ];
-        } elseif (! strpos ( $mixName, '.' )) {
+    static public function delete($mixName) {
+        if (! strpos ( $mixName, '.' )) {
             if (isset ( self::$arrOption [$mixName] )) {
                 unset ( self::$arrOption [$mixName] );
             }
