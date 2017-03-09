@@ -392,7 +392,7 @@ class Q {
         }
         
         // 设置值
-        return option::set ( $mixName, $mixValue, $mixDefault );
+        return option::set ( $mixName, $mixValue );
     }
     
     /**
@@ -440,7 +440,7 @@ class Q {
      * cookie 统一入口
      *
      * @param string $sName            
-     * @param mixed $mixValue                      
+     * @param mixed $mixValue            
      * @param array $in
      *            life 过期时间
      *            cookie_domain 是否启用域名

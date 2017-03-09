@@ -60,15 +60,13 @@ class option {
      *            配置键值
      * @param mixed $mixValue
      *            配置值
-     * @param mixed $mixDefault
-     *            配置默认值
      * @return
      *
      */
-    static public function set($mixName, $mixValue = null, $mixDefault = null) {
+    static public function set($mixName, $mixValue = null) {
         if (is_array ( $mixName )) {
             foreach ( $mixName as $sKey => $mixValue ) {
-                self::set ( $sKey, $mixValue, $mixDefault );
+                self::set ( $sKey, $mixValue);
             }
             return $GLOBALS ['~@option'] = self::$arrOption;
         } else {
