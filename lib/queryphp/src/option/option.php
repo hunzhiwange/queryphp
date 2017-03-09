@@ -66,7 +66,7 @@ class option {
     static public function set($mixName, $mixValue = null) {
         if (is_array ( $mixName )) {
             foreach ( $mixName as $sKey => $mixValue ) {
-                self::set ( $sKey, $mixValue);
+                self::set ( $sKey, $mixValue );
             }
             return $GLOBALS ['~@option'] = self::$arrOption;
         } else {
