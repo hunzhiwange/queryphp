@@ -452,10 +452,29 @@ class select {
     // ######################################################
     // ------------------- 返回查询结果 end --------------------
     // ######################################################
+    
+    // ######################################################
+    // ------------------ 构造查询条件 start -------------------
+    // ######################################################
+    
+    /**
+     * 设置是否查询主服务器
+     *
+     * @param boolean $booMaster            
+     * @return $this
+     */
     public function asMaster($booMaster = false) {
         $this->arrQueryParams ['master'] = $booMaster;
         return $this;
     }
+    
+    /**
+     * 设置查询结果类型
+     *
+     * @param mixed $mixType            
+     * @param mixed $mixValue            
+     * @return $this
+     */
     public function asFetchType($mixType, $mixValue = null) {
         if (is_array ( $mixType )) {
             $this->arrQueryParams ['fetch_type'] = array_merge ( $this->arrQueryParams ['fetch_type'], $mixType );
@@ -468,24 +487,40 @@ class select {
         }
         return $this;
     }
+    
+    /**
+     * 设置以类返会结果
+     *
+     * @param string $sClassName            
+     * @return $this
+     */
     public function asClass($sClassName) {
         $this->arrQueryParams ['as_class'] = $sClassName;
         $this->arrQueryParams ['as_default'] = false;
         return $this;
     }
+    
+    /**
+     * 设置默认形式返回
+     *
+     * @return $this
+     */
     public function asDefault() {
         $this->arrQueryParams ['as_class'] = null;
         $this->arrQueryParams ['as_default'] = true;
         return $this;
     }
+    
+    /**
+     * 设置是否以集合返回
+     *
+     * @param string $bAsCollection            
+     * @return $this
+     */
     public function asCollection($bAsCollection = true) {
         $this->arrQueryParams ['as_collection'] = $bAsCollection;
         return $this;
     }
-    
-    // ######################################################
-    // ------------------ 构造查询条件 start -------------------
-    // ######################################################
     
     /**
      * 重置查询条件

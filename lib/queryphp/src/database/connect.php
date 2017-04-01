@@ -13,7 +13,6 @@ namespace Q\database;
 use PDO;
 use PDOException;
 use Q\database\select;
-use Q\structure\object;
 
 /**
  * 数据库连接
