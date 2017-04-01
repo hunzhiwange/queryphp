@@ -68,8 +68,7 @@ class i18n {
      *
      * @param $sI18nName 语言名字            
      * @param $arrData 语言包数据            
-     * @return
-     *
+     * @return void
      */
     static public function addI18n($sI18nName, $arrData = []) {
         if (! $sI18nName || ! is_string ( $sI18nName )) {
@@ -116,8 +115,7 @@ class i18n {
      *
      * @param
      *            $sI18nName
-     * @return
-     *
+     * @return void
      */
     static public function setContext($sI18nName) {
         self::$sI18nName = $sI18nName;
@@ -128,8 +126,7 @@ class i18n {
      *
      * @param
      *            $sI18nName
-     * @return
-     *
+     * @return void
      */
     static public function setDefaultContext($sI18nName) {
         self::$sDefaultI18nName = $sI18nName;
@@ -140,8 +137,7 @@ class i18n {
      *
      * @param string $sCookieName
      *            cookie名字
-     * @return
-     *
+     * @return void
      */
     static public function setCookieName($sCookieName) {
         return self::$sCookieName == $sCookieName;
@@ -150,8 +146,7 @@ class i18n {
     /**
      * 获取当前语言包默认上下文环境
      *
-     * @return
-     *
+     * @return string
      */
     static public function getDefaultContext() {
         return self::$sDefaultI18nName;
@@ -160,8 +155,7 @@ class i18n {
     /**
      * 获取当前语言包 cookie 名字
      *
-     * @return
-     *
+     * @return string
      */
     static public function getCookieName() {
         return self::$sCookieName;
@@ -170,8 +164,7 @@ class i18n {
     /**
      * 获取当前语言包上下文环境
      *
-     * @return
-     *
+     * @return string
      */
     static public function getContext() {
         return self::$sI18nName;

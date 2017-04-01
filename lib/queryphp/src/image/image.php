@@ -109,6 +109,7 @@ class image {
      * @param string $sTargetFile            
      * @param number $nThumbWidth            
      * @param number $nThumbHeight            
+     * @return void
      */
     static public function thumbPreview($sTargetFile, $nThumbWidth, $nThumbHeight) {
         $arrAttachInfo = @getimagesize ( $sTargetFile );
@@ -347,6 +348,7 @@ class image {
      * @param unknown $oImage            
      * @param string $sType            
      * @param string $sFilename            
+     * @return void
      */
     static public function outputImage($oImage, $sType = 'png', $sFilename = '') {
         header ( "Content-type: image/" . $sType );
@@ -394,8 +396,7 @@ class image {
      * @param string $sImgPath            
      * @param number $nMaxWidth            
      * @param number $nMaxHeight            
-     * @return
-     *
+     * @return array
      */
     static function returnChangeSize($sImgPath, $nMaxWidth, $nMaxHeight) {
         $arrSize = @getimagesize ( $sImgPath );

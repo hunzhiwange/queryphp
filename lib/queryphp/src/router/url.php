@@ -22,7 +22,7 @@ class url {
      *
      * @var Q\base\url
      */
-    protected static $oInstance = null;
+    private static $oInstance = null;
     
     /**
      * 基础 url
@@ -86,7 +86,7 @@ class url {
      *
      * @return void
      */
-    protected function parseUrlWeb_() {
+    private function parseUrlWeb_() {
         $_SERVER ['REQUEST_URI'] = isset ( $_SERVER ['REQUEST_URI'] ) ? $_SERVER ['REQUEST_URI'] : $_SERVER ["HTTP_X_REWRITE_URL"]; // For IIS
                                                                                                                                     
         // 分析 pathinfo
@@ -104,7 +104,7 @@ class url {
      *
      * @return void
      */
-    protected function parseUrlCli_() {
+    private function parseUrlCli_() {
         // phpunit 等不存在 $argv
         if (! isset ( $argv ) || empty ( $argv )) {
             return;
@@ -149,7 +149,7 @@ class url {
      *
      * @return array
      */
-    public function parsePathInfo_() {
+    private function parsePathInfo_() {
         $arrPathInfo = [ ];
         $sPathInfo = $_SERVER ['PATH_INFO'];
         $arrPaths = explode ( $GLOBALS ['~@option'] ['url_pathinfo_depr'], trim ( $sPathInfo, '/' ) );
@@ -181,7 +181,7 @@ class url {
      * @param string $sVar            
      * @return string
      */
-    protected function getApp_($sVar) {
+    private function getApp_($sVar) {
         return $_GET [$sVar] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['~@option'] ['default_app']);
     }
     
@@ -191,7 +191,7 @@ class url {
      * @param string $sVar            
      * @return string
      */
-    protected function getController_($sVar) {
+    private function getController_($sVar) {
         return $_GET [$sVar] = ! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['~@option'] ['default_controller'];
     }
     
@@ -201,7 +201,7 @@ class url {
      * @param string $sVar            
      * @return string
      */
-    protected function getAction_($sVar) {
+    private function getAction_($sVar) {
         return $_GET [$sVar] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['~@option'] ['default_action']);
     }
     
@@ -211,6 +211,8 @@ class url {
     
     /**
      * pathinfo 解析入口
+     *
+     * @return void
      */
     private function filterPathInfo_() {
         $sPathInfo = $this->pathinfo_ ();

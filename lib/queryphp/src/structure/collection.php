@@ -10,12 +10,16 @@
  */
 namespace Q\structure;
 
+use Iterator;
+use ArrayAccess;
+use Countable;
+
 /**
- * 数组转对象
+ * 数组转对象集合
  *
  * @author Xiangmin Liu
  */
-class object implements Iterator, ArrayAccess, Countable {
+class collection implements Iterator, ArrayAccess, Countable {
     
     /**
      * 元素合集
@@ -32,12 +36,24 @@ class object implements Iterator, ArrayAccess, Countable {
     private $booValid = true;
     
     /**
+     * 类型
+     *
+     * @var string
+     */
+    private $sType = '';
+    
+    /**
      * 构造函数
      *
      * @param arra $arrObject            
+     * @return void
      */
-    public function __construct($arrObject = []) {
-        $this->arrObject = $arrObject;
+    public function __construct($arrObject = [], $sType = '') {
+        $this->sType = $sType;
+        foreach ( $arrObject as $offset => $oObject ) {
+            $this [$offset] = $oObject;
+        }
+        return $this;
     }
     
     /**
@@ -45,6 +61,7 @@ class object implements Iterator, ArrayAccess, Countable {
      *
      * @param string $sMethod            
      * @param array $arrArgs            
+     * @return void
      */
     public function __call($sMethod, $arrArgs) {
         \Q::throwException ( sprintf ( 'Method %s is not implemented', $sMethod ) );
@@ -72,6 +89,7 @@ class object implements Iterator, ArrayAccess, Countable {
      * @return mixed
      */
     public function __set($sKey, $mixVal) {
+        $this->checkType_ ( $mixVal );
         $mixOld = $this->__get ( $sKey );
         $this->arrObject [$sKey] = $mixVal;
         return $mixOld;
@@ -83,7 +101,7 @@ class object implements Iterator, ArrayAccess, Countable {
     
     /**
      * 当前元素
-     * 
+     *
      * @return mixed
      */
     public function current() {
@@ -92,7 +110,7 @@ class object implements Iterator, ArrayAccess, Countable {
     
     /**
      * 当前 key
-     * 
+     *
      * @return mixed
      */
     public function key() {
@@ -101,7 +119,7 @@ class object implements Iterator, ArrayAccess, Countable {
     
     /**
      * 下一个元素
-     * 
+     *
      * @return mixed
      */
     public function next() {
@@ -112,7 +130,7 @@ class object implements Iterator, ArrayAccess, Countable {
     
     /**
      * 指针重置
-     * 
+     *
      * @return mixed
      */
     public function rewind() {
@@ -123,6 +141,8 @@ class object implements Iterator, ArrayAccess, Countable {
     
     /**
      * 验证
+     *
+     * @return boolean
      */
     public function valid() {
         return $this->booValid;
@@ -164,6 +184,7 @@ class object implements Iterator, ArrayAccess, Countable {
      * @return mixed
      */
     public function offsetSet($strKey, $mixValue) {
+        $this->checkType_ ( $mixValue );
         $mixOld = $this->offsetGet ( $strKey );
         $this->arrObject [$strKey] = $mixValue;
         return $mixOld;
@@ -173,6 +194,7 @@ class object implements Iterator, ArrayAccess, Countable {
      * 实现 unset($obj['hello'])
      *
      * @param string $strKey            
+     * @return void
      */
     public function offsetUnset($strKey) {
         if (isset ( $this->arrObject [$strKey] ))
@@ -189,6 +211,8 @@ class object implements Iterator, ArrayAccess, Countable {
     
     /**
      * 统计元素数量 count($obj)
+     *
+     * @return int
      */
     public function count() {
         return count ( $this->arrObject );
@@ -204,6 +228,8 @@ class object implements Iterator, ArrayAccess, Countable {
     
     /**
      * jquery.each
+     *
+     * @return void
      */
     public function each() {
         $arrArgs = func_get_args ();
@@ -234,6 +260,8 @@ class object implements Iterator, ArrayAccess, Countable {
     
     /**
      * jquery.prev
+     *
+     * @return mixed
      */
     public function prev() {
         $prev = prev ( $this->arrObject );
@@ -243,6 +271,8 @@ class object implements Iterator, ArrayAccess, Countable {
     
     /**
      * jquery.end
+     *
+     * @return mixed
      */
     public function end() {
         $end = end ( $this->arrObject );
@@ -324,6 +354,7 @@ class object implements Iterator, ArrayAccess, Countable {
      *
      * @param string $sKey            
      * @param mixed $mixValue            
+     * @return void|mixed
      */
     public function attr($sKey, $mixValue = null) {
         if ($mixValue === null) {
@@ -337,6 +368,7 @@ class object implements Iterator, ArrayAccess, Countable {
      * jquery.eq
      *
      * @param string $sKey            
+     * @return mixed
      */
     public function eq($sKey) {
         return $this->offsetGet ( $sKey );
@@ -346,6 +378,7 @@ class object implements Iterator, ArrayAccess, Countable {
      * jquery.get
      *
      * @param string $sKey            
+     * @return mixed
      */
     public function get($sKey) {
         return $this->offsetGet ( $sKey );
@@ -373,6 +406,7 @@ class object implements Iterator, ArrayAccess, Countable {
      * jquery.find
      *
      * @param string $sKey            
+     * @return mixed
      */
     public function find($sKey) {
         return $this->offsetGet ( $sKey );
@@ -380,6 +414,8 @@ class object implements Iterator, ArrayAccess, Countable {
     
     /**
      * jquery.first
+     *
+     * @return mixed
      */
     public function first() {
         return $this->rewind ();
@@ -387,6 +423,8 @@ class object implements Iterator, ArrayAccess, Countable {
     
     /**
      * jquery.last
+     *
+     * @return mixed
      */
     public function last() {
         return $this->end ();
@@ -395,6 +433,7 @@ class object implements Iterator, ArrayAccess, Countable {
      * jquery.is
      *
      * @param string $sKey            
+     * @return boolean
      */
     public function is($sKey) {
         return $this->offsetExists ( $sKey );
@@ -419,6 +458,7 @@ class object implements Iterator, ArrayAccess, Countable {
      * jquery.not
      *
      * @param string $sKey            
+     * @return array
      */
     public function not($sKey) {
         return $this->siblings ( $sKey );
@@ -428,6 +468,7 @@ class object implements Iterator, ArrayAccess, Countable {
      * jquery.filter
      *
      * @param string $sKey            
+     * @return array
      */
     public function filter($sKey) {
         return $this->siblings ( $sKey );
@@ -435,6 +476,8 @@ class object implements Iterator, ArrayAccess, Countable {
     
     /**
      * jquer.size
+     *
+     * @return int
      */
     public function size() {
         return $this->count ();
@@ -442,6 +485,8 @@ class object implements Iterator, ArrayAccess, Countable {
     
     /**
      * 是否为空
+     *
+     * @return boolean
      */
     public function isEmpty() {
         return empty ( $this->arrObject );
@@ -452,7 +497,7 @@ class object implements Iterator, ArrayAccess, Countable {
      *
      * @param string $sKeyName            
      * @param mixed $mixValueName            
-     * @return array:
+     * @return array
      */
     public function map($sKeyName, $mixValueName = null) {
         if ($mixValueName === NULL) {
@@ -467,4 +512,23 @@ class object implements Iterator, ArrayAccess, Countable {
     // ######################################################
     // ------------------- 实现额外的方法 end -------------------
     // ######################################################
+    
+    /**
+     * 验证类型
+     *
+     * @param mixed $mixObject            
+     * @return void
+     */
+    private function checkType_($mixObject) {
+        if (is_object ( $mixObject )) {
+            if ($mixObject instanceof $this->sType) {
+                return;
+            }
+            $sType = get_class ( $mixObject );
+        } else {
+            $sType = gettype ( $mixObject );
+        }
+        
+        \Q::throwException ( \Q::i18n ( '集合只能容纳 %s 类型的对象，而不是 %s 类型的值', $this->sType, $sType ) );
+    }
 }

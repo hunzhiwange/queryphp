@@ -10,7 +10,9 @@
  */
 namespace Q\mvc;
 
-use Q\router\router, Q\i18n\i18n, Q\i18n\tool;
+use Q\router\router;
+use Q\i18n\i18n;
+use Q\i18n\tool;
 
 /**
  * 应用程序对象
@@ -21,8 +23,10 @@ class app {
     
     /**
      * 应用程序属性
+     *
+     * @var array
      */
-    protected $arrProp = [ 
+    private $arrProp = [ 
             /**
              * 应用基本
              */
@@ -61,6 +65,8 @@ class app {
     
     /**
      * 请求参数
+     *
+     * @var array
      */
     public $in;
     
@@ -69,7 +75,7 @@ class app {
      *
      * @var Q\mvc\project
      */
-    protected $objProject = null;
+    private $objProject = null;
     
     /**
      * 构造函数
@@ -414,7 +420,7 @@ class app {
      * @param string $sControllerName            
      * @return 注册的控制器
      */
-    protected function getController($sControllerName) {
+    private function getController($sControllerName) {
         $mixController = router::getBind ( $this->packControllerAndAction_ ( $sControllerName ) );
         if ($mixController !== null) {
             return $mixController;
@@ -428,7 +434,7 @@ class app {
      * @param string $sControllerName            
      * @return boolean
      */
-    protected function hasController($sControllerName) {
+    private function hasController($sControllerName) {
         $booHasController = router::hasBind ( $this->packControllerAndAction_ ( $sControllerName ) );
         if ($booHasController === false) {
             $booHasController = router::hasBind ( $sControllerName );
@@ -443,7 +449,7 @@ class app {
      * @param mixed $mixController            
      * @return 注册的控制器
      */
-    protected function registerController($sControllerName, $mixController) {
+    private function registerController($sControllerName, $mixController) {
         router::bind ( $this->packControllerAndAction_ ( $sControllerName ), $mixController );
     }
     
@@ -453,7 +459,7 @@ class app {
      * @param string $sActionName            
      * @return 注册的方法
      */
-    protected function getAction($sControllerName, $sActionName) {
+    private function getAction($sControllerName, $sActionName) {
         $mixAction = router::getBind ( $this->packControllerAndAction_ ( $sControllerName, $sActionName ) );
         if ($mixAction !== null) {
             return $mixAction;
@@ -468,9 +474,9 @@ class app {
      *            控制器
      * @param string $sActionName
      *            方法
-     *            return boolean
+     * @return boolean
      */
-    protected function hasAction($sControllerName, $sActionName) {
+    private function hasAction($sControllerName, $sActionName) {
         $booHasAction = router::hasBind ( $this->packControllerAndAction_ ( $sControllerName, $sActionName ) );
         if ($booHasAction === false) {
             $booHasAction = router::hasBind ( $sControllerName . '/' . $sActionName );
@@ -488,9 +494,9 @@ class app {
      *            方法
      * @param mixed $mixAction
      *            待注册的方法
-     *            return 注册的方法
+     * @return 注册的方法
      */
-    protected function registerAction($sControllerName, $sActionName, $mixAction) {
+    private function registerAction($sControllerName, $sActionName, $mixAction) {
         return router::bind ( $this->packControllerAndAction_ ( $sControllerName, $sActionName ), $mixAction );
     }
     
@@ -499,7 +505,7 @@ class app {
      *
      * @return void
      */
-    protected function loadOption_() {
+    private function loadOption_() {
         $sOptionCache = $this->optioncache_path . '/' . $this->optioncache_name . '.php';
         
         // 开发模式不用读取缓存
@@ -593,7 +599,7 @@ class app {
      *
      * @return void
      */
-    protected function initView_() {
+    private function initView_() {
         if (! $GLOBALS ['~@option'] ['theme_switch']) {
             $sThemeSet = $GLOBALS ['~@option'] ['theme_default'];
         } else {
@@ -628,7 +634,7 @@ class app {
      *
      * @return void
      */
-    protected function initI18n_() {
+    private function initI18n_() {
         if (! $GLOBALS ['~@option'] ['i18n_switch']) {
             $sI18nSet = $GLOBALS ['~@option'] ['i18n_default'];
             i18n::setContext ( $sI18nSet );
@@ -693,7 +699,7 @@ class app {
      *            参数
      * @return void
      */
-    protected function initApp_($in) {
+    private function initApp_($in) {
         $sAppName = $this->app_name;
         $sAppPath = $this->objProject->app_path . '/' . $sAppName;
         $sRuntime = $this->objProject->runtime_path;
@@ -731,10 +737,9 @@ class app {
      * 过滤掉系统控制器等参数
      *
      * @param array $arrArgs            
-     * @return
-     *
+     * @return array
      */
-    protected function filterArgs_($arrArgs) {
+    private function filterArgs_($arrArgs) {
         unset ( $arrArgs [\Q\mvc\project::ARGS_APP], $arrArgs [\Q\mvc\project::ARGS_CONTROLLER], $arrArgs [\Q\mvc\project::ARGS_ACTION] );
         return $arrArgs;
     }
@@ -744,10 +749,9 @@ class app {
      *
      * @param string $strController            
      * @param string $strAction            
-     * @return
-     *
+     * @return string
      */
-    protected function packControllerAndAction_($strController, $strAction = '') {
+    private function packControllerAndAction_($strController, $strAction = '') {
         return $this->app_name . '://' . $strController . ($strAction ? '/' . $strAction : '');
     }
     
@@ -758,7 +762,7 @@ class app {
      * @param array $arrNewRouter            
      * @return array
      */
-    protected function mergeRouter_(array $arrRouter, array $arrNewRouter) {
+    private function mergeRouter_(array $arrRouter, array $arrNewRouter) {
         // 合并域名参数
         if (! empty ( $arrNewRouter ['~domains~'] ) && is_array ( $arrNewRouter ['~domains~'] )) {
             if (! isset ( $arrRouter ['~domains~'] )) {

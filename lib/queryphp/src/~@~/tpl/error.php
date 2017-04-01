@@ -64,10 +64,9 @@
             <?php echo $sMessage; ?>
         </div>
     </div>
-
-    <script type="text/javascript"
-        src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
-    <script type="text/javascript">
+    
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script type="text/javascript">
 $(function(){
     var objMeta = $('meta'),objTitle=$('title'),objStyle=$('style'),objContainer = $('.queryphp-message-container');
     $('head').append(objMeta).append(objTitle).append(objStyle);

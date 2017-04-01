@@ -28,6 +28,7 @@ abstract class stack_queue {
      * 删除元素
      *
      * @param int $nIdx            
+     * @return void
      */
     public function remove($nIdx) {
         unset ( $this->arrElements [$nIdx] );
@@ -64,11 +65,14 @@ abstract class stack_queue {
      * 加载元素
      *
      * @param mixed $mixItem            
+     * @return void
      */
     abstract public function in($mixItem);
     
     /**
      * 释放元素
+     *
+     * @return mixed
      */
     abstract public function out();
 }

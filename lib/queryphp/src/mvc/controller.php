@@ -43,6 +43,7 @@ class controller {
      *
      * @param Q\mvc\app $oApp            
      * @param 过滤后参数 $in            
+     * @return void
      */
     public function __construct($oApp = null, $in = []) {
         // 检查视图和APP
@@ -67,6 +68,7 @@ class controller {
      *
      * @param mixed $mixName            
      * @param mixed $Value            
+     * @return void
      */
     public function __set($mixName, $mixValue) {
         $this->assign ( $mixName, $mixValue );
@@ -90,6 +92,7 @@ class controller {
      *            方法名
      * @param array $arrArgs
      *            参数
+     * @return void
      */
     public function action($sActionName, $arrArgs = []) {
         // 判断方法是否存在

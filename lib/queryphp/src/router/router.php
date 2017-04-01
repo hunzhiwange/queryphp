@@ -318,8 +318,8 @@ class router {
     /**
      * 导入路由配置数据
      *
-     * @param array $arrData
-     *            @retun void
+     * @param array $arrData            
+     * @return void
      */
     static public function cache($arrData) {
         if (isset ( $arrData ['~domains~'] )) {
@@ -373,6 +373,8 @@ class router {
     
     /**
      * 匹配路由
+     *
+     * @return void
      */
     public static function parse() {
         $arrNextParse = [ ];

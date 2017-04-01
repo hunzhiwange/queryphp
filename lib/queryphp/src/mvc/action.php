@@ -29,6 +29,7 @@ abstract class action {
      *
      * @param Q\mvc\app $oApp            
      * @param 过滤后参数 $in            
+     * @return void
      */
     public function __construct($oApp = null, $in = []) {
         ! $oApp && $oApp = \Q::app ();
@@ -42,6 +43,7 @@ abstract class action {
      *
      * @param mixed $mixName            
      * @param mixed $Value            
+     * @return void
      */
     public function __set($mixName, $mixValue) {
         $this->objController->assign ( $mixName, $mixValue );

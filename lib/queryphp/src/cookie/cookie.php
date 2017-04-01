@@ -21,12 +21,13 @@ class cookie {
      * 设置 COOKIE
      *
      * @param string $sName            
-     * @param string $mixValue                      
+     * @param string $mixValue            
      * @param array $in
      *            life 过期时间
      *            cookie_domain 是否启用域名
      *            prefix 是否开启前缀
      *            http_only
+     * @return void
      */
     public static function setCookie($sName, $mixValue = '', array $in = []) {
         $in = array_merge ( [ 
@@ -78,6 +79,7 @@ class cookie {
      * @param string $sName            
      * @param string $sCookieDomain            
      * @param string $bPrefix            
+     * @return void
      */
     public static function deleteCookie($sName, $sCookieDomain = null, $bPrefix = true) {
         self::setCookie ( $sName, null, [ 

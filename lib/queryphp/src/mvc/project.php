@@ -21,8 +21,10 @@ class project {
     
     /**
      * 项目属性
+     *
+     * @var array
      */
-    protected $arrProp = [ 
+    private $arrProp = [ 
             
             /**
              * 项目基本
@@ -44,6 +46,8 @@ class project {
     
     /**
      * 请求参数
+     *
+     * @var array
      */
     public static $in = [ ];
     
@@ -259,7 +263,7 @@ class project {
      *            参数
      * @return void
      */
-    protected function initProject_($in) {
+    private function initProject_($in) {
         
         /**
          * 项目基础目录
@@ -286,7 +290,7 @@ class project {
      *
      * @return void
      */
-    protected function initUrl_() {
+    private function initUrl_() {
         // 分析 php 入口文件路径
         $sEnterBak = $sEnter = $this->url_enter;
         if (! $sEnter) {
@@ -330,10 +334,11 @@ class project {
     /**
      * 检查 URL 非法请求
      *
-     * @param $in return
-     *            void
+     * @param
+     *            $in
+     * @return void
      */
-    protected function checkIn_($in) {
+    private function checkIn_($in) {
         return $in;
     }
 }

@@ -60,8 +60,7 @@ class option {
      *            配置键值
      * @param mixed $mixValue
      *            配置值
-     * @return
-     *
+     * @return array
      */
     static public function set($mixName, $mixValue = null) {
         if (is_array ( $mixName )) {

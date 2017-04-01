@@ -14,7 +14,10 @@
  *
  * @author Xiangmin Liu
  */
-use Q\cookie\cookie, Q\xml\xml, Q\option\option, Q\log\log;
+use Q\cookie\cookie;
+use Q\xml\xml;
+use Q\option\option;
+use Q\log\log;
 
 /**
  * 注册框架命名空间
@@ -81,6 +84,8 @@ class Q {
     
     /**
      * 项目类管理
+     *
+     * @return \Q\mvc\project
      */
     static public function project() {
         return \Q\mvc\project::run ();
@@ -88,6 +93,8 @@ class Q {
     
     /**
      * 应用类管理
+     *
+     * @return \Q\mvc\app
      */
     static public function app($sAppName = '') {
         return \Q\mvc\project::getApp ( $sAppName );
@@ -248,7 +255,7 @@ class Q {
      *
      * @param bool $bAutoload
      *            true　表示启用
-     * @return 旧的设置值
+     * @return boolean
      */
     static public function setAutoload($bAutoload) {
         if (! is_bool ( $bAutoload )) {
@@ -267,7 +274,7 @@ class Q {
      *
      * @param string $sKey            
      * @param string $sVar            
-     * @return 返回数据
+     * @return mixed
      */
     static function in($sKey, $sVar = 'request') {
         switch ($sVar) {
@@ -301,6 +308,7 @@ class Q {
      * @param mixed $mixArgs            
      * @param string $sMethod            
      * @param mixed $mixMethodArgs            
+     * @return object
      */
     static public function instance($sClass, $mixArgs = null, $sMethod = null, $mixMethodArgs = null) {
         $sIdentify = $sClass . serialize ( $mixArgs ) . $sMethod . serialize ( $mixMethodArgs ); // 惟一识别号
@@ -408,6 +416,7 @@ class Q {
      *            参考 error_log 参数 $destination
      * @param string $strExtraHeaders
      *            参考 error_log 参数 $extra_headers
+     * @return void
      */
     static public function log($strMessage, $strLevel = 'error', $intMessageType = 3, $strDestination = '', $strExtraHeaders = '') {
         log::run ( $strMessage, $strLevel, $intMessageType, $strDestination, $strExtraHeaders );
@@ -447,6 +456,7 @@ class Q {
      *            prefix 是否开启前缀
      *            http_only
      *            only_delete_prefix
+     * @return void|mixed
      */
     static public function cookie($sName, $mixValue = '', array $in = []) {
         $in = array_merge ( [ 
@@ -667,6 +677,7 @@ class Q {
      * 行为插件 todo
      *
      * @param string $sTag            
+     * @return void
      */
     static public function tag($sTag) {
         if (array_key_exists ( $sTag, $GLOBALS ['~@option'] ['globals_tags'] )) {
@@ -694,8 +705,7 @@ class Q {
      * @param boolean $bEcho            
      * @param string $sLabel            
      * @param boolean $bStrict            
-     * @return
-     *
+     * @return mixed
      */
     static public function dump($mixVar, $bEcho = true, $sLabel = null, $bStrict = true) {
         $SLabel = ($sLabel === null) ? '' : rtrim ( $sLabel ) . ' ';
@@ -736,6 +746,7 @@ class Q {
      * 接管 PHP 异常
      *
      * @param Exception $oE            
+     * @return void
      */
     static public function exceptionHandler($oE) {
         $sErrstr = $oE->getMessage ();
@@ -762,7 +773,7 @@ class Q {
      * @param string $sErrStr            
      * @param string $sErrFile            
      * @param int $nErrLine            
-     * @return oid
+     * @return void
      */
     static public function errorHandel($nErrorNo, $sErrStr, $sErrFile, $nErrLine) {
         if ($nErrorNo) {
@@ -777,7 +788,7 @@ class Q {
     /**
      * 接管 PHP 致命错误
      *
-     * @return oid
+     * @return void
      */
     static public function shutdownHandel() {
         if (($arrError = error_get_last ()) && ! empty ( $arrError ['type'] )) {
@@ -795,7 +806,7 @@ class Q {
      * @param string $sMsg            
      * @param string $sType            
      * @param number $nCode            
-     * @return oid
+     * @return void
      */
     static public function throwException($sMsg, $sType = 'Q\exception\exception', $nCode = 0) {
         if (self::classExists ( $sType, false, true )) {
@@ -810,7 +821,7 @@ class Q {
      *
      * @param mixed $mixError            
      * @param boolean $bDbError            
-     * @return oid
+     * @return void
      */
     static public function halt($mixError, $bDbError = FALSE) {
         if (! is_array ( $mixError )) {
@@ -842,7 +853,7 @@ class Q {
      * 输出一个致命错误
      *
      * @param string $sMessage            
-     * @return oid
+     * @return void
      */
     static public function errorMessage($sMessage) {
         require_once (Q_PATH . '/~@~/tpl/error.php');
@@ -1226,8 +1237,7 @@ class Q {
      * @param array $arrIn
      *            fullpath 是否返回全部路径
      *            returndir 返回目录
-     * @return
-     *
+     * @return array
      */
     static public function listDir($sDir, $arrIn = []) {
         $arrIn = array_merge ( [ 
@@ -1309,8 +1319,7 @@ class Q {
     /**
      * 获取 IP 地址
      *
-     * @return
-     *
+     * @return string
      */
     static public function getIp() {
         static $sRealip = NULL;
@@ -1360,6 +1369,7 @@ class Q {
      * @param string $sUrl            
      * @param number $nTime            
      * @param string $sMsg            
+     * @return void
      */
     static public function urlRedirect($sUrl, $nTime = 0, $sMsg = '') {
         $sUrl = str_replace ( [ 
@@ -1497,8 +1507,7 @@ class Q {
      *
      * @param int $nFileSize            
      * @param boolean $booUnit            
-     * @return
-     *
+     * @return string
      */
     static public function formatBytes($nFileSize, $booUnit = true) {
         if ($nFileSize >= 1073741824) {
@@ -1520,8 +1529,7 @@ class Q {
      * @param mixed $mixInput            
      * @param string $sDelimiter            
      * @param boolean $bAllowedEmpty            
-     * @return
-     *
+     * @return mixed
      */
     public static function normalize($mixInput, $sDelimiter = ',', $bAllowedEmpty = false) {
         if (is_array ( $mixInput ) || is_string ( $mixInput )) {
@@ -1547,8 +1555,7 @@ class Q {
      * @param int $nLength            
      * @param string $sCharBox            
      * @param boolean $bNumeric            
-     * @return
-     *
+     * @return string
      */
     static public function randString($nLength, $sCharBox = null, $bNumeric = false) {
         if ($bNumeric === true) {
@@ -1578,8 +1585,7 @@ class Q {
      * @param mixed $mixContents            
      * @param string $sFromChar            
      * @param string $sToChar            
-     * @return
-     *
+     * @return mixed
      */
     static public function stringEncoding($mixContents, $sFromChar, $sToChar = 'utf-8') {
         if (empty ( $mixContents )) {
@@ -1691,6 +1697,8 @@ class Q {
     
     /**
      * 魔术转移处理
+     *
+     * @return void
      */
     static public function stripslashesMagicquotegpc() {
         if (self::getMagicQuotesGpc ()) {
@@ -1706,8 +1714,7 @@ class Q {
      *
      * @param mixed $mixString            
      * @param boolean $bRecursive            
-     * @return
-     *
+     * @return mixed
      */
     static public function stripslashes($mixString, $bRecursive = true) {
         if ($bRecursive === true and is_array ( $mixString )) { // 递归
@@ -1818,8 +1825,7 @@ class Q {
      *
      * @param string $sTxt            
      * @param bool $bEsc            
-     * @return
-     *
+     * @return string
      */
     static public function escapeCharacter($sTxt, $bEsc = true) {
         if ($sTxt == '""') {
@@ -2129,7 +2135,7 @@ class Q {
      * 读取 json 缓存数据
      *
      * @param $sCacheFile
-     * @return
+     * @return json
      */
     static private function readCache($sCacheFile) {
         return json_decode ( file_get_contents ( $sCacheFile ) );

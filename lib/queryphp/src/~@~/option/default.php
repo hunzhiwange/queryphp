@@ -35,21 +35,28 @@ return [
         /**
          * 数据库
          */
+        
+        // 数据库默认连接参数
+        'db_type' => 'mysql', // 数据库类型
         'db_host' => 'localhost', // 数据库地址
         'db_user' => 'root', // 数据库用户名
         'db_password' => '', // 数据库密码
         'db_prefix' => '', // 数据库表前缀
         'db_char' => 'utf8', // 数据库编码
         'db_name' => '', // 数据库名字
-        'db_type' => 'mysql', // 数据库类型
         'db_schema' => '', // 数据库SCHEMA
         'db_port' => 3306, // 端口
+        'db_dsn' => '', // [优先解析]数据 dsn 解析 mysql://username:password@localhost:3306/dbname
+        'db_params' => [ ], // 数据库连接参数
+        'db_persistent' => FALSE, // 数据库是否支持长连接
+        'db_distributed' => FALSE, // 是否采用分布式
+        'db_rw_separate' => FALSE, // 数据库读写是否分离[注意：主从式有效]
+        'db_master' => [], // 主服务器
+        'db_slave' => [], // 副服务器
+                                   
+        // 数据库缓存
         'db_cache' => FALSE, // 数据库查询是否缓存
         'db_meta_cached' => TRUE, // 数据库元是否缓存
-        'db_distributed' => FALSE, // 是否采用分布式
-        'db_rw_separate' => FALSE, // 数据库读写是否分离主从式有效
-        'db_dsn' => 'mysql://username:password@localhost:3306/dbname', // 数据 dsn 解析
-        'db_params' => [ ], // 数据库连接参数
         
         /**
          * 主题 && 语言包

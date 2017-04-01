@@ -86,8 +86,7 @@ class view {
      *
      * @param mixed $mixName            
      * @param mixed $mixValue            
-     * @return
-     *
+     * @return mixed
      */
     public function assign($mixName, $mixValue = null) {
         return $this->getTheme ()->setVar ( $mixName, $mixValue );
@@ -111,8 +110,7 @@ class view {
      *            charset 编码
      *            content_type 内容类型
      *            return 是否返回
-     * @return
-     *
+     * @return void|string
      */
     public function display($sFile = '', $in = []) {
         $in = array_merge ( [ 

@@ -21,6 +21,7 @@ class queue extends stack_queue {
      * 入对
      *
      * @param mixed $mixItem            
+     * @return void
      */
     public function in($mixItem) {
         array_unshift ( $this->arrElements, $mixItem );
@@ -28,6 +29,8 @@ class queue extends stack_queue {
     
     /**
      * 出队
+     *
+     * @return mixed
      */
     public function out() {
         if (! $this->getLength ()) {

@@ -51,6 +51,7 @@ class log {
      *            参考 error_log 参数 $destination
      * @param string $strExtraHeaders
      *            参考 error_log 参数 $extra_headers
+     * @return void
      */
     static public function run($strMessage, $strLevel = 'error', $intMessageType = 3, $strDestination = '', $strExtraHeaders = '') {
         // 是否开启日志

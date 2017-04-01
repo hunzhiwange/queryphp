@@ -22,8 +22,7 @@ class compilers {
     /**
      * code 支持的特殊别名映射
      *
-     * @var
-     *
+     * @var array
      */
     protected static $arrCodeMap = [ 
             'php' => '~',
@@ -44,24 +43,21 @@ class compilers {
     /**
      * node 支持的特殊别名映射
      *
-     * @var
-     *
+     * @var array
      */
     protected static $arrNodeMap = [ ];
     
     /**
      * javascript 支持的特殊别名映射
      *
-     * @var
-     *
+     * @var array
      */
     protected static $arrJsMap = [ ];
     
     /**
      * javascript 标签
      *
-     * @var
-     *
+     * @var array
      */
     protected static $arrJsTag = [
             // required 属性不能为空，single 单标签
@@ -104,8 +100,7 @@ class compilers {
     /**
      * Node标签
      *
-     * @var
-     *
+     * @var array
      */
     protected static $arrNodeTag = [
             // required 属性不能为空，single 单标签
@@ -225,6 +220,7 @@ class compilers {
      * 全局编译器（保护标签）
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function globalCompiler(&$arrTheme) {
         $arrTheme ['content'] = $this->encodeContent_ ( $arrTheme ['content'], 'global' );
@@ -234,6 +230,7 @@ class compilers {
      * 全局还原编译器（保护标签还原）
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function globalrevertCompiler(&$arrTheme) {
         $arrTheme ['content'] = $this->encodeContent_ ( $arrTheme ['content'], 'revert' );
@@ -243,6 +240,7 @@ class compilers {
      * node.code 还原编译器
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function revertCompiler(&$arrTheme) {
         $arrTheme ['content'] = $this->encodeContent_ ( $arrTheme ['content'], 'revert' );
@@ -260,6 +258,7 @@ class compilers {
      * 变量
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function variableCodeCompiler(&$arrTheme) {
         $arrTheme ['content'] = ! empty ( $arrTheme ['content'] ) ? $this->parseContent_ ( $arrTheme ['content'] ) : NULL;
@@ -273,6 +272,7 @@ class compilers {
      * if
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function ifCodeCompiler(&$arrTheme) {
         $arrTheme ['content'] = $this->parseContentIf_ ( $arrTheme ['content'] );
@@ -283,6 +283,7 @@ class compilers {
      * elseif
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function elseifCodeCompiler(&$arrTheme) {
         $arrTheme ['content'] = $this->parseContentIf_ ( $arrTheme ['content'], 'else' );
@@ -293,6 +294,7 @@ class compilers {
      * else 标签
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function elseCodeCompiler(&$arrTheme) {
         $arrTheme ['content'] = $this->encodeContent_ ( '<?' . 'php else: ?' . '>' );
@@ -302,6 +304,7 @@ class compilers {
      * foreach
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function foreachCodeCompiler(&$arrTheme) {
         // 分析foreach
@@ -331,6 +334,7 @@ class compilers {
      * for
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function forCodeCompiler(&$arrTheme) {
         $arrTheme ['content'] = $this->encodeContent_ ( '<?' . 'php for( ' . $arrTheme ['content'] . ' ) : ?' . '>' );
@@ -340,6 +344,7 @@ class compilers {
      * while 头部
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function whileCodeCompiler(&$arrTheme) {
         $arrTheme ['content'] = $this->encodeContent_ ( '<?' . 'php while( ' . $arrTheme ['content'] . ' ) : ?' . '>' );
@@ -349,6 +354,7 @@ class compilers {
      * php 脚本
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function phpCodeCompiler(&$arrTheme) {
         $arrTheme ['content'] = $this->encodeContent_ ( '<?' . 'php ' . $arrTheme ['content'] . '; ?' . '>' );
@@ -358,6 +364,7 @@ class compilers {
      * 注释
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function noteCodeCompiler(&$arrTheme) {
         $arrTheme ['content'] = $this->encodeContent_ ( ' ' );
@@ -367,6 +374,7 @@ class compilers {
      * PHP echo 标签
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function echoCodeCompiler(&$arrTheme) {
         $arrTheme ['content'] = $this->encodeContent_ ( '<?' . 'php echo ' . $arrTheme ['content'] . '; ?' . '>' );
@@ -376,6 +384,7 @@ class compilers {
      * javascript 初始标签
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function scriptCodeCompiler(&$arrTheme) {
         $arrTheme ['content'] = $this->encodeContent_ ( '<script type="text/javascript">' );
@@ -385,6 +394,7 @@ class compilers {
      * css 初始标签
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function styleCodeCompiler(&$arrTheme) {
         $arrTheme ['content'] = $this->encodeContent_ ( '<style type="text/css">' );
@@ -394,6 +404,7 @@ class compilers {
      * endtag
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function endtagCodeCompiler(&$arrTheme) {
         // 尾标签
@@ -438,6 +449,7 @@ class compilers {
      * 变量及表达式
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function jsvarCompiler(&$arrTheme) {
         $arrTheme ['content'] = "' + " . $this->parseJsContent_ ( $arrTheme ['content'] ) . " + '";
@@ -447,6 +459,7 @@ class compilers {
      * if 编译器
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function ifJsCompiler(&$arrTheme) {
         $this->checkNode_ ( $arrTheme, true );
@@ -467,6 +480,7 @@ out += '";
      * elseif 编译器
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function elseifJsCompiler(&$arrTheme) {
         $this->checkNode_ ( $arrTheme, true );
@@ -486,6 +500,7 @@ out += '";
      * else
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function elseJsCompiler(&$arrTheme) {
         $sCompiled = "';
@@ -499,6 +514,7 @@ out += '";
      * each 循环
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function eachJsCompiler(&$arrTheme) {
         $this->checkNode_ ( $arrTheme, true );
@@ -532,6 +548,7 @@ out += '";
      * assign
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function assignNodeCompiler(&$arrTheme) {
         $this->checkNode_ ( $arrTheme );
@@ -557,6 +574,7 @@ out += '";
      * 流程if
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function ifNodeCompiler(&$arrTheme) {
         $this->checkNode_ ( $arrTheme );
@@ -570,6 +588,7 @@ out += '";
      * elseif
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function elseifNodeCompiler(&$arrTheme) {
         $this->checkNode_ ( $arrTheme );
@@ -583,6 +602,7 @@ out += '";
      * else
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function elseNodeCompiler(&$arrTheme) {
         $this->checkNode_ ( $arrTheme );
@@ -594,6 +614,7 @@ out += '";
      * foreach list
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function listNodeCompiler(&$arrTheme) {
         $this->checkNode_ ( $arrTheme );
@@ -628,6 +649,7 @@ out += '";
      * lists 增强版
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function listsNodeCompiler(&$arrTheme) {
         $this->checkNode_ ( $arrTheme );
@@ -667,6 +689,7 @@ out += '";
      * include
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function includeNodeCompiler(&$arrTheme) {
         $this->checkNode_ ( $arrTheme );
@@ -696,6 +719,7 @@ out += '";
      * for
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function forNodeCompiler(&$arrTheme) {
         $this->checkNode_ ( $arrTheme );
@@ -722,6 +746,7 @@ out += '";
      * while
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function whileNodeCompiler(&$arrTheme) {
         $this->checkNode_ ( $arrTheme );
@@ -735,6 +760,7 @@ out += '";
      * break
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function breakNodeCompiler(&$arrTheme) {
         $this->checkNode_ ( $arrTheme );
@@ -746,6 +772,7 @@ out += '";
      * continue
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function continueNodeCompiler(&$arrTheme) {
         $this->checkNode_ ( $arrTheme );
@@ -757,6 +784,7 @@ out += '";
      * php
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function phpNodeCompiler(&$arrTheme) {
         $this->checkNode_ ( $arrTheme );
@@ -768,6 +796,7 @@ out += '";
      * 属性编译
      *
      * @param array $arrTheme            
+     * @return void
      */
     public function attributeNodeCompiler(&$arrTheme) {
         $sSource = trim ( $arrTheme ['content'] );
@@ -829,6 +858,8 @@ out += '";
     
     /**
      * code
+     *
+     * @return array
      */
     static public function getCodeMapHelp() {
         return self::$arrCodeMap;
@@ -836,6 +867,8 @@ out += '";
     
     /**
      * node
+     *
+     * @return array
      */
     static public function getNodeMapHelp() {
         return self::$arrNodeMap;
@@ -843,6 +876,8 @@ out += '";
     
     /**
      * js
+     *
+     * @return array
      */
     static public function getJsMapHelp() {
         return self::$arrJsMap;
@@ -850,6 +885,8 @@ out += '";
     
     /**
      * node.tag
+     *
+     * @return array
      */
     static public function getNodeTagHelp() {
         return self::$arrNodeTag;
@@ -857,6 +894,8 @@ out += '";
     
     /**
      * js.tag
+     *
+     * @return array
      */
     static public function getJsTagHelp() {
         return self::$arrJsTag;
@@ -877,7 +916,7 @@ out += '";
      * @param string $sType            
      * @return string
      */
-    protected function parseContentIf_($sContent, $sType = '') {
+    private function parseContentIf_($sContent, $sType = '') {
         $arrArray = explode ( ' ', $sContent );
         $bObj = false;
         $arrParam = [ ];
@@ -911,7 +950,7 @@ out += '";
      * @param string $sContent            
      * @return string
      */
-    protected function parseJsContent_($sContent) {
+    private function parseJsContent_($sContent) {
         $arrVar = explode ( '|', $sContent );
         $sContent = array_shift ( $arrVar );
         
@@ -929,7 +968,7 @@ out += '";
      * @param array $arrVar            
      * @return string
      */
-    protected function parseJsFunction_($sName, $arrVar) {
+    private function parseJsFunction_($sName, $arrVar) {
         return $this->parseVarFunction_ ( $sName, $arrVar, true );
     }
     
@@ -941,7 +980,7 @@ out += '";
      *            是否允许解析函数
      * @return string
      */
-    protected function parseContent_($sContent, $booFunc = true) {
+    private function parseContent_($sContent, $booFunc = true) {
         $sContent = str_replace ( ':', '->', $sContent ); // 以|分割字符串,数组第一位是变量名字符串,之后的都是函数参数&&函数{$hello|md5}
         
         $arrVar = explode ( '|', $sContent );
@@ -998,7 +1037,7 @@ out += '";
      *            是否为 JS 变量解析
      * @return string
      */
-    protected function parseVarFunction_($sName, $arrVar, $bJs = false) {
+    private function parseVarFunction_($sName, $arrVar, $bJs = false) {
         $nLen = count ( $arrVar );
         // 取得模板禁止使用函数列表
         $arrNot = explode ( ',', $GLOBALS ['~@option'] ['theme_notallows_func' . ($bJs ? '' : '_js')] );
@@ -1047,7 +1086,7 @@ out += '";
      * @param string $sContent            
      * @return string
      */
-    protected function parseConditionHelp_($sContent) {
+    private function parseConditionHelp_($sContent) {
         return str_replace ( [ 
                 ':',
                 '+' 
@@ -1065,7 +1104,7 @@ out += '";
      * @param number $nGo            
      * @return string
      */
-    protected function arrayHandler_(&$arrVars, $nType = 1, $nGo = 2) {
+    private function arrayHandler_(&$arrVars, $nType = 1, $nGo = 2) {
         $nLen = count ( $arrVars );
         
         $sParam = '';
@@ -1091,10 +1130,9 @@ out += '";
      *
      * @param string $sContent            
      * @param string $sContent            
-     * @return
-     *
+     * @return string
      */
-    protected function encodeContent_($sContent, $sType = '') {
+    private function encodeContent_($sContent, $sType = '') {
         if ($sType == 'global') {
             $sContent = parsers::globalEncode ( $sContent );
         } else if (in_array ( $sType, [ 
@@ -1114,7 +1152,7 @@ out += '";
      * @param array $arrTheme            
      * @return boolean
      */
-    protected function checkNode_($arrTheme, $bJsNode = false) {
+    private function checkNode_($arrTheme, $bJsNode = false) {
         $arrAttribute = $arrTheme ['children'] [0];
         
         // 验证标签的属性值
@@ -1145,7 +1183,7 @@ out += '";
      *            节点
      * @return array
      */
-    protected function getNodeAttribute_($arrTheme) {
+    private function getNodeAttribute_($arrTheme) {
         foreach ( $arrTheme ['children'] as $arrChild ) {
             if (isset ( $arrChild ['is_attribute'] ) && $arrChild ['is_attribute'] == 1) {
                 return $arrChild ['attribute_list'];
@@ -1161,7 +1199,7 @@ out += '";
      *            节点
      * @return array
      */
-    protected function getNodeBody_($arrTheme) {
+    private function getNodeBody_($arrTheme) {
         foreach ( $arrTheme ['children'] as $arrChild ) {
             if (isset ( $arrChild ['is_body'] ) && $arrChild ['is_body'] == 1) {
                 return $arrChild ['content'];
@@ -1175,10 +1213,9 @@ out += '";
      *
      * @param string $sTxt            
      * @param bool $bEsc            
-     * @return
-     *
+     * @return string
      */
-    static protected function escapeCharacter_(&$sTxt, $bEsc = true) {
+    static private function escapeCharacter_(&$sTxt, $bEsc = true) {
         $sTxt = \Q::escapeCharacter ( $sTxt, $bEsc );
         if (! $bEsc) {
             $sTxt = str_replace ( [ 

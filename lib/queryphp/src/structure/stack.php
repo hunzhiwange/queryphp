@@ -2,7 +2,7 @@
 /*
  * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
  * ©2010-2017 http://queryphp.com All rights reserved.
- * 
+ *
  * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
  * @date 2016.11.21
@@ -21,6 +21,7 @@ class stack extends stack_queue {
      * 进栈
      *
      * @param mixed $mixItem            
+     * @return void
      */
     public function in($Item) {
         $this->arrElements [] = &$Item;
@@ -28,6 +29,8 @@ class stack extends stack_queue {
     
     /**
      * 出栈
+     *
+     * @return mixed
      */
     public function out() {
         if (! $this->getLength ()) {

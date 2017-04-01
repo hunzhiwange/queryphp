@@ -25,30 +25,35 @@ class xml {
     private $resParser = NULL;
     
     /**
+     * Document
      *
      * @var array
      */
     private $arrDocument;
     
     /**
+     * Parent
      *
      * @var array
      */
     private $arrParent;
     
     /**
+     * Stack
      *
      * @var array
      */
     private $arrStack;
     
     /**
+     * LastOpenedTag
      *
      * @var array
      */
     private $sLastOpenedTag;
     
     /**
+     * Data
      *
      * @var string
      */
@@ -56,6 +61,8 @@ class xml {
     
     /**
      * 构造函数
+     *
+     * @return void
      */
     public function __construct() {
         $this->resParser = xml_parser_create ();
@@ -69,6 +76,7 @@ class xml {
      * xml 反序列化
      *
      * @param string $sXml            
+     * @return resource
      */
     static public function xmlUnSerialize($sXml) {
         $oXmlParser = new Xml ();
@@ -130,8 +138,7 @@ class xml {
      * 分析 xml 数据
      *
      * @param string $sData            
-     * @return
-     *
+     * @return resource
      */
     private function parse(&$sData) {
         $this->arrDocument = [ ];
@@ -146,6 +153,7 @@ class xml {
      * @param resource $resParser            
      * @param string $sTag            
      * @param array $arrAttributes            
+     * @return void
      */
     private function open(&$resParser, $sTag, $arrAttributes) {
         $this->sData = '';
@@ -187,6 +195,7 @@ class xml {
      *
      * @param resouce $resParser            
      * @param string $sTag            
+     * @return void
      */
     private function close(&$resParser, $sTag) {
         if ($this->sLastOpenedTag == $sTag) {
@@ -201,13 +210,6 @@ class xml {
     }
     
     /**
-     * 析构函数
-     */
-    public function __destruct() {
-        xml_parser_free ( $this->resParser );
-    }
-    
-    /**
      * 数字项数量
      *
      * @param array $array            
@@ -215,5 +217,14 @@ class xml {
      */
     private function countNumericItems(&$array) {
         return is_array ( $array ) ? count ( array_filter ( array_keys ( $array ), 'is_numeric' ) ) : 0;
+    }
+    
+    /**
+     * 析构函数
+     *
+     * @return void
+     */
+    public function __destruct() {
+        xml_parser_free ( $this->resParser );
     }
 }

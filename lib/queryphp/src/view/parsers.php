@@ -50,16 +50,14 @@ class parsers {
     /**
      * 编译器
      *
-     * @var
-     *
+     * @var array
      */
     public static $arrCompilers;
     
     /**
      * 分析器
      *
-     * @var
-     *
+     * @var array
      */
     public static $arrParses = [ ];
     
@@ -189,6 +187,8 @@ class parsers {
     
     /**
      * 清理模板树对象
+     *
+     * @return void
      */
     protected function clearThemeTree() {
         $this->arrThemeTree = [ ];
@@ -221,8 +221,7 @@ class parsers {
      * @param string $sFile            
      * @param string $sCachePath            
      * @param boolean $bReturn            
-     * @return
-     *
+     * @return string
      */
     public function doCombile($sFile, $sCachePath, $bReturn = false) {
         if (! is_file ( $sFile )) {
@@ -314,6 +313,7 @@ class parsers {
      * 全局编译器 tagself
      *
      * @param string $sCompiled            
+     * @return void
      */
     public function globalParse(&$sCompiled) {
         $arrTag = $this->getTag ( 'global' );
@@ -344,6 +344,7 @@ class parsers {
      * javascript 变量分析器
      *
      * @param string $sCompiled            
+     * @return void
      */
     public function jsvarParse(&$sCompiled) {
         $arrTag = $this->getTag ( 'jsvar' );
@@ -374,6 +375,7 @@ class parsers {
      * code 方式分析器
      *
      * @param string $sCompiled            
+     * @return void
      */
     public function codeParse(&$sCompiled) {
         foreach ( self::$arrCompilers ['code'] as $sCompilers => $sTag ) {
@@ -411,10 +413,10 @@ class parsers {
     }
     
     /**
-     * javascript 分析器
-     * 与 node 公用分析器
+     * javascript 分析器 与 node 公用分析器
      *
      * @param string $sCompiled            
+     * @return void
      */
     public function jsParse(&$sCompiled) {
         $this->bJsNode = true;
@@ -426,6 +428,7 @@ class parsers {
      * node 分析器
      *
      * @param string $sCompiled            
+     * @return void
      */
     public function nodeParse(&$sCompiled) {
         $this->bJsNode = false;
@@ -437,6 +440,7 @@ class parsers {
      * code 还原分析器
      *
      * @param string $sCompiled            
+     * @return void
      */
     public function revertParse(&$sCompiled) {
         $arrRes = [ ]; // 分析
@@ -464,6 +468,7 @@ class parsers {
      * tagself 还原分析器
      *
      * @param string $sCompiled            
+     * @return void
      */
     public function globalrevertParse(&$sCompiled) {
         $arrRes = [ ]; // 分析
@@ -497,8 +502,7 @@ class parsers {
      * 注册分析器
      *
      * @param string $sTag            
-     * @return
-     *
+     * @return array
      */
     public static function regParser($sTag) {
         self::$arrParses [] = $sTag;
@@ -517,7 +521,7 @@ class parsers {
      *            while 标签
      * @param array|string $Tag
      *            标签对应的编译器
-     *            return void
+     * @return void
      */
     public static function regCompilers($sType, $Name, $sTag) {
         if (! is_array ( $Name )) {
@@ -870,8 +874,7 @@ class parsers {
     /**
      * 逐个编译模板树
      *
-     * @return
-     *
+     * @return string
      */
     protected function compileThemeTree() {
         // 逐个编译
@@ -899,6 +902,7 @@ class parsers {
      * 查找成对节点
      *
      * @param string $sCompiled            
+     * @return void
      */
     protected function findNodeTag(&$sCompiled) {
         $this->oNodeStack = new stack (); // 设置一个栈
@@ -962,6 +966,7 @@ class parsers {
      * 装配节点
      *
      * @param string $sCompiled            
+     * @return void
      */
     protected function packNode(&$sCompiled) {
         if ($this->bJsNode === true) {
@@ -1052,8 +1057,7 @@ class parsers {
      *
      * @param array $arrTag            
      * @param array $arrTailTag            
-     * @return
-     *
+     * @return boolean
      */
     protected function findHeadTag($arrTag, $arrTailTag) {
         if ($arrTailTag ['type'] != 'tail') {

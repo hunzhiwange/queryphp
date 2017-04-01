@@ -39,9 +39,9 @@ defined ( 'Q_DEBUG' ) or define ( 'Q_DEBUG', false );
 defined ( 'Q_DEVELOPMENT' ) or define ( 'Q_DEVELOPMENT', 'online' );
 
 /**
- * QueryPHP 版本 | 2016.11.17
+ * QueryPHP 版本 | 2017.03.31
  */
-define ( 'Q_VER', '1.0' );
+define ( 'Q_VER', '4.0' );
 
 /**
  * QueryPHP 核心函数库和一些公用函数

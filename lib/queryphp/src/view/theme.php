@@ -10,7 +10,8 @@
  */
 namespace Q\view;
 
-use Q\view\parsers, Q\mvc\view;
+use Q\view\parsers;
+use Q\mvc\view;
 
 /**
  * 模板处理类
@@ -28,11 +29,15 @@ class theme {
     
     /**
      * 加载视图文件
-     * 
-     * @param string $sFile 视图文件地址
-     * @param boolean $bDisplay 是否显示
-     * @param string $sTargetCache 主模板缓存路径
-     * @param string $sMd5 源文件地址 md5 标记
+     *
+     * @param string $sFile
+     *            视图文件地址
+     * @param boolean $bDisplay
+     *            是否显示
+     * @param string $sTargetCache
+     *            主模板缓存路径
+     * @param string $sMd5
+     *            源文件地址 md5 标记
      * @return string
      */
     public function display($sFile, $bDisplay = true, $sTargetCache = '', $sMd5 = '') {
@@ -70,7 +75,7 @@ class theme {
                 \Q::throwException ( sprintf ( 'source %s and target cache %s is not a valid path', $sFile, $sTargetCache ) );
             }
         }
-
+        
         // 返回类型
         if ($bDisplay === false) {
             ob_start ();
@@ -88,8 +93,7 @@ class theme {
      *
      * @param mixed $mixName            
      * @param mixed $mixValue            
-     * @return
-     *
+     * @return void
      */
     public function setVar($mixName, $mixValue = null) {
         if (is_string ( $mixName )) {
