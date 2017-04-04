@@ -398,7 +398,7 @@ class select {
      */
     public function getCount($strField = '*', $sAlias = 'row_count') {
         $arrRow = ( array ) $this->count ( $strField, $sAlias )->get ();
-        return $arrRow [$sAlias];
+        return intval ( $arrRow [$sAlias] );
     }
     
     /**
@@ -410,7 +410,7 @@ class select {
      */
     public function getAvg($strField, $sAlias = 'avg_value') {
         $arrRow = ( array ) $this->avg ( $strField, $sAlias )->get ();
-        return $arrRow [$sAlias];
+        return ( float ) $arrRow [$sAlias];
     }
     
     /**
@@ -422,7 +422,7 @@ class select {
      */
     public function getMax($strField, $sAlias = 'max_value') {
         $arrRow = ( array ) $this->max ( $strField, $sAlias )->get ();
-        return $arrRow [$sAlias];
+        return ( float ) $arrRow [$sAlias];
     }
     
     /**
@@ -434,7 +434,7 @@ class select {
      */
     public function getMin($strField, $sAlias = 'min_value') {
         $arrRow = ( array ) $this->min ( $strField, $sAlias )->get ();
-        return $arrRow [$sAlias];
+        return ( float ) $arrRow [$sAlias];
     }
     
     /**
@@ -1934,7 +1934,10 @@ class select {
             }
             if (preg_match ( '/(.+)\.(.+)/', $strField, $arrMatch )) { // 检查字段名是否包含表名称
                 $strTableName = $arrMatch [1];
-                $sCol = $arrMatch [2];
+                $strField = $arrMatch [2];
+            }
+            if ($strField == '*') {
+                $strTableName = '';
             }
             $strField = $this->objConnect->qualifyColumn ( $strField, $strTableName );
         }
