@@ -301,14 +301,44 @@ class select {
      * 原生 sql 插入数据 insert
      *
      * @param null|string $mixData            
+     * @param array $arrBind            
+     * @param boolean $booReplace            
      * @return int 最后插入ID
      */
-    public function insert($mixData = null) {
-        $this->setNativeSql_ ( 'insert' );
+    public function insert($mixData = null, $arrBind = [], $booReplace = false) {
+        // 构造数据插入
+        if (is_array ( $mixData )) {
+            $arrField = [ ];
+            $arrValue = [ ];
+            
+            foreach ( $mixData as $sKey => $mixValue ) {
+                $mixValue = $this->objConnect->qualifyColumnValue ( $mixValue );
+                if (! is_null ( $mixValue )) {
+                    $arrField [] = $sKey;
+                    $arrValue [] = $mixValue;
+                }
+            }
+            
+            if ($arrValue) {
+                $sSql = ($booReplace ? 'REPLACE' : 'INSERT') . ' INTO ' . $this->parseFrom_ ( true );
+                $sSql .= '(' . implode ( ',', $arrField ) . ') VALUES (' . implode ( ',', $arrValue ) . ')';
+            }
+            $mixData = $sSql;
+            unset ( $arrField, $arrValue, $sSql );
+        }
+        
+        // 绑定参数
+        $arrBind = array_merge ( $this->getBindParams (), $arrBind );
+        
+        // 执行查询
+        $this->setNativeSql_ ( $booReplace === false ? 'insert' : 'replace' );
         return call_user_func_array ( [ 
                 $this,
                 'runNativeSql_' 
-        ], func_get_args () );
+        ], [ 
+                $mixData,
+                $arrBind 
+        ] );
     }
     
     /**
@@ -1221,9 +1251,10 @@ class select {
     /**
      * 解析 from(table) 分析结果
      *
+     * @param boolean $booFirstTable            
      * @return string
      */
-    private function parseFrom_() {
+    private function parseFrom_($booFirstTable = false) {
         if (empty ( $this->arrOption ['from'] )) {
             return '';
         }
@@ -1247,10 +1278,15 @@ class select {
                 $sTmp .= ' ON ' . $arrTable ['join_cond'];
             }
             $arrFrom [] = $sTmp;
+            
+            // 指定第一个查询表
+            if ($booFirstTable === true) {
+                break;
+            }
         }
         
         if (! empty ( $arrFrom )) {
-            return 'FROM ' . implode ( ' ', $arrFrom );
+            return ($booFirstTable === false ? 'FROM ' : '') . implode ( ' ', $arrFrom );
         } else {
             return '';
         }
@@ -1975,7 +2011,7 @@ class select {
                 'query' 
         ], [ 
                 $strSql,
-                $this->arrBindParams,
+                $this->getBindParams (),
                 $this->arrQueryParams ['master'],
                 $this->arrQueryParams ['fetch_type'] ['fetch_type'],
                 $this->arrQueryParams ['fetch_type'] ['fetch_argument'],
@@ -2084,6 +2120,15 @@ class select {
      */
     private function getNativeSql_() {
         return $this->strNativeSql;
+    }
+    
+    /**
+     * 返回参数绑定
+     *
+     * @return array
+     */
+    private function getBindParams() {
+        return $this->arrBindParams;
     }
     
     /**

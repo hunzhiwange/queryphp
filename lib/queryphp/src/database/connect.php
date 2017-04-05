@@ -207,7 +207,7 @@ abstract class connect {
         $this->setSqlBindParams_ ( $strSql, $arrBindParams );
         
         // 验证 sql 类型
-        if ($this->getSqlType ( $strSql ) == 'select') {
+        if (($strSqlType = $this->getSqlType ( $strSql )) == 'select') {
             $this->throwException_ ( \Q::i18n ( 'execute 方法不允许运行 select sql 语句' ) );
         }
         
@@ -223,7 +223,16 @@ abstract class connect {
                 $this->throwException_ ();
             }
             
-            return $this->intNumRows = $this->objPDOStatement->rowCount ();
+            $this->intNumRows = $this->objPDOStatement->rowCount ();
+            
+            if (in_array ( $strSqlType, [ 
+                    'insert',
+                    'replace' 
+            ] )) {
+                return $this->lastInsertId ();
+            } else {
+                return $this->intNumRows;
+            }
         } catch ( PDOException $oE ) {
             $this->throwException_ ( $oE->getMessage () );
         }
@@ -530,6 +539,7 @@ abstract class connect {
                 'select',
                 'delete',
                 'insert',
+                'replace',
                 'update' 
         ] as $strType ) {
             if (stripos ( $strSql, $strType ) === 0) {
@@ -641,7 +651,14 @@ abstract class connect {
         foreach ( $arrBindParams as $mixKey => $mixVal ) {
             // 占位符
             $mixKey = is_numeric ( $mixKey ) ? $mixKey + 1 : ':' . $mixKey;
-            if ($this->objPDOStatement->bindValue ( $mixKey, $mixVal ) === false) {
+            if (is_array ( $mixVal )) {
+                $strParam = $mixVal [1];
+                $mixVal = $mixVal [0];
+            } else {
+                $strParam = PDO::PARAM_STR;
+            }
+            
+            if ($this->objPDOStatement->bindValue ( $mixKey, $mixVal, $strParam ) === false) {
                 $this->throwException_ ( \Q::i18n ( 'sql %s 参数绑定失败: %s', $this->strSql, \Q::dump ( $arrBindParams, true ) ) );
             }
         }
