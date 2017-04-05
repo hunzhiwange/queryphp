@@ -1611,7 +1611,7 @@ class select {
             
             // 字符串表达式
             if (is_string ( $strKey ) && $strKey == 'string__') {
-                // 不符合规则跳过
+                // 不符合规则抛出异常
                 if (! is_string ( $arrTemp )) {
                     \Q::throwException ( \Q::i18n ( 'string__ 只支持字符串' ) );
                 }
