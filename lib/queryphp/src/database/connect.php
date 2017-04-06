@@ -484,10 +484,11 @@ abstract class connect {
     /**
      * 字段值格式化
      *
+     * @param boolean $booQuotationMark            
      * @param mixed $mixValue            
      * @return mixed
      */
-    public function qualifyColumnValue($mixValue) {
+    public function qualifyColumnValue($mixValue, $booQuotationMark = true) {
         if (is_array ( $mixValue )) { // 数组，递归
             foreach ( $mixValue as $nOffset => $sV ) {
                 $mixValue [$nOffset] = $this->qualifyColumnValue ( $sV );
@@ -517,7 +518,11 @@ abstract class connect {
             return trim ( $arrMatche [0], '[]' );
         }
         
-        return "'" . addslashes ( $mixValue ) . "'";
+        if ($booQuotationMark === true) {
+            return "'" . addslashes ( $mixValue ) . "'";
+        } else {
+            return $mixValue;
+        }
     }
     
     /**
@@ -547,6 +552,27 @@ abstract class connect {
             }
         }
         return 'statement';
+    }
+    
+    /**
+     * 分析绑定参数类型数据
+     *
+     * @param mixed $mixValue            
+     * @return string
+     */
+    public function getBindParamType($mixValue) {
+        // 参数
+        switch (true) {
+            case is_int ( $mixValue ) :
+                return PDO::PARAM_INT;
+                break;
+            case is_bool ( $mixValue ) :
+                return PDO::PARAM_BOOL;
+                break;
+            default :
+                return PDO::PARAM_STR;
+                break;
+        }
     }
     
     // ######################################################
