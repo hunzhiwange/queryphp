@@ -1009,19 +1009,7 @@ class select {
                 }
                 
                 // 表达式支持
-                if (strpos ( $strTemp, '{' ) !== false && preg_match ( '/^{(.+?)}$/', $strTemp, $arrResThree )) {
-                    $strTemp = $this->objConnect->qualifyExpression ( $arrResThree [1], $strTableName, $this->arrColumnsMapping );
-                } elseif (! preg_match ( '/\(.*\)/', $strTemp )) {
-                    $sCurrentTableName = $strTableName;
-                    if (preg_match ( '/(.+)\.(.+)/', $strTemp, $arrMatch )) {
-                        $sCurrentTableName = $arrMatch [1];
-                        $strTemp = $arrMatch [2];
-                    }
-                    if (isset ( $this->arrColumnsMapping [$strTemp] )) {
-                        $strTemp = $this->arrColumnsMapping [$strTemp];
-                    }
-                    $strTemp = $this->objConnect->qualifyTableOrColumn ( "{$sCurrentTableName}.{$strTemp}" );
-                }
+                $strTemp = $this->qualifyOneColumn_ ( $strTemp, $strTableName );
                 $this->arrOption ['group'] [] = $strTemp;
             }
         }
@@ -1951,7 +1939,6 @@ class select {
             } else {
                 $sCurrentTableName = $sTableName;
             }
-            
             if (isset ( $this->arrColumnsMapping [$strField] )) {
                 $strField = $this->arrColumnsMapping [$strField];
             }
@@ -2147,12 +2134,12 @@ class select {
         if (strpos ( $strField, '{' ) !== false && preg_match ( '/^{(.+?)}$/', $strField, $arrRes )) {
             $strField = $this->objConnect->qualifyExpression ( $arrRes [1], $strTableName, $this->arrColumnsMapping );
         } else {
-            if (isset ( $this->arrColumnsMapping [$strField] )) {
-                $strField = $this->arrColumnsMapping [$strField];
-            }
             if (preg_match ( '/(.+)\.(.+)/', $strField, $arrMatch )) { // 检查字段名是否包含表名称
                 $strTableName = $arrMatch [1];
                 $strField = $arrMatch [2];
+            }
+            if (isset ( $this->arrColumnsMapping [$strField] )) {
+                $strField = $this->arrColumnsMapping [$strField];
             }
             if ($strField == '*') {
                 $strTableName = '';

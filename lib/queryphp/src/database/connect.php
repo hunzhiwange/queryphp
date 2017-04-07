@@ -435,7 +435,6 @@ abstract class connect {
      */
     public function qualifyTableOrColumn($sName, $sAlias = null, $sAs = null) {
         $sName = str_replace ( '`', '', $sName ); // 过滤'`'字符
-        
         if (strpos ( $sName, '.' ) === false) { // 不包含表名字
             $sName = $this->identifierColumn ( $sName );
         } else {
