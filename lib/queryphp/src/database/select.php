@@ -208,6 +208,13 @@ class select {
     private $strCurrentTable = '';
     
     /**
+     * 是否为表操作
+     *
+     * @var boolean
+     */
+    private $booIsTable = false;
+    
+    /**
      * 构造函数
      *
      * @param Q\database\connect $objConnect            
@@ -298,7 +305,7 @@ class select {
     }
     
     /**
-     * 原生 sql 插入数据 insert
+     * 插入数据 insert (支持原生 sql)
      *
      * @param array|string $mixData            
      * @param array $arrBind            
@@ -306,6 +313,13 @@ class select {
      * @return int 最后插入ID
      */
     public function insert($mixData, $arrBind = [], $booReplace = false) {
+        if (! \Q::isThese ( $mixData, [ 
+                'string',
+                'array' 
+        ] )) {
+            \Q::throwException ( \Q::i18n ( 'insert 插入数据第一个参数只能为 string 或者 array' ) );
+        }
+        
         // 绑定参数
         $arrBind = array_merge ( $this->getBindParams_ (), $arrBind );
         
@@ -315,11 +329,22 @@ class select {
             $arrBindData = $this->getBindData_ ( $mixData, $arrBind, $intQuestionMark );
             $arrField = $arrBindData [0];
             $arrValue = $arrBindData [1];
+            $sTableName = $this->getCurrentTable_ ();
+            
+            foreach ( $arrField as &$strField ) {
+                $strField = $this->qualifyOneColumn_ ( $strField, $sTableName );
+            }
+            
+            // 构造 insert 语句
             if ($arrValue) {
-                $sSql = ($booReplace ? 'REPLACE' : 'INSERT') . ' INTO ' . $this->parseFrom_ ( true );
-                $sSql .= '(' . implode ( ',', $arrField ) . ') VALUES (' . implode ( ',', $arrValue ) . ')';
-                $mixData = $sSql;
-                unset ( $arrBindData, $arrField, $arrValue, $sSql );
+                $arrSql = [ ];
+                $arrSql [] = ($booReplace ? 'REPLACE' : 'INSERT') . ' INTO';
+                $arrSql [] = $this->parseFrom_ ( true );
+                $arrSql [] = '(' . implode ( ',', $arrField ) . ')';
+                $arrSql [] = 'VALUES';
+                $arrSql [] = '(' . implode ( ',', $arrValue ) . ')';
+                $mixData = implode ( ' ', $arrSql );
+                unset ( $arrBindData, $arrField, $arrValue, $arrSql );
             }
         }
         $arrBind = array_merge ( $this->getBindParams_ (), $arrBind );
@@ -355,6 +380,7 @@ class select {
         if (is_array ( $arrData )) {
             $arrDataResult = [ ];
             $intQuestionMark = 0;
+            $sTableName = $this->getCurrentTable_ ();
             foreach ( $arrData as $intKey => $arrTemp ) {
                 if (! is_array ( $arrTemp )) {
                     continue;
@@ -362,6 +388,9 @@ class select {
                 $arrBindData = $this->getBindData_ ( $arrTemp, $arrBind, $intQuestionMark, $intKey );
                 if ($intKey === 0) {
                     $arrField = $arrBindData [0];
+                    foreach ( $arrField as &$strField ) {
+                        $strField = $this->qualifyOneColumn_ ( $strField, $sTableName );
+                    }
                 }
                 $arrValue = $arrBindData [1];
                 if ($arrValue) {
@@ -369,11 +398,16 @@ class select {
                 }
             }
             
+            // 构造 insertAll 语句
             if ($arrDataResult) {
-                $sSql = ($booReplace ? 'REPLACE' : 'INSERT') . ' INTO ' . $this->parseFrom_ ( true );
-                $sSql .= '(' . implode ( ',', $arrField ) . ') VALUES ' . implode ( ',', $arrDataResult );
-                $mixData = $sSql;
-                unset ( $arrField, $arrValue, $sSql, $arrDataResult );
+                $arrSql = [ ];
+                $arrSql [] = ($booReplace ? 'REPLACE' : 'INSERT') . ' INTO';
+                $arrSql [] = $this->parseFrom_ ( true );
+                $arrSql [] = '(' . implode ( ',', $arrField ) . ')';
+                $arrSql [] = 'VALUES';
+                $arrSql [] = implode ( ',', $arrDataResult );
+                $mixData = implode ( ' ', $arrSql );
+                unset ( $arrField, $arrValue, $arrSql, $arrDataResult );
             }
         }
         $arrBind = array_merge ( $this->getBindParams_ (), $arrBind );
@@ -390,17 +424,61 @@ class select {
     }
     
     /**
-     * 原生 sql 更新数据 update
+     * 更新数据 update (支持原生 sql)
      *
-     * @param null|string $mixData            
+     * @param array|string $mixData            
      * @return int 影响记录
      */
-    public function update($mixData = null) {
+    public function update($mixData, $arrBind = []) {
+        if (! \Q::isThese ( $mixData, [ 
+                'string',
+                'array' 
+        ] )) {
+            \Q::throwException ( \Q::i18n ( 'update 更新数据第一个参数只能为 string 或者 array' ) );
+        }
+        
+        // 绑定参数
+        $arrBind = array_merge ( $this->getBindParams_ (), $arrBind );
+        
+        // 构造数据插入
+        if (is_array ( $mixData )) {
+            $intQuestionMark = 0;
+            $arrBindData = $this->getBindData_ ( $mixData, $arrBind, $intQuestionMark );
+            $arrField = $arrBindData [0];
+            $arrValue = $arrBindData [1];
+            $sTableName = $this->getCurrentTable_ ();
+            
+            // SET 语句
+            $arrSetData = [ ];
+            foreach ( $arrField as $intKey => $strField ) {
+                $strField = $this->qualifyOneColumn_ ( $strField, $sTableName );
+                $arrSetData [] = $strField . '=' . $arrValue [$intKey];
+            }
+            
+            // 构造 update 语句
+            if ($arrValue) {
+                $arrSql = [ ];
+                $arrSql [] = 'UPDATE';
+                $arrSql [] = ltrim ( $this->parseFrom_ (), 'FROM ' );
+                $arrSql [] = 'SET ' . implode ( ',', $arrSetData );
+                $arrSql [] = $this->parseWhere_ ();
+                $arrSql [] = $this->parseOrder_ ();
+                $arrSql [] = $this->parseLimitcount_ ();
+                $arrSql [] = $this->parseForUpdate_ ();
+                $mixData = implode ( ' ', $arrSql );
+                unset ( $arrBindData, $arrField, $arrValue, $arrSetData, $arrSql );
+            }
+        }
+        $arrBind = array_merge ( $this->getBindParams_ (), $arrBind );
+        
         $this->setNativeSql_ ( 'update' );
         return call_user_func_array ( [ 
                 $this,
                 'runNativeSql_' 
-        ], func_get_args () );
+        ], [ 
+                $mixData,
+                $arrBind 
+        ] );
     }
     
     /**
@@ -644,8 +722,10 @@ class select {
      * @return $this
      */
     public function table($mixTable, $mixCols = '*') {
-        $this->setCurrentTable_ ( $mixTable );
-        return $this->join_ ( 'inner join', $mixTable, $mixCols );
+        $this->setIsTable_ ( true );
+        $this->join_ ( 'inner join', $mixTable, $mixCols );
+        $this->setIsTable_ ( false );
+        return $this;
     }
     
     /**
@@ -771,14 +851,23 @@ class select {
                 $this->arrBindParams [$mixKey] = $mixValue;
             }
         } else {
-            if (! is_array ( $mixValue )) {
-                $mixTemp = $mixValue;
+            if (is_null ( $mixValue )) {
                 $mixValue = [ 
-                        $mixTemp,
+                        $mixName,
                         $intType 
                 ];
+                $this->arrBindParams [] = $mixValue;
+            } else {
+                if (! is_array ( $mixValue )) {
+                    $mixTemp = $mixValue;
+                    $mixValue = [ 
+                            $mixTemp,
+                            $intType 
+                    ];
+                }
+                
+                $this->arrBindParams [$mixName] = $mixValue;
             }
-            $this->arrBindParams [$mixName] = $mixValue;
         }
         return $this;
     }
@@ -1837,6 +1926,42 @@ class select {
     }
     
     /**
+     * 格式化一个字段
+     *
+     * @param string $strField            
+     * @param string $sTableName            
+     * @return string
+     */
+    private function qualifyOneColumn_($strField, $sTableName = null) {
+        $strField = trim ( $strField );
+        if (empty ( $strField )) {
+            return '';
+        }
+        
+        if (is_null ( $sTableName )) {
+            $sTableName = $this->getCurrentTable_ ();
+        }
+        
+        if (strpos ( $strField, '{' ) !== false && preg_match ( '/^{(.+?)}$/', $strField, $arrRes )) {
+            $strField = $this->objConnect->qualifyExpression ( $arrRes [1], $sTableName, $this->arrColumnsMapping );
+        } elseif (! preg_match ( '/\(.*\)/', $strField )) {
+            if (preg_match ( '/(.+)\.(.+)/', $strField, $arrMatch )) {
+                $sCurrentTableName = $arrMatch [1];
+                $strTemp = $arrMatch [2];
+            } else {
+                $sCurrentTableName = $sTableName;
+            }
+            
+            if (isset ( $this->arrColumnsMapping [$strField] )) {
+                $strField = $this->arrColumnsMapping [$strField];
+            }
+            $strField = $this->objConnect->qualifyTableOrColumn ( "{$sCurrentTableName}.{$strField}" );
+        }
+        
+        return $strField;
+    }
+    
+    /**
      * 连表 join 操作
      *
      * @param string $sJoinType            
@@ -1893,6 +2018,11 @@ class select {
         
         // 获得一个唯一的别名
         $sAlias = $this->uniqueAlias_ ( empty ( $sAlias ) ? $sTableName : $sAlias );
+        
+        // 只有表操作才设置当前表
+        if ($this->getIsTable_ ()) {
+            $this->setCurrentTable_ ( ($sSchema ? $sSchema . '.' : '') . $sAlias );
+        }
         
         // 查询条件
         $arrArgs = func_get_args ();
@@ -2221,30 +2351,42 @@ class select {
      */
     private function getBindData_($arrData, &$arrBind = [], &$intQuestionMark = 0, $intIndex = 0) {
         $arrField = $arrValue = [ ];
+        $strTableName = $this->getCurrentTable_ ();
         foreach ( $arrData as $sKey => $mixValue ) {
-            $mixValue = $this->objConnect->qualifyColumnValue ( $mixValue, false );
-            if (! is_null ( $mixValue )) {
-                if ($intIndex === 0) {
-                    $arrField [] = $sKey;
+            if (is_null ( $mixValue )) {
+                continue;
+            }
+            
+            // 表达式支持
+            $arrRes = null;
+            if (strpos ( $mixValue, '{' ) !== false && preg_match ( '/^{(.+?)}$/', $mixValue, $arrRes )) {
+                $mixValue = $this->objConnect->qualifyExpression ( $arrRes [1], $strTableName, $this->arrColumnsMapping );
+            } else {
+                $mixValue = $this->objConnect->qualifyColumnValue ( $mixValue, false );
+            }
+            
+            // 字段
+            if ($intIndex === 0) {
+                $arrField [] = $sKey;
+            }
+            
+            if (strpos ( $mixValue, ':' ) === 0 || ! empty ( $arrRes )) {
+                $arrValue [] = $mixValue;
+            } else {
+                // 转换 ? 占位符至 : 占位符
+                if ($mixValue == '?' && isset ( $arrBind [$intQuestionMark] )) {
+                    $sKey = 'questionmark_' . $intQuestionMark;
+                    $mixValue = $arrBind [$intQuestionMark];
+                    unset ( $arrBind [$intQuestionMark] );
+                    $this->deleteBindParams_ ( $intQuestionMark );
+                    $intQuestionMark ++;
                 }
-                if (strpos ( $mixValue, ':' ) === 0) {
-                    $arrValue [] = $mixValue;
-                } else {
-                    // 转换 ? 占位符至 : 占位符
-                    if ($mixValue == '?' && isset ( $arrBind [$intQuestionMark] )) {
-                        $sKey = 'questionmark_' . $intQuestionMark;
-                        $mixValue = $arrBind [$intQuestionMark];
-                        unset ( $arrBind [$intQuestionMark] );
-                        $this->deleteBindParams_ ( $intQuestionMark );
-                        $intQuestionMark ++;
-                    }
-                    
-                    if ($intIndex > 0) {
-                        $sKey = $sKey . '_' . $intIndex;
-                    }
-                    $arrValue [] = ':' . $sKey;
-                    $this->bind ( $sKey, $mixValue, $this->objConnect->getBindParamType ( $mixValue ) );
+                
+                if ($intIndex > 0) {
+                    $sKey = $sKey . '_' . $intIndex;
                 }
+                $arrValue [] = ':' . $sKey;
+                $this->bind ( $sKey, $mixValue, $this->objConnect->getBindParamType ( $mixValue ) );
             }
         }
         
@@ -2277,6 +2419,25 @@ class select {
         } else {
             return $this->strCurrentTable;
         }
+    }
+    
+    /**
+     * 设置是否为表操作
+     *
+     * @param boolean $booIsTable            
+     * @return void
+     */
+    private function setIsTable_($booIsTable = true) {
+        $this->booIsTable = $booIsTable;
+    }
+    
+    /**
+     * 返回是否为表操作
+     *
+     * @return boolean
+     */
+    private function getIsTable_() {
+        return $this->booIsTable;
     }
     
     /**
