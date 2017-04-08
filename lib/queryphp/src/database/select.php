@@ -283,7 +283,7 @@ class select {
             ], $arrArgs );
         }
         
-        \Q::throwException ( \Q::i18n ( 'select 没有实现魔法方法 %s.', $sMethod ) );
+        \Q::throwException ( \Q::i18n ( 'select 没有实现魔法方法 %s.', $sMethod ), 'Q\database\exception' );
     }
     
     // ######################################################
@@ -314,10 +314,10 @@ class select {
      */
     public function insert($mixData, $arrBind = [], $booReplace = false) {
         if (! \Q::isThese ( $mixData, [ 
-                'string',
+                'scalar',
                 'array' 
         ] )) {
-            \Q::throwException ( \Q::i18n ( 'insert 插入数据第一个参数只能为 string 或者 array' ) );
+            \Q::throwException ( \Q::i18n ( 'insert 插入数据第一个参数只能为 scalar 或者 array' ), 'Q\database\exception' );
         }
         
         // 绑定参数
@@ -370,7 +370,7 @@ class select {
      */
     public function insertAll($arrData, $arrBind = [], $booReplace = false) {
         if (! is_array ( $arrData )) {
-            \Q::throwException ( \Q::i18n ( 'insertAll 批量插入数据第一个参数必须为数组' ) );
+            \Q::throwException ( \Q::i18n ( 'insertAll 批量插入数据第一个参数必须为数组' ), 'Q\database\exception' );
         }
         
         // 绑定参数
@@ -431,10 +431,10 @@ class select {
      */
     public function update($mixData, $arrBind = []) {
         if (! \Q::isThese ( $mixData, [ 
-                'string',
+                'scalar',
                 'array' 
         ] )) {
-            \Q::throwException ( \Q::i18n ( 'update 更新数据第一个参数只能为 string 或者 array' ) );
+            \Q::throwException ( \Q::i18n ( 'update 更新数据第一个参数只能为 scalar 或者 array' ), 'Q\database\exception' );
         }
         
         // 绑定参数
@@ -452,7 +452,7 @@ class select {
             $arrSetData = [ ];
             foreach ( $arrField as $intKey => $strField ) {
                 $strField = $this->qualifyOneColumn_ ( $strField, $sTableName );
-                $arrSetData [] = $strField . '=' . $arrValue [$intKey];
+                $arrSetData [] = $strField . ' = ' . $arrValue [$intKey];
             }
             
             // 构造 update 语句
@@ -479,6 +479,48 @@ class select {
                 $mixData,
                 $arrBind 
         ] );
+    }
+    
+    /**
+     * 更新某个字段的值
+     *
+     * @param string $strColumn            
+     * @param mixed $mixValue            
+     * @param array $arrBind            
+     * @return int
+     */
+    public function updateColumn($strColumn, $mixValue, $arrBind = []) {
+        if (! is_string ( $strColumn )) {
+            \Q::throwException ( \Q::i18n ( 'updateColumn 第一个参数必须为字符串' ), 'Q\database\exception' );
+        }
+        
+        return $this->update ( [ 
+                $strColumn => $mixValue 
+        ], $arrBind );
+    }
+    
+    /**
+     * 字段递增
+     *
+     * @param string $strColumn            
+     * @param int $intStep            
+     * @param array $arrBind            
+     * @return int
+     */
+    public function updateIncrease($strColumn, $intStep = 1, $arrBind = []) {
+        return $this->updateColumn ( $strColumn, '{[' . $strColumn . ']+' . $intStep . '}', $arrBind );
+    }
+    
+    /**
+     * 字段减少
+     *
+     * @param string $strColumn            
+     * @param int $intStep            
+     * @param array $arrBind            
+     * @return int
+     */
+    public function updateDecrease($strColumn, $intStep = 1, $arrBind = []) {
+        return $this->updateColumn ( $strColumn, '{[' . $strColumn . ']-' . $intStep . '}', $arrBind );
     }
     
     /**
@@ -881,7 +923,7 @@ class select {
      */
     public function forceIndex($mixIndex, $sType = 'FORCE') {
         if (! isset ( self::$arrIndexTypes [$sType] )) {
-            \Q::throwException ( \Q::i18n ( '无效的 Index 类型 %s', $sType ) );
+            \Q::throwException ( \Q::i18n ( '无效的 Index 类型 %s', $sType ), 'Q\database\exception' );
         }
         $sType = strtoupper ( $sType );
         $mixIndex = \Q::normalize ( $mixIndex );
@@ -940,7 +982,7 @@ class select {
      */
     public function union($mixSelect, $sType = 'UNION') {
         if (! isset ( self::$arrUnionTypes [$sType] )) {
-            \Q::throwException ( \Q::i18n ( '无效的 UNION 类型 %s', $sType ) );
+            \Q::throwException ( \Q::i18n ( '无效的 UNION 类型 %s', $sType ), 'Q\database\exception' );
         }
         
         if (! is_array ( $mixSelect )) {
@@ -1742,7 +1784,7 @@ class select {
             if (is_string ( $strKey ) && $strKey == 'string__') {
                 // 不符合规则抛出异常
                 if (! is_string ( $arrTemp )) {
-                    \Q::throwException ( \Q::i18n ( 'string__ 只支持字符串' ) );
+                    \Q::throwException ( \Q::i18n ( 'string__ 只支持字符串' ), 'Q\database\exception' );
                 }
                 
                 // 表达式支持
@@ -1790,7 +1832,7 @@ class select {
             elseif (is_string ( $strKey ) && $strKey == 'exists__') {
                 // having 不支持 exists
                 if ($this->getTypeAndLogic_ ()[0] == 'having') {
-                    \Q::throwException ( \Q::i18n ( 'having 不支持 exists 写法' ) );
+                    \Q::throwException ( \Q::i18n ( 'having 不支持 exists 写法' ), 'Q\database\exception' );
                 }
                 
                 if ($arrTemp instanceof select) {
@@ -1960,12 +2002,12 @@ class select {
     private function join_($sJoinType, $mixName, $mixCols, $mixCond = null/* args */) {
         // 验证 join 类型
         if (! isset ( self::$arrJoinTypes [$sJoinType] )) {
-            \Q::throwException ( \Q::i18n ( '无效的 JOIN 类型 %s', $sJoinType ) );
+            \Q::throwException ( \Q::i18n ( '无效的 JOIN 类型 %s', $sJoinType ), 'Q\database\exception' );
         }
         
         // 不能在使用 UNION 查询的同时使用 JOIN 查询
         if (count ( $this->arrOption ['union'] )) {
-            \Q::throwException ( \Q::i18n ( '不能在使用 UNION 查询的同时使用 JOIN 查询' ) );
+            \Q::throwException ( \Q::i18n ( '不能在使用 UNION 查询的同时使用 JOIN 查询' ), 'Q\database\exception' );
         }
         
         // 没有指定表，获取默认表

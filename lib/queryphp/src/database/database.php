@@ -47,7 +47,7 @@ class database {
         if (\Q::classExists ( $strConnectClass, false, true )) {
             return $arrConnect [$strUnique] = new $strConnectClass ( $mixOption );
         } else {
-            \Q::throwException ( \Q::i18n ( '数据库驱动 %s 不存在！', $mixOption ['db_type'] ) );
+            \Q::throwException ( \Q::i18n ( '数据库驱动 %s 不存在！', $mixOption ['db_type'] ), 'Q\database\exception' );
         }
     }
     
