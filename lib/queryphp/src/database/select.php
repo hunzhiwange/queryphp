@@ -240,7 +240,9 @@ class select {
                 'whereIn',
                 'whereNotIn',
                 'whereNull',
-                'whereNotNull' 
+                'whereNotNull',
+                'whereLike',
+                'whereNotLike' 
         ] )) {
             $this->setTypeAndLogic_ ( 'where', self::LOGIC_AND );
             array_unshift ( $arrArgs, str_replace ( 'not', 'not ', strtolower ( ltrim ( $sMethod, 'where' ) ) ) );
@@ -257,7 +259,9 @@ class select {
                 'havingIn',
                 'havingNotIn',
                 'havingNull',
-                'havingNotNull' 
+                'havingNotNull',
+                'havingLike',
+                'havingNotLike' 
         ] )) {
             $this->setTypeAndLogic_ ( 'having', self::LOGIC_AND );
             array_unshift ( $arrArgs, str_replace ( 'not', 'not ', strtolower ( ltrim ( $sMethod, 'having' ) ) ) );
