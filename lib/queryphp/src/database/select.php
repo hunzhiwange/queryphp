@@ -664,17 +664,17 @@ class select {
     /**
      * 返回一列数据
      *
-     * @param mixed $mixedFieldValue            
+     * @param mixed $mixFieldValue            
      * @param string $strFieldKey            
      * @return array
      */
-    public function lists($mixedFieldValue, $strFieldKey = null) {
+    public function lists($mixFieldValue, $strFieldKey = null) {
         // 纵然有弱水三千，我也只取一瓢 (第一个字段为值，第二个字段为键值，多余的字段丢弃)
         $arrField = [ ];
-        if (is_array ( $mixedFieldValue )) {
-            $arrField = $mixedFieldValue;
+        if (is_array ( $mixFieldValue )) {
+            $arrField = $mixFieldValue;
         } else {
-            $arrField [] = $mixedFieldValue;
+            $arrField [] = $mixFieldValue;
         }
         if (is_string ( $strFieldKey )) {
             $arrField [] = $strFieldKey;
