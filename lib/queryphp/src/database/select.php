@@ -233,6 +233,32 @@ class select {
      * @return boolean
      */
     public function __call($sMethod, $arrArgs) {
+        // 动态查询支持
+        if (strncasecmp ( $sMethod, 'get', 3 ) === 0) {
+            $sMethod = substr ( $sMethod, 3 );
+            if (strpos ( strtolower ( $sMethod ), 'start' ) !== false) { // support get10start3 etc.
+                $arrValue = explode ( 'start', strtolower ( $sMethod ) );
+                $nNum = intval ( array_shift ( $arrValue ) );
+                $nOffset = intval ( array_shift ( $arrValue ) );
+                return $this->limit ( $nOffset, $nNum )->get ();
+            } elseif (strncasecmp ( $sMethod, 'By', 2 ) === 0) { // support getByName getByNameAndSex etc.
+                $sMethod = substr ( $sMethod, 2 );
+                $arrKeys = explode ( 'And', $sMethod );
+                if (count ( $arrKeys ) != count ( $arrArgs )) {
+                    \Q::throwException ( \Q::i18n ( 'getBy 参数数量不对应' ) );
+                }
+                return $this->where ( array_combine ( $arrKeys, $arrArgs ) )->getOne ();
+            } elseif (strncasecmp ( $sMethod, 'AllBy', 5 ) === 0) { // support getAllByNameAndSex etc.
+                $sMethod = substr ( $sMethod, 5 );
+                $arrKeys = explode ( 'And', $sMethod );
+                if (count ( $arrKeys ) != count ( $arrArgs )) {
+                    \Q::throwException ( \Q::i18n ( 'getAllBy 参数数量不对应' ) );
+                }
+                return $this->where ( array_combine ( $arrKeys, $arrArgs ) )->getAll ();
+            }
+            return $this->top ( intval ( substr ( $sMethod, 3 ) ) );
+        }
+        
         // where 别名支持
         if (in_array ( $sMethod, [ 
                 'whereBetween',
@@ -622,6 +648,51 @@ class select {
         } else {
             return $this->query_ ();
         }
+    }
+    
+    /**
+     * 返回一个字段的值
+     *
+     * @param string $strField            
+     * @return mixed
+     */
+    public function value($strField) {
+        $arrRow = ( array ) $this->setColumns ( $strField )->getOne ();
+        return isset ( $arrRow [$strField] ) ? $arrRow [$strField] : null;
+    }
+    
+    /**
+     * 返回一列数据
+     *
+     * @param mixed $mixedFieldValue            
+     * @param string $strFieldKey            
+     * @return array
+     */
+    public function lists($mixedFieldValue, $strFieldKey = null) {
+        // 纵然有弱水三千，我也只取一瓢 (第一个字段为值，第二个字段为键值，多余的字段丢弃)
+        $arrField = [ ];
+        if (is_array ( $mixedFieldValue )) {
+            $arrField = $mixedFieldValue;
+        } else {
+            $arrField [] = $mixedFieldValue;
+        }
+        if (is_string ( $strFieldKey )) {
+            $arrField [] = $strFieldKey;
+        }
+        
+        // 解析结果
+        $arrResult = [ ];
+        foreach ( ( array ) $this->setColumns ( $arrField )->getAll () as $arrTemp ) {
+            $arrTemp = ( array ) $arrTemp;
+            if (count ( $arrTemp ) == 1) {
+                $arrResult [] = reset ( $arrTemp );
+            } else {
+                $mixValue = array_shift ( $arrTemp );
+                $mixKey = array_shift ( $arrTemp );
+                $arrResult [$mixKey] = $mixValue;
+            }
+        }
+        return $arrResult;
     }
     
     /**
@@ -2389,7 +2460,7 @@ class select {
      */
     private function query_() {
         $strSql = $this->makeSql ();
-        echo $strSql;
+        
         $arrData = call_user_func_array ( [ 
                 $this->objConnect,
                 'query' 
