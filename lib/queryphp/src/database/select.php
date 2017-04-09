@@ -112,8 +112,8 @@ class select {
             'columns' => [ ],
             'aggregate' => [ ],
             'union' => [ ],
-            'table' => null,
             'from' => [ ],
+            'using' => [ ],
             'index' => [ ],
             'where' => null,
             'group' => [ ],
@@ -318,10 +318,10 @@ class select {
      */
     public function insert($mixData, $arrBind = [], $booReplace = false) {
         if (! \Q::isThese ( $mixData, [ 
-                'scalar',
+                'string',
                 'array' 
         ] )) {
-            \Q::throwException ( \Q::i18n ( 'insert 插入数据第一个参数只能为 scalar 或者 array' ), 'Q\database\exception' );
+            \Q::throwException ( \Q::i18n ( 'insert 插入数据第一个参数只能为 string 或者 array' ), 'Q\database\exception' );
         }
         
         // 绑定参数
@@ -343,7 +343,7 @@ class select {
             if ($arrValue) {
                 $arrSql = [ ];
                 $arrSql [] = ($booReplace ? 'REPLACE' : 'INSERT') . ' INTO';
-                $arrSql [] = $this->parseFrom_ ( true );
+                $arrSql [] = $this->parseTable_ ();
                 $arrSql [] = '(' . implode ( ',', $arrField ) . ')';
                 $arrSql [] = 'VALUES';
                 $arrSql [] = '(' . implode ( ',', $arrValue ) . ')';
@@ -380,7 +380,7 @@ class select {
         // 绑定参数
         $arrBind = array_merge ( $this->getBindParams_ (), $arrBind );
         
-        // 构造数据插入
+        // 构造数据批量插入
         if (is_array ( $arrData )) {
             $arrDataResult = [ ];
             $intQuestionMark = 0;
@@ -406,7 +406,7 @@ class select {
             if ($arrDataResult) {
                 $arrSql = [ ];
                 $arrSql [] = ($booReplace ? 'REPLACE' : 'INSERT') . ' INTO';
-                $arrSql [] = $this->parseFrom_ ( true );
+                $arrSql [] = $this->parseTable_ ();
                 $arrSql [] = '(' . implode ( ',', $arrField ) . ')';
                 $arrSql [] = 'VALUES';
                 $arrSql [] = implode ( ',', $arrDataResult );
@@ -431,20 +431,21 @@ class select {
      * 更新数据 update (支持原生 sql)
      *
      * @param array|string $mixData            
+     * @param array $arrBind            
      * @return int 影响记录
      */
     public function update($mixData, $arrBind = []) {
         if (! \Q::isThese ( $mixData, [ 
-                'scalar',
+                'string',
                 'array' 
         ] )) {
-            \Q::throwException ( \Q::i18n ( 'update 更新数据第一个参数只能为 scalar 或者 array' ), 'Q\database\exception' );
+            \Q::throwException ( \Q::i18n ( 'update 更新数据第一个参数只能为 string 或者 array' ), 'Q\database\exception' );
         }
         
         // 绑定参数
         $arrBind = array_merge ( $this->getBindParams_ (), $arrBind );
         
-        // 构造数据插入
+        // 构造数据更新
         if (is_array ( $mixData )) {
             $intQuestionMark = 0;
             $arrBindData = $this->getBindData_ ( $mixData, $arrBind, $intQuestionMark );
@@ -528,17 +529,49 @@ class select {
     }
     
     /**
-     * 原生 sql 删除数据 delete
+     * 删除数据 delete (支持原生 sql)
      *
      * @param null|string $mixData            
+     * @param array $arrBind            
      * @return int 影响记录
      */
-    public function delete($mixData = null) {
+    public function delete($mixData = null, $arrBind = []) {
+        if (! \Q::isThese ( $mixData, [ 
+                'string',
+                'null' 
+        ] )) {
+            \Q::throwException ( \Q::i18n ( 'delete 删除数据第一个参数只能为 null 或者 string' ), 'Q\database\exception' );
+        }
+        
+        // 构造数据删除
+        if (is_null ( $mixData )) {
+            // 构造 delete 语句
+            $arrSql = [ ];
+            $arrSql [] = 'DELETE';
+            if (empty ( $this->arrOption ['using'] )) { // join 方式关联删除
+                $arrSql [] = $this->parseTable_ ( true, true );
+                $arrSql [] = $this->parseFrom_ ();
+            } else { // using 方式关联删除
+                $arrSql [] = 'FROM ' . $this->parseTable_ ( true );
+                $arrSql [] = $this->parseUsing_ ( true );
+            }
+            $arrSql [] = $this->parseWhere_ ();
+            $arrSql [] = $this->parseOrder_ ( true );
+            $arrSql [] = $this->parseLimitcount_ ( true, true );
+            // $arrSql [] = $this->parseForUpdate_ ();
+            $mixData = implode ( ' ', $arrSql );
+            unset ( $arrSql );
+        }
+        $arrBind = array_merge ( $this->getBindParams_ (), $arrBind );
+        
         $this->setNativeSql_ ( 'delete' );
         return call_user_func_array ( [ 
                 $this,
                 'runNativeSql_' 
-        ], func_get_args () );
+        ], [ 
+                $mixData,
+                $arrBind 
+        ] );
     }
     
     /**
@@ -775,6 +808,47 @@ class select {
     }
     
     /**
+     * 添加一个 using 用于删除操作
+     *
+     * @param string|array $mixName            
+     * @return $this
+     */
+    public function using($mixName) {
+        $mixName = \Q::normalize ( $mixName );
+        foreach ( $mixName as $sAlias => $sTable ) {
+            // 字符串指定别名
+            if (preg_match ( '/^(.+)\s+AS\s+(.+)$/i', $sTable, $arrMatch )) {
+                $sAlias = $arrMatch [2];
+                $sTable = $arrMatch [1];
+            }
+            
+            if (! is_string ( $sAlias )) {
+                $sAlias = $sTable;
+            }
+            
+            // 确定 table_name 和 schema
+            $arrTemp = explode ( '.', $sTable );
+            if (isset ( $arrTemp [1] )) {
+                $sSchema = $arrTemp [0];
+                $sTableName = $arrTemp [1];
+            } else {
+                $sSchema = null;
+                $sTableName = $sTable;
+            }
+            
+            // 获得一个唯一的别名
+            $sAlias = $this->uniqueAlias_ ( empty ( $sAlias ) ? $sTableName : $sAlias );
+            
+            $this->arrOption ['using'] [$sAlias] = [ 
+                    'table_name' => $sTable,
+                    'schema' => $sSchema 
+            ];
+        }
+        
+        return $this;
+    }
+    
+    /**
      * 添加字段
      *
      * @param mixed $mixCols            
@@ -872,6 +946,23 @@ class select {
         ], [ 
                 [ 
                         'exists__' => $arrArgs [0] 
+                ] 
+        ] );
+    }
+    
+    /**
+     * not exists 方法支持
+     *
+     * @return $this
+     */
+    public function whereNotExists(/* args */){
+        $arrArgs = func_get_args ();
+        return call_user_func_array ( [ 
+                $this,
+                'addConditions_' 
+        ], [ 
+                [ 
+                        'notexists__' => $arrArgs [0] 
                 ] 
         ] );
     }
@@ -1283,10 +1374,14 @@ class select {
      * @param number $nCount            
      * @return $this
      */
-    public function limit($nOffset = 0, $nCount = 30) {
-        $this->arrOption ['limitcount'] = abs ( intval ( $nCount ) );
-        $this->arrOption ['limitoffset'] = abs ( intval ( $nOffset ) );
-        $this->arrOption ['limitquery'] = true;
+    public function limit($nOffset = 0, $nCount = null) {
+        if (is_null ( $nCount )) {
+            return $this->top ( $nOffset );
+        } else {
+            $this->arrOption ['limitcount'] = abs ( intval ( $nCount ) );
+            $this->arrOption ['limitoffset'] = abs ( intval ( $nOffset ) );
+            $this->arrOption ['limitquery'] = true;
+        }
         return $this;
     }
     
@@ -1424,12 +1519,11 @@ class select {
     }
     
     /**
-     * 解析 from(table) 分析结果
+     * 解析 from 分析结果
      *
-     * @param boolean $booFirstTable            
      * @return string
      */
-    private function parseFrom_($booFirstTable = false) {
+    private function parseFrom_() {
         if (empty ( $this->arrOption ['from'] )) {
             return '';
         }
@@ -1453,18 +1547,74 @@ class select {
                 $sTmp .= ' ON ' . $arrTable ['join_cond'];
             }
             $arrFrom [] = $sTmp;
-            
-            // 指定第一个查询表
-            if ($booFirstTable === true) {
-                break;
-            }
         }
         
         if (! empty ( $arrFrom )) {
-            return ($booFirstTable === false ? 'FROM ' : '') . implode ( ' ', $arrFrom );
+            return 'FROM ' . implode ( ' ', $arrFrom );
         } else {
             return '';
         }
+    }
+    
+    /**
+     * 解析 table 分析结果
+     *
+     * @param boolean $booOnlyAlias            
+     * @param Boolean $booForDelete            
+     * @return string
+     */
+    private function parseTable_($booOnlyAlias = true, $booForDelete = false) {
+        if (empty ( $this->arrOption ['from'] )) {
+            return '';
+        }
+        
+        // 如果为删除,没有 join 则返回为空
+        if ($booForDelete === true && count ( $this->arrOption ['from'] ) == 1) {
+            return '';
+        }
+        
+        foreach ( $this->arrOption ['from'] as $sAlias => $arrTable ) {
+            if ($sAlias == $arrTable ['table_name']) {
+                return $this->objConnect->qualifyTableOrColumn ( "{$arrTable['schema']}.{$arrTable['table_name']}" );
+            } else {
+                if ($booOnlyAlias === true) {
+                    return $sAlias;
+                } else {
+                    return $this->objConnect->qualifyTableOrColumn ( "{$arrTable['schema']}.{$arrTable['table_name']}", $sAlias );
+                }
+            }
+            break;
+        }
+    }
+    
+    /**
+     * 解析 using 分析结果
+     *
+     * @param Boolean $booForDelete            
+     * @return string
+     */
+    private function parseUsing_($booForDelete = false) {
+        // parse using 只支持删除操作
+        if ($booForDelete === false || empty ( $this->arrOption ['using'] )) {
+            return '';
+        }
+        
+        $arrUsing = [ ];
+        $arrOptionUsing = $this->arrOption ['using'];
+        foreach ( $this->arrOption ['from'] as $sAlias => $arrTable ) { // table 自动加入
+            $arrOptionUsing [$sAlias] = $arrTable;
+            break;
+        }
+        
+        foreach ( $arrOptionUsing as $sAlias => $arrTable ) {
+            if ($sAlias == $arrTable ['table_name']) {
+                $arrUsing [] = $this->objConnect->qualifyTableOrColumn ( "{$arrTable['schema']}.{$arrTable['table_name']}" );
+            } else {
+                $arrUsing [] = $this->objConnect->qualifyTableOrColumn ( "{$arrTable['schema']}.{$arrTable['table_name']}", $sAlias );
+            }
+        }
+        
+        return 'USING ' . implode ( ',', array_unique ( $arrUsing ) );
     }
     
     /**
@@ -1528,10 +1678,15 @@ class select {
     /**
      * 解析 order 分析结果
      *
+     * @param boolean $booForDelete            
      * @return string
      */
-    private function parseOrder_() {
+    private function parseOrder_($booForDelete = false) {
         if (empty ( $this->arrOption ['order'] )) {
+            return '';
+        }
+        // 删除存在 join, order 无效
+        if ($booForDelete === true && (count ( $this->arrOption ['from'] ) > 1 || ! empty ( $this->arrOption ['using'] ))) {
             return '';
         }
         return 'ORDER BY ' . implode ( ',', array_unique ( $this->arrOption ['order'] ) );
@@ -1565,9 +1720,20 @@ class select {
     /**
      * 解析 limit 分析结果
      *
+     * @param boolean $booNullLimitOffset            
+     * @param boolean $booForDelete            
      * @return string
      */
-    private function parseLimitcount_() {
+    private function parseLimitcount_($booNullLimitOffset = false, $booForDelete = false) {
+        // 删除存在 join, limit 无效
+        if ($booForDelete === true && (count ( $this->arrOption ['from'] ) > 1 || ! empty ( $this->arrOption ['using'] ))) {
+            return '';
+        }
+        
+        if ($booNullLimitOffset === true) {
+            $this->arrOption ['limitoffset'] = null;
+        }
+        
         if (is_null ( $this->arrOption ['limitoffset'] ) && is_null ( $this->arrOption ['limitcount'] )) {
             return '';
         }
@@ -1833,10 +1999,13 @@ class select {
             }            
 
             // exists 支持
-            elseif (is_string ( $strKey ) && $strKey == 'exists__') {
-                // having 不支持 exists
+            elseif (is_string ( $strKey ) && in_array ( $strKey, [ 
+                    'exists__',
+                    'notexists__' 
+            ] )) {
+                // having 不支持 [not] exists
                 if ($this->getTypeAndLogic_ ()[0] == 'having') {
-                    \Q::throwException ( \Q::i18n ( 'having 不支持 exists 写法' ), 'Q\database\exception' );
+                    \Q::throwException ( \Q::i18n ( 'having 不支持 [not] exists  写法' ), 'Q\database\exception' );
                 }
                 
                 if ($arrTemp instanceof select) {
@@ -1850,7 +2019,7 @@ class select {
                     $arrTemp = $objSelect->makeSql ();
                 }
                 
-                $arrTemp = 'EXISTS ' . self::LOGIC_GROUP_LEFT . ' ' . $arrTemp . ' ' . self::LOGIC_GROUP_RIGHT;
+                $arrTemp = ($strKey == 'notexists__' ? 'NOT EXISTS ' : 'EXISTS ') . self::LOGIC_GROUP_LEFT . ' ' . $arrTemp . ' ' . self::LOGIC_GROUP_RIGHT;
                 $this->setConditionItem_ ( $arrTemp, 'string__' );
             }             
 
