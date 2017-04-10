@@ -54,6 +54,7 @@ class log {
      * @return void
      */
     static public function run($strMessage, $strLevel = 'error', $intMessageType = 3, $strDestination = '', $strExtraHeaders = '') {
+        var_dump( $GLOBALS ['~@option'] ['log_sql_enabled']);
         // 是否开启日志
         if (! $GLOBALS ['~@option'] ['log_enabled']) {
             return;
@@ -68,8 +69,8 @@ class log {
         if (! in_array ( $strLevel, explode ( ',', $GLOBALS ['~@option'] ['log_level'] ) )) {
             return;
         }
-        
-        // 注册过滤器
+
+        // 执行过滤器
         if (self::$calFilter !== null && call_user_func_array ( self::$calFilter, [ 
                 $strMessage,
                 $strLevel 
@@ -95,7 +96,7 @@ class log {
         }
         self::$arrLog [$strLevel] [] = $strMessage;
         
-        // 注册处理器
+        // 执行处理器
         if (self::$calProcessor !== null) {
             call_user_func_array ( self::$calProcessor, [ 
                     $strMessage,

@@ -215,6 +215,13 @@ class select {
     private $booIsTable = false;
     
     /**
+     * 子表达式默认别名
+     *
+     * @var string
+     */
+    const DEFAULT_SUBEXPRESSION_ALIAS = 'a';
+    
+    /**
      * 构造函数
      *
      * @param Q\database\connect $objConnect            
@@ -584,7 +591,6 @@ class select {
             $arrSql [] = $this->parseWhere_ ();
             $arrSql [] = $this->parseOrder_ ( true );
             $arrSql [] = $this->parseLimitcount_ ( true, true );
-            // $arrSql [] = $this->parseForUpdate_ ();
             $mixData = implode ( ' ', $arrSql );
             unset ( $arrSql );
         }
@@ -601,7 +607,28 @@ class select {
     }
     
     /**
-     * 原生 sql 无返回一般 sql 声明 statement
+     * 清空表重置自增 ID
+     *
+     * @return void
+     */
+    public function truncate() {
+        // 构造 truncate 语句
+        $arrSql = [ ];
+        $arrSql [] = 'TRUNCATE TABLE';
+        $arrSql [] = $this->parseTable_ ( true );
+        $arrSql = implode ( ' ', $arrSql );
+        
+        $this->setNativeSql_ ( 'statement' );
+        call_user_func_array ( [ 
+                $this,
+                'runNativeSql_' 
+        ], [ 
+                $arrSql 
+        ] );
+    }
+    
+    /**
+     * 声明 statement 运行一般 sql,无返回
      *
      * @param null|string $mixData            
      * @return void
@@ -1478,9 +1505,11 @@ class select {
     /**
      * 获得查询字符串
      *
+     * @param
+     *            $booWithLogicGroup
      * @return string
      */
-    public function makeSql() {
+    public function makeSql($booWithLogicGroup = false) {
         $arrSql = [ 
                 'SELECT' 
         ];
@@ -1507,7 +1536,12 @@ class select {
         
         $arrSql [] = $this->parseUnion_ ();
         $this->_sLastSql = implode ( ' ', $arrSql );
-        return $this->_sLastSql;
+        
+        if ($booWithLogicGroup === true) {
+            return self::LOGIC_GROUP_LEFT . $this->_sLastSql . self::LOGIC_GROUP_RIGHT;
+        } else {
+            return $this->_sLastSql;
+        }
     }
     
     /**
@@ -1607,7 +1641,10 @@ class select {
                 $sTmp .= ' ' . strtoupper ( $arrTable ['join_type'] ) . ' ';
             }
             
-            if ($sAlias == $arrTable ['table_name']) {
+            // 表名子表达式支持
+            if (strpos ( $arrTable ['table_name'], '(' ) !== false) {
+                $sTmp .= $arrTable ['table_name'] . ' ' . $sAlias;
+            } elseif ($sAlias == $arrTable ['table_name']) {
                 $sTmp .= $this->objConnect->qualifyTableOrColumn ( "{$arrTable['schema']}.{$arrTable['table_name']}" );
             } else {
                 $sTmp .= $this->objConnect->qualifyTableOrColumn ( "{$arrTable['schema']}.{$arrTable['table_name']}", $sAlias );
@@ -1889,22 +1926,48 @@ class select {
                 
                 // 格式化字段值，支持数组
                 if (isset ( $mixCond [2] )) {
-                    if (is_array ( $mixCond [2] )) {
-                        foreach ( $mixCond [2] as &$strTemp ) {
-                            // 表达式支持
-                            if (strpos ( $strTemp, '{' ) !== false && preg_match ( '/^{(.+?)}$/', $strTemp, $arrRes )) {
-                                $strTemp = $this->objConnect->qualifyExpression ( $arrRes [1], $strTable, $this->arrColumnsMapping );
+                    $booIsArray = true;
+                    if (! is_array ( $mixCond [2] )) {
+                        $mixTemp = $mixCond [2];
+                        $mixCond [2] = [ ];
+                        $mixCond [2] [] = $mixTemp;
+                        $booIsArray = false;
+                    }
+                    
+                    foreach ( $mixCond [2] as &$strTemp ) {
+                        // 对象子表达式支持
+                        if ($strTemp instanceof select) {
+                            $strTemp = $strTemp->makeSql ( true );
+                        }                        
+
+                        // 回调方法
+                        elseif (\Q::varType ( $strTemp, 'callback' )) {
+                            $objSelect = new self ( $this->objConnect );
+                            $objSelect->setCurrentTable_ ( $this->getCurrentTable_ () );
+                            $mixResultCallback = call_user_func_array ( $strTemp, [ 
+                                    &$objSelect 
+                            ] );
+                            if (is_null ( $mixResultCallback )) {
+                                $strTemp = $objSelect->makeSql ( true );
                             } else {
-                                $strTemp = $this->objConnect->qualifyColumnValue ( $strTemp );
+                                $strTemp = $mixResultCallback;
                             }
-                        }
-                    } else {
+                        }                        
+
+                        // 字符串子表达式支持
+                        elseif (strpos ( trim ( $strTemp ), '(' ) === 0) {
+                        }                        
+
                         // 表达式支持
-                        if (strpos ( $mixCond [2], '{' ) !== false && preg_match ( '/^{(.+?)}$/', $mixCond [2], $arrRes )) {
-                            $mixCond [2] = $this->objConnect->qualifyExpression ( $arrRes [1], $strTable, $this->arrColumnsMapping );
+                        elseif (strpos ( $strTemp, '{' ) !== false && preg_match ( '/^{(.+?)}$/', $strTemp, $arrRes )) {
+                            $strTemp = $this->objConnect->qualifyExpression ( $arrRes [1], $strTable, $this->arrColumnsMapping );
                         } else {
-                            $mixCond [2] = $this->objConnect->qualifyColumnValue ( $mixCond [2] );
+                            $strTemp = $this->objConnect->qualifyColumnValue ( $strTemp );
                         }
+                    }
+                    
+                    if ($booIsArray === false || (count ( $mixCond [2] ) == 1 && strpos ( trim ( $mixCond [2] [0] ), '(' ) === 0)) {
+                        $mixCond [2] = reset ( $mixCond [2] );
                     }
                 }
                 
@@ -1918,11 +1981,15 @@ class select {
                         'in',
                         'not in' 
                 ] )) {
-                    $arrSqlCond [] = $mixCond [0] . ' ' . strtoupper ( $mixCond [1] ) . ' (' . implode ( ',', $mixCond [2] ) . ')';
+                    $arrSqlCond [] = $mixCond [0] . ' ' . strtoupper ( $mixCond [1] ) . ' ' . (is_array ( $mixCond [2] ) ? '(' . implode ( ',', $mixCond [2] ) . ')' : $mixCond [2]);
                 } elseif (in_array ( $mixCond [1], [ 
                         'between',
                         'not between' 
                 ] )) {
+                    if (! is_array ( $mixCond [2] ) || count ( $mixCond [2] ) < 2) {
+                        \Q::throwException ( \Q::i18n ( '[not] between 参数值必须是一个数组，不能少于 2 个元素' ), 'Q\database\exception' );
+                    }
+                    
                     $arrSqlCond [] = $mixCond [0] . ' ' . strtoupper ( $mixCond [1] ) . ' ' . $mixCond [2] [0] . ' AND ' . $mixCond [2] [1];
                 } elseif (! is_array ( $mixCond [2] )) {
                     $arrSqlCond [] = $mixCond [0] . ' ' . strtoupper ( $mixCond [1] ) . ' ' . $mixCond [2];
@@ -1967,11 +2034,16 @@ class select {
         if (\Q::varType ( $mixCond, 'callback' )) {
             $objSelect = new self ( $this->objConnect );
             $objSelect->setCurrentTable_ ( $this->getCurrentTable_ () );
-            call_user_func_array ( $mixCond, [ 
+            $mixResultCallback = call_user_func_array ( $mixCond, [ 
                     &$objSelect 
             ] );
-            $strParseType = 'parse' . ucwords ( $strType ) . '_';
-            $this->setConditionItem_ ( self::LOGIC_GROUP_LEFT . $objSelect->{$strParseType} ( true ) . self::LOGIC_GROUP_RIGHT, 'string__' );
+            if (is_null ( $mixResultCallback )) {
+                $strParseType = 'parse' . ucwords ( $strType ) . '_';
+                $strTemp = $objSelect->{$strParseType} ( true );
+            } else {
+                $strTemp = $mixResultCallback;
+            }
+            $this->setConditionItem_ ( self::LOGIC_GROUP_LEFT . $strTemp . self::LOGIC_GROUP_RIGHT, 'string__' );
             return $this;
         } else {
             $arrArgs = func_get_args ();
@@ -2084,10 +2156,14 @@ class select {
                 } elseif (\Q::varType ( $arrTemp, 'callback' )) {
                     $objSelect = new self ( $this->objConnect );
                     $objSelect->setCurrentTable_ ( $this->getCurrentTable_ () );
-                    call_user_func_array ( $arrTemp, [ 
+                    $mixResultCallback = call_user_func_array ( $arrTemp, [ 
                             &$objSelect 
                     ] );
-                    $arrTemp = $objSelect->makeSql ();
+                    if (is_null ( $mixResultCallback )) {
+                        $strTemp = $arrTemp = $objSelect->makeSql ();
+                    } else {
+                        $strTemp = $mixResultCallback;
+                    }
                 }
                 
                 $arrTemp = ($strKey == 'notexists__' ? 'NOT EXISTS ' : 'EXISTS ') . self::LOGIC_GROUP_LEFT . ' ' . $arrTemp . ' ' . self::LOGIC_GROUP_RIGHT;
@@ -2130,7 +2206,7 @@ class select {
                         'null',
                         'not null' 
                 ] )) {
-                    if (isset ( $arrTemp [2] ) && ! is_array ( $arrTemp [2] )) {
+                    if (isset ( $arrTemp [2] ) && is_string ( $arrTemp [2] )) {
                         $arrTemp [2] = explode ( ',', $arrTemp [2] );
                     }
                     $this->setConditionItem_ ( [ 
@@ -2254,6 +2330,9 @@ class select {
             \Q::throwException ( \Q::i18n ( '不能在使用 UNION 查询的同时使用 JOIN 查询' ), 'Q\database\exception' );
         }
         
+        // 是否分析 schema，子表达式不支持
+        $booParseSchema = true;
+        
         // 没有指定表，获取默认表
         if (empty ( $mixName )) {
             $sTable = $this->getCurrentTable_ ();
@@ -2266,24 +2345,91 @@ class select {
                 if (! is_string ( $sAlias )) {
                     $sAlias = '';
                 }
+                
+                // 对象子表达式
+                if ($sTable instanceof select) {
+                    $sTable = $sTable->makeSql ( true );
+                    if (! $sAlias) {
+                        $sAlias = self::DEFAULT_SUBEXPRESSION_ALIAS;
+                    }
+                    $booParseSchema = false;
+                }                
+
+                // 回调方法子表达式
+                elseif (\Q::varType ( $sTable, 'callback' )) {
+                    $objSelect = new self ( $this->objConnect );
+                    $objSelect->setCurrentTable_ ( $this->getCurrentTable_ () );
+                    $mixResultCallback = call_user_func_array ( $sTable, [ 
+                            &$objSelect 
+                    ] );
+                    if (is_null ( $mixResultCallback )) {
+                        $sTable = $objSelect->makeSql ( true );
+                    } else {
+                        $sTable = $mixResultCallback;
+                    }
+                    if (! $sAlias) {
+                        $sAlias = self::DEFAULT_SUBEXPRESSION_ALIAS;
+                    }
+                    $booParseSchema = false;
+                }
                 break;
             }
         }        
 
-        // 字符串指定别名
-        elseif (preg_match ( '/^(.+)\s+AS\s+(.+)$/i', $mixName, $arrMatch )) {
-            $sTable = $arrMatch [1];
-            $sAlias = $arrMatch [2];
+        // 对象子表达式
+        elseif ($mixName instanceof select) {
+            $sTable = $mixName->makeSql ( true );
+            $sAlias = self::DEFAULT_SUBEXPRESSION_ALIAS;
+            $booParseSchema = false;
+        }        
+
+        // 回调方法
+        elseif (\Q::varType ( $mixName, 'callback' )) {
+            $objSelect = new self ( $this->objConnect );
+            $objSelect->setCurrentTable_ ( $this->getCurrentTable_ () );
+            $mixResultCallback = call_user_func_array ( $mixName, [ 
+                    &$objSelect 
+            ] );
+            if (is_null ( $mixResultCallback )) {
+                $sTable = $objSelect->makeSql ( true );
+            } else {
+                $sTable = $mixResultCallback;
+            }
+            $sAlias = self::DEFAULT_SUBEXPRESSION_ALIAS;
+            $booParseSchema = false;
+        }        
+
+        // 字符串子表达式
+        elseif (strpos ( trim ( $mixName ), '(' ) === 0) {
+            if (($intAsPosition = strripos ( $mixName, 'as' )) !== false) {
+                $sTable = trim ( substr ( $mixName, 0, $intAsPosition - 1 ) );
+                $sAlias = trim ( substr ( $mixName, $intAsPosition + 2 ) );
+            } else {
+                $sTable = $mixName;
+                $sAlias = self::DEFAULT_SUBEXPRESSION_ALIAS;
+            }
+            $booParseSchema = false;
         } else {
-            $sTable = $mixName;
-            $sAlias = '';
+            // 字符串指定别名
+            if (preg_match ( '/^(.+)\s+AS\s+(.+)$/i', $mixName, $arrMatch )) {
+                $sTable = $arrMatch [1];
+                $sAlias = $arrMatch [2];
+            } else {
+                $sTable = $mixName;
+                $sAlias = '';
+            }
         }
         
         // 确定 table_name 和 schema
-        $arrTemp = explode ( '.', $sTable );
-        if (isset ( $arrTemp [1] )) {
-            $sSchema = $arrTemp [0];
-            $sTableName = $arrTemp [1];
+        if ($booParseSchema === true) {
+            $arrTemp = explode ( '.', $sTable );
+            if (isset ( $arrTemp [1] )) {
+                $sSchema = $arrTemp [0];
+                $sTableName = $arrTemp [1];
+            } else {
+                $sSchema = null;
+                $sTableName = $sTable;
+            }
         } else {
             $sSchema = null;
             $sTableName = $sTable;

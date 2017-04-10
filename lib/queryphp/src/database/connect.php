@@ -86,6 +86,13 @@ abstract class connect {
     protected $intNumRows = 0;
     
     /**
+     * SQL 监听器
+     *
+     * @var callable
+     */
+    protected static $calSqlListen = null;
+    
+    /**
      * 构造函数
      *
      * @param array $arrOption            
@@ -186,6 +193,9 @@ abstract class connect {
                 $this->throwException_ ();
             }
             
+            // 记录 SQL 日志
+            $this->recordSqlLog_ ();
+            
             // 返回结果
             return $this->fetchResult ( $intFetchType, $mixFetchArgument, $arrCtorArgs );
         } catch ( PDOException $oE ) {
@@ -222,6 +232,9 @@ abstract class connect {
             if ($this->objPDOStatement->execute () === false) {
                 $this->throwException_ ();
             }
+            
+            // 记录 SQL 日志
+            $this->recordSqlLog_ ();
             
             $this->intNumRows = $this->objPDOStatement->rowCount ();
             
@@ -352,6 +365,19 @@ abstract class connect {
      */
     public function getNumRows() {
         return $this->intNumRows;
+    }
+    
+    /**
+     * 注册 SQL 监视器
+     *
+     * @param callable $calSqlListen            
+     * @return void
+     */
+    public function registerListen($calSqlListen) {
+        if (! \Q::varType ( $calSqlListen, 'callback' )) {
+            $this->throwException_ ( \Q::i18n ( 'SQL 监视器必须为一个回调类型' ) );
+        }
+        self::$calSqlListen = $calSqlListen;
     }
     
     /**
@@ -721,6 +747,24 @@ abstract class connect {
     protected function setSqlBindParams_($strSql, $arrBindParams = []) {
         $this->strSql = $strSql;
         $this->arrBindParams = $arrBindParams;
+    }
+    
+    /**
+     * 记录 SQL 日志
+     *
+     * @return void
+     */
+    protected function recordSqlLog_() {
+        // SQL 监视器
+        if (self::$calSqlListen !== null) {
+            call_user_func_array ( self::$calSqlListen, [ 
+                    $this 
+            ] );
+        }
+        
+        // 记录 SQL 日志
+        $arrLastSql = $this->getLastSql ( true );
+        \Q::log ( $arrLastSql [0] . (! empty ( $arrLastSql [1] ) ? ' @ ' . \Q::jsonEncode ( $arrLastSql [1] ) : ''), 'sql' );
     }
     
     /**
