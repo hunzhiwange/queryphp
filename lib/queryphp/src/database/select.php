@@ -2000,7 +2000,12 @@ class select {
                 if ($booOnlyAlias === true) {
                     return $sAlias;
                 } else {
-                    return $this->objConnect->qualifyTableOrColumn ( "{$arrTable['schema']}.{$arrTable['table_name']}", $sAlias );
+                    // 表名子表达式支持
+                    if (strpos ( $arrTable ['table_name'], '(' ) !== false) {
+                        return $arrTable ['table_name'] . ' ' . $sAlias;
+                    } else {
+                        return $this->objConnect->qualifyTableOrColumn ( "{$arrTable['schema']}.{$arrTable['table_name']}", $sAlias );
+                    }
                 }
             }
             break;
