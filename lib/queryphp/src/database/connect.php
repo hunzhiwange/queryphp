@@ -577,10 +577,15 @@ abstract class connect {
     /**
      * 返回当前配置连接信息（方便其他组件调用设置为 public）
      *
+     * @param string $strOptionName            
      * @return array
      */
-    public function getCurrentOption() {
-        return $this->arrCurrentOption;
+    public function getCurrentOption($strOptionName = null) {
+        if (is_null ( $strOptionName )) {
+            return $this->arrCurrentOption;
+        } else {
+            return isset ( $this->arrCurrentOption [$strOptionName] ) ? $this->arrCurrentOption [$strOptionName] : null;
+        }
     }
     
     /**

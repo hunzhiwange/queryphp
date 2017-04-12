@@ -253,6 +253,13 @@ class select {
     private $booFlowConditionIsTrue = false;
     
     /**
+     * 是否处于时间功能状态
+     *
+     * @var string
+     */
+    private $strInTimeCondition = null;
+    
+    /**
      * 构造函数
      *
      * @param Q\database\connect $objConnect            
@@ -295,6 +302,29 @@ class select {
                 return $this->where ( array_combine ( $arrKeys, $arrArgs ) )->getAll ();
             }
             return $this->top ( intval ( substr ( $sMethod, 3 ) ) );
+        }        
+
+        // 时间控制语句支持
+        elseif (in_array ( $sMethod, [ 
+                'time',
+                'endTime' 
+        ] )) {
+            if ($this->checkFlowCondition_ ())
+                return $this;
+            switch ($sMethod) {
+                case 'time' :
+                    $this->setInTimeCondition_ ( isset ( $arrArgs [0] ) && in_array ( $arrArgs [0], [ 
+                            'date',
+                            'month',
+                            'year',
+                            'day' 
+                    ] ) ? $arrArgs [0] : null );
+                    break;
+                case 'endTime' :
+                    $this->setInTimeCondition_ ( null );
+                    break;
+            }
+            return $this;
         }
         
         // where 别名支持
@@ -316,6 +346,22 @@ class select {
                     $this,
                     'aliasCondition_' 
             ], $arrArgs );
+        }        
+
+        // where 时间函数自动格式化支持
+        elseif (in_array ( $sMethod, [ 
+                'whereDate',
+                'whereMonth',
+                'whereDay',
+                'whereYear' 
+        ] )) {
+            $this->setInTimeCondition_ ( strtolower ( ltrim ( $sMethod, 'where' ) ) );
+            call_user_func_array ( [ 
+                    $this,
+                    'where' 
+            ], $arrArgs );
+            $this->setInTimeCondition_ ( null );
+            return $this;
         }
         
         // having 别名支持
@@ -339,6 +385,22 @@ class select {
             ], $arrArgs );
         }        
 
+        // having 时间函数自动格式化支持
+        elseif (in_array ( $sMethod, [ 
+                'havingDate',
+                'havingMonth',
+                'havingDay',
+                'havingYear' 
+        ] )) {
+            $this->setInTimeCondition_ ( strtolower ( ltrim ( $sMethod, 'having' ) ) );
+            call_user_func_array ( [ 
+                    $this,
+                    'having' 
+            ], $arrArgs );
+            $this->setInTimeCondition_ ( null );
+            return $this;
+        }        
+
         // join 别名支持
         elseif (in_array ( $sMethod, [ 
                 'innerJoin',
@@ -357,7 +419,7 @@ class select {
             ], $arrArgs );
         }        
 
-        // 条件控制语句持
+        // 条件控制语句支持
         elseif (in_array ( $sMethod, [ 
                 'if',
                 'elseIf',
@@ -2174,6 +2236,26 @@ class select {
                     $mixCond [0] = $this->objConnect->qualifyColumn ( $mixCond [0], $strCurrentTable );
                 }
                 
+                // 分析是否存在自动格式化时间标识
+                $strFindTime = null;
+                if (strpos ( $mixCond [1], '@' ) === 0) {
+                    foreach ( [ 
+                            'date',
+                            'month',
+                            'day',
+                            'year' 
+                    ] as $strTimeType ) {
+                        if (stripos ( $mixCond [1], '@' . $strTimeType ) === 0) {
+                            $strFindTime = $strTimeType;
+                            $mixCond [1] = ltrim ( substr ( $mixCond [1], strlen ( $strTimeType ) + 1 ) );
+                            break;
+                        }
+                    }
+                    if ($strFindTime === null) {
+                        \Q::throwException ( \Q::i18n ( '你正在尝试一个不受支持的时间处理语法' ), 'Q\database\exception' );
+                    }
+                }
+                
                 // 格式化字段值，支持数组
                 if (isset ( $mixCond [2] )) {
                     $booIsArray = true;
@@ -2190,7 +2272,7 @@ class select {
                             $strTemp = $strTemp->makeSql ( true );
                         }                        
 
-                        // 回调方法
+                        // 回调方法子表达式支持
                         elseif (\Q::varType ( $strTemp, 'callback' )) {
                             $objSelect = new self ( $this->objConnect );
                             $objSelect->setCurrentTable_ ( $this->getCurrentTable_ () );
@@ -2212,6 +2294,10 @@ class select {
                         elseif (strpos ( $strTemp, '{' ) !== false && preg_match ( '/^{(.+?)}$/', $strTemp, $arrRes )) {
                             $strTemp = $this->objConnect->qualifyExpression ( $arrRes [1], $strTable, $this->arrColumnsMapping );
                         } else {
+                            // 自动格式化时间
+                            if ($strFindTime !== null) {
+                                $strTemp = $this->parseTime_ ( $mixCond [0], $strTemp, $strFindTime );
+                            }
                             $strTemp = $this->objConnect->qualifyColumnValue ( $strTemp );
                         }
                     }
@@ -2239,9 +2325,8 @@ class select {
                     if (! is_array ( $mixCond [2] ) || count ( $mixCond [2] ) < 2) {
                         \Q::throwException ( \Q::i18n ( '[not] between 参数值必须是一个数组，不能少于 2 个元素' ), 'Q\database\exception' );
                     }
-                    
                     $arrSqlCond [] = $mixCond [0] . ' ' . strtoupper ( $mixCond [1] ) . ' ' . $mixCond [2] [0] . ' AND ' . $mixCond [2] [1];
-                } elseif (! is_array ( $mixCond [2] )) {
+                } elseif (is_scalar ( $mixCond [2] )) {
                     $arrSqlCond [] = $mixCond [0] . ' ' . strtoupper ( $mixCond [1] ) . ' ' . $mixCond [2];
                 }
             }
@@ -2485,6 +2570,7 @@ class select {
      */
     private function setConditionItem_($arrItem, $strType = '') {
         $arrTypeAndLogic = $this->getTypeAndLogic_ ();
+        // 字符串类型
         if ($strType) {
             if (empty ( $this->arrOption [$arrTypeAndLogic [0]] [$strType] )) {
                 $this->arrOption [$arrTypeAndLogic [0]] [] = $arrTypeAndLogic [1];
@@ -2492,6 +2578,10 @@ class select {
             }
             $this->arrOption [$arrTypeAndLogic [0]] [$strType] [] = $arrItem;
         } else {
+            // 格式化时间
+            if (($strInTimeCondition = $this->getInTimeCondition_ ())) {
+                $arrItem [1] = '@' . $strInTimeCondition . ' ' . $arrItem [1];
+            }
             $this->arrOption [$arrTypeAndLogic [0]] [] = $arrTypeAndLogic [1];
             $this->arrOption [$arrTypeAndLogic [0]] [] = $arrItem;
         }
@@ -3125,6 +3215,81 @@ class select {
     }
     
     /**
+     * 解析时间信息
+     *
+     * @param string $sField            
+     * @param mixed $mixValue            
+     * @param string $strType            
+     * @return mixed
+     */
+    private function parseTime_($sField, $mixValue, $strType) {
+        static $arrDate = null, $arrColumns = [ ];
+        
+        // 获取时间和字段信息
+        if ($arrDate === null) {
+            $arrDate = getdate ();
+        }
+        $sField = str_replace ( '`', '', $sField );
+        $strTable = $this->getCurrentTable_ ();
+        if (! preg_match ( '/\(.*\)/', $sField )) {
+            if (preg_match ( '/(.+)\.(.+)/', $sField, $arrMatch )) {
+                $strTable = $arrMatch [1];
+                $sField = $arrMatch [2];
+            }
+            if (isset ( $this->arrColumnsMapping [$sField] )) {
+                $sField = $this->arrColumnsMapping [$sField];
+            }
+        }
+        if ($sField == '*') {
+            return '';
+        }
+        if (! isset ( $arrColumns [$strTable] )) {
+            $arrColumns [$strTable] = $this->objConnect->getTableColumns ( $strTable )['list'];
+        }
+        
+        // 支持类型
+        switch ($strType) {
+            case 'day' :
+                $mixValue = mktime ( 0, 0, 0, $arrDate ['mon'], intval ( $mixValue ), $arrDate ['year'] );
+                break;
+            case 'month' :
+                $mixValue = mktime ( 0, 0, 0, intval ( $mixValue ), 1, $arrDate ['year'] );
+                break;
+            case 'year' :
+                $mixValue = mktime ( 0, 0, 0, 1, 1, intval ( $mixValue ) );
+                break;
+            case 'date' :
+                $mixValue = strtotime ( $mixValue );
+                if ($mixValue === false) {
+                    \Q::throwException ( \Q::i18n ( '请输入一个支持 strtotime 正确的时间' ) );
+                }
+                break;
+            default :
+                \Q::throwException ( \Q::i18n ( '不受支持的时间格式化类型 %s', $strType ) );
+                break;
+        }
+        
+        // 自动格式化时间
+        if (! empty ( $arrColumns [$strTable] [$sField] )) {
+            $strFieldType = $arrColumns [$strTable] [$sField] ['type'];
+            if (in_array ( $strFieldType, [ 
+                    'datetime',
+                    'timestamp' 
+            ] )) {
+                $mixValue = date ( 'Y-m-d H:i:s', $mixValue );
+            } elseif ($strFieldType == 'date') {
+                $mixValue = date ( 'Y-m-d', $mixValue );
+            } elseif ($strFieldType == 'time') {
+                $mixValue = date ( 'H:i:s', $mixValue );
+            } elseif (strpos ( $strFieldType, 'year' ) === 0) {
+                $mixValue = date ( 'Y', $mixValue );
+            }
+        }
+        
+        return $mixValue;
+    }
+    
+    /**
      * 别名唯一
      *
      * @param mixed $mixName            
@@ -3141,12 +3306,30 @@ class select {
             $nDot = strrpos ( $mixName, '.' );
             $strAliasReturn = $nDot === false ? $mixName : substr ( $mixName, $nDot + 1 );
         }
-        
         for($nI = 2; array_key_exists ( $strAliasReturn, $this->arrOption ['from'] ); ++ $nI) {
             $strAliasReturn = $mixName . '_' . ( string ) $nI;
         }
         
         return $strAliasReturn;
+    }
+    
+    /**
+     * 设置当前是否处于时间条件状态
+     *
+     * @param string $strInTimeCondition            
+     * @return void
+     */
+    private function setInTimeCondition_($strInTimeCondition = null) {
+        $this->strInTimeCondition = $strInTimeCondition;
+    }
+    
+    /**
+     * 返回当前是否处于时间条件状态
+     *
+     * @return string|null
+     */
+    private function getInTimeCondition_() {
+        return $this->strInTimeCondition;
     }
     
     /**

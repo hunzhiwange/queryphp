@@ -66,7 +66,7 @@ class mysql extends connect {
     public function getTableNames($sDbName = null, $mixMaster = false) {
         // 确定数据库
         if ($sDbName === null) {
-            $sDbName = $this->getCurrentOption ()['db_name'];
+            $sDbName = $this->getCurrentOption ( 'db_name' );
         }
         $strSql = 'SHOW TABLES FROM ' . $this->qualifyTableOrColumn ( $sDbName );
         $arrResult = [ ];
@@ -83,7 +83,7 @@ class mysql extends connect {
      * 取得数据库表字段信息
      *
      * @param string $sTableName            
-     * @param string $mixMaster            
+     * @param mixed $mixMaster            
      * @return array
      */
     public function getTableColumns($sTableName, $mixMaster = false) {
