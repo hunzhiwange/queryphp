@@ -222,6 +222,27 @@ class select {
     const DEFAULT_SUBEXPRESSION_ALIAS = 'a';
     
     /**
+     * 不查询直接返回 SQL
+     *
+     * @var boolean
+     */
+    private $booOnlyMakeSql = false;
+    
+    /**
+     * 逻辑代码是否处于条件表达式中
+     *
+     * @var boolean
+     */
+    private $booInFlowCondition = false;
+    
+    /**
+     * 条件表达式是否为真
+     *
+     * @var boolean
+     */
+    private $booFlowConditionIsTrue = false;
+    
+    /**
      * 构造函数
      *
      * @param Q\database\connect $objConnect            
@@ -277,6 +298,8 @@ class select {
                 'whereLike',
                 'whereNotLike' 
         ] )) {
+            if ($this->checkFlowCondition_ ())
+                return $this;
             $this->setTypeAndLogic_ ( 'where', self::LOGIC_AND );
             array_unshift ( $arrArgs, str_replace ( 'not', 'not ', strtolower ( ltrim ( $sMethod, 'where' ) ) ) );
             return call_user_func_array ( [ 
@@ -296,6 +319,8 @@ class select {
                 'havingLike',
                 'havingNotLike' 
         ] )) {
+            if ($this->checkFlowCondition_ ())
+                return $this;
             $this->setTypeAndLogic_ ( 'having', self::LOGIC_AND );
             array_unshift ( $arrArgs, str_replace ( 'not', 'not ', strtolower ( ltrim ( $sMethod, 'having' ) ) ) );
             return call_user_func_array ( [ 
@@ -313,11 +338,35 @@ class select {
                 'crossJoin',
                 'naturalJoin' 
         ] )) {
+            if ($this->checkFlowCondition_ ())
+                return $this;
             array_unshift ( $arrArgs, str_replace ( 'join', ' join', strtolower ( $sMethod ) ) );
             return call_user_func_array ( [ 
                     $this,
                     'join_' 
             ], $arrArgs );
+        }        
+
+        // 条件控制语句持
+        elseif (in_array ( $sMethod, [ 
+                'if',
+                'elseIf',
+                'else',
+                'endIf' 
+        ] )) {
+            switch ($sMethod) {
+                case 'if' :
+                case 'elseIf' :
+                    $this->setFlowCondition_ ( true, isset ( $arrArgs [0] ) ? ( bool ) $arrArgs [0] : false );
+                    break;
+                case 'else' :
+                    $this->setFlowCondition_ ( true, ! $this->getFlowCondition_ ()[1] );
+                    break;
+                case 'endIf' :
+                    $this->setFlowCondition_ ( false, false );
+                    break;
+            }
+            return $this;
         }
         
         \Q::throwException ( \Q::i18n ( 'select 没有实现魔法方法 %s.', $sMethod ), 'Q\database\exception' );
@@ -330,15 +379,25 @@ class select {
     /**
      * 原生 sql 查询数据 select
      *
-     * @param null|string $mixData            
+     * @param string $strData            
+     * @param array $arrBind            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return mixed
      */
-    public function select($mixData = null) {
-        $this->setNativeSql_ ( 'select' );
+    public function select($strData, $arrBind = [], $bFlag = false) {
+        if (\Q::varType ( $strData, 'string' )) {
+            \Q::throwException ( \Q::i18n ( 'select 插入数据第一个参数只能为一个 string' ), 'Q\database\exception' );
+        }
+        
+        $this->sql ( $bFlag )->setNativeSql_ ( 'select' );
         return call_user_func_array ( [ 
                 $this,
                 'runNativeSql_' 
-        ], func_get_args () );
+        ], [ 
+                $strData,
+                $arrBind 
+        ] );
     }
     
     /**
@@ -347,9 +406,11 @@ class select {
      * @param array|string $mixData            
      * @param array $arrBind            
      * @param boolean $booReplace            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return int 最后插入ID
      */
-    public function insert($mixData, $arrBind = [], $booReplace = false) {
+    public function insert($mixData, $arrBind = [], $booReplace = false, $bFlag = false) {
         if (! \Q::isThese ( $mixData, [ 
                 'string',
                 'array' 
@@ -387,7 +448,7 @@ class select {
         $arrBind = array_merge ( $this->getBindParams_ (), $arrBind );
         
         // 执行查询
-        $this->setNativeSql_ ( $booReplace === false ? 'insert' : 'replace' );
+        $this->sql ( $bFlag )->setNativeSql_ ( $booReplace === false ? 'insert' : 'replace' );
         return call_user_func_array ( [ 
                 $this,
                 'runNativeSql_' 
@@ -403,9 +464,11 @@ class select {
      * @param array $arrData            
      * @param array $arrBind            
      * @param boolean $booReplace            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return int 最后插入ID
      */
-    public function insertAll($arrData, $arrBind = [], $booReplace = false) {
+    public function insertAll($arrData, $arrBind = [], $booReplace = false, $bFlag = false) {
         if (! is_array ( $arrData )) {
             \Q::throwException ( \Q::i18n ( 'insertAll 批量插入数据第一个参数必须为数组' ), 'Q\database\exception' );
         }
@@ -450,7 +513,7 @@ class select {
         $arrBind = array_merge ( $this->getBindParams_ (), $arrBind );
         
         // 执行查询
-        $this->setNativeSql_ ( $booReplace === false ? 'insert' : 'replace' );
+        $this->sql ( $bFlag )->setNativeSql_ ( $booReplace === false ? 'insert' : 'replace' );
         return call_user_func_array ( [ 
                 $this,
                 'runNativeSql_' 
@@ -465,9 +528,11 @@ class select {
      *
      * @param array|string $mixData            
      * @param array $arrBind            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return int 影响记录
      */
-    public function update($mixData, $arrBind = []) {
+    public function update($mixData, $arrBind = [], $bFlag = false) {
         if (! \Q::isThese ( $mixData, [ 
                 'string',
                 'array' 
@@ -509,7 +574,7 @@ class select {
         }
         $arrBind = array_merge ( $this->getBindParams_ (), $arrBind );
         
-        $this->setNativeSql_ ( 'update' );
+        $this->sql ( $bFlag )->setNativeSql_ ( 'update' );
         return call_user_func_array ( [ 
                 $this,
                 'runNativeSql_' 
@@ -525,14 +590,16 @@ class select {
      * @param string $strColumn            
      * @param mixed $mixValue            
      * @param array $arrBind            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return int
      */
-    public function updateColumn($strColumn, $mixValue, $arrBind = []) {
+    public function updateColumn($strColumn, $mixValue, $arrBind = [], $bFlag = false) {
         if (! is_string ( $strColumn )) {
             \Q::throwException ( \Q::i18n ( 'updateColumn 第一个参数必须为字符串' ), 'Q\database\exception' );
         }
         
-        return $this->update ( [ 
+        return $this->sql ( $bFlag )->update ( [ 
                 $strColumn => $mixValue 
         ], $arrBind );
     }
@@ -543,10 +610,12 @@ class select {
      * @param string $strColumn            
      * @param int $intStep            
      * @param array $arrBind            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return int
      */
-    public function updateIncrease($strColumn, $intStep = 1, $arrBind = []) {
-        return $this->updateColumn ( $strColumn, '{[' . $strColumn . ']+' . $intStep . '}', $arrBind );
+    public function updateIncrease($strColumn, $intStep = 1, $arrBind = [], $bFlag = false) {
+        return $this->sql ( $bFlag )->updateColumn ( $strColumn, '{[' . $strColumn . ']+' . $intStep . '}', $arrBind );
     }
     
     /**
@@ -555,10 +624,12 @@ class select {
      * @param string $strColumn            
      * @param int $intStep            
      * @param array $arrBind            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return int
      */
-    public function updateDecrease($strColumn, $intStep = 1, $arrBind = []) {
-        return $this->updateColumn ( $strColumn, '{[' . $strColumn . ']-' . $intStep . '}', $arrBind );
+    public function updateDecrease($strColumn, $intStep = 1, $arrBind = [], $bFlag = false) {
+        return $this->sql ( $bFlag )->updateColumn ( $strColumn, '{[' . $strColumn . ']-' . $intStep . '}', $arrBind );
     }
     
     /**
@@ -566,9 +637,11 @@ class select {
      *
      * @param null|string $mixData            
      * @param array $arrBind            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return int 影响记录
      */
-    public function delete($mixData = null, $arrBind = []) {
+    public function delete($mixData = null, $arrBind = [], $bFlag = false) {
         if (! \Q::isThese ( $mixData, [ 
                 'string',
                 'null' 
@@ -596,7 +669,7 @@ class select {
         }
         $arrBind = array_merge ( $this->getBindParams_ (), $arrBind );
         
-        $this->setNativeSql_ ( 'delete' );
+        $this->sql ( $bFlag )->setNativeSql_ ( 'delete' );
         return call_user_func_array ( [ 
                 $this,
                 'runNativeSql_' 
@@ -609,16 +682,18 @@ class select {
     /**
      * 清空表重置自增 ID
      *
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return void
      */
-    public function truncate() {
+    public function truncate($bFlag = false) {
         // 构造 truncate 语句
         $arrSql = [ ];
         $arrSql [] = 'TRUNCATE TABLE';
         $arrSql [] = $this->parseTable_ ( true );
         $arrSql = implode ( ' ', $arrSql );
         
-        $this->setNativeSql_ ( 'statement' );
+        $this->sql ( $bFlag )->setNativeSql_ ( 'statement' );
         call_user_func_array ( [ 
                 $this,
                 'runNativeSql_' 
@@ -630,36 +705,50 @@ class select {
     /**
      * 声明 statement 运行一般 sql,无返回
      *
-     * @param null|string $mixData            
+     * @param string $strData            
+     * @param array $arrBind            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return void
      */
-    public function statement($mixData = null) {
-        $this->setNativeSql_ ( 'statement' );
+    public function statement($strData, $arrBind = [], $bFlag = false) {
+        if (\Q::varType ( $strData, 'string' )) {
+            \Q::throwException ( \Q::i18n ( 'statement 插入数据第一个参数只能为一个 string' ), 'Q\database\exception' );
+        }
+        
+        $this->sql ( $bFlag )->setNativeSql_ ( 'statement' );
         call_user_func_array ( [ 
                 $this,
                 'runNativeSql_' 
-        ], func_get_args () );
+        ], [ 
+                $strData,
+                $arrBind 
+        ] );
     }
     
     /**
      * 返回一条记录
      *
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return mixed
      */
-    public function getOne() {
-        return $this->one ()->query_ ();
+    public function getOne($bFlag = false) {
+        return $this->sql ( $bFlag, true )->one ()->query_ ();
     }
     
     /**
      * 返回所有记录
      *
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return mixed
      */
-    public function getAll() {
+    public function getAll($bFlag = false) {
         if ($this->arrOption ['limitquery']) {
-            return $this->query_ ();
+            return $this->sql ( $bFlag, true )->query_ ();
         } else {
-            return $this->all ()->query_ ();
+            return $this->sql ( $bFlag, true )->all ()->query_ ();
         }
     }
     
@@ -667,13 +756,15 @@ class select {
      * 返回最后几条记录
      *
      * @param mixed $nNum            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return mixed
      */
-    public function get($nNum = null) {
+    public function get($nNum = null, $bFlag = false) {
         if (! is_null ( $nNum )) {
-            return $this->top ( $nNum )->query_ ();
+            return $this->sql ( $bFlag, true )->top ( $nNum )->query_ ();
         } else {
-            return $this->query_ ();
+            return $this->sql ( $bFlag, true )->query_ ();
         }
     }
     
@@ -681,10 +772,15 @@ class select {
      * 返回一个字段的值
      *
      * @param string $strField            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return mixed
      */
-    public function value($strField) {
-        $arrRow = ( array ) $this->setColumns ( $strField )->getOne ();
+    public function value($strField, $bFlag = false) {
+        $arrRow = ( array ) $this->sql ( $bFlag, true )->setColumns ( $strField )->getOne ();
+        if ($bFlag === true) {
+            return $arrRow;
+        }
         return isset ( $arrRow [$strField] ) ? $arrRow [$strField] : null;
     }
     
@@ -693,9 +789,11 @@ class select {
      *
      * @param mixed $mixFieldValue            
      * @param string $strFieldKey            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return array
      */
-    public function lists($mixFieldValue, $strFieldKey = null) {
+    public function lists($mixFieldValue, $strFieldKey = null, $bFlag = false) {
         // 纵然有弱水三千，我也只取一瓢 (第一个字段为值，第二个字段为键值，多余的字段丢弃)
         $arrField = [ ];
         if (is_array ( $mixFieldValue )) {
@@ -709,7 +807,12 @@ class select {
         
         // 解析结果
         $arrResult = [ ];
-        foreach ( ( array ) $this->setColumns ( $arrField )->getAll () as $arrTemp ) {
+        foreach ( ( array ) $this->sql ( $bFlag, true )->setColumns ( $arrField )->getAll () as $arrTemp ) {
+            if ($bFlag === true) {
+                $arrResult [] = $arrTemp;
+                continue;
+            }
+            
             $arrTemp = ( array ) $arrTemp;
             if (count ( $arrTemp ) == 1) {
                 $arrResult [] = reset ( $arrTemp );
@@ -727,10 +830,15 @@ class select {
      *
      * @param string $strField            
      * @param string $sAlias            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return int
      */
-    public function getCount($strField = '*', $sAlias = 'row_count') {
-        $arrRow = ( array ) $this->count ( $strField, $sAlias )->get ();
+    public function getCount($strField = '*', $sAlias = 'row_count', $bFlag = false) {
+        $arrRow = ( array ) $this->sql ( $bFlag, true )->count ( $strField, $sAlias )->get ();
+        if ($bFlag === true) {
+            return $arrRow;
+        }
         return intval ( $arrRow [$sAlias] );
     }
     
@@ -739,10 +847,15 @@ class select {
      *
      * @param string $strField            
      * @param string $sAlias            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return number
      */
-    public function getAvg($strField, $sAlias = 'avg_value') {
-        $arrRow = ( array ) $this->avg ( $strField, $sAlias )->get ();
+    public function getAvg($strField, $sAlias = 'avg_value', $bFlag = false) {
+        $arrRow = ( array ) $this->sql ( $bFlag, true )->avg ( $strField, $sAlias )->get ();
+        if ($bFlag === true) {
+            return $arrRow;
+        }
         return ( float ) $arrRow [$sAlias];
     }
     
@@ -751,10 +864,15 @@ class select {
      *
      * @param string $strField            
      * @param string $sAlias            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return number
      */
-    public function getMax($strField, $sAlias = 'max_value') {
-        $arrRow = ( array ) $this->max ( $strField, $sAlias )->get ();
+    public function getMax($strField, $sAlias = 'max_value', $bFlag = false) {
+        $arrRow = ( array ) $this->sql ( $bFlag, true )->max ( $strField, $sAlias )->get ();
+        if ($bFlag === true) {
+            return $arrRow;
+        }
         return ( float ) $arrRow [$sAlias];
     }
     
@@ -763,10 +881,15 @@ class select {
      *
      * @param string $strField            
      * @param string $sAlias            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return number
      */
-    public function getMin($strField, $sAlias = 'min_value') {
-        $arrRow = ( array ) $this->min ( $strField, $sAlias )->get ();
+    public function getMin($strField, $sAlias = 'min_value', $bFlag = false) {
+        $arrRow = ( array ) $this->sql ( $bFlag, true )->min ( $strField, $sAlias )->get ();
+        if ($bFlag === true) {
+            return $arrRow;
+        }
         return ( float ) $arrRow [$sAlias];
     }
     
@@ -775,10 +898,15 @@ class select {
      *
      * @param string $strField            
      * @param string $sAlias            
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
      * @return number
      */
-    public function getSum($strField, $sAlias = 'sum_value') {
-        $arrRow = ( array ) $this->sum ( $strField, $sAlias )->get ();
+    public function getSum($strField, $sAlias = 'sum_value', $bFlag = false) {
+        $arrRow = ( array ) $this->sql ( $bFlag, true )->sum ( $strField, $sAlias )->get ();
+        if ($bFlag === true) {
+            return $arrRow;
+        }
         return $arrRow [$sAlias];
     }
     
@@ -791,12 +919,34 @@ class select {
     // ######################################################
     
     /**
+     * 指定返回 SQL 不做任何操作
+     *
+     * @param bool $bFlag
+     *            指示是否不做任何操作只返回 SQL
+     * @param bool $bQuickSql
+     *            如果快捷为 true,而原来的 $booOnlyMakeSql 为 true，则不做任何修改，只能通过手动方式修改
+     * @return $this
+     */
+    public function sql($bFlag = true, $bQuickSql = false) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
+            // 优先级最高 $this->sql(true, false)
+        if ($bFlag === false && $bQuickSql === true && $this->booOnlyMakeSql === true) {
+            return $this;
+        }
+        $this->booOnlyMakeSql = ( bool ) $bFlag;
+        return $this;
+    }
+    
+    /**
      * 设置是否查询主服务器
      *
      * @param boolean $booMaster            
      * @return $this
      */
     public function asMaster($booMaster = false) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->arrQueryParams ['master'] = $booMaster;
         return $this;
     }
@@ -809,6 +959,8 @@ class select {
      * @return $this
      */
     public function asFetchType($mixType, $mixValue = null) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         if (is_array ( $mixType )) {
             $this->arrQueryParams ['fetch_type'] = array_merge ( $this->arrQueryParams ['fetch_type'], $mixType );
         } else {
@@ -828,6 +980,8 @@ class select {
      * @return $this
      */
     public function asClass($sClassName) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->arrQueryParams ['as_class'] = $sClassName;
         $this->arrQueryParams ['as_default'] = false;
         return $this;
@@ -839,6 +993,8 @@ class select {
      * @return $this
      */
     public function asDefault() {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->arrQueryParams ['as_class'] = null;
         $this->arrQueryParams ['as_default'] = true;
         return $this;
@@ -851,6 +1007,8 @@ class select {
      * @return $this
      */
     public function asCollection($bAsCollection = true) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->arrQueryParams ['as_collection'] = $bAsCollection;
         return $this;
     }
@@ -862,6 +1020,8 @@ class select {
      * @return $this
      */
     public function reset($sOption = null) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         if ($sOption == null) {
             $this->initOption_ ();
         } elseif (array_key_exists ( $sOption, self::$arrOptionDefault )) {
@@ -877,6 +1037,8 @@ class select {
      * @return $this
      */
     public function prefix($mixPrefix) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $mixPrefix = \Q::normalize ( $mixPrefix );
         foreach ( $mixPrefix as $strValue ) {
             $strValue = \Q::normalize ( $strValue );
@@ -899,6 +1061,8 @@ class select {
      * @return $this
      */
     public function table($mixTable, $mixCols = '*') {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->setIsTable_ ( true );
         $this->join_ ( 'inner join', $mixTable, $mixCols );
         $this->setIsTable_ ( false );
@@ -912,6 +1076,8 @@ class select {
      * @return $this
      */
     public function using($mixName) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $mixName = \Q::normalize ( $mixName );
         foreach ( $mixName as $sAlias => $sTable ) {
             // 字符串指定别名
@@ -954,6 +1120,8 @@ class select {
      * @return $this
      */
     public function columns($mixCols = '*', $strTable = null) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         if (is_null ( $strTable )) {
             $strTable = $this->getCurrentTable_ ();
         }
@@ -969,6 +1137,8 @@ class select {
      * @return $this
      */
     public function setColumns($mixCols = '*', $strTable = null) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         if (is_null ( $strTable )) {
             $strTable = $this->getCurrentTable_ ();
         }
@@ -985,6 +1155,8 @@ class select {
      * @return $this
      */
     public function columnsMapping($mixName, $sMappingTo = NULL) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         if (is_array ( $mixName )) {
             $this->arrColumnsMapping = array_merge ( $this->arrColumnsMapping, $mixName );
         } else {
@@ -1006,6 +1178,8 @@ class select {
      * @return $this
      */
     public function where($mixCond /* args */){
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $arrArgs = func_get_args ();
         array_unshift ( $arrArgs, self::LOGIC_AND );
         array_unshift ( $arrArgs, 'where' );
@@ -1022,6 +1196,8 @@ class select {
      * @return $this
      */
     public function orWhere($mixCond /* args */){
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $arrArgs = func_get_args ();
         array_unshift ( $arrArgs, self::LOGIC_OR );
         array_unshift ( $arrArgs, 'where' );
@@ -1037,6 +1213,8 @@ class select {
      * @return $this
      */
     public function whereExists(/* args */){
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $arrArgs = func_get_args ();
         return call_user_func_array ( [ 
                 $this,
@@ -1054,6 +1232,8 @@ class select {
      * @return $this
      */
     public function whereNotExists(/* args */){
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $arrArgs = func_get_args ();
         return call_user_func_array ( [ 
                 $this,
@@ -1074,6 +1254,8 @@ class select {
      * @return $this
      */
     public function bind($mixName, $mixValue = null, $intType = PDO::PARAM_STR) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         if (is_array ( $mixName )) {
             foreach ( $mixName as $mixKey => $mixValue ) {
                 if (! is_array ( $mixValue )) {
@@ -1115,6 +1297,8 @@ class select {
      * @return $this
      */
     public function forceIndex($mixIndex, $sType = 'FORCE') {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         if (! isset ( self::$arrIndexTypes [$sType] )) {
             \Q::throwException ( \Q::i18n ( '无效的 Index 类型 %s', $sType ), 'Q\database\exception' );
         }
@@ -1158,6 +1342,8 @@ class select {
      * @return $this
      */
     public function join($mixTable, $mixCols = '*', $mixCond /* args */){
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $arrArgs = func_get_args ();
         array_unshift ( $arrArgs, 'inner join' );
         return call_user_func_array ( [ 
@@ -1174,6 +1360,8 @@ class select {
      * @return $this
      */
     public function union($mixSelect, $sType = 'UNION') {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         if (! isset ( self::$arrUnionTypes [$sType] )) {
             \Q::throwException ( \Q::i18n ( '无效的 UNION 类型 %s', $sType ), 'Q\database\exception' );
         }
@@ -1201,6 +1389,8 @@ class select {
      * @return $this
      */
     public function unionAll($mixSelect) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         return $this->union ( $mixSelect, 'UNION ALL' );
     }
     
@@ -1211,7 +1401,9 @@ class select {
      * @return $this
      */
     public function groupBy($mixExpr) {
-        // 处理条件表达式
+        if ($this->checkFlowCondition_ ())
+            return $this;
+            // 处理条件表达式
         if (is_string ( $mixExpr ) && strpos ( $mixExpr, ',' ) !== false && strpos ( $mixExpr, '{' ) !== false && preg_match_all ( '/{(.+?)}/', $mixExpr, $arrRes )) {
             $mixExpr = str_replace ( $arrRes [1] [0], base64_encode ( $arrRes [1] [0] ), $mixExpr );
         }
@@ -1261,6 +1453,8 @@ class select {
      * @return $this
      */
     public function having($mixCond /* args */){
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $arrArgs = func_get_args ();
         array_unshift ( $arrArgs, self::LOGIC_AND );
         array_unshift ( $arrArgs, 'having' );
@@ -1277,6 +1471,8 @@ class select {
      * @return $this
      */
     public function orHaving($mixCond /* args */){
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $arrArgs = func_get_args ();
         array_unshift ( $arrArgs, self::LOGIC_OR );
         array_unshift ( $arrArgs, 'having' );
@@ -1294,7 +1490,9 @@ class select {
      * @return $this
      */
     public function orderBy($mixExpr, $sOrderDefault = 'ASC') {
-        // 格式化为大写
+        if ($this->checkFlowCondition_ ())
+            return $this;
+            // 格式化为大写
         $sOrderDefault = strtoupper ( $sOrderDefault );
         
         // 处理条件表达式
@@ -1365,13 +1563,35 @@ class select {
     }
     
     /**
+     * 最近排序数据
+     *
+     * @param string $mixField            
+     * @return $this
+     */
+    public function latest($mixField = 'create_at') {
+        return $this->orderBy ( $mixField, 'DESC' );
+    }
+    
+    /**
+     * 最早排序数据
+     *
+     * @param string $mixField            
+     * @return $this
+     */
+    public function oldest($mixField = 'create_at') {
+        return $this->orderBy ( $mixField, 'ASC' );
+    }
+    
+    /**
      * 创建一个 SELECT DISTINCT 查询
      *
-     * @param bool $flag
+     * @param bool $bFlag
      *            指示是否是一个 SELECT DISTINCT 查询（默认 true）
      * @return $this
      */
     public function distinct($bFlag = true) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->arrOption ['distinct'] = ( bool ) $bFlag;
         return $this;
     }
@@ -1384,6 +1604,8 @@ class select {
      * @return $this
      */
     public function count($strField = '*', $sAlias = 'row_count') {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         return $this->addAggregate_ ( 'COUNT', $strField, $sAlias );
     }
     
@@ -1395,6 +1617,8 @@ class select {
      * @return $this
      */
     public function avg($strField, $sAlias = 'avg_value') {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         return $this->addAggregate_ ( 'AVG', $strField, $sAlias );
     }
     
@@ -1406,6 +1630,8 @@ class select {
      * @return $this
      */
     public function max($strField, $sAlias = 'max_value') {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         return $this->addAggregate_ ( 'MAX', $strField, $sAlias );
     }
     
@@ -1417,6 +1643,8 @@ class select {
      * @return $this
      */
     public function min($strField, $sAlias = 'min_value') {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         return $this->addAggregate_ ( 'MIN', $strField, $sAlias );
     }
     
@@ -1428,6 +1656,8 @@ class select {
      * @return $this
      */
     public function sum($strField, $sAlias = 'sum_value') {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         return $this->addAggregate_ ( 'SUM', $strField, $sAlias );
     }
     
@@ -1437,6 +1667,8 @@ class select {
      * @return $this
      */
     public function one() {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->arrOption ['limitcount'] = 1;
         $this->arrOption ['limitoffset'] = null;
         $this->arrOption ['limitquery'] = false;
@@ -1449,6 +1681,8 @@ class select {
      * @return $this
      */
     public function all() {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->arrOption ['limitcount'] = null;
         $this->arrOption ['limitoffset'] = null;
         $this->arrOption ['limitquery'] = true;
@@ -1462,6 +1696,8 @@ class select {
      * @return $this
      */
     public function top($nCount = 30) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         return $this->limit ( 0, $nCount );
     }
     
@@ -1473,6 +1709,8 @@ class select {
      * @return $this
      */
     public function limit($nOffset = 0, $nCount = null) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         if (is_null ( $nCount )) {
             return $this->top ( $nOffset );
         } else {
@@ -1490,6 +1728,8 @@ class select {
      * @return $this
      */
     public function forUpdate($bFlag = true) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->arrOption ['forupdate'] = ( bool ) $bFlag;
         return $this;
     }
@@ -2607,17 +2847,25 @@ class select {
     private function query_() {
         $strSql = $this->makeSql ();
         
-        $arrData = call_user_func_array ( [ 
-                $this->objConnect,
-                'query' 
-        ], [ 
+        $arrArgs = [ 
                 $strSql,
                 $this->getBindParams_ (),
                 $this->arrQueryParams ['master'],
                 $this->arrQueryParams ['fetch_type'] ['fetch_type'],
                 $this->arrQueryParams ['fetch_type'] ['fetch_argument'],
                 $this->arrQueryParams ['fetch_type'] ['ctor_args'] 
-        ] );
+        ];
+        
+        // 只返回 SQL，不做任何实际操作
+        if ($this->booOnlyMakeSql === true) {
+            return $arrArgs;
+        }
+        
+        $arrData = call_user_func_array ( [ 
+                $this->objConnect,
+                'query' 
+        ], $arrArgs );
+        unset ( $arrArgs );
         
         if ($this->arrQueryParams ['as_default']) {
             $this->queryDefault_ ( $arrData );
@@ -2695,10 +2943,17 @@ class select {
                 \Q::throwException ( \Q::i18n ( '%s 方法只允许运行 %s sql 语句', $strNativeSql, $strNativeSql ), 'Q\database\exception' );
             }
             
-            return (call_user_func_array ( [ 
+            $arrArgs = func_get_args ();
+            
+            // 只返回 SQL，不做任何实际操作
+            if ($this->booOnlyMakeSql === true) {
+                return $arrArgs;
+            }
+            
+            return call_user_func_array ( [ 
                     $this->objConnect,
                     $strNativeSql == 'select' ? 'query' : 'execute' 
-            ], func_get_args () ));
+            ], $arrArgs );
         } else {
             \Q::throwException ( \Q::i18n ( '%s 方法第一个参数只允许是 null 或者字符串', $strNativeSql ), 'Q\database\exception' );
         }
@@ -2869,13 +3124,10 @@ class select {
         if (empty ( $mixName )) {
             return '';
         }
-        // 数组，返回最后一个元素
-        if (is_array ( $mixName )) {
+        
+        if (is_array ( $mixName )) { // 数组，返回最后一个元素
             $strAliasReturn = end ( $mixName );
-        }         
-
-        // 字符串
-        else {
+        } else { // 字符串
             $nDot = strrpos ( $mixName, '.' );
             $strAliasReturn = $nDot === false ? $mixName : substr ( $mixName, $nDot + 1 );
         }
@@ -2885,6 +3137,39 @@ class select {
         }
         
         return $strAliasReturn;
+    }
+    
+    /**
+     * 设置当前条件表达式状态
+     *
+     * @param boolean $booInFlowCondition            
+     * @param boolean $booFlowConditionIsTrue            
+     * @return void
+     */
+    private function setFlowCondition_($booInFlowCondition, $booFlowConditionIsTrue) {
+        $this->booInFlowCondition = $booInFlowCondition;
+        $this->booFlowConditionIsTrue = $booFlowConditionIsTrue;
+    }
+    
+    /**
+     * 获取当前条件表达式状态
+     *
+     * @return array
+     */
+    private function getFlowCondition_() {
+        return [ 
+                $this->booInFlowCondition,
+                $this->booFlowConditionIsTrue 
+        ];
+    }
+    
+    /**
+     * 验证一下条件表达式是否通过
+     *
+     * @return $this|void
+     */
+    private function checkFlowCondition_() {
+        return $this->booInFlowCondition && ! $this->booFlowConditionIsTrue;
     }
     
     /**

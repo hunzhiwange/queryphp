@@ -64,6 +64,13 @@ abstract class connect {
      */
     protected $arrOption = [ ];
     
+    /**
+     * 当前数据库连接参数
+     *
+     * @var array
+     */
+    protected $arrCurrentOption = [ ];
+    
     /*
      * sql 最后查询语句
      *
@@ -558,6 +565,15 @@ abstract class connect {
     abstract public function identifierColumn($sName);
     
     /**
+     * 返回当前配置连接信息（方便其他组件调用设置为 public）
+     *
+     * @return array
+     */
+    public function getCurrentOption() {
+        return $this->arrCurrentOption;
+    }
+    
+    /**
      * 分析 sql 类型数据
      *
      * @param string $strSql            
@@ -567,12 +583,16 @@ abstract class connect {
         $strSql = trim ( $strSql );
         foreach ( [ 
                 'select',
+                'show',
                 'delete',
                 'insert',
                 'replace',
                 'update' 
         ] as $strType ) {
             if (stripos ( $strSql, $strType ) === 0) {
+                if ($strType == 'show') {
+                    $strType = 'select';
+                }
                 return $strType;
             }
         }
@@ -685,6 +705,7 @@ abstract class connect {
         }
         
         try {
+            $this->setCurrentOption_ ( $arrOption );
             return $this->arrConnect [$nLinkid] = new \PDO ( $this->parseDsn_ ( $arrOption ), $arrOption ['db_user'], $arrOption ['db_password'], $arrOption ['db_params'] );
         } catch ( PDOException $oE ) {
             return false;
@@ -747,6 +768,16 @@ abstract class connect {
     protected function setSqlBindParams_($strSql, $arrBindParams = []) {
         $this->strSql = $strSql;
         $this->arrBindParams = $arrBindParams;
+    }
+    
+    /**
+     * 设置当前数据库连接信息
+     *
+     * @param array $arrOption            
+     * @return void
+     */
+    protected function setCurrentOption_($arrOption) {
+        $this->arrCurrentOption = $arrOption;
     }
     
     /**

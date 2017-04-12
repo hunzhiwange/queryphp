@@ -54,7 +54,6 @@ class log {
      * @return void
      */
     static public function run($strMessage, $strLevel = 'error', $intMessageType = 3, $strDestination = '', $strExtraHeaders = '') {
-        var_dump( $GLOBALS ['~@option'] ['log_sql_enabled']);
         // 是否开启日志
         if (! $GLOBALS ['~@option'] ['log_enabled']) {
             return;

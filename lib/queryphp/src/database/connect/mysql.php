@@ -10,6 +10,7 @@
  */
 namespace Q\database\connect;
 
+use PDO;
 use Q\database\connect;
 
 /**
@@ -46,6 +47,72 @@ class mysql extends connect {
     }
     
     /**
+     * 取得数据库表名列表
+     *
+     * @param string $sDbName            
+     * @param mixed $mixMaster            
+     * @return array
+     */
+    public function getTableNames($sDbName = null, $mixMaster = false) {
+        // 确定数据库
+        if ($sDbName === null) {
+            $sDbName = $this->getCurrentOption ()['db_name'];
+        }
+        $strSql = 'SHOW TABLES FROM ' . $this->qualifyTableOrColumn ( $sDbName );
+        $arrResult = [ ];
+        if (($arrTables = $this->query ( $strSql, [ ], $mixMaster, PDO::FETCH_ASSOC ))) {
+            foreach ( $arrTables as $arrTable ) {
+                $arrResult [] = reset ( $arrTable );
+            }
+        }
+        unset ( $arrTables, $strSql );
+        return $arrResult;
+    }
+    
+    /**
+     * 取得数据库表字段信息
+     *
+     * @param string $sTableName            
+     * @param string $mixMaster            
+     * @return array
+     */
+    public function getTableColumns($sTableName, $mixMaster = false) {
+        $strSql = 'SHOW FULL COLUMNS FROM ' . $this->qualifyTableOrColumn ( $sTableName );
+        $arrResult = [ 
+                'list' => [ ],
+                'primary_key' => [ ],
+                'auto_increment' => null 
+        ];
+        
+        if (($arrColumns = $this->query ( $strSql, [ ], $mixMaster, PDO::FETCH_ASSOC ))) {
+            foreach ( $arrColumns as $arrColumn ) {
+                // 处理字段
+                $arrTemp = [ ];
+                $arrTemp ['name'] = $arrColumn ['Field'];
+                $arrTemp ['type'] = $arrColumn ['Type'];
+                $arrTemp ['primary_key'] = strtolower ( $arrColumn ['Key'] ) == 'pri';
+                $arrTemp ['auto_increment'] = strpos ( $arrColumn ['Extra'], 'auto_increment' ) !== false;
+                if (! is_null ( $arrColumn ['Default'] ) && strtolower ( $arrColumn ['Default'] ) != 'null') {
+                    $arrTemp ['default'] = $arrColumn ['Default'];
+                } else {
+                    $arrTemp ['default'] = null;
+                }
+                
+                // 返回结果
+                $arrResult ['list'] [$arrTemp ['name']] = $arrTemp;
+                if ($arrTemp ['auto_increment']) {
+                    $arrResult ['auto_increment'] = $arrTemp ['name'];
+                }
+                if ($arrTemp ['primary_key']) {
+                    $arrResult ['primary_key'] [] = $arrTemp ['name'];
+                }
+            }
+        }
+        unset ( $arrColumns, $strSql );
+        return $arrResult;
+    }
+    
+    /**
      * sql 字段格式化
      *
      * @return string
@@ -53,5 +120,4 @@ class mysql extends connect {
     public function identifierColumn($sName) {
         return $sName != '*' ? "`{$sName}`" : '*';
     }
-  
 }
