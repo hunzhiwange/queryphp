@@ -193,8 +193,11 @@ abstract class connect {
         // 记录 sql 参数
         $this->setSqlBindParams_ ( $strSql, $arrBindParams );
         
-        // 验证 sql 类型
-        if ($this->getSqlType ( $strSql ) != 'select') {
+        // 验证 sql 类型PROCEDURE
+        if (! in_array ( ($strSqlType = $this->getSqlType ( $strSql )), [ 
+                'select',
+                'procedure' 
+        ] )) {
             $this->throwException_ ( \Q::i18n ( 'query 方法只允许运行 select sql 语句' ) );
         }
         
@@ -214,7 +217,7 @@ abstract class connect {
             $this->recordSqlLog_ ();
             
             // 返回结果
-            return $this->fetchResult ( $intFetchType, $mixFetchArgument, $arrCtorArgs );
+            return $this->fetchResult_ ( $intFetchType, $mixFetchArgument, $arrCtorArgs, $strSqlType == 'procedure' );
         } catch ( PDOException $oE ) {
             $this->throwException_ ( $oE->getMessage () );
         }
@@ -599,6 +602,8 @@ abstract class connect {
         foreach ( [ 
                 'select',
                 'show',
+                'call',
+                'exec',
                 'delete',
                 'insert',
                 'replace',
@@ -607,6 +612,11 @@ abstract class connect {
             if (stripos ( $strSql, $strType ) === 0) {
                 if ($strType == 'show') {
                     $strType = 'select';
+                } elseif (in_array ( $strType, [ 
+                        'call',
+                        'exec' 
+                ] )) {
+                    $strType = 'procedure';
                 }
                 return $strType;
             }
@@ -757,9 +767,15 @@ abstract class connect {
      * @param int $intFetchType            
      * @param mixed $mixFetchArgument            
      * @param array $arrCtorArgs            
+     * @param boolean $booProcedure            
      * @return array
      */
-    protected function fetchResult($intFetchType = PDO::FETCH_OBJ, $mixFetchArgument = null, $arrCtorArgs = []) {
+    protected function fetchResult_($intFetchType = PDO::FETCH_OBJ, $mixFetchArgument = null, $arrCtorArgs = [], $booProcedure = false) {
+        // 存储过程支持多个结果
+        if ($booProcedure) {
+            return $this->fetchProcedureResult_($intFetchType, $mixFetchArgument, $arrCtorArgs);
+        }
+        
         $arrArgs = [ 
                 $intFetchType 
         ];
@@ -775,6 +791,24 @@ abstract class connect {
         ], $arrArgs );
     }
     
+    /**
+     * 获得数据集
+     *
+     * @param int $intFetchType            
+     * @param mixed $mixFetchArgument            
+     * @param array $arrCtorArgs            
+     * @return array
+     */
+    protected function fetchProcedureResult_($intFetchType = PDO::FETCH_OBJ, $mixFetchArgument = null, $arrCtorArgs = []) {
+        $arrResult = [ ];
+        do {
+            if (($mixResult = $this->fetchResult_ ( $intFetchType, $mixFetchArgument, $arrCtorArgs ))) {
+                $arrResult [] = $mixResult;
+            }
+        } while ( $this->objPDOStatement->nextRowset () );
+        return $arrResult;
+    }
+
     /**
      * 设置 sql 绑定参数
      *

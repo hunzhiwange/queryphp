@@ -443,10 +443,10 @@ class select {
         
         \Q::throwException ( \Q::i18n ( 'select 没有实现魔法方法 %s.', $sMethod ), 'Q\database\exception' );
     }
-    
-    // ######################################################
-    // ------------------ 返回查询结果 start -------------------
-    // ######################################################
+        
+        // ######################################################
+        // ------------------ 返回查询结果 start -------------------
+        // ######################################################
     
     /**
      * 原生 sql 查询数据 select
@@ -458,8 +458,8 @@ class select {
      * @return mixed
      */
     public function select($strData, $arrBind = [], $bFlag = false) {
-        if (\Q::varType ( $strData, 'string' )) {
-            \Q::throwException ( \Q::i18n ( 'select 插入数据第一个参数只能为一个 string' ), 'Q\database\exception' );
+        if (! \Q::varType ( $strData, 'string' )) {
+            \Q::throwException ( \Q::i18n ( 'select 查询数据第一个参数只能为一个 string' ), 'Q\database\exception' );
         }
         
         $this->sql ( $bFlag )->setNativeSql_ ( 'select' );
@@ -785,7 +785,7 @@ class select {
      */
     public function statement($strData, $arrBind = [], $bFlag = false) {
         if (\Q::varType ( $strData, 'string' )) {
-            \Q::throwException ( \Q::i18n ( 'statement 插入数据第一个参数只能为一个 string' ), 'Q\database\exception' );
+            \Q::throwException ( \Q::i18n ( 'statement 声明查询第一个参数只能为一个 string' ), 'Q\database\exception' );
         }
         
         $this->sql ( $bFlag )->setNativeSql_ ( 'statement' );
@@ -3039,7 +3039,11 @@ class select {
             return $this;
         } elseif (is_string ( $mixData )) {
             // 验证参数
-            if ($this->objConnect->getSqlType ( $mixData ) != $strNativeSql) {
+            $strSqlType = $this->objConnect->getSqlType ( $mixData );
+            if ($strSqlType == 'procedure') {
+                $strSqlType = 'select';
+            }
+            if ($strSqlType != $strNativeSql) {
                 \Q::throwException ( \Q::i18n ( '%s 方法只允许运行 %s sql 语句', $strNativeSql, $strNativeSql ), 'Q\database\exception' );
             }
             
@@ -3359,7 +3363,7 @@ class select {
     /**
      * 验证一下条件表达式是否通过
      *
-     * @return $this|void
+     * @return boolean
      */
     private function checkFlowCondition_() {
         return $this->booInFlowCondition && ! $this->booFlowConditionIsTrue;
