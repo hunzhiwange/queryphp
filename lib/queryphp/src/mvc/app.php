@@ -256,17 +256,7 @@ class app {
                         break;
                     
                     // 简单数据直接输出
-                    case \Q::isThese ( $mixModule, [ 
-                            'string',
-                            'integer',
-                            'int',
-                            'float',
-                            'boolean',
-                            'bool',
-                            'num',
-                            'numeric',
-                            'null' 
-                    ] ) :
+                    case \Q::varType ( $mixModule, 'scalar' ) :
                         $this->registerAction ( $sController, $sAction, $mixModule );
                         break;
                     
@@ -384,17 +374,7 @@ class app {
                     break;
                 
                 // 简单数据直接输出
-                case \Q::isThese ( $mixAction, [ 
-                        'string',
-                        'integer',
-                        'int',
-                        'float',
-                        'boolean',
-                        'bool',
-                        'num',
-                        'numeric',
-                        'null' 
-                ] ) :
+                case \Q::varType ( $mixAction, 'scalar' ) :
                     echo $mixAction;
                     break;
                 
