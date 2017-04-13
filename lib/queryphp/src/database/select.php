@@ -451,15 +451,37 @@ class select {
     /**
      * 原生 sql 查询数据 select
      *
-     * @param string $strData            
+     * @param string|null|callback|select $mixData            
      * @param array $arrBind            
      * @param bool $bFlag
      *            指示是否不做任何操作只返回 SQL
      * @return mixed
      */
-    public function select($strData, $arrBind = [], $bFlag = false) {
-        if (! \Q::varType ( $strData, 'string' )) {
-            \Q::throwException ( \Q::i18n ( 'select 查询数据第一个参数只能为一个 string' ), 'Q\database\exception' );
+    public function select($mixData = null, $arrBind = [], $bFlag = false) {
+        if (! \Q::isThese ( $mixData, [ 
+                'string',
+                'null',
+                'callback' 
+        ] ) && ! $mixData instanceof select) {
+            \Q::throwException ( \Q::i18n ( 'select 查询数据第一个参数只能为 null、callback、select 或者 string' ), 'Q\database\exception' );
+        }
+        
+        // 查询对象直接查询
+        if ($mixData instanceof select) {
+            return $mixData->select ( null, $arrBind, $bFlag );
+        }        
+
+        // 回调
+        elseif (\Q::varType ( $mixData, 'callback' )) {
+            call_user_func_array ( $mixData, [ 
+                    & $this 
+            ] );
+            $mixData = null;
+        }
+        
+        // 调用查询
+        if (is_null ( $mixData )) {
+            return $this->get ( null, $bFlag );
         }
         
         $this->sql ( $bFlag )->setNativeSql_ ( 'select' );
@@ -467,7 +489,7 @@ class select {
                 $this,
                 'runNativeSql_' 
         ], [ 
-                $strData,
+                $mixData,
                 $arrBind 
         ] );
     }

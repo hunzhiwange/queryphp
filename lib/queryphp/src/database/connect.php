@@ -216,6 +216,9 @@ abstract class connect {
             // 记录 SQL 日志
             $this->recordSqlLog_ ();
             
+            // 返回影响函数
+            $this->intNumRows = $this->objPDOStatement->rowCount ();
+            
             // 返回结果
             return $this->fetchResult_ ( $intFetchType, $mixFetchArgument, $arrCtorArgs, $strSqlType == 'procedure' );
         } catch ( PDOException $oE ) {
@@ -256,6 +259,7 @@ abstract class connect {
             // 记录 SQL 日志
             $this->recordSqlLog_ ();
             
+            // 返回影响函数
             $this->intNumRows = $this->objPDOStatement->rowCount ();
             
             if (in_array ( $strSqlType, [ 
@@ -773,7 +777,7 @@ abstract class connect {
     protected function fetchResult_($intFetchType = PDO::FETCH_OBJ, $mixFetchArgument = null, $arrCtorArgs = [], $booProcedure = false) {
         // 存储过程支持多个结果
         if ($booProcedure) {
-            return $this->fetchProcedureResult_($intFetchType, $mixFetchArgument, $arrCtorArgs);
+            return $this->fetchProcedureResult_ ( $intFetchType, $mixFetchArgument, $arrCtorArgs );
         }
         
         $arrArgs = [ 
@@ -808,7 +812,7 @@ abstract class connect {
         } while ( $this->objPDOStatement->nextRowset () );
         return $arrResult;
     }
-
+    
     /**
      * 设置 sql 绑定参数
      *
