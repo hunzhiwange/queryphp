@@ -153,7 +153,7 @@ class view {
                 $sContent .= $this->trace ();
             }
         }
-        
+      
         // 返回
         if ($in ['return'] === true) {
             return $sContent;

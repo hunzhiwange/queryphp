@@ -87,8 +87,8 @@ abstract class action {
      * @param array $in            
      * @return void
      */
-    abstract public function run($that = null, $in = []);
-    
+   // abstract public function run($that = null, $in = []);
+    abstract public function run();
     /**
      * 实现 isPost,isGet等
      *

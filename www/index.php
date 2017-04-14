@@ -20,6 +20,6 @@ define ( 'PROJECT_PATH', dirname ( __DIR__ ) );
  * 执行项目
  */
 require_once PROJECT_PATH . '/lib/queryphp/src/bootstrap.php';
-\Q\mvc\project::run ( [ 
+\Q\mvc\project::singleton ( [ 
         'project_path' => PROJECT_PATH 
-] );
+])->run();

@@ -98,7 +98,7 @@ class Q {
      * @return \Q\mvc\project
      */
     static public function project() {
-        return \Q\mvc\project::run ();
+        return \Q\mvc\project::singleton ();
     }
     
     /**
@@ -1143,6 +1143,38 @@ class Q {
         return false;
     }
     
+    /**
+     * 尝试读取一个构造函数中第一个参数的对象类名
+     *
+     * @param string $strClassName            
+     * @return mixed
+     */
+    public static function getConstructFirstParamClass($strClassName) {
+        $objReflection = new \ReflectionClass ( $strClassName );
+        if (($objConstructor = $objReflection->getConstructor ()) && ($arrParameters = $objConstructor->getParameters ())) {
+            return $arrParameters [0]->getClass ()->getName ();
+        }
+        return null;
+    }
+    
+    /**
+     * 尝试读取一个回调函数中第一个参数的对象类名
+     *
+     * @param mixed $mixCallback            
+     * @return mixed
+     */
+    public static function getCallbackFirstParamClass($mixCallback) {
+        if ($mixCallback instanceof \Closure) {
+            $objReflection = new \ReflectionFunction ( $mixCallback );
+        } else {
+            $objReflection = new \ReflectionMethod ( $mixCallback [0], $mixCallback [1] );
+        }
+        if (($arrParameters = $objReflection->getParameters ())) {
+            return $arrParameters [0]->getClass ()->getName ();
+        }
+        return null;
+    }
+
     /**
      * 验证数组是否为一维
      *

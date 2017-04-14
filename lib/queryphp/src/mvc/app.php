@@ -74,13 +74,6 @@ class app {
     ]; // JS默认国际化缓存目录
     
     /**
-     * 请求参数
-     *
-     * @var array
-     */
-    public $in;
-    
-    /**
      * 当前项目
      *
      * @var Q\mvc\project
@@ -88,24 +81,63 @@ class app {
     private $objProject = null;
     
     /**
+     * 当前请求
+     *
+     * @var Q\mvc\request
+     */
+    private $objRequest = null;
+    
+    /**
+     * 项目配置
+     *
+     * @var array
+     */
+    private $arrProjectOption = [ ];
+    
+    /**
      * 构造函数
      *
-     * @param array $in            
-     * @param boolean $booRun            
+     * @param Q\mvc\project $objProject            
+     * @param string $sApp            
+     * @param array $arrProjectOption            
      * @return app
      */
-    public function __construct($objProject, $sApp, $in = []) {
+    public function __construct(project $objProject, $sApp, $arrProjectOption = []) {
         // 带入项目
         $this->objProject = $objProject;
         
+        // 初始化应用
+        $this->app_name = $sApp;
+        
+        // 项目配置
+        $this->arrProjectOption = $arrProjectOption;
+    }
+    
+    /**
+     * 返回应用实例
+     *
+     * @param Q\mvc\project $objProject            
+     * @param string $sApp            
+     * @param array $arrProjectOption            
+     * @return \Q\mvc\app
+     */
+    static public function instance(project $objProject, $sApp, $arrProjectOption = []) {
+        return new self ( $objProject, $sApp, $arrProjectOption );
+    }
+    
+    /**
+     * 执行应用
+     *
+     * @return \Q\mvc\app
+     */
+    public function run() {
         // 公共 url 地址
         $this->url_enter = $this->objProject->url_enter;
         $this->url_root = $this->objProject->url_root;
         $this->url_public = $this->objProject->url_public;
         
         // 初始化应用
-        $this->app_name = $sApp;
-        $this->initApp_ ( $in );
+        $this->initApp_ ( $this->arrProjectOption );
         
         // 注册命名空间
         \Q::import ( $this->app_name, $this->objProject->app_path . '/' . $this->app_name, [ 
@@ -119,19 +151,8 @@ class app {
         // 加载配置文件
         $this->loadOption_ ();
         
-        unset ( $in );
+        // 返回自身
         return $this;
-    }
-    
-    /**
-     * APP 入口
-     *
-     * @param array $in            
-     * @param boolean $booRun            
-     * @return app
-     */
-    static public function run($objProject, $sApp, $in = [], $bRun = true) {
-        return new self ( $objProject, $sApp, $in, $bRun );
     }
     
     /**
@@ -155,7 +176,7 @@ class app {
      * @param string $sName
      *            支持的项
      * @param string $sVal
-     *            支持的值、
+     *            支持的值
      * @return 旧值
      */
     public function __set($sName, $sVal) {
@@ -196,9 +217,9 @@ class app {
         }
         
         // 执行控制器
-        $this->in = project::$in;
-        $this->controller_name = $this->in [\Q\mvc\project::ARGS_CONTROLLER];
-        $this->action_name = $this->in [\Q\mvc\project::ARGS_ACTION];
+        $this->objRequest = $this->objProject->make ( 'request' );
+        $this->controller_name = $this->objRequest->controller ();
+        $this->action_name = $this->objRequest->action ();
         $this->controller ();
     }
     
@@ -268,7 +289,12 @@ class app {
                 // 尝试读取默认控制器
                 $sModuleClass = '\\' . $this->app_name . '\\controller\\' . $sController;
                 if (\Q::classExists ( $sModuleClass, false, true )) {
-                    $oModule = new $sModuleClass ( $this, $this->in );
+                    // 自动注入
+                    if (($objAutoInjection = $this->parseAutoInjection_ ( $sModuleClass, true ))) {
+                        $oModule = new $sModuleClass ( $objAutoInjection, $this->objRequest, $this );
+                    } else {
+                        $oModule = new $sModuleClass ( $this->objRequest, $this );
+                    }
                     
                     // 注册控制器
                     $this->registerController ( $sController, $oModule );
@@ -283,9 +309,15 @@ class app {
                     $sActionClass = '\\' . $this->app_name . '\\controller\\' . $sController . '\\' . $sAction;
                     if (\Q::classExists ( $sActionClass, false, true )) {
                         // 注册控制器
-                        $this->registerController ( $sController, new controller ( $this, $this->in ) );
+                        $this->registerController ( $sController, new controller ( $this->objRequest, $this ) );
                         
-                        $oAction = new $sActionClass ( $this, $this->in );
+                        // 自动注入
+                        if (($objAutoInjection = $this->parseAutoInjection_ ( $sActionClass ))) {
+                            $oAction = new $sActionClass ( $objAutoInjection, $this->objRequest, $this );
+                        } else {
+                            $oAction = new $sActionClass ( $this->objRequest, $this );
+                        }
+                        
                         if (\Q::isKindOf ( $oAction, 'Q\mvc\action' )) {
                             // 注册方法
                             $this->registerAction ( $sController, $sAction, [ 
@@ -293,7 +325,7 @@ class app {
                                     'run' 
                             ] );
                         } else {
-                            \Q::throwException ( \Q::i18n ( '方法 %s 必须为  Q\base\action 实例', $sAction ) );
+                            \Q::throwException ( \Q::i18n ( '方法 %s 必须为  Q\mvc\action 实例', $sAction ) );
                         }
                     }
                 }
@@ -328,40 +360,68 @@ class app {
                                 call_user_func_array ( [ 
                                         $mixAction [0],
                                         '__init' 
-                                ], $this->filterArgs_ ( $this->in ) );
+                                ], [ 
+                                        
+                                        $this->objRequest,
+                                        $this 
+                                ] );
                             }
                             
                             call_user_func_array ( [ 
                                     $mixAction [0],
                                     $mixAction [1] 
-                            ], $this->filterArgs_ ( $this->in ) );
+                            ], [ 
+                                    
+                                    $this->objRequest,
+                                    $this 
+                            ] );
                         } else {
                             \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', $sController, $sAction ) );
                         }
                     } catch ( \ReflectionException $oE ) {
-                        $mixAction [0]->__call ( $sAction, $this->filterArgs_ ( $this->in ) );
+                        $mixAction [0]->__call ( $sAction, [ 
+                                
+                                $this->objRequest,
+                                $this 
+                        ] );
                     }
                     break;
                 
                 // 判断是否为回调
                 case \Q::varType ( $mixAction, 'callback' ) :
-                    call_user_func_array ( $mixAction, [ 
-                            $this,
-                            $this->in 
-                    ] );
+                    
+                    // 自动注入
+                    $arrArgs = [ 
+                            
+                            $this->objRequest,
+                            $this 
+                    ];
+                    if (($objAutoInjection = $this->parseAutoInjection_ ( $mixAction, false ))) {
+                        array_unshift ( $arrArgs, $objAutoInjection );
+                    }
+                    call_user_func_array ( $mixAction, $arrArgs );
                     break;
                 
                 // 如果为方法则注册为方法
                 case \Q::isKindOf ( $mixAction, 'Q\mvc\action' ) :
                 case \Q::varType ( $mixAction, 'object' ) :
                     if (method_exists ( $mixAction, 'run' )) {
-                        call_user_func_array ( [ 
+                        $calRun = [ 
                                 $mixAction,
                                 'run' 
-                        ], [ 
-                                $this,
-                                $this->in 
-                        ] );
+                        ];
+                        
+                        // 自动注入
+                        $arrArgs = [ 
+                                
+                                $this->objRequest,
+                                $this 
+                        ];
+                        if (($objAutoInjection = $this->parseAutoInjection_ ( $calRun, false ))) {
+                            array_unshift ( $arrArgs, $objAutoInjection );
+                        }
+                        
+                        call_user_func_array ( $calRun, $arrArgs );
                     } else {
                         \Q::throwException ( '方法对象不存在执行入口  run' );
                     }
@@ -396,7 +456,7 @@ class app {
      */
     public function __call($sMethod, $arrArgs) {
         if (! $this->hasController ( 'query_default' )) {
-            $this->registerController ( 'query_default', new controller ( $this, $this->in ) );
+            $this->registerController ( 'query_default', new controller ( $this->objRequest, $this ) );
         }
         return call_user_func_array ( [ 
                 $this->getController ( 'query_default' ),
@@ -724,17 +784,6 @@ class app {
     }
     
     /**
-     * 过滤掉系统控制器等参数
-     *
-     * @param array $arrArgs            
-     * @return array
-     */
-    private function filterArgs_($arrArgs) {
-        unset ( $arrArgs [\Q\mvc\project::ARGS_APP], $arrArgs [\Q\mvc\project::ARGS_CONTROLLER], $arrArgs [\Q\mvc\project::ARGS_ACTION] );
-        return $arrArgs;
-    }
-    
-    /**
      * 装配注册节点
      *
      * @param string $strController            
@@ -765,5 +814,21 @@ class app {
             $arrRouter = array_merge ( $arrRouter, $arrNewRouter );
         }
         return $arrRouter;
+    }
+    
+    /**
+     * 分析自动注入
+     *
+     * @param mixed $mixClassOrCallback            
+     * @param boolean $booClass            
+     * @return object|NULL
+     */
+    private function parseAutoInjection_($mixClassOrCallback, $booClass = true) {
+        if (($mixClassOrCallback = $booClass === true ? \Q::getConstructFirstParamClass ( $mixClassOrCallback ) : \Q::getCallbackFirstParamClass ( $mixClassOrCallback )) && \Q::classExists ( $mixClassOrCallback, false, true ) && \Q::isKindOf ( $mixClassOrCallback, 'Q\factory\factory' )) {
+            $mixClassOrCallback = new $mixClassOrCallback ( $this->objProject );
+            $mixClassOrCallback->register ();
+            return $mixClassOrCallback;
+        }
+        return null;
     }
 }

@@ -15,17 +15,19 @@
  * 
  * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
- * @date 2016.11.18
+ * @date 2016.11.19
  * @since 1.0
  */
-namespace Q\router;
+namespace Q\mvc;
+
+use Q\router\router;
 
 /**
- * URL分析器
+ * 启动程序
  *
  * @author Xiangmin Liu
  */
-class url {
+class request {
     
     /**
      * url 分析实例
@@ -49,11 +51,51 @@ class url {
     private static $sRequestUrl;
     
     /**
+     * 是否初始化
+     *
+     * @var boolean
+     */
+    private static $booInit = false;
+    
+    /**
+     * 应用名字
+     *
+     * @var string
+     */
+    private $strApp = null;
+    
+    /**
+     * 控制器名字
+     *
+     * @var string
+     */
+    private $strController = null;
+    
+    /**
+     * 方法名字
+     *
+     * @var string
+     */
+    private $strAction = null;
+    
+    /**
      * 构造函数
      *
      * @return void
      */
     public function __construct() {
+        if (self::$booInit === true) {
+            return $this;
+        }
+        self::$booInit = true;
+    }
+    
+    /**
+     * 执行请求
+     *
+     * @return \Q\mvc\request
+     */
+    public function run() {
         // 非命令行模式
         if (! \Q::isCli ()) {
             $this->parseUrlWeb_ ();
@@ -62,19 +104,23 @@ class url {
         }
         
         // 解析URL
-        $this->getApp_ ( \Q\mvc\project::ARGS_APP );
-        $this->getController_ ( \Q\mvc\project::ARGS_CONTROLLER );
-        $this->getAction_ ( \Q\mvc\project::ARGS_ACTION );
+        $this->app ();
+        $this->controller ();
+        $this->action ();
         
+        // 合并到 REQUEST
         $_REQUEST = array_merge ( $_POST, $_GET );
+        
+        // 返回自身
+        return $this;
     }
     
     /**
-     * 创建 url 分析器
+     * 创建请求实例
      *
-     * @return Q\base\url
+     * @return Q\mvc\request
      */
-    static public function run() {
+    static public function singleton() {
         if (self::$oInstance) {
             return self::$oInstance;
         } else {
@@ -83,12 +129,54 @@ class url {
     }
     
     /**
-     * 返回 in 参数
+     * 返回 REQUEST 参数
      *
      * @return array
      */
-    public function in() {
+    public function getRequest() {
         return $_REQUEST;
+    }
+    
+    /**
+     * 取回应用名
+     *
+     * @return string
+     */
+    public function app() {
+        if ($this->strApp) {
+            return $this->strApp;
+        } else {
+            $sVar = \Q\mvc\project::ARGS_APP;
+            return $this->strApp = $_GET [$sVar] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['~@option'] ['default_app']);
+        }
+    }
+    
+    /**
+     * 取回控制器名
+     *
+     * @return string
+     */
+    public function controller() {
+        if ($this->strController) {
+            return $this->strController;
+        } else {
+            $sVar = \Q\mvc\project::ARGS_CONTROLLER;
+            return $this->strController = $_GET [$sVar] = ! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['~@option'] ['default_controller'];
+        }
+    }
+    
+    /**
+     * 取回方法名
+     *
+     * @return string
+     */
+    public function action() {
+        if ($this->strAction) {
+            return $this->strAction;
+        } else {
+            $sVar = \Q\mvc\project::ARGS_ACTION;
+            return $this->strAction = $_GET [$sVar] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['~@option'] ['default_action']);
+        }
     }
     
     /**
@@ -183,36 +271,6 @@ class url {
         }
         
         return $arrPathInfo;
-    }
-    
-    /**
-     * 取回应用名
-     *
-     * @param string $sVar            
-     * @return string
-     */
-    private function getApp_($sVar) {
-        return $_GET [$sVar] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['~@option'] ['default_app']);
-    }
-    
-    /**
-     * 取回控制器名
-     *
-     * @param string $sVar            
-     * @return string
-     */
-    private function getController_($sVar) {
-        return $_GET [$sVar] = ! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['~@option'] ['default_controller'];
-    }
-    
-    /**
-     * 取回方法名
-     *
-     * @param string $sVar            
-     * @return string
-     */
-    private function getAction_($sVar) {
-        return $_GET [$sVar] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['~@option'] ['default_action']);
     }
     
     // ######################################################
