@@ -14,12 +14,12 @@ else
 /**
  * 基础路径
  */
-define ( 'PROJECT_PATH', dirname ( __DIR__ ) );
+define ( 'PATH', dirname ( __DIR__ ) );
 
 /**
  * 执行项目
  */
-require_once PROJECT_PATH . '/lib/queryphp/src/bootstrap.php';
+require_once PATH . '/vendor/hunzhiwange/queryphp/src/bootstrap.php';
 \Q\mvc\project::singleton ( [ 
-        'project_path' => PROJECT_PATH 
+        'path' => PATH 
 ])->run();

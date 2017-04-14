@@ -1,0 +1,25 @@
+{
+    "name": "hunzhiwange/queryphp",
+    "description": "The QueryPHP Framework.",
+    "keywords": ["framework", "queryphp"],
+    "license": "MIT",
+    "homepage": "http://www.queryphp.com",
+    "support": {
+        "issues": "https://github.com/hunzhiwange/queryphp/issues",
+        "source": "https://github.com/hunzhiwange/queryphp"
+    },
+    "authors": [
+        {
+            "name": "Xiangmin Liu",
+            "email": "635750556@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Q\\": "src"
+        }
+    } 
+}
