@@ -32,48 +32,6 @@ use Q\i18n\tool;
 class app {
     
     /**
-     * 应用程序属性
-     *
-     * @var array
-     */
-    private $arrProp = [ 
-            /**
-             * 应用基本
-             */
-            'app_name' => '', // 应用名字
-            'controller_name' => '', // 控制器名字
-            'action_name' => '', // 方法名字
-            'appoption_path' => '', // 配置默认目录
-            'appoption_name' => '', // 配置默认名字
-            'apptheme_path' => '', // 主题目录
-            'apptheme_name' => '', // 主题名字
-            'appthemebackup_path' => '', // 备用主题目录
-            'appi18n_path' => '', // 国际化目录
-            'appi18n_name' => '', // i18n名字
-            'appi18nextend_path' => [ ], // 国际化目录扩展，系统将会扫描这些目录
-            
-            /**
-             * URL 地址
-             */
-            'url_enter' => '', // php 文件所在 url 地址如 http://myapp.com/index.php
-            'url_root' => '', // 网站 root http://myapp.com
-            'url_public' => '',
-            
-            /**
-             * 缓存目录
-             */
-            'cache_path' => '', // 默认缓存组件缓存目录
-            'logcache_path' => '', // 默认日志目录
-            'tablecache_path' => '', // 默认数据库表缓存目录
-            'themecache_path' => '', // 默认模板缓存目录
-            'optioncache_path' => '', // 默认配置缓存目录
-            'optioncache_name' => '', // 默认配置缓存名字
-            'i18ncache_path' => '', // 默认国际化缓存目录
-            'i18ncache_name' => '', // 默认国际化缓存名字
-            'i18njscache_path' => '' 
-    ]; // JS默认国际化缓存目录
-    
-    /**
      * 当前项目
      *
      * @var Q\mvc\project
@@ -107,7 +65,7 @@ class app {
         $this->objProject = $objProject;
         
         // 初始化应用
-        $this->app_name = $sApp;
+        $this->objProject->instance ( 'app_name', $sApp );
         
         // 项目配置
         $this->arrOption = $arrOption;
@@ -131,16 +89,11 @@ class app {
      * @return \Q\mvc\app
      */
     public function run() {
-        // 公共 url 地址
-        $this->url_enter = $this->objProject->url_enter;
-        $this->url_root = $this->objProject->url_root;
-        $this->url_public = $this->objProject->url_public;
-        
         // 初始化应用
         $this->initApp_ ( $this->arrOption );
         
         // 注册命名空间
-        \Q::import ( $this->app_name, $this->objProject->path_application . '/' . $this->app_name, [ 
+        \Q::import ( $this->objProject->app_name, $this->objProject->path_application . '/' . $this->objProject->app_name, [ 
                 [ 
                         'i18n',
                         'option',
@@ -153,40 +106,6 @@ class app {
         
         // 返回自身
         return $this;
-    }
-    
-    /**
-     * 捕捉支持属性参数
-     *
-     * @param string $sName
-     *            支持的项
-     * @return 设置项
-     */
-    public function __get($sName) {
-        if (array_key_exists ( $sName, $this->arrProp )) {
-            return $this->arrProp [$sName];
-        } else {
-            \Q::throwException ( sprintf ( 'The prop %s is disallowed when you get!', $sName ) );
-        }
-    }
-    
-    /**
-     * 设置支持属性参数
-     *
-     * @param string $sName
-     *            支持的项
-     * @param string $sVal
-     *            支持的值
-     * @return 旧值
-     */
-    public function __set($sName, $sVal) {
-        if (array_key_exists ( $sName, $this->arrProp )) {
-            $sOld = $this->arrProp [$sName];
-            $this->arrProp [$sName] = $sVal;
-            return $sOld;
-        } else {
-            \Q::throwException ( sprintf ( 'The prop %s is disallowed when you set!', $sName ) );
-        }
     }
     
     /**
@@ -206,7 +125,7 @@ class app {
         }
         
         // 载入 app 引导文件
-        if (is_file ( ($strBootstrap = $this->objProject->path_application . '/' . $this->app_name . '/bootstrap.php') )) {
+        if (is_file ( ($strBootstrap = $this->objProject->path_application . '/' . $this->objProject->app_name . '/bootstrap.php') )) {
             require $strBootstrap;
         }
         
@@ -217,9 +136,9 @@ class app {
         }
         
         // 执行控制器
-        $this->objRequest = $this->objProject->make ( 'request' );
-        $this->controller_name = $this->objRequest->controller ();
-        $this->action_name = $this->objRequest->action ();
+        $this->objRequest = $this->objProject->make ( request::class );
+        $this->objProject->instance ( 'controller_name', $this->objRequest->controller () );
+        $this->objProject->instance ( 'action_name', $this->objRequest->action () );
         $this->controller ();
         
         // 返回自身
@@ -234,8 +153,8 @@ class app {
      * @return void
      */
     public function controller($sController = '', $sAction = '') {
-        ! $sController && $sController = $this->controller_name;
-        ! $sAction && $sAction = $this->action_name;
+        ! $sController && $sController = $this->objProject->controller_name;
+        ! $sAction && $sAction = $this->objProject->action_name;
         
         // 是否已经注册过 action
         if (! $this->hasAction ( $sController, $sAction )) {
@@ -290,7 +209,7 @@ class app {
                 }
             } else {
                 // 尝试读取默认控制器
-                $sModuleClass = '\\' . $this->app_name . '\\controller\\' . $sController;
+                $sModuleClass = '\\' . $this->objProject->app_name . '\\controller\\' . $sController;
                 if (\Q::classExists ( $sModuleClass, false, true )) {
                     // 自动注入
                     if (($objAutoInjection = $this->parseAutoInjection_ ( $sModuleClass, true ))) {
@@ -309,7 +228,7 @@ class app {
                     ] );
                 } else {
                     // 默认控制器不存在，尝试直接读取方法
-                    $sActionClass = '\\' . $this->app_name . '\\controller\\' . $sController . '\\' . $sAction;
+                    $sActionClass = '\\' . $this->objProject->app_name . '\\controller\\' . $sController . '\\' . $sAction;
                     if (\Q::classExists ( $sActionClass, false, true )) {
                         // 注册控制器
                         $this->registerController ( $sController, new controller ( $this->objRequest, $this ) );
@@ -347,8 +266,8 @@ class app {
      * @return void
      */
     public function action($sController = '', $sAction = '') {
-        ! $sController && $sController = $this->controller_name;
-        ! $sAction && $sAction = $this->action_name;
+        ! $sController && $sController = $this->objProject->controller_name;
+        ! $sAction && $sAction = $this->objProject->action_name;
         
         $mixAction = $this->getAction ( $sController, $sAction );
         
@@ -559,12 +478,12 @@ class app {
      * @return void
      */
     private function loadOption_() {
-        $sOptionCache = $this->optioncache_path . '/' . $this->optioncache_name . '.php';
+        $sOptionCache = $this->objProject->path_cache_option . '/default.php';
         
         // 开发模式不用读取缓存
         if (Q_DEVELOPMENT !== 'develop' && is_file ( $sOptionCache )) {
             $GLOBALS ['~@option'] = \Q::option ( ( array ) (include $sOptionCache) );
-            if ($this->app_name == \Q\mvc\project::INIT_APP && $arrOption ['url_router_cache']) {
+            if ($this->objProject->app_name == \Q\mvc\project::INIT_APP && $arrOption ['url_router_cache']) {
                 if (! empty ( $arrOption ['url_router_cache'] )) {
                     router::cache ( $arrOption ['url_router_cache'] );
                 }
@@ -583,7 +502,7 @@ class app {
             
             // 读取公共缓存和项目配置
             $arrOptionDir = [ 
-                    $this->appoption_path 
+                    $this->objProject->path_app_option 
             ];
             
             if (is_dir ( $this->objProject->path_common . '/option' )) {
@@ -592,8 +511,8 @@ class app {
             
             foreach ( $arrOptionDir as $sDir ) {
                 // 合并数据，项目配置优先于系统惯性配置
-                if (is_file ( $sDir . '/' . $this->appoption_name . '.php' )) {
-                    $arrOption = array_merge ( $arrOption, ( array ) (include $sDir . '/' . $this->appoption_name . '.php') );
+                if (is_file ( $sDir . '/default.php' )) {
+                    $arrOption = array_merge ( $arrOption, ( array ) (include $sDir . '/default.php') );
                 }
                 
                 // 读取扩展配置文件，扩展配置优先于项目配置
@@ -604,18 +523,18 @@ class app {
                 }
             }
             
-            if (! is_dir ( $this->optioncache_path )) {
-                \Q::makeDir ( $this->optioncache_path );
+            if (! is_dir ( $this->objProject->path_cache_option )) {
+                \Q::makeDir ( $this->objProject->path_cache_option );
             }
             
             // 缓存所有应用名字
             $arrOption ['~apps~'] = \Q::listDir ( $this->objProject->path_application );
-            if ($this->app_name == \Q\mvc\project::INIT_APP) {
+            if ($this->objProject->app_name == \Q\mvc\project::INIT_APP) {
                 foreach ( $arrOption ['~apps~'] as $strApp ) {
                     if ($strApp == \Q\mvc\project::INIT_APP) {
                         continue;
                     }
-                    $arrOptionDir [] = str_replace ( '/' . \Q\mvc\project::INIT_APP . '/', '/' . $strApp . '/', $this->appoption_path );
+                    $arrOptionDir [] = str_replace ( '/' . \Q\mvc\project::INIT_APP . '/', '/' . $strApp . '/', $this->objProject->path_app_option );
                 }
                 
                 $arrOption ['url_router_cache'] = [ ];
@@ -657,7 +576,7 @@ class app {
             $sThemeSet = $GLOBALS ['~@option'] ['theme_default'];
         } else {
             if ($GLOBALS ['~@option'] ['cookie_langtheme_app'] === TRUE) {
-                $sCookieName = $this->app_name . '_theme';
+                $sCookieName = $this->objProject->app_name . '_theme';
             } else {
                 $sCookieName = 'theme';
             }
@@ -675,10 +594,10 @@ class app {
         }
         
         // 设置应用主题名字
-        $this->apptheme_name = $sThemeSet;
-        view::setThemeDir ( $this->apptheme_path . '/' . $sThemeSet );
-        if ($this->appthemebackup_path) {
-            view::setThemeDefault ( $this->appthemebackup_path . '/' . $sThemeSet );
+        $this->objProject->instance ( 'name_app_theme', $sThemeSet );
+        view::setThemeDir ( $this->objProject->path_app_theme . '/' . $sThemeSet );
+        if ($this->objProject->path_app_theme_extend) {
+            view::setThemeDefault ( $this->objProject->path_app_theme_extend . '/' . $sThemeSet );
         }
     }
     
@@ -693,7 +612,7 @@ class app {
             i18n::setContext ( $sI18nSet );
         } else {
             if ($GLOBALS ['~@option'] ['cookie_langtheme_app'] === TRUE) {
-                $sCookieName = $this->app_name . '_i18n';
+                $sCookieName = $this->objProject->app_name . '_i18n';
             } else {
                 $sCookieName = 'i18n';
             }
@@ -707,13 +626,13 @@ class app {
             return;
         }
         
-        $this->appi18n_name = $sI18nSet;
+        $this->objProject->instance ( 'name_app_i18n', $sI18nSet );
         \Q::$booI18nOn = TRUE; // 开启语言
-        $sCacheFile = '/' . $sI18nSet . '/' . $this->i18ncache_name . '.php';
+        $sCacheFile = '/' . $sI18nSet . '/default.php';
         
         // 开发模式不用读取缓存
-        if (Q_DEVELOPMENT !== 'develop' && is_file ( $this->i18ncache_path . $sCacheFile ) && is_file ( $this->i18njscache_path . $sCacheFile )) {
-            i18n::addI18n ( $sI18nSet, ( array ) (include $this->i18ncache_path . $sCacheFile) );
+        if (Q_DEVELOPMENT !== 'develop' && is_file ( $this->objProject->path_cache_i18n . $sCacheFile ) && is_file ( $this->objProject->path_cache_i18n_js . $sCacheFile )) {
+            i18n::addI18n ( $sI18nSet, ( array ) (include $this->objProject->path_cache_i18n . $sCacheFile) );
         } else {
             
             /**
@@ -721,16 +640,16 @@ class app {
              */
             $arrAllI18nDir = [ 
                     Q_PATH . '/~@~/i18n/' . $sI18nSet, // 系统语言包
-                    $this->com_path . '/' . $sI18nSet, // com语言包
-                    $this->appi18n_path . '/' . $sI18nSet 
+                    $this->objProject->path_common . '/' . $sI18nSet, // com语言包
+                    $this->objProject->path_app_i18n . '/' . $sI18nSet 
             ]; // 应用语言包
                
             // 扩展语言包
-            if ($this->appi18nextend_path) {
-                if (is_array ( $this->appi18nextend_path )) {
-                    $arrAllI18nDir = array_merge ( $arrAllI18nDir, $this->appi18nextend_path );
+            if ($this->objProject->path_app_i18n_extend) {
+                if (is_array ( $this->objProject->path_app_i18n_extend )) {
+                    $arrAllI18nDir = array_merge ( $arrAllI18nDir, $this->objProject->path_app_i18n_extend );
                 } else {
-                    $arrAllI18nDir [] = $this->appi18nextend_path;
+                    $arrAllI18nDir [] = $this->objProject->path_app_i18n_extend;
                 }
             }
             $arrFiles = tool::findPoFile ( $arrAllI18nDir );
@@ -738,8 +657,8 @@ class app {
             /**
              * 保存到缓存文件
              */
-            i18n::addI18n ( $sI18nSet, tool::saveToPhp ( $arrFiles ['php'], $this->i18ncache_path . $sCacheFile ) );
-            tool::saveToJs ( $arrFiles ['js'], $this->i18njscache_path . $sCacheFile, $sI18nSet );
+            i18n::addI18n ( $sI18nSet, tool::saveToPhp ( $arrFiles ['php'], $this->objProject->path_cache_i18n . $sCacheFile ) );
+            tool::saveToJs ( $arrFiles ['js'], $this->objProject->path_cache_i18n_js . $sCacheFile, $sI18nSet );
             
             unset ( $arrFiles, $arrAllI18nDir, $sCacheFile );
         }
@@ -753,37 +672,32 @@ class app {
      * @return void
      */
     private function initApp_($in) {
-        $sAppName = $this->app_name;
+        $sAppName = $this->objProject->app_name;
         $sAppPath = $this->objProject->path_application . '/' . $sAppName;
         $sRuntime = $this->objProject->path_runtime;
         
-        $arrDefault = [ 
-                
-                /**
-                 * 缓存目录
-                 */
-                'cache_path' => $sRuntime . '/cache', // 默认缓存组件缓存目录
-                'logcache_path' => $sRuntime . '/log', // 默认日志目录
-                'tablecache_path' => $sRuntime . '/table', // 默认数据库表缓存目录
-                'themecache_path' => $sRuntime . '/theme/' . $sAppName, // 默认模板缓存目录
-                'optioncache_path' => $sRuntime . '/option', // 默认配置缓存目录
-                'optioncache_name' => $sAppName, // 默认缓存配置名字
-                'i18ncache_path' => $sRuntime . '/i18n', // 默认语言包缓存目录
-                'i18ncache_name' => $sAppName, // 默认缓存配置名字
-                'i18njscache_path' => $this->objProject->path_public . '/js/i18n', // 默认 JS 语言包缓存目录
-                
-                /**
-                 * 应用其他目录
-                 */
-                'appoption_path' => $sAppPath . '/option', // 默认配置目录
-                'appoption_name' => 'default', // 默认配置名字
-                'apptheme_path' => $sAppPath . '/theme', // 默认主题目录
-                'appthemebackup_path' => '', // 备用主题目录
-                'appi18n_path' => $sAppPath . '/i18n' 
-        ]; // 默认语言目录
-        
-        $this->arrProp = array_merge ( $this->arrProp, $arrDefault, $in );
-        unset ( $in, $arrDefault );
+        // 各种缓存组件路径
+        foreach ( [ 
+                'file',
+                'log',
+                'table',
+                'theme',
+                'option',
+                'i18n' 
+        ] as $sPath ) {
+            $this->objProject->instance ( 'path_cache_' . $sPath, $sRuntime . '/' . $sPath );
+        }
+        $this->objProject->instance ( 'path_cache_i18n_js', $this->objProject->path_public . '/js/i18n/' . $sAppName ); // 默认 JS 语言包缓存目录
+                                                                                                                        
+        // 应用组件
+        foreach ( [ 
+                'option',
+                'theme',
+                'i18n' 
+        ] as $sPath ) {
+            $this->objProject->instance ( 'path_app_' . $sPath, $sAppPath . '/' . $sPath );
+        }
+        $this->objProject->instance ( 'path_app_theme_extend', '' );
     }
     
     /**
@@ -794,7 +708,7 @@ class app {
      * @return string
      */
     private function packControllerAndAction_($strController, $strAction = '') {
-        return $this->app_name . '://' . $strController . ($strAction ? '/' . $strAction : '');
+        return $this->objProject->app_name . '://' . $strController . ($strAction ? '/' . $strAction : '');
     }
     
     /**

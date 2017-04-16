@@ -130,7 +130,7 @@ class bootstrap {
      */
     private function request_() {
         // 注册初始化应用
-        project::registerApp ( $this->objProject->make ( 'app', project::INIT_APP, $this->arrOption )->run (), project::INIT_APP );
+        project::registerApp ( $this->objProject->make ( app::class, project::INIT_APP, $this->arrOption )->run (), project::INIT_APP );
         
         // 完成请求
         $this->objRequest->run ();
@@ -148,7 +148,7 @@ class bootstrap {
         }
         
         // 创建 & 注册
-        project::registerApp ( ($objApp = $this->objProject->make ( 'app', $this->objRequest->app (), $this->arrOption )->run ()), $this->objRequest->app () );
+        project::registerApp ( ($objApp = $this->objProject->make ( app::class, $this->objRequest->app (), $this->arrOption )->run ()), $this->objRequest->app () );
         
         // 运行应用
         $objApp->app ();

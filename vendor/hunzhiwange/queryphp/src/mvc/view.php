@@ -153,7 +153,7 @@ class view {
                 $sContent .= $this->trace ();
             }
         }
-      
+        
         // 返回
         if ($in ['return'] === true) {
             return $sContent;
@@ -247,11 +247,11 @@ class view {
         } elseif (strpos ( $sTpl, '(' ) !== false) { // 存在表达式
             return $calHelp ( $sTpl );
         } else {
-            $objApp = \Q::app ();
-
+            $objProject = \Q::project ();
+            
             // 空取默认控制器和方法
             if ($sTpl == '') {
-                $sTpl = $objApp->controller_name . $GLOBALS ['~@option'] ['theme_moduleaction_depr'] . $objApp->action_name;
+                $sTpl = $objProject->controller_name . $GLOBALS ['~@option'] ['theme_moduleaction_depr'] . $objProject->action_name;
             }
             
             if (strpos ( $sTpl, '@' )) { // 分析主题
@@ -266,7 +266,7 @@ class view {
                     ':' 
             ], $GLOBALS ['~@option'] ['theme_moduleaction_depr'], $sTpl );
             
-            return $objApp->apptheme_path . '/' . (isset ( $sTheme ) ? $sTheme : $objApp->apptheme_name) . '/' . $sTpl . ($sExt ?  : $GLOBALS ['~@option'] ['theme_suffix']);
+            return $objProject->path_app_theme . '/' . (isset ( $sTheme ) ? $sTheme : $objProject->name_app_theme) . '/' . $sTpl . ($sExt ?  : $GLOBALS ['~@option'] ['theme_suffix']);
         }
     }
     

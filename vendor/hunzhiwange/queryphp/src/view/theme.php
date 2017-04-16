@@ -174,6 +174,6 @@ class theme {
         $sFile = basename ( $sFile, '.' . \Q::getExtName ( $sFile ) ) . '.' . md5 ( $sFile ) . '.php';
         
         // 返回真实路径
-        return \Q::app ()->themecache_path . '/' . $sFile;
+        return \Q::project ()->path_cache_theme . '/' . $sFile;
     }
 }

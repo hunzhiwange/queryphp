@@ -78,7 +78,7 @@ class log {
         if (! in_array ( $strLevel, explode ( ',', $GLOBALS ['~@option'] ['log_level'] ) )) {
             return;
         }
-
+        
         // 执行过滤器
         if (self::$calFilter !== null && call_user_func_array ( self::$calFilter, [ 
                 $strMessage,
@@ -197,7 +197,7 @@ class log {
     static private function getPath_($strLevel, $sFilePath = '') {
         // 不存在路径，则直接使用项目默认路径
         if (empty ( $sFilePath )) {
-            $sFilePath = \Q::app ()->logcache_path . '/' . $strLevel . '/' . date ( $GLOBALS ['~@option'] ['log_file_name'] ) . ".log";
+            $sFilePath = \Q::project ()->path_cache_log . '/' . $strLevel . '/' . date ( $GLOBALS ['~@option'] ['log_file_name'] ) . ".log";
         }
         return $sFilePath;
     }

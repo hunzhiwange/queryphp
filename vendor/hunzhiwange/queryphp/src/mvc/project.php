@@ -125,7 +125,7 @@ class project extends container {
      * @return void
      */
     public function run() {
-        $this->make ( 'bootstrap' )->run ( $this->make ( 'request' ) );
+        $this->make ( bootstrap::class )->run ( $this->make ( request::class ) );
     }
     
     /**
@@ -173,7 +173,7 @@ class project extends container {
      */
     static public function getApp($sAppName = '') {
         if (! $sAppName) {
-            $sAppName = \Q::project()->request->app();
+            $sAppName = \Q::project ()->make ( request::class )->app ();
         }
         return isset ( self::$arrApps [$sAppName] ) ? self::$arrApps [$sAppName] : null;
     }
@@ -193,7 +193,7 @@ class project extends container {
      * @return string
      */
     public function pathApplication() {
-        return isset ( $this->arrOption ['path_application'] ) ? $this->arrOption ['path.applicationp'] : $this->strPath . DIRECTORY_SEPARATOR . 'application';
+        return isset ( $this->arrOption ['path_application'] ) ? $this->arrOption ['path_applicationp'] : $this->strPath . DIRECTORY_SEPARATOR . 'application';
     }
     
     /**
@@ -202,7 +202,7 @@ class project extends container {
      * @return string
      */
     public function pathCommon() {
-        return isset ( $this->arrOption ['path_common'] ) ? $this->arrOption ['path.common'] : $this->strPath . DIRECTORY_SEPARATOR . 'common';
+        return isset ( $this->arrOption ['path_common'] ) ? $this->arrOption ['path_common'] : $this->strPath . DIRECTORY_SEPARATOR . 'common';
     }
     
     /**
@@ -211,7 +211,7 @@ class project extends container {
      * @return string
      */
     public function pathRuntime() {
-        return isset ( $this->arrOption ['path_runtime'] ) ? $this->arrOption ['path.runtime'] : $this->strPath . DIRECTORY_SEPARATOR . '~@~';
+        return isset ( $this->arrOption ['path_runtime'] ) ? $this->arrOption ['path_runtime'] : $this->strPath . DIRECTORY_SEPARATOR . '~@~';
     }
     
     /**
@@ -220,7 +220,7 @@ class project extends container {
      * @return string
      */
     public function pathPublic() {
-        return isset ( $this->arrOption ['path_public'] ) ? $this->arrOption ['path.public'] : $this->strPath . DIRECTORY_SEPARATOR . 'public';
+        return isset ( $this->arrOption ['path_public'] ) ? $this->arrOption ['path_public'] : $this->strPath . DIRECTORY_SEPARATOR . 'public';
     }
     
     /**
@@ -229,7 +229,7 @@ class project extends container {
      * @return string
      */
     public function pathVendor() {
-        return isset ( $this->arrOption ['path_vendor'] ) ? $this->arrOption ['path.vendor'] : $this->strPath . DIRECTORY_SEPARATOR . 'vendor';
+        return isset ( $this->arrOption ['path_vendor'] ) ? $this->arrOption ['path_vendor'] : $this->strPath . DIRECTORY_SEPARATOR . 'vendor';
     }
     
     /**
@@ -239,8 +239,8 @@ class project extends container {
      */
     public function urlPublic() {
         return $this->url_public;
-    }  
-
+    }
+    
     /**
      * root url
      *
@@ -248,7 +248,7 @@ class project extends container {
      */
     public function urlRoot() {
         return $this->url_root;
-    }    
+    }
     
     /**
      * enter url
@@ -280,17 +280,17 @@ class project extends container {
         $this->register ( 'project', $this );
         
         // 注册 app
-        $this->register ( 'app', function (project $objProject, $sApp, $arrOption = []) {
+        $this->register ( app::class, function (project $objProject, $sApp, $arrOption = []) {
             return app::instance ( $objProject, $sApp, $arrOption );
         } );
         
         // 注册请求
-        $this->register ( 'request', function () {
+        $this->register ( request::class, function () {
             return new request ();
         } );
         
         // 注册启动程序
-        $this->register ( 'bootstrap', new bootstrap ( $this, $this->arrOption ) );
+        $this->register ( new bootstrap ( $this, $this->arrOption ) );
         
         return $this;
     }
@@ -350,12 +350,12 @@ class project extends container {
      * @return void
      */
     private function registerUrl_() {
-        foreach ( [
+        foreach ( [ 
                 'enter',
                 'root',
-                'public'
+                'public' 
         ] as $sKey => $sUrl ) {
-            $this->instance ( 'url_' . $sUrl, isset ( $this->arrOption ['url_'.$sUrl] ) ? $this->arrOption ['url_'.$sUrl] : '' );
+            $this->instance ( 'url_' . $sUrl, isset ( $this->arrOption ['url_' . $sUrl] ) ? $this->arrOption ['url_' . $sUrl] : '' );
         }
     }
 }

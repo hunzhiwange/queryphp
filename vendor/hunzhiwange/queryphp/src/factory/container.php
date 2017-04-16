@@ -46,19 +46,24 @@ abstract class container implements ArrayAccess {
     /**
      * 注册工厂
      *
-     * @param string $strFactoryName            
+     * @param mixed $mixFactoryName            
      * @param mixed $mixFactory            
      * @return void
      */
-    public function register($strFactoryName, $mixFactory) {
+    public function register($mixFactoryName, $mixFactory = null) {
+        // 实例
+        if(is_object($mixFactoryName)) {
+            $this->arrInstances [get_class($mixFactoryName)] = $mixFactoryName;
+        }
+        
         // 回调
-        if (\Q::varType ( $mixFactory, 'callback' )) {
-            $this->arrFactorys [$strFactoryName] = $mixFactory;
+        elseif (\Q::varType ( $mixFactory, 'callback' )) {
+            $this->arrFactorys [$mixFactoryName] = $mixFactory;
         }        
 
         // 实例化
         elseif (is_object ( $mixFactory )) {
-            $this->arrInstances [$strFactoryName] = $mixFactory;
+            $this->arrInstances [$mixFactoryName] = $mixFactory;
         }         
 
         // 创建一个默认存储的值
@@ -66,7 +71,7 @@ abstract class container implements ArrayAccess {
             $mixFactory = function () use($mixFactory) {
                 return $mixFactory;
             };
-            $this->arrFactorys [$strFactoryName] = $mixFactory;
+            $this->arrFactorys [$mixFactoryName] = $mixFactory;
         }
     }
     

@@ -67,7 +67,7 @@ class file extends cache {
             if ($GLOBALS ['~@option'] ['runtime_file_path']) {
                 $this->arrOption ['cache_path'] = $GLOBALS ['~@option'] ['runtime_file_path'];
             } else {
-                $this->arrOption ['cache_path'] = \Q::app ()->cache_path;
+                $this->arrOption ['cache_path'] = \Q::project ()->path_cache_file;
             }
         }
     }
