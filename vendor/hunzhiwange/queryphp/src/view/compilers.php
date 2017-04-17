@@ -708,7 +708,7 @@ out += '";
         // 替换一下，防止迁移的时候由于物理路径的原因，需要重新生成编译文件
         $arrAttr ['file'] = view::parseFile ( $arrAttr ['file'], $arrAttr ['ext'] );
         if (strpos ( $arrAttr ['file'], '$' ) !== 0 && strpos ( $arrAttr ['file'], '(' ) === false) {
-            $arrAttr ['file'] = str_replace ( \Q::tidyPath ( \Q::app ()->apptheme_path . '/' . \Q::app ()->apptheme_name ), '$APP->apptheme_path.\'/\'.$APP->apptheme_name.\'', \Q::tidyPath ( $arrAttr ['file'] ) );
+            $arrAttr ['file'] = str_replace ( \Q::tidyPath ( \Q::project ()->path_app_theme . '/' . \Q::project ()->name_app_theme ), '$PROJECT->path_app_theme.\'/\'.$PROJECT->name_app_theme.\'', \Q::tidyPath ( $arrAttr ['file'] ) );
             $arrAttr ['file'] = (strpos ( $arrAttr ['file'], '$' ) === 0 ? '' : '\'') . $arrAttr ['file'] . '\'';
         }
         

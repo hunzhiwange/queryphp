@@ -129,8 +129,8 @@ class bootstrap {
      * @return void
      */
     private function request_() {
-        // 注册初始化应用
-        project::registerApp ( $this->objProject->make ( app::class, project::INIT_APP, $this->arrOption )->run (), project::INIT_APP );
+        // 运行笑脸初始化应用
+        $this->objProject->make ( app::class, project::INIT_APP, $this->arrOption )->run ();
         
         // 完成请求
         $this->objRequest->run ();
@@ -142,13 +142,8 @@ class bootstrap {
      * @return void
      */
     private function runApp_() {
-        // 执行当前应用
-        if (project::hasApp ( $this->objRequest->app () )) {
-            return $this;
-        }
-        
         // 创建 & 注册
-        project::registerApp ( ($objApp = $this->objProject->make ( app::class, $this->objRequest->app (), $this->arrOption )->run ()), $this->objRequest->app () );
+        $this->objProject->instance ( 'app', ($objApp = $this->objProject->make ( app::class, $this->objRequest->app (), $this->arrOption )->run ()) );
         
         // 运行应用
         $objApp->app ();

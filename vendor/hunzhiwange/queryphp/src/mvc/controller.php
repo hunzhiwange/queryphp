@@ -55,7 +55,7 @@ class controller {
      * @param 过滤后参数 $in            
      * @return void
      */
-    public function __construct($oApp = null, $in = []) {
+    public function __init($oApp = null, $in = []) {
         // 检查视图和APP
         if (! $oApp) {
             $oApp = \Q::app ();
@@ -69,7 +69,7 @@ class controller {
         // 属性 && 赋值
         $this->in = $in;
         $this->assign ( 'in', $in );
-        $this->assign ( 'APP', $oApp );
+        $this->assign ( 'PROJECT', $oApp );
         $this->assign ( 'CONTROLLER', $this );
     }
     

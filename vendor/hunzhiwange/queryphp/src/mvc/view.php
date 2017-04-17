@@ -283,11 +283,11 @@ class view {
         }
         
         $sBakTpl = $sTpl;
-        $objApp = \Q::app ();
+        $objProject = \Q::project ();
         
         // 物理路径
         if (strpos ( $sTpl, ':' ) !== false || strpos ( $sTpl, '/' ) === 0 || strpos ( $sTpl, '\\' ) === 0) {
-            $sTpl = str_replace ( \Q::tidypath ( $objApp->apptheme_path . '/' . $objApp->apptheme_name . '/' ), '', \Q::tidypath ( $sTpl ) );
+            $sTpl = str_replace ( \Q::tidypath ( $objProject->path_app_theme . '/' . $objProject->name_app_theme . '/' ), '', \Q::tidypath ( $sTpl ) );
         }
         
         // 当前主题
@@ -301,8 +301,8 @@ class view {
         }
         
         // default 主题
-        if ($objApp->apptheme_name != 'default' && is_file ( $objApp->apptheme_path . '/default/' . $sTpl )) {
-            return $objApp->apptheme_path . '/default/' . $sTpl;
+        if ($objProject->name_app_theme != 'default' && is_file ( $objProject->path_app_theme . '/default/' . $sTpl )) {
+            return $objProject->path_app_theme . '/default/' . $sTpl;
         }
         
         return $sBakTpl;

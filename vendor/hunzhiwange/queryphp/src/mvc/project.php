@@ -44,13 +44,6 @@ class project extends container {
     private $arrOption = [ ];
     
     /**
-     * 应用程序实例
-     *
-     * @var app
-     */
-    private static $arrApps = [ ];
-    
-    /**
      * 项目基础路径
      *
      * @var string
@@ -140,42 +133,6 @@ class project extends container {
         } else {
             return self::$objProject = new self ( $arrOption );
         }
-    }
-    
-    /**
-     * 注册程序实例
-     *
-     * @param App $app
-     *            应用
-     * @param string $sAppName
-     *            应用名字
-     * @return void
-     */
-    static function registerApp(app $oApp, $sAppName) {
-        return self::$arrApps [$sAppName] = $oApp;
-    }
-    
-    /**
-     * 是否注册程序实例
-     *
-     * @param string $sAppName
-     *            应用名字
-     * @return void
-     */
-    static function hasApp($sAppName) {
-        return isset ( self::$arrApps [$sAppName] );
-    }
-    
-    /**
-     * 取得应用程序实例
-     *
-     * @return App
-     */
-    static public function getApp($sAppName = '') {
-        if (! $sAppName) {
-            $sAppName = \Q::project ()->make ( request::class )->app ();
-        }
-        return isset ( self::$arrApps [$sAppName] ) ? self::$arrApps [$sAppName] : null;
     }
     
     /**
