@@ -41,18 +41,25 @@ abstract class event extends factory {
     protected $arrListener = [ ];
     
     /**
-     * 抛出异常是否继续传递事件
-     *
-     * @var bool
-     */
-    protected $booContinue = false;
-    
-    /**
      * 执行结果
      *
      * @var array
      */
     protected $arrResult = [ ];
+    
+    /**
+     * 抛出异常是否继续传递事件
+     *
+     * @var boolean
+     */
+    protected $booContinue = true;
+    
+    /**
+     * 错误消息
+     *
+     * @var array
+     */
+    protected $arrError = [ ];
     
     /**
      * 创建一个对象
@@ -92,20 +99,21 @@ abstract class event extends factory {
         foreach ( $this->getListener () as $strListenerName => $objListener ) {
             if ($objListener instanceof listener) {
                 try {
-                    $objListener->run ( $this );
                     $this->arrResult [$strListenerName] = call_user_func_array ( [ 
                             $objListener,
                             'run' 
                     ], $arrArgs );
-                } catch ( Exception $oE ) {
-                    if ($this->booContinue !== true) {
-                        \Q::throwException ( $oE->getMessage () );
-                        break;
+                } catch ( listener_exception $oE ) {
+                    if ($this->booContinue === true) {
+                        $this->arrError [$strListenerName] = $oE->getMessage ();
+                    } else {
+                        \Q::throwException ( $oE->getMessage (), exception::class );
                     }
                 }
             }
         }
         
+        $this->arrResult ['~@error'] = $this->arrError;
         return $this->arrResult;
     }
     
@@ -131,6 +139,15 @@ abstract class event extends factory {
         } else {
             return isset ( $this->arrResult [$strListenerName] ) ? $this->arrResult [$strListenerName] : null;
         }
+    }
+    
+    /**
+     * 返回错误消息
+     *
+     * @return array|mixed
+     */
+    public function getError() {
+        return $this->arrError;
     }
     
     /**

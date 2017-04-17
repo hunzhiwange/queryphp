@@ -23,7 +23,7 @@ namespace Q\factory;
 use ArrayAccess;
 
 /**
- * 服务容器
+ * 工厂容器
  *
  * @author Xiangmin Liu
  */
