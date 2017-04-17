@@ -18,19 +18,14 @@
  * @date 2016.11.19
  * @since 1.0
  */
-
-/**
- * 全局静态函数库
- *
- * @author Xiangmin Liu
- */
 use Q\cookie\cookie;
 use Q\xml\xml;
 use Q\option\option;
 use Q\log\log;
+use Q\event\event;
 
 /**
- * 自动载入、异常和基础服务
+ * 全局静态函数库
  *
  * @author Xiangmin Liu
  */
@@ -96,8 +91,8 @@ class Q {
      *
      * @return \Q\mvc\app
      */
-    static public function app($sAppName = '') {
-        return \Q\mvc\project::getApp ( $sAppName );
+    static public function app() {
+        return self::project ()->app;
     }
     
     /**
@@ -699,6 +694,22 @@ class Q {
     }
     
     /**
+     * 执行事件
+     *
+     * @param event $objEvent            
+     * @return array
+     */
+    static public function event(event $objEvent) {
+        $arrArgs = func_get_args ();
+        array_shift ( $arrArgs );
+        $objEvent->register ();
+        return call_user_func_array ( [ 
+                $objEvent,
+                'run' 
+        ], $arrArgs );
+    }
+    
+    /**
      * 调试工具
      *
      * @param mixed $Var            
@@ -753,7 +764,7 @@ class Q {
         $sErrfile = $oE->getFile ();
         $nErrline = $oE->getLine ();
         $nErrno = $oE->getCode ();
-        $sErrorStr = "[$nErrno] $sErrstr " . basename ( $sErrfile) . \Q::i18n ( " 第 %d 行", $nErrline );
+        $sErrorStr = "[$nErrno] $sErrstr " . basename ( $sErrfile ) . \Q::i18n ( " 第 %d 行", $nErrline );
         
         if ($GLOBALS ['~@option'] ['log_error_enabled']) {
             self::log ( $sErrstr, 'error' );
