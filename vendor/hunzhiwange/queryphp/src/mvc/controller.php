@@ -193,7 +193,7 @@ class controller {
      *            
      * @return json
      */
-    protected function errorMessage($sMessage = '', $in = []) {
+    protected function error($sMessage = '', $in = []) {
         $in = array_merge ( [ 
                 'message' => $sMessage ?  : \Q::i18n ( '操作失败' ),
                 'url' => '',
@@ -216,7 +216,7 @@ class controller {
      *            
      * @return json
      */
-    protected function successMessage($sMessage = '', $in = []) {
+    protected function success($sMessage = '', $in = []) {
         $in = array_merge ( [ 
                 'message' => $sMessage ?  : \Q::i18n ( '操作成功' ),
                 'url' => '',
@@ -238,7 +238,7 @@ class controller {
      *            
      * @return json
      */
-    protected function jsonMessage($sMessage = '', $in = []) {
+    protected function json($sMessage = '', $in = []) {
         $in = array_merge ( [ 
                 'status' => 'success',
                 'message' => $sMessage 
@@ -258,14 +258,8 @@ class controller {
      *            time 停留时间，0表示不停留
      * @return void
      */
-    protected function urlRedirect($sUrl, $in = []) {
-        $in = array_merge ( [ 
-                'params' => [ ],
-                'message' => '',
-                'time' => 0 
-        ], $in );
-        
-        \Q::urlRedirect ( \Q::url ( $sUrl, $in ['params'] ), $in ['time'], $in ['message'] );
+    protected function redirect($sUrl, $in = []) {
+        return \Q::redirect ( $sUrl, $in );
     }
     
     /**

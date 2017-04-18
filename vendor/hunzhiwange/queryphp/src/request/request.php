@@ -18,7 +18,7 @@
  * @date 2016.11.19
  * @since 1.0
  */
-namespace Q\mvc;
+namespace Q\request;
 
 use Q\router\router;
 
@@ -30,7 +30,7 @@ use Q\router\router;
 class request {
     
     /**
-     * url 分析实例
+     * url 请求实例
      *
      * @var Q\base\url
      */

@@ -21,6 +21,7 @@
 namespace Q\mvc;
 
 use Q\factory\container;
+use Q\request\request;
 
 /**
  * 项目管理
@@ -312,7 +313,8 @@ class project extends container {
                 'root',
                 'public' 
         ] as $sKey => $sUrl ) {
-            $this->instance ( 'url_' . $sUrl, isset ( $this->arrOption ['url_' . $sUrl] ) ? $this->arrOption ['url_' . $sUrl] : '' );
+            $sUrl = 'url_' . $sUrl;
+            $this->instance ( $sUrl, isset ( $this->arrOption [$sUrl] ) ? $this->arrOption [$sUrl] : '' );
         }
     }
 }

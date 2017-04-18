@@ -20,6 +20,8 @@
  */
 namespace Q\mvc;
 
+use Q\request\request;
+
 /**
  * 启动程序
  *
@@ -44,7 +46,7 @@ class bootstrap {
     /**
      * 请求
      *
-     * @var Q\mvc\request
+     * @var Q\request\request
      */
     private $objRequest = null;
     
@@ -75,7 +77,7 @@ class bootstrap {
     /**
      * 执行初始化事件
      *
-     * @param $objRequest Q\mvc\request            
+     * @param $objRequest Q\request\request            
      * @return void
      */
     public function run(request $objRequest) {

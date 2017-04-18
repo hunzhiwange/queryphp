@@ -23,6 +23,8 @@ namespace Q\mvc;
 use Q\router\router;
 use Q\i18n\i18n;
 use Q\i18n\tool;
+use Q\request\request;
+use Q\request\response;
 
 /**
  * 应用程序对象
@@ -41,7 +43,7 @@ class app {
     /**
      * 当前请求
      *
-     * @var Q\mvc\request
+     * @var Q\request\request
      */
     private $objRequest = null;
     
@@ -90,7 +92,7 @@ class app {
      */
     public function run() {
         // 初始化应用
-        $this->initApp_ ( $this->arrOption );
+        $this->initApp_ ();
         
         // 注册命名空间
         \Q::import ( $this->objProject->app_name, $this->objProject->path_application . '/' . $this->objProject->app_name, [ 
@@ -135,11 +137,16 @@ class app {
             $this->initI18n_ ();
         }
         
-        // 执行控制器
+        // 分析资源节点
         $this->objRequest = $this->objProject->make ( request::class );
         $this->objProject->instance ( 'controller_name', $this->objRequest->controller () );
         $this->objProject->instance ( 'action_name', $this->objRequest->action () );
-        $this->controller ();
+        
+        // 执行控制器，返回相应
+        $mixResponse = $this->controller ();
+        if (! is_null ( $mixResponse )) {
+            $this->response_ ( $mixResponse );
+        }
         
         // 返回自身
         return $this;
@@ -255,7 +262,7 @@ class app {
         }
         
         // 执行方法
-        $this->action ( $sController, $sAction );
+        return $this->action ( $sController, $sAction );
     }
     
     /**
@@ -283,17 +290,15 @@ class app {
                                         $mixAction [0],
                                         '__init' 
                                 ], [ 
-                                        
                                         $this->objRequest,
                                         $this 
                                 ] );
                             }
                             
-                            call_user_func_array ( [ 
+                            return call_user_func_array ( [ 
                                     $mixAction [0],
                                     $mixAction [1] 
                             ], [ 
-                                    
                                     $this->objRequest,
                                     $this 
                             ] );
@@ -301,8 +306,7 @@ class app {
                             \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', $sController, $sAction ) );
                         }
                     } catch ( \ReflectionException $oE ) {
-                        $mixAction [0]->__call ( $sAction, [ 
-                                
+                        return $mixAction [0]->__call ( $sAction, [ 
                                 $this->objRequest,
                                 $this 
                         ] );
@@ -314,14 +318,13 @@ class app {
                     
                     // 自动注入
                     $arrArgs = [ 
-                            
                             $this->objRequest,
                             $this 
                     ];
                     if (($objAutoInjection = $this->parseAutoInjection_ ( $mixAction, false ))) {
                         array_unshift ( $arrArgs, $objAutoInjection );
                     }
-                    call_user_func_array ( $mixAction, $arrArgs );
+                    return call_user_func_array ( $mixAction, $arrArgs );
                     break;
                 
                 // 如果为方法则注册为方法
@@ -335,7 +338,6 @@ class app {
                         
                         // 自动注入
                         $arrArgs = [ 
-                                
                                 $this->objRequest,
                                 $this 
                         ];
@@ -343,7 +345,7 @@ class app {
                             array_unshift ( $arrArgs, $objAutoInjection );
                         }
                         
-                        call_user_func_array ( $calRun, $arrArgs );
+                        return call_user_func_array ( $calRun, $arrArgs );
                     } else {
                         \Q::throwException ( '方法对象不存在执行入口  run' );
                     }
@@ -352,12 +354,12 @@ class app {
                 // 静态类回调
                 // 数组支持,方法名即数组的键值,注册方法
                 case \Q::varType ( $mixAction, 'array' ) :
-                    echo \Q::jsonEncode ( $mixAction );
+                    return $mixAction;
                     break;
                 
                 // 简单数据直接输出
                 case \Q::varType ( $mixAction, 'scalar' ) :
-                    echo $mixAction;
+                    return $mixAction;
                     break;
                 
                 default :
@@ -640,7 +642,7 @@ class app {
              */
             $arrAllI18nDir = [ 
                     Q_PATH . '/~@~/i18n/' . $sI18nSet, // 系统语言包
-                    $this->objProject->path_common . '/' . $sI18nSet, // com语言包
+                    $this->objProject->path_common . '/' . $sI18nSet, // common 语言包
                     $this->objProject->path_app_i18n . '/' . $sI18nSet 
             ]; // 应用语言包
                
@@ -667,11 +669,9 @@ class app {
     /**
      * 初始化应用
      *
-     * @param array $in
-     *            参数
      * @return void
      */
-    private function initApp_($in) {
+    private function initApp_() {
         $sAppName = $this->objProject->app_name;
         $sAppPath = $this->objProject->path_application . '/' . $sAppName;
         $sRuntime = $this->objProject->path_runtime;
@@ -685,19 +685,21 @@ class app {
                 'option',
                 'i18n' 
         ] as $sPath ) {
-            $this->objProject->instance ( 'path_cache_' . $sPath, $sRuntime . '/' . $sPath );
+            $sPath = 'path_cache_' . $sPath;
+            $this->objProject->instance ( $sPath, isset ( $this->arrOption [$sPath] ) ? $this->arrOption [$sPath] : $sRuntime . '/' . $sPath );
         }
-        $this->objProject->instance ( 'path_cache_i18n_js', $this->objProject->path_public . '/js/i18n/' . $sAppName ); // 默认 JS 语言包缓存目录
-                                                                                                                        
+        $this->objProject->instance ( 'path_cache_i18n_js', isset ( $this->arrOption ['path_cache_i18n_js'] ) ? $this->arrOption ['path_cache_i18n_js'] : $this->objProject->path_public . '/js/i18n/' . $sAppName ); // 默认 JS 语言包缓存目录
+                                                                                                                                                                                                                      
         // 应用组件
         foreach ( [ 
                 'option',
                 'theme',
                 'i18n' 
         ] as $sPath ) {
-            $this->objProject->instance ( 'path_app_' . $sPath, $sAppPath . '/' . $sPath );
+            $sPath = 'path_app_' . $sPath;
+            $this->objProject->instance ( $sPath, isset ( $this->arrOption [$sPath] ) ? $this->arrOption [$sPath] : $sAppPath . '/' . $sPath );
         }
-        $this->objProject->instance ( 'path_app_theme_extend', '' );
+        $this->objProject->instance ( 'path_app_theme_extend', isset ( $this->arrOption ['path_app_theme_extend'] ) ? $this->arrOption ['path_app_theme_extend'] : '' );
     }
     
     /**
@@ -731,6 +733,30 @@ class app {
             $arrRouter = array_merge ( $arrRouter, $arrNewRouter );
         }
         return $arrRouter;
+    }
+    
+    /**
+     * 响应结果
+     *
+     * @param mixed $mixResponse            
+     * @return void
+     */
+    private function response_($mixResponse) {
+        if (! is_null ( $mixResponse )) {
+            if ($mixResponse instanceof response) {
+                $mixResponse = $mixResponse->output ();
+            } elseif (is_callable ( $mixResponse )) {
+                $mixResponse = call_user_func_array ( $mixResponse, [ ] );
+            }
+            
+            if (is_array ( $mixResponse )) {
+                echo \Q::jsonEncode ( $mixResponse );
+            } elseif (is_scalar ( $mixResponse )) {
+                echo $mixResponse;
+            } else {
+                var_dump ( $mixResponse );
+            }
+        }
     }
     
     /**
