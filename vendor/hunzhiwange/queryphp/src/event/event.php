@@ -144,10 +144,15 @@ abstract class event extends factory {
     /**
      * 返回错误消息
      *
-     * @return array|mixed
+     * @param string|null $strListenerName            
+     * @return array|string
      */
-    public function getError() {
-        return $this->arrError;
+    public function getError($strListenerName = null) {
+        if (is_null ( $strListenerName )) {
+            return $this->arrError;
+        } else {
+            return isset ( $this->arrError [$strListenerName] ) ? $this->arrError [$strListenerName] : null;
+        }
     }
     
     /**
