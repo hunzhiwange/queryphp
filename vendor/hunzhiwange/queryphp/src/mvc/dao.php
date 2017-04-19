@@ -14,37 +14,18 @@
  * ##########################################################
  * 
  * @author Xiangmin Liu<635750556@qq.com>
+ * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
- * @date 2017.04.13
+ * @date 2017.04.19
  * @since 4.0
  */
-namespace Q\factory;
+namespace Q\mvc;
 
 /**
- * 基础类复用
+ * 基类数据库 dao 层
  *
  * @author Xiangmin Liu
  */
-trait reuse {
-    
-    /**
-     * 参数
-     *
-     * @var array
-     */
-    protected $arrArgs = [ ];
-    
-    /**
-     * 返回事件参数
-     *
-     * @param boolean $booFirstArgs            
-     * @return mixed
-     */
-    public function getArgs($booFirstArgs = true) {
-        if ($booFirstArgs === true) {
-            return isset ( $this->arrArgs [0] ) ? $this->arrArgs [0] : null;
-        } else {
-            return $this->arrArgs;
-        }
-    }
+abstract class dao {
+ 
 }
