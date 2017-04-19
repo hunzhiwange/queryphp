@@ -177,7 +177,7 @@ class response {
      *
      * @param string $strResponseName            
      * @param callback $calResponse            
-     * @return void
+     * @return $this
      */
     public function register($strResponseName, $calResponse) {
         // 严格验证参数
@@ -194,6 +194,7 @@ class response {
         }
         
         self::$arrCustomerResponse [$strResponseName] = $calResponse;
+        return $this;
     }
     
     /**
