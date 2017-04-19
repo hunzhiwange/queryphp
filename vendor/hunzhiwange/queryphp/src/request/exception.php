@@ -18,20 +18,23 @@
  * @date 2017.04.17
  * @since 4.0
  */
-namespace Q\event;
+namespace Q\request;
 
 /**
- * 事件监视器
+ * 请求响应组件异常捕获
  *
  * @author Xiangmin Liu
  */
-abstract class listener {
+class exception extends \Q\exception\exception {
     
     /**
-     * 创建一个对象
+     * 构造函数
      *
+     * @param string $sMessage            
+     * @param number $nCode            
      * @return void
      */
-    public function __construct() {
+    public function __construct($sMessage, $nCode = 0) {
+        parent::__construct ( $sMessage, $nCode );
     }
 }

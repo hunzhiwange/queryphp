@@ -21,6 +21,7 @@
 namespace Q\database;
 
 use PDO;
+use Q\structure\flow_condition;
 
 /**
  * 数据库查询器
@@ -28,6 +29,8 @@ use PDO;
  * @author Xiangmin Liu
  */
 class select {
+    
+    use flow_condition;
     
     /**
      * 数据库连接
@@ -239,20 +242,6 @@ class select {
     private $booOnlyMakeSql = false;
     
     /**
-     * 逻辑代码是否处于条件表达式中
-     *
-     * @var boolean
-     */
-    private $booInFlowCondition = false;
-    
-    /**
-     * 条件表达式是否为真
-     *
-     * @var boolean
-     */
-    private $booFlowConditionIsTrue = false;
-    
-    /**
      * 是否处于时间功能状态
      *
      * @var string
@@ -417,36 +406,19 @@ class select {
                     $this,
                     'join_' 
             ], $arrArgs );
-        }        
+        }         
 
         // 条件控制语句支持
-        elseif (in_array ( $sMethod, [ 
-                'if',
-                'elseIf',
-                'else',
-                'endIf' 
-        ] )) {
-            switch ($sMethod) {
-                case 'if' :
-                case 'elseIf' :
-                    $this->setFlowCondition_ ( true, isset ( $arrArgs [0] ) ? ( bool ) $arrArgs [0] : false );
-                    break;
-                case 'else' :
-                    $this->setFlowCondition_ ( true, ! $this->getFlowCondition_ ()[1] );
-                    break;
-                case 'endIf' :
-                    $this->setFlowCondition_ ( false, false );
-                    break;
-            }
-            return $this;
+        else {
+            $this->flowConditionCall_ ( $sMethod, $arrArgs );
         }
         
         \Q::throwException ( \Q::i18n ( 'select 没有实现魔法方法 %s.', $sMethod ), 'Q\database\exception' );
     }
-        
-        // ######################################################
-        // ------------------ 返回查询结果 start -------------------
-        // ######################################################
+    
+    // ######################################################
+    // ------------------ 返回查询结果 start -------------------
+    // ######################################################
     
     /**
      * 原生 sql 查询数据 select
@@ -3361,39 +3333,6 @@ class select {
      */
     private function getInTimeCondition_() {
         return $this->strInTimeCondition;
-    }
-    
-    /**
-     * 设置当前条件表达式状态
-     *
-     * @param boolean $booInFlowCondition            
-     * @param boolean $booFlowConditionIsTrue            
-     * @return void
-     */
-    private function setFlowCondition_($booInFlowCondition, $booFlowConditionIsTrue) {
-        $this->booInFlowCondition = $booInFlowCondition;
-        $this->booFlowConditionIsTrue = $booFlowConditionIsTrue;
-    }
-    
-    /**
-     * 获取当前条件表达式状态
-     *
-     * @return array
-     */
-    private function getFlowCondition_() {
-        return [ 
-                $this->booInFlowCondition,
-                $this->booFlowConditionIsTrue 
-        ];
-    }
-    
-    /**
-     * 验证一下条件表达式是否通过
-     *
-     * @return boolean
-     */
-    private function checkFlowCondition_() {
-        return $this->booInFlowCondition && ! $this->booFlowConditionIsTrue;
     }
     
     /**

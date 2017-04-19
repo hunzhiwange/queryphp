@@ -22,7 +22,6 @@ namespace Q\event;
 
 use Exception;
 use Q\factory\factory;
-use Q\factory\reuse;
 
 /**
  * 事件工厂
@@ -30,8 +29,6 @@ use Q\factory\reuse;
  * @author Xiangmin Liu
  */
 abstract class event extends factory {
-    
-    use reuse;
     
     /**
      * 事件监听器
@@ -67,7 +64,6 @@ abstract class event extends factory {
      * @return void
      */
     public function __construct() {
-        $this->arrArgs = func_get_args ();
     }
     
     /**

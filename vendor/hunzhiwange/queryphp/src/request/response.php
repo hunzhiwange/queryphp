@@ -21,6 +21,7 @@
 namespace Q\request;
 
 use Q\mvc\view;
+use Q\structure\flow_condition;
 
 /**
  * 响应请求
@@ -28,6 +29,8 @@ use Q\mvc\view;
  * @author Xiangmin Liu
  */
 class response {
+    
+    use flow_condition;
     
     /**
      * 请求实例
@@ -124,6 +127,13 @@ class response {
     private static $objView = null;
     
     /**
+     * 自定义响应方法
+     *
+     * @var array
+     */
+    private static $arrCustomerResponse = [ ];
+    
+    /**
      * 构造函数
      *
      * @param mixed $mixData            
@@ -141,6 +151,49 @@ class response {
         
         // 初始化参数
         $this->data ( $mixData )->code ( intval ( $intCode ) )->header ( $arrHeader )->option ( $arrOption );
+    }
+    
+    /**
+     * 拦截一些别名和快捷方式
+     *
+     * @param 方法名 $sMethod            
+     * @param 参数 $arrArgs            
+     * @return boolean
+     */
+    public function __call($sMethod, $arrArgs) {
+        // 条件控制语句支持
+        $this->flowConditionCall_ ( $sMethod, $arrArgs );
+        
+        // 调用自定义的响应方法
+        if (isset ( self::$arrCustomerResponse [$sMethod] )) {
+            return call_user_func_array ( self::$arrCustomerResponse [$sMethod], $arrArgs );
+        }
+        
+        \Q::throwException ( \Q::i18n ( 'response 没有实现魔法方法 %s.', $sMethod ), 'Q\request\exception' );
+    }
+    
+    /**
+     * 自定义响应方法
+     *
+     * @param string $strResponseName            
+     * @param callback $calResponse            
+     * @return void
+     */
+    public function register($strResponseName, $calResponse) {
+        // 严格验证参数
+        if (! \Q::varType ( $strResponseName, 'string' ) || in_array ( $strResponseName, [ 
+                'if',
+                'elseIf',
+                'else',
+                'endIf' 
+        ] ) || method_exists ( $this, $strResponseName )) {
+            \Q::throwException ( \Q::i18n ( '响应名字必须是一个字符串，不能占用条件表达式，且不能注册一个存在的响应方法' ) );
+        }
+        if (! \Q::varType ( $calResponse, 'callback' )) {
+            \Q::throwException ( \Q::i18n ( '响应内容必须是一个回调类型' ) );
+        }
+        
+        self::$arrCustomerResponse [$strResponseName] = $calResponse;
     }
     
     /**
@@ -167,7 +220,7 @@ class response {
      */
     public function output() {
         // 组装编码
-        $this->contentTypeAndCharset ( $this->getContentType (), $this->getrCharset () );
+        $this->contentTypeAndCharset_ ( $this->getContentType (), $this->getrCharset () );
         
         // 发送头部 header
         if (! headers_sent () && ! empty ( $this->arrHeader )) {
@@ -194,6 +247,8 @@ class response {
      * @return $this
      */
     public function header($mixName, $strValue = null) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         if (is_array ( $mixName )) {
             $this->arrHeader = array_merge ( $this->arrHeader, $mixName );
         } else {
@@ -224,12 +279,28 @@ class response {
      * @return $this
      */
     public function option($mixName, $strValue = null) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         if (is_array ( $mixName )) {
             $this->arrOption = array_merge ( $this->arrOption, $mixName );
         } else {
             $this->arrOption [$mixName] = $strValue;
         }
         return $this;
+    }
+    
+    /**
+     * 返回配置参数
+     *
+     * @param string $strOptionName            
+     * @return mixed
+     */
+    public function getOption($strOptionName = null) {
+        if (is_null ( $strOptionName )) {
+            return $this->arrOption;
+        } else {
+            return isset ( $this->arrOption [$strOptionName] ) ? $this->arrOption [$strOptionName] : null;
+        }
     }
     
     /**
@@ -246,6 +317,8 @@ class response {
      * @return $this
      */
     public function cookie($sName, $mixValue = '', array $in = []) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         \Q::cookie ( $sName, $mixValue, $in );
         return $this;
     }
@@ -257,6 +330,8 @@ class response {
      * @return $this
      */
     public function data($mixData) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->mixData = $mixData;
         return $this;
     }
@@ -277,6 +352,8 @@ class response {
      * @return $this
      */
     public function code($intCode) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->intCode = intval ( $intCode );
         return $this;
     }
@@ -297,6 +374,8 @@ class response {
      * @return $this
      */
     public function contentType($strContentType) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->strContentType = $strContentType;
         return $this;
     }
@@ -316,6 +395,8 @@ class response {
      * @return \Q\request\response
      */
     public function charset($strCharset) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->strCharset = $strCharset;
         return $this;
     }
@@ -329,29 +410,20 @@ class response {
     }
     
     /**
-     * 页面输出类型
-     *
-     * @param string $strContentType            
-     * @param string $strCharset            
-     * @return $this
-     */
-    public function contentTypeAndCharset($strContentType, $strCharset = 'utf-8') {
-        return $this->header ( 'Content-Type', $strContentType . '; charset=' . $strCharset );
-    }
-    
-    /**
      * 设置内容
      *
      * @param string $strContent            
      * @return $this
      */
     public function content($strContent) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->strContent = $strContent;
         return $this;
     }
     
     /**
-     * 返回内容
+     * 解析并且返回内容
      *
      * @return string
      */
@@ -360,7 +432,7 @@ class response {
             $strContent = '';
             switch ($this->getResponseType ()) {
                 case 'json' :
-                    $arrOption = array_merge ( self::$arrJsonOption, $this->arrOption );
+                    $arrOption = array_merge ( self::$arrJsonOption, $this->getOption () );
                     $strContent = \Q::jsonEncode ( $this->getData (), $arrOption ['json_options'] );
                     if ($arrOption ['json_callback']) {
                         $strContent = $arrOption ['json_callback'] . '(' . $strContent . ');';
@@ -371,7 +443,7 @@ class response {
                     break;
                 case 'file' :
                     ob_end_clean ();
-                    $resFp = fopen ( $this->arrOption ['file_name'], 'rb' );
+                    $resFp = fopen ( $this->getOption ( 'file_name' ), 'rb' );
                     fpassthru ( $resFp );
                     fclose ( $resFp );
                     break;
@@ -388,6 +460,8 @@ class response {
      * @return $this
      */
     public function responseType($strResponseType) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->strResponseType = $strResponseType;
         return $this;
     }
@@ -410,7 +484,9 @@ class response {
      * @return $this
      */
     public function json($arrData = null, $intOptions = JSON_UNESCAPED_UNICODE, $strCharset = 'utf-8') {
-        if (! is_null ( $arrData )) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
+        if (is_array ( $arrData )) {
             $this->data ( $arrData );
         }
         $this->responseType ( 'json' )->contentType ( 'application/json' )->charset ( $strCharset )->option ( 'json_options', $intOptions );
@@ -424,6 +500,8 @@ class response {
      * @return $this
      */
     public function jsonCallback($strJsonCallback) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         return $this->option ( 'json_callback', $strJsonCallback );
     }
     
@@ -437,6 +515,8 @@ class response {
      * @return $this
      */
     public function jsonp($strJsonCallback, $arrData = null, $intOptions = JSON_UNESCAPED_UNICODE, $strCharset = 'utf-8') {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         return $this->jsonCallback ( $strJsonCallback )->json ( $arrData, $intOptions, $strCharset );
     }
     
@@ -448,6 +528,8 @@ class response {
      * @return $this
      */
     public function view($mixName = null, $mixValue = null) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         if (! self::$objView) {
             self::$objView = view::run ();
         }
@@ -465,6 +547,8 @@ class response {
      * @return $this
      */
     public function assign($mixName, $mixValue = null) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         self::$objView->assign ( $mixName, $mixValue );
         return $this;
     }
@@ -494,6 +578,8 @@ class response {
      * @return void
      */
     public function redirect($sUrl, $in = []) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         \Q::redirect ( $sUrl, $in );
     }
     
@@ -505,7 +591,9 @@ class response {
      * @return $this
      */
     public function xml($arrData = null, $strCharset = 'utf-8') {
-        if (! is_null ( $arrData )) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
+        if (is_array ( $arrData )) {
             $this->data ( $arrData );
         }
         $this->responseType ( 'xml' )->contentType ( 'text/xml' )->charset ( $strCharset );
@@ -521,6 +609,8 @@ class response {
      * @return $this
      */
     public function download($sFileName, $sDownName = '', array $arrHeader = []) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         if (! $sDownName) {
             $sDownName = basename ( $sFileName );
         } else {
@@ -538,8 +628,21 @@ class response {
      * @return $this
      */
     public function file($sFileName, array $arrHeader = []) {
+        if ($this->checkFlowCondition_ ())
+            return $this;
         $this->downloadAndFile_ ( $sFileName, $arrHeader )->header ( 'Content-Disposition', 'attachment;filename=' . basename ( $sFileName ) );
         return $this;
+    }
+    
+    /**
+     * 页面输出类型
+     *
+     * @param string $strContentType            
+     * @param string $strCharset            
+     * @return $this
+     */
+    private function contentTypeAndCharset_($strContentType, $strCharset = 'utf-8') {
+        return $this->header ( 'Content-Type', $strContentType . '; charset=' . $strCharset );
     }
     
     /**

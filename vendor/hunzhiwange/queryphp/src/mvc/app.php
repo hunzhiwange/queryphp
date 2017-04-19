@@ -142,11 +142,8 @@ class app {
         $this->objProject->instance ( 'controller_name', $this->objRequest->controller () );
         $this->objProject->instance ( 'action_name', $this->objRequest->action () );
         
-        // 执行控制器，返回相应
-        $mixResponse = $this->controller ();
-        if (! is_null ( $mixResponse )) {
-            $this->response_ ( $mixResponse );
-        }
+        // 执行控制器，返回相应结果
+        $this->response_ ( $this->controller () );
         
         // 返回自身
         return $this;
@@ -685,8 +682,8 @@ class app {
                 'option',
                 'i18n' 
         ] as $sPath ) {
-            $sPath = 'path_cache_' . $sPath;
-            $this->objProject->instance ( $sPath, isset ( $this->arrOption [$sPath] ) ? $this->arrOption [$sPath] : $sRuntime . '/' . $sPath );
+            $sPathName = 'path_cache_' . $sPath;
+            $this->objProject->instance ( $sPathName, isset ( $this->arrOption [$sPathName] ) ? $this->arrOption [$sPathName] : $sRuntime . '/' . $sPath );
         }
         $this->objProject->instance ( 'path_cache_i18n_js', isset ( $this->arrOption ['path_cache_i18n_js'] ) ? $this->arrOption ['path_cache_i18n_js'] : $this->objProject->path_public . '/js/i18n/' . $sAppName ); // 默认 JS 语言包缓存目录
                                                                                                                                                                                                                       
@@ -696,8 +693,8 @@ class app {
                 'theme',
                 'i18n' 
         ] as $sPath ) {
-            $sPath = 'path_app_' . $sPath;
-            $this->objProject->instance ( $sPath, isset ( $this->arrOption [$sPath] ) ? $this->arrOption [$sPath] : $sAppPath . '/' . $sPath );
+            $sPathName = 'path_app_' . $sPath;
+            $this->objProject->instance ( $sPathName, isset ( $this->arrOption [$sPathName] ) ? $this->arrOption [$sPathName] : $sAppPath . '/' . $sPath );
         }
         $this->objProject->instance ( 'path_app_theme_extend', isset ( $this->arrOption ['path_app_theme_extend'] ) ? $this->arrOption ['path_app_theme_extend'] : '' );
     }
