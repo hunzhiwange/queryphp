@@ -27,5 +27,4 @@ namespace Q\mvc;
  * @author Xiangmin Liu
  */
 abstract class dao {
- 
 }

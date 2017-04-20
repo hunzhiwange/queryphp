@@ -46,7 +46,6 @@ class queue extends stack_queue {
         if (! $this->getLength ()) {
             return null;
         }
-        
         return array_shift ( $this->arrElements );
     }
 }

@@ -38,27 +38,6 @@ abstract class event extends factory {
     protected $arrListener = [ ];
     
     /**
-     * 执行结果
-     *
-     * @var array
-     */
-    protected $arrResult = [ ];
-    
-    /**
-     * 抛出异常是否继续传递事件
-     *
-     * @var boolean
-     */
-    protected $booContinue = true;
-    
-    /**
-     * 错误消息
-     *
-     * @var array
-     */
-    protected $arrError = [ ];
-    
-    /**
      * 创建一个对象
      *
      * @return void
@@ -73,7 +52,7 @@ abstract class event extends factory {
      */
     public function listener(listener $objListener) {
         if (! method_exists ( $objListener, 'run' )) {
-            \Q::throwException ( \Q::i18n ( '监视器 %s 必须包含 run 响应方法', get_class ( $objListener ) ) );
+            \Q::throwException ( \Q::i18n ( '监视器 %s 必须包含 run 响应方法', get_class ( $objListener ) ), 'Q\event\exception' );
         }
         $this->arrListener [get_class ( $objListener )] = $objListener;
         return $this;
@@ -94,60 +73,14 @@ abstract class event extends factory {
         
         foreach ( $this->getListener () as $strListenerName => $objListener ) {
             if ($objListener instanceof listener) {
-                try {
-                    $this->arrResult [$strListenerName] = call_user_func_array ( [ 
-                            $objListener,
-                            'run' 
-                    ], $arrArgs );
-                } catch ( listener_exception $oE ) {
-                    if ($this->booContinue === true) {
-                        $this->arrError [$strListenerName] = $oE->getMessage ();
-                    } else {
-                        \Q::throwException ( $oE->getMessage (), exception::class );
-                    }
+                // 有返回值则中断下一个监听器
+                if (! is_null ( $mixResult = call_user_func_array ( [ 
+                        $objListener,
+                        'run' 
+                ], $arrArgs ) )) {
+                    return $mixResult;
                 }
             }
-        }
-        
-        $this->arrResult ['~@error'] = $this->arrError;
-        return $this->arrResult;
-    }
-    
-    /**
-     * 抛出异常是否继续传递事件
-     *
-     * @param boolean $booContinue            
-     * @return void
-     */
-    public function setContinue($booContinue = true) {
-        $this->booContinue = $booContinue;
-    }
-    
-    /**
-     * 返回事件执行结果
-     *
-     * @param string|null $strListenerName            
-     * @return array|mixed
-     */
-    public function getResult($strListenerName = null) {
-        if (is_null ( $strListenerName )) {
-            return $this->arrResult;
-        } else {
-            return isset ( $this->arrResult [$strListenerName] ) ? $this->arrResult [$strListenerName] : null;
-        }
-    }
-    
-    /**
-     * 返回错误消息
-     *
-     * @param string|null $strListenerName            
-     * @return array|string
-     */
-    public function getError($strListenerName = null) {
-        if (is_null ( $strListenerName )) {
-            return $this->arrError;
-        } else {
-            return isset ( $this->arrError [$strListenerName] ) ? $this->arrError [$strListenerName] : null;
         }
     }
     

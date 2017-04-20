@@ -194,10 +194,10 @@ class response {
                 'else',
                 'endIf' 
         ] ) || method_exists ( $this, $strResponseName )) {
-            \Q::throwException ( \Q::i18n ( '响应名字必须是一个字符串，不能占用条件表达式，且不能注册一个存在的响应方法' ) );
+            \Q::throwException ( \Q::i18n ( '响应名字必须是一个字符串，不能占用条件表达式，且不能注册一个存在的响应方法' ), 'Q\request\exception' );
         }
         if (! \Q::varType ( $calResponse, 'callback' )) {
-            \Q::throwException ( \Q::i18n ( '响应内容必须是一个回调类型' ) );
+            \Q::throwException ( \Q::i18n ( '响应内容必须是一个回调类型' ), 'Q\request\exception' );
         }
         
         self::$arrCustomerResponse [$strResponseName] = $calResponse;
@@ -681,7 +681,7 @@ class response {
      */
     private function downloadAndFile_($sFileName, array $arrHeader = []) {
         if (! is_file ( $sFileName )) {
-            \Q::throwException ( \Q::i18n ( '读取的文件不存在' ) );
+            \Q::throwException ( \Q::i18n ( '读取的文件不存在' ), 'Q\request\exception' );
         }
         $sFileName = realpath ( $sFileName );
         

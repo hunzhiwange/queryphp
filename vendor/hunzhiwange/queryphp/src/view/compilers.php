@@ -329,7 +329,7 @@ class compilers {
                 } elseif ($nNum == 3) {
                     $sResult = "\${$arrArray[1]} => \${$arrArray[2]}";
                 } else {
-                    \Q::throwException ( \Q::i18n ( '参数错误' ) );
+                    \Q::throwException ( \Q::i18n ( '参数错误' ), 'Q\view\exception' );
                 }
                 
                 return "if (is_array ( \${$arrArray[0]} ) ) : foreach( \${$arrArray[0]} as $sResult )";
@@ -1167,19 +1167,19 @@ out += '";
         
         // 验证标签的属性值
         if ($arrAttribute ['is_attribute'] !== true) {
-            \Q::throwException ( \Q::i18n ( '标签属性类型验证失败' ) );
+            \Q::throwException ( \Q::i18n ( '标签属性类型验证失败' ), 'Q\view\exception' );
         }
         
         // 验证必要属性
         $arrTag = $bJsNode === true ? self::$arrJsTag : self::$arrNodeTag;
         if (! isset ( $arrTag [$arrTheme ['name']] )) {
-            \Q::throwException ( \Q::i18n ( '标签 %s 未定义', $arrTheme ['name'] ) );
+            \Q::throwException ( \Q::i18n ( '标签 %s 未定义', $arrTheme ['name'] ), 'Q\view\exception' );
         }
         
         foreach ( $arrTag [$arrTheme ['name']] ['required'] as $sName ) {
             $sName = strtolower ( $sName );
             if (! isset ( $arrAttribute ['attribute_list'] [$sName] )) {
-                \Q::throwException ( \Q::i18n ( '节点 “%s” 缺少必须的属性：“%s”', $arrTheme ['name'], $sName ) );
+                \Q::throwException ( \Q::i18n ( '节点 “%s” 缺少必须的属性：“%s”', $arrTheme ['name'], $sName ), 'Q\view\exception' );
             }
         }
         

@@ -26,15 +26,4 @@ namespace Q\event;
  * @author Xiangmin Liu
  */
 class exception extends \Q\exception\exception {
-    
-    /**
-     * 构造函数
-     *
-     * @param string $sMessage            
-     * @param number $nCode            
-     * @return void
-     */
-    public function __construct($sMessage, $nCode = 0) {
-        parent::__construct ( $sMessage, $nCode );
-    }
 }

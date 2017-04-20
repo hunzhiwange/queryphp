@@ -279,14 +279,14 @@ class select {
                 $sMethod = substr ( $sMethod, 2 );
                 $arrKeys = explode ( 'And', $sMethod );
                 if (count ( $arrKeys ) != count ( $arrArgs )) {
-                    \Q::throwException ( \Q::i18n ( 'getBy 参数数量不对应' ) );
+                    \Q::throwException ( \Q::i18n ( 'getBy 参数数量不对应' ), 'Q\database\exception' );
                 }
                 return $this->where ( array_combine ( $arrKeys, $arrArgs ) )->getOne ();
             } elseif (strncasecmp ( $sMethod, 'AllBy', 5 ) === 0) { // support getAllByNameAndSex etc.
                 $sMethod = substr ( $sMethod, 5 );
                 $arrKeys = explode ( 'And', $sMethod );
                 if (count ( $arrKeys ) != count ( $arrArgs )) {
-                    \Q::throwException ( \Q::i18n ( 'getAllBy 参数数量不对应' ) );
+                    \Q::throwException ( \Q::i18n ( 'getAllBy 参数数量不对应' ), 'Q\database\exception' );
                 }
                 return $this->where ( array_combine ( $arrKeys, $arrArgs ) )->getAll ();
             }
@@ -3267,11 +3267,11 @@ class select {
             case 'date' :
                 $mixValue = strtotime ( $mixValue );
                 if ($mixValue === false) {
-                    \Q::throwException ( \Q::i18n ( '请输入一个支持 strtotime 正确的时间' ) );
+                    \Q::throwException ( \Q::i18n ( '请输入一个支持 strtotime 正确的时间' ), 'Q\database\exception' );
                 }
                 break;
             default :
-                \Q::throwException ( \Q::i18n ( '不受支持的时间格式化类型 %s', $strType ) );
+                \Q::throwException ( \Q::i18n ( '不受支持的时间格式化类型 %s', $strType ), 'Q\database\exception' );
                 break;
         }
         

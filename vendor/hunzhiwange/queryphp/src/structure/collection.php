@@ -74,7 +74,7 @@ class collection implements Iterator, ArrayAccess, Countable {
      * @return void
      */
     public function __call($sMethod, $arrArgs) {
-        \Q::throwException ( sprintf ( 'Method %s is not implemented', $sMethod ) );
+        \Q::throwException ( sprintf ( 'Method %s is not implemented', $sMethod ), 'Q\structure\exception' );
     }
     
     /**
@@ -244,7 +244,7 @@ class collection implements Iterator, ArrayAccess, Countable {
     public function each() {
         $arrArgs = func_get_args ();
         if (empty ( $arrArgs [0] ) || ! is_callable ( $arrArgs [0] )) {
-            \Q::throwException ( 'The first parameter must be a callback' );
+            \Q::throwException ( 'The first parameter must be a callback', 'Q\structure\exception' );
         }
         
         if (! empty ( $arrArgs [1] ) && is_string ( $arrArgs [1] )) {
@@ -539,6 +539,6 @@ class collection implements Iterator, ArrayAccess, Countable {
             $sType = gettype ( $mixObject );
         }
         
-        \Q::throwException ( \Q::i18n ( '集合只能容纳 %s 类型的对象，而不是 %s 类型的值', $this->sType, $sType ) );
+        \Q::throwException ( \Q::i18n ( '集合只能容纳 %s 类型的对象，而不是 %s 类型的值', $this->sType, $sType ), 'Q\structure\exception' );
     }
 }

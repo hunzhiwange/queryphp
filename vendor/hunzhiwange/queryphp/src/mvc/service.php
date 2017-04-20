@@ -25,6 +25,5 @@ namespace Q\mvc;
  *
  * @author Xiangmin Liu
  */
-abstract class service {
- 
+abstract class service { 
 }

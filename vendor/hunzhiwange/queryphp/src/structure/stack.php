@@ -46,7 +46,6 @@ class stack extends stack_queue {
         if (! $this->getLength ()) {
             return null;
         }
-        
         return array_pop ( $this->arrElements );
     }
 }

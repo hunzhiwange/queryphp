@@ -22,6 +22,7 @@ namespace Q\database;
 
 use PDO;
 use PDOException;
+use Exception;
 use Q\database\select;
 
 /**
@@ -201,29 +202,25 @@ abstract class connect {
             $this->throwException_ ( \Q::i18n ( 'query 方法只允许运行 select sql 语句' ) );
         }
         
-        try {
-            // 预处理
-            $this->objPDOStatement = $this->getPdo ( $mixMaster )->prepare ( $strSql );
-            
-            // 参数绑定
-            $this->bindParams_ ( $arrBindParams );
-            
-            // 执行 sql
-            if ($this->objPDOStatement->execute () === false) {
-                $this->throwException_ ();
-            }
-            
-            // 记录 SQL 日志
-            $this->recordSqlLog_ ();
-            
-            // 返回影响函数
-            $this->intNumRows = $this->objPDOStatement->rowCount ();
-            
-            // 返回结果
-            return $this->fetchResult_ ( $intFetchType, $mixFetchArgument, $arrCtorArgs, $strSqlType == 'procedure' );
-        } catch ( PDOException $oE ) {
-            $this->throwException_ ( $oE->getMessage () );
+        // 预处理
+        $this->objPDOStatement = $this->getPdo ( $mixMaster )->prepare ( $strSql );
+        
+        // 参数绑定
+        $this->bindParams_ ( $arrBindParams );
+        
+        // 执行 sql
+        if ($this->objPDOStatement->execute () === false) {
+            $this->throwException_ ();
         }
+        
+        // 记录 SQL 日志
+        $this->recordSqlLog_ ();
+        
+        // 返回影响函数
+        $this->intNumRows = $this->objPDOStatement->rowCount ();
+        
+        // 返回结果
+        return $this->fetchResult_ ( $intFetchType, $mixFetchArgument, $arrCtorArgs, $strSqlType == 'procedure' );
     }
     
     /**
@@ -244,34 +241,30 @@ abstract class connect {
             $this->throwException_ ( \Q::i18n ( 'execute 方法不允许运行 select sql 语句' ) );
         }
         
-        try {
-            // 预处理
-            $this->objPDOStatement = $this->getPdo ( true )->prepare ( $strSql );
-            
-            // 参数绑定
-            $this->bindParams_ ( $arrBindParams );
-            
-            // 执行 sql
-            if ($this->objPDOStatement->execute () === false) {
-                $this->throwException_ ();
-            }
-            
-            // 记录 SQL 日志
-            $this->recordSqlLog_ ();
-            
-            // 返回影响函数
-            $this->intNumRows = $this->objPDOStatement->rowCount ();
-            
-            if (in_array ( $strSqlType, [ 
-                    'insert',
-                    'replace' 
-            ] )) {
-                return $this->lastInsertId ();
-            } else {
-                return $this->intNumRows;
-            }
-        } catch ( PDOException $oE ) {
-            $this->throwException_ ( $oE->getMessage () );
+        // 预处理
+        $this->objPDOStatement = $this->getPdo ( true )->prepare ( $strSql );
+        
+        // 参数绑定
+        $this->bindParams_ ( $arrBindParams );
+        
+        // 执行 sql
+        if ($this->objPDOStatement->execute () === false) {
+            $this->throwException_ ();
+        }
+        
+        // 记录 SQL 日志
+        $this->recordSqlLog_ ();
+        
+        // 返回影响函数
+        $this->intNumRows = $this->objPDOStatement->rowCount ();
+        
+        if (in_array ( $strSqlType, [ 
+                'insert',
+                'replace' 
+        ] )) {
+            return $this->lastInsertId ();
+        } else {
+            return $this->intNumRows;
         }
     }
     
@@ -298,7 +291,7 @@ abstract class connect {
             return $mixResult;
         } catch ( Exception $oE ) {
             $this->rollBack ();
-            $this->throwException_ ( $oE->getMessage () );
+            throw $oE;
         }
     }
     
@@ -308,9 +301,7 @@ abstract class connect {
      * @return void
      */
     public function beginTransaction() {
-        if ($this->getPdo ( true )->beginTransaction () === false) {
-            $this->throwException_ ();
-        }
+        $this->getPdo ( true )->beginTransaction ();
     }
     
     /**
@@ -328,9 +319,7 @@ abstract class connect {
      * @return void
      */
     public function commit() {
-        if ($this->getPdo ( true )->commit () === false) {
-            $this->throwException_ ();
-        }
+        $this->getPdo ( true )->commit ();
     }
     
     /**
@@ -339,9 +328,7 @@ abstract class connect {
      * @return void
      */
     public function rollBack() {
-        if ($this->getPdo ( true )->rollBack () === false) {
-            $this->throwException_ ();
-        }
+        $this->getPdo ( true )->rollBack ();
     }
     
     /**

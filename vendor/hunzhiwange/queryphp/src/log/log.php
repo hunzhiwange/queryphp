@@ -122,7 +122,7 @@ class log {
      */
     static public function registerFilter($calFilter) {
         if (! \Q::varType ( $calFilter, 'callback' )) {
-            \Q::throwException ( \Q::i18n ( '日志过滤器必须为一个回调类型' ) );
+            \Q::throwException ( \Q::i18n ( '日志过滤器必须为一个回调类型' ), 'Q\log\exception' );
         }
         self::$calFilter = $calFilter;
     }
@@ -135,7 +135,7 @@ class log {
      */
     static public function registerProcessor($calProcessor) {
         if (! \Q::varType ( $calProcessor, 'callback' )) {
-            \Q::throwException ( \Q::i18n ( '日志处理器必须为一个回调类型' ) );
+            \Q::throwException ( \Q::i18n ( '日志处理器必须为一个回调类型' ), 'Q\log\exception' );
         }
         self::$calProcessor = $calProcessor;
     }
@@ -178,7 +178,7 @@ class log {
     static private function checkSize_($sFilePath) {
         // 如果不是文件，则创建
         if (! is_file ( $sFilePath ) && ! is_dir ( dirname ( $sFilePath ) ) && ! \Q::makeDir ( dirname ( $sFilePath ) )) {
-            \Q::throwException ( \Q::i18n ( '无法创建日志文件：“%s”', $sFilePath ) );
+            \Q::throwException ( \Q::i18n ( '无法创建日志文件：“%s”', $sFilePath ), 'Q\log\exception' );
         }
         
         // 检测日志文件大小，超过配置大小则备份日志文件重新生成

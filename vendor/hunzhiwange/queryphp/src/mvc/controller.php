@@ -131,10 +131,10 @@ class controller {
                     // 执行
                     call_user_func_array ( $oAction, $arrArgs );
                 } else {
-                    \Q::throwException ( \Q::i18n ( 'Q\mvc\action 对象不存在执行入口  run' ) );
+                    \Q::throwException ( \Q::i18n ( 'Q\mvc\action 对象不存在执行入口  run' ), 'Q\mvc\exception' );
                 }
             } else {
-                \Q::throwException ( \Q::i18n ( '方法 %s 不存在', $sActionNameOld ) );
+                \Q::throwException ( \Q::i18n ( '方法 %s 不存在', $sActionNameOld ), 'Q\mvc\exception' );
             }
         }
     }
@@ -279,7 +279,7 @@ class controller {
                 if (! empty ( $arrArgs [0] )) {
                     return \Q::in ( $arrArgs [0], isset ( $arrArgs [1] ) ? $arrArgs [1] : 'R' );
                 } else {
-                    \Q::throwException ( 'Can not find method.' );
+                    \Q::throwException ( 'Can not find method.', 'Q\mvc\exception' );
                 }
             default :
                 try {

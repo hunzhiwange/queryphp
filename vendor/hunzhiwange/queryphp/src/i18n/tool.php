@@ -149,11 +149,10 @@ class tool {
                     $I18nFile 
             ];
         }
-        
         $sContent = '';
         foreach ( $I18nFile as $sFile ) {
             if (! is_file ( $sFile )) {
-                \Q::throwException ( sprintf ( 'The i18n file < %s > is not exists!', $sFile ) );
+                \Q::throwException ( sprintf ( 'The i18n file < %s > is not exists!', $sFile ), 'Q\event\exception' );
             }
             $sContent .= \Q::escapeCharacter ( file_get_contents ( $sFile ) );
         }

@@ -63,7 +63,7 @@ class memcache extends cache {
      */
     public function __construct(array $arrOption = []) {
         if (! extension_loaded ( 'memcache' )) {
-            \Q::throwException ( 'memcache extension must be loaded before use.' );
+            \Q::throwException ( 'memcache extension must be loaded before use.', 'Q\cache\exception' );
         }
         
         // 合并默认配置
@@ -92,7 +92,7 @@ class memcache extends cache {
         foreach ( $this->arrOption ['servers'] as $arrServer ) {
             $bResult = $this->hHandel->addServer ( $arrServer ['host'], $arrServer ['port'], $this->arrOption ['persistent'] );
             if (! $bResult) {
-                \Q::throwException ( sprintf ( 'Unable to connect the memcached server [%s:%s] failed.', $arrServer ['host'], $arrServer ['port'] ) );
+                \Q::throwException ( sprintf ( 'Unable to connect the memcached server [%s:%s] failed.', $arrServer ['host'], $arrServer ['port'] ), 'Q\cache\exception' );
             }
         }
     }

@@ -49,7 +49,7 @@ class cookie {
         
         // 验证 cookie 值是不是一个标量
         if ($mixValue !== null && ! \Q::varType ( $mixValue, 'scalar' )) {
-            \Q::throwException ( \Q::i18n ( 'cookie 值必须是一个 PHP 标量' ) );
+            \Q::throwException ( \Q::i18n ( 'cookie 值必须是一个 PHP 标量' ), 'Q\cookie\exception' );
         }
         
         $sName = ($in ['prefix'] ? $GLOBALS ['~@option'] ['cookie_prefix'] : '') . $sName;

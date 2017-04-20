@@ -56,7 +56,7 @@ class theme {
             $sFile = view::parseDefaultFile ( $sFile );
         }
         if (! is_file ( $sFile )) {
-            \Q::throwException ( \Q::i18n ( '模板文件 %s 不存在', $sFile ) );
+            \Q::throwException ( \Q::i18n ( '模板文件 %s 不存在', $sFile ), 'Q\view\exception' );
         }
         
         // 变量赋值
@@ -82,7 +82,7 @@ class theme {
                 
                 unset ( $sChildCache, $sTargetContent );
             } else {
-                \Q::throwException ( sprintf ( 'source %s and target cache %s is not a valid path', $sFile, $sTargetCache ) );
+                \Q::throwException ( sprintf ( 'source %s and target cache %s is not a valid path', $sFile, $sTargetCache ), 'Q\view\exception' );
             }
         }
         

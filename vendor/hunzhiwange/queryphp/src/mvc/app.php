@@ -198,7 +198,7 @@ class app {
                         if (isset ( $mixModule [$sAction] )) {
                             $this->registerAction ( $sController, $sAction, $mixModule [$sAction] );
                         } else {
-                            \Q::throwException ( sprintf ( '数组控制器不存在 %s 方法键值', $sAction ) );
+                            \Q::throwException ( \Q::i18n ( '数组控制器不存在 %s 方法键值', $sAction ), 'Q\mvc\exception' );
                         }
                         break;
                     
@@ -208,7 +208,7 @@ class app {
                         break;
                     
                     default :
-                        \Q::throwException ( sprintf ( '注册的控制器类型 %s 不受支持', $sController ) );
+                        \Q::throwException ( \Q::i18n ( '注册的控制器类型 %s 不受支持', $sController ), 'Q\mvc\exception' );
                         break;
                 }
             } else {
@@ -251,7 +251,7 @@ class app {
                                     'run' 
                             ] );
                         } else {
-                            \Q::throwException ( \Q::i18n ( '方法 %s 必须为  Q\mvc\action 实例', $sAction ) );
+                            \Q::throwException ( \Q::i18n ( '方法 %s 必须为  Q\mvc\action 实例', $sAction ), 'Q\mvc\exception' );
                         }
                     }
                 }
@@ -300,7 +300,7 @@ class app {
                                     $this 
                             ] );
                         } else {
-                            \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', $sController, $sAction ) );
+                            \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', $sController, $sAction ), 'Q\mvc\exception' );
                         }
                     } catch ( \ReflectionException $oE ) {
                         return $mixAction [0]->__call ( $sAction, [ 
@@ -344,7 +344,7 @@ class app {
                         
                         return call_user_func_array ( $calRun, $arrArgs );
                     } else {
-                        \Q::throwException ( '方法对象不存在执行入口  run' );
+                        \Q::throwException ( \Q::i18n ( '方法对象不存在执行入口  run' ), 'Q\mvc\exception' );
                     }
                     break;
                 
@@ -360,11 +360,11 @@ class app {
                     break;
                 
                 default :
-                    \Q::throwException ( \Q::i18n ( '注册的方法类型 %s 不受支持', $sAction ) );
+                    \Q::throwException ( \Q::i18n ( '注册的方法类型 %s 不受支持', $sAction ), 'Q\mvc\exception' );
                     break;
             }
         } else {
-            \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 未注册', $sController, $sAction ) );
+            \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 未注册', $sController, $sAction ), 'Q\mvc\exception' );
         }
     }
     
@@ -559,7 +559,7 @@ class app {
             if (! file_put_contents ( $sOptionCache, "<?php\n /* option cache */ \n return " . var_export ( $arrOption, true ) . "\n?>" )) {
                 \Q::errorMessage ( sprintf ( 'Dir %s Do not have permission.', $this->optioncache_path ) );
             }
-
+            
             $GLOBALS ['~@option'] = \Q::option ( $arrOption );
             unset ( $arrOption, $sAppOptionPath, $arrOptionDir, $arrOptionExtend, $arrRouterExtend );
         }
@@ -727,7 +727,7 @@ class app {
             $arrRouter = array_merge ( $arrRouter, $arrNewRouter );
             $arrRouter ['~domains~'] = $arrMergeRouters;
         } else {
-            $arrRouter = array_merge( $arrRouter, $arrNewRouter );
+            $arrRouter = array_merge ( $arrRouter, $arrNewRouter );
         }
         return $arrRouter;
     }
@@ -742,7 +742,7 @@ class app {
         if (! ($mixResponse instanceof response)) {
             $mixResponse = \Q::response ( $mixResponse );
         }
-        $mixResponse->output();
+        $mixResponse->output ();
     }
     
     /**

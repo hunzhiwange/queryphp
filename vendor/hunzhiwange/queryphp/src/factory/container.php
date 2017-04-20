@@ -100,7 +100,7 @@ abstract class container implements ArrayAccess {
         
         // 生产服务
         if (! isset ( $this->arrFactorys [$strFactoryName] )) {
-            \Q::throwException ( \Q::i18n ( '生产的工厂 %s 不存在', $strFactoryName ) );
+            \Q::throwException ( \Q::i18n ( '生产的工厂 %s 不存在', $strFactoryName ), 'Q\factory\exception' );
         }
         $arrArgs = func_get_args ();
         array_shift ( $arrArgs );

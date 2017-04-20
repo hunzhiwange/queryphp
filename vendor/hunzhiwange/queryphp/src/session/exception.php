@@ -15,13 +15,13 @@
  * 
  * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
- * @date 2017.01.09
- * @since 1.0
+ * @date 2017.04.17
+ * @since 4.0
  */
-namespace Q\database;
+namespace Q\request;
 
 /**
- * 数据库组件异常捕获
+ * session 组件异常捕获
  *
  * @author Xiangmin Liu
  */
