@@ -559,7 +559,7 @@ class app {
             if (! file_put_contents ( $sOptionCache, "<?php\n /* option cache */ \n return " . var_export ( $arrOption, true ) . "\n?>" )) {
                 \Q::errorMessage ( sprintf ( 'Dir %s Do not have permission.', $this->optioncache_path ) );
             }
-            
+
             $GLOBALS ['~@option'] = \Q::option ( $arrOption );
             unset ( $arrOption, $sAppOptionPath, $arrOptionDir, $arrOptionExtend, $arrRouterExtend );
         }
@@ -727,7 +727,7 @@ class app {
             $arrRouter = array_merge ( $arrRouter, $arrNewRouter );
             $arrRouter ['~domains~'] = $arrMergeRouters;
         } else {
-            $arrRouter = array_merge ( $arrRouter, $arrNewRouter );
+            $arrRouter = array_merge( $arrRouter, $arrNewRouter );
         }
         return $arrRouter;
     }
@@ -739,21 +739,10 @@ class app {
      * @return void
      */
     private function response_($mixResponse) {
-        if (! is_null ( $mixResponse )) {
-            if ($mixResponse instanceof response) {
-                $mixResponse = $mixResponse->output ();
-            } elseif (is_callable ( $mixResponse )) {
-                $mixResponse = call_user_func_array ( $mixResponse, [ ] );
-            }
-            
-            if (is_array ( $mixResponse )) {
-                echo \Q::jsonEncode ( $mixResponse );
-            } elseif (is_scalar ( $mixResponse )) {
-                echo $mixResponse;
-            } else {
-                var_dump ( $mixResponse );
-            }
+        if (! ($mixResponse instanceof response)) {
+            $mixResponse = \Q::response ( $mixResponse );
         }
+        $mixResponse->output();
     }
     
     /**

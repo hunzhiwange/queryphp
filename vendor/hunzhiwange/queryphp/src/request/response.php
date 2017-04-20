@@ -162,11 +162,18 @@ class response {
      */
     public function __call($sMethod, $arrArgs) {
         // 条件控制语句支持
-        $this->flowConditionCall_ ( $sMethod, $arrArgs );
+        if ($this->flowConditionCall_ ( $sMethod, $arrArgs ) !== false) {
+            return $this;
+        }
         
         // 调用自定义的响应方法
         if (isset ( self::$arrCustomerResponse [$sMethod] )) {
-            return call_user_func_array ( self::$arrCustomerResponse [$sMethod], $arrArgs );
+            $mixData = call_user_func_array ( self::$arrCustomerResponse [$sMethod], $arrArgs );
+            if ($mixData instanceof response) {
+                return $mixData;
+            } else {
+                return $this->data ( $mixData );
+            }
         }
         
         \Q::throwException ( \Q::i18n ( 'response 没有实现魔法方法 %s.', $sMethod ), 'Q\request\exception' );
@@ -430,17 +437,17 @@ class response {
      */
     public function getContent() {
         if (! $this->booParseContent) {
-            $strContent = '';
+            $mixContent = $this->getData ();
             switch ($this->getResponseType ()) {
                 case 'json' :
                     $arrOption = array_merge ( self::$arrJsonOption, $this->getOption () );
-                    $strContent = \Q::jsonEncode ( $this->getData (), $arrOption ['json_options'] );
+                    $mixContent = \Q::jsonEncode ( $mixContent, $arrOption ['json_options'] );
                     if ($arrOption ['json_callback']) {
-                        $strContent = $arrOption ['json_callback'] . '(' . $strContent . ');';
+                        $mixContent = $arrOption ['json_callback'] . '(' . $mixContent . ');';
                     }
                     break;
                 case 'xml' :
-                    $strContent = \Q::xmlEncode ( $this->getData () );
+                    $mixContent = \Q::xmlEncode ( $mixContent );
                     break;
                 case 'file' :
                     ob_end_clean ();
@@ -448,8 +455,32 @@ class response {
                     fpassthru ( $resFp );
                     fclose ( $resFp );
                     break;
+                case 'redirect' :
+                    \Q::redirect ( $this->getOption ( 'redirect_url' ), $this->getOption ( 'in' ) );
+                    break;
+                case 'view' :
+                    $mixContent = self::$objView->display ( $this->getOption ( 'file' ), $this->getOption ( 'in' ) );
+                    break;
+                default :
+                    if (is_callable ( $mixContent )) {
+                        $mixTemp = call_user_func_array ( $mixContent, [ ] );
+                        if ($mixTemp !== null) {
+                            $mixContent = $mixTemp;
+                        }
+                        unset ( $mixTemp );
+                    } elseif (is_array ( $mixContent )) {
+                        $mixContent = \Q::jsonEncode ( $mixContent );
+                    }
+                    if (! is_scalar ( $mixContent )) {
+                        ob_start ();
+                        print_r ( $mixContent );
+                        $mixContent = ob_get_contents ();
+                        ob_end_clean ();
+                    }
+                    break;
             }
-            $this->content ( $strContent );
+            $this->content ( $mixContent );
+            unset ( $mixContent );
         }
         return $this->strContent;
     }
@@ -522,22 +553,31 @@ class response {
     }
     
     /**
-     * view 变量赋值
+     * view 加载视图文件
      *
-     * @param mixed $mixName            
-     * @param mixed $mixValue            
-     * @return $this
+     * @param string $sFile            
+     * @param array $in
+     *            charset 编码
+     *            content_type 内容类型
+     *            return 是否返回
+     * @return void|string
      */
-    public function view($mixName = null, $mixValue = null) {
+    public function view($sFile = '', $in = []) {
         if ($this->checkFlowCondition_ ())
             return $this;
         if (! self::$objView) {
             self::$objView = view::run ();
         }
-        if (! is_null ( $mixName )) {
-            $this->assign ( $mixName, $mixValue );
+        if (! isset ( $in ['return'] )) {
+            $in ['return'] = true;
         }
-        return $this;
+        if (! empty ( $in ['charset'] )) {
+            $this->charset ( $in ['charset'] );
+        }
+        if (! empty ( $in ['content_type'] )) {
+            $this->contentType ( $in ['content_type'] );
+        }
+        return $this->responseType ( 'view' )->option ( 'file', $sFile )->option ( 'in', $in )->header ( 'Cache-control', 'private' );
     }
     
     /**
@@ -550,22 +590,11 @@ class response {
     public function assign($mixName, $mixValue = null) {
         if ($this->checkFlowCondition_ ())
             return $this;
+        if (! self::$objView) {
+            self::$objView = view::run ();
+        }
         self::$objView->assign ( $mixName, $mixValue );
         return $this;
-    }
-    
-    /**
-     * view 加载视图文件
-     *
-     * @param string $sFile            
-     * @param array $in
-     *            charset 编码
-     *            content_type 内容类型
-     *            return 是否返回
-     * @return void|string
-     */
-    public function display($sFile = '', $in = []) {
-        return self::$objView->display ( $sFile, $in );
     }
     
     /**
@@ -581,7 +610,7 @@ class response {
     public function redirect($sUrl, $in = []) {
         if ($this->checkFlowCondition_ ())
             return $this;
-        \Q::redirect ( $sUrl, $in );
+        return $this->responseType ( 'redirect' )->code ( 301 )->option ( 'redirect_url', $sUrl )->option ( 'in', $in );
     }
     
     /**
@@ -597,8 +626,7 @@ class response {
         if (is_array ( $arrData )) {
             $this->data ( $arrData );
         }
-        $this->responseType ( 'xml' )->contentType ( 'text/xml' )->charset ( $strCharset );
-        return $this;
+        return $this->responseType ( 'xml' )->contentType ( 'text/xml' )->charset ( $strCharset );
     }
     
     /**
@@ -617,8 +645,7 @@ class response {
         } else {
             $sDownName = $sDownName . '.' . \Q::getExtName ( $sFileName );
         }
-        $this->downloadAndFile_ ( $sFileName, $arrHeader )->header ( 'Content-Disposition', 'attachment;filename=' . $sDownName );
-        return $this;
+        return $this->downloadAndFile_ ( $sFileName, $arrHeader )->header ( 'Content-Disposition', 'attachment;filename=' . $sDownName );
     }
     
     /**
@@ -631,8 +658,7 @@ class response {
     public function file($sFileName, array $arrHeader = []) {
         if ($this->checkFlowCondition_ ())
             return $this;
-        $this->downloadAndFile_ ( $sFileName, $arrHeader )->header ( 'Content-Disposition', 'attachment;filename=' . basename ( $sFileName ) );
-        return $this;
+        return $this->downloadAndFile_ ( $sFileName, $arrHeader )->header ( 'Content-Disposition', 'inline;filename=' . basename ( $sFileName ) );
     }
     
     /**

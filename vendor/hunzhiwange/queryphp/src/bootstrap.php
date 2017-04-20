@@ -413,16 +413,22 @@ class Q {
     static public function option($mixName = '', $mixValue = '', $mixDefault = null) {
         // 返回配置数据
         if (is_string ( $mixName ) && $mixValue === '') {
+            echo 'sdfsdf';
             return \Q\option\option::get ( $mixName, $mixDefault );
-        }
-        
+        }        
+
         // 删除值
-        if ($mixValue === null) {
-            return \Q\option\option::delete ( $mixName );
+        elseif ($mixValue === null) {
+            \Q\option\option::delete ( $mixName );
+        }         
+
+        // 设置值
+        else {
+            \Q\option\option::set ( $mixName, $mixValue );
         }
         
-        // 设置值
-        return \Q\option\option::set ( $mixName, $mixValue );
+        // 返回全部
+        return $GLOBALS ['~@option'] = \Q\option\option::get ();
     }
     
     /**

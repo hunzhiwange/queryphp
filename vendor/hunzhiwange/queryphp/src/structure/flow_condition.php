@@ -70,6 +70,8 @@ trait flow_condition {
             }
             return $this;
         }
+        
+        return false;
     }
     
     /**

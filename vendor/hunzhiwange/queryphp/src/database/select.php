@@ -410,7 +410,10 @@ class select {
 
         // 条件控制语句支持
         else {
-            $this->flowConditionCall_ ( $sMethod, $arrArgs );
+            // 条件控制语句支持
+            if ($this->flowConditionCall_ ( $sMethod, $arrArgs ) !== false) {
+                return $this;
+            }
         }
         
         \Q::throwException ( \Q::i18n ( 'select 没有实现魔法方法 %s.', $sMethod ), 'Q\database\exception' );

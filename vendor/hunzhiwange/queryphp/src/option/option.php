@@ -77,11 +77,9 @@ class option {
             foreach ( $mixName as $sKey => $mixValue ) {
                 self::set ( $sKey, $mixValue );
             }
-            return $GLOBALS ['~@option'] = self::$arrOption;
         } else {
             if (! strpos ( $mixName, '.' )) {
                 self::$arrOption [$mixName] = $mixValue;
-                return $GLOBALS ['~@option'] = self::$arrOption;
             }
             
             $arrParts = explode ( '.', $mixName );
@@ -98,8 +96,6 @@ class option {
                     $arrOption [$sPart] = $mixValue;
                 }
             }
-            
-            return $GLOBALS ['~@option'] = self::$arrOption;
         }
     }
     
@@ -133,8 +129,5 @@ class option {
                 }
             }
         }
-        
-        $GLOBALS ['~@option'] = self::$arrOption;
-        return true;
     }
 }
