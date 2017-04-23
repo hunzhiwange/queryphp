@@ -23,8 +23,7 @@ namespace Q\database;
 use PDO;
 use PDOException;
 use Exception;
-use Q\database\select;
-use Q\contract\database\contract_connect;
+use Q\contract\database\connect as contract_connect;
 
 /**
  * 数据库连接
@@ -34,7 +33,6 @@ use Q\contract\database\contract_connect;
 abstract class connect implements contract_connect {
     
     /**
-     *
      * 数据库是否已经初始化连接
      *
      * @var bool
@@ -127,7 +125,7 @@ abstract class connect implements contract_connect {
             $this->arrOption = $arrOption;
             
             // 查询组件
-            $this->objSelect = new select ( $this );
+            $this->objSelect = \Q::project ()->make ( 'select', $this );
             
             // 尝试连接主服务器
             if (! $this->writeConnect_ ()) {
@@ -648,7 +646,7 @@ abstract class connect implements contract_connect {
         if (! empty ( $this->arrConnect [0] )) {
             return $this->objConnect = $this->arrConnect [0];
         }
-        
+
         // 没有连接开始请求连接
         if (! ($objPdo = $this->commonConnect_ ( $this->arrOption ['db_master'], 0 ))) {
             return false;

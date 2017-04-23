@@ -217,7 +217,6 @@ abstract class container implements ArrayAccess {
         }
         $arrArgs = func_get_args ();
         array_shift ( $arrArgs );
-        array_unshift ( $arrArgs, $this );
         $mixInstances = call_user_func_array ( $this->arrFactorys [$strFactoryName], $arrArgs );
         
         // 单一实例

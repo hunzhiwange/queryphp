@@ -21,6 +21,7 @@
 namespace Q\cache;
 
 use Q\contract\cache\cache as contract_cache;
+use Q\traits\object_option;
 
 /**
  * 缓存抽象类
@@ -28,6 +29,8 @@ use Q\contract\cache\cache as contract_cache;
  * @author Xiangmin Liu
  */
 abstract class cache implements contract_cache {
+    
+    use object_option;
     
     /**
      * 缓存惯性配置

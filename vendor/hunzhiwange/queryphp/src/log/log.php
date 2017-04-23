@@ -57,7 +57,7 @@ class log {
      *
      * @var array
      */
-    protected $arrObjectOption = [ 
+    protected $arrDefaultObjectOption = [ 
             'log_enabled' => FALSE,
             'log_error_enabled' => FALSE,
             'log_sql_enabled' => FALSE,
@@ -66,6 +66,15 @@ class log {
             'log_file_name' => 'Y-m-d H',
             'path_cache_log' => '' 
     ];
+    
+    /**
+     * 构造函数
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->mergeObjectOption_ ();
+    }
     
     /**
      * 记录错误消息

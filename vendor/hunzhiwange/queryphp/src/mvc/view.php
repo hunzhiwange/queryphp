@@ -63,7 +63,7 @@ class view {
      *
      * @var Q\mvc\view
      */
-    public static function run() {
+    static public function run() {
         if (! self::$objView) {
             self::$objView = new self ();
         }

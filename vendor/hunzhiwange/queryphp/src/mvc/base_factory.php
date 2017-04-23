@@ -21,6 +21,7 @@
 namespace Q\mvc;
 
 use Q\factory\factory;
+use ReflectionClass;
 
 /**
  * 注册基础工厂
@@ -35,9 +36,26 @@ class base_factory extends factory {
      * @var array
      */
     private $arrSingleton = [
+            // cache
+            'Q\cache\file',
+            'Q\cache\memcache',
+            
+            // cookie
+            'Q\cookie\cookie',
+            
+            // database
+            'Q\database\database',
+            'Q\database\select',
+            
             // i18n
             'Q\i18n\i18n',
             'Q\i18n\tool',
+            
+            // image
+            'Q\image\image',
+            
+            // log
+            'Q\log\log',
             
             // option
             'Q\option\option',
@@ -45,9 +63,6 @@ class base_factory extends factory {
             // request
             'Q\request\request',
             'Q\request\response',
-            
-            // cookie
-            'Q\cookie\cookie',
             
             // router
             'Q\router\router',
@@ -67,6 +82,9 @@ class base_factory extends factory {
      * @var array
      */
     private $arrOther = [
+            // database
+            'Q\database\mysql',
+            
             // structure
             'Q\structure\collection',
             'Q\structure\queue',
@@ -94,7 +112,7 @@ class base_factory extends factory {
     private function registerSingleton_() {
         foreach ( $this->arrSingleton as $strCore ) {
             $this->objProject->singleton ( $strCore, function () use($strCore) {
-                return new $strCore ();
+                return \Q::newInstanceArgs ( $strCore, func_get_args () );
             } );
         }
     }
@@ -107,7 +125,7 @@ class base_factory extends factory {
     private function registerOther_() {
         foreach ( $this->arrOther as $strOther ) {
             $this->objProject->register ( $strOther, function () use($strOther) {
-                return new $strOther ( func_get_args () );
+                return \Q::newInstanceArgs ( $strOther, func_get_args () );
             } );
         }
     }

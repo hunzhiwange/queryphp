@@ -36,12 +36,21 @@ class cookie {
      *
      * @var array
      */
-    protected $arrObjectOption = [ 
+    protected $arrDefaultObjectOption = [ 
             'cookie_prefix' => 'q_',
             'cookie_expire' => 86400,
             'cookie_domain' => '',
             'cookie_path' => '/' 
     ];
+    
+    /**
+     * 构造函数
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->mergeObjectOption_ ();
+    }
     
     /**
      * 设置 COOKIE

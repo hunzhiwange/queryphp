@@ -40,9 +40,9 @@ class image {
      * @param number $nQuality            
      * @return mixed
      */
-    static public function thumb($sImage, $sThumbName, $sType = '', $nMaxWidth = 200, $nMaxHeight = 50, $bInterlace = true, $bFixed = false, $nQuality = 100) {
+    public function thumb($sImage, $sThumbName, $sType = '', $nMaxWidth = 200, $nMaxHeight = 50, $bInterlace = true, $bFixed = false, $nQuality = 100) {
         // 获取原图信息
-        $arrInfo = self::getImageInfo ( $sImage );
+        $arrInfo = $this->getImageInfo ( $sImage );
         
         if ($arrInfo !== false) {
             $nSrcWidth = $arrInfo ['width'];
@@ -121,7 +121,7 @@ class image {
      * @param number $nThumbHeight            
      * @return void
      */
-    static public function thumbPreview($sTargetFile, $nThumbWidth, $nThumbHeight) {
+    public function thumbPreview($sTargetFile, $nThumbWidth, $nThumbHeight) {
         $arrAttachInfo = @getimagesize ( $sTargetFile );
         
         list ( $nImgW, $nImgH ) = $arrAttachInfo;
@@ -190,7 +190,7 @@ class image {
      * @param boolean $bDeleteBackgroupPath            
      * @return boolean
      */
-    static public function imageWaterMark($sBackgroundPath, $arrWaterArgs, $nWaterPos = 0, $bDeleteBackgroupPath = true) {
+    public function imageWaterMark($sBackgroundPath, $arrWaterArgs, $nWaterPos = 0, $bDeleteBackgroupPath = true) {
         $bIsWaterImage = FALSE;
         
         if (! empty ( $sBackgroundPath ) && is_file ( $sBackgroundPath )) { // 读取背景图片
@@ -360,7 +360,7 @@ class image {
      * @param string $sFilename            
      * @return void
      */
-    static public function outputImage($oImage, $sType = 'png', $sFilename = '') {
+    public function outputImage($oImage, $sType = 'png', $sFilename = '') {
         header ( "Content-type: image/" . $sType );
         
         $sImageFun = 'image' . $sType;
@@ -380,7 +380,7 @@ class image {
      * @param string $sFilename            
      * @return void
      */
-    static public function outerImage($sUrl, $sFilename) {
+    public function outerImage($sUrl, $sFilename) {
         if ($sUrl == '' || $sFilename == '') {
             return false;
         }
@@ -408,7 +408,7 @@ class image {
      * @param number $nMaxHeight            
      * @return array
      */
-    static function returnChangeSize($sImgPath, $nMaxWidth, $nMaxHeight) {
+    public function returnChangeSize($sImgPath, $nMaxWidth, $nMaxHeight) {
         $arrSize = @getimagesize ( $sImgPath );
         
         $nW = $arrSize [0];
@@ -442,7 +442,7 @@ class image {
      * @param string $sImagesPath            
      * @return mixed
      */
-    static public function getImageInfo($sImagesPath) {
+    public function getImageInfo($sImagesPath) {
         $arrImageInfo = getimagesize ( $sImagesPath );
         
         if ($arrImageInfo !== false) {

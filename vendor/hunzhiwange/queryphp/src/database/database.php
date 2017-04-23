@@ -28,21 +28,16 @@ namespace Q\database;
 class database {
     
     /**
-     * 数据库连接对象
-     *
-     * @var array
-     */
-    private $arrConnect = [ ];
-    
-    /**
      * 连接数据库并返回连接对象
      *
      * @param mixed $mixOption            
      * @return \Q\connect
      */
-    static public function connect($mixOption = null) {
+    public function connect($mixOption = null) {
+        static $arrConnect;
+        
         // 连接唯一标识
-        $strUnique = md5 ( json_encode ( $mixOption ) );
+        $strUnique = md5 ( is_array ( $mixOption ) ? json_encode ( $mixOption ) : $mixOption );
         
         // 已经存在直接返回
         if (isset ( $arrConnect [$strUnique] )) {
@@ -50,12 +45,11 @@ class database {
         }
         
         // 解析数据库配置
-        $mixOption = self::parseOption_ ( $mixOption );
-        
+        $mixOption = $this->parseOption_ ( $mixOption );
+
         // 连接数据库
-        $strConnectClass = '\\Q\\database\\' . $mixOption ['db_type'];
-        if (\Q::classExists ( $strConnectClass, false, true )) {
-            return $arrConnect [$strUnique] = new $strConnectClass ( $mixOption );
+        if (($objConnectClass = \Q::project ()->make ( $mixOption ['db_type'], $mixOption ))) {
+            return $arrConnect [$strUnique] = $objConnectClass;
         } else {
             \Q::throwException ( \Q::i18n ( '数据库驱动 %s 不存在！', $mixOption ['db_type'] ), 'Q\database\exception' );
         }
@@ -67,7 +61,7 @@ class database {
      * @param string $mixOption            
      * @return array
      */
-    private static function parseOption_($mixOption = null) {
+    private function parseOption_($mixOption = null) {
         $arrOption = [ ];
         
         // 配置文件存在链接
@@ -81,7 +75,7 @@ class database {
         }
         
         // 补全结果
-        return self::fillOption_ ( $arrOption );
+        return $this->fillOption_ ( $arrOption );
     }
     
     /**
@@ -90,7 +84,7 @@ class database {
      * @param array $arrOption            
      * @return array
      */
-    private static function fillOption_($arrOption = []) {
+    private function fillOption_($arrOption = []) {
         // 返回结果
         $arrResult = [ ];
         
@@ -115,7 +109,7 @@ class database {
         
         // 如果 DSN 字符串则进行解析
         if (! empty ( $arrOption ['db_dsn'] )) {
-            $arrOption = array_merge ( $arrOption, self::parseDsn_ ( $arrOption ['db_dsn'] ) );
+            $arrOption = array_merge ( $arrOption, $this->parseDsn_ ( $arrOption ['db_dsn'] ) );
         }
         
         // 合并 param 参数
@@ -176,7 +170,7 @@ class database {
      * @param string $strDsn            
      * @return array
      */
-    private static function parseDsn_($strDsn) {
+    private function parseDsn_($strDsn) {
         $strDsn = trim ( $strDsn );
         
         // dsn 为空，直接返回
@@ -209,19 +203,5 @@ class database {
                 ];
             }
         }
-    }
-    
-    /**
-     * 拦截查询静态方法转接到 connect 组件,并最终转接到 select 组件
-     *
-     * @param 方法名 $sMethod            
-     * @param 参数 $arrArgs            
-     * @return boolean
-     */
-    public static function __callStatic($sMethod, $arrArgs) {
-        return call_user_func_array ( [ 
-                self::connect (),
-                $sMethod 
-        ], $arrArgs );
     }
 }

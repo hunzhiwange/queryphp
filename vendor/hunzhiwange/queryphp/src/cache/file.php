@@ -52,22 +52,34 @@ class file extends cache {
     const HEADER_LENGTH = 15;
     
     /**
+     * 配置
+     *
+     * @var array
+     */
+    protected $arrDefaultObjectOption = [ 
+            'runtime_file_path' => '',
+            'path_cache_file' => '' 
+    ];
+    
+    /**
      * 构造函数
      *
      * @param array $arrOption            
      * @return void
      */
     public function __construct(array $arrOption = []) {
+        $this->mergeObjectOption_ ();
+
         // 合并默认配置
         $this->arrOption = array_merge ( $this->arrOption, $this->arrDefaultOption );
         if (! empty ( $arrOption )) {
             $this->arrOption = array_merge ( $this->arrOption, $arrOption );
         }
         if (empty ( $this->_arrOption ['cache_path'] )) {
-            if ($GLOBALS ['~@option'] ['runtime_file_path']) {
-                $this->arrOption ['cache_path'] = $GLOBALS ['~@option'] ['runtime_file_path'];
+            if ($this->getObjectOption_ ( 'runtime_file_path' )) {
+                $this->arrOption ['cache_path'] = $this->getObjectOption_ ( 'runtime_file_path' );
             } else {
-                $this->arrOption ['cache_path'] = \Q::project ()->path_cache_file;
+                $this->arrOption ['cache_path'] = $this->getObjectOption_ ( 'path_cache_file' );
             }
         }
     }

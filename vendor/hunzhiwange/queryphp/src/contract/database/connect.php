@@ -32,5 +32,5 @@ interface connect {
      *
      * @return string
      */
-    abstract public function identifierColumn($sName);
+    public function identifierColumn($sName);
 }

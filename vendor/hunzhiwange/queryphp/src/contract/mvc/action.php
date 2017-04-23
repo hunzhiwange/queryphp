@@ -32,5 +32,5 @@ interface action {
      *          
      * @return void
      */
-    abstract public function run();
+    public function run();
 }

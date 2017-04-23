@@ -56,6 +56,19 @@ class memcache extends cache {
     private $hHandel;
     
     /**
+     * 配置
+     *
+     * @var array
+     */
+    protected $arrDefaultObjectOption = [ 
+            'runtime_memcache_compressed' => false,
+            'runtime_memcache_persistent' => true,
+            'runtime_memcache_servers' => [ ],
+            'runtime_memcache_host' => '127.0.0.1',
+            'runtime_memcache_port' => 11211 
+    ];
+
+    /**
      * 构造函数
      *
      * @param array $arrOption            
@@ -66,22 +79,24 @@ class memcache extends cache {
             \Q::throwException ( 'memcache extension must be loaded before use.', 'Q\cache\exception' );
         }
         
+        $this->mergeObjectOption_ ();
+        
         // 合并默认配置
         $this->arrOption = array_merge ( $this->arrOption, $this->arrDefaultOption );
-        $this->arrOption ['compressed'] = $GLOBALS ['_commonConfig_'] ['RUNTIME_MEMCACHE_COMPRESSED'];
-        $this->arrOption ['persistent'] = $GLOBALS ['_commonConfig_'] ['RUNTIME_MEMCACHE_PERSISTENT'];
+        $this->arrOption ['compressed'] = $this->getObjectOption_ ( 'runtime_memcache_compressed' );
+        $this->arrOption ['persistent'] = $this->getObjectOption_ ( 'runtime_memcache_persistent' );
         
         if (is_array ( $arrOption )) {
             $this->arrOption = array_merge ( $this->arrOption, $arrOption );
         }
         
         if (empty ( $this->arrOption ['servers'] )) {
-            if (! empty ( $GLOBALS ['_commonConfig_'] ['RUNTIME_MEMCACHE_SERVERS'] )) {
-                $this->arrOption ['servers'] = $GLOBALS ['_commonConfig_'] ['RUNTIME_MEMCACHE_SERVERS'];
+            if (! empty ( $this->getObjectOption_ ( 'runtime_memcache_servers' ) )) {
+                $this->arrOption ['servers'] = $this->getObjectOption_ ( 'runtime_memcache_servers' );
             } else {
                 $this->arrOption ['servers'] [] = array (
-                        'host' => $GLOBALS ['_commonConfig_'] ['RUNTIME_MEMCACHE_HOST'],
-                        'port' => $GLOBALS ['_commonConfig_'] ['RUNTIME_MEMCACHE_PORT'] 
+                        'host' => $this->getObjectOption_ ( 'runtime_memcache_host' ),
+                        'port' => $this->getObjectOption_ ( 'runtime_memcache_port' ) 
                 );
             }
         }

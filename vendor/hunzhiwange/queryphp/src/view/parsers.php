@@ -186,7 +186,7 @@ class parsers {
      *
      * @var Q\theme\parsers
      */
-    public static function run() {
+    static public function run() {
         if (! self::$objParsers) {
             self::$objParsers = new self ();
         }
@@ -512,7 +512,7 @@ class parsers {
      * @param string $sTag            
      * @return array
      */
-    public static function regParser($sTag) {
+    static public function regParser($sTag) {
         self::$arrParses [] = $sTag;
         return $sTag;
     }
@@ -531,7 +531,7 @@ class parsers {
      *            标签对应的编译器
      * @return void
      */
-    public static function regCompilers($sType, $Name, $sTag) {
+    static public function regCompilers($sType, $Name, $sTag) {
         if (! is_array ( $Name )) {
             $Name = [ 
                     $Name 

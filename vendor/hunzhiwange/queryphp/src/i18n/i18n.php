@@ -64,10 +64,19 @@ class i18n {
      *
      * @var array
      */
-    protected $arrObjectOption = [ 
+    protected $arrDefaultObjectOption = [ 
             'i18n_default' => 'zh-cn',
             'i18n_auto_accept' => TRUE 
     ];
+    
+    /**
+     * 构造函数
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->mergeObjectOption_ ();
+    }
     
     /**
      * 获取语言text

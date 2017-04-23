@@ -265,12 +265,12 @@ class project extends container {
         
         // 注册 controller
         $this->register ( 'Q\mvc\controller', function () {
-            return new controller ( func_get_args () );
+            return \Q::newInstanceArgs ( 'Q\mvc\controller', func_get_args () );
         } );
         
         // 注册 action
         $this->register ( 'Q\mvc\action', function () {
-            return new action ( func_get_args () );
+            return \Q::newInstanceArgs ( 'Q\mvc\action', func_get_args () );
         } );
         
         // 注册 view
@@ -288,12 +288,27 @@ class project extends container {
      */
     private function registerAlias_() {
         $this->alias ( [
+                // cache
+                'file' => 'Q\cache\file',
+                'memcache' => 'Q\cache\memcache',
+                
                 // cookie
                 'cookie' => 'Q\cookie\cookie',
+                
+                // database
+                'database' => 'Q\database\database',
+                'select' => 'Q\database\select',
+                'mysql' => 'Q\database\mysql',
                 
                 // i18n
                 'i18n' => 'Q\i18n\i18n',
                 'i18n_tool' => 'Q\i18n\tool',
+                
+                // image
+                'image' => 'Q\image\image',
+                
+                // log
+                'log' => 'Q\log\log',
                 
                 // mvc
                 'controller' => 'Q\mvc\controller',

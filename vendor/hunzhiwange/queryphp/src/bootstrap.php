@@ -70,7 +70,7 @@ class Q {
      *
      * @var array
      */
-    protected static $arrNamespace = [ ];
+    private static $arrNamespace = [ ];
     
     /**
      * 命名空间缓存
@@ -226,7 +226,7 @@ class Q {
      *            bool prepend true 表示插入命名空间前面，优先路径
      * @return void
      */
-    public static function addNamespace($sNamespace, $mixBaseDir, $in = []) {
+    static public function addNamespace($sNamespace, $mixBaseDir, $in = []) {
         $in = array_merge ( [ 
                 'prepend' => false 
         ], $in );
@@ -263,7 +263,7 @@ class Q {
      * @param string $strVendor            
      * @return void
      */
-    public static function importComposer($strVendor) {
+    static public function importComposer($strVendor) {
         if (is_file ( $strVendor . '/composer/autoload_psr4.php' )) {
             $arrMap = require $strVendor . '/composer/autoload_psr4.php';
             foreach ( $arrMap as $sNamespace => $sPath ) {
@@ -360,6 +360,18 @@ class Q {
     }
     
     /**
+     * 动态创建实例对象
+     *
+     * @param string $strClass            
+     * @param array $arrArgs            
+     * @return mixed
+     */
+    static public function newInstanceArgs($strClass, $arrArgs) {
+        $objClass = new \ReflectionClass ( $strClass );
+        return $objClass->newInstanceArgs ( $arrArgs );
+    }
+    
+    /**
      * 缓存统一入口
      *
      * @param string $sId            
@@ -369,7 +381,7 @@ class Q {
      * @return boolean
      */
     static public function cache($sId, $mixData = '', $arrOption = null, $sBackendClass = null) {
-        static $oObj = null;
+        static $arrCache;
         
         if (! is_array ( $arrOption )) {
             $arrOption = [ ];
@@ -377,16 +389,23 @@ class Q {
         $arrOption = array_merge ( [ 
                 'cache_time' => self::cacheTime_ ( $sId, $GLOBALS ['~@option'] ['runtime_cache_time'] ),
                 'cache_prefix' => $GLOBALS ['~@option'] ['runtime_cache_prefix'],
-                'cache_backend' => $GLOBALS ['~@option'] ['runtime_cache_backend'] 
+                'cache_backend' => ! is_null ( $sBackendClass ) ? $sBackendClass : $GLOBALS ['~@option'] ['runtime_cache_backend'] 
         ], $arrOption );
         
-        if (is_null ( $oObj )) {
-            // 强制使用某个缓存引擎
-            if (is_null ( $sBackendClass )) {
-                $sBackendClass = $arrOption ['cache_backend'];
+        if (empty ( $arrCache [$arrOption ['cache_backend']] )) {
+            $arrObjectOption = [ ];
+            foreach ( [ 
+                    'runtime_file_path',
+                    'runtime_memcache_compressed',
+                    'runtime_memcache_persistent',
+                    'runtime_memcache_servers',
+                    'runtime_memcache_host',
+                    'runtime_memcache_port' 
+            ] as $sObjectOption ) {
+                $arrObjectOption [$sObjectOption] = $GLOBALS ['~@option'] [$sObjectOption];
             }
-            $sBackendClass = 'Q\cache\\' . $sBackendClass;
-            $oObj = self::instance ( $sBackendClass );
+            $arrObjectOption ['path_cache_file'] = \Q::project ()->path_cache_file;
+            $arrCache [$arrOption ['cache_backend']] = self::project ()->make ( $arrOption ['cache_backend'], $arrOption )->setObjectOption ( $arrObjectOption );
         }
         
         if ($mixData === '') {
@@ -394,12 +413,12 @@ class Q {
             if (self::in ( $GLOBALS ['~@option'] ['runtime_cache_force_name'] ) == 1) {
                 return false;
             }
-            return $oObj->get ( $sId, $arrOption );
+            return $arrCache [$arrOption ['cache_backend']]->get ( $sId, $arrOption );
         }
         if ($mixData === null) {
-            return $oObj->delele ( $sId, $arrOption );
+            return $arrCache [$arrOption ['cache_backend']]->delele ( $sId, $arrOption );
         }
-        return $oObj->set ( $sId, $mixData, $arrOption );
+        return $arrCache [$arrOption ['cache_backend']]->set ( $sId, $mixData, $arrOption );
     }
     
     /**
@@ -458,7 +477,7 @@ class Q {
         }
         
         if (! $objLog) {
-            $arrOption = [ ];
+            $arrObjectOption = [ ];
             foreach ( [ 
                     'log_enabled',
                     'log_error_enabled',
@@ -466,11 +485,11 @@ class Q {
                     'log_time_format',
                     'log_file_size',
                     'log_file_name' 
-            ] as $sOption ) {
-                $arrOption [$sOption] = $GLOBALS ['~@option'] [$sOption];
+            ] as $sObjectOption ) {
+                $arrOption [$sObjectOption] = $GLOBALS ['~@option'] [$sObjectOption];
             }
             $arrOption ['path_cache_log'] = \Q::project ()->path_cache_log;
-            $objLog = self::project ()->log->setObjectOption ( $arrOption );
+            $objLog = self::project ()->log->setObjectOption ( $arrObjectOption );
         }
         
         $objLog->run ( $strMessage, $strLevel, $intMessageType, $strDestination, $strExtraHeaders );
@@ -498,14 +517,14 @@ class Q {
         }
         
         if (! $objI18n) {
-            $arrOption = [ ];
+            $arrObjectOption = [ ];
             foreach ( [ 
                     'i18n_default',
                     'i18n_auto_accept' 
-            ] as $sOption ) {
-                $arrOption [$sOption] = $GLOBALS ['~@option'] [$sOption];
+            ] as $sObjectOption ) {
+                $arrObjectOption [$sObjectOption] = $GLOBALS ['~@option'] [$sObjectOption];
             }
-            $objI18n = self::project ()->i18n->setObjectOption ( $arrOption );
+            $objI18n = self::project ()->i18n->setObjectOption ( $arrObjectOption );
         }
         
         // 返回当地语句
@@ -532,16 +551,16 @@ class Q {
     static public function cookie($sName, $mixValue = '', array $in = []) {
         static $objCookie;
         if (! $objCookie) {
-            $arrOption = [ ];
+            $arrObjectOption = [ ];
             foreach ( [ 
                     'cookie_prefix',
                     'cookie_expire',
                     'cookie_domain',
                     'cookie_path' 
-            ] as $sOption ) {
-                $arrOption [$sOption] = $GLOBALS ['~@option'] [$sOption];
+            ] as $sObjectOption ) {
+                $arrObjectOption [$sObjectOption] = $GLOBALS ['~@option'] [$sObjectOption];
             }
-            $objCookie = self::project ()->cookie->setObjectOption ( $arrOption );
+            $objCookie = self::project ()->cookie->setObjectOption ( $arrObjectOption );
         }
         
         $in = array_merge ( [ 
@@ -1223,7 +1242,7 @@ class Q {
      * @param string $sMethodName            
      * @return boolean
      */
-    public static function hasStaticMethod($sClassName, $sMethodName) {
+    static public function hasStaticMethod($sClassName, $sMethodName) {
         $oRef = new ReflectionClass ( $sClassName );
         if ($oRef->hasMethod ( $sMethodName ) and $oRef->getMethod ( $sMethodName )->isStatic ()) {
             return true;
@@ -1238,7 +1257,7 @@ class Q {
      * @param string $sMethodName            
      * @return boolean
      */
-    public static function hasPublicMethod($objClass, $sMethodName) {
+    static public function hasPublicMethod($objClass, $sMethodName) {
         $objClass = new \ReflectionMethod ( $objClass, $sMethodName );
         if ($objClass->isPublic () and ! $objClass->isStatic ()) {
             return $objClass;
@@ -1252,7 +1271,7 @@ class Q {
      * @param string $strClassName            
      * @return mixed
      */
-    public static function getConstructFirstParamClass($strClassName) {
+    static public function getConstructFirstParamClass($strClassName) {
         $objReflection = new \ReflectionClass ( $strClassName );
         if (($objConstructor = $objReflection->getConstructor ()) && ($arrParameters = $objConstructor->getParameters ())) {
             if (! is_object ( $arrParameters [0] ) || ! method_exists ( $arrParameters [0], 'getClass' )) {
@@ -1273,7 +1292,7 @@ class Q {
      * @param mixed $mixCallback            
      * @return mixed
      */
-    public static function getCallbackFirstParamClass($mixCallback) {
+    static public function getCallbackFirstParamClass($mixCallback) {
         if ($mixCallback instanceof \Closure) {
             $objReflection = new \ReflectionFunction ( $mixCallback );
         } else {
@@ -1567,7 +1586,7 @@ class Q {
      *            time 停留时间，0表示不停留
      * @return void
      */
-    public static function redirect($sUrl, $in = []) {
+    static public function redirect($sUrl, $in = []) {
         $in = array_merge ( [ 
                 'params' => [ ],
                 'message' => '',
@@ -1716,7 +1735,7 @@ class Q {
      * @param boolean $bAllowedEmpty            
      * @return mixed
      */
-    public static function normalize($mixInput, $sDelimiter = ',', $bAllowedEmpty = false) {
+    static public function normalize($mixInput, $sDelimiter = ',', $bAllowedEmpty = false) {
         if (is_array ( $mixInput ) || is_string ( $mixInput )) {
             if (! is_array ( $mixInput )) {
                 $mixInput = explode ( $sDelimiter, $mixInput );
@@ -1811,7 +1830,7 @@ class Q {
      * @param string $sString            
      * @return boolean
      */
-    public static function isUtf8($sString) {
+    static public function isUtf8($sString) {
         $nLength = strlen ( $sString );
         
         for($nI = 0; $nI < $nLength; $nI ++) {
@@ -2335,7 +2354,7 @@ class Q {
      *            类名字
      * @return string|false 存在则为文件名，不存则返回 false
      */
-    private static function loadMappedFile($sPrefix, $sRelativeClass) {
+    static private function loadMappedFile($sPrefix, $sRelativeClass) {
         if (isset ( self::$arrNamespace [$sPrefix] ) === false) {
             return false;
         }
@@ -2357,7 +2376,7 @@ class Q {
      *            待载入的文件
      * @return bool true 表示存在， false 表示不存在
      */
-    private static function requireFile($sFile) {
+    static private function requireFile($sFile) {
         if (is_file ( $sFile )) {
             require $sFile;
             return true;
@@ -2471,7 +2490,7 @@ class Q {
      * @param 参数 $arrArgs            
      * @return boolean
      */
-    public static function __callStatic($sMethod, $arrArgs) {
+    static public function __callStatic($sMethod, $arrArgs) {
         if (($objFacades = self::project ()->make ( $sMethod ))) {
             return $objFacades;
         }

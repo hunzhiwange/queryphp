@@ -129,7 +129,7 @@ class bootstrap {
      */
     private function request_() {
         // 运行笑脸初始化应用
-        $this->objProject->make ( app::class, project::INIT_APP, $this->arrOption )->run ();
+        $this->objProject->make ( app::class, $this->objProject, project::INIT_APP, $this->arrOption )->run ();
         
         // 完成请求
         $this->objRequest->run ();
@@ -142,7 +142,7 @@ class bootstrap {
      */
     private function runApp_() {
         // 创建 & 注册
-        $this->objProject->instance ( 'app', ($objApp = $this->objProject->make ( app::class, $this->objRequest->app (), $this->arrOption )->run ()) );
+        $this->objProject->instance ( 'app', ($objApp = $this->objProject->make ( app::class, $this->objProject, $this->objRequest->app (), $this->arrOption )->run ()) );
         
         // 运行应用
         $objApp->app ();

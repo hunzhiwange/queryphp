@@ -59,4 +59,13 @@ trait object_option {
     protected function getObjectOption_($strOptionName) {
         return isset ( $this->arrObjectOption [$strOptionName] ) ? $this->arrObjectOption [$strOptionName] : null;
     }
+    
+    /**
+     * 合并默认配置
+     *
+     * @return array
+     */
+    protected function mergeObjectOption_() {
+        $this->arrObjectOption = array_merge ( $this->arrDefaultObjectOption, $this->arrObjectOption );
+    }
 }
