@@ -20,7 +20,6 @@
  */
 namespace Q\view;
 
-use Q\view\parsers;
 use Q\mvc\view;
 
 /**
@@ -66,7 +65,7 @@ class theme {
         
         $sCachePath = $this->getCachePath ( $sFile ); // 编译文件路径
         if ($this->isCacheExpired ( $sFile, $sCachePath )) { // 重新编译
-            parsers::run ()->doCombile ( $sFile, $sCachePath );
+            \Q::view_parsers ()->doCombile ( $sFile, $sCachePath );
         }
         
         // 逐步将子模板缓存写入父模板至到最后

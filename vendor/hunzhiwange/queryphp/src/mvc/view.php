@@ -37,20 +37,6 @@ class view {
     private static $objView;
     
     /**
-     * 主题管理器
-     *
-     * @var object
-     */
-    private $oTheme;
-    
-    /**
-     * 共享主题管理器
-     *
-     * @var object
-     */
-    private static $oShareTheme;
-    
-    /**
      * 当前主题目录
      *
      * @var string
@@ -67,26 +53,19 @@ class view {
     /**
      * 构造函数
      *
-     * @param object $oTheme            
      * @return void
      */
-    public function __construct($oTheme = null) {
-        if ($oTheme) {
-            $this->setTheme ( $oTheme );
-        } else {
-            $this->setTheme ( self::shareTheme () );
-        }
+    public function __construct() {
     }
     
     /**
      * 返回视图实例
      *
-     * @param object $oTheme            
      * @var Q\mvc\view
      */
-    public static function run($oTheme = null) {
+    public static function run() {
         if (! self::$objView) {
-            self::$objView = new self ( $oTheme );
+            self::$objView = new self ();
         }
         return self::$objView;
     }
@@ -99,7 +78,7 @@ class view {
      * @return mixed
      */
     public function assign($mixName, $mixValue = null) {
-        return $this->getTheme ()->setVar ( $mixName, $mixValue );
+        return \Q::view_theme ()->setVar ( $mixName, $mixValue );
     }
     
     /**
@@ -109,7 +88,7 @@ class view {
      * @return mixed
      */
     public function getAssign($sName) {
-        return $this->getTheme ()->getVar ( $sName );
+        return \Q::view_theme ()->getVar ( $sName );
     }
     
     /**
@@ -139,7 +118,7 @@ class view {
         if (! is_file ( $sFile )) {
             $sFile = self::parseFile ( $sFile );
         }
-        $sContent = $this->getTheme ()->display ( $sFile, false );
+        $sContent = \Q::view_theme ()->display ( $sFile, false );
         
         // 过滤编译文件子模板定位注释标签，防止在网页头部出现注释，导致 IE 浏览器不居中
         if (Q_DEBUG === TRUE && $GLOBALS ['~@option'] ['theme_cache_children'] === true) {
@@ -184,42 +163,6 @@ class view {
     }
     
     /**
-     * 获取当前主题管理器
-     *
-     * @return object
-     */
-    public function getTheme() {
-        if (is_null ( $this->oTheme )) {
-            $this->oTheme = self::shareTheme ();
-        }
-        return $this->oTheme;
-    }
-    
-    /**
-     * 设置当期主题管理器
-     *
-     * @param object $oTheme            
-     * @return 旧值
-     */
-    public function setTheme($oTheme) {
-        $oOld = $this->oTheme;
-        $this->oTheme = $oTheme;
-        return $oOld;
-    }
-    
-    /**
-     * 创建共享主题管理器
-     *
-     * @return object
-     */
-    static public function shareTheme() {
-        if (! self::$oShareTheme) {
-            self::$oShareTheme = new theme ();
-        }
-        return self::$oShareTheme;
-    }
-    
-    /**
      * 分析模板真实路径
      *
      * @param string $sTpl
@@ -228,7 +171,7 @@ class view {
      *            扩展名
      * @return string
      */
-    public static function parseFile($sTpl, $sExt = '') {
+    static public function parseFile($sTpl, $sExt = '') {
         $calHelp = function ($sContent) {
             return str_replace ( [ 
                     ':',

@@ -18,7 +18,7 @@
  * @date 2017.04.20
  * @since 4.0
  */
-namespace Q\database;
+namespace Q\cache;
 
 /**
  * 缓存组件异常捕获

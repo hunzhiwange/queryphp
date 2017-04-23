@@ -21,7 +21,7 @@
 namespace Q\database;
 
 use PDO;
-use Q\structure\flow_condition;
+use Q\traits\flow_condition;
 
 /**
  * 数据库查询器

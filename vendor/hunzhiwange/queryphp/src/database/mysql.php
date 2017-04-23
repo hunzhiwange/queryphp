@@ -18,10 +18,9 @@
  * @date 2017.03.09
  * @since 1.0
  */
-namespace Q\database\connect;
+namespace Q\database;
 
 use PDO;
-use Q\database\connect;
 
 /**
  * 数据库连接

@@ -18,7 +18,7 @@
  * @date 2017.04.20
  * @since 4.0
  */
-namespace Q\database;
+namespace Q\cookie;
 
 /**
  * cookie 组件异常捕获

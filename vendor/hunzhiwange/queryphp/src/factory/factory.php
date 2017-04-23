@@ -20,12 +20,14 @@
  */
 namespace Q\factory;
 
+use Q\contract\factory\factory as contract_factory;
+
 /**
  * 工厂提供者
  *
  * @author Xiangmin Liu
  */
-abstract class factory {
+abstract class factory implements contract_factory {
     
     /**
      * 应用程序实例
@@ -45,9 +47,11 @@ abstract class factory {
     }
     
     /**
-     * 注册一个工厂提供者
+     * 返回 project
      *
-     * @return void
+     * @return Q\mvc\project
      */
-    abstract public function register();
+    public function project() {
+        return $this->objProject;
+    }
 }

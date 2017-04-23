@@ -15,15 +15,30 @@
  * 
  * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
- * @date 2017.04.17
+ * @date 2017.04.23
  * @since 4.0
  */
-namespace Q\event;
+namespace Q\contract\structure;
 
 /**
- * 事件监听器异常捕获
+ * stack_queue 接口
  *
  * @author Xiangmin Liu
  */
-class listener_exception extends \Q\exception\exception {
+interface stack_queue {
+    
+    /**
+     * 加载元素
+     *
+     * @param mixed $mixItem            
+     * @return void
+     */
+    public function in($mixItem);
+    
+    /**
+     * 释放元素
+     *
+     * @return mixed
+     */
+    public function out();
 }

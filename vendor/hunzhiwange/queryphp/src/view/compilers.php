@@ -34,7 +34,7 @@ class compilers {
      *
      * @var array
      */
-    protected static $arrCodeMap = [ 
+    private $arrCodeMap = [ 
             'php' => '~',
             'note' => '#',
             'variable' => '$',
@@ -55,21 +55,21 @@ class compilers {
      *
      * @var array
      */
-    protected static $arrNodeMap = [ ];
+    private $arrNodeMap = [ ];
     
     /**
      * javascript 支持的特殊别名映射
      *
      * @var array
      */
-    protected static $arrJsMap = [ ];
+    private $arrJsMap = [ ];
     
     /**
      * javascript 标签
      *
      * @var array
      */
-    protected static $arrJsTag = [
+    private $arrJsTag = [
             // required 属性不能为空，single 单标签
             'if' => [ 
                     'attr' => [ 
@@ -112,7 +112,7 @@ class compilers {
      *
      * @var array
      */
-    protected static $arrNodeTag = [
+    private $arrNodeTag = [
             // required 属性不能为空，single 单标签
             'assign' => [ 
                     'attr' => [ 
@@ -810,12 +810,12 @@ out += '";
      */
     public function attributeNodeCompiler(&$arrTheme) {
         $sSource = trim ( $arrTheme ['content'] );
-        self::escapeCharacter_ ( $sSource );
+        $this->escapeCharacter_ ( $sSource );
         
         if ($arrTheme ['is_js'] === true) {
-            $arrTag = self::$arrJsTag;
+            $arrTag = $this->arrJsTag;
         } else {
-            $arrTag = self::$arrNodeTag;
+            $arrTag = $this->arrNodeTag;
         }
         
         $arrAllowedAttr = $arrTag [$arrTheme ['parent_name']] ['attr'];
@@ -844,7 +844,7 @@ out += '";
                     }
                     
                     $sValue = $arrRes [$nValueIdx] [$nIdx];
-                    self::escapeCharacter_ ( $sValue, false );
+                    $this->escapeCharacter_ ( $sValue, false );
                     $arrTheme ['attribute_list'] [strtolower ( $sName )] = $sValue;
                 }
             }
@@ -871,8 +871,8 @@ out += '";
      *
      * @return array
      */
-    static public function getCodeMapHelp() {
-        return self::$arrCodeMap;
+    public function getCodeMapHelp() {
+        return $this->arrCodeMap;
     }
     
     /**
@@ -880,8 +880,8 @@ out += '";
      *
      * @return array
      */
-    static public function getNodeMapHelp() {
-        return self::$arrNodeMap;
+    public function getNodeMapHelp() {
+        return $this->arrNodeMap;
     }
     
     /**
@@ -889,8 +889,8 @@ out += '";
      *
      * @return array
      */
-    static public function getJsMapHelp() {
-        return self::$arrJsMap;
+    public function getJsMapHelp() {
+        return $this->arrJsMap;
     }
     
     /**
@@ -898,8 +898,8 @@ out += '";
      *
      * @return array
      */
-    static public function getNodeTagHelp() {
-        return self::$arrNodeTag;
+    public function getNodeTagHelp() {
+        return $this->arrNodeTag;
     }
     
     /**
@@ -907,8 +907,8 @@ out += '";
      *
      * @return array
      */
-    static public function getJsTagHelp() {
-        return self::$arrJsTag;
+    public function getJsTagHelp() {
+        return $this->arrJsTag;
     }
     
     // ######################################################
@@ -1171,7 +1171,7 @@ out += '";
         }
         
         // 验证必要属性
-        $arrTag = $bJsNode === true ? self::$arrJsTag : self::$arrNodeTag;
+        $arrTag = $bJsNode === true ? $this->arrJsTag : $this->arrNodeTag;
         if (! isset ( $arrTag [$arrTheme ['name']] )) {
             \Q::throwException ( \Q::i18n ( '标签 %s 未定义', $arrTheme ['name'] ), 'Q\view\exception' );
         }
@@ -1225,7 +1225,7 @@ out += '";
      * @param bool $bEsc            
      * @return string
      */
-    static private function escapeCharacter_(&$sTxt, $bEsc = true) {
+    private function escapeCharacter_(&$sTxt, $bEsc = true) {
         $sTxt = \Q::escapeCharacter ( $sTxt, $bEsc );
         if (! $bEsc) {
             $sTxt = str_replace ( [ 

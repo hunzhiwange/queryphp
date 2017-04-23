@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 项目调试
  */
@@ -20,6 +19,6 @@ define ( 'PATH', dirname ( __DIR__ ) );
  * 执行项目
  */
 require_once PATH . '/vendor/hunzhiwange/queryphp/src/bootstrap.php';
-\Q\mvc\project::singleton ( [ 
+\Q\mvc\project::bootstrap ( [ 
         'path' => PATH 
-])->run();
+] )->run ();

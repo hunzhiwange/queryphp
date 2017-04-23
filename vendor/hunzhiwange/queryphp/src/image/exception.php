@@ -18,7 +18,7 @@
  * @date 2017.04.17
  * @since 4.0
  */
-namespace Q\event;
+namespace Q\image;
 
 /**
  * 图像组件异常捕获

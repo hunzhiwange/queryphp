@@ -24,13 +24,14 @@ use PDO;
 use PDOException;
 use Exception;
 use Q\database\select;
+use Q\contract\database\contract_connect;
 
 /**
  * 数据库连接
  *
  * @author Xiangmin Liu
  */
-abstract class connect {
+abstract class connect implements contract_connect {
     
     /**
      *
@@ -560,13 +561,6 @@ abstract class connect {
             return $mixValue;
         }
     }
-    
-    /**
-     * sql 字段格式化
-     *
-     * @return string
-     */
-    abstract public function identifierColumn($sName);
     
     /**
      * 返回当前配置连接信息（方便其他组件调用设置为 public）

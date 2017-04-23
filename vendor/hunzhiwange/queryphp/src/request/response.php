@@ -21,7 +21,7 @@
 namespace Q\request;
 
 use Q\mvc\view;
-use Q\structure\flow_condition;
+use Q\traits\flow_condition;
 
 /**
  * 响应请求
@@ -447,7 +447,7 @@ class response {
                     }
                     break;
                 case 'xml' :
-                    $mixContent = \Q::xmlEncode ( $mixContent );
+                    $mixContent = \Q::xmlSerialize ( $mixContent );
                     break;
                 case 'file' :
                     ob_end_clean ();

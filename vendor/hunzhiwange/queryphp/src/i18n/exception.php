@@ -18,7 +18,7 @@
  * @date 2017.04.17
  * @since 4.0
  */
-namespace Q\event;
+namespace Q\i18n;
 
 /**
  * 工厂组件异常捕获

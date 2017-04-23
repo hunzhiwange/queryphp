@@ -20,12 +20,14 @@
  */
 namespace Q\cache;
 
+use Q\contract\cache\cache as contract_cache;
+
 /**
  * 缓存抽象类
  *
  * @author Xiangmin Liu
  */
-abstract class cache {
+abstract class cache implements contract_cache {
     
     /**
      * 缓存惯性配置
@@ -36,34 +38,6 @@ abstract class cache {
             'cache_time' => 86400,
             'cache_prefix' => '~@' 
     ];
-    
-    /**
-     * 获取缓存
-     *
-     * @param string $sCacheName            
-     * @param array $arrOption            
-     * @return mixed
-     */
-    abstract public function get($sCacheName, array $arrOption = []);
-    
-    /**
-     * 设置缓存
-     *
-     * @param string $sCacheName            
-     * @param mixed $mixData            
-     * @param array $arrOption            
-     * @return void
-     */
-    abstract public function set($sCacheName, $mixData, array $arrOption = []);
-    
-    /**
-     * 清除缓存
-     *
-     * @param string $sCacheName            
-     * @param array $arrOption            
-     * @return void
-     */
-    abstract public function delele($sCacheName, array $arrOption = []);
     
     /**
      * 修改配置

@@ -40,7 +40,7 @@ class tool {
      * @since 2016.11.27
      * @return array
      */
-    static public function saveToJs($Files, $sCacheFile, $sI18nSet) {
+    public function saveToJs($Files, $sCacheFile, $sI18nSet) {
         // 读取语言包数据
         if (is_string ( $Files )) {
             $Files [] = $Files;
@@ -71,7 +71,7 @@ class tool {
      * @since 2016.11.27
      * @return array
      */
-    static public function saveToPhp($Files, $sCacheFile) {
+    public function saveToPhp($Files, $sCacheFile) {
         // 读取语言包数据
         if (is_string ( $Files )) {
             $Files [] = $Files;
@@ -100,7 +100,7 @@ class tool {
      * @since 2016.11.27
      * @return array
      */
-    static public function findPoFile($I18nDir) {
+    public function findPoFile($I18nDir) {
         if (is_string ( $I18nDir )) {
             $I18nDir = [ 
                     $I18nDir 
@@ -143,7 +143,7 @@ class tool {
      * @since 2016.11.25
      * @return array
      */
-    static private function parsePoData_($I18nFile) {
+    private function parsePoData_($I18nFile) {
         if (is_string ( $I18nFile )) {
             $I18nFile = [ 
                     $I18nFile 

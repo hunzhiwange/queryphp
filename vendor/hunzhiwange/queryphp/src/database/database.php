@@ -53,7 +53,7 @@ class database {
         $mixOption = self::parseOption_ ( $mixOption );
         
         // 连接数据库
-        $strConnectClass = '\\Q\\database\\connect\\' . $mixOption ['db_type'];
+        $strConnectClass = '\\Q\\database\\' . $mixOption ['db_type'];
         if (\Q::classExists ( $strConnectClass, false, true )) {
             return $arrConnect [$strUnique] = new $strConnectClass ( $mixOption );
         } else {

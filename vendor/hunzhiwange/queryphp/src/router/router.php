@@ -32,28 +32,28 @@ class router {
      *
      * @var array
      */
-    private static $arrDomains = [ ];
+    private $arrDomains = [ ];
     
     /**
      * 注册路由
      *
      * @var array
      */
-    private static $arrRouters = [ ];
+    private $arrRouters = [ ];
     
     /**
      * 参数正则
      *
      * @var array
      */
-    private static $arrWheres = [ ];
+    private $arrWheres = [ ];
     
     /**
      * 域名正则
      *
      * @var array
      */
-    private static $arrDomainWheres = [ ];
+    private $arrDomainWheres = [ ];
     
     /**
      * 默认替换参数[字符串]
@@ -67,28 +67,28 @@ class router {
      *
      * @var array
      */
-    private static $arrGroupArgs = [ ];
+    private $arrGroupArgs = [ ];
     
     /**
      * 配置文件路由
      *
      * @var string
      */
-    private static $arrFileRouters = [ ];
+    private $arrFileRouters = [ ];
     
     /**
      * 路由绑定资源
      *
      * @var string
      */
-    private static $arrBinds = [ ];
+    private $arrBinds = [ ];
     
     /**
      * 域名匹配数据
      *
      * @var array
      */
-    private static $arrDomainData = [ ];
+    private $arrDomainData = [ ];
     
     /**
      * 导入路由规则
@@ -104,15 +104,15 @@ class router {
      *            prefix 前缀
      * @return void
      */
-    static function import($mixRouter, $strUrl = '', $in = []) {
+    public function import($mixRouter, $strUrl = '', $in = []) {
         // 默认参数
-        $in = self::mergeIn_ ( [ 
+        $in = $this->mergeIn_ ( [ 
                 'prepend' => false,
                 'where' => [ ],
                 'params' => [ ],
                 'domain' => '',
                 'prefix' => '' 
-        ], self::mergeIn_ ( self::$arrGroupArgs, $in ) );
+        ], $this->mergeIn_ ( $this->arrGroupArgs, $in ) );
         
         // 支持数组传入
         if (! is_array ( $mixRouter ) || \Q::oneImensionArray ( $mixRouter )) {
@@ -144,7 +144,7 @@ class router {
                 if (! $arrRouter [1]) {
                     $arrRouter [1] = $strUrl;
                 }
-                $arrRouter [2] = self::mergeIn_ ( $in, $arrRouter [2] );
+                $arrRouter [2] = $this->mergeIn_ ( $in, $arrRouter [2] );
                 $mixRouter [$intKey] = $arrRouter;
             }
         }
@@ -157,7 +157,7 @@ class router {
                     'url' => $arrArgs [1],
                     'regex' => $arrArgs [0],
                     'params' => $arrArgs [2] ['params'],
-                    'where' => self::$arrWheres,
+                    'where' => $this->arrWheres,
                     'domain' => $arrArgs [2] ['domain'] 
             ];
             
@@ -167,24 +167,24 @@ class router {
             
             // 合并参数正则
             if (! empty ( $arrArgs [2] ['where'] ) && is_array ( $arrArgs [2] ['where'] )) {
-                $arrRouter ['where'] = self::mergeWhere_ ( $arrRouter ['where'], $arrArgs [2] ['where'] );
+                $arrRouter ['where'] = $this->mergeWhere_ ( $arrRouter ['where'], $arrArgs [2] ['where'] );
             }
             
-            if (! isset ( self::$arrRouters [$arrArgs [0]] )) {
-                self::$arrRouters [$arrArgs [0]] = [ ];
+            if (! isset ( $this->arrRouters [$arrArgs [0]] )) {
+                $this->arrRouters [$arrArgs [0]] = [ ];
             }
             
             // 优先插入
             if ($arrArgs [2] ['prepend'] === true) {
-                array_unshift ( self::$arrRouters [$arrArgs [0]], $arrRouter );
+                array_unshift ( $this->arrRouters [$arrArgs [0]], $arrRouter );
             } else {
-                array_push ( self::$arrRouters [$arrArgs [0]], $arrRouter );
+                array_push ( $this->arrRouters [$arrArgs [0]], $arrRouter );
             }
             
             // 域名支持
             if (! empty ( $arrRouter ['domain'] )) {
                 $in ['router'] = true;
-                self::domain ( $arrRouter ['domain'], $arrArgs [0], $in );
+                $this->domain ( $arrRouter ['domain'], $arrArgs [0], $in );
             }
         }
     }
@@ -196,11 +196,11 @@ class router {
      * @param string $strValue            
      * @return void
      */
-    static public function regex($mixRegex, $strValue = '') {
+    public function regex($mixRegex, $strValue = '') {
         if (is_string ( $mixRegex )) {
-            self::$arrWheres [$mixRegex] = $strValue;
+            $this->arrWheres [$mixRegex] = $strValue;
         } else {
-            self::$arrWheres = self::mergeWhere_ ( self::$arrWheres, $mixRegex );
+            $this->arrWheres = $this->mergeWhere_ ( $this->arrWheres, $mixRegex );
         }
     }
     
@@ -211,11 +211,11 @@ class router {
      * @param string $strValue            
      * @return void
      */
-    static public function regexDomain($mixRegex, $strValue = '') {
+    public function regexDomain($mixRegex, $strValue = '') {
         if (is_string ( $mixRegex )) {
-            self::$arrDomainWheres [$mixRegex] = $strValue;
+            $this->arrDomainWheres [$mixRegex] = $strValue;
         } else {
-            self::$arrDomainWheres = self::mergeWhere_ ( self::$arrDomainWheres, $mixRegex );
+            $this->arrDomainWheres = $this->mergeWhere_ ( $this->arrDomainWheres, $mixRegex );
         }
     }
     
@@ -231,8 +231,8 @@ class router {
      *            router 对应路由规则
      * @return void
      */
-    static public function domain($strDomain, $mixUrl, $in = []) {
-        $in = self::mergeIn_ ( [ 
+    public function domain($strDomain, $mixUrl, $in = []) {
+        $in = $this->mergeIn_ ( [ 
                 'prepend' => false,
                 'params' => [ ],
                 'domain_where' => [ ],
@@ -242,7 +242,7 @@ class router {
         // 闭包直接转接到分组
         if ($mixUrl instanceof \Closure) {
             $in ['domain'] = $strDomain;
-            self::group ( $in, $mixUrl );
+            $this->group ( $in, $mixUrl );
         }         
 
         // 注册域名
@@ -254,30 +254,30 @@ class router {
             ];
             
             // 合并参数正则
-            $arrDomainWheres = self::$arrDomainWheres;
+            $arrDomainWheres = $this->arrDomainWheres;
             if (! empty ( $in ['domain_where'] ) && is_array ( $in ['domain_where'] )) {
-                $arrDomainWheres = self::mergeWhere_ ( $in ['domain_where'], $arrDomainWheres );
+                $arrDomainWheres = $this->mergeWhere_ ( $in ['domain_where'], $arrDomainWheres );
             }
             
             // 主域名只有一个，路由可以有多个
             $strDomainBox = $arrDomain ['router'] === false ? 'main' : 'rule';
-            if (! isset ( self::$arrDomains [$strDomain] )) {
-                self::$arrDomains [$strDomain] = [ ];
+            if (! isset ( $this->arrDomains [$strDomain] )) {
+                $this->arrDomains [$strDomain] = [ ];
             }
-            self::$arrDomains [$strDomain] ['domain_where'] = $arrDomainWheres;
-            if (! isset ( self::$arrDomains [$strDomain] [$strDomainBox] )) {
-                self::$arrDomains [$strDomain] [$strDomainBox] = [ ];
+            $this->arrDomains [$strDomain] ['domain_where'] = $arrDomainWheres;
+            if (! isset ( $this->arrDomains [$strDomain] [$strDomainBox] )) {
+                $this->arrDomains [$strDomain] [$strDomainBox] = [ ];
             }
             
             // 纯域名绑定只支持一个，可以被覆盖
             if ($arrDomain ['router'] === false) {
-                self::$arrDomains [$strDomain] [$strDomainBox] = $arrDomain;
+                $this->arrDomains [$strDomain] [$strDomainBox] = $arrDomain;
             } else {
                 // 优先插入
                 if ($in ['prepend'] === true) {
-                    array_unshift ( self::$arrDomains [$strDomain] [$strDomainBox], $arrDomain );
+                    array_unshift ( $this->arrDomains [$strDomain] [$strDomainBox], $arrDomain );
                 } else {
-                    array_push ( self::$arrDomains [$strDomain] [$strDomainBox], $arrDomain );
+                    array_push ( $this->arrDomains [$strDomain] [$strDomainBox], $arrDomain );
                 }
             }
         }
@@ -296,9 +296,9 @@ class router {
      * @param mixed $mixRouter            
      * @return void
      */
-    static function group(array $in, $mixRouter) {
+    public function group(array $in, $mixRouter) {
         // 分组参数叠加
-        self::$arrGroupArgs = $in = self::mergeIn_ ( self::$arrGroupArgs, $in );
+        $this->arrGroupArgs = $in = $this->mergeIn_ ( $this->arrGroupArgs, $in );
         
         if ($mixRouter instanceof \Closure) {
             call_user_func_array ( $mixRouter, [ ] );
@@ -318,11 +318,11 @@ class router {
                     $arrVal [2] = [ ];
                 }
                 
-                self::import ( $strPrefix . $arrVal [0], $arrVal [1], self::mergeIn_ ( $in, $arrVal [2] ) );
+                $this->import ( $strPrefix . $arrVal [0], $arrVal [1], $this->mergeIn_ ( $in, $arrVal [2] ) );
             }
         }
         
-        self::$arrGroupArgs = [ ];
+        $this->arrGroupArgs = [ ];
     }
     
     /**
@@ -331,19 +331,19 @@ class router {
      * @param array $arrData            
      * @return void
      */
-    static public function cache($arrData) {
+    public function cache($arrData) {
         if (isset ( $arrData ['~domains~'] )) {
             foreach ( $arrData ['~domains~'] as $arrVal ) {
                 if (is_array ( $arrVal ) && isset ( $arrVal [1] )) {
                     empty ( $arrVal [2] ) && $arrVal [2] = [ ];
-                    self::domain ( $arrVal [0], $arrVal [1], $arrVal [2] );
+                    $this->domain ( $arrVal [0], $arrVal [1], $arrVal [2] );
                 }
             }
             unset ( $arrData ['~domains~'] );
         }
         
         if ($arrData) {
-            self::import ( $arrData );
+            $this->import ( $arrData );
         }
     }
     
@@ -353,8 +353,8 @@ class router {
      * @param string $sBindName            
      * @return mixed
      */
-    static public function getBind($sBindName) {
-        return isset ( self::$arrBinds [$sBindName] ) ? self::$arrBinds [$sBindName] : null;
+    public function getBind($sBindName) {
+        return isset ( $this->arrBinds [$sBindName] ) ? $this->arrBinds [$sBindName] : null;
     }
     
     /**
@@ -363,8 +363,8 @@ class router {
      * @param string $sBindName            
      * @return boolean
      */
-    static public function hasBind($sBindName) {
-        return isset ( self::$arrBinds [$sBindName] ) ? true : false;
+    public function hasBind($sBindName) {
+        return isset ( $this->arrBinds [$sBindName] ) ? true : false;
     }
     
     /**
@@ -377,8 +377,8 @@ class router {
      * @param mixed $mixBind            
      * @return void
      */
-    static public function bind($sBindName, $mixBind) {
-        self::$arrBinds [$sBindName] = $mixBind;
+    public function bind($sBindName, $mixBind) {
+        $this->arrBinds [$sBindName] = $mixBind;
     }
     
     /**
@@ -386,19 +386,19 @@ class router {
      *
      * @return void
      */
-    public static function parse() {
+    public function parse() {
         $arrNextParse = [ ];
         
         // 解析域名
         if ($GLOBALS ['~@option'] ['url_router_domain_on'] === true) {
-            if (($arrParseData = self::parseDomain_ ( $arrNextParse )) !== false) {
+            if (($arrParseData = $this->parseDomain_ ( $arrNextParse )) !== false) {
                 return $arrParseData;
             }
         }
         
         // 解析路由
         $arrNextParse = $arrNextParse ? array_column ( $arrNextParse, 'url' ) : [ ];
-        return self::parseRouter_ ( $arrNextParse );
+        return $this->parseRouter_ ( $arrNextParse );
     }
     
     /**
@@ -407,11 +407,11 @@ class router {
      * @param array $arrNextParse            
      * @return void
      */
-    private static function parseDomain_(&$arrNextParse) {
+    private function parseDomain_(&$arrNextParse) {
         $strHost = \Q::getHost ();
         
         $booFindDomain = false;
-        foreach ( self::$arrDomains as $sKey => $arrDomains ) {
+        foreach ( $this->arrDomains as $sKey => $arrDomains ) {
             
             // 直接匹配成功
             if ($strHost === $sKey || $strHost === $sKey . '.' . $GLOBALS ['~@option'] ['url_router_domain_top']) {
@@ -425,10 +425,10 @@ class router {
                 }
                 
                 // 解析匹配正则
-                $sKey = self::formatRegex_ ( $sKey );
+                $sKey = $this->formatRegex_ ( $sKey );
                 $sKey = preg_replace_callback ( "/{(.+?)}/", function ($arrMatches) use(&$arrDomains) {
                     $arrDomains ['args'] [] = $arrMatches [1];
-                    return '(' . (isset ( $arrDomains ['domain_where'] [$arrMatches [1]] ) ? $arrDomains ['domain_where'] [$arrMatches [1]] : self::DEFAULT_REGEX) . ')';
+                    return '(' . (isset ( $arrDomains ['domain_where'] [$arrMatches [1]] ) ? $arrDomains ['domain_where'] [$arrMatches [1]] : $this->DEFAULT_REGEX) . ')';
                 }, $sKey );
                 $sKey = '/^' . $sKey . '$/';
                 
@@ -438,7 +438,7 @@ class router {
                     if (isset ( $arrDomains ['args'] )) {
                         array_shift ( $arrRes );
                         foreach ( $arrDomains ['args'] as $intArgsKey => $strArgs ) {
-                            self::$arrDomainData [$strArgs] = $arrRes [$intArgsKey];
+                            $this->arrDomainData [$strArgs] = $arrRes [$intArgsKey];
                         }
                     }
                     
@@ -460,7 +460,7 @@ class router {
                     }
                     
                     // 合并域名匹配数据
-                    $arrData = array_merge ( self::$arrDomainData, $arrData );
+                    $arrData = array_merge ( $this->arrDomainData, $arrData );
                     
                     return $arrData;
                 }
@@ -474,12 +474,12 @@ class router {
      * @param array $arrNextParse            
      * @return array
      */
-    private static function parseRouter_($arrNextParse = []) {
+    private function parseRouter_($arrNextParse = []) {
         $arrData = [ ];
         $sPathinfo = $_SERVER ['PATH_INFO'];
         
         // 匹配路由
-        foreach ( self::$arrRouters as $sKey => $arrRouters ) {
+        foreach ( $this->arrRouters as $sKey => $arrRouters ) {
             // 域名过滤掉无关路由
             if ($arrNextParse && ! in_array ( $sKey, $arrNextParse )) {
                 continue;
@@ -492,10 +492,10 @@ class router {
                     $booFindFouter = true;
                 } else {
                     // 解析匹配正则
-                    $arrRouter ['regex'] = self::formatRegex_ ( $arrRouter ['regex'] );
+                    $arrRouter ['regex'] = $this->formatRegex_ ( $arrRouter ['regex'] );
                     $arrRouter ['regex'] = preg_replace_callback ( "/{(.+?)}/", function ($arrMatches) use(&$arrRouter) {
                         $arrRouter ['args'] [] = $arrMatches [1];
-                        return '(' . (isset ( $arrRouter ['where'] [$arrMatches [1]] ) ? $arrRouter ['where'] [$arrMatches [1]] : self::DEFAULT_REGEX) . ')';
+                        return '(' . (isset ( $arrRouter ['where'] [$arrMatches [1]] ) ? $arrRouter ['where'] [$arrMatches [1]] : $this->DEFAULT_REGEX) . ')';
                     }, $arrRouter ['regex'] );
                     $arrRouter ['regex'] = '/^\/' . $arrRouter ['regex'] . ((isset ( $arrRouter ['strict'] ) ? $arrRouter ['strict'] : $GLOBALS ['~@option'] ['url_router_strict']) ? '$' : '') . '/';
                     
@@ -527,7 +527,7 @@ class router {
         }
         
         // 合并域名匹配数据
-        $arrData = array_merge ( self::$arrDomainData, $arrData );
+        $arrData = array_merge ( $this->arrDomainData, $arrData );
         
         return $arrData;
     }
@@ -538,7 +538,7 @@ class router {
      * @param string $sRegex            
      * @return string
      */
-    private static function formatRegex_($sRegex) {
+    private function formatRegex_($sRegex) {
         $sRegex = \Q::escapeRegexCharacter ( $sRegex );
         
         // 还原变量特殊标记
@@ -558,7 +558,7 @@ class router {
      * @param array $arrExtend            
      * @return array
      */
-    private static function mergeIn_(array $in, array $arrExtend) {
+    private function mergeIn_(array $in, array $arrExtend) {
         // 合并特殊参数
         foreach ( [ 
                 'params',
@@ -569,7 +569,7 @@ class router {
                 if (! isset ( $in [$strType] )) {
                     $in [$strType] = [ ];
                 }
-                $in [$strType] = self::mergeWhere_ ( $in [$strType], $arrExtend [$strType] );
+                $in [$strType] = $this->mergeWhere_ ( $in [$strType], $arrExtend [$strType] );
             }
         }
         
@@ -596,7 +596,7 @@ class router {
      * @param array $arrExtend            
      * @return array
      */
-    private static function mergeWhere_(array $arrWhere, array $arrExtend) {
+    private function mergeWhere_(array $arrWhere, array $arrExtend) {
         // 合并参数正则
         if (! empty ( $arrExtend ) && is_array ( $arrExtend )) {
             if (is_string ( key ( $arrExtend ) )) {

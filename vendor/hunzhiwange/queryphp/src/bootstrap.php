@@ -110,7 +110,7 @@ class Q {
      * @return \Q\mvc\project
      */
     static public function project() {
-        return \Q\mvc\project::singleton ();
+        return \Q\mvc\project::bootstrap ();
     }
     
     /**
@@ -411,24 +411,28 @@ class Q {
      * @return mixed
      */
     static public function option($mixName = '', $mixValue = '', $mixDefault = null) {
+        static $objOption;
+        if (! $objOption) {
+            $objOption = self::project ()->option;
+        }
+        
         // 返回配置数据
         if (is_string ( $mixName ) && $mixValue === '') {
-            echo 'sdfsdf';
-            return \Q\option\option::get ( $mixName, $mixDefault );
+            return $objOption->get ( $mixName, $mixDefault );
         }        
 
         // 删除值
         elseif ($mixValue === null) {
-            \Q\option\option::delete ( $mixName );
+            $objOption->delete ( $mixName );
         }         
 
         // 设置值
         else {
-            \Q\option\option::set ( $mixName, $mixValue );
+            $objOption->set ( $mixName, $mixValue );
         }
         
         // 返回全部
-        return $GLOBALS ['~@option'] = \Q\option\option::get ();
+        return $GLOBALS ['~@option'] = $objOption->get ();
     }
     
     /**
@@ -447,7 +451,29 @@ class Q {
      * @return void
      */
     static public function log($strMessage, $strLevel = 'error', $intMessageType = 3, $strDestination = '', $strExtraHeaders = '') {
-        \Q\log\log::run ( $strMessage, $strLevel, $intMessageType, $strDestination, $strExtraHeaders );
+        static $objLog;
+        
+        if (is_null ( $strMessage )) {
+            return self::__callStatic ( 'log', func_get_args () );
+        }
+        
+        if (! $objLog) {
+            $arrOption = [ ];
+            foreach ( [ 
+                    'log_enabled',
+                    'log_error_enabled',
+                    'log_sql_enabled',
+                    'log_time_format',
+                    'log_file_size',
+                    'log_file_name' 
+            ] as $sOption ) {
+                $arrOption [$sOption] = $GLOBALS ['~@option'] [$sOption];
+            }
+            $arrOption ['path_cache_log'] = \Q::project ()->path_cache_log;
+            $objLog = self::project ()->log->setObjectOption ( $arrOption );
+        }
+        
+        $objLog->run ( $strMessage, $strLevel, $intMessageType, $strDestination, $strExtraHeaders );
     }
     
     /**
@@ -456,7 +482,13 @@ class Q {
      * @param 语言 $sValue            
      * @return mixed
      */
-    static public function i18n($sValue/*argvs*/){
+    static public function i18n($sValue = null/*argvs*/){
+        static $objI18n;
+        
+        if (is_null ( $sValue )) {
+            return self::__callStatic ( 'i18n', func_get_args () );
+        }
+        
         // 不开启
         if (! $GLOBALS ['~@option'] ['i18n_on'] || ! self::$booI18nOn) {
             if (func_num_args () > 1) { // 代入参数
@@ -465,9 +497,20 @@ class Q {
             return $sValue;
         }
         
+        if (! $objI18n) {
+            $arrOption = [ ];
+            foreach ( [ 
+                    'i18n_default',
+                    'i18n_auto_accept' 
+            ] as $sOption ) {
+                $arrOption [$sOption] = $GLOBALS ['~@option'] [$sOption];
+            }
+            $objI18n = self::project ()->i18n->setObjectOption ( $arrOption );
+        }
+        
         // 返回当地语句
         $sValue = call_user_func_array ( [ 
-                'Q\i18n\i18n',
+                $objI18n,
                 'getText' 
         ], func_get_args () );
         return $sValue;
@@ -487,6 +530,20 @@ class Q {
      * @return void|mixed
      */
     static public function cookie($sName, $mixValue = '', array $in = []) {
+        static $objCookie;
+        if (! $objCookie) {
+            $arrOption = [ ];
+            foreach ( [ 
+                    'cookie_prefix',
+                    'cookie_expire',
+                    'cookie_domain',
+                    'cookie_path' 
+            ] as $sOption ) {
+                $arrOption [$sOption] = $GLOBALS ['~@option'] [$sOption];
+            }
+            $objCookie = self::project ()->cookie->setObjectOption ( $arrOption );
+        }
+        
         $in = array_merge ( [ 
                 'life' => 0,
                 'cookie_domain' => null,
@@ -500,17 +557,17 @@ class Q {
             if (empty ( $_COOKIE )) {
                 return;
             }
-            \Q\cookie\cookie::clearCookie ( $in ['only_delete_prefix'] );
+            $objCookie->clearCookie ( $in ['only_delete_prefix'] );
             return;
         }
         
         // 如果值为null，则删除指定COOKIE
         if ($in ['life'] < 0 || $mixValue === null) {
-            \Q\cookie\cookie::deleteCookie ( $sName, $in ['cookie_domain'], $in ['prefix'] );
+            $objCookie->deleteCookie ( $sName, $in ['cookie_domain'], $in ['prefix'] );
         } elseif ($mixValue == '' && $in ['life'] >= 0) { // 如果值为空，则获取cookie
-            return \Q\cookie\cookie::getCookie ( $sName, $in ['prefix'] );
+            return $objCookie->getCookie ( $sName, $in ['prefix'] );
         } else { // 设置COOKIE
-            \Q\cookie\cookie::setCookie ( $sName, $mixValue, $in );
+            $objCookie->setCookie ( $sName, $mixValue, $in );
         }
     }
     
@@ -1572,12 +1629,23 @@ class Q {
     /**
      * 系统提供的 xml 序列化
      *
-     * @param string $sText
+     * @param array $arrData
      *            待过滤的字符串
      * @return string
      */
-    static public function xmlEncode($arrData = []) {
-        return \Q\xml\xml::xmlSerialize ( $arrData );
+    static public function xmlSerialize($arrData = []) {
+        return self::xml ()->xmlSerialize ( $arrData );
+    }
+    
+    /**
+     * 系统提供的 xml 反序列化
+     *
+     * @param string $sText
+     *            待反序列化的 xml 字符串
+     * @return string
+     */
+    static public function xmlUnSerialize($sText) {
+        return self::xml ()->xmlUnSerialize ( $sText );
     }
     
     /**
@@ -2395,6 +2463,20 @@ class Q {
     // ######################################################
     // --------------------- 私有函数 end ---------------------
     // ######################################################
+    
+    /**
+     * 拦截查询静态方法 facades
+     *
+     * @param 方法名 $sMethod            
+     * @param 参数 $arrArgs            
+     * @return boolean
+     */
+    public static function __callStatic($sMethod, $arrArgs) {
+        if (($objFacades = self::project ()->make ( $sMethod ))) {
+            return $objFacades;
+        }
+        self::throwException ( self::i18n ( '未实现 facades 方法 %s', $sMethod ) );
+    }
 }
 
 /**

@@ -32,7 +32,7 @@ class option {
      *
      * @var array
      */
-    private static $arrOption = [ ];
+    private $arrOption = [ ];
     
     /**
      * 获取配置
@@ -43,17 +43,17 @@ class option {
      *            配置默认值
      * @return string
      */
-    static public function get($sName = '', $mixDefault = null) {
+    public function get($sName = '', $mixDefault = null) {
         if ($sName === '') {
-            return self::$arrOption;
+            return $this->arrOption;
         }
         
         if (! strpos ( $sName, '.' )) {
-            return array_key_exists ( $sName, self::$arrOption ) ? self::$arrOption [$sName] : $mixDefault;
+            return array_key_exists ( $sName, $this->arrOption ) ? $this->arrOption [$sName] : $mixDefault;
         }
         
         $arrParts = explode ( '.', $sName );
-        $arrOption = &self::$arrOption;
+        $arrOption = &$this->arrOption;
         foreach ( $arrParts as $sPart ) {
             if (! isset ( $arrOption [$sPart] )) {
                 return $mixDefault;
@@ -72,19 +72,19 @@ class option {
      *            配置值
      * @return array
      */
-    static public function set($mixName, $mixValue = null) {
+    public function set($mixName, $mixValue = null) {
         if (is_array ( $mixName )) {
             foreach ( $mixName as $sKey => $mixValue ) {
-                self::set ( $sKey, $mixValue );
+                $this->set ( $sKey, $mixValue );
             }
         } else {
             if (! strpos ( $mixName, '.' )) {
-                self::$arrOption [$mixName] = $mixValue;
+                $this->arrOption [$mixName] = $mixValue;
             }
             
             $arrParts = explode ( '.', $mixName );
             $nMax = count ( $arrParts ) - 1;
-            $arrOption = &self::$arrOption;
+            $arrOption = &$this->arrOption;
             for($nI = 0; $nI <= $nMax; $nI ++) {
                 $sPart = $arrParts [$nI];
                 if ($nI < $nMax) {
@@ -106,15 +106,15 @@ class option {
      *            配置键值
      * @return string
      */
-    static public function delete($mixName) {
+    public function delete($mixName) {
         if (! strpos ( $mixName, '.' )) {
-            if (isset ( self::$arrOption [$mixName] )) {
-                unset ( self::$arrOption [$mixName] );
+            if (isset ( $this->arrOption [$mixName] )) {
+                unset ( $this->arrOption [$mixName] );
             }
         } else {
             $arrParts = explode ( '.', $mixName );
             $nMax = count ( $arrParts ) - 1;
-            $arrOption = &self::$arrOption;
+            $arrOption = &$this->arrOption;
             for($nI = 0; $nI <= $nMax; $nI ++) {
                 $sPart = $arrParts [$nI];
                 if ($nI < $nMax) {

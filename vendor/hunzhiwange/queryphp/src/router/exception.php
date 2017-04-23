@@ -18,7 +18,7 @@
  * @date 2017.04.17
  * @since 4.0
  */
-namespace Q\request;
+namespace Q\router;
 
 /**
  * 路由组件异常捕获

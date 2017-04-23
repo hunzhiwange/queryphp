@@ -20,12 +20,14 @@
  */
 namespace Q\mvc;
 
+use Q\contract\mvc\action as contract_action;
+
 /**
  * 基类方法器
  *
  * @author Xiangmin Liu
  */
-abstract class action {
+abstract class action implements contract_action {
     
     /**
      * 父控制器
@@ -35,60 +37,15 @@ abstract class action {
     protected $objController = null;
     
     /**
-     * 构造函数
-     *
-     * @param Q\mvc\app $oApp            
-     * @param 过滤后参数 $in            
-     * @return void
-     */
-    public function __construct($oApp = null, $in = []) {
-        ! $oApp && $oApp = \Q::app ();
-        if (! ($this->objController = $oApp->getController ( $oApp->controller_name ))) {
-            $this->objController = new controller ( $oApp, $in );
-        }
-    }
-    
-    /**
-     * 赋值
-     *
-     * @param mixed $mixName            
-     * @param mixed $Value            
-     * @return void
-     */
-    public function __set($mixName, $mixValue) {
-        $this->objController->assign ( $mixName, $mixValue );
-    }
-    
-    /**
-     * 获取值
-     *
-     * @param string $sName            
-     * @return mixed
-     */
-    public function &__get($sName) {
-        $mixValue = $this->objController->getAssign ( $sName );
-        return $mixValue;
-    }
-    
-    /**
      * 返回父控制器
      *
      * @return Q\mvc\controller
      */
     public function controller() {
+        $this->initController_ ();
         return $this->objController;
     }
     
-    /**
-     * 方法执行抽象函数
-     *
-     * @param object $that
-     *            Q\mvc\action
-     * @param array $in            
-     * @return void
-     */
-    // abstract public function run($that = null, $in = []);
-    abstract public function run();
     /**
      * 实现 isPost,isGet等
      *
@@ -97,9 +54,25 @@ abstract class action {
      * @return boolean
      */
     public function __call($sMethod, $arrArgs) {
+        $this->initController_ ();
         return call_user_func_array ( [ 
                 $this->objController,
                 $sMethod 
         ], $arrArgs );
+    }
+    
+    /**
+     * 初始化控制器
+     *
+     * @return void
+     */
+    protected function initController_() {
+        if (is_null ( $this->objController )) {
+            return;
+        }
+        
+        if (! ($this->objController = \Q::app ()->getController ( \Q::project ()->controller_name ))) {
+            $this->objController = \Q::app ()->controllerDefault ();
+        }
     }
 }

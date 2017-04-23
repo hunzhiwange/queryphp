@@ -28,52 +28,6 @@ namespace Q\mvc;
 class controller {
     
     /**
-     * app
-     *
-     * @var Q\mvc\app
-     */
-    protected $oApp = null;
-    
-    /**
-     * 共享视图
-     *
-     * @var Q\mvc\view
-     */
-    protected static $oShareView = null;
-    
-    /**
-     * in 参数
-     *
-     * @var array
-     */
-    public $in = [ ];
-    
-    /**
-     * 构造函数
-     *
-     * @param Q\mvc\app $oApp            
-     * @param 过滤后参数 $in            
-     * @return void
-     */
-    public function __init($oApp = null, $in = []) {
-        // 检查视图和APP
-        if (! $oApp) {
-            $oApp = \Q::app ();
-        }
-        if (! self::$oShareView) {
-            self::createShareView ();
-        }
-        
-        $this->oApp = $oApp;
-        
-        // 属性 && 赋值
-        $this->in = $in;
-        $this->assign ( 'in', $in );
-        $this->assign ( 'PROJECT', $oApp );
-        $this->assign ( 'CONTROLLER', $this );
-    }
-    
-    /**
      * 赋值
      *
      * @param mixed $mixName            
@@ -107,34 +61,36 @@ class controller {
     public function action($sActionName, $arrArgs = []) {
         // 判断方法是否存在
         if (method_exists ( $this, $sActionName )) {
-            $this->$sActionName ();
+            return $this->$sActionName ();
         } else {
-            
             // 判断是否已经注册过
-            // if (($objAction = $this->oApp->getAction ( $this->oApp->controller_name, $sActionName ))) {
-            // $this->oApp->action ( $this->oApp->controller_name, $sActionName );
-            // } else {
-            $sActionNameOld = $sActionName;
-            $sActionName = get_class ( $this ) . '\\' . $sActionName;
-            
-            if (\Q::classExists ( $sActionName, false, true )) {
-                $oAction = new $sActionName ();
-                if (method_exists ( $oAction, 'run' )) {
-                    $oAction = [ 
-                            $oAction,
-                            'run' 
-                    ];
-                    
-                    // 注册控制器
-                    $this->oApp->registerAction ( $this->oApp->controller_name, $sActionName, $oAction );
-                    
-                    // 执行
-                    call_user_func_array ( $oAction, $arrArgs );
+            if (\Q::app ()->hasAction ( \Q::project ()->controller_name, $sActionName )) {
+                return \Q::app ()->action ( \Q::project ()->controller_name, $sActionName );
+            }             
+
+            // 读取默认方法器
+            else {
+                $sActionNameOld = $sActionName;
+                $sActionName = get_class ( $this ) . '\\' . $sActionName;
+                if (\Q::classExists ( $sActionName, false, true )) {
+                    $oAction = new $sActionName ();
+                    if (method_exists ( $oAction, 'run' )) {
+                        $oAction = [ 
+                                $oAction,
+                                'run' 
+                        ];
+                        
+                        // 注册控制器
+                        \Q::app ()->registerAction ( \Q::project ()->controller_name, $sActionName, $oAction );
+                        
+                        // 执行
+                        return call_user_func_array ( $oAction, $arrArgs );
+                    } else {
+                        \Q::throwException ( \Q::i18n ( 'Q\mvc\action 对象不存在执行入口  run' ), 'Q\mvc\exception' );
+                    }
                 } else {
-                    \Q::throwException ( \Q::i18n ( 'Q\mvc\action 对象不存在执行入口  run' ), 'Q\mvc\exception' );
+                    \Q::throwException ( \Q::i18n ( '方法 %s 不存在', $sActionNameOld ), 'Q\mvc\exception' );
                 }
-            } else {
-                \Q::throwException ( \Q::i18n ( '方法 %s 不存在', $sActionNameOld ), 'Q\mvc\exception' );
             }
         }
     }
@@ -147,7 +103,7 @@ class controller {
      * @return this
      */
     public function assign($Name, $Value = '') {
-        self::$oShareView->assign ( $Name, $Value );
+        \Q::view ()->assign ( $Name, $Value );
         return $this;
     }
     
@@ -167,8 +123,7 @@ class controller {
                 'content_type' => 'text/html',
                 'return' => false 
         ], $in );
-        
-        return self::$oShareView->display ( $sThemeFile, $in );
+        return \Q::view ()->display ( $sThemeFile, $in );
     }
     
     /**
@@ -178,7 +133,7 @@ class controller {
      * @return mixed
      */
     protected function getAssign($sName) {
-        $value = self::$oShareView->getVar ( $sName );
+        $value = \Q::view ()->getVar ( $sName );
         return $value;
     }
     
@@ -199,10 +154,8 @@ class controller {
                 'url' => '',
                 'time' => 3 
         ], $in );
-        
         $this->assign ( $in );
         $this->display ( $GLOBALS ['~@option'] ['theme_action_fail'] );
-        exit ();
     }
     
     /**
@@ -222,10 +175,8 @@ class controller {
                 'url' => '',
                 'time' => 1 
         ], $in );
-        
         $this->assign ( $in );
         $this->display ( $GLOBALS ['~@option'] ['theme_action_success'] );
-        exit ();
     }
     
     /**
@@ -243,7 +194,6 @@ class controller {
                 'status' => 'success',
                 'message' => $sMessage 
         ], $in );
-        
         header ( "Content-Type:text/html; charset=utf-8" );
         exit ( \Q::jsonEncode ( $in ) );
     }
@@ -282,22 +232,7 @@ class controller {
                     \Q::throwException ( 'Can not find method.', 'Q\mvc\exception' );
                 }
             default :
-                try {
-                    $this->action ( $sMethod, $arrArgs );
-                } catch ( Exception $e ) {
-                }
+                return $this->action ( $sMethod, $arrArgs );
         }
-    }
-    
-    /**
-     * 创建共享的视图
-     *
-     * @return \Q\base\view
-     */
-    static public function createShareView() {
-        if (! self::$oShareView) {
-            self::$oShareView = view::run ();
-        }
-        return self::$oShareView;
     }
 }

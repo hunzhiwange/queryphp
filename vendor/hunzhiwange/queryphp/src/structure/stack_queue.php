@@ -20,12 +20,14 @@
  */
 namespace Q\structure;
 
+use Q\contract\structure\stack_queue as contract_stack_queue;
+
 /**
  * 队列和栈抽象类
  *
  * @author Xiangmin Liu
  */
-abstract class stack_queue {
+abstract class stack_queue implements contract_stack_queue {
     
     /**
      * 元素集合
@@ -70,19 +72,4 @@ abstract class stack_queue {
     public function reset() {
         return reset ( $this->arrElements );
     }
-    
-    /**
-     * 加载元素
-     *
-     * @param mixed $mixItem            
-     * @return void
-     */
-    abstract public function in($mixItem);
-    
-    /**
-     * 释放元素
-     *
-     * @return mixed
-     */
-    abstract public function out();
 }

@@ -21,7 +21,7 @@
 namespace Q\mvc;
 
 use Q\factory\container;
-use Q\request\request;
+use Q\mvc\view;
 
 /**
  * 项目管理
@@ -103,11 +103,14 @@ class project extends container {
         // 项目基础配置
         $this->setOption_ ( $arrOption )->
         
-        // 注册框架基础工厂
-        registerMvcFactory_ ()->
+        // 注册别名
+        registerAlias_ ()->
         
-        // 注册核心工厂提供者
-        registerCoreFactory_ ()->
+        // 注册基础工厂提供者
+        registerBaseFactory_ ()->
+        
+        // 注册框架核心工厂
+        registerMvcFactory_ ()->
         
         // 初始化项目路径
         setPath_ ();
@@ -119,7 +122,7 @@ class project extends container {
      * @return void
      */
     public function run() {
-        $this->make ( bootstrap::class )->run ( $this->make ( request::class ) );
+        $this->make ( bootstrap::class )->run ();
     }
     
     /**
@@ -128,7 +131,7 @@ class project extends container {
      * @param array $arrOption            
      * @return Q\mvc\project
      */
-    static public function singleton($arrOption = []) {
+    static public function bootstrap($arrOption = []) {
         if (self::$objProject !== null) {
             return self::$objProject;
         } else {
@@ -229,36 +232,97 @@ class project extends container {
     }
     
     /**
+     * 框架基础工厂
+     *
+     * @return $this
+     */
+    private function registerBaseFactory_() {
+        $arrBaseFactory = [ 
+                'Q\mvc\base_factory' 
+        ];
+        foreach ( $arrBaseFactory as $strFactory ) {
+            call_user_func_array ( [ 
+                    new $strFactory ( $this ),
+                    'register' 
+            ], [ ] );
+        }
+        return $this;
+    }
+    
+    /**
      * 框架 MVC 基础工厂
      *
      * @return $this
      */
     private function registerMvcFactory_() {
-        // 注册 project
-        $this->register ( 'project', $this );
+        // 注册启动程序
+        $this->register ( new bootstrap ( $this, $this->arrOption ) );
         
         // 注册 app
         $this->register ( app::class, function (project $objProject, $sApp, $arrOption = []) {
             return app::instance ( $objProject, $sApp, $arrOption );
         } );
         
-        // 注册请求
-        $this->register ( request::class, function () {
-            return new request ();
+        // 注册 controller
+        $this->register ( 'Q\mvc\controller', function () {
+            return new controller ( func_get_args () );
         } );
         
-        // 注册启动程序
-        $this->register ( new bootstrap ( $this, $this->arrOption ) );
+        // 注册 action
+        $this->register ( 'Q\mvc\action', function () {
+            return new action ( func_get_args () );
+        } );
+        
+        // 注册 view
+        $this->singleton ( 'Q\mvc\view', function () {
+            return view::run ();
+        } );
         
         return $this;
     }
     
     /**
-     * 框架核心工厂
+     * 注册别名
      *
-     * @return $this
+     * @return void
      */
-    private function registerCoreFactory_() {
+    private function registerAlias_() {
+        $this->alias ( [
+                // cookie
+                'cookie' => 'Q\cookie\cookie',
+                
+                // i18n
+                'i18n' => 'Q\i18n\i18n',
+                'i18n_tool' => 'Q\i18n\tool',
+                
+                // mvc
+                'controller' => 'Q\mvc\controller',
+                'action' => 'Q\mvc\action',
+                'view' => 'Q\mvc\view',
+                
+                // option
+                'option' => 'Q\option\option',
+                
+                // request
+                'request' => 'Q\request\request',
+                'response' => 'Q\request\response',
+                
+                // router
+                'router' => 'Q\router\router',
+                
+                // structure
+                'collection' => 'Q\structure\collection',
+                'queue' => 'Q\structure\queue',
+                'stack' => 'Q\structure\stack',
+                
+                // view
+                'view_compilers' => 'Q\view\compilers',
+                'view_parsers' => 'Q\view\parsers',
+                'view_theme' => 'Q\view\theme',
+                
+                // xml
+                'xml' => 'Q\xml\xml' 
+        ] );
         return $this;
     }
     

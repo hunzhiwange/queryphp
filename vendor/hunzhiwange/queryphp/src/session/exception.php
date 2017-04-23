@@ -18,7 +18,7 @@
  * @date 2017.04.17
  * @since 4.0
  */
-namespace Q\request;
+namespace Q\session;
 
 /**
  * session 组件异常捕获

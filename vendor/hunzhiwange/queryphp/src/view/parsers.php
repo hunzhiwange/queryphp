@@ -20,8 +20,6 @@
  */
 namespace Q\view;
 
-use Q\structure\stack;
-
 /**
  * 分析模板
  *
@@ -143,9 +141,9 @@ class parsers {
         $arrMethods = get_class_methods ( __NAMESPACE__ . '\compilers' );
         
         // 编译器别名
-        $arrCodeMap = compilers::getCodeMapHelp ();
-        $arrNodeMap = compilers::getNodeMapHelp ();
-        $arrJsMap = compilers::getJsMapHelp ();
+        $arrCodeMap = \Q::view_compilers ()->getCodeMapHelp ();
+        $arrNodeMap = \Q::view_compilers ()->getNodeMapHelp ();
+        $arrJsMap = \Q::view_compilers ()->getJsMapHelp ();
         
         foreach ( $arrMethods as $sMethod ) {
             // 按照命名习惯排除的辅助方法和非public的方法
@@ -915,8 +913,9 @@ class parsers {
      * @return void
      */
     protected function findNodeTag(&$sCompiled) {
-        $this->oNodeStack = new stack (); // 设置一个栈
-                                          
+        // 设置一个栈
+        $this->oNodeStack = \Q::stack ();
+        
         // 判断是那种编译器
         $sNodeType = $this->bJsNode === true ? 'js' : 'node';
         
@@ -980,14 +979,14 @@ class parsers {
      */
     protected function packNode(&$sCompiled) {
         if ($this->bJsNode === true) {
-            $arrNodeTag = compilers::getJsTagHelp ();
+            $arrNodeTag = \Q::view_compilers ()->getJsTagHelp ();
             $sCompiler = 'Js';
         } else {
-            $arrNodeTag = compilers::getNodeTagHelp ();
+            $arrNodeTag = \Q::view_compilers ()->getNodeTagHelp ();
             $sCompiler = 'Node';
         }
         
-        $oTailStack = new stack ( 'array' ); // 尾标签栈
+        $oTailStack = \Q::stack ( 'array' ); // 尾标签栈
         while ( ($arrTag = $this->oNodeStack->out ()) !== null ) { // 载入节点属性分析器&依次处理所有标签
             if ($arrTag ['type'] == 'tail') { // 尾标签，加入到尾标签中
                 $oTailStack->in ( $arrTag );

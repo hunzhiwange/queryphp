@@ -20,7 +20,6 @@
  */
 namespace Q\event;
 
-use Exception;
 use Q\factory\factory;
 
 /**

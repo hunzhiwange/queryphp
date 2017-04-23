@@ -20,6 +20,8 @@
  */
 namespace Q\i18n;
 
+use Q\traits\object_option;
+
 /**
  * 语言管理类
  *
@@ -27,33 +29,45 @@ namespace Q\i18n;
  */
 class i18n {
     
+    use object_option;
+    
     /**
      * 当前语言上下文
      *
      * @var string
      */
-    private static $sI18nName = NULL;
+    private $sI18nName = NULL;
     
     /**
      * 默认语言上下文
      *
      * @var string
      */
-    private static $sDefaultI18nName = 'zh-cn';
+    private $sDefaultI18nName = 'zh-cn';
     
     /**
      * 语言数据
      *
      * @var array
      */
-    private static $arrText = [ ];
+    private $arrText = [ ];
     
     /**
      * 语言 cookie
      *
      * @var string
      */
-    private static $sCookieName = 'i18n';
+    private $sCookieName = 'i18n';
+    
+    /**
+     * 配置
+     *
+     * @var array
+     */
+    protected $arrObjectOption = [ 
+            'i18n_default' => 'zh-cn',
+            'i18n_auto_accept' => TRUE 
+    ];
     
     /**
      * 获取语言text
@@ -61,9 +75,9 @@ class i18n {
      * @param 当前的语言 $sValue            
      * @return string
      */
-    static public function getText($sValue/*Argvs*/){
-        $sContext = self::getContext ();
-        $sValue = $sContext && isset ( self::$arrText [$sContext] [$sValue] ) ? self::$arrText [$sContext] [$sValue] : $sValue;
+    public function getText($sValue/*Argvs*/){
+        $sContext = $this->getContext ();
+        $sValue = $sContext && isset ( $this->arrText [$sContext] [$sValue] ) ? $this->arrText [$sContext] [$sValue] : $sValue;
         if (func_num_args () > 1) {
             $arrArgs = func_get_args ();
             $arrArgs [0] = $sValue;
@@ -80,15 +94,15 @@ class i18n {
      * @param $arrData 语言包数据            
      * @return void
      */
-    static public function addI18n($sI18nName, $arrData = []) {
+    public function addI18n($sI18nName, $arrData = []) {
         if (! $sI18nName || ! is_string ( $sI18nName )) {
             \Q::errorMessage ( 'I18n name not allowed empty!' );
         }
         
-        if (array_key_exists ( $sI18nName, self::$arrText )) {
-            self::$arrText [$sI18nName] = array_merge ( self::$arrText [$sI18nName], $arrData );
+        if (array_key_exists ( $sI18nName, $this->arrText )) {
+            $this->arrText [$sI18nName] = array_merge ( $this->arrText [$sI18nName], $arrData );
         } else {
-            self::$arrText [$sI18nName] = $arrData;
+            $this->arrText [$sI18nName] = $arrData;
         }
     }
     
@@ -97,8 +111,8 @@ class i18n {
      *
      * @return string
      */
-    static public function parseContext() {
-        $sCookieName = self::getCookieName ();
+    public function parseContext() {
+        $sCookieName = $this->getCookieName ();
         
         if (isset ( $_GET [\Q\mvc\project::ARGS_I18N] )) {
             $sI18nSet = $_GET [\Q\mvc\project::ARGS_I18N];
@@ -106,16 +120,16 @@ class i18n {
         } elseif ($sCookieName) {
             $sI18nSet = \Q::cookie ( $sCookieName );
             if (empty ( $sI18nSet )) {
-                $sI18nSet = $GLOBALS ['~@option'] ['i18n_default'];
+                $sI18nSet = $this->getObjectOption_ ( 'i18n_default' );
             }
-        } elseif ($GLOBALS ['~@option'] ['i18n_auto_accept'] && isset ( $_SERVER ['HTTP_ACCEPT_LANGUAGE'] )) {
+        } elseif ($this->getObjectOption_ ( 'i18n_auto_accept' ) && isset ( $_SERVER ['HTTP_ACCEPT_LANGUAGE'] )) {
             preg_match ( '/^([a-z\-]+)/i', $_SERVER ['HTTP_ACCEPT_LANGUAGE'], $arrMatches );
             $sI18nSet = $arrMatches [1];
         } else {
-            $sI18nSet = $GLOBALS ['~@option'] ['i18n_default'];
+            $sI18nSet = $this->getObjectOption_ ( 'i18n_default' );
         }
         
-        self::setContext ( $sI18nSet );
+        $this->setContext ( $sI18nSet );
         
         return $sI18nSet;
     }
@@ -127,8 +141,8 @@ class i18n {
      *            $sI18nName
      * @return void
      */
-    static public function setContext($sI18nName) {
-        self::$sI18nName = $sI18nName;
+    public function setContext($sI18nName) {
+        $this->sI18nName = $sI18nName;
     }
     
     /**
@@ -138,8 +152,8 @@ class i18n {
      *            $sI18nName
      * @return void
      */
-    static public function setDefaultContext($sI18nName) {
-        self::$sDefaultI18nName = $sI18nName;
+    public function setDefaultContext($sI18nName) {
+        $this->sDefaultI18nName = $sI18nName;
     }
     
     /**
@@ -149,8 +163,8 @@ class i18n {
      *            cookie名字
      * @return void
      */
-    static public function setCookieName($sCookieName) {
-        return self::$sCookieName == $sCookieName;
+    public function setCookieName($sCookieName) {
+        return $this->sCookieName == $sCookieName;
     }
     
     /**
@@ -158,8 +172,8 @@ class i18n {
      *
      * @return string
      */
-    static public function getDefaultContext() {
-        return self::$sDefaultI18nName;
+    public function getDefaultContext() {
+        return $this->sDefaultI18nName;
     }
     
     /**
@@ -167,8 +181,8 @@ class i18n {
      *
      * @return string
      */
-    static public function getCookieName() {
-        return self::$sCookieName;
+    public function getCookieName() {
+        return $this->sCookieName;
     }
     
     /**
@@ -176,7 +190,7 @@ class i18n {
      *
      * @return string
      */
-    static public function getContext() {
-        return self::$sI18nName;
+    public function getContext() {
+        return $this->sI18nName;
     }
 }

@@ -2,17 +2,17 @@
 /*
  * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
  * ©2010-2017 http://queryphp.com All rights reserved.
- * 
+ *
  * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
+ * # ____ ______ _ _ ______ #
+ * # / \ ___ _ __ _ _ | ___ \| | | || ___ \ #
+ * # | ( ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ / #
+ * # \____/ |___|| __/| | | |_| || __/ | _ || __/ #
+ * # \__ | \___ |_| \__ || | | | | || | #
+ * # Query Yet Simple __/ |\_| |_| |_|\_| #
+ * # |___ / Since 2010.10.03 #
  * ##########################################################
- * 
+ *
  * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
  * @date 2016.11.19
@@ -20,12 +20,28 @@
  */
 namespace Q\cookie;
 
+use Q\traits\object_option;
+
 /**
  * 对 PHP 原生Cookie 函数库的封装
  *
  * @author Xiangmin Liu
  */
 class cookie {
+    
+    use object_option;
+    
+    /**
+     * 配置
+     *
+     * @var array
+     */
+    protected $arrObjectOption = [ 
+            'cookie_prefix' => 'q_',
+            'cookie_expire' => 86400,
+            'cookie_domain' => '',
+            'cookie_path' => '/' 
+    ];
     
     /**
      * 设置 COOKIE
@@ -39,7 +55,7 @@ class cookie {
      *            http_only
      * @return void
      */
-    public static function setCookie($sName, $mixValue = '', array $in = []) {
+    public function setCookie($sName, $mixValue = '', array $in = []) {
         $in = array_merge ( [ 
                 'life' => 0,
                 'cookie_domain' => null,
@@ -52,7 +68,7 @@ class cookie {
             \Q::throwException ( \Q::i18n ( 'cookie 值必须是一个 PHP 标量' ), 'Q\cookie\exception' );
         }
         
-        $sName = ($in ['prefix'] ? $GLOBALS ['~@option'] ['cookie_prefix'] : '') . $sName;
+        $sName = ($in ['prefix'] === true ? $this->getObjectOption_ ( 'cookie_prefix' ) : '') . $sName;
         
         if ($mixValue === null || $in ['life'] < 0) {
             $in ['life'] = - 1;
@@ -62,13 +78,13 @@ class cookie {
         } else {
             $_COOKIE [$sName] = $mixValue;
             if ($in ['life'] !== NULL && $in ['life'] === 0) {
-                $in ['life'] = $GLOBALS ['~@option'] ['cookie_expire'];
+                $in ['life'] = $this->getObjectOption_ ( 'cookie_expire' );
             }
         }
         
         $in ['life'] = $in ['life'] > 0 ? time () + $in ['life'] : ($in ['life'] < 0 ? time () - 31536000 : null);
-        $in ['cookie_domain'] = $in ['cookie_domain'] !== null ? $in ['cookie_domain'] : $GLOBALS ['~@option'] ['cookie_domain'];
-        setcookie ( $sName, $mixValue, $in ['life'], $GLOBALS ['~@option'] ['cookie_path'], $in ['cookie_domain'], $_SERVER ['SERVER_PORT'] == 443 ? 1 : 0, $in ['http_only'] );
+        $in ['cookie_domain'] = $in ['cookie_domain'] !== null ? $in ['cookie_domain'] : $this->getObjectOption_ ( 'cookie_domain' );
+        setcookie ( $sName, $mixValue, $in ['life'], $this->getObjectOption_ ( 'cookie_path' ), $in ['cookie_domain'], $_SERVER ['SERVER_PORT'] == 443 ? 1 : 0, $in ['http_only'] );
     }
     
     /**
@@ -78,8 +94,8 @@ class cookie {
      * @param string $bPrefix            
      * @return mixed
      */
-    public static function getCookie($sName, $bPrefix = true) {
-        $sName = ($bPrefix ? $GLOBALS ['~@option'] ['cookie_prefix'] : '') . $sName;
+    public function getCookie($sName, $bPrefix = true) {
+        $sName = ($bPrefix ? $this->getObjectOption_ ( 'cookie_prefix' ) : '') . $sName;
         return isset ( $_COOKIE [$sName] ) ? $_COOKIE [$sName] : null;
     }
     
@@ -91,7 +107,7 @@ class cookie {
      * @param string $bPrefix            
      * @return void
      */
-    public static function deleteCookie($sName, $sCookieDomain = null, $bPrefix = true) {
+    public function deleteCookie($sName, $sCookieDomain = null, $bPrefix = true) {
         self::setCookie ( $sName, null, [ 
                 'life' => - 1,
                 'cookie_domain' => $sCookieDomain,
@@ -106,11 +122,12 @@ class cookie {
      * @param string $sCookieDomain            
      * @return cookie 顶层数量
      */
-    public static function clearCookie($bOnlyDeletePrefix = true, $sCookieDomain = null) {
+    public function clearCookie($bOnlyDeletePrefix = true, $sCookieDomain = null) {
         $nCookie = count ( $_COOKIE );
+        $strCookiePrefix = $this->getObjectOption_ ( 'cookie_prefix' );
         foreach ( $_COOKIE as $sKey => $Val ) {
-            if ($bOnlyDeletePrefix === true && $GLOBALS ['~@option'] ['cookie_prefix']) {
-                if (strpos ( $sKey, $GLOBALS ['~@option'] ['cookie_prefix'] ) === 0) {
+            if ($bOnlyDeletePrefix === true && $strCookiePrefix) {
+                if (strpos ( $sKey, $strCookiePrefix ) === 0) {
                     self::deleteCookie ( $sKey, $sCookieDomain, false );
                 }
             } else {

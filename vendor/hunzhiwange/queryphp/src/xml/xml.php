@@ -70,27 +70,16 @@ class xml {
     private $sData;
     
     /**
-     * 构造函数
-     *
-     * @return void
-     */
-    public function __construct() {
-        $this->resParser = xml_parser_create ();
-        xml_parser_set_option ( $this->resParser, XML_OPTION_CASE_FOLDING, false );
-        xml_set_object ( $this->resParser, $this );
-        xml_set_element_handler ( $this->resParser, 'open', 'close' );
-        xml_set_character_data_handler ( $this->resParser, 'data' );
-    }
-    
-    /**
      * xml 反序列化
      *
      * @param string $sXml            
      * @return resource
      */
-    static public function xmlUnSerialize($sXml) {
-        $oXmlParser = new Xml ();
-        return $oXmlParser->parse ( $sXml );
+    public function xmlUnSerialize($sXml) {
+        $this->initParser_ ();
+        $arrData = $this->parse_ ( $sXml );
+        $this->destroyParser_ ();
+        return $arrData;
     }
     
     /**
@@ -103,7 +92,7 @@ class xml {
      * @param string $sCharset            
      * @return string
      */
-    static public function xmlSerialize(&$arrData, $bHtmlOn = true, $nLevel = 0, $sPriorKey = NULL, $sCharset = 'UTF-8') {
+    public function xmlSerialize(&$arrData, $bHtmlOn = true, $nLevel = 0, $sPriorKey = NULL, $sCharset = 'UTF-8') {
         if ($nLevel == 0) {
             ob_start ();
             echo '<?xml version="1.0" encoding="' . $sCharset . '"?>' . "\n" . '<root>' . "\n";
@@ -150,7 +139,7 @@ class xml {
      * @param string $sData            
      * @return resource
      */
-    private function parse(&$sData) {
+    private function parse_(&$sData) {
         $this->arrDocument = [ ];
         $this->arrStack = [ ];
         $this->arrParent = &$this->arrDocument;
@@ -165,12 +154,12 @@ class xml {
      * @param array $arrAttributes            
      * @return void
      */
-    private function open(&$resParser, $sTag, $arrAttributes) {
+    private function open_(&$resParser, $sTag, $arrAttributes) {
         $this->sData = '';
         $this->sLastOpenedTag = $sTag;
         if (is_array ( $this->arrParent ) and array_key_exists ( $sTag, $this->arrParent )) {
             if (is_array ( $this->arrParent [$sTag] ) and array_key_exists ( 0, $this->arrParent [$sTag] )) {
-                $nKey = $tthis->countNumericItems ( $this->arrParent [$sTag] );
+                $nKey = $tthis->countNumericItems_ ( $this->arrParent [$sTag] );
             } else {
                 if (array_key_exists ( "$sTag attr", $this->arrParent )) {
                     $arrValue = [ 
@@ -207,7 +196,7 @@ class xml {
      * @param string $sTag            
      * @return void
      */
-    private function close(&$resParser, $sTag) {
+    private function close_(&$resParser, $sTag) {
         if ($this->sLastOpenedTag == $sTag) {
             $this->arrParent = $this->sData;
             $this->sLastOpenedTag = NULL;
@@ -220,21 +209,47 @@ class xml {
     }
     
     /**
+     * 数据设置
+     *
+     * @param resouce $resParser            
+     * @param string $sTag            
+     * @return void
+     */
+    private function data_(&$oParser, $sData) {
+        if ($this->sLastOpenedTag != NULL) {
+            $this->sData .= $sData;
+        }
+    }
+    
+    /**
      * 数字项数量
      *
      * @param array $array            
      * @return number
      */
-    private function countNumericItems(&$array) {
+    private function countNumericItems_(&$array) {
         return is_array ( $array ) ? count ( array_filter ( array_keys ( $array ), 'is_numeric' ) ) : 0;
     }
     
     /**
-     * 析构函数
+     * 初始化 xml 分析器句柄
      *
      * @return void
      */
-    public function __destruct() {
+    private function initParser_() {
+        $this->resParser = xml_parser_create ();
+        xml_parser_set_option ( $this->resParser, XML_OPTION_CASE_FOLDING, false );
+        xml_set_object ( $this->resParser, $this );
+        xml_set_element_handler ( $this->resParser, 'open_', 'close_' );
+        xml_set_character_data_handler ( $this->resParser, 'data_' );
+    }
+    
+    /**
+     * 关闭 xml 分析器句柄
+     *
+     * @return void
+     */
+    private function destroyParser_() {
         xml_parser_free ( $this->resParser );
     }
 }

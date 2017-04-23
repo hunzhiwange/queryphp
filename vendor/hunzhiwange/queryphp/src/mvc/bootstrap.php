@@ -20,8 +20,6 @@
  */
 namespace Q\mvc;
 
-use Q\request\request;
-
 /**
  * 启动程序
  *
@@ -37,18 +35,18 @@ class bootstrap {
     private $objProject = null;
     
     /**
-     * 项目配置
-     *
-     * @var array
-     */
-    private $arrOption = [ ];
-    
-    /**
      * 请求
      *
      * @var Q\request\request
      */
     private $objRequest = null;
+    
+    /**
+     * 项目配置
+     *
+     * @var array
+     */
+    private $arrOption = [ ];
     
     /**
      * 执行事件流程
@@ -71,17 +69,16 @@ class bootstrap {
      */
     public function __construct(project $objProject = null, $arrOption = []) {
         $this->objProject = $objProject;
+        $this->objRequest = $this->objProject->request;
         $this->arrOption = $arrOption;
     }
     
     /**
      * 执行初始化事件
      *
-     * @param $objRequest Q\request\request            
      * @return void
      */
-    public function run(request $objRequest) {
-        $this->objRequest = $objRequest;
+    public function run() {
         foreach ( $this->arrEvent as $strEvent ) {
             $strEvent = $strEvent . '_';
             $this->{$strEvent} ();

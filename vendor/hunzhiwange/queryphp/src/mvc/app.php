@@ -20,10 +20,6 @@
  */
 namespace Q\mvc;
 
-use Q\router\router;
-use Q\i18n\i18n;
-use Q\i18n\tool;
-use Q\request\request;
 use Q\request\response;
 
 /**
@@ -138,7 +134,7 @@ class app {
         }
         
         // 分析资源节点
-        $this->objRequest = $this->objProject->make ( request::class );
+        $this->objRequest = $this->objProject->request;
         $this->objProject->instance ( 'controller_name', $this->objRequest->controller () );
         $this->objProject->instance ( 'action_name', $this->objRequest->action () );
         
@@ -213,13 +209,13 @@ class app {
                 }
             } else {
                 // 尝试读取默认控制器
-                $sModuleClass = '\\' . $this->objProject->app_name . '\\controller\\' . $sController;
+                $sModuleClass = '\\' . $this->objProject->app_name . '\\application\\controller\\' . $sController;
                 if (\Q::classExists ( $sModuleClass, false, true )) {
                     // 自动注入
                     if (($objAutoInjection = $this->parseAutoInjection_ ( $sModuleClass, true ))) {
                         $oModule = new $sModuleClass ( $objAutoInjection, $this->objRequest, $this );
                     } else {
-                        $oModule = new $sModuleClass ( $this->objRequest, $this );
+                        $oModule = new $sModuleClass ( 'controller', $this->objRequest, $this );
                     }
                     
                     // 注册控制器
@@ -231,8 +227,8 @@ class app {
                             $sAction 
                     ] );
                 } else {
-                    // 默认控制器不存在，尝试直接读取方法
-                    $sActionClass = '\\' . $this->objProject->app_name . '\\controller\\' . $sController . '\\' . $sAction;
+                    // 默认控制器不存在，尝试直接读取方法类
+                    $sActionClass = '\\' . $this->objProject->app_name . '\\application\\controller\\' . $sController . '\\' . $sAction;
                     if (\Q::classExists ( $sActionClass, false, true )) {
                         // 注册控制器
                         $this->registerController ( $sController, new controller ( $this->objRequest, $this ) );
@@ -376,11 +372,9 @@ class app {
      * @return boolean
      */
     public function __call($sMethod, $arrArgs) {
-        if (! $this->hasController ( 'query_default' )) {
-            $this->registerController ( 'query_default', new controller ( $this->objRequest, $this ) );
-        }
+        $objDefaultController = $this->controllerDefault ();
         return call_user_func_array ( [ 
-                $this->getController ( 'query_default' ),
+                $objDefaultController,
                 $sMethod 
         ], $arrArgs );
     }
@@ -391,12 +385,12 @@ class app {
      * @param string $sControllerName            
      * @return 注册的控制器
      */
-    private function getController($sControllerName) {
-        $mixController = router::getBind ( $this->packControllerAndAction_ ( $sControllerName ) );
+    public function getController($sControllerName) {
+        $mixController = \Q::router ()->getBind ( $this->packControllerAndAction_ ( $sControllerName ) );
         if ($mixController !== null) {
             return $mixController;
         }
-        return router::getBind ( $sControllerName );
+        return \Q::router ()->getBind ( $sControllerName );
     }
     
     /**
@@ -405,10 +399,10 @@ class app {
      * @param string $sControllerName            
      * @return boolean
      */
-    private function hasController($sControllerName) {
-        $booHasController = router::hasBind ( $this->packControllerAndAction_ ( $sControllerName ) );
+    public function hasController($sControllerName) {
+        $booHasController = \Q::router ()->hasBind ( $this->packControllerAndAction_ ( $sControllerName ) );
         if ($booHasController === false) {
-            $booHasController = router::hasBind ( $sControllerName );
+            $booHasController = \Q::router ()->hasBind ( $sControllerName );
         }
         return $booHasController;
     }
@@ -420,8 +414,8 @@ class app {
      * @param mixed $mixController            
      * @return 注册的控制器
      */
-    private function registerController($sControllerName, $mixController) {
-        router::bind ( $this->packControllerAndAction_ ( $sControllerName ), $mixController );
+    public function registerController($sControllerName, $mixController) {
+        \Q::router ()->bind ( $this->packControllerAndAction_ ( $sControllerName ), $mixController );
     }
     
     /**
@@ -430,12 +424,12 @@ class app {
      * @param string $sActionName            
      * @return 注册的方法
      */
-    private function getAction($sControllerName, $sActionName) {
-        $mixAction = router::getBind ( $this->packControllerAndAction_ ( $sControllerName, $sActionName ) );
+    public function getAction($sControllerName, $sActionName) {
+        $mixAction = \Q::router ()->getBind ( $this->packControllerAndAction_ ( $sControllerName, $sActionName ) );
         if ($mixAction !== null) {
             return $mixAction;
         }
-        return router::getBind ( $sControllerName . '/' . $sActionName );
+        return \Q::router ()->getBind ( $sControllerName . '/' . $sActionName );
     }
     
     /**
@@ -447,10 +441,10 @@ class app {
      *            方法
      * @return boolean
      */
-    private function hasAction($sControllerName, $sActionName) {
-        $booHasAction = router::hasBind ( $this->packControllerAndAction_ ( $sControllerName, $sActionName ) );
+    public function hasAction($sControllerName, $sActionName) {
+        $booHasAction = \Q::router ()->hasBind ( $this->packControllerAndAction_ ( $sControllerName, $sActionName ) );
         if ($booHasAction === false) {
-            $booHasAction = router::hasBind ( $sControllerName . '/' . $sActionName );
+            $booHasAction = \Q::router ()->hasBind ( $sControllerName . '/' . $sActionName );
         }
         return $booHasAction;
     }
@@ -467,8 +461,20 @@ class app {
      *            待注册的方法
      * @return 注册的方法
      */
-    private function registerAction($sControllerName, $sActionName, $mixAction) {
-        return router::bind ( $this->packControllerAndAction_ ( $sControllerName, $sActionName ), $mixAction );
+    public function registerAction($sControllerName, $sActionName, $mixAction) {
+        return \Q::router ()->bind ( $this->packControllerAndAction_ ( $sControllerName, $sActionName ), $mixAction );
+    }
+    
+    /**
+     * 获取注册默认控制器
+     *
+     * @return boolean
+     */
+    public function controllerDefault() {
+        if (! $this->hasController ( 'query_default' )) {
+            $this->registerController ( 'query_default', $this->objProject->make ( 'controller', $this->objRequest, $this ) );
+        }
+        return $this->getController ( 'query_default' );
     }
     
     /**
@@ -504,8 +510,8 @@ class app {
                     $this->objProject->path_app_option 
             ];
             
-            if (is_dir ( $this->objProject->path_common . '/option' )) {
-                array_unshift ( $arrOptionDir, $this->objProject->path_common . '/option' );
+            if (is_dir ( $this->objProject->path_common . '/interfaces/option' )) {
+                array_unshift ( $arrOptionDir, $this->objProject->path_common . '/interfaces/option' );
             }
             
             foreach ( $arrOptionDir as $sDir ) {
@@ -606,18 +612,19 @@ class app {
      * @return void
      */
     private function initI18n_() {
+        $objI18n = \Q::i18n ();
         if (! $GLOBALS ['~@option'] ['i18n_switch']) {
             $sI18nSet = $GLOBALS ['~@option'] ['i18n_default'];
-            i18n::setContext ( $sI18nSet );
+            $objI18n->setContext ( $sI18nSet );
         } else {
             if ($GLOBALS ['~@option'] ['cookie_langtheme_app'] === TRUE) {
                 $sCookieName = $this->objProject->app_name . '_i18n';
             } else {
                 $sCookieName = 'i18n';
             }
-            i18n::setCookieName ( $sCookieName );
-            i18n::setDefaultContext ( $GLOBALS ['~@option'] ['i18n_default'] );
-            $sI18nSet = i18n::parseContext ();
+            $objI18n->setCookieName ( $sCookieName );
+            $objI18n->setDefaultContext ( $GLOBALS ['~@option'] ['i18n_default'] );
+            $sI18nSet = $objI18n->parseContext ();
         }
         
         // 判断是否为默认主题，非默认主题载入语言包
@@ -631,7 +638,7 @@ class app {
         
         // 开发模式不用读取缓存
         if (Q_DEVELOPMENT !== 'develop' && is_file ( $this->objProject->path_cache_i18n . $sCacheFile ) && is_file ( $this->objProject->path_cache_i18n_js . $sCacheFile )) {
-            i18n::addI18n ( $sI18nSet, ( array ) (include $this->objProject->path_cache_i18n . $sCacheFile) );
+            $objI18n->addI18n ( $sI18nSet, ( array ) (include $this->objProject->path_cache_i18n . $sCacheFile) );
         } else {
             
             /**
@@ -639,7 +646,7 @@ class app {
              */
             $arrAllI18nDir = [ 
                     Q_PATH . '/~@~/i18n/' . $sI18nSet, // 系统语言包
-                    $this->objProject->path_common . '/' . $sI18nSet, // common 语言包
+                    $this->objProject->path_common . '/interfaces/' . $sI18nSet, // common 语言包
                     $this->objProject->path_app_i18n . '/' . $sI18nSet 
             ]; // 应用语言包
                
@@ -651,13 +658,13 @@ class app {
                     $arrAllI18nDir [] = $this->objProject->path_app_i18n_extend;
                 }
             }
-            $arrFiles = tool::findPoFile ( $arrAllI18nDir );
+            $arrFiles = \Q::i18n_tool ()->findPoFile ( $arrAllI18nDir );
             
             /**
              * 保存到缓存文件
              */
-            i18n::addI18n ( $sI18nSet, tool::saveToPhp ( $arrFiles ['php'], $this->objProject->path_cache_i18n . $sCacheFile ) );
-            tool::saveToJs ( $arrFiles ['js'], $this->objProject->path_cache_i18n_js . $sCacheFile, $sI18nSet );
+            $objI18n->addI18n ( $sI18nSet, \Q::i18n_tool ()->saveToPhp ( $arrFiles ['php'], $this->objProject->path_cache_i18n . $sCacheFile ) );
+            \Q::i18n_tool ()->saveToJs ( $arrFiles ['js'], $this->objProject->path_cache_i18n_js . $sCacheFile, $sI18nSet );
             
             unset ( $arrFiles, $arrAllI18nDir, $sCacheFile );
         }
@@ -694,7 +701,7 @@ class app {
                 'i18n' 
         ] as $sPath ) {
             $sPathName = 'path_app_' . $sPath;
-            $this->objProject->instance ( $sPathName, isset ( $this->arrOption [$sPathName] ) ? $this->arrOption [$sPathName] : $sAppPath . '/' . $sPath );
+            $this->objProject->instance ( $sPathName, isset ( $this->arrOption [$sPathName] ) ? $this->arrOption [$sPathName] : $sAppPath . '/interfaces/' . $sPath );
         }
         $this->objProject->instance ( 'path_app_theme_extend', isset ( $this->arrOption ['path_app_theme_extend'] ) ? $this->arrOption ['path_app_theme_extend'] : '' );
     }
@@ -753,10 +760,37 @@ class app {
      * @return object|NULL
      */
     private function parseAutoInjection_($mixClassOrCallback, $booClass = true) {
-        if (($mixClassOrCallback = $booClass === true ? \Q::getConstructFirstParamClass ( $mixClassOrCallback ) : \Q::getCallbackFirstParamClass ( $mixClassOrCallback )) && \Q::classExists ( $mixClassOrCallback, false, true ) && \Q::isKindOf ( $mixClassOrCallback, 'Q\factory\factory' )) {
-            $mixClassOrCallback = new $mixClassOrCallback ( $this->objProject );
-            $mixClassOrCallback->register ();
-            return $mixClassOrCallback;
+        return;
+        if (($mixClassOrCallback = $booClass === true ? \Q::getConstructFirstParamClass ( $mixClassOrCallback ) : \Q::getCallbackFirstParamClass ( $mixClassOrCallback ))/* && \Q::classExists ( $mixClassOrCallback, false, true )*//* && \Q::isKindOf ( $mixClassOrCallback, 'Q\factory\factory' )*/) {
+            // print_r($mixClassOrCallback);
+            // var_dump(\Q::classExists ( $mixClassOrCallback, false, true ));
+            // var_dump(\Q::classExists ( $mixClassOrCallback, true, true ));
+            
+            // print_r( $mixClassOrCallback );
+            
+            // print_r( $this->objProject->make($mixClassOrCallback) );
+            
+            // 接口绑定实现
+            if (($mixClassOrCallback = $this->objProject->make ( $mixClassOrCallback )) !== false) {
+                // 接口绑定实现
+                if (\Q::classExists ( $mixClassOrCallback, false, true )) {
+                    return new $mixClassOrCallback ( $this->objProject );
+                }                
+
+                // 实例对象
+                elseif (is_object ( $mixClassOrCallback )) {
+                    return $mixClassOrCallback;
+                }
+            }
+            
+            // elseif(is_string($mixClassOrCallback) && ($mixClassOrCallback = $this->objProject->make($mixClassOrCallback)) ){
+            // return $mixClassOrCallback;
+            // }
+            
+            exit ();
+            // $mixClassOrCallback = new $mixClassOrCallback ( $this->objProject );
+            // $mixClassOrCallback->register ();
+            // return $mixClassOrCallback;
         }
         return null;
     }
