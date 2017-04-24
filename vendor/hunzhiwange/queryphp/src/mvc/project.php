@@ -289,7 +289,7 @@ class project extends container {
     private function registerAlias_() {
         $this->alias ( [
                 // cache
-                'file' => 'Q\cache\file',
+                'file' => 'Q\cache\filecache',
                 'memcache' => 'Q\cache\memcache',
                 
                 // cookie
@@ -297,8 +297,6 @@ class project extends container {
                 
                 // database
                 'database' => 'Q\database\database',
-                'select' => 'Q\database\select',
-                'mysql' => 'Q\database\mysql',
                 
                 // i18n
                 'i18n' => 'Q\i18n\i18n',

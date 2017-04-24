@@ -125,7 +125,7 @@ abstract class connect implements contract_connect {
             $this->arrOption = $arrOption;
             
             // 查询组件
-            $this->objSelect = \Q::project ()->make ( 'select', $this );
+            $this->objSelect = new select ( $this );
             
             // 尝试连接主服务器
             if (! $this->writeConnect_ ()) {

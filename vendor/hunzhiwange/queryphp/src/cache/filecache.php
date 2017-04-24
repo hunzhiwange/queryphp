@@ -25,7 +25,7 @@ namespace Q\cache;
  *
  * @author Xiangmin Liu
  */
-class file extends cache {
+class filecache extends cache {
     
     /**
      * 缓存惯性配置

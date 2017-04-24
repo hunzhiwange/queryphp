@@ -60,7 +60,7 @@ abstract class event extends factory {
     /**
      * 执行事件
      *
-     * @return array
+     * @return mixed
      */
     public function run() {
         if (! $this->getListener ()) {

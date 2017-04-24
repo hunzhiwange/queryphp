@@ -46,10 +46,11 @@ class database {
         
         // 解析数据库配置
         $mixOption = $this->parseOption_ ( $mixOption );
-
+            
         // 连接数据库
-        if (($objConnectClass = \Q::project ()->make ( $mixOption ['db_type'], $mixOption ))) {
-            return $arrConnect [$strUnique] = $objConnectClass;
+        $strConnectClass = '\\Q\\database\\' . $mixOption ['db_type'];
+        if (\Q::classExists ( $strConnectClass, false, true )) {
+            return $arrConnect [$strUnique] = new $strConnectClass ( $mixOption );
         } else {
             \Q::throwException ( \Q::i18n ( '数据库驱动 %s 不存在！', $mixOption ['db_type'] ), 'Q\database\exception' );
         }

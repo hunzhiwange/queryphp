@@ -37,7 +37,7 @@ class base_factory extends factory {
      */
     private $arrSingleton = [
             // cache
-            'Q\cache\file',
+            'Q\cache\filecache',
             'Q\cache\memcache',
             
             // cookie
@@ -45,7 +45,6 @@ class base_factory extends factory {
             
             // database
             'Q\database\database',
-            'Q\database\select',
             
             // i18n
             'Q\i18n\i18n',
@@ -82,9 +81,6 @@ class base_factory extends factory {
      * @var array
      */
     private $arrOther = [
-            // database
-            'Q\database\mysql',
-            
             // structure
             'Q\structure\collection',
             'Q\structure\queue',
