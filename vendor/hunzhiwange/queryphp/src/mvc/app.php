@@ -301,13 +301,12 @@ class app {
                             \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', $sController, $sAction ), 'Q\mvc\exception' );
                         }
                     } catch ( \ReflectionException $oE ) {
+                        // 请求默认子方法器
                         return call_user_func_array ( [ 
                                 $mixAction [0],
                                 'action' 
                         ], [ 
-                                $mixAction [1],
-                                $this->getNodeArgs_ (),
-                                true 
+                                $mixAction [1] 
                         ] );
                     }
                     break;

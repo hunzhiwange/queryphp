@@ -58,63 +58,31 @@ class controller {
     }
     
     /**
-     * 执行子控制器
+     * 执行子方法器
      *
      * @param string $sActionName
      *            方法名
-     * @param array $arrArgs
-     *            参数
-     * @param boolean $booPublic            
      * @return void
      */
-    public function action($sActionName, $arrArgs = [], $booPublic = false) {
-        // 是否执行默认控制器方法
-        $booDefaultAction = false;
-        if ($booPublic === true) {
-            try {
-                if (\Q::hasPublicMethod ( $this, $sActionName )) {
-                    return call_user_func_array ( [ 
-                            $this,
-                            $sActionName 
-                    ], $arrArgs );
-                } else {
-                    \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sActionName ), 'Q\mvc\exception' );
-                }
-            } catch ( \ReflectionException $oE ) {
-                $booDefaultAction = true;
-            }
-        } else {
-            if (method_exists ( $this, $sActionName )) {
-                return call_user_func_array ( [ 
-                        $this,
-                        $sActionName 
-                ], $arrArgs );
-            } else {
-                $booDefaultAction = true;
-            }
+    public function action($sActionName) {
+        // 判断是否已经注册过
+        if (($objAction = \Q::app ()->getAction ( \Q::project ()->controller_name, $sActionName )) && ! (\Q::varType ( $objAction, 'array' ) && isset ( $objAction [1] ) && \Q::isKindOf ( $objAction [0], 'Q\mvc\controller' ))) {
+            return \Q::app ()->action ( \Q::project ()->controller_name, $sActionName );
         }
         
-        // 执行默认控制器方法
-        if ($booDefaultAction === true) {
-            // 判断是否已经注册过
-            if (($objAction = \Q::app ()->getAction ( \Q::project ()->controller_name, $sActionName )) && ! (\Q::varType ( $objAction, 'array' ) && isset ( $objAction [1] ) && \Q::isKindOf ( $objAction [0], 'Q\mvc\controller' ))) {
-                return \Q::app ()->action ( \Q::project ()->controller_name, $sActionName );
-            }
+        // 读取默认方法器
+        $sActionName = get_class ( $this ) . '\\' . $sActionName;
+        if (\Q::classExists ( $sActionName, false, true )) {
+            // 注册方法器
+            \Q::app ()->registerAction ( \Q::project ()->controller_name, $sActionName, [ 
+                    $sActionName,
+                    'run' 
+            ] );
             
-            // 读取默认方法器
-            $sActionName = get_class ( $this ) . '\\' . $sActionName;
-            if (\Q::classExists ( $sActionName, false, true )) {
-                // 注册方法器
-                \Q::app ()->registerAction ( \Q::project ()->controller_name, $sActionName, [ 
-                        $sActionName,
-                        'run' 
-                ] );
-                
-                // 运行方法器
-                return \Q::app ()->action ( \Q::project ()->controller_name, $sActionName );
-            } else {
-                \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sActionName ), 'Q\mvc\exception' );
-            }
+            // 运行方法器
+            return \Q::app ()->action ( \Q::project ()->controller_name, $sActionName );
+        } else {
+            \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sActionName ), 'Q\mvc\exception' );
         }
     }
     
@@ -254,7 +222,7 @@ class controller {
                     \Q::throwException ( 'Can not find method.', 'Q\mvc\exception' );
                 }
             default :
-                return $this->action ( $sMethod, $arrArgs, true );
+                \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sMethod ), 'Q\mvc\exception' );
         }
     }
 }
