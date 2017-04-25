@@ -20,14 +20,12 @@
  */
 namespace Q\mvc;
 
-use Q\contract\mvc\action as contract_action;
-
 /**
  * 基类方法器
  *
  * @author Xiangmin Liu
  */
-abstract class action implements contract_action {
+abstract class action {
     
     /**
      * 父控制器
@@ -35,6 +33,14 @@ abstract class action implements contract_action {
      * @var Q\mvc\controller
      */
     protected $objController = null;
+    
+    /**
+     * 构造函数
+     *
+     * @return void
+     */
+    public function __construct() {
+    }
     
     /**
      * 返回父控制器
@@ -54,6 +60,10 @@ abstract class action implements contract_action {
      * @return boolean
      */
     public function __call($sMethod, $arrArgs) {
+        if ($sMethod == 'run') {
+            \Q::throwException ( \Q::i18n ( '方法对象不允许通过 __call 方法执行  run 入口' ), 'Q\mvc\exception' );
+        }
+        
         $this->initController_ ();
         return call_user_func_array ( [ 
                 $this->objController,

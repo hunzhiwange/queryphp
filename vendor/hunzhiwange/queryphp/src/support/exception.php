@@ -18,10 +18,10 @@
  * @date 2017.04.17
  * @since 4.0
  */
-namespace Q\factory;
+namespace Q\support;
 
 /**
- * 工厂组件异常捕获
+ * 支撑组件异常捕获
  *
  * @author Xiangmin Liu
  */

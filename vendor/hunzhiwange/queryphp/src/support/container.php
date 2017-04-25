@@ -18,17 +18,18 @@
  * @date 2017.04.13
  * @since 4.0
  */
-namespace Q\factory;
+namespace Q\support;
 
 use ArrayAccess;
 use Q\traits\flow_condition;
+use Q\contract\support\container as contract_container;
 
 /**
  * 工厂容器
  *
  * @author Xiangmin Liu
  */
-abstract class container implements ArrayAccess {
+abstract class container implements ArrayAccess, contract_container {
     
     use flow_condition;
     
@@ -80,7 +81,7 @@ abstract class container implements ArrayAccess {
             return $this;
         }
         
-        \Q::throwException ( \Q::i18n ( 'container 没有实现魔法方法 %s.', $sMethod ), 'Q\factory\exception' );
+        \Q::throwException ( \Q::i18n ( 'container 没有实现魔法方法 %s.', $sMethod ), 'Q\support\exception' );
     }
     
     /**
@@ -91,14 +92,22 @@ abstract class container implements ArrayAccess {
      * @return void
      */
     public function register($mixFactoryName, $mixFactory = null) {
-        // 实例
-        if (is_object ( $mixFactoryName )) {
-            $this->arrInstances [get_class ( $mixFactoryName )] = $mixFactoryName;
+        // 回调
+        if (\Q::varType ( $mixFactory, 'callback' )) {
+            $this->arrFactorys [$mixFactoryName] = $mixFactory;
+        }         
+
+        // 批量注册
+        else if (is_array ( $mixFactoryName )) {
+            foreach ( $mixFactoryName as $mixName => $mixValue ) {
+                $this->register ( $mixName, $mixValue );
+            }
+            return $this;
         }        
 
-        // 回调
-        elseif (\Q::varType ( $mixFactory, 'callback' )) {
-            $this->arrFactorys [$mixFactoryName] = $mixFactory;
+        // 实例
+        elseif (is_object ( $mixFactoryName )) {
+            $this->arrInstances [get_class ( $mixFactoryName )] = $mixFactoryName;
         }        
 
         // 实例化
@@ -108,6 +117,9 @@ abstract class container implements ArrayAccess {
 
         // 创建一个默认存储的值
         else {
+            if (is_null ( $mixFactory )) {
+                $mixFactory = $mixFactoryName;
+            }
             $mixFactory = function () use($mixFactory) {
                 return $mixFactory;
             };
@@ -119,24 +131,49 @@ abstract class container implements ArrayAccess {
     /**
      * 强制注册为实例，存放数据
      *
-     * @param string $strFactoryName            
+     * @param string $mixFactoryName            
      * @param mixed $mixFactory            
      * @return void
      */
-    public function instance($strFactoryName, $mixFactory) {
-        $this->arrInstances [$strFactoryName] = $mixFactory;
+    public function instance($mixFactoryName, $mixFactory = null) {
+        if (! \Q::isThese ( $mixFactoryName, [ 
+                'scalar',
+                'array' 
+        ] )) {
+            \Q::throwException ( \Q::i18n ( 'instance 第一个参数只能为 scalar 或者 array' ), 'Q\support\exception' );
+        }
+        
+        if (is_array ( $mixFactoryName )) {
+            $this->arrInstances = array_merge ( $this->arrInstances, $mixFactoryName );
+        } else {
+            if (is_null ( $mixFactory )) {
+                $mixFactory = $mixFactoryName;
+            }
+            $this->arrInstances [$mixFactoryName] = $mixFactory;
+        }
         return $this;
     }
     
     /**
      * 注册单一实例
      *
-     * @param string $strFactoryName            
+     * @param scalar|array $mixFactoryName            
      * @param mixed $mixFactory            
      * @return void
      */
     public function singleton($mixFactoryName, $mixFactory = null) {
-        $this->arrSingletons [] = $mixFactoryName;
+        if (! \Q::isThese ( $mixFactoryName, [ 
+                'scalar',
+                'array' 
+        ] )) {
+            \Q::throwException ( \Q::i18n ( 'singleton 第一个参数只能为 scalar 或者 array' ), 'Q\support\exception' );
+        }
+        
+        if (is_array ( $mixFactoryName )) {
+            $this->arrSingletons = array_merge ( $this->arrSingletons, array_keys ( $mixFactoryName ) );
+        } else {
+            $this->arrSingletons [] = $mixFactoryName;
+        }
         return $this->register ( $mixFactoryName, $mixFactory );
     }
     
@@ -195,7 +232,7 @@ abstract class container implements ArrayAccess {
     }
     
     /**
-     * 生产产品
+     * 生产产品 (动态参数)
      *
      * @param string $strFactoryName            
      * @return object
@@ -228,6 +265,24 @@ abstract class container implements ArrayAccess {
         else {
             return $mixInstances;
         }
+    }
+    
+    /**
+     * 生产产品 (数组参数)
+     *
+     * @param string $strFactoryName            
+     * @param array $arrArgs            
+     * @return object
+     */
+    public function makeWithArgs($strFactoryName, array $arrArgs = []) {
+        if (! is_array ( $arrArgs )) {
+            \Q::throwException ( \Q::i18n ( 'makeWithArgs 第二个参数只能为 array' ), 'Q\support\exception' );
+        }
+        array_unshift ( $arrArgs, $strFactoryName );
+        return call_user_func_array ( [ 
+                $this,
+                'make' 
+        ], $arrArgs );
     }
     
     /**
@@ -269,10 +324,15 @@ abstract class container implements ArrayAccess {
      */
     public function offsetUnset($strFactoryName) {
         $strFactoryName = $this->normalize_ ( $strFactoryName );
-        if (isset ( $this->arrFactorys [$strFactoryName] ))
-            unset ( $this->arrFactorys [$strFactoryName] );
-        if (isset ( $this->arrInstances [$strFactoryName] ))
-            unset ( $this->arrInstances [$strFactoryName] );
+        foreach ( [ 
+                'Factorys',
+                'Instances',
+                'Singletons' 
+        ] as $strType ) {
+            $strType = 'arr' . $strType;
+            if (isset ( $this->{$strType} [$strFactoryName] ))
+                unset ( $this->{$strType} [$strFactoryName] );
+        }
     }
     
     /**

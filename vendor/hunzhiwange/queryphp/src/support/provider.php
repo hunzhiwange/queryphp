@@ -15,22 +15,48 @@
  * 
  * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
- * @date 2017.04.23
+ * @date 2017.04.13
  * @since 4.0
  */
-namespace Q\contract\factory;
+namespace Q\support;
 
 /**
- * factory 接口
+ * 服务提供者
  *
  * @author Xiangmin Liu
  */
-interface factory {
+abstract class provider {
     
     /**
-     * 注册一个工厂提供者
+     * 应用程序实例
+     *
+     * @var Q\mvc\project
+     */
+    protected $objProject;
+    
+    /**
+     * 创建一个服务容器提供者实例
+     *
+     * @param Q\mvc\project $objProject            
+     * @return void
+     */
+    public function __construct($objProject) {
+        $this->objProject = $objProject;
+    }
+    
+    /**
+     * 返回 project
+     *
+     * @return Q\mvc\project
+     */
+    public function project() {
+        return $this->objProject;
+    }
+    
+    /**
+     * 注册一个提供者
      *
      * @return void
      */
-    public function register();
+    abstract public function register();
 }

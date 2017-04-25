@@ -15,43 +15,15 @@
  * 
  * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
- * @date 2017.04.13
+ * @date 2017.04.17
  * @since 4.0
  */
-namespace Q\factory;
-
-use Q\contract\factory\factory as contract_factory;
+namespace Q\dao;
 
 /**
- * 工厂提供者
+ * dao 组件异常捕获
  *
  * @author Xiangmin Liu
  */
-abstract class factory implements contract_factory {
-    
-    /**
-     * 应用程序实例
-     *
-     * @var Q\mvc\project
-     */
-    protected $objProject;
-    
-    /**
-     * 创建一个服务容器提供者实例
-     *
-     * @param Q\mvc\project $objProject            
-     * @return void
-     */
-    public function __construct($objProject) {
-        $this->objProject = $objProject;
-    }
-    
-    /**
-     * 返回 project
-     *
-     * @return Q\mvc\project
-     */
-    public function project() {
-        return $this->objProject;
-    }
+class exception extends \Q\exception\exception {
 }

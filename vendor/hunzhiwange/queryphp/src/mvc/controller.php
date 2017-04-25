@@ -28,6 +28,14 @@ namespace Q\mvc;
 class controller {
     
     /**
+     * 构造函数
+     *
+     * @return void
+     */
+    public function __construct() {
+    }
+    
+    /**
      * 赋值
      *
      * @param mixed $mixName            
@@ -56,41 +64,56 @@ class controller {
      *            方法名
      * @param array $arrArgs
      *            参数
+     * @param boolean $booPublic            
      * @return void
      */
-    public function action($sActionName, $arrArgs = []) {
-        // 判断方法是否存在
-        if (method_exists ( $this, $sActionName )) {
-            return $this->$sActionName ();
-        } else {
-            // 判断是否已经注册过
-            if (\Q::app ()->hasAction ( \Q::project ()->controller_name, $sActionName )) {
-                return \Q::app ()->action ( \Q::project ()->controller_name, $sActionName );
-            }             
-
-            // 读取默认方法器
-            else {
-                $sActionNameOld = $sActionName;
-                $sActionName = get_class ( $this ) . '\\' . $sActionName;
-                if (\Q::classExists ( $sActionName, false, true )) {
-                    $oAction = new $sActionName ();
-                    if (method_exists ( $oAction, 'run' )) {
-                        $oAction = [ 
-                                $oAction,
-                                'run' 
-                        ];
-                        
-                        // 注册控制器
-                        \Q::app ()->registerAction ( \Q::project ()->controller_name, $sActionName, $oAction );
-                        
-                        // 执行
-                        return call_user_func_array ( $oAction, $arrArgs );
-                    } else {
-                        \Q::throwException ( \Q::i18n ( 'Q\mvc\action 对象不存在执行入口  run' ), 'Q\mvc\exception' );
-                    }
+    public function action($sActionName, $arrArgs = [], $booPublic = false) {
+        // 是否执行默认控制器方法
+        $booDefaultAction = false;
+        if ($booPublic === true) {
+            try {
+                if (\Q::hasPublicMethod ( $this, $sActionName )) {
+                    return call_user_func_array ( [ 
+                            $this,
+                            $sActionName 
+                    ], $arrArgs );
                 } else {
-                    \Q::throwException ( \Q::i18n ( '方法 %s 不存在', $sActionNameOld ), 'Q\mvc\exception' );
+                    \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sActionName ), 'Q\mvc\exception' );
                 }
+            } catch ( \ReflectionException $oE ) {
+                $booDefaultAction = true;
+            }
+        } else {
+            if (method_exists ( $this, $sActionName )) {
+                return call_user_func_array ( [ 
+                        $this,
+                        $sActionName 
+                ], $arrArgs );
+            } else {
+                $booDefaultAction = true;
+            }
+        }
+        
+        // 执行默认控制器方法
+        if ($booDefaultAction === true) {
+            // 判断是否已经注册过
+            if (($objAction = \Q::app ()->getAction ( \Q::project ()->controller_name, $sActionName )) && ! (\Q::varType ( $objAction, 'array' ) && isset ( $objAction [1] ) && \Q::isKindOf ( $objAction [0], 'Q\mvc\controller' ))) {
+                return \Q::app ()->action ( \Q::project ()->controller_name, $sActionName );
+            }
+            
+            // 读取默认方法器
+            $sActionName = get_class ( $this ) . '\\' . $sActionName;
+            if (\Q::classExists ( $sActionName, false, true )) {
+                // 注册方法器
+                \Q::app ()->registerAction ( \Q::project ()->controller_name, $sActionName, [ 
+                        $sActionName,
+                        'run' 
+                ] );
+                
+                // 运行方法器
+                return \Q::app ()->action ( \Q::project ()->controller_name, $sActionName );
+            } else {
+                \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sActionName ), 'Q\mvc\exception' );
             }
         }
     }
@@ -133,8 +156,7 @@ class controller {
      * @return mixed
      */
     protected function getAssign($sName) {
-        $value = \Q::view ()->getVar ( $sName );
-        return $value;
+        return \Q::view ()->getVar ( $sName );
     }
     
     /**
@@ -232,7 +254,7 @@ class controller {
                     \Q::throwException ( 'Can not find method.', 'Q\mvc\exception' );
                 }
             default :
-                return $this->action ( $sMethod, $arrArgs );
+                return $this->action ( $sMethod, $arrArgs, true );
         }
     }
 }

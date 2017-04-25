@@ -167,7 +167,7 @@ class app {
                         break;
                     
                     // 如果为方法则注册为方法
-                    case \Q::isKindOf ( $mixModule, 'Q\mvc\action' ) :
+                    case \Q::varType ( $mixModule, 'object' ) && (method_exists ( $mixModule, 'run' ) || \Q::isKindOf ( $mixModule, 'Q\mvc\action' )) :
                         $this->registerAction ( $sController, $sAction, [ 
                                 $mixModule,
                                 'run' 
@@ -212,10 +212,11 @@ class app {
                 $sModuleClass = '\\' . $this->objProject->app_name . '\\application\\controller\\' . $sController;
                 if (\Q::classExists ( $sModuleClass, false, true )) {
                     // 自动注入
-                    if (($objAutoInjection = $this->parseAutoInjection_ ( $sModuleClass, true ))) {
-                        $oModule = new $sModuleClass ( $objAutoInjection, $this->objRequest, $this );
+                    if (($arrAutoInjection = $this->parseAutoInjection_ ( $sModuleClass ))) {
+                        $oModule = \Q::newInstanceArgs ( $sModuleClass, $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'] ) );
+                        unset ( $arrAutoInjection );
                     } else {
-                        $oModule = new $sModuleClass ( 'controller', $this->objRequest, $this );
+                        $oModule = \Q::newInstanceArgs ( $sModuleClass, $this->getNodeArgs_ () );
                     }
                     
                     // 注册控制器
@@ -231,13 +232,14 @@ class app {
                     $sActionClass = '\\' . $this->objProject->app_name . '\\application\\controller\\' . $sController . '\\' . $sAction;
                     if (\Q::classExists ( $sActionClass, false, true )) {
                         // 注册控制器
-                        $this->registerController ( $sController, new controller ( $this->objRequest, $this ) );
+                        $this->registerController ( $sController, $this->objProject->makeWithArgs ( 'controller', $this->getNodeArgs_ () ) );
                         
                         // 自动注入
-                        if (($objAutoInjection = $this->parseAutoInjection_ ( $sActionClass ))) {
-                            $oAction = new $sActionClass ( $objAutoInjection, $this->objRequest, $this );
+                        if (($arrAutoInjection = $this->parseAutoInjection_ ( $sActionClass ))) {
+                            $oAction = \Q::newInstanceArgs ( $sActionClass, $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'] ) );
+                            unset ( $arrAutoInjection );
                         } else {
-                            $oAction = new $sActionClass ( $this->objRequest, $this );
+                            $oAction = \Q::newInstanceArgs ( $sActionClass, $this->getNodeArgs_ () );
                         }
                         
                         if (\Q::isKindOf ( $oAction, 'Q\mvc\action' )) {
@@ -270,38 +272,42 @@ class app {
         ! $sAction && $sAction = $this->objProject->action_name;
         
         $mixAction = $this->getAction ( $sController, $sAction );
-        
         if ($mixAction !== null) {
             switch (true) {
-                // 如果为控制器实例，注册为回调
-                case \Q::varType ( $mixAction, 'array' ) && isset ( $mixAction [0] ) && \Q::isKindOf ( $mixAction [0], 'Q\mvc\controller' ) :
+                // 判断是否为控制器回调
+                case \Q::varType ( $mixAction, 'array' ) && isset ( $mixAction [1] ) && \Q::isKindOf ( $mixAction [0], 'Q\mvc\controller' ) :
                     try {
                         if (\Q::hasPublicMethod ( $mixAction [0], $mixAction [1] )) {
-                            // 执行控制器公用初始化函数
-                            if (method_exists ( $mixAction [0], '__init' )) {
-                                call_user_func_array ( [ 
-                                        $mixAction [0],
-                                        '__init' 
-                                ], [ 
-                                        $this->objRequest,
-                                        $this 
-                                ] );
+                            
+                            // 自动注入
+                            if (($arrAutoInjection = $this->parseAutoInjection_ ( $mixAction ))) {
+                                // 注入构造器，重构第一个静态参数
+                                if (! empty ( $arrAutoInjection ['constructor'] )) {
+                                    $mixAction [0] = \Q::newInstanceArgs ( $mixAction [0], $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'] ) );
+                                }
+                                
+                                // 注入方法
+                                if (! empty ( $arrAutoInjection ['method'] )) {
+                                    $arrArgs = $this->getAutoInjectionArgs_ ( $arrAutoInjection ['method'] );
+                                }
+                                
+                                unset ( $arrAutoInjection );
+                            } else {
+                                $arrArgs = $this->getNodeArgs_ ();
                             }
                             
-                            return call_user_func_array ( [ 
-                                    $mixAction [0],
-                                    $mixAction [1] 
-                            ], [ 
-                                    $this->objRequest,
-                                    $this 
-                            ] );
+                            return call_user_func_array ( $mixAction, $arrArgs );
                         } else {
                             \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', $sController, $sAction ), 'Q\mvc\exception' );
                         }
                     } catch ( \ReflectionException $oE ) {
-                        return $mixAction [0]->__call ( $sAction, [ 
-                                $this->objRequest,
-                                $this 
+                        return call_user_func_array ( [ 
+                                $mixAction [0],
+                                'action' 
+                        ], [ 
+                                $mixAction [1],
+                                $this->getNodeArgs_ (),
+                                true 
                         ] );
                     }
                     break;
@@ -310,12 +316,20 @@ class app {
                 case \Q::varType ( $mixAction, 'callback' ) :
                     
                     // 自动注入
-                    $arrArgs = [ 
-                            $this->objRequest,
-                            $this 
-                    ];
-                    if (($objAutoInjection = $this->parseAutoInjection_ ( $mixAction, false ))) {
-                        array_unshift ( $arrArgs, $objAutoInjection );
+                    if (($arrAutoInjection = $this->parseAutoInjection_ ( $mixAction ))) {
+                        // 注入构造器，重构第一个静态参数
+                        if (! empty ( $arrAutoInjection ['constructor'] )) {
+                            $mixAction [0] = \Q::newInstanceArgs ( $mixAction [0], $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'] ) );
+                        }
+                        
+                        // 注入方法
+                        if (! empty ( $arrAutoInjection ['method'] )) {
+                            $arrArgs = $this->getAutoInjectionArgs_ ( $arrAutoInjection ['method'] );
+                        }
+                        
+                        unset ( $arrAutoInjection );
+                    } else {
+                        $arrArgs = $this->getNodeArgs_ ();
                     }
                     return call_user_func_array ( $mixAction, $arrArgs );
                     break;
@@ -324,27 +338,17 @@ class app {
                 case \Q::isKindOf ( $mixAction, 'Q\mvc\action' ) :
                 case \Q::varType ( $mixAction, 'object' ) :
                     if (method_exists ( $mixAction, 'run' )) {
-                        $calRun = [ 
+                        // 注册方法
+                        $this->registerAction ( $sController, $sAction, [ 
                                 $mixAction,
                                 'run' 
-                        ];
-                        
-                        // 自动注入
-                        $arrArgs = [ 
-                                $this->objRequest,
-                                $this 
-                        ];
-                        if (($objAutoInjection = $this->parseAutoInjection_ ( $calRun, false ))) {
-                            array_unshift ( $arrArgs, $objAutoInjection );
-                        }
-                        
-                        return call_user_func_array ( $calRun, $arrArgs );
+                        ] );
+                        return $this->action ( $sController, $sAction );
                     } else {
                         \Q::throwException ( \Q::i18n ( '方法对象不存在执行入口  run' ), 'Q\mvc\exception' );
                     }
                     break;
                 
-                // 静态类回调
                 // 数组支持,方法名即数组的键值,注册方法
                 case \Q::varType ( $mixAction, 'array' ) :
                     return $mixAction;
@@ -362,21 +366,6 @@ class app {
         } else {
             \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 未注册', $sController, $sAction ), 'Q\mvc\exception' );
         }
-    }
-    
-    /**
-     * 拦截匿名注册控制器方法
-     *
-     * @param 方法名 $sMethod            
-     * @param 参数 $arrArgs            
-     * @return boolean
-     */
-    public function __call($sMethod, $arrArgs) {
-        $objDefaultController = $this->controllerDefault ();
-        return call_user_func_array ( [ 
-                $objDefaultController,
-                $sMethod 
-        ], $arrArgs );
     }
     
     /**
@@ -472,7 +461,7 @@ class app {
      */
     public function controllerDefault() {
         if (! $this->hasController ( 'query_default' )) {
-            $this->registerController ( 'query_default', $this->objProject->make ( 'controller', $this->objRequest, $this ) );
+            $this->registerController ( 'query_default', $this->objProject->makeWithArgs ( 'controller', $this->getNodeArgs_ () ) );
         }
         return $this->getController ( 'query_default' );
     }
@@ -558,7 +547,7 @@ class app {
                 }
                 
                 if (! empty ( $arrOption ['url_router_cache'] )) {
-                    router::cache ( $arrOption ['url_router_cache'] );
+                    \Q::router ()->cache ( $arrOption ['url_router_cache'] );
                 }
             }
             
@@ -753,45 +742,121 @@ class app {
     }
     
     /**
+     * 注入参数分析
+     *
+     * @param array $arrArgs            
+     * @return array
+     */
+    private function getAutoInjectionArgs_($arrArgs) {
+        foreach ( $this->getNodeArgs_ () as $objArgs ) {
+            $arrArgs [] = $objArgs;
+        }
+        return $arrArgs;
+    }
+    
+    /**
+     * 节点执行默认注入参数
+     *
+     * @return array
+     */
+    private function getNodeArgs_() {
+        return [ 
+                $this->objRequest,
+                $this 
+        ];
+    }
+    
+    /**
      * 分析自动注入
      *
      * @param mixed $mixClassOrCallback            
-     * @param boolean $booClass            
-     * @return object|NULL
+     * @return array
      */
-    private function parseAutoInjection_($mixClassOrCallback, $booClass = true) {
-        return;
-        if (($mixClassOrCallback = $booClass === true ? \Q::getConstructFirstParamClass ( $mixClassOrCallback ) : \Q::getCallbackFirstParamClass ( $mixClassOrCallback ))/* && \Q::classExists ( $mixClassOrCallback, false, true )*//* && \Q::isKindOf ( $mixClassOrCallback, 'Q\factory\factory' )*/) {
-            // print_r($mixClassOrCallback);
-            // var_dump(\Q::classExists ( $mixClassOrCallback, false, true ));
-            // var_dump(\Q::classExists ( $mixClassOrCallback, true, true ));
-            
-            // print_r( $mixClassOrCallback );
-            
-            // print_r( $this->objProject->make($mixClassOrCallback) );
-            
-            // 接口绑定实现
-            if (($mixClassOrCallback = $this->objProject->make ( $mixClassOrCallback )) !== false) {
-                // 接口绑定实现
-                if (\Q::classExists ( $mixClassOrCallback, false, true )) {
-                    return new $mixClassOrCallback ( $this->objProject );
-                }                
-
-                // 实例对象
-                elseif (is_object ( $mixClassOrCallback )) {
-                    return $mixClassOrCallback;
+    private function parseAutoInjection_($mixClassOrCallback) {
+        $arrResult = [ ];
+        
+        $arrFunctions = [ 
+                'constructor' => [ ],
+                'method' => [ ] 
+        ];
+        
+        $booFindClass = [ 
+                'constructor' => false,
+                'method' => false 
+        ];
+        
+        if ($mixClassOrCallback instanceof \Closure) {
+            $objReflection = new \ReflectionFunction ( $mixClassOrCallback );
+            if (($arrParameters = $objReflection->getParameters ())) {
+                $arrFunctions ['method'] = $arrParameters;
+            }
+        } elseif (is_callable ( $mixClassOrCallback )) {
+            $objReflection = new \ReflectionMethod ( $mixClassOrCallback [0], $mixClassOrCallback [1] );
+            if (($arrParameters = $objReflection->getParameters ())) {
+                $arrFunctions ['method'] = $arrParameters;
+            }
+            if (is_string ( $mixClassOrCallback [0] )) {
+                $objReflection = new \ReflectionClass ( $mixClassOrCallback [0] );
+                if (($objConstructor = $objReflection->getConstructor ()) && ($arrParameters = $objConstructor->getParameters ())) {
+                    $arrFunctions ['constructor'] = $arrParameters;
                 }
             }
-            
-            // elseif(is_string($mixClassOrCallback) && ($mixClassOrCallback = $this->objProject->make($mixClassOrCallback)) ){
-            // return $mixClassOrCallback;
-            // }
-            
-            exit ();
-            // $mixClassOrCallback = new $mixClassOrCallback ( $this->objProject );
-            // $mixClassOrCallback->register ();
-            // return $mixClassOrCallback;
+        } elseif (is_string ( $mixClassOrCallback )) {
+            $objReflection = new \ReflectionClass ( $mixClassOrCallback );
+            if (($objConstructor = $objReflection->getConstructor ()) && ($arrParameters = $objConstructor->getParameters ())) {
+                $arrFunctions ['constructor'] = $arrParameters;
+            }
         }
-        return null;
+        
+        foreach ( $arrFunctions as $sType => $arrFunction ) {
+            foreach ( $arrFunction as $intIndex => $objFunction ) {
+                if ($objFunction instanceof \ReflectionParameter && ($objFunction = $objFunction->getClass ()) && $objFunction instanceof \ReflectionClass && ($objFunction = $objFunction->getName ())) {
+                    // 接口绑定实现
+                    if (($objFunctionMake = $this->objProject->make ( $objFunction )) !== false) {
+                        // 接口绑定实现
+                        if (\Q::classExists ( $objFunctionMake, false, true )) {
+                            $booFindClass [$sType] = true;
+                            $arrResult [$sType] [$intIndex] = new $objFunctionMake ( $this->objProject );
+                        }                        
+
+                        // 实例对象
+                        elseif (is_object ( $objFunctionMake )) {
+                            $booFindClass [$sType] = true;
+                            $arrResult [$sType] [$intIndex] = $objFunctionMake;
+                        }
+                    } elseif (\Q::classExists ( $objFunction, false, true )) {
+                        $arrResult [$sType] [$intIndex] = new $objFunction ( $this->objProject );
+                        $booFindClass [$sType] = true;
+                    } else {
+                        $arrResult [$sType] [$intIndex] = '';
+                    }
+                } else {
+                    $arrResult [$sType] [$intIndex] = '';
+                }
+            }
+        }
+        
+        foreach ( $booFindClass as $sType => $booFind ) {
+            if ($booFind === false && isset ( $arrResult [$sType] )) {
+                unset ( $arrResult [$sType] );
+            }
+        }
+        
+        return $arrResult;
+    }
+    
+    /**
+     * 拦截匿名注册控制器方法
+     *
+     * @param 方法名 $sMethod            
+     * @param 参数 $arrArgs            
+     * @return boolean
+     */
+    public function __call($sMethod, $arrArgs) {
+        $objDefaultController = $this->controllerDefault ();
+        return call_user_func_array ( [ 
+                $objDefaultController,
+                $sMethod 
+        ], $arrArgs );
     }
 }

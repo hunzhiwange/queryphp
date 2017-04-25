@@ -18,17 +18,14 @@
  * @date 2017.04.23
  * @since 1.0
  */
-namespace Q\mvc;
-
-use Q\factory\factory;
-use ReflectionClass;
+namespace Q\support;
 
 /**
- * 注册基础工厂
+ * 注册基础服务提供者
  *
  * @author Xiangmin Liu
  */
-class base_factory extends factory {
+class base_provider extends provider {
     
     /**
      * 单一实例

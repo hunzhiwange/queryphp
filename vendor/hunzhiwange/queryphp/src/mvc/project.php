@@ -20,7 +20,7 @@
  */
 namespace Q\mvc;
 
-use Q\factory\container;
+use Q\support\container;
 use Q\mvc\view;
 
 /**
@@ -106,14 +106,17 @@ class project extends container {
         // 注册别名
         registerAlias_ ()->
         
-        // 注册基础工厂提供者
-        registerBaseFactory_ ()->
+        // 注册基础提供者 register
+        registerBaseProvider_ ()->
         
-        // 注册框架核心工厂
-        registerMvcFactory_ ()->
+        // 注册框架核心提供者
+        registerMvcProvider_ ()->
         
         // 初始化项目路径
-        setPath_ ();
+        setPath_ ()->
+        
+        // 注册基础提供者 boot
+        registerBaseProviderBoot_ ();
     }
     
     /**
@@ -232,17 +235,17 @@ class project extends container {
     }
     
     /**
-     * 框架基础工厂
+     * 框架基础提供者 register
      *
      * @return $this
      */
-    private function registerBaseFactory_() {
-        $arrBaseFactory = [ 
-                'Q\mvc\base_factory' 
+    private function registerBaseProvider_() {
+        $arrBaseProvider = [ 
+                'Q\support\base_provider' 
         ];
-        foreach ( $arrBaseFactory as $strFactory ) {
+        foreach ( $arrBaseProvider as $strProvider ) {
             call_user_func_array ( [ 
-                    new $strFactory ( $this ),
+                    new $strProvider ( $this ),
                     'register' 
             ], [ ] );
         }
@@ -250,11 +253,32 @@ class project extends container {
     }
     
     /**
-     * 框架 MVC 基础工厂
+     * 框架基础提供者 boot
      *
      * @return $this
      */
-    private function registerMvcFactory_() {
+    private function registerBaseProviderBoot_() {
+        $arrBaseProvider = [ 
+                'Q\support\base_provider' 
+        ];
+        foreach ( $arrBaseProvider as $strProvider ) {
+            $objProvider = new $strProvider ( $this );
+            if (method_exists ( $objProvider, 'bootstrap' )) {
+                call_user_func_array ( [ 
+                        $objProvider,
+                        'bootstrap' 
+                ], [ ] );
+            }
+        }
+        return $this;
+    }
+    
+    /**
+     * 框架 MVC 基础提供者
+     *
+     * @return $this
+     */
+    private function registerMvcProvider_() {
         // 注册启动程序
         $this->register ( new bootstrap ( $this, $this->arrOption ) );
         
@@ -289,7 +313,7 @@ class project extends container {
     private function registerAlias_() {
         $this->alias ( [
                 // cache
-                'file' => 'Q\cache\filecache',
+                'filecache' => 'Q\cache\filecache',
                 'memcache' => 'Q\cache\memcache',
                 
                 // cookie
@@ -356,6 +380,8 @@ class project extends container {
         
         // 注册 url
         $this->registerUrl_ ();
+        
+        return $this;
     }
     
     /**
