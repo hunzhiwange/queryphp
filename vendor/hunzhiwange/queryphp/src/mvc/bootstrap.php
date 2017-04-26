@@ -107,10 +107,9 @@ class bootstrap {
         // 注册公共组件命名空间
         \Q::import ( 'common', $this->objProject->path_common, [ 
                 'ignore' => [ 
-                        'i18n',
-                        'option',
-                        'theme' 
-                ] 
+                        'interfaces' 
+                ],
+                'force' => Q_DEVELOPMENT !== 'develop' ? false : true 
         ] );
         
         // 尝试导入 Composer PSR-4

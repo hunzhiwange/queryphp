@@ -21,7 +21,7 @@
 namespace Q\traits;
 
 /**
- * 对象参数控制复用
+ * 对象参数复用
  *
  * @author Xiangmin Liu
  */

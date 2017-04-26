@@ -21,6 +21,7 @@
 namespace Q\mvc;
 
 use Q\request\response;
+use Q\traits\auto_injection;
 
 /**
  * 应用程序对象
@@ -28,6 +29,8 @@ use Q\request\response;
  * @author Xiangmin Liu
  */
 class app {
+    
+    use auto_injection;
     
     /**
      * 当前项目
@@ -89,14 +92,13 @@ class app {
     public function run() {
         // 初始化应用
         $this->initApp_ ();
-        
+            
         // 注册命名空间
         \Q::import ( $this->objProject->app_name, $this->objProject->path_application . '/' . $this->objProject->app_name, [ 
-                [ 
-                        'i18n',
-                        'option',
-                        'theme' 
-                ] 
+                'ignore' => [ 
+                        'interfaces' 
+                ],
+                'force' => Q_DEVELOPMENT !== 'develop' ? false : true 
         ] );
         
         // 加载配置文件
@@ -213,7 +215,7 @@ class app {
                 if (\Q::classExists ( $sModuleClass, false, true )) {
                     // 自动注入
                     if (($arrAutoInjection = $this->parseAutoInjection_ ( $sModuleClass ))) {
-                        $oModule = \Q::newInstanceArgs ( $sModuleClass, $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'] ) );
+                        $oModule = \Q::newInstanceArgs ( $sModuleClass, $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'], $this->getNodeArgs_ () ) );
                         unset ( $arrAutoInjection );
                     } else {
                         $oModule = \Q::newInstanceArgs ( $sModuleClass, $this->getNodeArgs_ () );
@@ -236,7 +238,7 @@ class app {
                         
                         // 自动注入
                         if (($arrAutoInjection = $this->parseAutoInjection_ ( $sActionClass ))) {
-                            $oAction = \Q::newInstanceArgs ( $sActionClass, $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'] ) );
+                            $oAction = \Q::newInstanceArgs ( $sActionClass, $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'], $this->getNodeArgs_ () ) );
                             unset ( $arrAutoInjection );
                         } else {
                             $oAction = \Q::newInstanceArgs ( $sActionClass, $this->getNodeArgs_ () );
@@ -283,12 +285,12 @@ class app {
                             if (($arrAutoInjection = $this->parseAutoInjection_ ( $mixAction ))) {
                                 // 注入构造器，重构第一个静态参数
                                 if (! empty ( $arrAutoInjection ['constructor'] )) {
-                                    $mixAction [0] = \Q::newInstanceArgs ( $mixAction [0], $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'] ) );
+                                    $mixAction [0] = \Q::newInstanceArgs ( $mixAction [0], $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'], $this->getNodeArgs_ () ) );
                                 }
                                 
                                 // 注入方法
                                 if (! empty ( $arrAutoInjection ['method'] )) {
-                                    $arrArgs = $this->getAutoInjectionArgs_ ( $arrAutoInjection ['method'] );
+                                    $arrArgs = $this->getAutoInjectionArgs_ ( $arrAutoInjection ['method'], $this->getNodeArgs_ () );
                                 }
                                 
                                 unset ( $arrAutoInjection );
@@ -318,12 +320,12 @@ class app {
                     if (($arrAutoInjection = $this->parseAutoInjection_ ( $mixAction ))) {
                         // 注入构造器，重构第一个静态参数
                         if (! empty ( $arrAutoInjection ['constructor'] )) {
-                            $mixAction [0] = \Q::newInstanceArgs ( $mixAction [0], $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'] ) );
+                            $mixAction [0] = \Q::newInstanceArgs ( $mixAction [0], $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'], $this->getNodeArgs_ () ) );
                         }
                         
                         // 注入方法
                         if (! empty ( $arrAutoInjection ['method'] )) {
-                            $arrArgs = $this->getAutoInjectionArgs_ ( $arrAutoInjection ['method'] );
+                            $arrArgs = $this->getAutoInjectionArgs_ ( $arrAutoInjection ['method'], $this->getNodeArgs_ () );
                         }
                         
                         unset ( $arrAutoInjection );
@@ -741,19 +743,6 @@ class app {
     }
     
     /**
-     * 注入参数分析
-     *
-     * @param array $arrArgs            
-     * @return array
-     */
-    private function getAutoInjectionArgs_($arrArgs) {
-        foreach ( $this->getNodeArgs_ () as $objArgs ) {
-            $arrArgs [] = $objArgs;
-        }
-        return $arrArgs;
-    }
-    
-    /**
      * 节点执行默认注入参数
      *
      * @return array
@@ -763,85 +752,6 @@ class app {
                 $this->objRequest,
                 $this 
         ];
-    }
-    
-    /**
-     * 分析自动注入
-     *
-     * @param mixed $mixClassOrCallback            
-     * @return array
-     */
-    private function parseAutoInjection_($mixClassOrCallback) {
-        $arrResult = [ ];
-        
-        $arrFunctions = [ 
-                'constructor' => [ ],
-                'method' => [ ] 
-        ];
-        
-        $booFindClass = [ 
-                'constructor' => false,
-                'method' => false 
-        ];
-        
-        if ($mixClassOrCallback instanceof \Closure) {
-            $objReflection = new \ReflectionFunction ( $mixClassOrCallback );
-            if (($arrParameters = $objReflection->getParameters ())) {
-                $arrFunctions ['method'] = $arrParameters;
-            }
-        } elseif (is_callable ( $mixClassOrCallback )) {
-            $objReflection = new \ReflectionMethod ( $mixClassOrCallback [0], $mixClassOrCallback [1] );
-            if (($arrParameters = $objReflection->getParameters ())) {
-                $arrFunctions ['method'] = $arrParameters;
-            }
-            if (is_string ( $mixClassOrCallback [0] )) {
-                $objReflection = new \ReflectionClass ( $mixClassOrCallback [0] );
-                if (($objConstructor = $objReflection->getConstructor ()) && ($arrParameters = $objConstructor->getParameters ())) {
-                    $arrFunctions ['constructor'] = $arrParameters;
-                }
-            }
-        } elseif (is_string ( $mixClassOrCallback )) {
-            $objReflection = new \ReflectionClass ( $mixClassOrCallback );
-            if (($objConstructor = $objReflection->getConstructor ()) && ($arrParameters = $objConstructor->getParameters ())) {
-                $arrFunctions ['constructor'] = $arrParameters;
-            }
-        }
-        
-        foreach ( $arrFunctions as $sType => $arrFunction ) {
-            foreach ( $arrFunction as $intIndex => $objFunction ) {
-                if ($objFunction instanceof \ReflectionParameter && ($objFunction = $objFunction->getClass ()) && $objFunction instanceof \ReflectionClass && ($objFunction = $objFunction->getName ())) {
-                    // 接口绑定实现
-                    if (($objFunctionMake = $this->objProject->make ( $objFunction )) !== false) {
-                        // 接口绑定实现
-                        if (\Q::classExists ( $objFunctionMake, false, true )) {
-                            $booFindClass [$sType] = true;
-                            $arrResult [$sType] [$intIndex] = new $objFunctionMake ( $this->objProject );
-                        }                        
-
-                        // 实例对象
-                        elseif (is_object ( $objFunctionMake )) {
-                            $booFindClass [$sType] = true;
-                            $arrResult [$sType] [$intIndex] = $objFunctionMake;
-                        }
-                    } elseif (\Q::classExists ( $objFunction, false, true )) {
-                        $arrResult [$sType] [$intIndex] = new $objFunction ( $this->objProject );
-                        $booFindClass [$sType] = true;
-                    } else {
-                        $arrResult [$sType] [$intIndex] = '';
-                    }
-                } else {
-                    $arrResult [$sType] [$intIndex] = '';
-                }
-            }
-        }
-        
-        foreach ( $booFindClass as $sType => $booFind ) {
-            if ($booFind === false && isset ( $arrResult [$sType] )) {
-                unset ( $arrResult [$sType] );
-            }
-        }
-        
-        return $arrResult;
     }
     
     /**

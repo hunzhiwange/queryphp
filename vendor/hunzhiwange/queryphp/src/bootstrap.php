@@ -139,24 +139,26 @@ class Q {
             $sClassName = ltrim ( $sClassName, '\\' );
         }
         
+        if($sClassName == 'home\infrastructure\privider\test_provider'){
+            echo 'xxx';
+            print_r(self::$arrNamespace);
+        }
+        
         /**
          * 非命名空间的类
          */
         if (strpos ( $sClassName, '\\' ) === false) {
             $sFile = str_replace ( '_', '\\', $sClassName ) . '.php';
-            return self::requireFile ( $sFile );
+            return self::requireFile_ ( $sFile );
         } else {
             $sPrefix = $sClassName;
             while ( false !== ($intPos = strrpos ( $sPrefix, '\\' )) ) {
                 $sPrefix = substr ( $sClassName, 0, $intPos + 1 );
-                
                 $sRelativeClass = substr ( $sClassName, $intPos + 1 );
-                $sMappedFile = self::loadMappedFile ( $sPrefix, $sRelativeClass );
-                
+                $sMappedFile = self::loadMappedFile_ ( $sPrefix, $sRelativeClass );
                 if ($sMappedFile) {
                     return $sMappedFile;
                 }
-                
                 $sPrefix = rtrim ( $sPrefix, '\\' );
             }
         }
@@ -165,7 +167,7 @@ class Q {
     /**
      * 导入一个目录中命名空间结构
      *
-     * @param string|array $namespace
+     * @param string|array $mixNamespace
      *            命名空间名字
      * @param string $sPackage
      *            命名空间路径
@@ -174,7 +176,7 @@ class Q {
      *            force 是否强制更新缓存
      * @return void
      */
-    static public function import($namespace, $sPackage, $in = []) {
+    static public function import($mixNamespace, $sPackage, $in = []) {
         $in = array_merge ( [ 
                 'ignore' => [ ],
                 'force' => false 
@@ -190,7 +192,9 @@ class Q {
         
         if ($in ['force'] === true || ! is_file ( $sCache )) {
             // 扫描命名空间
-            $arrPath = self::scanNamespace ( $sPackagePath, '', $in ['ignore'] );
+            $arrPath = self::scanNamespace_ ( $sPackagePath, $sPackagePath, [ 
+                    'ignore' => $in ['ignore'] 
+            ] );
             
             // 写入文件
             if (! file_put_contents ( $sCache, json_encode ( $arrPath ) )) {
@@ -200,13 +204,13 @@ class Q {
             $arrPath = self::readCache ( $sCache );
         }
         
-        if (! is_array ( $namespace )) {
-            $namespace = [ 
-                    $namespace 
-            ];
+        if (! is_array ( $mixNamespace )) {
+            $strTemp = $mixNamespace;
+            $mixNamespace = [ ];
+            $mixNamespace [] = $strTemp;
         }
         
-        foreach ( $namespace as $sNamespace ) {
+        foreach ( $mixNamespace as $sNamespace ) {
             self::addNamespace ( $sNamespace, $sPackage );
             foreach ( $arrPath as $sPath ) {
                 self::addNamespace ( $sNamespace . '\\' . $sPath, $sPackage . '/' . $sPath );
@@ -511,7 +515,7 @@ class Q {
         if (is_null ( $sValue )) {
             return self::__callStatic ( 'i18n', func_get_args () );
         }
-            
+        
         // 不开启
         if (empty ( $GLOBALS ['~@option'] ['i18n_on'] ) || ! self::$booI18nOn) {
             if (func_num_args () > 1) { // 代入参数
@@ -978,7 +982,7 @@ class Q {
             if (empty ( $GLOBALS ['~@option'] ['show_exception_show_message'] ) && ! empty ( $GLOBALS ['~@option'] ['show_exception_default_message'] )) {
                 $mixError ['message'] = $GLOBALS ['~@option'] ['show_exception_default_message'];
             }
-                
+            
             // 包含异常页面模板
             if (! empty ( $GLOBALS ['~@option'] ['show_exception_tpl'] ) && is_file ( $GLOBALS ['~@option'] ['show_exception_tpl'] )) {
                 include ($GLOBALS ['~@option'] ['show_exception_tpl']);
@@ -1272,52 +1276,6 @@ class Q {
             return $objClass;
         }
         return false;
-    }
-    
-    /**
-     * 尝试读取一个构造函数中第一个参数的对象类名
-     *
-     * @param string $strClassName            
-     * @return mixed
-     */
-    static public function getConstructFirstParamClass($strClassName) {
-        $objReflection = new \ReflectionClass ( $strClassName );
-        if (($objConstructor = $objReflection->getConstructor ()) && ($arrParameters = $objConstructor->getParameters ())) {
-            if (! is_object ( $arrParameters [0] ) || ! method_exists ( $arrParameters [0], 'getClass' )) {
-                return null;
-            }
-            $arrParameters [0] = $arrParameters [0]->getClass ();
-            if (! is_object ( $arrParameters [0] )) {
-                return null;
-            }
-            return $arrParameters [0]->getName ();
-        }
-        return null;
-    }
-    
-    /**
-     * 尝试读取一个回调函数中第一个参数的对象类名
-     *
-     * @param mixed $mixCallback            
-     * @return mixed
-     */
-    static public function getCallbackFirstParamClass($mixCallback) {
-        if ($mixCallback instanceof \Closure) {
-            $objReflection = new \ReflectionFunction ( $mixCallback );
-        } else {
-            $objReflection = new \ReflectionMethod ( $mixCallback [0], $mixCallback [1] );
-        }
-        if (($arrParameters = $objReflection->getParameters ())) {
-            if (! is_object ( $arrParameters [0] ) || ! method_exists ( $arrParameters [0], 'getClass' )) {
-                return null;
-            }
-            $arrParameters [0] = $arrParameters [0]->getClass ();
-            if (! is_object ( $arrParameters [0] )) {
-                return null;
-            }
-            return $arrParameters [0]->getName ();
-        }
-        return null;
     }
     
     /**
@@ -2363,14 +2321,14 @@ class Q {
      *            类名字
      * @return string|false 存在则为文件名，不存则返回 false
      */
-    static private function loadMappedFile($sPrefix, $sRelativeClass) {
+    static private function loadMappedFile_($sPrefix, $sRelativeClass) {
         if (isset ( self::$arrNamespace [$sPrefix] ) === false) {
             return false;
         }
         
         foreach ( self::$arrNamespace [$sPrefix] as $bBaseDir ) {
             $sFile = $bBaseDir . str_replace ( '\\', '/', $sRelativeClass ) . '.php';
-            if (self::requireFile ( $sFile )) {
+            if (self::requireFile_ ( $sFile )) {
                 return $sFile;
             }
         }
@@ -2385,7 +2343,7 @@ class Q {
      *            待载入的文件
      * @return bool true 表示存在， false 表示不存在
      */
-    static private function requireFile($sFile) {
+    static private function requireFile_($sFile) {
         if (is_file ( $sFile )) {
             require $sFile;
             return true;
@@ -2398,50 +2356,63 @@ class Q {
      *
      * @param string $sDirectory
      *            待扫描的目录
-     * @param string $sPreFilename            
+     * @param string $sRootDir
+     *            根目录
      * @param array $in
-     *            配置参数
+     *            参数配置
      *            ignore 忽略扫描目录
+     *            add_more 是否为增加更多还是覆盖
+     *            full_path 是否返回完整路径
      * @return array 扫描后的命名空间数据
      */
-    static private function scanNamespace($sDirectory, $sPreFilename = '', $in = []) {
-        $arrDefault = [ 
-                'ignore' => [ 
-                        '.',
-                        '..',
-                        '.svn',
-                        'node_modules',
-                        '.git',
-                        '~@~',
-                        'www',
-                        'ignore',
-                        '.gitkeep' 
-                ] 
+    static private function scanNamespace_($sDirectory, $sRootDir = '', $in = []) {
+        $in = array_merge ( [ 
+                'ignore' => [ ],
+                'add_more' => true,
+                'full_path' => false 
+        ], $in );
+        
+        $arrDefaultIgnore = [ 
+                '.',
+                '..',
+                '.svn',
+                'node_modules',
+                '.git',
+                '~@~',
+                'www',
+                'ignore',
+                '.gitkeep' 
         ];
         
-        if (isset ( $in ['ignore'] )) {
+        if ($in ['add_more'] === true) {
             foreach ( $in ['ignore'] as $sIgnore ) {
-                if (! in_array ( $sIgnore, $arrDefault ['ignore'] )) {
-                    $arrDefault ['ignore'] [] = $sIgnore;
+                if (! in_array ( $sIgnore, $arrDefaultIgnore )) {
+                    $arrDefaultIgnore [] = $sIgnore;
                 }
             }
+        } else {
+            $arrDefaultIgnore = $in ['ignore'];
         }
-        $in = $arrDefault;
-        unset ( $arrDefault );
         
         $arrReturn = [ ];
-        
         $sDirectoryPath = realpath ( $sDirectory ) . '/';
         $hDir = opendir ( $sDirectoryPath );
         
         while ( ($sFilename = readdir ( $hDir )) !== false ) {
             $sPath = $sDirectoryPath . $sFilename;
             if (is_dir ( $sPath )) { // 目录
-                if (in_array ( $sFilename, $in ['ignore'] )) { // 排除特殊目录
+                if (in_array ( $sFilename, $arrDefaultIgnore )) { // 排除特殊目录
                     continue;
                 } else {
+                    // 返回完整路径
+                    if ($in ['full_path'] === true) {
+                        $arrReturn [] = $sPath;
+                    } else {
+                        $arrReturn [] = str_replace ( str_replace ( '/', '\\', $sRootDir ), '', str_replace ( '/', '\\', $sPath ) );
+                    }
+                    
                     // 递归子目录
-                    $arrReturn = array_merge ( $arrReturn, self::scanNamespace ( $sPath, $sPreFilename . $sFilename . '/', $in ) );
+                    $arrReturn = array_merge ( $arrReturn, self::scanNamespace_ ( $sPath, $sRootDir, $in ) );
                 }
             }
         }
