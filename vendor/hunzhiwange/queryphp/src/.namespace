@@ -1,1 +1,1 @@
-["cache","collection","contract","contract\\cache","contract\\database","contract\\structure","contract\\support","cookie","dao","database","event","exception","i18n","image","log","mvc","option","queue","request","router","session","support","traits","view","xml"]
+["cache","collection","contract","contract\\cache","contract\\database","contract\\queue","contract\\support","cookie","dao","database","event","exception","i18n","image","log","mvc","option","queue","request","router","session","support","traits","view","xml"]

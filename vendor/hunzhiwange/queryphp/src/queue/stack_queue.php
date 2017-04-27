@@ -20,7 +20,7 @@
  */
 namespace Q\queue;
 
-use Q\contract\structure\stack_queue as contract_stack_queue;
+use Q\contract\queue\stack_queue as contract_stack_queue;
 
 /**
  * 队列和栈抽象类

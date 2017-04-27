@@ -18,7 +18,7 @@
  * @date 2017.04.23
  * @since 4.0
  */
-namespace Q\contract\structure;
+namespace Q\contract\queue;
 
 /**
  * stack_queue 接口
