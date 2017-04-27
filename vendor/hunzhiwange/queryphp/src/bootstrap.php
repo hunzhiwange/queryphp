@@ -139,11 +139,6 @@ class Q {
             $sClassName = ltrim ( $sClassName, '\\' );
         }
         
-        if($sClassName == 'home\infrastructure\privider\test_provider'){
-            echo 'xxx';
-            print_r(self::$arrNamespace);
-        }
-        
         /**
          * 非命名空间的类
          */
@@ -372,7 +367,11 @@ class Q {
      */
     static public function newInstanceArgs($strClass, $arrArgs) {
         $objClass = new \ReflectionClass ( $strClass );
-        return $objClass->newInstanceArgs ( $arrArgs );
+        if ($objClass->getConstructor ()) {
+            return $objClass->newInstanceArgs ( $arrArgs );
+        } else {
+            return $objClass->newInstanceWithoutConstructor ();
+        }
     }
     
     /**
@@ -821,15 +820,15 @@ class Q {
      * @param \Q\event\event $objEvent            
      * @return array
      */
-    static public function event(\Q\event\event $objEvent) {
-        $arrArgs = func_get_args ();
-        array_shift ( $arrArgs );
-        $objEvent->register ();
-        return call_user_func_array ( [ 
-                $objEvent,
-                'run' 
-        ], $arrArgs );
-    }
+    // static public function event(\Q\event\event $objEvent) {
+    // $arrArgs = func_get_args ();
+    // array_shift ( $arrArgs );
+    // $objEvent->register ();
+    // return call_user_func_array ( [
+    // $objEvent,
+    // 'run'
+    // ], $arrArgs );
+    // }
     
     /**
      * 响应请求
@@ -923,7 +922,7 @@ class Q {
     static public function errorHandel($nErrorNo, $sErrStr, $sErrFile, $nErrLine) {
         if ($nErrorNo) {
             $sMessage = "[{$nErrorNo}]: {$sErrStr}<br> File: {$sErrFile}<br> Line: {$nErrLine}";
-            if ($GLOBALS ['~@option'] ['log_error_enabled']) {
+            if (! empty ( $GLOBALS ['~@option'] ['log_error_enabled'] )) {
                 self::log ( $sMessage, 'error' );
             }
             self::errorMessage ( $sMessage );
@@ -1211,6 +1210,9 @@ class Q {
      * @return boolean
      */
     static public function classExists($sClassName, $bInter = false, $bAutoload = false) {
+        if (! is_string ( $sClassName )) {
+            self::throwException ( 'classExists first args must be a string!' );
+        }
         $bAutoloadOld = self::setAutoload ( $bAutoload );
         $sFuncName = $bInter ? 'interface_exists' : 'class_exists';
         $bResult = $sFuncName ( $sClassName );

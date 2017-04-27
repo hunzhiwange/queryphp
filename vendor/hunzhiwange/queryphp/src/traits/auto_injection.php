@@ -42,6 +42,61 @@ trait auto_injection {
     }
     
     /**
+     * 根据 class 名字创建实例
+     *
+     * @param string $strClassName            
+     * @param array $arrArgs            
+     * @return object
+     */
+    protected function getObjectByClassAndArgs_($strClassName, $arrArgs = []) {
+        // 注入构造器
+        if (($arrAutoInjection = $this->parseAutoInjection_ ( $strClassName )) && ! empty ( $arrAutoInjection ['constructor'] )) {
+            return \Q::newInstanceArgs ( $strClassName, $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'], $arrArgs ) );
+        } else {
+            return \Q::newInstanceArgs ( $strClassName, $arrArgs );
+        }
+    }
+    
+    /**
+     * 实例回调自动注入并返回结果
+     *
+     * @param callable $calClass            
+     * @param string $arrArgs            
+     * @return mixed
+     */
+    protected function getObjectCallbackResultWithMethodArgs_($calClass, $arrArgs = []) {
+        if (($arrAutoInjection = $this->parseAutoInjection_ ( $calClass )) && ! empty ( $arrAutoInjection ['method'] )) {
+            $arrArgs = $this->getAutoInjectionArgs_ ( $arrAutoInjection ['method'], $arrArgs );
+            unset ( $arrAutoInjection );
+        }
+        return call_user_func_array ( $calClass, $arrArgs );
+    }
+    
+    /**
+     * 静态回调或者匿名函数自动注入并返回结果
+     *
+     * @param callable $calClass            
+     * @param string $arrArgs            
+     * @return mixed
+     */
+    protected function getStaticOrClosureCallbackResultWithMethodArgs_($calClass, $arrArgs = []) {
+        if (($arrAutoInjection = $this->parseAutoInjection_ ( $calClass ))) {
+            // 注入构造器，重构第一个静态参数
+            if (! empty ( $arrAutoInjection ['constructor'] )) {
+                $calClass [0] = \Q::newInstanceArgs ( $calClass [0], $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'], $arrArgs ) );
+            }
+            
+            // 注入方法
+            if (! empty ( $arrAutoInjection ['method'] )) {
+                $arrArgs = $this->getAutoInjectionArgs_ ( $arrAutoInjection ['method'], $arrArgs );
+            }
+            
+            unset ( $arrAutoInjection );
+        }
+        return call_user_func_array ( $calClass, $arrArgs );
+    }
+    
+    /**
      * 分析自动注入
      *
      * @param mixed $mixClassOrCallback            
@@ -87,20 +142,20 @@ trait auto_injection {
             foreach ( $arrFunction as $intIndex => $objFunction ) {
                 if ($objFunction instanceof \ReflectionParameter && ($objFunction = $objFunction->getClass ()) && $objFunction instanceof \ReflectionClass && ($objFunction = $objFunction->getName ())) {
                     // 接口绑定实现
-                    if (($objFunctionMake = $this->objProject->make ( $objFunction )) !== false) {
-                        // 接口绑定实现
-                        if (\Q::classExists ( $objFunctionMake, false, true )) {
-                            $booFindClass [$sType] = true;
-                            $arrResult [$sType] [$intIndex] = new $objFunctionMake ( $this->objProject );
-                        }                        
-
+                    if (($objFunctionMake = \Q::project ()->make ( $objFunction )) !== false) {
                         // 实例对象
-                        elseif (is_object ( $objFunctionMake )) {
+                        if (is_object ( $objFunctionMake )) {
                             $booFindClass [$sType] = true;
                             $arrResult [$sType] [$intIndex] = $objFunctionMake;
+                        }                        
+
+                        // 接口绑定实现
+                        elseif (\Q::classExists ( $objFunctionMake, false, true )) {
+                            $booFindClass [$sType] = true;
+                            $arrResult [$sType] [$intIndex] = new $objFunctionMake ( \Q::project () );
                         }
                     } elseif (\Q::classExists ( $objFunction, false, true )) {
-                        $arrResult [$sType] [$intIndex] = new $objFunction ( $this->objProject );
+                        $arrResult [$sType] [$intIndex] = new $objFunction ( \Q::project () );
                         $booFindClass [$sType] = true;
                     } else {
                         $arrResult [$sType] [$intIndex] = '';

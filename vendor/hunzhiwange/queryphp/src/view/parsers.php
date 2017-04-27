@@ -20,6 +20,8 @@
  */
 namespace Q\view;
 
+use Q\queue\stack;
+
 /**
  * 分析模板
  *
@@ -914,7 +916,7 @@ class parsers {
      */
     protected function findNodeTag(&$sCompiled) {
         // 设置一个栈
-        $this->oNodeStack = \Q::stack ();
+        $this->oNodeStack = new stack ();
         
         // 判断是那种编译器
         $sNodeType = $this->bJsNode === true ? 'js' : 'node';
@@ -986,7 +988,7 @@ class parsers {
             $sCompiler = 'Node';
         }
         
-        $oTailStack = \Q::stack ( 'array' ); // 尾标签栈
+        $oTailStack = new stack ( 'array' ); // 尾标签栈
         while ( ($arrTag = $this->oNodeStack->out ()) !== null ) { // 载入节点属性分析器&依次处理所有标签
             if ($arrTag ['type'] == 'tail') { // 尾标签，加入到尾标签中
                 $oTailStack->in ( $arrTag );

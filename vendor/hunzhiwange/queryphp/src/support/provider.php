@@ -45,15 +45,6 @@ abstract class provider {
     }
     
     /**
-     * 返回 project
-     *
-     * @return Q\mvc\project
-     */
-    public function project() {
-        return $this->objProject;
-    }
-    
-    /**
      * 注册一个提供者
      *
      * @return void

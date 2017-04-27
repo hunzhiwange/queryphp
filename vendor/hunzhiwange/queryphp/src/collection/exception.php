@@ -15,37 +15,15 @@
  * 
  * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
- * @date 2016.11.21
- * @since 1.0
+ * @date 2017.04.17
+ * @since 4.0
  */
-namespace Q\structure;
+namespace Q\collection;
 
 /**
- * 栈，后进先出
+ * 集合组件异常捕获
  *
  * @author Xiangmin Liu
  */
-class stack extends stack_queue {
-    
-    /**
-     * 进栈
-     *
-     * @param mixed $mixItem            
-     * @return void
-     */
-    public function in($Item) {
-        $this->arrElements [] = &$Item;
-    }
-    
-    /**
-     * 出栈
-     *
-     * @return mixed
-     */
-    public function out() {
-        if (! $this->getLength ()) {
-            return null;
-        }
-        return array_pop ( $this->arrElements );
-    }
+class exception extends \Q\exception\exception {
 }

@@ -43,6 +43,9 @@ class base_provider extends provider {
             // database
             'Q\database\database',
             
+            // event
+            'Q\event\event',
+            
             // i18n
             'Q\i18n\i18n',
             'Q\i18n\tool',
@@ -78,10 +81,12 @@ class base_provider extends provider {
      * @var array
      */
     private $arrOther = [
-            // structure
-            'Q\structure\collection',
-            'Q\structure\queue',
-            'Q\structure\stack' 
+            // collection
+            'Q\collection\collection',
+            
+            // queue
+            'Q\queue\queue',
+            'Q\queue\stack' 
     ];
     
     /**

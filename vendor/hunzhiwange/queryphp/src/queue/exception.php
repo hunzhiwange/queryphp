@@ -18,10 +18,10 @@
  * @date 2017.04.17
  * @since 4.0
  */
-namespace Q\structure;
+namespace Q\queue;
 
 /**
- * 数据结构组件异常捕获
+ * 队列组件异常捕获
  *
  * @author Xiangmin Liu
  */

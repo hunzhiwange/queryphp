@@ -141,7 +141,7 @@ class bootstrap {
      */
     private function runApp_() {
         // 创建 & 注册
-        $this->objProject->instance ( 'app', ($objApp = $this->objProject->make ( app::class, $this->objProject, $this->objRequest->app (), $this->arrOption )->run ()) );
+        $this->objProject->instance ( 'app', ($objApp = $this->objProject->make ( app::class, $this->objProject, $this->objRequest->app (), $this->arrOption )->run ()->registerAppProvider ()) );
         
         // 运行应用
         $objApp->app ();

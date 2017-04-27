@@ -22,6 +22,7 @@ namespace Q\mvc;
 
 use Q\support\container;
 use Q\mvc\view;
+use Q\traits\auto_injection;
 
 /**
  * 项目管理
@@ -29,6 +30,8 @@ use Q\mvc\view;
  * @author Xiangmin Liu
  */
 class project extends container {
+    
+    use auto_injection;
     
     /**
      * 当前项目实例
@@ -43,6 +46,13 @@ class project extends container {
      * @var array
      */
     private $arrOption = [ ];
+    
+    /**
+     * 应用提供者
+     *
+     * @var array
+     */
+    private $arrProvider = [ ];
     
     /**
      * 项目基础路径
@@ -115,8 +125,8 @@ class project extends container {
         // 初始化项目路径
         setPath_ ()->
         
-        // 注册基础提供者 boot
-        registerBaseProviderBoot_ ();
+        // 注册基础提供者 bootstrap
+        registerBaseProviderBootstrap_ ();
     }
     
     /**
@@ -140,6 +150,16 @@ class project extends container {
         } else {
             return self::$objProject = new self ( $arrOption );
         }
+    }
+    
+    /**
+     * 框架基础提供者 register
+     *
+     * @param array $arrProvider            
+     * @return $this
+     */
+    public function registerAppProvider($arrProvider) {
+        return $this->runProvider_ ( $arrProvider, 'register' )->runProvider_ ( $arrProvider, 'bootstrap' );
     }
     
     /**
@@ -240,37 +260,20 @@ class project extends container {
      * @return $this
      */
     private function registerBaseProvider_() {
-        $arrBaseProvider = [ 
+        return $this->runProvider_ ( [ 
                 'Q\support\base_provider' 
-        ];
-        foreach ( $arrBaseProvider as $strProvider ) {
-            call_user_func_array ( [ 
-                    new $strProvider ( $this ),
-                    'register' 
-            ], [ ] );
-        }
-        return $this;
+        ], 'register' );
     }
     
     /**
-     * 框架基础提供者 boot
+     * 框架基础提供者 bootstrap
      *
      * @return $this
      */
-    private function registerBaseProviderBoot_() {
-        $arrBaseProvider = [ 
+    private function registerBaseProviderBootstrap_() {
+        return $this->runProvider_ ( [ 
                 'Q\support\base_provider' 
-        ];
-        foreach ( $arrBaseProvider as $strProvider ) {
-            $objProvider = new $strProvider ( $this );
-            if (method_exists ( $objProvider, 'bootstrap' )) {
-                call_user_func_array ( [ 
-                        $objProvider,
-                        'bootstrap' 
-                ], [ ] );
-            }
-        }
-        return $this;
+        ], 'bootstrap' );
     }
     
     /**
@@ -316,11 +319,17 @@ class project extends container {
                 'filecache' => 'Q\cache\filecache',
                 'memcache' => 'Q\cache\memcache',
                 
+                // collection
+                'collection' => 'Q\collection\collection',
+                
                 // cookie
                 'cookie' => 'Q\cookie\cookie',
                 
                 // database
                 'database' => 'Q\database\database',
+                
+                // event
+                'event' => 'Q\event\event',
                 
                 // i18n
                 'i18n' => 'Q\i18n\i18n',
@@ -340,18 +349,17 @@ class project extends container {
                 // option
                 'option' => 'Q\option\option',
                 
+                // queue
+                'queue' => 'Q\queue\queue',
+                'stack' => 'Q\queue\stack',
+                
                 // request
                 'request' => 'Q\request\request',
                 'response' => 'Q\request\response',
                 
                 // router
                 'router' => 'Q\router\router',
-                
-                // structure
-                'collection' => 'Q\structure\collection',
-                'queue' => 'Q\structure\queue',
-                'stack' => 'Q\structure\stack',
-                
+
                 // view
                 'view_compilers' => 'Q\view\compilers',
                 'view_parsers' => 'Q\view\parsers',
@@ -419,5 +427,27 @@ class project extends container {
             $sUrl = 'url_' . $sUrl;
             $this->instance ( $sUrl, isset ( $this->arrOption [$sUrl] ) ? $this->arrOption [$sUrl] : '' );
         }
+    }
+    
+    /**
+     * 运行服务提供者
+     *
+     * @param array $arrProvider            
+     * @param string $strType            
+     * @return void
+     */
+    private function runProvider_($arrProvider, $strType) {
+        foreach ( $arrProvider as $strProvider ) {
+            $objProvider = $this->getObjectByClassAndArgs_ ( $strProvider, [ 
+                    $this 
+            ] );
+            if (method_exists ( $objProvider, $strType )) {
+                $this->getObjectCallbackResultWithMethodArgs_ ( [ 
+                        $objProvider,
+                        $strType 
+                ], [ ] );
+            }
+        }
+        return $this;
     }
 }

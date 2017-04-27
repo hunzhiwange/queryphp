@@ -15,23 +15,37 @@
  * 
  * @author Xiangmin Liu<635750556@qq.com>
  * @version $$
- * @date 2017.04.17
- * @since 4.0
+ * @date 2016.11.21
+ * @since 1.0
  */
-namespace Q\event;
+namespace Q\queue;
 
 /**
- * 事件监视器
+ * 栈，后进先出
  *
  * @author Xiangmin Liu
  */
-abstract class listener {
+class stack extends stack_queue {
     
     /**
-     * 创建一个对象
+     * 进栈
      *
+     * @param mixed $mixItem            
      * @return void
      */
-    public function __construct() {
+    public function in($Item) {
+        $this->arrElements [] = &$Item;
+    }
+    
+    /**
+     * 出栈
+     *
+     * @return mixed
+     */
+    public function out() {
+        if (! $this->getLength ()) {
+            return null;
+        }
+        return array_pop ( $this->arrElements );
     }
 }

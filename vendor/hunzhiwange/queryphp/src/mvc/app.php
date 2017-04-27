@@ -92,7 +92,7 @@ class app {
     public function run() {
         // 初始化应用
         $this->initApp_ ();
-            
+        
         // 注册命名空间
         \Q::import ( $this->objProject->app_name, $this->objProject->path_application . '/' . $this->objProject->app_name, [ 
                 'ignore' => [ 
@@ -105,6 +105,16 @@ class app {
         $this->loadOption_ ();
         
         // 返回自身
+        return $this;
+    }
+    
+    /**
+     * 注册应用提供者
+     *
+     * @return void
+     */
+    public function registerAppProvider() {
+        $this->objProject->registerAppProvider ( $GLOBALS ['~@option'] ['provider'] );
         return $this;
     }
     
@@ -214,12 +224,7 @@ class app {
                 $sModuleClass = '\\' . $this->objProject->app_name . '\\application\\controller\\' . $sController;
                 if (\Q::classExists ( $sModuleClass, false, true )) {
                     // 自动注入
-                    if (($arrAutoInjection = $this->parseAutoInjection_ ( $sModuleClass ))) {
-                        $oModule = \Q::newInstanceArgs ( $sModuleClass, $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'], $this->getNodeArgs_ () ) );
-                        unset ( $arrAutoInjection );
-                    } else {
-                        $oModule = \Q::newInstanceArgs ( $sModuleClass, $this->getNodeArgs_ () );
-                    }
+                    $oModule = $this->getObjectByClassAndArgs_ ( $sModuleClass, $this->getNodeArgs_ () );
                     
                     // 注册控制器
                     $this->registerController ( $sController, $oModule );
@@ -237,12 +242,7 @@ class app {
                         $this->registerController ( $sController, $this->objProject->makeWithArgs ( 'controller', $this->getNodeArgs_ () ) );
                         
                         // 自动注入
-                        if (($arrAutoInjection = $this->parseAutoInjection_ ( $sActionClass ))) {
-                            $oAction = \Q::newInstanceArgs ( $sActionClass, $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'], $this->getNodeArgs_ () ) );
-                            unset ( $arrAutoInjection );
-                        } else {
-                            $oAction = \Q::newInstanceArgs ( $sActionClass, $this->getNodeArgs_ () );
-                        }
+                        $oAction = $this->getObjectByClassAndArgs_ ( $sActionClass, $this->getNodeArgs_ () );
                         
                         if (\Q::isKindOf ( $oAction, 'Q\mvc\action' )) {
                             // 注册方法
@@ -280,25 +280,7 @@ class app {
                 case \Q::varType ( $mixAction, 'array' ) && isset ( $mixAction [1] ) && \Q::isKindOf ( $mixAction [0], 'Q\mvc\controller' ) :
                     try {
                         if (\Q::hasPublicMethod ( $mixAction [0], $mixAction [1] )) {
-                            
-                            // 自动注入
-                            if (($arrAutoInjection = $this->parseAutoInjection_ ( $mixAction ))) {
-                                // 注入构造器，重构第一个静态参数
-                                if (! empty ( $arrAutoInjection ['constructor'] )) {
-                                    $mixAction [0] = \Q::newInstanceArgs ( $mixAction [0], $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'], $this->getNodeArgs_ () ) );
-                                }
-                                
-                                // 注入方法
-                                if (! empty ( $arrAutoInjection ['method'] )) {
-                                    $arrArgs = $this->getAutoInjectionArgs_ ( $arrAutoInjection ['method'], $this->getNodeArgs_ () );
-                                }
-                                
-                                unset ( $arrAutoInjection );
-                            } else {
-                                $arrArgs = $this->getNodeArgs_ ();
-                            }
-                            
-                            return call_user_func_array ( $mixAction, $arrArgs );
+                            return $this->getStaticOrClosureCallbackResultWithMethodArgs_ ( $mixAction, $this->getNodeArgs_ () );
                         } else {
                             \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', $sController, $sAction ), 'Q\mvc\exception' );
                         }
@@ -315,24 +297,7 @@ class app {
                 
                 // 判断是否为回调
                 case \Q::varType ( $mixAction, 'callback' ) :
-                    
-                    // 自动注入
-                    if (($arrAutoInjection = $this->parseAutoInjection_ ( $mixAction ))) {
-                        // 注入构造器，重构第一个静态参数
-                        if (! empty ( $arrAutoInjection ['constructor'] )) {
-                            $mixAction [0] = \Q::newInstanceArgs ( $mixAction [0], $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'], $this->getNodeArgs_ () ) );
-                        }
-                        
-                        // 注入方法
-                        if (! empty ( $arrAutoInjection ['method'] )) {
-                            $arrArgs = $this->getAutoInjectionArgs_ ( $arrAutoInjection ['method'], $this->getNodeArgs_ () );
-                        }
-                        
-                        unset ( $arrAutoInjection );
-                    } else {
-                        $arrArgs = $this->getNodeArgs_ ();
-                    }
-                    return call_user_func_array ( $mixAction, $arrArgs );
+                    return $this->getStaticOrClosureCallbackResultWithMethodArgs_ ( $mixAction, $this->getNodeArgs_ () );
                     break;
                 
                 // 如果为方法则注册为方法

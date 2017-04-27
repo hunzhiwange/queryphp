@@ -29,7 +29,7 @@ use Q\contract\support\container as contract_container;
  *
  * @author Xiangmin Liu
  */
-abstract class container implements ArrayAccess, contract_container {
+class container implements ArrayAccess, contract_container {
     
     use flow_condition;
     

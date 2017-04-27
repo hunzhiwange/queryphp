@@ -18,7 +18,7 @@
  * @date 2016.11.21
  * @since 1.0
  */
-namespace Q\structure;
+namespace Q\collection;
 
 use Iterator;
 use ArrayAccess;
