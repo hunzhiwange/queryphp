@@ -1,28 +1,25 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- *
- * ##########################################################
- * # ____ ______ _ _ ______ #
- * # / \ ___ _ __ _ _ | ___ \| | | || ___ \ #
- * # | ( ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ / #
- * # \____/ |___|| __/| | | |_| || __/ | _ || __/ #
- * # \__ | \___ |_| \__ || | | | | || | #
- * # Query Yet Simple __/ |\_| |_| |_|\_| #
- * # |___ / Since 2010.10.03 #
- * ##########################################################
- *
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2016.11.17
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
 
 /**
  * 框架引导文件
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2016.11.17
+ * @version 1.0
  */
 if (version_compare ( PHP_VERSION, '5.5.0', '<' ))
     die ( 'PHP 5.5.0 OR Higher' );
@@ -47,6 +44,11 @@ defined ( 'Q_DEBUG' ) or define ( 'Q_DEBUG', false );
  * 开发模式=develop、测试模式=test、线上模式online
  */
 defined ( 'Q_DEVELOPMENT' ) or define ( 'Q_DEVELOPMENT', 'online' );
+
+/**
+ * QueryPHP 是否命令行工具模式
+ */
+defined ( 'Q_CONSOLE' ) or define ( 'Q_CONSOLE', false );
 
 /**
  * QueryPHP 版本 | 2017.03.31
@@ -114,15 +116,6 @@ class Q {
     }
     
     /**
-     * 应用类管理
-     *
-     * @return \Q\mvc\app
-     */
-    static public function app() {
-        return self::project ()->app;
-    }
-    
-    /**
      * 自动载入
      * 基于 PSR-4 规范构建
      *
@@ -131,7 +124,7 @@ class Q {
      * @return mixed
      */
     static public function autoLoad($sClassName) {
-        if (self::$bAutoLoad === false) {
+        if (static::$bAutoLoad === false) {
             return;
         }
         
@@ -144,13 +137,13 @@ class Q {
          */
         if (strpos ( $sClassName, '\\' ) === false) {
             $sFile = str_replace ( '_', '\\', $sClassName ) . '.php';
-            return self::requireFile_ ( $sFile );
+            return static::requireFile_ ( $sFile );
         } else {
             $sPrefix = $sClassName;
             while ( false !== ($intPos = strrpos ( $sPrefix, '\\' )) ) {
                 $sPrefix = substr ( $sClassName, 0, $intPos + 1 );
                 $sRelativeClass = substr ( $sClassName, $intPos + 1 );
-                $sMappedFile = self::loadMappedFile_ ( $sPrefix, $sRelativeClass );
+                $sMappedFile = static::loadMappedFile_ ( $sPrefix, $sRelativeClass );
                 if ($sMappedFile) {
                     return $sMappedFile;
                 }
@@ -178,25 +171,25 @@ class Q {
         ], $in );
         
         if (! is_dir ( $sPackage )) {
-            self::errorMessage ( "Package:'{$sPackage}' does not exists." );
+            \Q\exception\exception::throws ( "Package:'{$sPackage}' does not exists." );
         }
         
         // 包路径
         $sPackagePath = realpath ( $sPackage ) . '/';
-        $sCache = $sPackagePath . self::NAMESPACE_CACHE;
+        $sCache = $sPackagePath . static::NAMESPACE_CACHE;
         
         if ($in ['force'] === true || ! is_file ( $sCache )) {
             // 扫描命名空间
-            $arrPath = self::scanNamespace_ ( $sPackagePath, $sPackagePath, [ 
+            $arrPath = static::scanNamespace_ ( $sPackagePath, $sPackagePath, [ 
                     'ignore' => $in ['ignore'] 
             ] );
             
             // 写入文件
             if (! file_put_contents ( $sCache, json_encode ( $arrPath ) )) {
-                self::errorMessage ( sprintf ( 'Can not create cache file: %s', $sCache ) );
+                \Q\exception\exception::throws ( sprintf ( 'Can not create cache file: %s', $sCache ) );
             }
         } else {
-            $arrPath = self::readCache ( $sCache );
+            $arrPath = static::readCache ( $sCache );
         }
         
         if (! is_array ( $mixNamespace )) {
@@ -206,9 +199,9 @@ class Q {
         }
         
         foreach ( $mixNamespace as $sNamespace ) {
-            self::addNamespace ( $sNamespace, $sPackage );
+            static::addNamespace ( $sNamespace, $sPackage );
             foreach ( $arrPath as $sPath ) {
-                self::addNamespace ( $sNamespace . '\\' . $sPath, $sPackage . '/' . $sPath );
+                static::addNamespace ( $sNamespace . '\\' . $sPath, $sPackage . '/' . $sPath );
             }
         }
     }
@@ -239,8 +232,8 @@ class Q {
         
         // 导入
         $sNamespace = trim ( $sNamespace, '\\' ) . '\\';
-        if (isset ( self::$arrNamespace [$sNamespace] ) === false) {
-            self::$arrNamespace [$sNamespace] = [ ];
+        if (isset ( static::$arrNamespace [$sNamespace] ) === false) {
+            static::$arrNamespace [$sNamespace] = [ ];
         }
         
         foreach ( $mixBaseDir as $sBase ) {
@@ -249,9 +242,9 @@ class Q {
             
             // 优先插入
             if ($in ['prepend'] === true) {
-                array_unshift ( self::$arrNamespace [$sNamespace], $sBase );
+                array_unshift ( static::$arrNamespace [$sNamespace], $sBase );
             } else {
-                array_push ( self::$arrNamespace [$sNamespace], $sBase );
+                array_push ( static::$arrNamespace [$sNamespace], $sBase );
             }
         }
     }
@@ -266,9 +259,20 @@ class Q {
         if (is_file ( $strVendor . '/composer/autoload_psr4.php' )) {
             $arrMap = require $strVendor . '/composer/autoload_psr4.php';
             foreach ( $arrMap as $sNamespace => $sPath ) {
-                self::addNamespace ( $sNamespace, $sPath );
+                static::addNamespace ( $sNamespace, $sPath );
             }
         }
+    }
+    
+    /**
+     * 获取命名空间路径
+     *
+     * @param string $sNamespace            
+     * @return string|null
+     */
+    static public function getNamespace($sNamespace) {
+        $sNamespace .= '\\';
+        return isset ( static::$arrNamespace [$sNamespace] ) ? array_shift ( static::$arrNamespace [$sNamespace] ) : null;
     }
     
     /**
@@ -285,8 +289,8 @@ class Q {
             $bAutoload = &$bAutoload;
         }
         
-        $bOldValue = self::$bAutoLoad;
-        self::$bAutoLoad = $bAutoload;
+        $bOldValue = static::$bAutoLoad;
+        static::$bAutoLoad = $bAutoload;
         return $bOldValue;
     }
     
@@ -334,11 +338,11 @@ class Q {
     static public function instance($sClass, $mixArgs = null, $sMethod = null, $mixMethodArgs = null) {
         $sIdentify = $sClass . serialize ( $mixArgs ) . $sMethod . serialize ( $mixMethodArgs ); // 惟一识别号
         
-        if (! isset ( self::$arrInstances [$sIdentify] )) {
+        if (! isset ( static::$arrInstances [$sIdentify] )) {
             if (class_exists ( $sClass )) {
                 $oClass = $mixArgs === null ? new $sClass () : new $sClass ( $mixArgs );
                 if (! empty ( $sMethod ) && method_exists ( $oClass, $sMethod )) {
-                    self::$arrInstances [$sIdentify] = $mixMethodArgs === null ? call_user_func ( [ 
+                    static::$arrInstances [$sIdentify] = $mixMethodArgs === null ? call_user_func ( [ 
                             $oClass,
                             $sMethod 
                     ] ) : call_user_func_array ( [ 
@@ -348,14 +352,14 @@ class Q {
                             $mixMethodArgs 
                     ] );
                 } else {
-                    self::$arrInstances [$sIdentify] = $oClass;
+                    static::$arrInstances [$sIdentify] = $oClass;
                 }
             } else {
-                self::throwException ( sprintf ( 'class %s is not exists', $sClass ) );
+                \Q\exception\exception::throws ( sprintf ( 'class %s is not exists', $sClass ) );
             }
         }
         
-        return self::$arrInstances [$sIdentify];
+        return static::$arrInstances [$sIdentify];
     }
     
     /**
@@ -390,7 +394,7 @@ class Q {
             $arrOption = [ ];
         }
         $arrOption = array_merge ( [ 
-                'cache_time' => self::cacheTime_ ( $sId, $GLOBALS ['~@option'] ['runtime_cache_time'] ),
+                'cache_time' => static::cacheTime_ ( $sId, $GLOBALS ['~@option'] ['runtime_cache_time'] ),
                 'cache_prefix' => $GLOBALS ['~@option'] ['runtime_cache_prefix'],
                 'cache_backend' => ! is_null ( $sBackendClass ) ? $sBackendClass : $GLOBALS ['~@option'] ['runtime_cache_backend'] 
         ], $arrOption );
@@ -408,12 +412,12 @@ class Q {
                 $arrObjectOption [$sObjectOption] = $GLOBALS ['~@option'] [$sObjectOption];
             }
             $arrObjectOption ['path_cache_file'] = \Q::project ()->path_cache_file;
-            $arrCache [$arrOption ['cache_backend']] = self::project ()->make ( $arrOption ['cache_backend'], $arrOption )->setObjectOption ( $arrObjectOption );
+            $arrCache [$arrOption ['cache_backend']] = static::project ()->make ( $arrOption ['cache_backend'], $arrOption )->setObjectOption ( $arrObjectOption );
         }
         
         if ($mixData === '') {
             // 强制刷新页面数据
-            if (self::in ( $GLOBALS ['~@option'] ['runtime_cache_force_name'] ) == 1) {
+            if (static::in ( $GLOBALS ['~@option'] ['runtime_cache_force_name'] ) == 1) {
                 return false;
             }
             return $arrCache [$arrOption ['cache_backend']]->get ( $sId, $arrOption );
@@ -435,11 +439,11 @@ class Q {
     static public function option($mixName = '', $mixValue = '', $mixDefault = null) {
         static $objOption;
         if (! $objOption) {
-            $objOption = self::project ()->option;
+            $objOption = static::project ()->option;
         }
         
         if (is_null ( $mixName )) {
-            return self::__callStatic ( 'option', func_get_args () );
+            return static::__callStatic ( 'option', func_get_args () );
         }
         
         // 返回配置数据
@@ -462,47 +466,6 @@ class Q {
     }
     
     /**
-     * 日志统一入口
-     *
-     * @param string $strMessage
-     *            应该被记录的错误信息
-     * @param string $strLevel
-     *            日志错误类型，例如 error,sql,custom
-     * @param int $intMessageType
-     *            参考 error_log 参数 $message_type
-     * @param string $strDestination
-     *            参考 error_log 参数 $destination
-     * @param string $strExtraHeaders
-     *            参考 error_log 参数 $extra_headers
-     * @return void
-     */
-    static public function log($strMessage, $strLevel = 'error', $intMessageType = 3, $strDestination = '', $strExtraHeaders = '') {
-        static $objLog;
-        
-        if (is_null ( $strMessage )) {
-            return self::__callStatic ( 'log', func_get_args () );
-        }
-        
-        if (! $objLog) {
-            $arrObjectOption = [ ];
-            foreach ( [ 
-                    'log_enabled',
-                    'log_error_enabled',
-                    'log_sql_enabled',
-                    'log_time_format',
-                    'log_file_size',
-                    'log_file_name' 
-            ] as $sObjectOption ) {
-                $arrOption [$sObjectOption] = $GLOBALS ['~@option'] [$sObjectOption];
-            }
-            $arrOption ['path_cache_log'] = \Q::project ()->path_cache_log;
-            $objLog = self::project ()->log->setObjectOption ( $arrObjectOption );
-        }
-        
-        $objLog->run ( $strMessage, $strLevel, $intMessageType, $strDestination, $strExtraHeaders );
-    }
-    
-    /**
      * 产品国际化支持
      *
      * @param 语言 $sValue            
@@ -512,11 +475,11 @@ class Q {
         static $objI18n;
         
         if (is_null ( $sValue )) {
-            return self::__callStatic ( 'i18n', func_get_args () );
+            return static::__callStatic ( 'i18n', func_get_args () );
         }
         
         // 不开启
-        if (empty ( $GLOBALS ['~@option'] ['i18n_on'] ) || ! self::$booI18nOn) {
+        if (empty ( $GLOBALS ['~@option'] ['i18n_on'] ) || ! static::$booI18nOn) {
             if (func_num_args () > 1) { // 代入参数
                 $sValue = call_user_func_array ( 'sprintf', func_get_args () );
             }
@@ -531,7 +494,7 @@ class Q {
             ] as $sObjectOption ) {
                 $arrObjectOption [$sObjectOption] = $GLOBALS ['~@option'] [$sObjectOption];
             }
-            $objI18n = self::project ()->i18n->setObjectOption ( $arrObjectOption );
+            $objI18n = static::project ()->i18n->setObjectOption ( $arrObjectOption );
         }
         
         // 返回当地语句
@@ -541,67 +504,7 @@ class Q {
         ], func_get_args () );
         return $sValue;
     }
-    
-    /**
-     * cookie 统一入口
-     *
-     * @param string $sName            
-     * @param mixed $mixValue            
-     * @param array $in
-     *            life 过期时间
-     *            cookie_domain 是否启用域名
-     *            prefix 是否开启前缀
-     *            http_only
-     *            only_delete_prefix
-     * @return void|mixed
-     */
-    static public function cookie($sName = false, $mixValue = '', array $in = []) {
-        static $objCookie;
-        
-        if ($sName === false) {
-            return self::__callStatic ( 'cookie', func_get_args () );
-        }
-        
-        if (! $objCookie) {
-            $arrObjectOption = [ ];
-            foreach ( [ 
-                    'cookie_prefix',
-                    'cookie_expire',
-                    'cookie_domain',
-                    'cookie_path' 
-            ] as $sObjectOption ) {
-                $arrObjectOption [$sObjectOption] = $GLOBALS ['~@option'] [$sObjectOption];
-            }
-            $objCookie = self::project ()->cookie->setObjectOption ( $arrObjectOption );
-        }
-        
-        $in = array_merge ( [ 
-                'life' => 0,
-                'cookie_domain' => null,
-                'prefix' => true,
-                'http_only' => false,
-                'only_delete_prefix' => true 
-        ], $in );
-        
-        // 清除指定前缀的所有cookie
-        if (is_null ( $sName )) {
-            if (empty ( $_COOKIE )) {
-                return;
-            }
-            $objCookie->clearCookie ( $in ['only_delete_prefix'] );
-            return;
-        }
-        
-        // 如果值为null，则删除指定COOKIE
-        if ($in ['life'] < 0 || $mixValue === null) {
-            $objCookie->deleteCookie ( $sName, $in ['cookie_domain'], $in ['prefix'] );
-        } elseif ($mixValue == '' && $in ['life'] >= 0) { // 如果值为空，则获取cookie
-            return $objCookie->getCookie ( $sName, $in ['prefix'] );
-        } else { // 设置COOKIE
-            $objCookie->setCookie ( $sName, $mixValue, $in );
-        }
-    }
-    
+
     /**
      * 生成路由地址
      *
@@ -782,7 +685,7 @@ class Q {
         // 子域名支持
         if ($GLOBALS ['~@option'] ['url_make_subdomain_on'] === true) {
             if ($in ['subdomain']) {
-                $sUrl = self::urlFull_ ( $in ['subdomain'] ) . $sUrl;
+                $sUrl = static::urlFull_ ( $in ['subdomain'] ) . $sUrl;
             }
         }
         
@@ -807,28 +710,12 @@ class Q {
             }
             
             $sTag = ucfirst ( $arrOption [0] ) . '_Behavior';
-            if (self::classExists ( $sTag )) {
+            if (static::classExists ( $sTag )) {
                 $oBehavior = new $sTag ();
                 $oBehavior->RUN ( $arrOption [1] );
             }
         }
     }
-    
-    /**
-     * 执行事件
-     *
-     * @param \Q\event\event $objEvent            
-     * @return array
-     */
-    // static public function event(\Q\event\event $objEvent) {
-    // $arrArgs = func_get_args ();
-    // array_shift ( $arrArgs );
-    // $objEvent->register ();
-    // return call_user_func_array ( [
-    // $objEvent,
-    // 'run'
-    // ], $arrArgs );
-    // }
     
     /**
      * 响应请求
@@ -866,7 +753,7 @@ class Q {
             $sOutput = ob_get_clean ();
             if (! extension_loaded ( 'xdebug' )) {
                 $sOutput = preg_replace ( "/\]\=\>\n(\s+)/m", "] => ", $sOutput );
-                $sOutput = '<pre>' . $sLabel . htmlspecialchars ( $sOutput, ENT_QUOTES ) . '</pre>';
+                $sOutput = '<pre>' . $sLabel . (\Q::isCli () ? $sOutput : htmlspecialchars ( $sOutput, ENT_QUOTES )) . '</pre>';
             }
         }
         
@@ -880,132 +767,6 @@ class Q {
     
     // ######################################################
     // ------------------- 框架核心功能 end -------------------
-    // ######################################################
-    
-    // ######################################################
-    // ------------------- 错误异常相关 start -------------------
-    // ######################################################
-    
-    /**
-     * 接管 PHP 异常
-     *
-     * @param Exception $oE            
-     * @return void
-     */
-    static public function exceptionHandler($oE) {
-        $sErrstr = $oE->getMessage ();
-        $sErrfile = $oE->getFile ();
-        $nErrline = $oE->getLine ();
-        $nErrno = $oE->getCode ();
-        $sErrorStr = "[$nErrno] $sErrstr " . basename ( $sErrfile ) . \Q::i18n ( " 第 %d 行", $nErrline );
-        
-        if (! empty ( $GLOBALS ['~@option'] ['log_error_enabled'] )) {
-            self::log ( $sErrstr, 'error' );
-        }
-        
-        if (method_exists ( $oE, 'formatException' )) {
-            self::halt ( $oE->formatException (), $oE instanceof DbException );
-        } else {
-            self::halt ( $oE->getMessage (), $oE instanceof DbException );
-        }
-    }
-    
-    /**
-     * 接管 PHP 错误
-     *
-     * @param int $nErrorNo            
-     * @param string $sErrStr            
-     * @param string $sErrFile            
-     * @param int $nErrLine            
-     * @return void
-     */
-    static public function errorHandel($nErrorNo, $sErrStr, $sErrFile, $nErrLine) {
-        if ($nErrorNo) {
-            $sMessage = "[{$nErrorNo}]: {$sErrStr}<br> File: {$sErrFile}<br> Line: {$nErrLine}";
-            if (! empty ( $GLOBALS ['~@option'] ['log_error_enabled'] )) {
-                self::log ( $sMessage, 'error' );
-            }
-            self::errorMessage ( $sMessage );
-        }
-    }
-    
-    /**
-     * 接管 PHP 致命错误
-     *
-     * @return void
-     */
-    static public function shutdownHandel() {
-        if (($arrError = error_get_last ()) && ! empty ( $arrError ['type'] )) {
-            $sMessage = "[{$arrError['type']}]: {$arrError['message']} <br> File: {$arrError['file']} <br> Line: {$arrError['line']}";
-            if (! empty ( $GLOBALS ['~@option'] ['log_error_enabled'] )) {
-                self::log ( $sMessage, 'error' );
-            }
-            self::errorMessage ( $sMessage );
-        }
-    }
-    
-    /**
-     * 抛出异常
-     *
-     * @param string $sMsg            
-     * @param string $sType            
-     * @param number $nCode            
-     * @return void
-     */
-    static public function throwException($sMsg, $sType = 'Q\exception\exception', $nCode = 0) {
-        if (self::classExists ( $sType, false, true )) {
-            throw new $sType ( $sMsg, $nCode );
-        } else {
-            self::halt ( $sMsg ); // 异常类型不存在则输出错误信息字串
-        }
-    }
-    
-    /**
-     * 输入错误异常消息
-     *
-     * @param mixed $mixError            
-     * @param boolean $bDbError            
-     * @return void
-     */
-    static public function halt($mixError, $bDbError = FALSE) {
-        if (! is_array ( $mixError )) {
-            $arrTemp ['message'] = $mixError;
-            $mixError = $arrTemp;
-            unset ( $arrTemp );
-        }
-        
-        // 否则定向到错误页面
-        if (! empty ( $GLOBALS ['~@option'] ['show_exception_redirect'] ) && $bDbError === FALSE && Q_DEBUG === FALSE) {
-            self::urlRedirect ( self::url ( $GLOBALS ['~@option'] ['show_exception_redirect'] ) );
-        } else {
-            if (empty ( $GLOBALS ['~@option'] ['show_exception_show_message'] ) && ! empty ( $GLOBALS ['~@option'] ['show_exception_default_message'] )) {
-                $mixError ['message'] = $GLOBALS ['~@option'] ['show_exception_default_message'];
-            }
-            
-            // 包含异常页面模板
-            if (! empty ( $GLOBALS ['~@option'] ['show_exception_tpl'] ) && is_file ( $GLOBALS ['~@option'] ['show_exception_tpl'] )) {
-                include ($GLOBALS ['~@option'] ['show_exception_tpl']);
-            } else {
-                include (Q_PATH . '/~@~/tpl/exception.php');
-            }
-        }
-        
-        exit ();
-    }
-    
-    /**
-     * 输出一个致命错误
-     *
-     * @param string $sMessage            
-     * @return void
-     */
-    static public function errorMessage($sMessage) {
-        require_once (Q_PATH . '/~@~/tpl/error.php');
-        exit ();
-    }
-    
-    // ######################################################
-    // ------------------ - 错误异常相关 end ------ -------------
     // ######################################################
     
     // ######################################################
@@ -1049,7 +810,7 @@ class Q {
                 { // 数组
                     if (! empty ( $sType [1] )) {
                         $sType [1] = explode ( ',', $sType [1] );
-                        return self::checkArray ( $mixVar, $sType [1] );
+                        return static::checkArray ( $mixVar, $sType [1] );
                     } else {
                         return is_array ( $mixVar );
                     }
@@ -1061,7 +822,7 @@ class Q {
             case 'callback' : // 回调函数
                 return is_callable ( $mixVar, false );
             default : // 类
-                return self::isKindOf ( $mixVar, implode ( ':', $sType ) );
+                return static::isKindOf ( $mixVar, implode ( ':', $sType ) );
         }
     }
     
@@ -1096,10 +857,10 @@ class Q {
      * @return boolean
      */
     static public function isThese($mixVar, $mixTypes) {
-        if (! self::varType ( $mixTypes, 'string' ) && ! self::checkArray ( $mixTypes, [ 
+        if (! static::varType ( $mixTypes, 'string' ) && ! static::checkArray ( $mixTypes, [ 
                 'string' 
         ] )) {
-            self::throwException ( \Q::i18n ( '正确格式:参数必须为 string 或 各项元素为 string 的数组' ) );
+            \Q\exception\exception::throws ( \Q::i18n ( '正确格式:参数必须为 string 或 各项元素为 string 的数组' ) );
         }
         
         if (is_string ( $mixTypes )) {
@@ -1109,7 +870,7 @@ class Q {
         }
         
         foreach ( $mixTypes as $sType ) { // 类型检查
-            if (self::varType ( $mixVar, $sType )) {
+            if (static::varType ( $mixVar, $sType )) {
                 return true;
             }
         }
@@ -1125,8 +886,8 @@ class Q {
      * @return boolean
      */
     static public function isKindOf($mixSubClass, $sBaseClass) {
-        if (self::classExists ( $sBaseClass, true )) { // 接口
-            return self::isImplementedTo ( $mixSubClass, $sBaseClass );
+        if (static::classExists ( $sBaseClass, true )) { // 接口
+            return static::isImplementedTo ( $mixSubClass, $sBaseClass );
         } else { // 类
             if (is_object ( $mixSubClass )) { // 统一类名,如果不是，返回false
                 $mixSubClass = get_class ( $mixSubClass );
@@ -1143,7 +904,7 @@ class Q {
                 return false;
             }
             
-            return self::isKindOf ( $sParClass, $sBaseClass );
+            return static::isKindOf ( $sParClass, $sBaseClass );
         }
     }
     
@@ -1195,7 +956,7 @@ class Q {
         
         // 递归检查父类
         if (($sParName = get_parent_class ( $sClassName )) !== false) {
-            return self::isImplementedTo ( $sParName, $sInterface, $bStrictly );
+            return static::isImplementedTo ( $sParName, $sInterface, $bStrictly );
         } else {
             return false;
         }
@@ -1211,12 +972,12 @@ class Q {
      */
     static public function classExists($sClassName, $bInter = false, $bAutoload = false) {
         if (! is_string ( $sClassName )) {
-            self::throwException ( 'classExists first args must be a string!' );
+            \Q\exception\exception::throws ( 'classExists first args must be a string!' );
         }
-        $bAutoloadOld = self::setAutoload ( $bAutoload );
+        $bAutoloadOld = static::setAutoload ( $bAutoload );
         $sFuncName = $bInter ? 'interface_exists' : 'class_exists';
         $bResult = $sFuncName ( $sClassName );
-        self::setAutoload ( $bAutoloadOld );
+        static::setAutoload ( $bAutoloadOld );
         return $bResult;
     }
     
@@ -1236,7 +997,7 @@ class Q {
         foreach ( $arrArray as &$mixValue ) {
             $bRet = false;
             foreach ( $arrTypes as $mixType ) {
-                if (self::varType ( $mixValue, $mixType )) {
+                if (static::varType ( $mixValue, $mixType )) {
                     $bRet = true;
                     break;
                 }
@@ -1288,6 +1049,34 @@ class Q {
      */
     static public function oneImensionArray($arrArray) {
         return count ( $arrArray ) == count ( $arrArray, 1 );
+    }
+    
+    /**
+     * 数组合并支持 + 算法
+     *
+     * @param array $arrOption            
+     * @param boolean $booRecursion            
+     * @return array
+     */
+    static public function arrayMergePlus($arrOption, $booRecursion = true) {
+        $arrExtend = [ ];
+        foreach ( $arrOption as $strKey => $mixTemp ) {
+            if (strpos ( $strKey, '+' ) === 0) {
+                $arrExtend [ltrim ( $strKey, '+' )] = $mixTemp;
+                unset ( $arrOption [$strKey] );
+            }
+        }
+        foreach ( $arrExtend as $strKey => $mixTemp ) {
+            if (isset ( $arrOption [$strKey] ) && is_array ( $arrOption [$strKey] ) && is_array ( $mixTemp )) {
+                $arrOption [$strKey] = array_merge ( $arrOption [$strKey], $mixTemp );
+                if ($booRecursion === true) {
+                    $arrOption [$strKey] = static::arrayMergePlus ( $arrOption [$strKey], $booRecursion );
+                }
+            } else {
+                $arrOption [$strKey] = $mixTemp;
+            }
+        }
+        return $arrOption;
     }
     
     // ######################################################
@@ -1363,7 +1152,7 @@ class Q {
             $sDir = explode ( '/', str_replace ( '\\', '/', trim ( $sDir, '/' ) ) );
         }
         
-        $sCurDir = self::isWin () ? '' : '/';
+        $sCurDir = static::isWin () ? '' : '/';
         foreach ( $sDir as $nKey => $sTemp ) {
             $sCurDir .= $sTemp . '/';
             if (! is_dir ( $sCurDir )) {
@@ -1420,7 +1209,7 @@ class Q {
                 if (is_file ( $sDir . "/" . $sFile ) && in_array ( $arrIn ['return'], [ 
                         'file',
                         'both' 
-                ] ) && (! $arrIn ['filterext'] ? true : (in_array ( self::getExtName ( $sFile, 2 ), $arrIn ['filterext'] ) ? false : true))) {
+                ] ) && (! $arrIn ['filterext'] ? true : (in_array ( static::getExtName ( $sFile, 2 ), $arrIn ['filterext'] ) ? false : true))) {
                     $arrReturnData ['file'] [] = ($arrIn ['fullpath'] ? $sDir . "/" : '') . $sFile;
                 }
             }
@@ -1611,7 +1400,7 @@ class Q {
      * @return string
      */
     static public function getCurrentUrl() {
-        return (self::isSsl () ? 'https://' : 'http://') . $_SERVER ['HTTP_HOST'] . $_SERVER ['REQUEST_URI'];
+        return (static::isSsl () ? 'https://' : 'http://') . $_SERVER ['HTTP_HOST'] . $_SERVER ['REQUEST_URI'];
     }
     
     /**
@@ -1622,7 +1411,7 @@ class Q {
      * @return string
      */
     static public function xmlSerialize($arrData = []) {
-        return self::xml ()->xmlSerialize ( $arrData );
+        return static::xml ()->xmlSerialize ( $arrData );
     }
     
     /**
@@ -1633,7 +1422,7 @@ class Q {
      * @return string
      */
     static public function xmlUnSerialize($sText) {
-        return self::xml ()->xmlUnSerialize ( $sText );
+        return static::xml ()->xmlUnSerialize ( $sText );
     }
     
     /**
@@ -1781,8 +1570,8 @@ class Q {
             }
         } elseif (is_array ( $mixContents )) {
             foreach ( $mixContents as $sKey => $sVal ) {
-                $sKeyTwo = self::gbkToUtf8 ( $sKey, $sFromChar, $sToChar );
-                $mixContents [$sKeyTwo] = self::stringEncoding ( $sVal, $sFromChar, $sToChar );
+                $sKeyTwo = static::gbkToUtf8 ( $sKey, $sFromChar, $sToChar );
+                $mixContents [$sKeyTwo] = static::stringEncoding ( $sVal, $sFromChar, $sToChar );
                 if ($sKey != $sKeyTwo) {
                     unset ( $mixContents [$sKeyTwo] );
                 }
@@ -1869,20 +1658,6 @@ class Q {
     // ######################################################
     
     /**
-     * 魔术转移处理
-     *
-     * @return void
-     */
-    static public function stripslashesMagicquotegpc() {
-        if (self::getMagicQuotesGpc ()) {
-            $_GET = self::stripslashes ( $_GET );
-            $_POST = self::stripslashes ( $_POST );
-            $_COOKIE = self::stripslashes ( $_COOKIE );
-            $_REQUEST = self::stripslashes ( $_REQUEST );
-        }
-    }
-    
-    /**
      * 移除魔术方法转义
      *
      * @param mixed $mixString            
@@ -1892,7 +1667,7 @@ class Q {
     static public function stripslashes($mixString, $bRecursive = true) {
         if ($bRecursive === true and is_array ( $mixString )) { // 递归
             foreach ( $mixString as $sKey => $mixValue ) {
-                $mixString [self::stripslashes ( $sKey )] = self::stripslashes ( $mixValue ); // 如果你只注意到值，却没有注意到key
+                $mixString [static::stripslashes ( $sKey )] = static::stripslashes ( $mixValue ); // 如果你只注意到值，却没有注意到key
             }
         } else {
             if (is_string ( $mixString )) {
@@ -1913,7 +1688,7 @@ class Q {
     static public function addslashes($mixString, $bRecursive = true) {
         if ($bRecursive === true and is_array ( $mixString )) {
             foreach ( $mixString as $sKey => $mixValue ) {
-                $mixString [self::addslashes ( $sKey )] = self::addslashes ( $mixValue ); // 如果你只注意到值，却没有注意到key
+                $mixString [static::addslashes ( $sKey )] = static::addslashes ( $mixValue ); // 如果你只注意到值，却没有注意到key
             }
         } else {
             if (is_string ( $mixString )) {
@@ -1922,19 +1697,6 @@ class Q {
         }
         
         return $mixString;
-    }
-    
-    /**
-     * 取得当前模式转义状态
-     *
-     * @return boolean
-     */
-    static public function getMagicQuotesGpc() {
-        if (version_compare ( PHP_VERSION, '5.4.0', '<' )) {
-            return get_magic_quotes_gpc () ? TRUE : FALSE;
-        } else {
-            return FALSE;
-        }
     }
     
     /**
@@ -2114,7 +1876,7 @@ class Q {
      * @return string
      */
     static function text($sText) {
-        $sText = self::cleanJs ( $sText );
+        $sText = static::cleanJs ( $sText );
         // $sText=preg_replace('/\s(?=\s)/','',$sText);// 彻底过滤空格
         $sText = preg_replace ( '/[\n\r\t]/', ' ', $sText );
         /*
@@ -2146,7 +1908,7 @@ class Q {
      */
     static public function strip($sText) {
         $sText = trim ( $sText );
-        $sText = self::cleanJs ( $sText );
+        $sText = static::cleanJs ( $sText );
         $sText = strip_tags ( $sText );
         return $sText;
     }
@@ -2264,9 +2026,9 @@ class Q {
      * @return boolean
      */
     static public function osNewline() {
-        if (self::isWin ()) {
+        if (static::isWin ()) {
             return "\n";
-        } elseif (self::isMac ()) {
+        } elseif (static::isMac ()) {
             return "\r";
         } else {
             return "\r\n";
@@ -2324,13 +2086,13 @@ class Q {
      * @return string|false 存在则为文件名，不存则返回 false
      */
     static private function loadMappedFile_($sPrefix, $sRelativeClass) {
-        if (isset ( self::$arrNamespace [$sPrefix] ) === false) {
+        if (isset ( static::$arrNamespace [$sPrefix] ) === false) {
             return false;
         }
         
-        foreach ( self::$arrNamespace [$sPrefix] as $bBaseDir ) {
+        foreach ( static::$arrNamespace [$sPrefix] as $bBaseDir ) {
             $sFile = $bBaseDir . str_replace ( '\\', '/', $sRelativeClass ) . '.php';
-            if (self::requireFile_ ( $sFile )) {
+            if (static::requireFile_ ( $sFile )) {
                 return $sFile;
             }
         }
@@ -2414,7 +2176,7 @@ class Q {
                     }
                     
                     // 递归子目录
-                    $arrReturn = array_merge ( $arrReturn, self::scanNamespace_ ( $sPath, $sRootDir, $in ) );
+                    $arrReturn = array_merge ( $arrReturn, static::scanNamespace_ ( $sPath, $sRootDir, $in ) );
                 }
             }
         }
@@ -2455,7 +2217,7 @@ class Q {
     static private function urlFull_($sDomain = '', $sHttpPrefix = '', $sHttpSuffix = '') {
         static $sHttpPrefix = '', $sHttpSuffix = '';
         if (! $sHttpPrefix) {
-            $sHttpPrefix = self::isSsl () ? 'https://' : 'http://';
+            $sHttpPrefix = static::isSsl () ? 'https://' : 'http://';
             $sHttpSuffix = $GLOBALS ['~@option'] ['url_router_domain_top'];
         }
         return $sHttpPrefix . ($sDomain && $sDomain != '*' ? $sDomain . '.' : '') . $sHttpSuffix;
@@ -2473,34 +2235,11 @@ class Q {
      * @return boolean
      */
     static public function __callStatic($sMethod, $arrArgs) {
-        if (($objFacades = self::project ()->make ( $sMethod ))) {
+        if (($objFacades = static::project ()->make ( $sMethod ))) {
             return $objFacades;
         }
-        self::throwException ( self::i18n ( '未实现 facades 方法 %s', $sMethod ) );
+        \Q\exception\exception::throws ( static::i18n ( '未实现 facades 方法 %s', $sMethod ) );
     }
-}
-
-/**
- * QueryPHP 系统警告处理
- */
-set_exception_handler ( [ 
-        'Q',
-        'exceptionHandler' 
-] );
-
-/**
- * QueryPHP 系统错误处理
- */
-if (Q_DEBUG === TRUE) {
-    set_error_handler ( [ 
-            'Q',
-            'errorHandel' 
-    ] );
-    
-    register_shutdown_function ( [ 
-            'Q',
-            'shutdownHandel' 
-    ] );
 }
 
 /**
@@ -2519,3 +2258,26 @@ spl_autoload_register ( [
                 'resource' 
         ] 
 ] );
+
+/**
+ * QueryPHP 系统警告处理
+ */
+set_exception_handler ( [ 
+        'Q\exception\exception',
+        'exceptionHandle' 
+] );
+
+/**
+ * QueryPHP 系统错误处理
+ */
+if (Q_DEBUG === TRUE) {
+    set_error_handler ( [ 
+            'Q\exception\exception',
+            'errorHandle' 
+    ] );
+    
+    register_shutdown_function ( [ 
+            'Q\exception\exception',
+            'shutdownHandle' 
+    ] );
+}

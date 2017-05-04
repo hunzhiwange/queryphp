@@ -1,29 +1,27 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2017.02.15
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\cache;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
 
 /**
  * 文件缓存
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2017.02.15
+ * @version 1.0
  */
 class filecache extends cache {
     
@@ -69,7 +67,7 @@ class filecache extends cache {
      */
     public function __construct(array $arrOption = []) {
         $this->mergeObjectOption_ ();
-
+        
         // 合并默认配置
         $this->arrOption = array_merge ( $this->arrOption, $this->arrDefaultOption );
         if (! empty ( $arrOption )) {
@@ -110,8 +108,8 @@ class filecache extends cache {
         
         // 头部的16个字节存储了安全代码
         $nLen = filesize ( $sCachePath );
-        $sHead = fread ( $hFp, self::HEADER_LENGTH );
-        $nLen -= self::HEADER_LENGTH;
+        $sHead = fread ( $hFp, static::HEADER_LENGTH );
+        $nLen -= static::HEADER_LENGTH;
         
         do {
             // 检查缓存是否已经过期
@@ -155,7 +153,7 @@ class filecache extends cache {
         if ($arrOption ['json']) {
             $mixData = json_encode ( $mixData );
         }
-        $mixData = self::HEADER . $mixData;
+        $mixData = static::HEADER . $mixData;
         
         $sCachePath = $this->getCachePath_ ( $sCacheName, $arrOption );
         $this->writeData_ ( $sCachePath, $mixData );

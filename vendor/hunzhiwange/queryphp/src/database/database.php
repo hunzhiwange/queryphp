@@ -1,31 +1,93 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2017.03.09
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\database;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
+
+use Q\exception\exception;
+use Q\traits\static_entrance;
+use Q\traits\object_option;
+use Q\option\option;
 
 /**
  * 数据库入口
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2017.03.09
+ * @version 1.0
  */
 class database {
+    
+    use static_entrance;
+    use object_option;
+    
+    /**
+     * 配置
+     *
+     * @var array
+     */
+    protected $arrDefaultObjectOption = [ 
+            'db_type' => 'mysql',
+            'db_schema' => '',
+            'db_user' => 'root',
+            'db_password' => '',
+            'db_host' => 'localhost',
+            'db_port' => 3306,
+            'db_name' => '',
+            'db_prefix' => '',
+            'db_dsn' => '',
+            'db_params' => [ ],
+            'db_char' => 'utf8',
+            'db_persistent' => FALSE,
+            'db_distributed' => FALSE,
+            'db_rw_separate' => FALSE,
+            'db_master' => [ ],
+            'db_slave' => [ ] 
+    ];
+    
+    /**
+     * 初始化参数
+     *
+     * @var array
+     */
+    protected $arrStaticEntranceType = [ 
+            'db_type',
+            'db_schema',
+            'db_user',
+            'db_password',
+            'db_host',
+            'db_port',
+            'db_name',
+            'db_prefix',
+            'db_dsn',
+            'db_params',
+            'db_char',
+            'db_persistent',
+            'db_distributed',
+            'db_rw_separate',
+            'db_master',
+            'db_slave' 
+    ];
+    /**
+     * 构造函数
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->mergeObjectOption_ ();
+    }
     
     /**
      * 连接数据库并返回连接对象
@@ -46,13 +108,13 @@ class database {
         
         // 解析数据库配置
         $mixOption = $this->parseOption_ ( $mixOption );
-            
+        
         // 连接数据库
         $strConnectClass = '\\Q\\database\\' . $mixOption ['db_type'];
         if (\Q::classExists ( $strConnectClass, false, true )) {
             return $arrConnect [$strUnique] = new $strConnectClass ( $mixOption );
         } else {
-            \Q::throwException ( \Q::i18n ( '数据库驱动 %s 不存在！', $mixOption ['db_type'] ), 'Q\database\exception' );
+            exception::throws ( \Q::i18n ( '数据库驱动 %s 不存在！', $mixOption ['db_type'] ), 'Q\database\exception' );
         }
     }
     
@@ -66,8 +128,8 @@ class database {
         $arrOption = [ ];
         
         // 配置文件存在链接
-        if (is_string ( $mixOption ) && ! empty ( $GLOBALS ['~@option'] [$mixOption] ) && is_array ( $GLOBALS ['~@option'] [$mixOption] )) {
-            $arrOption = $GLOBALS ['~@option'] [$mixOption];
+        if (is_string ( $mixOption ) && is_array ( option::gets ( $mixOption ) )) {
+            $arrOption = option::gets ( $mixOption );
         }        
 
         // 数组类配置
@@ -87,37 +149,19 @@ class database {
      */
     private function fillOption_($arrOption = []) {
         // 返回结果
-        $arrResult = [ ];
+        $arrResult = $arrDefaultOption = [ ];
+        
+        // 默认参数
+        foreach ( $this->getStaticEntranceType_ () as $sOptionType ) {
+            $arrDefaultOption [$sOptionType] = $this->getObjectOption_ ( $sOptionType );
+        }
         
         // 合并参数
-        $arrOption = array_merge ( $arrOption, [ 
-                'db_type' => $GLOBALS ['~@option'] ['db_type'],
-                'db_schema' => $GLOBALS ['~@option'] ['db_schema'],
-                'db_user' => $GLOBALS ['~@option'] ['db_user'],
-                'db_password' => $GLOBALS ['~@option'] ['db_password'],
-                'db_host' => $GLOBALS ['~@option'] ['db_host'],
-                'db_port' => $GLOBALS ['~@option'] ['db_port'],
-                'db_name' => $GLOBALS ['~@option'] ['db_name'],
-                'db_prefix' => $GLOBALS ['~@option'] ['db_prefix'],
-                'db_dsn' => $GLOBALS ['~@option'] ['db_dsn'],
-                'db_char' => $GLOBALS ['~@option'] ['db_char'],
-                'db_persistent' => $GLOBALS ['~@option'] ['db_persistent'],
-                'db_distributed' => $GLOBALS ['~@option'] ['db_distributed'],
-                'db_rw_separate' => $GLOBALS ['~@option'] ['db_rw_separate'],
-                'db_master' => $GLOBALS ['~@option'] ['db_master'],
-                'db_slave' => $GLOBALS ['~@option'] ['db_slave'] 
-        ] );
+        $arrOption = array_merge ( $arrOption, $arrDefaultOption );
         
         // 如果 DSN 字符串则进行解析
         if (! empty ( $arrOption ['db_dsn'] )) {
             $arrOption = array_merge ( $arrOption, $this->parseDsn_ ( $arrOption ['db_dsn'] ) );
-        }
-        
-        // 合并 param 参数
-        if (! empty ( $arrOption ['db_params'] )) {
-            $arrOption ['db_params'] = array_merge ( $GLOBALS ['~@option'] ['db_params'], $arrOption ['db_params'] );
-        } else {
-            $arrOption ['db_params'] = $GLOBALS ['~@option'] ['db_params'];
         }
         
         // 剥离公共配置参数
@@ -160,8 +204,11 @@ class database {
             }
         }
         
+        // + 合并支持
+        $arrResult = \Q::arrayMergePlus ( $arrResult );
+        
         // 返回结果
-        unset ( $arrOption );
+        unset ( $arrOption, $arrDefaultOption );
         return $arrResult;
     }
     
@@ -204,5 +251,32 @@ class database {
                 ];
             }
         }
+    }
+    
+    /**
+     * 初始化静态入口配置
+     *
+     * @return void
+     */
+    protected function initStaticEntrance_() {
+        $arrObjectOption = [ ];
+        foreach ( $this->getStaticEntranceType_ () as $sObjectOption ) {
+            $arrObjectOption [$sObjectOption] = option::gets ( $sObjectOption );
+        }
+        return $this->setObjectOption ( $arrObjectOption );
+    }
+    
+    /**
+     * 拦截匿名注册控制器方法
+     *
+     * @param 方法名 $sMethod            
+     * @param 参数 $arrArgs            
+     * @return mixed
+     */
+    public function __call($sMethod, $arrArgs) {
+        return call_user_func_array ( [ 
+                $this->connect (),
+                $sMethod 
+        ], $arrArgs );
     }
 }

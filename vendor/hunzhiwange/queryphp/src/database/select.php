@@ -1,33 +1,32 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2017.03.09
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\database;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
 
 use PDO;
 use Q\traits\flow_condition;
 use Q\collection\collection;
+use Q\exception\exception;
 
 /**
  * 数据库查询器
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2017.03.09
+ * @version 1.0
  */
 class select {
     
@@ -280,14 +279,14 @@ class select {
                 $sMethod = substr ( $sMethod, 2 );
                 $arrKeys = explode ( 'And', $sMethod );
                 if (count ( $arrKeys ) != count ( $arrArgs )) {
-                    \Q::throwException ( \Q::i18n ( 'getBy 参数数量不对应' ), 'Q\database\exception' );
+                    exception::throws ( \Q::i18n ( 'getBy 参数数量不对应' ), 'Q\database\exception' );
                 }
                 return $this->where ( array_combine ( $arrKeys, $arrArgs ) )->getOne ();
             } elseif (strncasecmp ( $sMethod, 'AllBy', 5 ) === 0) { // support getAllByNameAndSex etc.
                 $sMethod = substr ( $sMethod, 5 );
                 $arrKeys = explode ( 'And', $sMethod );
                 if (count ( $arrKeys ) != count ( $arrArgs )) {
-                    \Q::throwException ( \Q::i18n ( 'getAllBy 参数数量不对应' ), 'Q\database\exception' );
+                    exception::throws ( \Q::i18n ( 'getAllBy 参数数量不对应' ), 'Q\database\exception' );
                 }
                 return $this->where ( array_combine ( $arrKeys, $arrArgs ) )->getAll ();
             }
@@ -330,7 +329,7 @@ class select {
         ] )) {
             if ($this->checkFlowCondition_ ())
                 return $this;
-            $this->setTypeAndLogic_ ( 'where', self::LOGIC_AND );
+            $this->setTypeAndLogic_ ( 'where', static::LOGIC_AND );
             array_unshift ( $arrArgs, str_replace ( 'not', 'not ', strtolower ( ltrim ( $sMethod, 'where' ) ) ) );
             return call_user_func_array ( [ 
                     $this,
@@ -367,7 +366,7 @@ class select {
         ] )) {
             if ($this->checkFlowCondition_ ())
                 return $this;
-            $this->setTypeAndLogic_ ( 'having', self::LOGIC_AND );
+            $this->setTypeAndLogic_ ( 'having', static::LOGIC_AND );
             array_unshift ( $arrArgs, str_replace ( 'not', 'not ', strtolower ( ltrim ( $sMethod, 'having' ) ) ) );
             return call_user_func_array ( [ 
                     $this,
@@ -417,7 +416,7 @@ class select {
             }
         }
         
-        \Q::throwException ( \Q::i18n ( 'select 没有实现魔法方法 %s.', $sMethod ), 'Q\database\exception' );
+        exception::throws ( \Q::i18n ( 'select 没有实现魔法方法 %s.', $sMethod ), 'Q\database\exception' );
     }
     
     // ######################################################
@@ -439,7 +438,7 @@ class select {
                 'null',
                 'callback' 
         ] ) && ! $mixData instanceof select) {
-            \Q::throwException ( \Q::i18n ( 'select 查询数据第一个参数只能为 null、callback、select 或者 string' ), 'Q\database\exception' );
+            exception::throws ( \Q::i18n ( 'select 查询数据第一个参数只能为 null、callback、select 或者 string' ), 'Q\database\exception' );
         }
         
         // 查询对象直接查询
@@ -485,7 +484,7 @@ class select {
                 'string',
                 'array' 
         ] )) {
-            \Q::throwException ( \Q::i18n ( 'insert 插入数据第一个参数只能为 string 或者 array' ), 'Q\database\exception' );
+            exception::throws ( \Q::i18n ( 'insert 插入数据第一个参数只能为 string 或者 array' ), 'Q\database\exception' );
         }
         
         // 绑定参数
@@ -540,7 +539,7 @@ class select {
      */
     public function insertAll($arrData, $arrBind = [], $booReplace = false, $bFlag = false) {
         if (! is_array ( $arrData )) {
-            \Q::throwException ( \Q::i18n ( 'insertAll 批量插入数据第一个参数必须为数组' ), 'Q\database\exception' );
+            exception::throws ( \Q::i18n ( 'insertAll 批量插入数据第一个参数必须为数组' ), 'Q\database\exception' );
         }
         
         // 绑定参数
@@ -607,7 +606,7 @@ class select {
                 'string',
                 'array' 
         ] )) {
-            \Q::throwException ( \Q::i18n ( 'update 更新数据第一个参数只能为 string 或者 array' ), 'Q\database\exception' );
+            exception::throws ( \Q::i18n ( 'update 更新数据第一个参数只能为 string 或者 array' ), 'Q\database\exception' );
         }
         
         // 绑定参数
@@ -666,7 +665,7 @@ class select {
      */
     public function updateColumn($strColumn, $mixValue, $arrBind = [], $bFlag = false) {
         if (! is_string ( $strColumn )) {
-            \Q::throwException ( \Q::i18n ( 'updateColumn 第一个参数必须为字符串' ), 'Q\database\exception' );
+            exception::throws ( \Q::i18n ( 'updateColumn 第一个参数必须为字符串' ), 'Q\database\exception' );
         }
         
         return $this->sql ( $bFlag )->update ( [ 
@@ -716,7 +715,7 @@ class select {
                 'string',
                 'null' 
         ] )) {
-            \Q::throwException ( \Q::i18n ( 'delete 删除数据第一个参数只能为 null 或者 string' ), 'Q\database\exception' );
+            exception::throws ( \Q::i18n ( 'delete 删除数据第一个参数只能为 null 或者 string' ), 'Q\database\exception' );
         }
         
         // 构造数据删除
@@ -783,7 +782,7 @@ class select {
      */
     public function statement($strData, $arrBind = [], $bFlag = false) {
         if (\Q::varType ( $strData, 'string' )) {
-            \Q::throwException ( \Q::i18n ( 'statement 声明查询第一个参数只能为一个 string' ), 'Q\database\exception' );
+            exception::throws ( \Q::i18n ( 'statement 声明查询第一个参数只能为一个 string' ), 'Q\database\exception' );
         }
         
         $this->sql ( $bFlag )->setNativeSql_ ( 'statement' );
@@ -1000,8 +999,7 @@ class select {
     public function sql($bFlag = true, $bQuickSql = false) {
         if ($this->checkFlowCondition_ ())
             return $this;
-            // 优先级最高 $this->sql(true, false)
-        if ($bFlag === false && $bQuickSql === true && $this->booOnlyMakeSql === true) {
+        if ($bFlag === false && $bQuickSql === true && $this->booOnlyMakeSql === true) { // 优先级最高 $this->sql(true, false)
             return $this;
         }
         $this->booOnlyMakeSql = ( bool ) $bFlag;
@@ -1094,8 +1092,8 @@ class select {
             return $this;
         if ($sOption == null) {
             $this->initOption_ ();
-        } elseif (array_key_exists ( $sOption, self::$arrOptionDefault )) {
-            $this->arrOption [$sOption] = self::$arrOptionDefault [$sOption];
+        } elseif (array_key_exists ( $sOption, static::$arrOptionDefault )) {
+            $this->arrOption [$sOption] = static::$arrOptionDefault [$sOption];
         }
         return $this;
     }
@@ -1251,7 +1249,7 @@ class select {
         if ($this->checkFlowCondition_ ())
             return $this;
         $arrArgs = func_get_args ();
-        array_unshift ( $arrArgs, self::LOGIC_AND );
+        array_unshift ( $arrArgs, static::LOGIC_AND );
         array_unshift ( $arrArgs, 'where' );
         return call_user_func_array ( [ 
                 $this,
@@ -1269,7 +1267,7 @@ class select {
         if ($this->checkFlowCondition_ ())
             return $this;
         $arrArgs = func_get_args ();
-        array_unshift ( $arrArgs, self::LOGIC_OR );
+        array_unshift ( $arrArgs, static::LOGIC_OR );
         array_unshift ( $arrArgs, 'where' );
         return call_user_func_array ( [ 
                 $this,
@@ -1369,8 +1367,8 @@ class select {
     public function forceIndex($mixIndex, $sType = 'FORCE') {
         if ($this->checkFlowCondition_ ())
             return $this;
-        if (! isset ( self::$arrIndexTypes [$sType] )) {
-            \Q::throwException ( \Q::i18n ( '无效的 Index 类型 %s', $sType ), 'Q\database\exception' );
+        if (! isset ( static::$arrIndexTypes [$sType] )) {
+            exception::throws ( \Q::i18n ( '无效的 Index 类型 %s', $sType ), 'Q\database\exception' );
         }
         $sType = strtoupper ( $sType );
         $mixIndex = \Q::normalize ( $mixIndex );
@@ -1432,8 +1430,8 @@ class select {
     public function union($mixSelect, $sType = 'UNION') {
         if ($this->checkFlowCondition_ ())
             return $this;
-        if (! isset ( self::$arrUnionTypes [$sType] )) {
-            \Q::throwException ( \Q::i18n ( '无效的 UNION 类型 %s', $sType ), 'Q\database\exception' );
+        if (! isset ( static::$arrUnionTypes [$sType] )) {
+            exception::throws ( \Q::i18n ( '无效的 UNION 类型 %s', $sType ), 'Q\database\exception' );
         }
         
         if (! is_array ( $mixSelect )) {
@@ -1526,7 +1524,7 @@ class select {
         if ($this->checkFlowCondition_ ())
             return $this;
         $arrArgs = func_get_args ();
-        array_unshift ( $arrArgs, self::LOGIC_AND );
+        array_unshift ( $arrArgs, static::LOGIC_AND );
         array_unshift ( $arrArgs, 'having' );
         return call_user_func_array ( [ 
                 $this,
@@ -1544,7 +1542,7 @@ class select {
         if ($this->checkFlowCondition_ ())
             return $this;
         $arrArgs = func_get_args ();
-        array_unshift ( $arrArgs, self::LOGIC_OR );
+        array_unshift ( $arrArgs, static::LOGIC_OR );
         array_unshift ( $arrArgs, 'having' );
         return call_user_func_array ( [ 
                 $this,
@@ -1562,9 +1560,9 @@ class select {
     public function orderBy($mixExpr, $sOrderDefault = 'ASC') {
         if ($this->checkFlowCondition_ ())
             return $this;
-            // 格式化为大写
-        $sOrderDefault = strtoupper ( $sOrderDefault );
         
+        $sOrderDefault = strtoupper ( $sOrderDefault ); // 格式化为大写
+                                                        
         // 处理条件表达式
         if (is_string ( $mixExpr ) && strpos ( $mixExpr, ',' ) !== false && strpos ( $mixExpr, '{' ) !== false && preg_match_all ( '/{(.+?)}/', $mixExpr, $arrRes )) {
             $mixExpr = str_replace ( $arrRes [1] [0], base64_encode ( $arrRes [1] [0] ), $mixExpr );
@@ -1848,7 +1846,7 @@ class select {
         $this->_sLastSql = implode ( ' ', $arrSql );
         
         if ($booWithLogicGroup === true) {
-            return self::LOGIC_GROUP_LEFT . $this->_sLastSql . self::LOGIC_GROUP_RIGHT;
+            return static::LOGIC_GROUP_LEFT . $this->_sLastSql . static::LOGIC_GROUP_RIGHT;
         } else {
             return $this->_sLastSql;
         }
@@ -2204,8 +2202,8 @@ class select {
         foreach ( $this->arrOption [$sCondType] as $sKey => $mixCond ) {
             // 逻辑连接符
             if (in_array ( $mixCond, [ 
-                    self::LOGIC_AND,
-                    self::LOGIC_OR 
+                    static::LOGIC_AND,
+                    static::LOGIC_OR 
             ] )) {
                 $arrSqlCond [] = strtoupper ( $mixCond );
                 continue;
@@ -2255,7 +2253,7 @@ class select {
                         }
                     }
                     if ($strFindTime === null) {
-                        \Q::throwException ( \Q::i18n ( '你正在尝试一个不受支持的时间处理语法' ), 'Q\database\exception' );
+                        exception::throws ( \Q::i18n ( '你正在尝试一个不受支持的时间处理语法' ), 'Q\database\exception' );
                     }
                 }
                 
@@ -2326,7 +2324,7 @@ class select {
                         'not between' 
                 ] )) {
                     if (! is_array ( $mixCond [2] ) || count ( $mixCond [2] ) < 2) {
-                        \Q::throwException ( \Q::i18n ( '[not] between 参数值必须是一个数组，不能少于 2 个元素' ), 'Q\database\exception' );
+                        exception::throws ( \Q::i18n ( '[not] between 参数值必须是一个数组，不能少于 2 个元素' ), 'Q\database\exception' );
                     }
                     $arrSqlCond [] = $mixCond [0] . ' ' . strtoupper ( $mixCond [1] ) . ' ' . $mixCond [2] [0] . ' AND ' . $mixCond [2] [1];
                 } elseif (is_scalar ( $mixCond [2] )) {
@@ -2381,7 +2379,7 @@ class select {
             } else {
                 $strTemp = $mixResultCallback;
             }
-            $this->setConditionItem_ ( self::LOGIC_GROUP_LEFT . $strTemp . self::LOGIC_GROUP_RIGHT, 'string__' );
+            $this->setConditionItem_ ( static::LOGIC_GROUP_LEFT . $strTemp . static::LOGIC_GROUP_RIGHT, 'string__' );
             return $this;
         } else {
             $arrArgs = func_get_args ();
@@ -2435,7 +2433,7 @@ class select {
             if (is_string ( $strKey ) && $strKey == 'string__') {
                 // 不符合规则抛出异常
                 if (! is_string ( $arrTemp )) {
-                    \Q::throwException ( \Q::i18n ( 'string__ 只支持字符串' ), 'Q\database\exception' );
+                    exception::throws ( \Q::i18n ( 'string__ 只支持字符串' ), 'Q\database\exception' );
                 }
                 
                 // 表达式支持
@@ -2458,8 +2456,8 @@ class select {
                 
                 // 逻辑表达式
                 if (isset ( $arrTemp ['logic__'] )) {
-                    if (strtolower ( $arrTemp ['logic__'] ) == self::LOGIC_OR) {
-                        $objSelect->setTypeAndLogic_ ( null, self::LOGIC_OR );
+                    if (strtolower ( $arrTemp ['logic__'] ) == static::LOGIC_OR) {
+                        $objSelect->setTypeAndLogic_ ( null, static::LOGIC_OR );
                     }
                     unset ( $arrTemp ['logic__'] );
                 }
@@ -2474,8 +2472,8 @@ class select {
                 // 解析结果
                 $strParseType = 'parse' . ucwords ( $arrTypeAndLogic [0] ) . '_';
                 $strOldLogic = $arrTypeAndLogic [1];
-                $this->setTypeAndLogic_ ( null, 'subor__' ? self::LOGIC_OR : self::LOGIC_AND );
-                $this->setConditionItem_ ( self::LOGIC_GROUP_LEFT . $objSelect->{$strParseType} ( true ) . self::LOGIC_GROUP_RIGHT, 'string__' );
+                $this->setTypeAndLogic_ ( null, 'subor__' ? static::LOGIC_OR : static::LOGIC_AND );
+                $this->setConditionItem_ ( static::LOGIC_GROUP_LEFT . $objSelect->{$strParseType} ( true ) . static::LOGIC_GROUP_RIGHT, 'string__' );
                 $this->setTypeAndLogic_ ( null, $strOldLogic );
             }            
 
@@ -2486,7 +2484,7 @@ class select {
             ] )) {
                 // having 不支持 [not] exists
                 if ($this->getTypeAndLogic_ ()[0] == 'having') {
-                    \Q::throwException ( \Q::i18n ( 'having 不支持 [not] exists  写法' ), 'Q\database\exception' );
+                    exception::throws ( \Q::i18n ( 'having 不支持 [not] exists  写法' ), 'Q\database\exception' );
                 }
                 
                 if ($arrTemp instanceof select) {
@@ -2504,7 +2502,7 @@ class select {
                     }
                 }
                 
-                $arrTemp = ($strKey == 'notexists__' ? 'NOT EXISTS ' : 'EXISTS ') . self::LOGIC_GROUP_LEFT . ' ' . $arrTemp . ' ' . self::LOGIC_GROUP_RIGHT;
+                $arrTemp = ($strKey == 'notexists__' ? 'NOT EXISTS ' : 'EXISTS ') . static::LOGIC_GROUP_LEFT . ' ' . $arrTemp . ' ' . static::LOGIC_GROUP_RIGHT;
                 $this->setConditionItem_ ( $arrTemp, 'string__' );
             }             
 
@@ -2664,13 +2662,13 @@ class select {
      */
     private function join_($sJoinType, $mixName, $mixCols, $mixCond = null/* args */) {
         // 验证 join 类型
-        if (! isset ( self::$arrJoinTypes [$sJoinType] )) {
-            \Q::throwException ( \Q::i18n ( '无效的 JOIN 类型 %s', $sJoinType ), 'Q\database\exception' );
+        if (! isset ( static::$arrJoinTypes [$sJoinType] )) {
+            exception::throws ( \Q::i18n ( '无效的 JOIN 类型 %s', $sJoinType ), 'Q\database\exception' );
         }
         
         // 不能在使用 UNION 查询的同时使用 JOIN 查询
         if (count ( $this->arrOption ['union'] )) {
-            \Q::throwException ( \Q::i18n ( '不能在使用 UNION 查询的同时使用 JOIN 查询' ), 'Q\database\exception' );
+            exception::throws ( \Q::i18n ( '不能在使用 UNION 查询的同时使用 JOIN 查询' ), 'Q\database\exception' );
         }
         
         // 是否分析 schema，子表达式不支持
@@ -2693,7 +2691,7 @@ class select {
                 if ($sTable instanceof select) {
                     $sTable = $sTable->makeSql ( true );
                     if (! $sAlias) {
-                        $sAlias = self::DEFAULT_SUBEXPRESSION_ALIAS;
+                        $sAlias = static::DEFAULT_SUBEXPRESSION_ALIAS;
                     }
                     $booParseSchema = false;
                 }                
@@ -2711,7 +2709,7 @@ class select {
                         $sTable = $mixResultCallback;
                     }
                     if (! $sAlias) {
-                        $sAlias = self::DEFAULT_SUBEXPRESSION_ALIAS;
+                        $sAlias = static::DEFAULT_SUBEXPRESSION_ALIAS;
                     }
                     $booParseSchema = false;
                 }
@@ -2722,7 +2720,7 @@ class select {
         // 对象子表达式
         elseif ($mixName instanceof select) {
             $sTable = $mixName->makeSql ( true );
-            $sAlias = self::DEFAULT_SUBEXPRESSION_ALIAS;
+            $sAlias = static::DEFAULT_SUBEXPRESSION_ALIAS;
             $booParseSchema = false;
         }        
 
@@ -2738,7 +2736,7 @@ class select {
             } else {
                 $sTable = $mixResultCallback;
             }
-            $sAlias = self::DEFAULT_SUBEXPRESSION_ALIAS;
+            $sAlias = static::DEFAULT_SUBEXPRESSION_ALIAS;
             $booParseSchema = false;
         }        
 
@@ -2749,7 +2747,7 @@ class select {
                 $sAlias = trim ( substr ( $mixName, $intAsPosition + 2 ) );
             } else {
                 $sTable = $mixName;
-                $sAlias = self::DEFAULT_SUBEXPRESSION_ALIAS;
+                $sAlias = static::DEFAULT_SUBEXPRESSION_ALIAS;
             }
             $booParseSchema = false;
         } else {
@@ -3047,7 +3045,7 @@ class select {
                 $strSqlType = 'select';
             }
             if ($strSqlType != $strNativeSql) {
-                \Q::throwException ( \Q::i18n ( '%s 方法只允许运行 %s sql 语句', $strNativeSql, $strNativeSql ), 'Q\database\exception' );
+                exception::throws ( \Q::i18n ( '%s 方法只允许运行 %s sql 语句', $strNativeSql, $strNativeSql ), 'Q\database\exception' );
             }
             
             $arrArgs = func_get_args ();
@@ -3062,7 +3060,7 @@ class select {
                     $strNativeSql == 'select' ? 'query' : 'execute' 
             ], $arrArgs );
         } else {
-            \Q::throwException ( \Q::i18n ( '%s 方法第一个参数只允许是 null 或者字符串', $strNativeSql ), 'Q\database\exception' );
+            exception::throws ( \Q::i18n ( '%s 方法第一个参数只允许是 null 或者字符串', $strNativeSql ), 'Q\database\exception' );
         }
     }
     
@@ -3268,11 +3266,11 @@ class select {
             case 'date' :
                 $mixValue = strtotime ( $mixValue );
                 if ($mixValue === false) {
-                    \Q::throwException ( \Q::i18n ( '请输入一个支持 strtotime 正确的时间' ), 'Q\database\exception' );
+                    exception::throws ( \Q::i18n ( '请输入一个支持 strtotime 正确的时间' ), 'Q\database\exception' );
                 }
                 break;
             default :
-                \Q::throwException ( \Q::i18n ( '不受支持的时间格式化类型 %s', $strType ), 'Q\database\exception' );
+                exception::throws ( \Q::i18n ( '不受支持的时间格式化类型 %s', $strType ), 'Q\database\exception' );
                 break;
         }
         
@@ -3345,8 +3343,8 @@ class select {
      * @return void
      */
     private function initOption_() {
-        $this->arrOption = self::$arrOptionDefault;
-        $this->arrQueryParams = self::$arrQueryParamsDefault;
+        $this->arrOption = static::$arrOptionDefault;
+        $this->arrQueryParams = static::$arrQueryParamsDefault;
     }
     
     // ######################################################

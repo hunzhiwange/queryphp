@@ -1,33 +1,32 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2016.11.21
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\collection;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
 
 use Iterator;
 use ArrayAccess;
 use Countable;
+use Q\exception\exception;
 
 /**
  * 数组转对象集合
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2016.11.21
+ * @version 1.0
  */
 class collection implements Iterator, ArrayAccess, Countable {
     
@@ -74,7 +73,7 @@ class collection implements Iterator, ArrayAccess, Countable {
      * @return void
      */
     public function __call($sMethod, $arrArgs) {
-        \Q::throwException ( sprintf ( 'Method %s is not implemented', $sMethod ), 'Q\collection\exception' );
+        exception::throws ( sprintf ( 'Method %s is not implemented', $sMethod ), 'Q\collection\exception' );
     }
     
     /**
@@ -244,7 +243,7 @@ class collection implements Iterator, ArrayAccess, Countable {
     public function each() {
         $arrArgs = func_get_args ();
         if (empty ( $arrArgs [0] ) || ! is_callable ( $arrArgs [0] )) {
-            \Q::throwException ( 'The first parameter must be a callback', 'Q\collection\exception' );
+            exception::throws ( 'The first parameter must be a callback', 'Q\collection\exception' );
         }
         
         if (! empty ( $arrArgs [1] ) && is_string ( $arrArgs [1] )) {
@@ -539,6 +538,6 @@ class collection implements Iterator, ArrayAccess, Countable {
             $sType = gettype ( $mixObject );
         }
         
-        \Q::throwException ( \Q::i18n ( '集合只能容纳 %s 类型的对象，而不是 %s 类型的值', $this->sType, $sType ), 'Q\collection\exception' );
+        exception::throws ( \Q::i18n ( '集合只能容纳 %s 类型的对象，而不是 %s 类型的值', $this->sType, $sType ), 'Q\collection\exception' );
     }
 }

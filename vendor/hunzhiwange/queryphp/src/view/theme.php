@@ -1,33 +1,38 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2016.11.18
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\view;
 
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
+
 use Q\mvc\view;
+use Q\exception\exception;
+use Q\traits\object_option;
+use Q\traits\static_entrance;
+use Q\option\option;
 
 /**
  * 模板处理类
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2016.11.18
+ * @version 1.0
  */
 class theme {
+    
+    use static_entrance;
+    use object_option;
     
     /**
      * 变量值
@@ -35,6 +40,33 @@ class theme {
      * @var array
      */
     private $arrVar = [ ];
+    
+    /**
+     * 配置
+     *
+     * @var array
+     */
+    protected $arrDefaultObjectOption = [ 
+            'theme_cache_lifetime' => - 1 
+    ];
+    
+    /**
+     * 初始化参数
+     *
+     * @var array
+     */
+    protected $arrStaticEntranceType = [ 
+            'theme_cache_lifetime' 
+    ];
+    
+    /**
+     * 构造函数
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->mergeObjectOption_ ();
+    }
     
     /**
      * 加载视图文件
@@ -55,7 +87,7 @@ class theme {
             $sFile = view::parseDefaultFile ( $sFile );
         }
         if (! is_file ( $sFile )) {
-            \Q::throwException ( \Q::i18n ( '模板文件 %s 不存在', $sFile ), 'Q\view\exception' );
+            exception::throws ( \Q::i18n ( '模板文件 %s 不存在', $sFile ), 'Q\view\exception' );
         }
         
         // 变量赋值
@@ -64,8 +96,8 @@ class theme {
         }
         
         $sCachePath = $this->getCachePath ( $sFile ); // 编译文件路径
-        if ($this->isCacheExpired ( $sFile, $sCachePath )) { // 重新编译
-            \Q::view_parsers ()->doCombile ( $sFile, $sCachePath );
+        if ($this->isCacheExpired_ ( $sFile, $sCachePath )) { // 重新编译
+            parsers::doCombiles ( $sFile, $sCachePath );
         }
         
         // 逐步将子模板缓存写入父模板至到最后
@@ -81,7 +113,7 @@ class theme {
                 
                 unset ( $sChildCache, $sTargetContent );
             } else {
-                \Q::throwException ( sprintf ( 'source %s and target cache %s is not a valid path', $sFile, $sTargetCache ), 'Q\view\exception' );
+                exception::throws ( sprintf ( 'source %s and target cache %s is not a valid path', $sFile, $sTargetCache ), 'Q\view\exception' );
             }
         }
         
@@ -123,42 +155,6 @@ class theme {
     }
     
     /**
-     * 判断缓存是否过期
-     *
-     * @param string $sFile            
-     * @param string $sCachePath            
-     * @return boolean
-     */
-    protected function isCacheExpired($sFile, $sCachePath) {
-        // 开启调试
-        if (Q_DEBUG === TRUE) {
-            return true;
-        }
-        
-        // 缓存文件不存在过期
-        if (! is_file ( $sCachePath )) {
-            return true;
-        }
-        
-        // 编译过期时间为 -1 表示永不过期
-        if ($GLOBALS ['~@option'] ['theme_cache_lifetime'] === - 1) {
-            return false;
-        }
-        
-        // 缓存时间到期
-        if (filemtime ( $sCachePath ) + intval ( $GLOBALS ['~@option'] ['theme_cache_lifetime'] ) < time ()) {
-            return true;
-        }
-        
-        // 文件有更新
-        if (filemtime ( $sFile ) >= filemtime ( $sCachePath )) {
-            return true;
-        }
-        
-        return false;
-    }
-    
-    /**
      * 获取编译路径
      *
      * @param string $sFile            
@@ -174,5 +170,54 @@ class theme {
         
         // 返回真实路径
         return \Q::project ()->path_cache_theme . '/' . $sFile;
+    }
+    
+    /**
+     * 判断缓存是否过期
+     *
+     * @param string $sFile            
+     * @param string $sCachePath            
+     * @return boolean
+     */
+    private function isCacheExpired_($sFile, $sCachePath) {
+        // 开启调试
+        if (Q_DEBUG === TRUE) {
+            return true;
+        }
+        
+        // 缓存文件不存在过期
+        if (! is_file ( $sCachePath )) {
+            return true;
+        }
+        
+        // 编译过期时间为 -1 表示永不过期
+        if ($this->getObjectOption_ ( 'theme_cache_lifetime' ) === - 1) {
+            return false;
+        }
+        
+        // 缓存时间到期
+        if (filemtime ( $sCachePath ) + intval ( $this->getObjectOption_ ( 'theme_cache_lifetime' ) ) < time ()) {
+            return true;
+        }
+        
+        // 文件有更新
+        if (filemtime ( $sFile ) >= filemtime ( $sCachePath )) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    /**
+     * 初始化静态入口配置
+     *
+     * @return void
+     */
+    protected function initStaticEntrance_() {
+        $arrObjectOption = [ ];
+        foreach ( $this->getStaticEntranceType_ () as $sObjectOption ) {
+            $arrObjectOption [$sObjectOption] = option::gets ( $sObjectOption );
+        }
+        return $this->setObjectOption ( $arrObjectOption );
     }
 }

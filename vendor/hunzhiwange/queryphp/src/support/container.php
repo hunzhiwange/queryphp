@@ -1,33 +1,32 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2017.04.13
- * @since 4.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\support;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
 
 use ArrayAccess;
 use Q\traits\flow_condition;
 use Q\contract\support\container as contract_container;
+use Q\exception\exception;
 
 /**
  * 工厂容器
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2017.04.13
+ * @version 4.0
  */
 class container implements ArrayAccess, contract_container {
     
@@ -81,7 +80,7 @@ class container implements ArrayAccess, contract_container {
             return $this;
         }
         
-        \Q::throwException ( \Q::i18n ( 'container 没有实现魔法方法 %s.', $sMethod ), 'Q\support\exception' );
+        exception::throws ( \Q::i18n ( 'container 没有实现魔法方法 %s.', $sMethod ), 'Q\support\exception' );
     }
     
     /**
@@ -140,7 +139,7 @@ class container implements ArrayAccess, contract_container {
                 'scalar',
                 'array' 
         ] )) {
-            \Q::throwException ( \Q::i18n ( 'instance 第一个参数只能为 scalar 或者 array' ), 'Q\support\exception' );
+            exception::throws ( \Q::i18n ( 'instance 第一个参数只能为 scalar 或者 array' ), 'Q\support\exception' );
         }
         
         if (is_array ( $mixFactoryName )) {
@@ -166,7 +165,7 @@ class container implements ArrayAccess, contract_container {
                 'scalar',
                 'array' 
         ] )) {
-            \Q::throwException ( \Q::i18n ( 'singleton 第一个参数只能为 scalar 或者 array' ), 'Q\support\exception' );
+            exception::throws ( \Q::i18n ( 'singleton 第一个参数只能为 scalar 或者 array' ), 'Q\support\exception' );
         }
         
         if (is_array ( $mixFactoryName )) {
@@ -276,7 +275,7 @@ class container implements ArrayAccess, contract_container {
      */
     public function makeWithArgs($strFactoryName, array $arrArgs = []) {
         if (! is_array ( $arrArgs )) {
-            \Q::throwException ( \Q::i18n ( 'makeWithArgs 第二个参数只能为 array' ), 'Q\support\exception' );
+            exception::throws ( \Q::i18n ( 'makeWithArgs 第二个参数只能为 array' ), 'Q\support\exception' );
         }
         array_unshift ( $arrArgs, $strFactoryName );
         return call_user_func_array ( [ 

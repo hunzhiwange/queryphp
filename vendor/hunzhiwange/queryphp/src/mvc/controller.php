@@ -1,29 +1,29 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2016.11.19
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\mvc;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
+
+use Q\exception\exception;
 
 /**
  * 基类控制器
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2016.11.19
+ * @version 1.0
  */
 class controller {
     
@@ -82,7 +82,7 @@ class controller {
             // 运行方法器
             return \Q::app ()->action ( \Q::project ()->controller_name, $sActionName );
         } else {
-            \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sActionName ), 'Q\mvc\exception' );
+            exception::throws ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sActionName ), 'Q\mvc\exception' );
         }
     }
     
@@ -219,10 +219,10 @@ class controller {
                 if (! empty ( $arrArgs [0] )) {
                     return \Q::in ( $arrArgs [0], isset ( $arrArgs [1] ) ? $arrArgs [1] : 'R' );
                 } else {
-                    \Q::throwException ( 'Can not find method.', 'Q\mvc\exception' );
+                    exception::throws ( 'Can not find method.', 'Q\mvc\exception' );
                 }
             default :
-                \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sMethod ), 'Q\mvc\exception' );
+                exception::throws ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sMethod ), 'Q\mvc\exception' );
         }
     }
 }

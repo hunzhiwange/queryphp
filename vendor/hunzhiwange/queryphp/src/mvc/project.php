@@ -1,33 +1,32 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2017.01.14
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\mvc;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
 
 use Q\support\container;
 use Q\mvc\view;
 use Q\traits\auto_injection;
+use Q\exception\exception;
 
 /**
  * 项目管理
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2017.01.14
+ * @version 1.0
  */
 class project extends container {
     
@@ -46,13 +45,6 @@ class project extends container {
      * @var array
      */
     private $arrOption = [ ];
-    
-    /**
-     * 应用提供者
-     *
-     * @var array
-     */
-    private $arrProvider = [ ];
     
     /**
      * 项目基础路径
@@ -145,15 +137,15 @@ class project extends container {
      * @return Q\mvc\project
      */
     static public function bootstrap($arrOption = []) {
-        if (self::$objProject !== null) {
-            return self::$objProject;
+        if (static::$objProject !== null) {
+            return static::$objProject;
         } else {
-            return self::$objProject = new self ( $arrOption );
+            return static::$objProject = new self ( $arrOption );
         }
     }
     
     /**
-     * 框架基础提供者 register
+     * 注册应用提供者
      *
      * @param array $arrProvider            
      * @return $this
@@ -331,6 +323,9 @@ class project extends container {
                 // event
                 'event' => 'Q\event\event',
                 
+                // exception
+                'exception' => 'Q\exception\exception',
+                
                 // i18n
                 'i18n' => 'Q\i18n\i18n',
                 'i18n_tool' => 'Q\i18n\tool',
@@ -359,11 +354,6 @@ class project extends container {
                 
                 // router
                 'router' => 'Q\router\router',
-
-                // view
-                'view_compilers' => 'Q\view\compilers',
-                'view_parsers' => 'Q\view\parsers',
-                'view_theme' => 'Q\view\theme',
                 
                 // xml
                 'xml' => 'Q\xml\xml' 
@@ -379,7 +369,7 @@ class project extends container {
     private function setPath_() {
         // 基础路径
         if (! isset ( $this->arrOption ['path'] )) {
-            \Q::errorMessage ( "project dir is not set" );
+            exception::throws ( "project dir is not set" );
         }
         $this->strPath = rtrim ( $this->arrOption ['path'], '\\' );
         

@@ -1,34 +1,34 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2017.03.09
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\database;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
 
 use PDO;
 use PDOException;
-use Exception;
+use Exception as PHPException;
 use Q\contract\database\connect as contract_connect;
+use Q\exception\exception;
+use Q\log\log;
 
 /**
  * 数据库连接
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2017.03.09
+ * @version 1.0
  */
 abstract class connect implements contract_connect {
     
@@ -124,9 +124,6 @@ abstract class connect implements contract_connect {
             // 记录连接参数
             $this->arrOption = $arrOption;
             
-            // 查询组件
-            $this->objSelect = new select ( $this );
-            
             // 尝试连接主服务器
             if (! $this->writeConnect_ ()) {
                 $this->throwException_ ();
@@ -149,6 +146,9 @@ abstract class connect implements contract_connect {
      * @return boolean
      */
     public function __call($sMethod, $arrArgs) {
+        // 查询组件
+        $this->initSelect_ ();
+        
         // 调用事件
         return call_user_func_array ( [ 
                 $this->objSelect,
@@ -190,6 +190,9 @@ abstract class connect implements contract_connect {
      * @return mixed
      */
     public function query($strSql, $arrBindParams = [], $mixMaster = false, $intFetchType = PDO::FETCH_OBJ, $mixFetchArgument = null, $arrCtorArgs = []) {
+        // 查询组件
+        $this->initSelect_ ();
+        
         // 记录 sql 参数
         $this->setSqlBindParams_ ( $strSql, $arrBindParams );
         
@@ -232,6 +235,9 @@ abstract class connect implements contract_connect {
      * @return int
      */
     public function execute($strSql, $arrBindParams = []) {
+        // 查询组件
+        $this->initSelect_ ();
+        
         // 记录 sql 参数
         $this->setSqlBindParams_ ( $strSql, $arrBindParams );
         
@@ -288,7 +294,7 @@ abstract class connect implements contract_connect {
             ] );
             $this->commit ();
             return $mixResult;
-        } catch ( Exception $oE ) {
+        } catch ( PHPException $oE ) {
             $this->rollBack ();
             throw $oE;
         }
@@ -387,7 +393,7 @@ abstract class connect implements contract_connect {
         if (! \Q::varType ( $calSqlListen, 'callback' )) {
             $this->throwException_ ( \Q::i18n ( 'SQL 监视器必须为一个回调类型' ) );
         }
-        self::$calSqlListen = $calSqlListen;
+        static::$calSqlListen = $calSqlListen;
     }
     
     /**
@@ -646,7 +652,7 @@ abstract class connect implements contract_connect {
         if (! empty ( $this->arrConnect [0] )) {
             return $this->objConnect = $this->arrConnect [0];
         }
-
+        
         // 没有连接开始请求连接
         if (! ($objPdo = $this->commonConnect_ ( $this->arrOption ['db_master'], 0 ))) {
             return false;
@@ -819,15 +825,15 @@ abstract class connect implements contract_connect {
      */
     protected function recordSqlLog_() {
         // SQL 监视器
-        if (self::$calSqlListen !== null) {
-            call_user_func_array ( self::$calSqlListen, [ 
+        if (static::$calSqlListen !== null) {
+            call_user_func_array ( static::$calSqlListen, [ 
                     $this 
             ] );
         }
         
         // 记录 SQL 日志
         $arrLastSql = $this->getLastSql ( true );
-        \Q::log ( $arrLastSql [0] . (! empty ( $arrLastSql [1] ) ? ' @ ' . \Q::jsonEncode ( $arrLastSql [1] ) : ''), 'sql' );
+        log::runs ( $arrLastSql [0] . (! empty ( $arrLastSql [1] ) ? ' @ ' . \Q::jsonEncode ( $arrLastSql [1] ) : ''), 'sql' );
     }
     
     /**
@@ -842,7 +848,16 @@ abstract class connect implements contract_connect {
             $arrTemp = $this->objPDOStatement->errorInfo ();
             $strError = '(' . $arrTemp [1] . ')' . $arrTemp [2] . "\r\n" . $strError;
         }
-        \Q::throwException ( $strError, 'Q\database\exception' );
+        exception::throws ( $strError, 'Q\database\exception' );
+    }
+    
+    /**
+     * 初始化查询组件
+     *
+     * @return void
+     */
+    protected function initSelect_() {
+        $this->objSelect = new select ( $this );
     }
     
     // ######################################################

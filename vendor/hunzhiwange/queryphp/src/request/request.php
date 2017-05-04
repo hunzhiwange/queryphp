@@ -1,29 +1,27 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2016.11.19
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\request;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
 
 /**
  * 启动程序
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2016.11.19
+ * @version 1.0
  */
 class request {
     
@@ -82,10 +80,10 @@ class request {
      * @return void
      */
     public function __construct() {
-        if (self::$booInit === true) {
+        if (static::$booInit === true) {
             return $this;
         }
-        self::$booInit = true;
+        static::$booInit = true;
     }
     
     /**
@@ -122,10 +120,10 @@ class request {
      * @return Q\mvc\request
      */
     static public function singleton() {
-        if (self::$oInstance) {
-            return self::$oInstance;
+        if (static::$oInstance) {
+            return static::$oInstance;
         } else {
-            return self::$oInstance = new self ();
+            return static::$oInstance = new self ();
         }
     }
     
@@ -204,39 +202,55 @@ class request {
      * @return void
      */
     private function parseUrlCli_() {
+        // console 命令行
+        if (Q_CONSOLE === true) {
+            // 定位应用目录到框架内部
+            \Q::project ()->instance ( 'path_application_source', \Q::project ()->path_application );
+            \Q::project ()->instance ( 'path_application', Q_PATH );
+            
+            // 注册默认应用程序
+            $_GET [\Q\mvc\project::ARGS_APP] = 'console';
+            $_GET [\Q\mvc\project::ARGS_CONTROLLER] = 'bootstrap';
+            $_GET [\Q\mvc\project::ARGS_ACTION] = 'index';
+            
+            return;
+        }
+        
+        $arrArgv = isset ( $GLOBALS ['argv'] ) ? $GLOBALS ['argv'] : [ ];
+        
         // phpunit 等不存在 $argv
-        if (! isset ( $argv ) || empty ( $argv )) {
+        if (! isset ( $arrArgv ) || empty ( $arrArgv )) {
             return;
         }
         
         // 第一个为脚本自身
-        array_shift ( $argv );
+        array_shift ( $arrArgv );
         
         // 继续分析
-        if ($argv) {
+        if ($arrArgv) {
             
             // app
-            if (in_array ( $argv [0], $GLOBALS ['~@option'] ['~apps~'] )) {
-                $_GET [\Q\mvc\project::ARGS_APP] = array_shift ( $argv );
+            if (in_array ( $arrArgv [0], $GLOBALS ['~@option'] ['~apps~'] )) {
+                $_GET [\Q\mvc\project::ARGS_APP] = array_shift ( $arrArgv );
             }
             
             // controller
-            if ($argv) {
-                $_GET [\Q\mvc\project::ARGS_CONTROLLER] = array_shift ( argv );
+            if ($arrArgv) {
+                $_GET [\Q\mvc\project::ARGS_CONTROLLER] = array_shift ( $arrArgv );
             }
             
             // 方法
-            if ($argv) {
-                $_GET [\Q\mvc\project::ARGS_ACTION] = array_shift ( argv );
+            if ($arrArgv) {
+                $_GET [\Q\mvc\project::ARGS_ACTION] = array_shift ( $arrArgv );
             }
             
             // 剩余参数
-            if ($argv) {
-                for($nI = 0, $nCnt = count ( $argv ); $nI < $nCnt; $nI ++) {
-                    if (isset ( $argv [$nI + 1] )) {
-                        $_GET [$argv [$nI]] = ( string ) $argv [++ $nI];
+            if ($arrArgv) {
+                for($nI = 0, $nCnt = count ( $arrArgv ); $nI < $nCnt; $nI ++) {
+                    if (isset ( $arrArgv [$nI + 1] )) {
+                        $_GET [$arrArgv [$nI]] = ( string ) $arrArgv [++ $nI];
                     } elseif ($nI == 0) {
-                        $_GET [$_GET [\Q\mvc\project::ARGS_ACTION]] = ( string ) $argv [$nI];
+                        $_GET [$_GET [\Q\mvc\project::ARGS_ACTION]] = ( string ) $arrArgv [$nI];
                     }
                 }
             }
@@ -388,8 +402,8 @@ class request {
      */
     private function baseUrl_() {
         // 存在返回
-        if (self::$sBaseUrl) {
-            return self::$sBaseUrl;
+        if (static::$sBaseUrl) {
+            return static::$sBaseUrl;
         }
         
         // 兼容分析
@@ -417,11 +431,11 @@ class request {
         // 比对请求
         $sRequestUrl = $this->requestUrl_ ();
         if (0 === strpos ( $sRequestUrl, $sUrl )) {
-            return self::$sBaseUrl = $sUrl;
+            return static::$sBaseUrl = $sUrl;
         }
         
         if (0 === strpos ( $sRequestUrl, dirname ( $sUrl ) )) {
-            return self::$sBaseUrl = rtrim ( dirname ( $sUrl ), '/' ) . '/';
+            return static::$sBaseUrl = rtrim ( dirname ( $sUrl ), '/' ) . '/';
         }
         
         if (! strpos ( $sRequestUrl, basename ( $sUrl ) )) {
@@ -432,7 +446,7 @@ class request {
             $sUrl = substr ( $sRequestUrl, 0, $nPos + strlen ( $sUrl ) );
         }
         
-        return self::$sBaseUrl = rtrim ( $sUrl, '/' ) . '/';
+        return static::$sBaseUrl = rtrim ( $sUrl, '/' ) . '/';
     }
     
     /**
@@ -441,8 +455,8 @@ class request {
      * @return string
      */
     private function requestUrl_() {
-        if (self::$sRequestUrl) {
-            return self::$sRequestUrl;
+        if (static::$sRequestUrl) {
+            return static::$sRequestUrl;
         }
         
         if (isset ( $_SERVER ['HTTP_X_REWRITE_URL'] )) {
@@ -458,7 +472,7 @@ class request {
             $sUrl = '';
         }
         
-        return self::$sRequestUrl = $sUrl;
+        return static::$sRequestUrl = $sUrl;
     }
     
     /**

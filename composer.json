@@ -1,6 +1,6 @@
 {
     "require": {
         "php": ">=5.5.0",
-        "hunzhiwange/queryphp": "4.0.0"
+        "symfony/console": "^3.2"
     }
 }

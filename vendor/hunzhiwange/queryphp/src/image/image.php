@@ -1,29 +1,29 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2016.11.19
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\image;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
+
+use Q\exception\exception;
 
 /**
  * 图像处理
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2016.11.19
+ * @version 1.0
  */
 class image {
     
@@ -208,10 +208,10 @@ class image {
                     $oBackgroundIm = @imagecreatefrompng ( $sBackgroundPath );
                     break;
                 default :
-                    \Q::throwException ( \Q::i18n ( '错误的图像格式' ), 'Q\image\exception' );
+                    exception::throws ( \Q::i18n ( '错误的图像格式' ), 'Q\image\exception' );
             }
         } else {
-            \Q::throwException ( \Q::i18n ( '图像 %s 为空或者不存在', $sBackgroundPath ), 'Q\image\exception' );
+            exception::throws ( \Q::i18n ( '图像 %s 为空或者不存在', $sBackgroundPath ), 'Q\image\exception' );
         }
         
         @imagealphablending ( $oBackgroundIm, true ); // 设定图像的混色模式
@@ -239,13 +239,13 @@ class image {
                         $oWaterIm = @imagecreatefrompng ( $arrWaterArgs ['path'] );
                         break;
                     default :
-                        \Q::throwException ( \Q::i18n ( '错误的图像格式' ), 'Q\image\exception' );
+                        exception::throws ( \Q::i18n ( '错误的图像格式' ), 'Q\image\exception' );
                 }
             } elseif ($arrWaterArgs ['type'] === 'text' && $arrWaterArgs ['content'] != '') {
                 $sFontfileTemp = $sFontfile = isset ( $arrWaterArgs ['textFile'] ) && ! empty ( $arrWaterArgs ['textFile'] ) ? $arrWaterArgs ['textFile'] : 'Microsoft YaHei.ttf';
                 $sFontfile = (! empty ( $arrWaterArgs ['textPath'] ) ? \Q::tidyPath ( $arrWaterArgs ['textPath'] ) : 'C:\WINDOWS\Fonts') . '/' . $sFontfile;
                 if (! is_file ( $sFontfile )) {
-                    \Q::throwException ( \Q::i18n ( '字体文件 %s 无法找到', $sFontfile ), 'Q\image\exception' );
+                    exception::throws ( \Q::i18n ( '字体文件 %s 无法找到', $sFontfile ), 'Q\image\exception' );
                 }
                 
                 $sWaterText = $arrWaterArgs ['content'];
@@ -258,10 +258,10 @@ class image {
                 $nWaterHeight = $arrTemp [3] - $arrTemp [7];
                 unset ( $arrTemp );
             } else {
-                \Q::throwException ( \Q::i18n ( '水印参数 type 不为 img 和 text' ), 'Q\image\exception' );
+                exception::throws ( \Q::i18n ( '水印参数 type 不为 img 和 text' ), 'Q\image\exception' );
             }
         } else {
-            \Q::throwException ( \Q::i18n ( '水印参数必须为一个数组' ), 'Q\image\exception' );
+            exception::throws ( \Q::i18n ( '水印参数必须为一个数组' ), 'Q\image\exception' );
         }
         
         if (($nGroundWidth < ($nWaterWidth * 2)) || ($nGroundHeight < ($nWaterHeight * 2))) { // 如果水印占了原图一半就不搞水印了.影响浏览.抵制影响正常浏览的广告
@@ -321,7 +321,7 @@ class image {
                 $G = hexdec ( substr ( $sTextColor, 3, 2 ) );
                 $B = hexdec ( substr ( $sTextColor, 5 ) );
             } else {
-                \Q::throwException ( \Q::i18n ( '水印文字颜色错误' ), 'Q\image\exception' );
+                exception::throws ( \Q::i18n ( '水印文字颜色错误' ), 'Q\image\exception' );
             }
             @imagettftext ( $oBackgroundIm, $nTextFont, 0, $nPosX, $nPosY, @imagecolorallocate ( $oBackgroundIm, $R, $G, $B ), $sFontfile, $sWaterText );
         }
@@ -341,7 +341,7 @@ class image {
                 @imagepng ( $oBackgroundIm, $sBackgroundPath );
                 break;
             default :
-                \Q::throwException ( \Q::i18n ( '错误的图像格式' ), 'Q\image\exception' );
+                exception::throws ( \Q::i18n ( '错误的图像格式' ), 'Q\image\exception' );
         }
         
         if (isset ( $oWaterIm )) {

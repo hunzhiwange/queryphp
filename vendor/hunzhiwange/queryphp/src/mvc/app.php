@@ -1,32 +1,32 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2016.11.18
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\mvc;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
 
 use Q\request\response;
 use Q\traits\auto_injection;
+use Q\exception\exception;
+use Q\cookie\cookie;
 
 /**
  * 应用程序对象
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2016.11.18
+ * @version 1.0
  */
 class app {
     
@@ -206,7 +206,7 @@ class app {
                         if (isset ( $mixModule [$sAction] )) {
                             $this->registerAction ( $sController, $sAction, $mixModule [$sAction] );
                         } else {
-                            \Q::throwException ( \Q::i18n ( '数组控制器不存在 %s 方法键值', $sAction ), 'Q\mvc\exception' );
+                            exception::throws ( \Q::i18n ( '数组控制器不存在 %s 方法键值', $sAction ), 'Q\mvc\exception' );
                         }
                         break;
                     
@@ -216,7 +216,7 @@ class app {
                         break;
                     
                     default :
-                        \Q::throwException ( \Q::i18n ( '注册的控制器类型 %s 不受支持', $sController ), 'Q\mvc\exception' );
+                        exception::throws ( \Q::i18n ( '注册的控制器类型 %s 不受支持', $sController ), 'Q\mvc\exception' );
                         break;
                 }
             } else {
@@ -251,7 +251,7 @@ class app {
                                     'run' 
                             ] );
                         } else {
-                            \Q::throwException ( \Q::i18n ( '方法 %s 必须为  Q\mvc\action 实例', $sAction ), 'Q\mvc\exception' );
+                            exception::throws ( \Q::i18n ( '方法 %s 必须为  Q\mvc\action 实例', $sAction ), 'Q\mvc\exception' );
                         }
                     }
                 }
@@ -280,9 +280,9 @@ class app {
                 case \Q::varType ( $mixAction, 'array' ) && isset ( $mixAction [1] ) && \Q::isKindOf ( $mixAction [0], 'Q\mvc\controller' ) :
                     try {
                         if (\Q::hasPublicMethod ( $mixAction [0], $mixAction [1] )) {
-                            return $this->getStaticOrClosureCallbackResultWithMethodArgs_ ( $mixAction, $this->getNodeArgs_ () );
+                            return $this->getObjectCallbackResultWithMethodArgs_ ( $mixAction, $this->getNodeArgs_ () );
                         } else {
-                            \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', $sController, $sAction ), 'Q\mvc\exception' );
+                            exception::throws ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', $sController, $sAction ), 'Q\mvc\exception' );
                         }
                     } catch ( \ReflectionException $oE ) {
                         // 请求默认子方法器
@@ -297,7 +297,7 @@ class app {
                 
                 // 判断是否为回调
                 case \Q::varType ( $mixAction, 'callback' ) :
-                    return $this->getStaticOrClosureCallbackResultWithMethodArgs_ ( $mixAction, $this->getNodeArgs_ () );
+                    return $this->getObjectCallbackResultWithMethodArgs_ ( $mixAction, $this->getNodeArgs_ () );
                     break;
                 
                 // 如果为方法则注册为方法
@@ -311,7 +311,7 @@ class app {
                         ] );
                         return $this->action ( $sController, $sAction );
                     } else {
-                        \Q::throwException ( \Q::i18n ( '方法对象不存在执行入口  run' ), 'Q\mvc\exception' );
+                        exception::throws ( \Q::i18n ( '方法对象不存在执行入口  run' ), 'Q\mvc\exception' );
                     }
                     break;
                 
@@ -326,11 +326,11 @@ class app {
                     break;
                 
                 default :
-                    \Q::throwException ( \Q::i18n ( '注册的方法类型 %s 不受支持', $sAction ), 'Q\mvc\exception' );
+                    exception::throws ( \Q::i18n ( '注册的方法类型 %s 不受支持', $sAction ), 'Q\mvc\exception' );
                     break;
             }
         } else {
-            \Q::throwException ( \Q::i18n ( '控制器 %s 的方法 %s 未注册', $sController, $sAction ), 'Q\mvc\exception' );
+            exception::throws ( \Q::i18n ( '控制器 %s 的方法 %s 未注册', $sController, $sAction ), 'Q\mvc\exception' );
         }
     }
     
@@ -438,7 +438,7 @@ class app {
      * @return void
      */
     private function loadOption_() {
-        $sOptionCache = $this->objProject->path_cache_option . '/default.php';
+        $sOptionCache = $this->objProject->path_cache_option . '/' . $this->objProject->app_name . '.php';
         
         // 开发模式不用读取缓存
         if (Q_DEVELOPMENT !== 'develop' && is_file ( $sOptionCache )) {
@@ -498,7 +498,6 @@ class app {
                 }
                 
                 $arrOption ['url_router_cache'] = [ ];
-                
                 foreach ( $arrOptionDir as $sDir ) {
                     foreach ( $arrRouterExtend as $sVal ) {
                         if (is_file ( $sDir . '/' . $sVal . '.php' )) {
@@ -506,8 +505,8 @@ class app {
                             if ($arrRouter === 1) {
                                 continue;
                             }
-                            
-                            $arrOption ['url_router_cache'] = $this->mergeRouter_ ( $arrOption ['url_router_cache'], ( array ) (include $sDir . '/' . $sVal . '.php') );
+                            $arrOption ['url_router_cache'] = array_merge ( $arrOption ['url_router_cache'], ( array ) (include $sDir . '/' . $sVal . '.php') );
+                            $arrOption ['url_router_cache'] = \Q::arrayMergePlus ( $arrOption ['url_router_cache'] );
                         }
                     }
                 }
@@ -517,8 +516,11 @@ class app {
                 }
             }
             
+            // 配置合并 + 语法支持
+            $arrOption = \Q::arrayMergePlus ( $arrOption );
+            
             if (! file_put_contents ( $sOptionCache, "<?php\n /* option cache */ \n return " . var_export ( $arrOption, true ) . "\n?>" )) {
-                \Q::errorMessage ( sprintf ( 'Dir %s Do not have permission.', $this->optioncache_path ) );
+                exception::throws ( sprintf ( 'Dir %s Do not have permission.', $this->optioncache_path ) );
             }
             
             $GLOBALS ['~@option'] = \Q::option ( $arrOption );
@@ -543,10 +545,10 @@ class app {
             
             if (isset ( $_GET [\Q\mvc\project::ARGS_THEME] )) {
                 $sThemeSet = $_GET [\Q\mvc\project::ARGS_THEME];
-                \Q::cookie ( $sCookieName, $sThemeSet );
+                cookie::sets ( $sCookieName, $sThemeSet );
             } else {
-                if (Q::cookie ( $sCookieName )) {
-                    $sThemeSet = \Q::cookie ( $sCookieName );
+                if (cookie::gets ( $sCookieName )) {
+                    $sThemeSet = cookie::gets ( $sCookieName );
                 } else {
                     $sThemeSet = $GLOBALS ['~@option'] ['theme_default'];
                 }
@@ -670,28 +672,6 @@ class app {
      */
     private function packControllerAndAction_($strController, $strAction = '') {
         return $this->objProject->app_name . '://' . $strController . ($strAction ? '/' . $strAction : '');
-    }
-    
-    /**
-     * 合并 router 参数
-     *
-     * @param array $arrRouter            
-     * @param array $arrNewRouter            
-     * @return array
-     */
-    private function mergeRouter_(array $arrRouter, array $arrNewRouter) {
-        // 合并域名参数
-        if (! empty ( $arrNewRouter ['~domains~'] ) && is_array ( $arrNewRouter ['~domains~'] )) {
-            if (! isset ( $arrRouter ['~domains~'] )) {
-                $arrRouter ['~domains~'] = [ ];
-            }
-            $arrMergeRouters = array_merge ( $arrRouter ['~domains~'], $arrNewRouter ['~domains~'] );
-            $arrRouter = array_merge ( $arrRouter, $arrNewRouter );
-            $arrRouter ['~domains~'] = $arrMergeRouters;
-        } else {
-            $arrRouter = array_merge ( $arrRouter, $arrNewRouter );
-        }
-        return $arrRouter;
     }
     
     /**

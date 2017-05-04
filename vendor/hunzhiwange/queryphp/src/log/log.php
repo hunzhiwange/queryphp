@@ -1,35 +1,37 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2017.03.03
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\log;
 
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
+
 use Q\traits\object_option;
+use Q\traits\static_entrance;
+use Q\option\option;
+use Q\exception\exception;
 
 /**
  * 日志
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2017.03.03
+ * @version 1.0
  */
 class log {
     
     use object_option;
+    use static_entrance;
     
     /**
      * 当前记录的日志信息
@@ -59,6 +61,7 @@ class log {
      */
     protected $arrDefaultObjectOption = [ 
             'log_enabled' => FALSE,
+            'log_level' => 'error,sql,debug,info',
             'log_error_enabled' => FALSE,
             'log_sql_enabled' => FALSE,
             'log_time_format' => '【Y-m-d H:i】',
@@ -66,7 +69,21 @@ class log {
             'log_file_name' => 'Y-m-d H',
             'path_cache_log' => '' 
     ];
-    
+    /**
+     * 初始化参数
+     *
+     * @var array
+     */
+    protected $arrStaticEntranceType = [ 
+            'log_enabled',
+            'log_level',
+            'log_error_enabled',
+            'log_sql_enabled',
+            'log_time_format',
+            'log_file_size',
+            'log_file_name',
+            'path_cache_log' 
+    ];
     /**
      * 构造函数
      *
@@ -150,7 +167,7 @@ class log {
      */
     public function registerFilter($calFilter) {
         if (! \Q::varType ( $calFilter, 'callback' )) {
-            \Q::throwException ( \Q::i18n ( '日志过滤器必须为一个回调类型' ), 'Q\log\exception' );
+            exception::throws ( \Q::i18n ( '日志过滤器必须为一个回调类型' ), 'Q\log\exception' );
         }
         $this->calFilter = $calFilter;
     }
@@ -163,7 +180,7 @@ class log {
      */
     public function registerProcessor($calProcessor) {
         if (! \Q::varType ( $calProcessor, 'callback' )) {
-            \Q::throwException ( \Q::i18n ( '日志处理器必须为一个回调类型' ), 'Q\log\exception' );
+            exception::throws ( \Q::i18n ( '日志处理器必须为一个回调类型' ), 'Q\log\exception' );
         }
         $this->calProcessor = $calProcessor;
     }
@@ -206,7 +223,7 @@ class log {
     private function checkSize_($sFilePath) {
         // 如果不是文件，则创建
         if (! is_file ( $sFilePath ) && ! is_dir ( dirname ( $sFilePath ) ) && ! \Q::makeDir ( dirname ( $sFilePath ) )) {
-            \Q::throwException ( \Q::i18n ( '无法创建日志文件：“%s”', $sFilePath ), 'Q\log\exception' );
+            exception::throws ( \Q::i18n ( '无法创建日志文件：“%s”', $sFilePath ), 'Q\log\exception' );
         }
         
         // 检测日志文件大小，超过配置大小则备份日志文件重新生成
@@ -228,5 +245,19 @@ class log {
             $sFilePath = $this->getObjectOption_ ( 'path_cache_log' ) . '/' . $strLevel . '/' . date ( $this->getObjectOption_ ( 'log_file_name' ) ) . ".log";
         }
         return $sFilePath;
+    }
+    
+    /**
+     * 初始化静态入口配置
+     *
+     * @return void
+     */
+    protected function initStaticEntrance_() {
+        $arrObjectOption = [ ];
+        foreach ( $this->getStaticEntranceType_ () as $sObjectOption ) {
+            $arrObjectOption [$sObjectOption] = option::gets ( $sObjectOption );
+        }
+        $arrObjectOption ['path_cache_log'] = \Q::project ()->path_cache_log;
+        return $this->setObjectOption ( $arrObjectOption );
     }
 }

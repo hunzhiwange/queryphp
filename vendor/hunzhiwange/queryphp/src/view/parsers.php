@@ -1,33 +1,38 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2016.11.19
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\view;
 
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
+
 use Q\queue\stack;
+use Q\exception\exception;
+use Q\traits\object_option;
+use Q\traits\static_entrance;
+use Q\option\option;
 
 /**
  * 分析模板
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2016.11.19
+ * @version 1.0
  */
 class parsers {
+    
+    use object_option;
+    use static_entrance;
     
     /**
      * 分析器
@@ -132,6 +137,26 @@ class parsers {
     ];
     
     /**
+     * 配置
+     *
+     * @var array
+     */
+    protected $arrDefaultObjectOption = [ 
+            'theme_strip_space' => TRUE,
+            'theme_tag_note' => FALSE 
+    ];
+    
+    /**
+     * 初始化参数
+     *
+     * @var array
+     */
+    protected $arrStaticEntranceType = [ 
+            'theme_strip_space',
+            'theme_tag_note' 
+    ];
+    
+    /**
      * 构造函数
      *
      * 注册分析其和编译器
@@ -139,13 +164,15 @@ class parsers {
      * @return void
      */
     public function __construct() {
+        $this->mergeObjectOption_ ();
+        
         // 注册编译器
         $arrMethods = get_class_methods ( __NAMESPACE__ . '\compilers' );
         
         // 编译器别名
-        $arrCodeMap = \Q::view_compilers ()->getCodeMapHelp ();
-        $arrNodeMap = \Q::view_compilers ()->getNodeMapHelp ();
-        $arrJsMap = \Q::view_compilers ()->getJsMapHelp ();
+        $arrCodeMap = compilers::getCodeMapHelps ();
+        $arrNodeMap = compilers::getNodeMapHelps ();
+        $arrJsMap = compilers::getJsMapHelps ();
         
         foreach ( $arrMethods as $sMethod ) {
             // 按照命名习惯排除的辅助方法和非public的方法
@@ -169,18 +196,18 @@ class parsers {
                         $sTag = substr ( $sMethod, 0, - 2 );
                         $name = isset ( $arrJsMap [$sTag] ) ? $arrJsMap [$sTag] : $sTag;
                     }
-                    self::regCompilers ( $sType, $name, $sTag );
+                    static::regCompilers ( $sType, $name, $sTag );
                 }
             }
         }
         
         // 注册分析器
         foreach ( $this->arrTag as $sKey => $arr ) {
-            self::regParser ( $sKey );
+            static::regParser ( $sKey );
         }
         
         // 创建编译器
-        self::$objCompilers = new compilers ();
+        static::$objCompilers = new compilers ();
     }
     
     /**
@@ -189,10 +216,10 @@ class parsers {
      * @var Q\theme\parsers
      */
     static public function run() {
-        if (! self::$objParsers) {
-            self::$objParsers = new self ();
+        if (! static::$objParsers) {
+            static::$objParsers = new self ();
         }
-        return self::$objParsers;
+        return static::$objParsers;
     }
     
     /**
@@ -222,7 +249,7 @@ class parsers {
      */
     public function addTheme($arrTheme) {
         $arrTop = &$this->arrThemeTree [0];
-        $arrTop = self::addThemeTree ( $arrTop, $arrTheme );
+        $arrTop = static::addThemeTree ( $arrTop, $arrTheme );
     }
     
     /**
@@ -235,20 +262,20 @@ class parsers {
      */
     public function doCombile($sFile, $sCachePath, $bReturn = false) {
         if (! is_file ( $sFile )) {
-            \Q::throwException ( printf ( 'file %s is not exits', $sFile ), 'Q\view\exception' );
+            exception::throws ( printf ( 'file %s is not exits', $sFile ), 'Q\view\exception' );
         }
         
         // 源码
         $sCache = file_get_contents ( $sFile );
         
         // 逐个载入分析器编译模板
-        foreach ( self::$arrParses as $sParser ) {
+        foreach ( static::$arrParses as $sParser ) {
             // 清理对象 & 构建顶层树对象
             $this->clearThemeTree ();
             $arrTheme = [ 
                     'source' => $sCache,
                     'content' => $sCache,
-                    'position' => self::getPosition ( $sCache, '', 0 ) 
+                    'position' => static::getPosition ( $sCache, '', 0 ) 
             ];
             
             $arrTheme = array_merge ( $this->getDefaultStruct (), $arrTheme );
@@ -263,7 +290,7 @@ class parsers {
         }
         
         // 清理模板编译文件空格
-        if ($GLOBALS ['~@option'] ['theme_strip_space'] === true) {
+        if ($this->getObjectOption_ ( 'theme_strip_space' ) === true) {
             
             /**
              * 清理 HTML 清除换行符,清除制表符,去掉注释标记
@@ -296,7 +323,7 @@ class parsers {
         
         // 返回编译文件
         $sOsNewline = \Q::osNewline ();
-        $sCache = "<?php !defined('Q_PATH') && exit; /* QeePHP Cache " . date ( 'Y-m-d H:i:s', time () ) . "  */ ?>" . $sOsNewline . $sCache;
+        $sCache = "<?php !defined('Q_PATH') && exit; /* QueryPHP Cache " . date ( 'Y-m-d H:i:s', time () ) . "  */ ?>" . $sOsNewline . $sCache;
         
         // 解决不同操作系统源代码换行混乱
         $sCache = str_replace ( [ 
@@ -342,7 +369,7 @@ class parsers {
                         'children' => [ ] 
                 ];
                 
-                $arrTheme ['position'] = self::getPosition ( $sCompiled, $sSource, $nStartPos );
+                $arrTheme ['position'] = static::getPosition ( $sCompiled, $sSource, $nStartPos );
                 $nStartPos = $arrTheme ['position'] ['end'] + 1;
                 $arrTheme = array_merge ( $this->arrThemeStruct, $arrTheme );
                 $this->addTheme ( $arrTheme ); // 将模板数据加入到树结构中
@@ -373,7 +400,7 @@ class parsers {
                         'children' => [ ] 
                 ];
                 
-                $arrTheme ['position'] = self::getPosition ( $sCompiled, $sSource, $nStartPos );
+                $arrTheme ['position'] = static::getPosition ( $sCompiled, $sSource, $nStartPos );
                 $nStartPos = $arrTheme ['position'] ['end'] + 1;
                 $arrTheme = array_merge ( $this->arrThemeStruct, $arrTheme );
                 $this->addTheme ( $arrTheme ); // 将模板数据加入到树结构中
@@ -388,8 +415,8 @@ class parsers {
      * @return void
      */
     public function codeParse(&$sCompiled) {
-        foreach ( self::$arrCompilers ['code'] as $sCompilers => $sTag ) {
-            $arrNames [] = self::escapeCharacter ( $sCompilers ); // 处理一些正则表达式中有特殊意义的符号
+        foreach ( static::$arrCompilers ['code'] as $sCompilers => $sTag ) {
+            $arrNames [] = static::escapeCharacter ( $sCompilers ); // 处理一些正则表达式中有特殊意义的符号
         }
         
         if (! count ( $arrNames )) { // 没有任何编译器
@@ -411,10 +438,10 @@ class parsers {
                 $arrTheme = [ 
                         'source' => $sSource,
                         'content' => $sContent,
-                        'compiler' => self::$arrCompilers ['code'] [$sObjType] . 'Code', // 编译器
+                        'compiler' => static::$arrCompilers ['code'] [$sObjType] . 'Code', // 编译器
                         'children' => [ ] 
                 ];
-                $arrTheme ['position'] = self::getPosition ( $sCompiled, $sSource, $nStartPos );
+                $arrTheme ['position'] = static::getPosition ( $sCompiled, $sSource, $nStartPos );
                 $nStartPos = $arrTheme ['position'] ['end'] + 1;
                 $arrTheme = array_merge ( $this->arrThemeStruct, $arrTheme );
                 $this->addTheme ( $arrTheme ); // 将模板数据加入到树结构中
@@ -466,7 +493,7 @@ class parsers {
                         'children' => [ ] 
                 ];
                 
-                $arrTheme ['position'] = self::getPosition ( $sCompiled, $sSource, $nStartPos );
+                $arrTheme ['position'] = static::getPosition ( $sCompiled, $sSource, $nStartPos );
                 $nStartPos = $arrTheme ['position'] ['end'] + 1;
                 $arrTheme = array_merge ( $this->arrThemeStruct, $arrTheme );
                 $this->addTheme ( $arrTheme ); // 将模板数据加入到树结构中
@@ -496,7 +523,7 @@ class parsers {
                         'children' => [ ] 
                 ];
                 
-                $arrTheme ['position'] = self::getPosition ( $sCompiled, $sSource, $nStartPos );
+                $arrTheme ['position'] = static::getPosition ( $sCompiled, $sSource, $nStartPos );
                 $nStartPos = $arrTheme ['position'] ['end'] + 1;
                 $arrTheme = array_merge ( $this->arrThemeStruct, $arrTheme );
                 $this->addTheme ( $arrTheme ); // 将模板数据加入到树结构中
@@ -515,7 +542,7 @@ class parsers {
      * @return array
      */
     static public function regParser($sTag) {
-        self::$arrParses [] = $sTag;
+        static::$arrParses [] = $sTag;
         return $sTag;
     }
     
@@ -540,7 +567,7 @@ class parsers {
             ];
         }
         foreach ( $Name as $sTemp ) {
-            self::$arrCompilers [$sType] [$sTemp] = $sTag;
+            static::$arrCompilers [$sType] [$sTemp] = $sTag;
         }
     }
     
@@ -739,7 +766,7 @@ class parsers {
         /**
          * 交叉（两个时间段相互关系）
          */
-        \Q::throwException ( \Q::i18n ( '标签库不支持交叉' ), 'Q\view\exception' );
+        exception::throws ( \Q::i18n ( '标签库不支持交叉' ), 'Q\view\exception' );
     }
     
     /**
@@ -756,7 +783,7 @@ class parsers {
         
         foreach ( $arrTop ['children'] as $arrChild ) {
             if ($arrNew) {
-                $sRelative = self::positionRelative ( $arrNew ['position'], $arrChild ['position'] );
+                $sRelative = static::positionRelative ( $arrNew ['position'], $arrChild ['position'] );
                 
                 switch ($sRelative) {
                     
@@ -783,7 +810,7 @@ class parsers {
                      * new 在 child 内部
                      */
                     case 'in' :
-                        $arrChild = self::addThemeTree ( $arrChild, $arrNew );
+                        $arrChild = static::addThemeTree ( $arrChild, $arrNew );
                         $arrResult [] = $arrChild;
                         $arrNew = null;
                         break;
@@ -793,7 +820,7 @@ class parsers {
                      * child 在 new 内部
                      */
                     case 'out' :
-                        $arrNew = self::addThemeTree ( $arrNew, $arrChild );
+                        $arrNew = static::addThemeTree ( $arrNew, $arrChild );
                         break;
                 }
             } else {
@@ -820,7 +847,7 @@ class parsers {
         foreach ( $arrTheme ['children'] as $intKey => $arrOne ) {
             $strSource = $arrOne ['source'];
             
-            self::compileTheme ( $arrOne ); // 编译子对象
+            static::compileTheme ( $arrOne ); // 编译子对象
             $arrTheme ['children'] [$intKey] = $arrOne;
             
             // 置换对象
@@ -832,7 +859,7 @@ class parsers {
         // 编译自身
         if ($arrTheme ['compiler']) {
             $strCompilers = $arrTheme ['compiler'] . 'Compiler';
-            self::$objCompilers->{$strCompilers} ( $arrTheme );
+            static::$objCompilers->{$strCompilers} ( $arrTheme );
         }
     }
     
@@ -890,7 +917,7 @@ class parsers {
         // 逐个编译
         $sCache = '';
         foreach ( $this->arrThemeTree as $arrTheme ) {
-            self::compileTheme ( $arrTheme );
+            static::compileTheme ( $arrTheme );
             $sCache .= $arrTheme ['content'];
         }
         return $sCache;
@@ -921,8 +948,8 @@ class parsers {
         // 判断是那种编译器
         $sNodeType = $this->bJsNode === true ? 'js' : 'node';
         
-        foreach ( self::$arrCompilers [$sNodeType] as $sCompilers => $sTag ) { // 所有一级节点名称
-            $arrNames [] = self::escapeCharacter ( $sCompilers ); // 处理一些正则表达式中有特殊意义的符号
+        foreach ( static::$arrCompilers [$sNodeType] as $sCompilers => $sTag ) { // 所有一级节点名称
+            $arrNames [] = static::escapeCharacter ( $sCompilers ); // 处理一些正则表达式中有特殊意义的符号
         }
         if (! count ( $arrNames )) { // 没有 任何编译器
             return;
@@ -937,9 +964,9 @@ class parsers {
         $nTagAttributeIdx = 5; // 标签属性位置
         
         if ($this->bJsNode === true) {
-            $arrCompiler = self::$arrCompilers ['js'];
+            $arrCompiler = static::$arrCompilers ['js'];
         } else {
-            $arrCompiler = self::$arrCompilers ['node'];
+            $arrCompiler = static::$arrCompilers ['node'];
         }
         
         if (preg_match_all ( $sRegexp, $sCompiled, $arrRes )) { // 依次创建标签对象
@@ -965,7 +992,7 @@ class parsers {
                     $arrTheme ['attribute'] = '';
                 }
                 $arrTheme ['content'] = $arrTheme ['attribute'];
-                $arrTheme ['position'] = self::getPosition ( $sCompiled, $sTagSource, $nStartPos );
+                $arrTheme ['position'] = static::getPosition ( $sCompiled, $sTagSource, $nStartPos );
                 $nStartPos = $arrTheme ['position'] ['end'] + 1;
                 $arrTheme = array_merge ( $this->arrThemeStruct, $arrTheme );
                 $this->oNodeStack->in ( $arrTheme ); // 加入到标签栈
@@ -981,10 +1008,10 @@ class parsers {
      */
     protected function packNode(&$sCompiled) {
         if ($this->bJsNode === true) {
-            $arrNodeTag = \Q::view_compilers ()->getJsTagHelp ();
+            $arrNodeTag = compilers::getJsTagHelps ();
             $sCompiler = 'Js';
         } else {
-            $arrNodeTag = \Q::view_compilers ()->getNodeTagHelp ();
+            $arrNodeTag = compilers::getNodeTagHelps ();
             $sCompiler = 'Node';
         }
         
@@ -999,7 +1026,7 @@ class parsers {
             if (! $arrTailTag or ! $this->findHeadTag ( $arrTag, $arrTailTag )) { // 单标签节点
                 
                 if ($arrNodeTag [$arrTag ['name']] ['single'] !== true) {
-                    \Q::throwException ( \Q::i18n ( '%s 类型节点 必须成对使用，没有找到对应的尾标签', $arrTag ['name'] ), 'Q\view\exception' );
+                    exception::throws ( \Q::i18n ( '%s 类型节点 必须成对使用，没有找到对应的尾标签', $arrTag ['name'] ), 'Q\view\exception' );
                 }
                 if ($arrTailTag) { // 退回栈中
                     $oTailStack->in ( $arrTailTag );
@@ -1025,7 +1052,7 @@ class parsers {
                         'source' => $sSource,
                         'name' => $arrTag ['name'] 
                 ];
-                $arrThemeNode ['position'] = self::getPosition ( $sCompiled, $sSource, $nStart );
+                $arrThemeNode ['position'] = static::getPosition ( $sCompiled, $sSource, $nStart );
                 $arrThemeNode = array_merge ( $this->arrThemeStruct, $arrThemeNode );
                 
                 // 标签body
@@ -1039,9 +1066,9 @@ class parsers {
                             'source' => $sBody,
                             'is_body' => 1 
                     ];
-                    $arrThemeBody ['position'] = self::getPosition ( $sCompiled, $sBody, $nStart );
+                    $arrThemeBody ['position'] = static::getPosition ( $sCompiled, $sBody, $nStart );
                     $arrThemeBody = array_merge ( $this->arrThemeStruct, $arrThemeBody );
-                    $arrThemeNode = self::addThemeTree ( $arrThemeNode, $arrThemeBody );
+                    $arrThemeNode = static::addThemeTree ( $arrThemeNode, $arrThemeBody );
                 }
             }
             
@@ -1056,9 +1083,9 @@ class parsers {
                     'is_js' => $this->bJsNode 
             ];
             
-            $arrThemeAttr ['position'] = self::getPosition ( $sCompiled, $arrTag ['source'], 0 );
+            $arrThemeAttr ['position'] = static::getPosition ( $sCompiled, $arrTag ['source'], 0 );
             $arrThemeAttr = array_merge ( $this->arrThemeStruct, $arrThemeAttr );
-            $arrThemeNode = self::addThemeTree ( $arrThemeNode, $arrThemeAttr );
+            $arrThemeNode = static::addThemeTree ( $arrThemeNode, $arrThemeAttr );
             $this->addTheme ( $arrThemeNode ); // 将模板数据加入到树结构中
         }
     }
@@ -1072,7 +1099,7 @@ class parsers {
      */
     protected function findHeadTag($arrTag, $arrTailTag) {
         if ($arrTailTag ['type'] != 'tail') {
-            \Q::throwException ( \Q::i18n ( '参数必须是一个尾标签' ), 'Q\view\exception' );
+            exception::throws ( \Q::i18n ( '参数必须是一个尾标签' ), 'Q\view\exception' );
         }
         return preg_match ( "/^{$arrTailTag['name']}/i", $arrTag ['name'] );
     }
@@ -1084,7 +1111,20 @@ class parsers {
      * @return array
      */
     protected function getTag($sType) {
-        return $this->arrTag [$sType . ($GLOBALS ['~@option'] ['theme_tag_note'] === true ? '_node' : '')];
+        return $this->arrTag [$sType . ($this->getObjectOption_ ( 'theme_tag_note' ) === true ? '_node' : '')];
+    }
+    
+    /**
+     * 初始化静态入口配置
+     *
+     * @return void
+     */
+    protected function initStaticEntrance_() {
+        $arrObjectOption = [ ];
+        foreach ( $this->getStaticEntranceType_ () as $sObjectOption ) {
+            $arrObjectOption [$sObjectOption] = option::gets ( $sObjectOption );
+        }
+        return $this->setObjectOption ( $arrObjectOption );
     }
     
     // ######################################################

@@ -1,43 +1,43 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2016.11.25
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\i18n;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
+
+use Q\exception\exception;
 
 /**
  * 语言包工具类
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2016.11.25
+ * @version 1.0
  */
 class tool {
     
     /**
      * 保存数据到 JS 的缓存文件
      *
-     * @param
-     *            string | array $Files 文件地址
+     * @param string|array $Files
+     *            文件地址
      * @param string $CacheFile
      *            缓存目录
      * @param string $sI18nSet
      *            语言上下文环境
      * @author 小牛
-     * @since 2016.11.27
+     * @version 2016.11.27
      * @return array
      */
     public function saveToJs($Files, $sCacheFile, $sI18nSet) {
@@ -45,7 +45,7 @@ class tool {
         if (is_string ( $Files )) {
             $Files [] = $Files;
         }
-        $arrTexts = self::parsePoData_ ( $Files );
+        $arrTexts = static::parsePoData_ ( $Files );
         
         $sDir = dirname ( $sCacheFile );
         if (! is_dir ( $sDir )) {
@@ -54,7 +54,7 @@ class tool {
         // 防止空数据无法写入
         $arrTexts ['Query Yet Simple'] = 'Query Yet Simple';
         if (! file_put_contents ( $sCacheFile, "/* I18n Cache */\n;$(function(){\n    $.fn.queryphp('i18nPackage',\''.$sI18nSet.'\'," . json_encode ( $arrTexts, 256 ) . "); \n});" )) {
-            \Q::errorMessage ( sprintf ( 'Dir %s do not have permission.', $sCacheDir ) );
+            exception::throws ( sprintf ( 'Dir %s do not have permission.', $sCacheDir ) );
         }
         
         return $arrTexts;
@@ -63,12 +63,12 @@ class tool {
     /**
      * 保存数据到 PHP 的缓存文件
      *
-     * @param
-     *            string | array $Files 文件地址
+     * @param string|array $Files
+     *            文件地址
      * @param string $CacheFile
      *            缓存目录
      * @author 小牛
-     * @since 2016.11.27
+     * @version 2016.11.27
      * @return array
      */
     public function saveToPhp($Files, $sCacheFile) {
@@ -76,7 +76,7 @@ class tool {
         if (is_string ( $Files )) {
             $Files [] = $Files;
         }
-        $arrTexts = self::parsePoData_ ( $Files );
+        $arrTexts = static::parsePoData_ ( $Files );
         
         $sDir = dirname ( $sCacheFile );
         if (! is_dir ( $sDir )) {
@@ -85,19 +85,19 @@ class tool {
         // 防止空数据无法写入
         $arrTexts ['Query Yet Simple'] = 'Query Yet Simple';
         if (! file_put_contents ( $sCacheFile, "<?php\n /* I18n Cache */ \n return " . var_export ( $arrTexts, true ) . "\n?>" )) {
-            \Q::errorMessage ( sprintf ( 'Dir %s do not have permission.', $sDir ) );
+            exception::throws ( sprintf ( 'Dir %s do not have permission.', $sDir ) );
         }
         
         return $arrTexts;
     }
     
     /**
-     * 分析目录中的PHP和JS语言包包含的文件
+     * 分析目录中的 PHP 和 JS 语言包包含的文件
      *
-     * @param
-     *            string | array $I18nDir 文件地址
+     * @param string|array $I18nDir
+     *            文件地址
      * @author 小牛
-     * @since 2016.11.27
+     * @version 2016.11.27
      * @return array
      */
     public function findPoFile($I18nDir) {
@@ -135,12 +135,12 @@ class tool {
     }
     
     /**
-     * 分析PO文件语言包数据
+     * 分析 PO 文件语言包数据
      *
-     * @param
-     *            string | array $I18nFile 文件地址
+     * @param string|array $I18nFile
+     *            文件地址
      * @author 小牛
-     * @since 2016.11.25
+     * @version 2016.11.25
      * @return array
      */
     private function parsePoData_($I18nFile) {
@@ -152,7 +152,7 @@ class tool {
         $sContent = '';
         foreach ( $I18nFile as $sFile ) {
             if (! is_file ( $sFile )) {
-                \Q::throwException ( sprintf ( 'The i18n file < %s > is not exists!', $sFile ), 'Q\event\exception' );
+                exception::throws ( sprintf ( 'The i18n file < %s > is not exists!', $sFile ), 'Q\event\exception' );
             }
             $sContent .= \Q::escapeCharacter ( file_get_contents ( $sFile ) );
         }

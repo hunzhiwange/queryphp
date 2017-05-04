@@ -1,32 +1,32 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2017.04.18
- * @since 4.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\request;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
 
 use Q\mvc\view;
 use Q\traits\flow_condition;
+use Q\exception\exception;
+use Q\cookie\cookie;
 
 /**
  * 响应请求
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2017.04.18
+ * @version 4.0
  */
 class response {
     
@@ -144,10 +144,10 @@ class response {
      */
     public function __construct($mixData = '', $intCode = 200, array $arrHeader = [], $arrOption = []) {
         // 是否初始化
-        if (self::$booInit === true) {
+        if (static::$booInit === true) {
             return $this;
         }
-        self::$booInit = true;
+        static::$booInit = true;
         
         // 初始化参数
         $this->data ( $mixData )->code ( intval ( $intCode ) )->header ( $arrHeader )->option ( $arrOption );
@@ -167,8 +167,8 @@ class response {
         }
         
         // 调用自定义的响应方法
-        if (isset ( self::$arrCustomerResponse [$sMethod] )) {
-            $mixData = call_user_func_array ( self::$arrCustomerResponse [$sMethod], $arrArgs );
+        if (isset ( static::$arrCustomerResponse [$sMethod] )) {
+            $mixData = call_user_func_array ( static::$arrCustomerResponse [$sMethod], $arrArgs );
             if ($mixData instanceof response) {
                 return $mixData;
             } else {
@@ -176,7 +176,7 @@ class response {
             }
         }
         
-        \Q::throwException ( \Q::i18n ( 'response 没有实现魔法方法 %s.', $sMethod ), 'Q\request\exception' );
+        exception::throws ( \Q::i18n ( 'response 没有实现魔法方法 %s.', $sMethod ), 'Q\request\exception' );
     }
     
     /**
@@ -194,13 +194,13 @@ class response {
                 'else',
                 'endIf' 
         ] ) || method_exists ( $this, $strResponseName )) {
-            \Q::throwException ( \Q::i18n ( '响应名字必须是一个字符串，不能占用条件表达式，且不能注册一个存在的响应方法' ), 'Q\request\exception' );
+            exception::throws ( \Q::i18n ( '响应名字必须是一个字符串，不能占用条件表达式，且不能注册一个存在的响应方法' ), 'Q\request\exception' );
         }
         if (! \Q::varType ( $calResponse, 'callback' )) {
-            \Q::throwException ( \Q::i18n ( '响应内容必须是一个回调类型' ), 'Q\request\exception' );
+            exception::throws ( \Q::i18n ( '响应内容必须是一个回调类型' ), 'Q\request\exception' );
         }
         
-        self::$arrCustomerResponse [$strResponseName] = $calResponse;
+        static::$arrCustomerResponse [$strResponseName] = $calResponse;
         return $this;
     }
     
@@ -214,10 +214,10 @@ class response {
      * @return $this
      */
     static public function singleton($mixData = '', $intCode = 200, array $arrHeader = [], $arrOption = []) {
-        if (self::$oInstance) {
-            return self::$oInstance;
+        if (static::$oInstance) {
+            return static::$oInstance;
         } else {
-            return self::$oInstance = new self ( $mixData, $intCode, $arrHeader, $arrOption );
+            return static::$oInstance = new self ( $mixData, $intCode, $arrHeader, $arrOption );
         }
     }
     
@@ -327,7 +327,7 @@ class response {
     public function cookie($sName, $mixValue = '', array $in = []) {
         if ($this->checkFlowCondition_ ())
             return $this;
-        \Q::cookie ( $sName, $mixValue, $in );
+        cookie::sets ( $sName, $mixValue, $in );
         return $this;
     }
     
@@ -440,7 +440,7 @@ class response {
             $mixContent = $this->getData ();
             switch ($this->getResponseType ()) {
                 case 'json' :
-                    $arrOption = array_merge ( self::$arrJsonOption, $this->getOption () );
+                    $arrOption = array_merge ( static::$arrJsonOption, $this->getOption () );
                     $mixContent = \Q::jsonEncode ( $mixContent, $arrOption ['json_options'] );
                     if ($arrOption ['json_callback']) {
                         $mixContent = $arrOption ['json_callback'] . '(' . $mixContent . ');';
@@ -459,7 +459,7 @@ class response {
                     \Q::redirect ( $this->getOption ( 'redirect_url' ), $this->getOption ( 'in' ) );
                     break;
                 case 'view' :
-                    $mixContent = self::$objView->display ( $this->getOption ( 'file' ), $this->getOption ( 'in' ) );
+                    $mixContent = static::$objView->display ( $this->getOption ( 'file' ), $this->getOption ( 'in' ) );
                     break;
                 default :
                     if (is_callable ( $mixContent )) {
@@ -565,8 +565,8 @@ class response {
     public function view($sFile = '', $in = []) {
         if ($this->checkFlowCondition_ ())
             return $this;
-        if (! self::$objView) {
-            self::$objView = view::run ();
+        if (! static::$objView) {
+            static::$objView = view::run ();
         }
         if (! isset ( $in ['return'] )) {
             $in ['return'] = true;
@@ -590,10 +590,10 @@ class response {
     public function assign($mixName, $mixValue = null) {
         if ($this->checkFlowCondition_ ())
             return $this;
-        if (! self::$objView) {
-            self::$objView = view::run ();
+        if (! static::$objView) {
+            static::$objView = view::run ();
         }
-        self::$objView->assign ( $mixName, $mixValue );
+        static::$objView->assign ( $mixName, $mixValue );
         return $this;
     }
     
@@ -681,7 +681,7 @@ class response {
      */
     private function downloadAndFile_($sFileName, array $arrHeader = []) {
         if (! is_file ( $sFileName )) {
-            \Q::throwException ( \Q::i18n ( '读取的文件不存在' ), 'Q\request\exception' );
+            exception::throws ( \Q::i18n ( '读取的文件不存在' ), 'Q\request\exception' );
         }
         $sFileName = realpath ( $sFileName );
         

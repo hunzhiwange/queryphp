@@ -1,29 +1,29 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2017.02.15
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\cache;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
+
+use Q\exception\exception;
 
 /**
  * memcache 扩展缓存
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2017.02.15
+ * @version 1.0
  */
 class memcache extends cache {
     
@@ -67,7 +67,7 @@ class memcache extends cache {
             'runtime_memcache_host' => '127.0.0.1',
             'runtime_memcache_port' => 11211 
     ];
-
+    
     /**
      * 构造函数
      *
@@ -76,7 +76,7 @@ class memcache extends cache {
      */
     public function __construct(array $arrOption = []) {
         if (! extension_loaded ( 'memcache' )) {
-            \Q::throwException ( 'memcache extension must be loaded before use.', 'Q\cache\exception' );
+            exception::throws ( 'memcache extension must be loaded before use.', 'Q\cache\exception' );
         }
         
         $this->mergeObjectOption_ ();
@@ -107,7 +107,7 @@ class memcache extends cache {
         foreach ( $this->arrOption ['servers'] as $arrServer ) {
             $bResult = $this->hHandel->addServer ( $arrServer ['host'], $arrServer ['port'], $this->arrOption ['persistent'] );
             if (! $bResult) {
-                \Q::throwException ( sprintf ( 'Unable to connect the memcached server [%s:%s] failed.', $arrServer ['host'], $arrServer ['port'] ), 'Q\cache\exception' );
+                exception::throws ( sprintf ( 'Unable to connect the memcached server [%s:%s] failed.', $arrServer ['host'], $arrServer ['port'] ), 'Q\cache\exception' );
             }
         }
     }

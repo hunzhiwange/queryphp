@@ -1,31 +1,30 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2016.11.19
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\mvc;
 
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
+
 use Q\view\theme;
+use Q\database\database;
 
 /**
  * 视图
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2016.11.19
+ * @version 1.0
  */
 class view {
     
@@ -64,10 +63,10 @@ class view {
      * @var Q\mvc\view
      */
     static public function run() {
-        if (! self::$objView) {
-            self::$objView = new self ();
+        if (! static::$objView) {
+            static::$objView = new self ();
         }
-        return self::$objView;
+        return static::$objView;
     }
     
     /**
@@ -78,7 +77,7 @@ class view {
      * @return mixed
      */
     public function assign($mixName, $mixValue = null) {
-        return \Q::view_theme ()->setVar ( $mixName, $mixValue );
+        return theme::setVars ( $mixName, $mixValue );
     }
     
     /**
@@ -88,7 +87,7 @@ class view {
      * @return mixed
      */
     public function getAssign($sName) {
-        return \Q::view_theme ()->getVar ( $sName );
+        return theme::getVars ( $sName );
     }
     
     /**
@@ -116,10 +115,11 @@ class view {
         
         // 加载视图文件
         if (! is_file ( $sFile )) {
-            $sFile = self::parseFile ( $sFile );
+            $sFile = static::parseFile ( $sFile );
         }
-        $sContent = \Q::view_theme ()->display ( $sFile, false );
         
+       $sContent = theme::displays ( $sFile, false );
+
         // 过滤编译文件子模板定位注释标签，防止在网页头部出现注释，导致 IE 浏览器不居中
         if (Q_DEBUG === TRUE && $GLOBALS ['~@option'] ['theme_cache_children'] === true) {
             $sContent = preg_replace ( "/<!--<\#\#\#\#incl\*(.*?)\*ude\#\#\#\#>-->/", '', $sContent );
@@ -149,7 +149,7 @@ class view {
      * @return string
      */
     static public function setThemeDir($sDir) {
-        return self::$sTheme = $sDir;
+        return static::$sTheme = $sDir;
     }
     
     /**
@@ -159,7 +159,7 @@ class view {
      * @return string
      */
     static public function setThemeDefault($sDir) {
-        return self::$sThemeDefault = $sDir;
+        return static::$sThemeDefault = $sDir;
     }
     
     /**
@@ -234,13 +234,13 @@ class view {
         }
         
         // 当前主题
-        if (is_file ( self::$sTheme . '/' . $sTpl )) {
-            return self::$sTheme . '/' . $sTpl;
+        if (is_file ( static::$sTheme . '/' . $sTpl )) {
+            return static::$sTheme . '/' . $sTpl;
         }
         
         // 备用地址
-        if (self::$sThemeDefault && is_file ( self::$sThemeDefault . '/' . $sTpl )) {
-            return self::$sThemeDefault . '/' . $sTpl;
+        if (static::$sThemeDefault && is_file ( static::$sThemeDefault . '/' . $sTpl )) {
+            return static::$sThemeDefault . '/' . $sTpl;
         }
         
         // default 主题

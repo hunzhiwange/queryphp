@@ -1,31 +1,31 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2016.11.18
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\i18n;
 
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
+
 use Q\traits\object_option;
+use Q\exception\exception;
+use Q\cookie\cookie;
 
 /**
  * 语言管理类
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2016.11.18
+ * @version 1.0
  */
 class i18n {
     
@@ -105,7 +105,7 @@ class i18n {
      */
     public function addI18n($sI18nName, $arrData = []) {
         if (! $sI18nName || ! is_string ( $sI18nName )) {
-            \Q::errorMessage ( 'I18n name not allowed empty!' );
+            exception::throws ( 'I18n name not allowed empty!' );
         }
         
         if (array_key_exists ( $sI18nName, $this->arrText )) {
@@ -125,9 +125,9 @@ class i18n {
         
         if (isset ( $_GET [\Q\mvc\project::ARGS_I18N] )) {
             $sI18nSet = $_GET [\Q\mvc\project::ARGS_I18N];
-            \Q::cookie ( $sCookieName, $sI18nSet );
+            cookie::sets ( $sCookieName, $sI18nSet );
         } elseif ($sCookieName) {
-            $sI18nSet = \Q::cookie ( $sCookieName );
+            $sI18nSet = cookie::gets ( $sCookieName );
             if (empty ( $sI18nSet )) {
                 $sI18nSet = $this->getObjectOption_ ( 'i18n_default' );
             }

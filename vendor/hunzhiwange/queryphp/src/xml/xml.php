@@ -1,29 +1,27 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2016.11.19
- * @since 1.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\xml;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
 
 /**
  * xml 解析类
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2016.11.19
+ * @version 1.0
  */
 class xml {
     
@@ -101,7 +99,7 @@ class xml {
         while ( (list ( $sKey, $sValue ) = each ( $arrData )) !== false ) {
             if (! strpos ( $sKey, ' attr' )) {
                 if (is_array ( $sValue ) and array_key_exists ( 0, $sValue )) {
-                    self::xmlSerialize ( $sValue, $bHtmlOn, $nLevel, $sKey, $sCharset );
+                    static::xmlSerialize ( $sValue, $bHtmlOn, $nLevel, $sKey, $sCharset );
                 } else {
                     $sTag = $sPriorKey ? $sPriorKey : $sKey;
                     echo str_repeat ( "\t", $nLevel ), '<', $sTag;
@@ -117,7 +115,7 @@ class xml {
                     } elseif (! is_array ( $sValue )) {
                         echo '>', ($bHtmlOn ? '<![CDATA[' : '') . $sValue . ($bHtmlOn ? ']]>' : ''), "</$sTag>\n";
                     } else {
-                        echo ">\n", self::xmlSerialize ( $sValue, $bHtmlOn, $nLevel + 1, null, $sCharset ), str_repeat ( "\t", $nLevel ), "</$sTag>\n";
+                        echo ">\n", static::xmlSerialize ( $sValue, $bHtmlOn, $nLevel + 1, null, $sCharset ), str_repeat ( "\t", $nLevel ), "</$sTag>\n";
                     }
                 }
             }

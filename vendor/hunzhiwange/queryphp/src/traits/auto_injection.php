@@ -1,29 +1,27 @@
 <?php
-/*
- * [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
- * ©2010-2017 http://queryphp.com All rights reserved.
- * 
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  # 
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- * 
- * @author Xiangmin Liu<635750556@qq.com>
- * @version $$
- * @date 2017.04.25
- * @since 4.0
- */
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\traits;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
 
 /**
  * 自动注入复用
  *
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2017.04.25
+ * @version 4.0
  */
 trait auto_injection {
     
@@ -73,30 +71,6 @@ trait auto_injection {
     }
     
     /**
-     * 静态回调或者匿名函数自动注入并返回结果
-     *
-     * @param callable $calClass            
-     * @param string $arrArgs            
-     * @return mixed
-     */
-    protected function getStaticOrClosureCallbackResultWithMethodArgs_($calClass, $arrArgs = []) {
-        if (($arrAutoInjection = $this->parseAutoInjection_ ( $calClass ))) {
-            // 注入构造器，重构第一个静态参数
-            if (! empty ( $arrAutoInjection ['constructor'] )) {
-                $calClass [0] = \Q::newInstanceArgs ( $calClass [0], $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'], $arrArgs ) );
-            }
-            
-            // 注入方法
-            if (! empty ( $arrAutoInjection ['method'] )) {
-                $arrArgs = $this->getAutoInjectionArgs_ ( $arrAutoInjection ['method'], $arrArgs );
-            }
-            
-            unset ( $arrAutoInjection );
-        }
-        return call_user_func_array ( $calClass, $arrArgs );
-    }
-    
-    /**
      * 分析自动注入
      *
      * @param mixed $mixClassOrCallback            
@@ -124,12 +98,6 @@ trait auto_injection {
             $objReflection = new \ReflectionMethod ( $mixClassOrCallback [0], $mixClassOrCallback [1] );
             if (($arrParameters = $objReflection->getParameters ())) {
                 $arrFunctions ['method'] = $arrParameters;
-            }
-            if (is_string ( $mixClassOrCallback [0] )) {
-                $objReflection = new \ReflectionClass ( $mixClassOrCallback [0] );
-                if (($objConstructor = $objReflection->getConstructor ()) && ($arrParameters = $objConstructor->getParameters ())) {
-                    $arrFunctions ['constructor'] = $arrParameters;
-                }
             }
         } elseif (is_string ( $mixClassOrCallback )) {
             $objReflection = new \ReflectionClass ( $mixClassOrCallback );
