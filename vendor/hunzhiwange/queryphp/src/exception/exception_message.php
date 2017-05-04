@@ -69,10 +69,6 @@ class exception_message extends message {
             ];
         }
         
-        print_r($mixError);
-        
-        exit();
-        
         // 否则定向到错误页面
         if (! \Q::isCli () && option::gets ( 'show_exception_redirect' ) && Q_DEBUG === FALSE) {
             static::urlRedirect ( \Q::url ( option::gets ( 'show_exception_redirect' ) ) );
