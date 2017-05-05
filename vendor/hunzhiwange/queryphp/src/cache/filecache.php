@@ -74,10 +74,10 @@ class filecache extends cache {
             $this->arrOption = array_merge ( $this->arrOption, $arrOption );
         }
         if (empty ( $this->_arrOption ['cache_path'] )) {
-            if ($this->getObjectOption_ ( 'runtime_file_path' )) {
-                $this->arrOption ['cache_path'] = $this->getObjectOption_ ( 'runtime_file_path' );
+            if ($this->getExpansionInstanceArgs_ ( 'runtime_file_path' )) {
+                $this->arrOption ['cache_path'] = $this->getExpansionInstanceArgs_ ( 'runtime_file_path' );
             } else {
-                $this->arrOption ['cache_path'] = $this->getObjectOption_ ( 'path_cache_file' );
+                $this->arrOption ['cache_path'] = $this->getExpansionInstanceArgs_ ( 'path_cache_file' );
             }
         }
     }

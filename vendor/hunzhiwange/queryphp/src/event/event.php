@@ -15,7 +15,7 @@ namespace Q\event;
 ##########################################################
 queryphp;
 
-use Q\traits\auto_injection;
+use Q\traits\dependency\injection as dependency_injection;
 
 /**
  * 事件
@@ -27,7 +27,7 @@ use Q\traits\auto_injection;
  */
 class event {
     
-    use auto_injection;
+    use dependency_injection;
     
     /**
      * 注册的监听器

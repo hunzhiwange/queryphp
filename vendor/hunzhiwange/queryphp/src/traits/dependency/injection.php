@@ -1,7 +1,7 @@
 <?php
 // [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
 // ©2010-2017 http://queryphp.com All rights reserved.
-namespace Q\traits;
+namespace Q\traits\dependency;
 
 <<<queryphp
 ##########################################################
@@ -15,15 +15,21 @@ namespace Q\traits;
 ##########################################################
 queryphp;
 
+use ReflectionFunction;
+use ReflectionMethod;
+use ReflectionClass;
+use ReflectionParameter;
+use Q\mvc\project;
+
 /**
- * 自动注入复用
+ * 依赖注入复用
  *
  * @author Xiangmin Liu<635750556@qq.com>
  * @package $$
  * @since 2017.04.25
- * @version 4.0
+ * @version 1.0
  */
-trait auto_injection {
+trait injection {
     
     /**
      * 注入参数分析
@@ -32,7 +38,7 @@ trait auto_injection {
      * @param array $arrExtends            
      * @return array
      */
-    protected function getAutoInjectionArgs_(array $arrArgs, array $arrExtends = []) {
+    protected function getDependencyInjectionArgs_(array $arrArgs, array $arrExtends = []) {
         foreach ( $arrExtends as $mixExtend ) {
             $arrArgs [] = $mixExtend;
         }
@@ -48,8 +54,8 @@ trait auto_injection {
      */
     protected function getObjectByClassAndArgs_($strClassName, $arrArgs = []) {
         // 注入构造器
-        if (($arrAutoInjection = $this->parseAutoInjection_ ( $strClassName )) && ! empty ( $arrAutoInjection ['constructor'] )) {
-            return \Q::newInstanceArgs ( $strClassName, $this->getAutoInjectionArgs_ ( $arrAutoInjection ['constructor'], $arrArgs ) );
+        if (($arrDependencyInjection = $this->parseDependencyInjection_ ( $strClassName )) && ! empty ( $arrDependencyInjection ['constructor'] )) {
+            return \Q::newInstanceArgs ( $strClassName, $this->getDependencyInjectionArgs_ ( $arrDependencyInjection ['constructor'], $arrArgs ) );
         } else {
             return \Q::newInstanceArgs ( $strClassName, $arrArgs );
         }
@@ -63,9 +69,9 @@ trait auto_injection {
      * @return mixed
      */
     protected function getObjectCallbackResultWithMethodArgs_($calClass, $arrArgs = []) {
-        if (($arrAutoInjection = $this->parseAutoInjection_ ( $calClass )) && ! empty ( $arrAutoInjection ['method'] )) {
-            $arrArgs = $this->getAutoInjectionArgs_ ( $arrAutoInjection ['method'], $arrArgs );
-            unset ( $arrAutoInjection );
+        if (($arrDependencyInjection = $this->parseDependencyInjection_ ( $calClass )) && ! empty ( $arrDependencyInjection ['method'] )) {
+            $arrArgs = $this->getDependencyInjectionArgs_ ( $arrDependencyInjection ['method'], $arrArgs );
+            unset ( $arrDependencyInjection );
         }
         return call_user_func_array ( $calClass, $arrArgs );
     }
@@ -76,7 +82,7 @@ trait auto_injection {
      * @param mixed $mixClassOrCallback            
      * @return array
      */
-    protected function parseAutoInjection_($mixClassOrCallback) {
+    protected function parseDependencyInjection_($mixClassOrCallback) {
         $arrResult = [ ];
         
         $arrFunctions = [ 
@@ -90,17 +96,17 @@ trait auto_injection {
         ];
         
         if ($mixClassOrCallback instanceof \Closure) {
-            $objReflection = new \ReflectionFunction ( $mixClassOrCallback );
+            $objReflection = new ReflectionFunction ( $mixClassOrCallback );
             if (($arrParameters = $objReflection->getParameters ())) {
                 $arrFunctions ['method'] = $arrParameters;
             }
         } elseif (is_callable ( $mixClassOrCallback )) {
-            $objReflection = new \ReflectionMethod ( $mixClassOrCallback [0], $mixClassOrCallback [1] );
+            $objReflection = new ReflectionMethod ( $mixClassOrCallback [0], $mixClassOrCallback [1] );
             if (($arrParameters = $objReflection->getParameters ())) {
                 $arrFunctions ['method'] = $arrParameters;
             }
         } elseif (is_string ( $mixClassOrCallback )) {
-            $objReflection = new \ReflectionClass ( $mixClassOrCallback );
+            $objReflection = new ReflectionClass ( $mixClassOrCallback );
             if (($objConstructor = $objReflection->getConstructor ()) && ($arrParameters = $objConstructor->getParameters ())) {
                 $arrFunctions ['constructor'] = $arrParameters;
             }
@@ -108,9 +114,9 @@ trait auto_injection {
         
         foreach ( $arrFunctions as $sType => $arrFunction ) {
             foreach ( $arrFunction as $intIndex => $objFunction ) {
-                if ($objFunction instanceof \ReflectionParameter && ($objFunction = $objFunction->getClass ()) && $objFunction instanceof \ReflectionClass && ($objFunction = $objFunction->getName ())) {
+                if ($objFunction instanceof ReflectionParameter && ($objFunction = $objFunction->getClass ()) && $objFunction instanceof ReflectionClass && ($objFunction = $objFunction->getName ())) {
                     // 接口绑定实现
-                    if (($objFunctionMake = \Q::project ()->make ( $objFunction )) !== false) {
+                    if (($objFunctionMake = project::bootstrap ()->make ( $objFunction )) !== false) {
                         // 实例对象
                         if (is_object ( $objFunctionMake )) {
                             $booFindClass [$sType] = true;
@@ -120,10 +126,10 @@ trait auto_injection {
                         // 接口绑定实现
                         elseif (\Q::classExists ( $objFunctionMake, false, true )) {
                             $booFindClass [$sType] = true;
-                            $arrResult [$sType] [$intIndex] = new $objFunctionMake ( \Q::project () );
+                            $arrResult [$sType] [$intIndex] = new $objFunctionMake ( project::bootstrap () );
                         }
                     } elseif (\Q::classExists ( $objFunction, false, true )) {
-                        $arrResult [$sType] [$intIndex] = new $objFunction ( \Q::project () );
+                        $arrResult [$sType] [$intIndex] = new $objFunction ( project::bootstrap () );
                         $booFindClass [$sType] = true;
                     } else {
                         $arrResult [$sType] [$intIndex] = '';

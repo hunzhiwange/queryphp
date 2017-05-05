@@ -1,7 +1,7 @@
 <?php
 // [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
 // ©2010-2017 http://queryphp.com All rights reserved.
-namespace Q\queue;
+namespace Q\datastruct\queue;
 
 <<<queryphp
 ##########################################################
@@ -15,35 +15,59 @@ namespace Q\queue;
 ##########################################################
 queryphp;
 
+use Q\contract\queue\stack_queue as contract_stack_queue;
+
 /**
- * 队列，先进先出
+ * 队列和栈抽象类
  *
  * @author Xiangmin Liu<635750556@qq.com>
  * @package $$
  * @since 2016.11.21
  * @version 1.0
  */
-class queue extends stack_queue {
+abstract class stack_queue implements contract_stack_queue {
     
     /**
-     * 入对
+     * 元素集合
      *
-     * @param mixed $mixItem            
+     * @var array
+     */
+    protected $arrElements = [ ];
+    
+    /**
+     * 删除元素
+     *
+     * @param int $nIdx            
      * @return void
      */
-    public function in($mixItem) {
-        array_unshift ( $this->arrElements, $mixItem );
+    public function remove($nIdx) {
+        unset ( $this->arrElements [$nIdx] );
     }
     
     /**
-     * 出队
+     * 元素长度
+     *
+     * @return int
+     */
+    public function getLength() {
+        return count ( $this->arrElements );
+    }
+    
+    /**
+     * 元素是否为空
+     *
+     * @return boolean
+     */
+    public function isEmpty() {
+        return ($this->getLength () == 0);
+    }
+    
+    /**
+     * 重置指针到开始
      *
      * @return mixed
      */
-    public function out() {
-        if (! $this->getLength ()) {
-            return null;
-        }
-        return array_shift ( $this->arrElements );
+    public function reset() {
+        return reset ( $this->arrElements );
     }
 }

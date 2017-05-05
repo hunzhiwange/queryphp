@@ -23,5 +23,5 @@ queryphp;
  * @since 2017.01.09
  * @version 1.0
  */
-class exception extends \Q\exception\exception {
+class exception extends \Exception {
 }

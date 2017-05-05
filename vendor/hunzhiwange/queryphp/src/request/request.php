@@ -119,21 +119,12 @@ class request {
      *
      * @return Q\mvc\request
      */
-    static public function singleton() {
+    public static function singleton() {
         if (static::$oInstance) {
             return static::$oInstance;
         } else {
             return static::$oInstance = new self ();
         }
-    }
-    
-    /**
-     * 返回 REQUEST 参数
-     *
-     * @return array
-     */
-    public function getRequest() {
-        return $_REQUEST;
     }
     
     /**
@@ -176,6 +167,104 @@ class request {
             $sVar = \Q\mvc\project::ARGS_ACTION;
             return $this->strAction = $_GET [$sVar] = ! empty ( $_POST [$sVar] ) ? $_POST [$sVar] : (! empty ( $_GET [$sVar] ) ? $_GET [$sVar] : $GLOBALS ['~@option'] ['default_action']);
         }
+    }
+    
+    /**
+     * 返回 REQUEST 参数
+     *
+     * @return array
+     */
+    public function getRequest() {
+        return $_REQUEST;
+    }
+    
+    /**
+     * 获取 in 数据
+     *
+     * @param string $sKey            
+     * @param string $sVar            
+     * @return mixed
+     */
+    public function in($sKey, $sVar = 'request') {
+        switch ($sVar) {
+            case 'get' :
+                $sVar = &$_GET;
+                break;
+            case 'post' :
+                $sVar = &$_POST;
+                break;
+            case 'cookie' :
+                $sVar = &$_COOKIE;
+                break;
+            case 'session' :
+                $sVar = &$_SESSION;
+                break;
+            case 'request' :
+                $sVar = &$_REQUEST;
+                break;
+            case 'files' :
+                $sVar = &$_FILES;
+                break;
+        }
+        
+        return isset ( $sVar [$sKey] ) ? $sVar [$sKey] : NULL;
+    }
+    
+    /**
+     * PHP 运行模式命令行
+     * link http://www.phpddt.com/php/php-sapi.html
+     *
+     * @return boolean
+     */
+    public function isCli() {
+        return PHP_SAPI == 'cli' ? true : false;
+    }
+    
+    /**
+     * PHP 运行模式 cgi
+     * link http://www.phpddt.com/php/php-sapi.html
+     *
+     * @return boolean
+     */
+    public function isCgi() {
+        return substr ( PHP_SAPI, 0, 3 ) == 'cgi' ? true : false;
+    }
+    
+    /**
+     * 是否为 Ajax 请求行为
+     *
+     * @return boolean
+     */
+    public function isAjax() {
+        if (isset ( $_SERVER ['HTTP_X_REQUESTED_WITH'] )) {
+            if ('xmlhttprequest' == strtolower ( $_SERVER ['HTTP_X_REQUESTED_WITH'] )) {
+                return true;
+            }
+        }
+        
+        if (! empty ( $_POST ['ajax'] ) || ! empty ( $_GET ['ajax'] )) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    /**
+     * 是否为 Get 请求行为
+     *
+     * @return boolean
+     */
+    public function isGet() {
+        return strtolower ( $_SERVER ['REQUEST_METHOD'] ) == 'get';
+    }
+    
+    /**
+     * 是否为 Post 请求行为
+     *
+     * @return boolean
+     */
+    public function isPost() {
+        return strtolower ( $_SERVER ['REQUEST_METHOD'] ) == 'post';
     }
     
     /**

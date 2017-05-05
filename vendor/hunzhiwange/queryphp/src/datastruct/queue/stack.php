@@ -1,7 +1,7 @@
 <?php
 // [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
 // ©2010-2017 http://queryphp.com All rights reserved.
-namespace Q\queue;
+namespace Q\datastruct\queue;
 
 <<<queryphp
 ##########################################################

@@ -15,7 +15,7 @@ namespace Q\cache;
 ##########################################################
 queryphp;
 
-use Q\exception\exception;
+use Q\exception\exceptions;
 
 /**
  * memcache 扩展缓存
@@ -76,27 +76,27 @@ class memcache extends cache {
      */
     public function __construct(array $arrOption = []) {
         if (! extension_loaded ( 'memcache' )) {
-            exception::throws ( 'memcache extension must be loaded before use.', 'Q\cache\exception' );
+            exceptions::throws ( 'memcache extension must be loaded before use.', 'Q\cache\exception' );
         }
         
         $this->mergeObjectOption_ ();
         
         // 合并默认配置
         $this->arrOption = array_merge ( $this->arrOption, $this->arrDefaultOption );
-        $this->arrOption ['compressed'] = $this->getObjectOption_ ( 'runtime_memcache_compressed' );
-        $this->arrOption ['persistent'] = $this->getObjectOption_ ( 'runtime_memcache_persistent' );
+        $this->arrOption ['compressed'] = $this->getExpansionInstanceArgs_ ( 'runtime_memcache_compressed' );
+        $this->arrOption ['persistent'] = $this->getExpansionInstanceArgs_ ( 'runtime_memcache_persistent' );
         
         if (is_array ( $arrOption )) {
             $this->arrOption = array_merge ( $this->arrOption, $arrOption );
         }
         
         if (empty ( $this->arrOption ['servers'] )) {
-            if (! empty ( $this->getObjectOption_ ( 'runtime_memcache_servers' ) )) {
-                $this->arrOption ['servers'] = $this->getObjectOption_ ( 'runtime_memcache_servers' );
+            if (! empty ( $this->getExpansionInstanceArgs_ ( 'runtime_memcache_servers' ) )) {
+                $this->arrOption ['servers'] = $this->getExpansionInstanceArgs_ ( 'runtime_memcache_servers' );
             } else {
                 $this->arrOption ['servers'] [] = array (
-                        'host' => $this->getObjectOption_ ( 'runtime_memcache_host' ),
-                        'port' => $this->getObjectOption_ ( 'runtime_memcache_port' ) 
+                        'host' => $this->getExpansionInstanceArgs_ ( 'runtime_memcache_host' ),
+                        'port' => $this->getExpansionInstanceArgs_ ( 'runtime_memcache_port' ) 
                 );
             }
         }
@@ -107,7 +107,7 @@ class memcache extends cache {
         foreach ( $this->arrOption ['servers'] as $arrServer ) {
             $bResult = $this->hHandel->addServer ( $arrServer ['host'], $arrServer ['port'], $this->arrOption ['persistent'] );
             if (! $bResult) {
-                exception::throws ( sprintf ( 'Unable to connect the memcached server [%s:%s] failed.', $arrServer ['host'], $arrServer ['port'] ), 'Q\cache\exception' );
+                exceptions::throws ( sprintf ( 'Unable to connect the memcached server [%s:%s] failed.', $arrServer ['host'], $arrServer ['port'] ), 'Q\cache\exception' );
             }
         }
     }

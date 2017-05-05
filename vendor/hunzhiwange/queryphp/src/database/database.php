@@ -15,9 +15,8 @@ namespace Q\database;
 ##########################################################
 queryphp;
 
-use Q\exception\exception;
-use Q\traits\static_entrance;
-use Q\traits\object_option;
+use Q\exception\exceptions;
+use Q\traits\dynamic\expansion as dynamic_expansion;
 use Q\option\option;
 
 /**
@@ -30,15 +29,14 @@ use Q\option\option;
  */
 class database {
     
-    use static_entrance;
-    use object_option;
+    use dynamic_expansion;
     
     /**
      * 配置
      *
      * @var array
      */
-    protected $arrDefaultObjectOption = [ 
+    protected $arrInitExpansionInstanceArgs = [ 
             'db_type' => 'mysql',
             'db_schema' => '',
             'db_user' => 'root',
@@ -56,38 +54,6 @@ class database {
             'db_master' => [ ],
             'db_slave' => [ ] 
     ];
-    
-    /**
-     * 初始化参数
-     *
-     * @var array
-     */
-    protected $arrStaticEntranceType = [ 
-            'db_type',
-            'db_schema',
-            'db_user',
-            'db_password',
-            'db_host',
-            'db_port',
-            'db_name',
-            'db_prefix',
-            'db_dsn',
-            'db_params',
-            'db_char',
-            'db_persistent',
-            'db_distributed',
-            'db_rw_separate',
-            'db_master',
-            'db_slave' 
-    ];
-    /**
-     * 构造函数
-     *
-     * @return void
-     */
-    public function __construct() {
-        $this->mergeObjectOption_ ();
-    }
     
     /**
      * 连接数据库并返回连接对象
@@ -114,7 +80,7 @@ class database {
         if (\Q::classExists ( $strConnectClass, false, true )) {
             return $arrConnect [$strUnique] = new $strConnectClass ( $mixOption );
         } else {
-            exception::throws ( \Q::i18n ( '数据库驱动 %s 不存在！', $mixOption ['db_type'] ), 'Q\database\exception' );
+            exceptions::throws ( \Q::i18n ( '数据库驱动 %s 不存在！', $mixOption ['db_type'] ), 'Q\database\exception' );
         }
     }
     
@@ -152,8 +118,8 @@ class database {
         $arrResult = $arrDefaultOption = [ ];
         
         // 默认参数
-        foreach ( $this->getStaticEntranceType_ () as $sOptionType ) {
-            $arrDefaultOption [$sOptionType] = $this->getObjectOption_ ( $sOptionType );
+        foreach ( $this->initExpansionInstanceArgs_ () as $sOptionType ) {
+            $arrDefaultOption [$sOptionType] = $this->getExpansionInstanceArgs_ ( $sOptionType );
         }
         
         // 合并参数
@@ -251,19 +217,6 @@ class database {
                 ];
             }
         }
-    }
-    
-    /**
-     * 初始化静态入口配置
-     *
-     * @return void
-     */
-    protected function initStaticEntrance_() {
-        $arrObjectOption = [ ];
-        foreach ( $this->getStaticEntranceType_ () as $sObjectOption ) {
-            $arrObjectOption [$sObjectOption] = option::gets ( $sObjectOption );
-        }
-        return $this->setObjectOption ( $arrObjectOption );
     }
     
     /**

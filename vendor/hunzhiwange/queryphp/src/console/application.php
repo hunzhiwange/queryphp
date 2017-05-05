@@ -16,7 +16,7 @@ namespace Q\console;
 queryphp;
 
 use Symfony\Component\Console\Application as SymfonyApplication;
-use Q\traits\auto_injection;
+use Q\traits\dependency\injection as dependency_injection;
 
 /**
  * 命令行应用程序
@@ -28,7 +28,7 @@ use Q\traits\auto_injection;
  */
 class application {
     
-    use auto_injection;
+    use dependency_injection;
     
     /**
      * 当前应用实例
@@ -77,7 +77,7 @@ class application {
      *
      * @return Q\console\application
      */
-    static public function instance() {
+    public static function instance() {
         if (static::$objApplication !== null) {
             return static::$objApplication;
         } else {

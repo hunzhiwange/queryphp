@@ -111,7 +111,7 @@ class Q {
      *
      * @return \Q\mvc\project
      */
-    static public function project() {
+    public static function project() {
         return \Q\mvc\project::bootstrap ();
     }
     
@@ -123,7 +123,7 @@ class Q {
      *            当前的类名
      * @return mixed
      */
-    static public function autoLoad($sClassName) {
+    public static function autoLoad($sClassName) {
         if (static::$bAutoLoad === false) {
             return;
         }
@@ -164,14 +164,14 @@ class Q {
      *            force 是否强制更新缓存
      * @return void
      */
-    static public function import($mixNamespace, $sPackage, $in = []) {
+    public static function import($mixNamespace, $sPackage, $in = []) {
         $in = array_merge ( [ 
                 'ignore' => [ ],
                 'force' => false 
         ], $in );
         
         if (! is_dir ( $sPackage )) {
-            \Q\exception\exception::throws ( "Package:'{$sPackage}' does not exists." );
+            \Exceptions::throws ( "Package:'{$sPackage}' does not exists." );
         }
         
         // 包路径
@@ -186,7 +186,7 @@ class Q {
             
             // 写入文件
             if (! file_put_contents ( $sCache, json_encode ( $arrPath ) )) {
-                \Q\exception\exception::throws ( sprintf ( 'Can not create cache file: %s', $sCache ) );
+                \Exceptions::throws ( sprintf ( 'Can not create cache file: %s', $sCache ) );
             }
         } else {
             $arrPath = static::readCache ( $sCache );
@@ -218,7 +218,7 @@ class Q {
      *            bool prepend true 表示插入命名空间前面，优先路径
      * @return void
      */
-    static public function addNamespace($sNamespace, $mixBaseDir, $in = []) {
+    public static function addNamespace($sNamespace, $mixBaseDir, $in = []) {
         $in = array_merge ( [ 
                 'prepend' => false 
         ], $in );
@@ -255,7 +255,7 @@ class Q {
      * @param string $strVendor            
      * @return void
      */
-    static public function importComposer($strVendor) {
+    public static function importComposer($strVendor) {
         if (is_file ( $strVendor . '/composer/autoload_psr4.php' )) {
             $arrMap = require $strVendor . '/composer/autoload_psr4.php';
             foreach ( $arrMap as $sNamespace => $sPath ) {
@@ -270,7 +270,7 @@ class Q {
      * @param string $sNamespace            
      * @return string|null
      */
-    static public function getNamespace($sNamespace) {
+    public static function getNamespace($sNamespace) {
         $sNamespace .= '\\';
         return isset ( static::$arrNamespace [$sNamespace] ) ? array_shift ( static::$arrNamespace [$sNamespace] ) : null;
     }
@@ -282,7 +282,7 @@ class Q {
      *            true　表示启用
      * @return boolean
      */
-    static public function setAutoload($bAutoload) {
+    public static function setAutoload($bAutoload) {
         if (! is_bool ( $bAutoload )) {
             $bAutoload = $bAutoload ? true : false;
         } else {
@@ -295,38 +295,6 @@ class Q {
     }
     
     /**
-     * 获取 in 数据
-     *
-     * @param string $sKey            
-     * @param string $sVar            
-     * @return mixed
-     */
-    static function in($sKey, $sVar = 'request') {
-        switch ($sVar) {
-            case 'get' :
-                $sVar = &$_GET;
-                break;
-            case 'post' :
-                $sVar = &$_POST;
-                break;
-            case 'cookie' :
-                $sVar = &$_COOKIE;
-                break;
-            case 'session' :
-                $sVar = &$_SESSION;
-                break;
-            case 'request' :
-                $sVar = &$_REQUEST;
-                break;
-            case 'files' :
-                $sVar = &$_FILES;
-                break;
-        }
-        
-        return isset ( $sVar [$sKey] ) ? $sVar [$sKey] : NULL;
-    }
-    
-    /**
      * 单一实例
      *
      * @param string $sClass            
@@ -335,7 +303,7 @@ class Q {
      * @param mixed $mixMethodArgs            
      * @return object
      */
-    static public function instance($sClass, $mixArgs = null, $sMethod = null, $mixMethodArgs = null) {
+    public static function instance($sClass, $mixArgs = null, $sMethod = null, $mixMethodArgs = null) {
         $sIdentify = $sClass . serialize ( $mixArgs ) . $sMethod . serialize ( $mixMethodArgs ); // 惟一识别号
         
         if (! isset ( static::$arrInstances [$sIdentify] )) {
@@ -355,7 +323,7 @@ class Q {
                     static::$arrInstances [$sIdentify] = $oClass;
                 }
             } else {
-                \Q\exception\exception::throws ( sprintf ( 'class %s is not exists', $sClass ) );
+                \Exceptions::throws ( sprintf ( 'class %s is not exists', $sClass ) );
             }
         }
         
@@ -369,7 +337,7 @@ class Q {
      * @param array $arrArgs            
      * @return mixed
      */
-    static public function newInstanceArgs($strClass, $arrArgs) {
+    public static function newInstanceArgs($strClass, $arrArgs) {
         $objClass = new \ReflectionClass ( $strClass );
         if ($objClass->getConstructor ()) {
             return $objClass->newInstanceArgs ( $arrArgs );
@@ -387,7 +355,7 @@ class Q {
      * @param string $sBackendClass            
      * @return boolean
      */
-    static public function cache($sId, $mixData = '', $arrOption = null, $sBackendClass = null) {
+    public static function cache($sId, $mixData = '', $arrOption = null, $sBackendClass = null) {
         static $arrCache;
         
         if (! is_array ( $arrOption )) {
@@ -436,7 +404,7 @@ class Q {
      * @param mixed $mixDefault            
      * @return mixed
      */
-    static public function option($mixName = '', $mixValue = '', $mixDefault = null) {
+    public static function option($mixName = '', $mixValue = '', $mixDefault = null) {
         static $objOption;
         if (! $objOption) {
             $objOption = static::project ()->option;
@@ -471,7 +439,7 @@ class Q {
      * @param 语言 $sValue            
      * @return mixed
      */
-    static public function i18n($sValue = null/*argvs*/){
+    public static function i18n($sValue = null/*argvs*/){
         static $objI18n;
         
         if (is_null ( $sValue )) {
@@ -504,7 +472,7 @@ class Q {
         ], func_get_args () );
         return $sValue;
     }
-
+    
     /**
      * 生成路由地址
      *
@@ -516,7 +484,7 @@ class Q {
      *            subdomain string 子域名
      * @return string
      */
-    static public function url($sUrl, $arrParams = [], $in = []) {
+    public static function url($sUrl, $arrParams = [], $in = []) {
         $in = array_merge ( [ 
                 'suffix' => true,
                 'normal' => false,
@@ -693,76 +661,15 @@ class Q {
     }
     
     /**
-     * 行为插件 todo
-     *
-     * @param string $sTag            
-     * @return void
-     */
-    static public function tag($sTag) {
-        if (array_key_exists ( $sTag, $GLOBALS ['~@option'] ['globals_tags'] )) {
-            if (is_array ( $GLOBALS ['~@option'] ['globals_tags'] [$sTag] )) {
-                $arrOption = $GLOBALS ['~@option'] ['globals_tags'] [$sTag];
-            } else {
-                $arrOption = [ 
-                        $GLOBALS ['~@option'] ['globals_tags'] [$sTag],
-                        [ ] 
-                ];
-            }
-            
-            $sTag = ucfirst ( $arrOption [0] ) . '_Behavior';
-            if (static::classExists ( $sTag )) {
-                $oBehavior = new $sTag ();
-                $oBehavior->RUN ( $arrOption [1] );
-            }
-        }
-    }
-    
-    /**
      * 响应请求
      *
      * @return mixed
      */
-    static public function response() {
+    public static function response() {
         return call_user_func_array ( [ 
                 'Q\request\response',
                 'singleton' 
         ], func_get_args () );
-    }
-    
-    /**
-     * 调试工具
-     *
-     * @param mixed $Var            
-     * @param boolean $bEcho            
-     * @param string $sLabel            
-     * @param boolean $bStrict            
-     * @return mixed
-     */
-    static public function dump($mixVar, $bEcho = true, $sLabel = null, $bStrict = true) {
-        $SLabel = ($sLabel === null) ? '' : rtrim ( $sLabel ) . ' ';
-        if (! $bStrict) {
-            if (ini_get ( 'html_errors' )) {
-                $sOutput = print_r ( $mixVar, true );
-                $sOutput = "<pre>" . $sLabel . htmlspecialchars ( $sOutput, ENT_QUOTES ) . "</pre>";
-            } else {
-                $sOutput = $sLabel . " : " . print_r ( $mixVar, true );
-            }
-        } else {
-            ob_start ();
-            var_dump ( $mixVar );
-            $sOutput = ob_get_clean ();
-            if (! extension_loaded ( 'xdebug' )) {
-                $sOutput = preg_replace ( "/\]\=\>\n(\s+)/m", "] => ", $sOutput );
-                $sOutput = '<pre>' . $sLabel . (\Q::isCli () ? $sOutput : htmlspecialchars ( $sOutput, ENT_QUOTES )) . '</pre>';
-            }
-        }
-        
-        if ($bEcho) {
-            echo $sOutput;
-            return null;
-        } else {
-            return $sOutput;
-        }
     }
     
     // ######################################################
@@ -781,7 +688,7 @@ class Q {
      *            变量类型
      * @return boolean
      */
-    static public function varType($mixVar, $sType) {
+    public static function varType($mixVar, $sType) {
         $sType = trim ( $sType ); // 整理参数，以支持 array:ini 格式
         $sType = explode ( ':', $sType );
         $sType [0] = strtolower ( $sType [0] );
@@ -833,7 +740,7 @@ class Q {
      * @param callback $calkB            
      * @return boolean
      */
-    static public function isSameCallback($calA, $calB) {
+    public static function isSameCallback($calA, $calB) {
         if (! is_callable ( $calA ) || is_callable ( $calB )) {
             return false;
         }
@@ -856,11 +763,11 @@ class Q {
      * @param mixed $mixTypes            
      * @return boolean
      */
-    static public function isThese($mixVar, $mixTypes) {
+    public static function isThese($mixVar, $mixTypes) {
         if (! static::varType ( $mixTypes, 'string' ) && ! static::checkArray ( $mixTypes, [ 
                 'string' 
         ] )) {
-            \Q\exception\exception::throws ( \Q::i18n ( '正确格式:参数必须为 string 或 各项元素为 string 的数组' ) );
+            \Exceptions::throws ( \Q::i18n ( '正确格式:参数必须为 string 或 各项元素为 string 的数组' ) );
         }
         
         if (is_string ( $mixTypes )) {
@@ -885,7 +792,7 @@ class Q {
      * @param string $sBaseClass            
      * @return boolean
      */
-    static public function isKindOf($mixSubClass, $sBaseClass) {
+    public static function isKindOf($mixSubClass, $sBaseClass) {
         if (static::classExists ( $sBaseClass, true )) { // 接口
             return static::isImplementedTo ( $mixSubClass, $sBaseClass );
         } else { // 类
@@ -916,7 +823,7 @@ class Q {
      * @param string $bStrictly            
      * @return boolean
      */
-    static public function isImplementedTo($mixClass, $sInterface, $bStrictly = false) {
+    public static function isImplementedTo($mixClass, $sInterface, $bStrictly = false) {
         if (is_object ( $mixClass )) { // 尝试获取类名，否则返回false
             $mixClass = get_class ( $mixClass );
             if (! is_string ( $mixClass )) { // 类型检查
@@ -970,9 +877,9 @@ class Q {
      * @param boolean $bAutoload            
      * @return boolean
      */
-    static public function classExists($sClassName, $bInter = false, $bAutoload = false) {
+    public static function classExists($sClassName, $bInter = false, $bAutoload = false) {
         if (! is_string ( $sClassName )) {
-            \Q\exception\exception::throws ( 'classExists first args must be a string!' );
+            \Exceptions::throws ( 'classExists first args must be a string!' );
         }
         $bAutoloadOld = static::setAutoload ( $bAutoload );
         $sFuncName = $bInter ? 'interface_exists' : 'class_exists';
@@ -988,7 +895,7 @@ class Q {
      * @param array $arrTypes            
      * @return boolean
      */
-    static public function checkArray($arrArray, array $arrTypes) {
+    public static function checkArray($arrArray, array $arrTypes) {
         if (! is_array ( $arrArray )) { // 不是数组直接返回
             return false;
         }
@@ -1018,7 +925,7 @@ class Q {
      * @param string $sMethodName            
      * @return boolean
      */
-    static public function hasStaticMethod($sClassName, $sMethodName) {
+    public static function hasStaticMethod($sClassName, $sMethodName) {
         $oRef = new ReflectionClass ( $sClassName );
         if ($oRef->hasMethod ( $sMethodName ) and $oRef->getMethod ( $sMethodName )->isStatic ()) {
             return true;
@@ -1033,7 +940,7 @@ class Q {
      * @param string $sMethodName            
      * @return boolean
      */
-    static public function hasPublicMethod($objClass, $sMethodName) {
+    public static function hasPublicMethod($objClass, $sMethodName) {
         $objClass = new \ReflectionMethod ( $objClass, $sMethodName );
         if ($objClass->isPublic () and ! $objClass->isStatic ()) {
             return $objClass;
@@ -1047,7 +954,7 @@ class Q {
      * @param array $arrArray            
      * @return boolean
      */
-    static public function oneImensionArray($arrArray) {
+    public static function oneImensionArray($arrArray) {
         return count ( $arrArray ) == count ( $arrArray, 1 );
     }
     
@@ -1058,7 +965,7 @@ class Q {
      * @param boolean $booRecursion            
      * @return array
      */
-    static public function arrayMergePlus($arrOption, $booRecursion = true) {
+    public static function arrayMergePlus($arrOption, $booRecursion = true) {
         $arrExtend = [ ];
         foreach ( $arrOption as $strKey => $mixTemp ) {
             if (strpos ( $strKey, '+' ) === 0) {
@@ -1094,7 +1001,7 @@ class Q {
      * @param boolean $bUnix            
      * @return string
      */
-    static public function tidyPath($sPath, $bUnix = true) {
+    public static function tidyPath($sPath, $bUnix = true) {
         $sRetPath = str_replace ( '\\', '/', $sPath ); // 统一 斜线方向
         $sRetPath = preg_replace ( '|/+|', '/', $sRetPath ); // 归并连续斜线
         
@@ -1143,7 +1050,7 @@ class Q {
      * @param number $nMode            
      * @return boolean
      */
-    static public function makeDir($sDir, $nMode = 0777) {
+    public static function makeDir($sDir, $nMode = 0777) {
         if (is_dir ( $sDir )) {
             return true;
         }
@@ -1175,7 +1082,7 @@ class Q {
      *            returndir 返回目录
      * @return array
      */
-    static public function listDir($sDir, $arrIn = []) {
+    public static function listDir($sDir, $arrIn = []) {
         $arrIn = array_merge ( [ 
                 'fullpath' => FALSE,
                 'return' => 'dir', // file dir both
@@ -1235,7 +1142,7 @@ class Q {
      *            格式化参数 0 默认，1 转为大小 ，转为大小
      * @return string
      */
-    static public function getExtName($sFileName, $nCase = 0) {
+    public static function getExtName($sFileName, $nCase = 0) {
         if (! preg_match ( '/\./', $sFileName )) {
             return '';
         }
@@ -1257,7 +1164,7 @@ class Q {
      *
      * @return string
      */
-    static public function getIp() {
+    public static function getIp() {
         static $sRealip = NULL;
         
         if ($sRealip !== NULL) {
@@ -1307,7 +1214,7 @@ class Q {
      * @param string $sMsg            
      * @return void
      */
-    static public function urlRedirect($sUrl, $nTime = 0, $sMsg = '') {
+    public static function urlRedirect($sUrl, $nTime = 0, $sMsg = '') {
         $sUrl = str_replace ( [ 
                 "\n",
                 "\r" 
@@ -1344,7 +1251,7 @@ class Q {
      *            time 停留时间，0表示不停留
      * @return void
      */
-    static public function redirect($sUrl, $in = []) {
+    public static function redirect($sUrl, $in = []) {
         $in = array_merge ( [ 
                 'params' => [ ],
                 'message' => '',
@@ -1361,7 +1268,7 @@ class Q {
      * @param string $sUrl            
      * @return array
      */
-    static public function parseMvcUrl($sUrl) {
+    public static function parseMvcUrl($sUrl) {
         $arrData = [ ];
         
         // 解析 url
@@ -1399,7 +1306,7 @@ class Q {
      *
      * @return string
      */
-    static public function getCurrentUrl() {
+    public static function getCurrentUrl() {
         return (static::isSsl () ? 'https://' : 'http://') . $_SERVER ['HTTP_HOST'] . $_SERVER ['REQUEST_URI'];
     }
     
@@ -1410,7 +1317,7 @@ class Q {
      *            待过滤的字符串
      * @return string
      */
-    static public function xmlSerialize($arrData = []) {
+    public static function xmlSerialize($arrData = []) {
         return static::xml ()->xmlSerialize ( $arrData );
     }
     
@@ -1421,7 +1328,7 @@ class Q {
      *            待反序列化的 xml 字符串
      * @return string
      */
-    static public function xmlUnSerialize($sText) {
+    public static function xmlUnSerialize($sText) {
         return static::xml ()->xmlUnSerialize ( $sText );
     }
     
@@ -1432,57 +1339,8 @@ class Q {
      * @param int $intOptions            
      * @return string
      */
-    static public function jsonEncode($arrData, $intOptions = JSON_UNESCAPED_UNICODE) {
+    public static function jsonEncode($arrData, $intOptions = JSON_UNESCAPED_UNICODE) {
         return json_encode ( $arrData, $intOptions );
-    }
-    
-    /**
-     * 日期格式化
-     *
-     * @param int $nDateTemp            
-     * @param string $sDateFormat            
-     * @return string
-     */
-    static public function formatDate($nDateTemp, $sDateFormat = 'Y-m-d H:i') {
-        $sReturn = '';
-        
-        $nSec = time () - $nDateTemp;
-        $nHover = floor ( $nSec / 3600 );
-        if ($nHover == 0) {
-            $nMin = floor ( $nSec / 60 );
-            if ($nMin == 0) {
-                $sReturn = $nSec . ' ' . \Q::i18n ( "秒前" );
-            } else {
-                $sReturn = $nMin . ' ' . \Q::i18n ( "分钟前" );
-            }
-        } elseif ($nHover < 24) {
-            $sReturn = \Q::i18n ( "大约 %d 小时前", $nHover );
-        } else {
-            $sReturn = date ( $sDateFormat, $nDateTemp );
-        }
-        
-        return $sReturn;
-    }
-    
-    /**
-     * 文件大小格式化
-     *
-     * @param int $nFileSize            
-     * @param boolean $booUnit            
-     * @return string
-     */
-    static public function formatBytes($nFileSize, $booUnit = true) {
-        if ($nFileSize >= 1073741824) {
-            $nFileSize = round ( $nFileSize / 1073741824, 2 ) . ($booUnit ? 'GB' : '');
-        } elseif ($nFileSize >= 1048576) {
-            $nFileSize = round ( $nFileSize / 1048576, 2 ) . ($booUnit ? 'MB' : '');
-        } elseif ($nFileSize >= 1024) {
-            $nFileSize = round ( $nFileSize / 1024, 2 ) . ($booUnit ? 'KB' : '');
-        } else {
-            $nFileSize = $nFileSize . ($booUnit ? \Q::i18n ( '字节' ) : '');
-        }
-        
-        return $nFileSize;
     }
     
     /**
@@ -1493,7 +1351,7 @@ class Q {
      * @param boolean $bAllowedEmpty            
      * @return mixed
      */
-    static public function normalize($mixInput, $sDelimiter = ',', $bAllowedEmpty = false) {
+    public static function normalize($mixInput, $sDelimiter = ',', $bAllowedEmpty = false) {
         if (is_array ( $mixInput ) || is_string ( $mixInput )) {
             if (! is_array ( $mixInput )) {
                 $mixInput = explode ( $sDelimiter, $mixInput );
@@ -1511,434 +1369,8 @@ class Q {
         }
     }
     
-    /**
-     * 随机字符串
-     *
-     * @param int $nLength            
-     * @param string $sCharBox            
-     * @param boolean $bNumeric            
-     * @return string
-     */
-    static public function randString($nLength, $sCharBox = null, $bNumeric = false) {
-        if ($bNumeric === true) {
-            return sprintf ( '%0' . $nLength . 'd', mt_rand ( 1, pow ( 10, $nLength ) - 1 ) );
-        }
-        
-        if ($sCharBox === null) {
-            list ( $nMS, $nS ) = explode ( ' ', microtime () );
-            $nCurTime = $nS + $nMS;
-            
-            $sCharBox = strtoupper ( md5 ( $nCurTime . rand ( 1000000000, 9999999999 ) ) );
-            $sCharBox .= md5 ( $nCurTime . rand ( 1000000000, 9999999999 ) );
-        }
-        
-        $nBoxEnd = strlen ( $sCharBox ) - 1;
-        $sRet = '';
-        while ( $nLength -- ) {
-            $sRet .= substr ( $sCharBox, rand ( 0, $nBoxEnd ), 1 );
-        }
-        
-        return $sRet;
-    }
-    
-    /**
-     * 字符串编码转换
-     *
-     * @param mixed $mixContents            
-     * @param string $sFromChar            
-     * @param string $sToChar            
-     * @return mixed
-     */
-    static public function stringEncoding($mixContents, $sFromChar, $sToChar = 'utf-8') {
-        if (empty ( $mixContents )) {
-            return $mixContents;
-        }
-        
-        $sFromChar = strtolower ( $sFromChar ) == 'utf8' ? 'utf-8' : strtolower ( $sFromChar );
-        $sToChar = strtolower ( $sToChar ) == 'utf8' ? 'utf-8' : strtolower ( $sToChar );
-        if ($sFromChar == $sToChar || (is_scalar ( $mixContents ) && ! is_string ( $mixContents ))) {
-            return $mixContents;
-        }
-        
-        if (is_string ( $mixContents )) {
-            if (function_exists ( 'iconv' )) {
-                return iconv ( $sFromChar, $sToChar . '//IGNORE', $mixContents );
-            } elseif (function_exists ( 'mb_convert_encoding' )) {
-                return mb_convert_encoding ( $mixContents, $sToChar, $sFromChar );
-            } else {
-                return $mixContents;
-            }
-        } elseif (is_array ( $mixContents )) {
-            foreach ( $mixContents as $sKey => $sVal ) {
-                $sKeyTwo = static::gbkToUtf8 ( $sKey, $sFromChar, $sToChar );
-                $mixContents [$sKeyTwo] = static::stringEncoding ( $sVal, $sFromChar, $sToChar );
-                if ($sKey != $sKeyTwo) {
-                    unset ( $mixContents [$sKeyTwo] );
-                }
-            }
-            return $mixContents;
-        } else {
-            return $mixContents;
-        }
-    }
-    
-    /**
-     * 判断字符串是否为 UTF8
-     *
-     * @param string $sString            
-     * @return boolean
-     */
-    static public function isUtf8($sString) {
-        $nLength = strlen ( $sString );
-        
-        for($nI = 0; $nI < $nLength; $nI ++) {
-            if (ord ( $sString [$nI] ) < 0x80) {
-                $nN = 0;
-            } elseif ((ord ( $sString [$nI] ) & 0xE0) == 0xC0) {
-                $nN = 1;
-            } elseif ((ord ( $sString [$nI] ) & 0xF0) == 0xE0) {
-                $nN = 2;
-            } elseif ((ord ( $sString [$nI] ) & 0xF0) == 0xF0) {
-                $nN = 3;
-            } else {
-                return FALSE;
-            }
-            
-            for($nJ = 0; $nJ < $nN; $nJ ++) {
-                if ((++ $nI == $nLength) || ((ord ( $sString [$nI] ) & 0xC0) != 0x80)) {
-                    return FALSE;
-                }
-            }
-        }
-        
-        return TRUE;
-    }
-    
-    /**
-     * 字符串截取
-     *
-     * @param string $sStr            
-     * @param number $nStart            
-     * @param number $nLength            
-     * @param string $sCharset            
-     * @param boolean $bSuffix            
-     * @return string
-     */
-    static public function subString($sStr, $nStart = 0, $nLength = 255, $sCharset = "utf-8", $bSuffix = true) {
-        // 对系统的字符串函数进行判断
-        if (function_exists ( "mb_substr" )) {
-            return mb_substr ( $sStr, $nStart, $nLength, $sCharset );
-        } elseif (function_exists ( 'iconv_substr' )) {
-            return iconv_substr ( $sStr, $nStart, $nLength, $sCharset );
-        }
-        
-        // 常用几种字符串正则表达式
-        $arrRe ['utf-8'] = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
-        $arrRe ['gb2312'] = "/[\x01-\x7f]|[\xb0-\xf7][\xa0-\xfe]/";
-        $arrRe ['gbk'] = "/[\x01-\x7f]|[\x81-\xfe][\x40-\xfe]/";
-        $arrRe ['big5'] = "/[\x01-\x7f]|[\x81-\xfe]([\x40-\x7e]|\xa1-\xfe])/";
-        
-        // 匹配
-        preg_match_all ( $arrRe [$sCharset], $sStr, $arrMatch );
-        $sSlice = join ( "", array_slice ( $arrMatch [0], $nStart, $nLength ) );
-        
-        if ($bSuffix) {
-            return $sSlice . "…";
-        }
-        
-        return $sSlice;
-    }
-    
     // ######################################################
     // -------------------- 常用辅助方法 end ------- ------------
-    // ######################################################
-    
-    // ######################################################
-    // ------------------- 系统安全相关 start ------ ------------
-    // ######################################################
-    
-    /**
-     * 移除魔术方法转义
-     *
-     * @param mixed $mixString            
-     * @param boolean $bRecursive            
-     * @return mixed
-     */
-    static public function stripslashes($mixString, $bRecursive = true) {
-        if ($bRecursive === true and is_array ( $mixString )) { // 递归
-            foreach ( $mixString as $sKey => $mixValue ) {
-                $mixString [static::stripslashes ( $sKey )] = static::stripslashes ( $mixValue ); // 如果你只注意到值，却没有注意到key
-            }
-        } else {
-            if (is_string ( $mixString )) {
-                $mixString = stripslashes ( $mixString );
-            }
-        }
-        
-        return $mixString;
-    }
-    
-    /**
-     * 添加模式转义
-     *
-     * @param mixed $mixString            
-     * @param string $bRecursive            
-     * @return string
-     */
-    static public function addslashes($mixString, $bRecursive = true) {
-        if ($bRecursive === true and is_array ( $mixString )) {
-            foreach ( $mixString as $sKey => $mixValue ) {
-                $mixString [static::addslashes ( $sKey )] = static::addslashes ( $mixValue ); // 如果你只注意到值，却没有注意到key
-            }
-        } else {
-            if (is_string ( $mixString )) {
-                $mixString = addslashes ( $mixString );
-            }
-        }
-        
-        return $mixString;
-    }
-    
-    /**
-     * 来自 Discuz 经典 PHP 加密算法
-     *
-     * @param string $string            
-     * @param boolean $operation            
-     * @param string $key            
-     * @param number $expiry            
-     * @return string
-     */
-    static public function authcode($string, $operation = TRUE, $key = null, $expiry = 0) {
-        $ckey_length = 4;
-        
-        $key = md5 ( $key ? $key : $GLOBALS ['~@option'] ['q_auth_key'] );
-        $keya = md5 ( substr ( $key, 0, 16 ) );
-        $keyb = md5 ( substr ( $key, 16, 16 ) );
-        $keyc = $ckey_length ? ($operation === TRUE ? substr ( $string, 0, $ckey_length ) : substr ( md5 ( microtime () ), - $ckey_length )) : '';
-        
-        $cryptkey = $keya . md5 ( $keya . $keyc );
-        $key_length = strlen ( $cryptkey );
-        $string = $operation === TRUE ? base64_decode ( substr ( $string, $ckey_length ) ) : sprintf ( '%010d', $expiry ? $expiry + time () : 0 ) . substr ( md5 ( $string . $keyb ), 0, 16 ) . $string;
-        $string_length = strlen ( $string );
-        
-        $result = '';
-        $box = range ( 0, 255 );
-        $rndkey = [ ];
-        for($i = 0; $i <= 255; $i ++) {
-            $rndkey [$i] = ord ( $cryptkey [$i % $key_length] );
-        }
-        
-        for($j = $i = 0; $i < 256; $i ++) {
-            $j = ($j + $box [$i] + $rndkey [$i]) % 256;
-            $tmp = $box [$i];
-            $box [$i] = $box [$j];
-            $box [$j] = $tmp;
-        }
-        
-        for($a = $j = $i = 0; $i < $string_length; $i ++) {
-            $a = ($a + 1) % 256;
-            $j = ($j + $box [$a]) % 256;
-            $tmp = $box [$a];
-            $box [$a] = $box [$j];
-            $box [$j] = $tmp;
-            $result .= chr ( ord ( $string [$i] ) ^ ($box [($box [$a] + $box [$j]) % 256]) );
-        }
-        
-        if ($operation === TRUE) {
-            if ((substr ( $result, 0, 10 ) == 0 || substr ( $result, 0, 10 ) - time () > 0) && substr ( $result, 10, 16 ) == substr ( md5 ( substr ( $result, 26 ) . $keyb ), 0, 16 )) {
-                return substr ( $result, 26 );
-            } else {
-                return '';
-            }
-        } else {
-            return $keyc . str_replace ( '=', '', base64_encode ( $result ) );
-        }
-    }
-    
-    /**
-     * 正则属性转义
-     *
-     * @param string $sTxt            
-     * @param bool $bEsc            
-     * @return string
-     */
-    static public function escapeCharacter($sTxt, $bEsc = true) {
-        if ($sTxt == '""') {
-            $sTxt = '';
-        }
-        
-        if ($bEsc) { // 转义
-            $sTxt = str_replace ( [ 
-                    '\\\\',
-                    "\\'",
-                    '\\"',
-                    '\\$',
-                    '\\.' 
-            ], [ 
-                    '\\',
-                    '~~{#!`!#}~~',
-                    '~~{#!``!#}~~',
-                    '~~{#!S!#}~~',
-                    '~~{#!dot!#}~~' 
-            ], $sTxt );
-        } else { // 还原
-            $sTxt = str_replace ( [ 
-                    '.',
-                    "~~{#!`!#}~~",
-                    '~~{#!``!#}~~',
-                    '~~{#!S!#}~~',
-                    '~~{#!dot!#}~~' 
-            ], [ 
-                    '->',
-                    "'",
-                    '"',
-                    '$',
-                    '.' 
-            ], $sTxt );
-        }
-        
-        return $sTxt;
-    }
-    
-    /**
-     * 转移正则表达式特殊字符
-     *
-     * @param string $sTxt            
-     * @return string
-     */
-    static public function escapeRegexCharacter($sTxt) {
-        $sTxt = str_replace ( [ 
-                '$',
-                '/',
-                '?',
-                '*',
-                '.',
-                '!',
-                '-',
-                '+',
-                '(',
-                ')',
-                '[',
-                ']',
-                ',',
-                '{',
-                '}',
-                '|' 
-        ], [ 
-                '\$',
-                '\/',
-                '\\?',
-                '\\*',
-                '\\.',
-                '\\!',
-                '\\-',
-                '\\+',
-                '\\(',
-                '\\)',
-                '\\[',
-                '\\]',
-                '\\,',
-                '\\{',
-                '\\}',
-                '\\|' 
-        ], $sTxt );
-        return $sTxt;
-    }
-    
-    /**
-     * 过滤掉 javascript
-     *
-     * @param string $sText
-     *            待过滤的字符串
-     * @return string
-     */
-    static public function cleanJs($sText) {
-        $sText = trim ( $sText );
-        $sText = stripslashes ( $sText );
-        $sText = preg_replace ( '/<!--?.*-->/', '', $sText ); // 完全过滤注释
-        $sText = preg_replace ( '/<\?|\?>/', '', $sText ); // 完全过滤动态代码
-        $sText = preg_replace ( '/<script?.*\/script>/', '', $sText ); // 完全过滤js
-        $sText = preg_replace ( '/<\/?(html|head|meta|link|base|body|title|style|script|form|iframe|frame|frameset)[^><]*>/i', '', $sText ); // 过滤多余html
-        while ( preg_match ( '/(<[^><]+)(lang|onfinish|onmouse|onexit|onerror|onclick|onkey|onload|onchange|onfocus|onblur)[^><]+/i', $sText, $arrMat ) ) { // 过滤on事件lang js
-            $sText = str_replace ( $arrMat [0], $arrMat [1], $sText );
-        }
-        while ( preg_match ( '/(<[^><]+)(window\.|javascript:|js:|about:|file:|document\.|vbs:|cookie)([^><]*)/i', $sText, $arrMat ) ) {
-            $sText = str_replace ( $arrMat [0], $arrMat [1] . $arrMat [3], $sText );
-        }
-        return $sText;
-    }
-    
-    /**
-     * 字符串文本化
-     *
-     * @param string $sText
-     *            待过滤的字符串
-     * @return string
-     */
-    static function text($sText) {
-        $sText = static::cleanJs ( $sText );
-        // $sText=preg_replace('/\s(?=\s)/','',$sText);// 彻底过滤空格
-        $sText = preg_replace ( '/[\n\r\t]/', ' ', $sText );
-        /*
-         * $sText=str_replace(' ',' ',$sText);
-         * $sText=str_replace(' ','',$sText);
-         * $sText=str_replace('&nbsp;','',$sText);
-         * $sText=str_replace('&','',$sText);
-         * $sText=str_replace('=','',$sText);
-         * $sText=str_replace('-','',$sText);
-         * $sText=str_replace('#','',$sText);
-         * $sText=str_replace('%','',$sText);
-         * $sText=str_replace('!','',$sText);
-         * $sText=str_replace('@','',$sText);
-         * $sText=str_replace('^','',$sText);
-         * $sText=str_replace('*','',$sText);
-         */
-        $sText = str_replace ( 'amp;', '', $sText );
-        $sText = strip_tags ( $sText );
-        $sText = htmlspecialchars ( $sText );
-        $sText = str_replace ( "'", "", $sText );
-        return $sText;
-    }
-    
-    /**
-     * 字符过滤 JS和 HTML标签
-     *
-     * @param string $sText            
-     * @return string
-     */
-    static public function strip($sText) {
-        $sText = trim ( $sText );
-        $sText = static::cleanJs ( $sText );
-        $sText = strip_tags ( $sText );
-        return $sText;
-    }
-    
-    /**
-     * 字符 HTML 安全实体
-     *
-     * @param string $sText            
-     * @return string
-     */
-    static public function html($sText) {
-        $sText = trim ( $sText );
-        $sText = htmlspecialchars ( $sText );
-        return $sText;
-    }
-    
-    /**
-     * 字符 HTML 安全显示
-     *
-     * @param string $sText            
-     * @return string
-     */
-    static public function htmlView($sText) {
-        $sText = stripslashes ( $sText );
-        $sText = nl2br ( $sText );
-        return $sText;
-    }
-    
-    // ######################################################
-    // -------------------- 系统安全相关 end ------ -------------
     // ######################################################
     
     // ######################################################
@@ -1946,68 +1378,11 @@ class Q {
     // ######################################################
     
     /**
-     * PHP 运行模式命令行
-     * link http://www.phpddt.com/php/php-sapi.html
-     *
-     * @return boolean
-     */
-    static public function isCli() {
-        return PHP_SAPI == 'cli' ? true : false;
-    }
-    
-    /**
-     * PHP 运行模式 cgi
-     * link http://www.phpddt.com/php/php-sapi.html
-     *
-     * @return boolean
-     */
-    static public function isCgi() {
-        return substr ( PHP_SAPI, 0, 3 ) == 'cgi' ? true : false;
-    }
-    
-    /**
-     * 是否为 Ajax 请求行为
-     *
-     * @return boolean
-     */
-    static public function isAjax() {
-        if (isset ( $_SERVER ['HTTP_X_REQUESTED_WITH'] )) {
-            if ('xmlhttprequest' == strtolower ( $_SERVER ['HTTP_X_REQUESTED_WITH'] )) {
-                return true;
-            }
-        }
-        
-        if (! empty ( $_POST ['ajax'] ) || ! empty ( $_GET ['ajax'] )) {
-            return true;
-        }
-        
-        return false;
-    }
-    
-    /**
-     * 是否为 Get 请求行为
-     *
-     * @return boolean
-     */
-    static public function isGet() {
-        return strtolower ( $_SERVER ['REQUEST_METHOD'] ) == 'get';
-    }
-    
-    /**
-     * 是否为 Post 请求行为
-     *
-     * @return boolean
-     */
-    static public function isPost() {
-        return strtolower ( $_SERVER ['REQUEST_METHOD'] ) == 'post';
-    }
-    
-    /**
      * 是否为 window 平台
      *
      * @return boolean
      */
-    static public function isWin() {
+    public static function isWin() {
         return DIRECTORY_SEPARATOR == '\\' ? true : false;
     }
     
@@ -2016,7 +1391,7 @@ class Q {
      *
      * @return boolean
      */
-    static public function isMac() {
+    public static function isMac() {
         return strstr ( PHP_OS, 'Darwin' ) ? true : false;
     }
     
@@ -2025,7 +1400,7 @@ class Q {
      *
      * @return boolean
      */
-    static public function osNewline() {
+    public static function osNewline() {
         if (static::isWin ()) {
             return "\n";
         } elseif (static::isMac ()) {
@@ -2040,7 +1415,7 @@ class Q {
      *
      * @return boolean
      */
-    static public function isSsl() {
+    public static function isSsl() {
         if (isset ( $_SERVER ['HTTPS'] ) && ('1' == $_SERVER ['HTTPS'] || 'on' == strtolower ( $_SERVER ['HTTPS'] ))) {
             return true;
         } elseif (isset ( $_SERVER ['SERVER_PORT'] ) && ('443' == $_SERVER ['SERVER_PORT'])) {
@@ -2054,7 +1429,7 @@ class Q {
      *
      * @return boolean
      */
-    static public function getHost() {
+    public static function getHost() {
         return isset ( $_SERVER ['HTTP_X_FORWARDED_HOST'] ) ? $_SERVER ['HTTP_X_FORWARDED_HOST'] : (isset ( $_SERVER ['HTTP_HOST'] ) ? $_SERVER ['HTTP_HOST'] : '');
     }
     
@@ -2072,7 +1447,7 @@ class Q {
      * @param $sCacheFile
      * @return json
      */
-    static private function readCache($sCacheFile) {
+    private static function readCache($sCacheFile) {
         return json_decode ( file_get_contents ( $sCacheFile ) );
     }
     
@@ -2085,7 +1460,7 @@ class Q {
      *            类名字
      * @return string|false 存在则为文件名，不存则返回 false
      */
-    static private function loadMappedFile_($sPrefix, $sRelativeClass) {
+    private static function loadMappedFile_($sPrefix, $sRelativeClass) {
         if (isset ( static::$arrNamespace [$sPrefix] ) === false) {
             return false;
         }
@@ -2107,7 +1482,7 @@ class Q {
      *            待载入的文件
      * @return bool true 表示存在， false 表示不存在
      */
-    static private function requireFile_($sFile) {
+    private static function requireFile_($sFile) {
         if (is_file ( $sFile )) {
             require $sFile;
             return true;
@@ -2129,7 +1504,7 @@ class Q {
      *            full_path 是否返回完整路径
      * @return array 扫描后的命名空间数据
      */
-    static private function scanNamespace_($sDirectory, $sRootDir = '', $in = []) {
+    private static function scanNamespace_($sDirectory, $sRootDir = '', $in = []) {
         $in = array_merge ( [ 
                 'ignore' => [ ],
                 'add_more' => true,
@@ -2191,7 +1566,7 @@ class Q {
      * @param int $intDefaultTime            
      * @return number
      */
-    static private function cacheTime_($sId, $intDefaultTime = 0) {
+    private static function cacheTime_($sId, $intDefaultTime = 0) {
         if (isset ( $GLOBALS ['~@option'] ['runtime_cache_times'] [$sId] )) {
             return $GLOBALS ['~@option'] ['runtime_cache_times'] [$sId];
         }
@@ -2214,7 +1589,7 @@ class Q {
      * @param string $sHttpSuffix            
      * @return string
      */
-    static private function urlFull_($sDomain = '', $sHttpPrefix = '', $sHttpSuffix = '') {
+    private static function urlFull_($sDomain = '', $sHttpPrefix = '', $sHttpSuffix = '') {
         static $sHttpPrefix = '', $sHttpSuffix = '';
         if (! $sHttpPrefix) {
             $sHttpPrefix = static::isSsl () ? 'https://' : 'http://';
@@ -2234,11 +1609,11 @@ class Q {
      * @param 参数 $arrArgs            
      * @return boolean
      */
-    static public function __callStatic($sMethod, $arrArgs) {
+    public static function __callStatic($sMethod, $arrArgs) {
         if (($objFacades = static::project ()->make ( $sMethod ))) {
             return $objFacades;
         }
-        \Q\exception\exception::throws ( static::i18n ( '未实现 facades 方法 %s', $sMethod ) );
+        \Exceptions::throws ( static::i18n ( '未实现 facades 方法 %s', $sMethod ) );
     }
 }
 
@@ -2263,7 +1638,7 @@ spl_autoload_register ( [
  * QueryPHP 系统警告处理
  */
 set_exception_handler ( [ 
-        'Q\exception\exception',
+        'Q\exception\handle',
         'exceptionHandle' 
 ] );
 
@@ -2272,12 +1647,12 @@ set_exception_handler ( [
  */
 if (Q_DEBUG === TRUE) {
     set_error_handler ( [ 
-            'Q\exception\exception',
+            'Q\exception\handle',
             'errorHandle' 
     ] );
     
     register_shutdown_function ( [ 
-            'Q\exception\exception',
+            'Q\exception\handle',
             'shutdownHandle' 
     ] );
 }

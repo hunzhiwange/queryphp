@@ -15,7 +15,7 @@ namespace Q\mvc;
 ##########################################################
 queryphp;
 
-use Q\exception\exception;
+use Q\exception\exceptions;
 
 /**
  * 基类控制器
@@ -66,7 +66,7 @@ class controller {
      */
     public function action($sActionName) {
         // 判断是否已经注册过
-        if (($objAction = \Q::app ()->getAction ( \Q::project ()->controller_name, $sActionName )) && ! (\Q::varType ( $objAction, 'array' ) && isset ( $objAction [1] ) && \Q::isKindOf ( $objAction [0], 'Q\mvc\controller' ))) {
+        if (($objAction = \Q::app ()->getAction ( \Q::project ()->controller_name, $sActionName )) && ! (is_array ( $objAction ) && isset ( $objAction [1] ) && \Q::isKindOf ( $objAction [0], 'Q\mvc\controller' ))) {
             return \Q::app ()->action ( \Q::project ()->controller_name, $sActionName );
         }
         
@@ -82,7 +82,7 @@ class controller {
             // 运行方法器
             return \Q::app ()->action ( \Q::project ()->controller_name, $sActionName );
         } else {
-            exception::throws ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sActionName ), 'Q\mvc\exception' );
+            exceptions::throws ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sActionName ), 'Q\mvc\exception' );
         }
     }
     
@@ -219,10 +219,10 @@ class controller {
                 if (! empty ( $arrArgs [0] )) {
                     return \Q::in ( $arrArgs [0], isset ( $arrArgs [1] ) ? $arrArgs [1] : 'R' );
                 } else {
-                    exception::throws ( 'Can not find method.', 'Q\mvc\exception' );
+                    exceptions::throws ( 'Can not find method.', 'Q\mvc\exception' );
                 }
             default :
-                exception::throws ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sMethod ), 'Q\mvc\exception' );
+                exceptions::throws ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sMethod ), 'Q\mvc\exception' );
         }
     }
 }

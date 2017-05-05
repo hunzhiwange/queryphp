@@ -15,7 +15,7 @@ namespace Q\exception;
 ##########################################################
 queryphp;
 
-use Exception as PHPException;
+use Exception;
 use LogicException;
 use BadFunctionCallException;
 use BadMethodCallException;
@@ -31,23 +31,23 @@ use UnderflowException;
 use UnexpectedValueException;
 
 /**
- * 异常捕获
+ * 异常处理
  *
  * @author Xiangmin Liu<635750556@qq.com>
  * @package $$
  * @since 2017.01.09
  * @version 1.0
  */
-class exception extends PHPException {
+class exceptions {
     
     /**
      * PHP 系统异常
      *
      * @var array
      */
-    protected static $arrPHPType = [
+    private static $arrPHPType = [
             // 顶级异常
-            'PHPException' => 'Exception happen.',
+            'Exception' => 'Exception happen.',
             
             // 表示程序逻辑中的错误的异常
             'LogicException' => 'Program logic.',
@@ -96,27 +96,6 @@ class exception extends PHPException {
     ];
     
     /**
-     * 构造函数
-     *
-     * @param string $sMessage            
-     * @param number $nCode            
-     * @return void
-     */
-    public function __construct($sMessage, $nCode = 0) {
-        parent::__construct ( $sMessage, $nCode );
-    }
-    
-    /**
-     * 对象字符串
-     *
-     * @see Exception::__toString()
-     * @return string
-     */
-    public function __toString() {
-        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
-    }
-    
-    /**
      * 抛出异常
      *
      * @param string $sMsg            
@@ -124,46 +103,8 @@ class exception extends PHPException {
      * @param number $nCode            
      * @return void
      */
-    public static function throws($sMsg, $sType = 'Q\exception\exception', $nCode = 0) {
+    public static function throws($sMsg, $sType = 'Exception', $nCode = 0) {
         throw new $sType ( $sMsg, $nCode );
-    }
-    
-    /**
-     * 接管 PHP 异常
-     *
-     * @param Exception $oException            
-     * @return void
-     */
-    public static function exceptionHandle($oException) {
-        $objMessage = new exception_message ( $oException );
-        $objMessage->run ();
-        exit ();
-    }
-    
-    /**
-     * 接管 PHP 错误
-     *
-     * @param int $nErrorNo            
-     * @param string $sErrStr            
-     * @param string $sErrFile            
-     * @param int $nErrLine            
-     * @return void
-     */
-    public static function errorHandle($nErrorNo, $sErrStr, $sErrFile, $nErrLine) {
-        $objMessage = new error_message ( $nErrorNo, $sErrStr, $sErrFile, $nErrLine );
-        $objMessage->run ();
-        exit ();
-    }
-    
-    /**
-     * 接管 PHP 致命错误
-     *
-     * @return void
-     */
-    public static function shutdownHandle() {
-        $objMessage = new shutdown_message ();
-        $objMessage->run ();
-        exit ();
     }
     
     /**
@@ -174,10 +115,9 @@ class exception extends PHPException {
      * @return boolean
      */
     public static function __callStatic($sMethod, $arrArgs) {
-        $sMethod = ucfirst ( $sMethod ) . 'Exception';
-        
+        $sMethod = ucfirst ( $sMethod );
         if (! array_key_exists ( $sMethod, static::$arrPHPType )) {
-            $sMethod = 'BadMethodCallException';
+            $sMethod = 'Exception';
         }
         
         if (! isset ( $arrArgs [0] )) {

@@ -15,10 +15,11 @@ namespace Q\log;
 ##########################################################
 queryphp;
 
-use Q\traits\object_option;
-use Q\traits\static_entrance;
+use Q\traits\dynamic\expansion as dynamic_expansion;
 use Q\option\option;
-use Q\exception\exception;
+use Q\exception\exceptions;
+use Q\assert\assert;
+use Q\mvc\project;
 
 /**
  * 日志
@@ -30,8 +31,7 @@ use Q\exception\exception;
  */
 class log {
     
-    use object_option;
-    use static_entrance;
+    use dynamic_expansion;
     
     /**
      * 当前记录的日志信息
@@ -59,7 +59,7 @@ class log {
      *
      * @var array
      */
-    protected $arrDefaultObjectOption = [ 
+    protected $arrInitExpansionInstanceArgs = [ 
             'log_enabled' => FALSE,
             'log_level' => 'error,sql,debug,info',
             'log_error_enabled' => FALSE,
@@ -69,29 +69,6 @@ class log {
             'log_file_name' => 'Y-m-d H',
             'path_cache_log' => '' 
     ];
-    /**
-     * 初始化参数
-     *
-     * @var array
-     */
-    protected $arrStaticEntranceType = [ 
-            'log_enabled',
-            'log_level',
-            'log_error_enabled',
-            'log_sql_enabled',
-            'log_time_format',
-            'log_file_size',
-            'log_file_name',
-            'path_cache_log' 
-    ];
-    /**
-     * 构造函数
-     *
-     * @return void
-     */
-    public function __construct() {
-        $this->mergeObjectOption_ ();
-    }
     
     /**
      * 记录错误消息
@@ -108,19 +85,19 @@ class log {
      *            参考 error_log 参数 $extra_headers
      * @return void
      */
-    public function run($strMessage, $strLevel = 'error', $intMessageType = 3, $strDestination = '', $strExtraHeaders = '') {
+    public function run($strMessage, $strLevel = 'info', $intMessageType = 3, $strDestination = '', $strExtraHeaders = '') {
         // 是否开启日志
-        if (! $this->getObjectOption_ ( 'log_enabled' )) {
+        if (! $this->getExpansionInstanceArgs_ ( 'log_enabled' )) {
             return;
         }
         
         // 错误日志和 sql 日志
-        if ((! $this->getObjectOption_ ( 'log_error_enabled' ) && $strLevel == 'error') || (! $this->getObjectOption_ ( 'log_sql_enabled' ) && $strLevel == 'sql')) {
+        if ((! $this->getExpansionInstanceArgs_ ( 'log_error_enabled' ) && $strLevel == 'error') || (! $this->getExpansionInstanceArgs_ ( 'log_sql_enabled' ) && $strLevel == 'sql')) {
             return;
         }
         
         // 只记录系统允许的日志级别
-        if (! in_array ( $strLevel, explode ( ',', $this->getObjectOption_ ( 'log_level' ) ) )) {
+        if (! in_array ( $strLevel, explode ( ',', $this->getExpansionInstanceArgs_ ( 'log_level' ) ) )) {
             return;
         }
         
@@ -133,7 +110,7 @@ class log {
         }
         
         // 日志消息
-        $strMessage = date ( $this->getObjectOption_ ( 'log_time_format' ) ) . $strMessage . "\r\n";
+        $strMessage = date ( $this->getExpansionInstanceArgs_ ( 'log_time_format' ) ) . $strMessage . "\r\n";
         
         // 保存日志
         $strDestination = $this->getPath_ ( $strLevel, $strDestination );
@@ -166,9 +143,7 @@ class log {
      * @return void
      */
     public function registerFilter($calFilter) {
-        if (! \Q::varType ( $calFilter, 'callback' )) {
-            exception::throws ( \Q::i18n ( '日志过滤器必须为一个回调类型' ), 'Q\log\exception' );
-        }
+        assert::callback ( $calFilter );
         $this->calFilter = $calFilter;
     }
     
@@ -179,9 +154,7 @@ class log {
      * @return void
      */
     public function registerProcessor($calProcessor) {
-        if (! \Q::varType ( $calProcessor, 'callback' )) {
-            exception::throws ( \Q::i18n ( '日志处理器必须为一个回调类型' ), 'Q\log\exception' );
-        }
+        assert::callback ( $calProcessor );
         $this->calProcessor = $calProcessor;
     }
     
@@ -223,11 +196,11 @@ class log {
     private function checkSize_($sFilePath) {
         // 如果不是文件，则创建
         if (! is_file ( $sFilePath ) && ! is_dir ( dirname ( $sFilePath ) ) && ! \Q::makeDir ( dirname ( $sFilePath ) )) {
-            exception::throws ( \Q::i18n ( '无法创建日志文件：“%s”', $sFilePath ), 'Q\log\exception' );
+            exceptions::throws ( \Q::i18n ( '无法创建日志文件：“%s”', $sFilePath ), 'Q\log\exception' );
         }
         
         // 检测日志文件大小，超过配置大小则备份日志文件重新生成
-        if (is_file ( $sFilePath ) && floor ( $this->getObjectOption_ ( 'log_file_size' ) ) <= filesize ( $sFilePath )) {
+        if (is_file ( $sFilePath ) && floor ( $this->getExpansionInstanceArgs_ ( 'log_file_size' ) ) <= filesize ( $sFilePath )) {
             rename ( $sFilePath, dirname ( $sFilePath ) . '/' . date ( 'Y-m-d H.i.s' ) . '~@' . basename ( $sFilePath ) );
         }
     }
@@ -242,22 +215,17 @@ class log {
     private function getPath_($strLevel, $sFilePath = '') {
         // 不存在路径，则直接使用项目默认路径
         if (empty ( $sFilePath )) {
-            $sFilePath = $this->getObjectOption_ ( 'path_cache_log' ) . '/' . $strLevel . '/' . date ( $this->getObjectOption_ ( 'log_file_name' ) ) . ".log";
+            $sFilePath = $this->getExpansionInstanceArgs_ ( 'path_cache_log' ) . '/' . $strLevel . '/' . date ( $this->getExpansionInstanceArgs_ ( 'log_file_name' ) ) . ".log";
         }
         return $sFilePath;
     }
     
     /**
-     * 初始化静态入口配置
+     * 初始化动态扩展参数
      *
      * @return void
      */
-    protected function initStaticEntrance_() {
-        $arrObjectOption = [ ];
-        foreach ( $this->getStaticEntranceType_ () as $sObjectOption ) {
-            $arrObjectOption [$sObjectOption] = option::gets ( $sObjectOption );
-        }
-        $arrObjectOption ['path_cache_log'] = \Q::project ()->path_cache_log;
-        return $this->setObjectOption ( $arrObjectOption );
+    protected function initExpansionInstance_() {
+        return $this->initExpansionInstanceDefault_ ()->setExpansionInstanceArgs ( 'path_cache_log', project::bootstrap ()->path_cache_log );
     }
 }

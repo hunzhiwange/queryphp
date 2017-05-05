@@ -1,7 +1,7 @@
 <?php
 // [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
 // ©2010-2017 http://queryphp.com All rights reserved.
-namespace Q\collection;
+namespace Q\contract\datastruct\queue;
 
 <<<queryphp
 ##########################################################
@@ -16,12 +16,27 @@ namespace Q\collection;
 queryphp;
 
 /**
- * 集合组件异常捕获
+ * stack_queue 接口
  *
  * @author Xiangmin Liu<635750556@qq.com>
  * @package $$
- * @since 2017.04.17
+ * @since 2017.04.23
  * @version 4.0
  */
-class exception extends \Q\exception\exception {
+interface stack_queue {
+    
+    /**
+     * 加载元素
+     *
+     * @param mixed $mixItem            
+     * @return void
+     */
+    public function in($mixItem);
+    
+    /**
+     * 释放元素
+     *
+     * @return mixed
+     */
+    public function out();
 }

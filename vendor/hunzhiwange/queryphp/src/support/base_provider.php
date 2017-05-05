@@ -83,11 +83,11 @@ class base_provider extends provider {
      */
     private $arrOther = [
             // collection
-            'Q\collection\collection',
+            'Q\datastruct\collection\collection',
             
             // queue
-            'Q\queue\queue',
-            'Q\queue\stack' 
+            'Q\datastruct\queue\queue',
+            'Q\datastruct\queue\stack' 
     ];
     
     /**

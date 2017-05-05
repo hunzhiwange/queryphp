@@ -19,8 +19,9 @@ use PDO;
 use PDOException;
 use Exception as PHPException;
 use Q\contract\database\connect as contract_connect;
-use Q\exception\exception;
+use Q\exception\exceptions;
 use Q\log\log;
+use Q\assert\assert;
 
 /**
  * 数据库连接
@@ -282,9 +283,7 @@ abstract class connect implements contract_connect {
      */
     public function transaction($calAction) {
         // 严格验证参数
-        if (! \Q::varType ( $calAction, 'callback' )) {
-            $this->throwException_ ( \Q::i18n ( 'transaction 必须是一个回调类型' ) );
-        }
+        assert::callback($calAction);
         
         // 事务过程
         $this->beginTransaction ();
@@ -390,9 +389,7 @@ abstract class connect implements contract_connect {
      * @return void
      */
     public function registerListen($calSqlListen) {
-        if (! \Q::varType ( $calSqlListen, 'callback' )) {
-            $this->throwException_ ( \Q::i18n ( 'SQL 监视器必须为一个回调类型' ) );
-        }
+        assert::callback($calSqlListen);
         static::$calSqlListen = $calSqlListen;
     }
     
@@ -848,7 +845,7 @@ abstract class connect implements contract_connect {
             $arrTemp = $this->objPDOStatement->errorInfo ();
             $strError = '(' . $arrTemp [1] . ')' . $arrTemp [2] . "\r\n" . $strError;
         }
-        exception::throws ( $strError, 'Q\database\exception' );
+        exceptions::throws ( $strError, 'Q\database\exception' );
     }
     
     /**

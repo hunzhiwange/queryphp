@@ -16,9 +16,9 @@ namespace Q\support;
 queryphp;
 
 use ArrayAccess;
-use Q\traits\flow_condition;
+use Q\traits\flow\control as flow_control;
 use Q\contract\support\container as contract_container;
-use Q\exception\exception;
+use Q\exception\exceptions;
 
 /**
  * 工厂容器
@@ -30,7 +30,7 @@ use Q\exception\exception;
  */
 class container implements ArrayAccess, contract_container {
     
-    use flow_condition;
+    use flow_control;
     
     /**
      * 注册工厂
@@ -76,11 +76,11 @@ class container implements ArrayAccess, contract_container {
      */
     public function __call($sMethod, $arrArgs) {
         // 条件控制语句支持
-        if ($this->flowConditionCall_ ( $sMethod, $arrArgs ) !== false) {
+        if ($this->flowControlCall_ ( $sMethod, $arrArgs ) !== false) {
             return $this;
         }
         
-        exception::throws ( \Q::i18n ( 'container 没有实现魔法方法 %s.', $sMethod ), 'Q\support\exception' );
+        exceptions::throws ( \Q::i18n ( 'container 没有实现魔法方法 %s.', $sMethod ), 'Q\support\exception' );
     }
     
     /**
@@ -92,7 +92,7 @@ class container implements ArrayAccess, contract_container {
      */
     public function register($mixFactoryName, $mixFactory = null) {
         // 回调
-        if (\Q::varType ( $mixFactory, 'callback' )) {
+        if (is_callable ( $mixFactory )) {
             $this->arrFactorys [$mixFactoryName] = $mixFactory;
         }         
 
@@ -139,7 +139,7 @@ class container implements ArrayAccess, contract_container {
                 'scalar',
                 'array' 
         ] )) {
-            exception::throws ( \Q::i18n ( 'instance 第一个参数只能为 scalar 或者 array' ), 'Q\support\exception' );
+            exceptions::throws ( \Q::i18n ( 'instance 第一个参数只能为 scalar 或者 array' ), 'Q\support\exception' );
         }
         
         if (is_array ( $mixFactoryName )) {
@@ -165,7 +165,7 @@ class container implements ArrayAccess, contract_container {
                 'scalar',
                 'array' 
         ] )) {
-            exception::throws ( \Q::i18n ( 'singleton 第一个参数只能为 scalar 或者 array' ), 'Q\support\exception' );
+            exceptions::throws ( \Q::i18n ( 'singleton 第一个参数只能为 scalar 或者 array' ), 'Q\support\exception' );
         }
         
         if (is_array ( $mixFactoryName )) {
@@ -275,7 +275,7 @@ class container implements ArrayAccess, contract_container {
      */
     public function makeWithArgs($strFactoryName, array $arrArgs = []) {
         if (! is_array ( $arrArgs )) {
-            exception::throws ( \Q::i18n ( 'makeWithArgs 第二个参数只能为 array' ), 'Q\support\exception' );
+            exceptions::throws ( \Q::i18n ( 'makeWithArgs 第二个参数只能为 array' ), 'Q\support\exception' );
         }
         array_unshift ( $arrArgs, $strFactoryName );
         return call_user_func_array ( [ 

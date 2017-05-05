@@ -16,10 +16,8 @@ namespace Q\view;
 queryphp;
 
 use Q\mvc\view;
-use Q\exception\exception;
-use Q\traits\object_option;
-use Q\traits\static_entrance;
-use Q\option\option;
+use Q\exception\exceptions;
+use Q\traits\dynamic\expansion as dynamic_expansion;
 
 /**
  * 编译器列表
@@ -31,8 +29,7 @@ use Q\option\option;
  */
 class compilers {
     
-    use static_entrance;
-    use object_option;
+    use dynamic_expansion;
     
     /**
      * code 支持的特殊别名映射
@@ -232,33 +229,12 @@ class compilers {
      *
      * @var array
      */
-    protected $arrDefaultObjectOption = [ 
+    protected $arrInitExpansionInstanceArgs = [ 
             'theme_cache_children' => FALSE,
             'theme_var_identify' => '',
             'theme_notallows_func' => 'exit,die,return',
             'theme_notallows_func_js' => 'alert' 
     ];
-    
-    /**
-     * 初始化参数
-     *
-     * @var array
-     */
-    protected $arrStaticEntranceType = [ 
-            'theme_cache_children',
-            'theme_var_identify',
-            'theme_notallows_func',
-            'theme_notallows_func_js' 
-    ];
-    
-    /**
-     * 构造函数
-     *
-     * @return void
-     */
-    public function __construct() {
-        $this->mergeObjectOption_ ();
-    }
     
     // ######################################################
     // ------------------- 全局编译器 start -------------------
@@ -367,7 +343,7 @@ class compilers {
                 } elseif ($nNum == 3) {
                     $sResult = "\${$arrArray[1]} => \${$arrArray[2]}";
                 } else {
-                    exception::throws ( \Q::i18n ( '参数错误' ), 'Q\view\exception' );
+                    exceptions::throws ( \Q::i18n ( '参数错误' ), 'Q\view\exception' );
                 }
                 
                 return "if (is_array ( \${$arrArray[0]} ) ) : foreach( \${$arrArray[0]} as $sResult )";
@@ -751,7 +727,7 @@ out += '";
         }
         
         // 子模板合并到主模板
-        if ($this->getObjectOption_ ( 'theme_cache_children' )) {
+        if ($this->getExpansionInstanceArgs_ ( 'theme_cache_children' )) {
             $sMd5 = md5 ( $arrAttr ['file'] );
             $sCompiled = "<!--<####incl*" . $sMd5 . "*ude####>-->";
             $sCompiled .= '<?' . 'php $this->display( ' . $arrAttr ['file'] . ', true, __FILE__,\'' . $sMd5 . '\'   ); ?' . '>';
@@ -1044,7 +1020,7 @@ out += '";
                 }
                 
                 if ($bIsObject === FALSE) { // 非对象
-                    switch (strtolower ( $this->getObjectOption_ ( 'theme_var_identify' ) )) {
+                    switch (strtolower ( $this->getExpansionInstanceArgs_ ( 'theme_var_identify' ) )) {
                         case 'array' : // 识别为数组
                             $sName = '$' . $arrVars [0] . '[\'' . $arrVars [1] . '\']' . ($this->arrayHandler_ ( $arrVars ));
                             break;
@@ -1088,7 +1064,7 @@ out += '";
     private function parseVarFunction_($sName, $arrVar, $bJs = false) {
         $nLen = count ( $arrVar );
         // 取得模板禁止使用函数列表
-        $arrNot = explode ( ',', $this->getObjectOption_ ( 'theme_notallows_func' . ($bJs ? '' : '_js') ) );
+        $arrNot = explode ( ',', $this->getExpansionInstanceArgs_ ( 'theme_notallows_func' . ($bJs ? '' : '_js') ) );
         for($nI = 0; $nI < $nLen; $nI ++) {
             if (0 === stripos ( $arrVar [$nI], 'default=' )) {
                 $arrArgs = explode ( '=', $arrVar [$nI], 2 );
@@ -1205,19 +1181,19 @@ out += '";
         
         // 验证标签的属性值
         if ($arrAttribute ['is_attribute'] !== true) {
-            exception::throws ( \Q::i18n ( '标签属性类型验证失败' ), 'Q\view\exception' );
+            exceptions::throws ( \Q::i18n ( '标签属性类型验证失败' ), 'Q\view\exception' );
         }
         
         // 验证必要属性
         $arrTag = $bJsNode === true ? $this->arrJsTag : $this->arrNodeTag;
         if (! isset ( $arrTag [$arrTheme ['name']] )) {
-            exception::throws ( \Q::i18n ( '标签 %s 未定义', $arrTheme ['name'] ), 'Q\view\exception' );
+            exceptions::throws ( \Q::i18n ( '标签 %s 未定义', $arrTheme ['name'] ), 'Q\view\exception' );
         }
         
         foreach ( $arrTag [$arrTheme ['name']] ['required'] as $sName ) {
             $sName = strtolower ( $sName );
             if (! isset ( $arrAttribute ['attribute_list'] [$sName] )) {
-                exception::throws ( \Q::i18n ( '节点 “%s” 缺少必须的属性：“%s”', $arrTheme ['name'], $sName ), 'Q\view\exception' );
+                exceptions::throws ( \Q::i18n ( '节点 “%s” 缺少必须的属性：“%s”', $arrTheme ['name'], $sName ), 'Q\view\exception' );
             }
         }
         
@@ -1287,19 +1263,6 @@ out += '";
             ], $sTxt );
         }
         return $sTxt;
-    }
-    
-    /**
-     * 初始化静态入口配置
-     *
-     * @return void
-     */
-    protected function initStaticEntrance_() {
-        $arrObjectOption = [ ];
-        foreach ( $this->getStaticEntranceType_ () as $sObjectOption ) {
-            $arrObjectOption [$sObjectOption] = option::gets ( $sObjectOption );
-        }
-        return $this->setObjectOption ( $arrObjectOption );
     }
     
     // ######################################################

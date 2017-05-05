@@ -15,10 +15,9 @@ namespace Q\cookie;
 ##########################################################
 queryphp;
 
-use Q\traits\object_option;
-use Q\traits\static_entrance;
-use Q\option\option;
-use Q\exception\exception;
+use Q\traits\dynamic\expansion as dynamic_expansion;
+use Q\exception\exceptions;
+use Q\assert\assert;
 
 /**
  * 对 PHP 原生Cookie 函数库的封装
@@ -30,41 +29,19 @@ use Q\exception\exception;
  */
 class cookie {
     
-    use object_option;
-    use static_entrance;
+    use dynamic_expansion;
     
     /**
      * 配置
      *
      * @var array
      */
-    protected $arrDefaultObjectOption = [ 
+    protected $arrInitExpansionInstanceArgs = [ 
             'cookie_prefix' => 'q_',
             'cookie_expire' => 86400,
             'cookie_domain' => '',
             'cookie_path' => '/' 
     ];
-    
-    /**
-     * 初始化参数
-     *
-     * @var array
-     */
-    protected $arrStaticEntranceType = [ 
-            'cookie_prefix',
-            'cookie_expire',
-            'cookie_domain',
-            'cookie_path' 
-    ];
-    
-    /**
-     * 构造函数
-     *
-     * @return void
-     */
-    public function __construct() {
-        $this->mergeObjectOption_ ();
-    }
     
     /**
      * 设置 COOKIE
@@ -87,11 +64,10 @@ class cookie {
         ], $in );
         
         // 验证 cookie 值是不是一个标量
-        if ($mixValue !== null && ! \Q::varType ( $mixValue, 'scalar' )) {
-            exception::throws ( \Q::i18n ( 'cookie 值必须是一个 PHP 标量' ), 'Q\cookie\exception' );
-        }
+        assert::notNull ( $mixValue );
+        assert::scalar ( $mixValue );
         
-        $sName = ($in ['prefix'] === true ? $this->getObjectOption_ ( 'cookie_prefix' ) : '') . $sName;
+        $sName = ($in ['prefix'] === true ? $this->getExpansionInstanceArgs_ ( 'cookie_prefix' ) : '') . $sName;
         
         if ($mixValue === null || $in ['life'] < 0) {
             $in ['life'] = - 1;
@@ -101,13 +77,13 @@ class cookie {
         } else {
             $_COOKIE [$sName] = $mixValue;
             if ($in ['life'] !== NULL && $in ['life'] === 0) {
-                $in ['life'] = $this->getObjectOption_ ( 'cookie_expire' );
+                $in ['life'] = $this->getExpansionInstanceArgs_ ( 'cookie_expire' );
             }
         }
         
         $in ['life'] = $in ['life'] > 0 ? time () + $in ['life'] : ($in ['life'] < 0 ? time () - 31536000 : null);
-        $in ['cookie_domain'] = $in ['cookie_domain'] !== null ? $in ['cookie_domain'] : $this->getObjectOption_ ( 'cookie_domain' );
-        setcookie ( $sName, $mixValue, $in ['life'], $this->getObjectOption_ ( 'cookie_path' ), $in ['cookie_domain'], $_SERVER ['SERVER_PORT'] == 443 ? 1 : 0, $in ['http_only'] );
+        $in ['cookie_domain'] = $in ['cookie_domain'] !== null ? $in ['cookie_domain'] : $this->getExpansionInstanceArgs_ ( 'cookie_domain' );
+        setcookie ( $sName, $mixValue, $in ['life'], $this->getExpansionInstanceArgs_ ( 'cookie_path' ), $in ['cookie_domain'], $_SERVER ['SERVER_PORT'] == 443 ? 1 : 0, $in ['http_only'] );
     }
     
     /**
@@ -118,7 +94,7 @@ class cookie {
      * @return mixed
      */
     public function get($sName, $bPrefix = true) {
-        $sName = ($bPrefix ? $this->getObjectOption_ ( 'cookie_prefix' ) : '') . $sName;
+        $sName = ($bPrefix ? $this->getExpansionInstanceArgs_ ( 'cookie_prefix' ) : '') . $sName;
         return isset ( $_COOKIE [$sName] ) ? $_COOKIE [$sName] : null;
     }
     
@@ -132,7 +108,7 @@ class cookie {
      */
     public function delete($sName, $sCookieDomain = null, $bPrefix = true) {
         if (is_null ( $sCookieDomain ))
-            $sCookieDomain = $this->getObjectOption_ ( 'cookie_domain' );
+            $sCookieDomain = $this->getExpansionInstanceArgs_ ( 'cookie_domain' );
         $this->set ( $sName, null, [ 
                 'life' => - 1,
                 'cookie_domain' => $sCookieDomain,
@@ -149,9 +125,9 @@ class cookie {
      */
     public function clear($bOnlyDeletePrefix = true, $sCookieDomain = null) {
         $nCookie = count ( $_COOKIE );
-        $strCookiePrefix = $this->getObjectOption_ ( 'cookie_prefix' );
+        $strCookiePrefix = $this->getExpansionInstanceArgs_ ( 'cookie_prefix' );
         if (is_null ( $sCookieDomain ))
-            $sCookieDomain = $this->getObjectOption_ ( 'cookie_domain' );
+            $sCookieDomain = $this->getExpansionInstanceArgs_ ( 'cookie_domain' );
         foreach ( $_COOKIE as $sKey => $Val ) {
             if ($bOnlyDeletePrefix === true && $strCookiePrefix) {
                 if (strpos ( $sKey, $strCookiePrefix ) === 0) {
@@ -162,18 +138,5 @@ class cookie {
             }
         }
         return $nCookie;
-    }
-    
-    /**
-     * 初始化静态入口配置
-     *
-     * @return void
-     */
-    protected function initStaticEntrance_() {
-        $arrObjectOption = [ ];
-        foreach ( $this->getStaticEntranceType_() as $sObjectOption ) {
-            $arrObjectOption [$sObjectOption] = option::gets ( $sObjectOption );
-        }
-        return $this->setObjectOption ( $arrObjectOption );
     }
 }

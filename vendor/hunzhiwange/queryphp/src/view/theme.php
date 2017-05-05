@@ -16,10 +16,8 @@ namespace Q\view;
 queryphp;
 
 use Q\mvc\view;
-use Q\exception\exception;
-use Q\traits\object_option;
-use Q\traits\static_entrance;
-use Q\option\option;
+use Q\exception\exceptions;
+use Q\traits\dynamic\expansion as dynamic_expansion;
 
 /**
  * 模板处理类
@@ -31,8 +29,7 @@ use Q\option\option;
  */
 class theme {
     
-    use static_entrance;
-    use object_option;
+    use dynamic_expansion;
     
     /**
      * 变量值
@@ -46,27 +43,9 @@ class theme {
      *
      * @var array
      */
-    protected $arrDefaultObjectOption = [ 
+    protected $arrInitExpansionInstanceArgs = [ 
             'theme_cache_lifetime' => - 1 
     ];
-    
-    /**
-     * 初始化参数
-     *
-     * @var array
-     */
-    protected $arrStaticEntranceType = [ 
-            'theme_cache_lifetime' 
-    ];
-    
-    /**
-     * 构造函数
-     *
-     * @return void
-     */
-    public function __construct() {
-        $this->mergeObjectOption_ ();
-    }
     
     /**
      * 加载视图文件
@@ -87,7 +66,7 @@ class theme {
             $sFile = view::parseDefaultFile ( $sFile );
         }
         if (! is_file ( $sFile )) {
-            exception::throws ( \Q::i18n ( '模板文件 %s 不存在', $sFile ), 'Q\view\exception' );
+            exceptions::throws ( \Q::i18n ( '模板文件 %s 不存在', $sFile ), 'Q\view\exception' );
         }
         
         // 变量赋值
@@ -113,7 +92,7 @@ class theme {
                 
                 unset ( $sChildCache, $sTargetContent );
             } else {
-                exception::throws ( sprintf ( 'source %s and target cache %s is not a valid path', $sFile, $sTargetCache ), 'Q\view\exception' );
+                exceptions::throws ( sprintf ( 'source %s and target cache %s is not a valid path', $sFile, $sTargetCache ), 'Q\view\exception' );
             }
         }
         
@@ -191,12 +170,12 @@ class theme {
         }
         
         // 编译过期时间为 -1 表示永不过期
-        if ($this->getObjectOption_ ( 'theme_cache_lifetime' ) === - 1) {
+        if ($this->getExpansionInstanceArgs_ ( 'theme_cache_lifetime' ) === - 1) {
             return false;
         }
         
         // 缓存时间到期
-        if (filemtime ( $sCachePath ) + intval ( $this->getObjectOption_ ( 'theme_cache_lifetime' ) ) < time ()) {
+        if (filemtime ( $sCachePath ) + intval ( $this->getExpansionInstanceArgs_ ( 'theme_cache_lifetime' ) ) < time ()) {
             return true;
         }
         
@@ -206,18 +185,5 @@ class theme {
         }
         
         return false;
-    }
-    
-    /**
-     * 初始化静态入口配置
-     *
-     * @return void
-     */
-    protected function initStaticEntrance_() {
-        $arrObjectOption = [ ];
-        foreach ( $this->getStaticEntranceType_ () as $sObjectOption ) {
-            $arrObjectOption [$sObjectOption] = option::gets ( $sObjectOption );
-        }
-        return $this->setObjectOption ( $arrObjectOption );
     }
 }

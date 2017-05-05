@@ -16,9 +16,10 @@ namespace Q\request;
 queryphp;
 
 use Q\mvc\view;
-use Q\traits\flow_condition;
-use Q\exception\exception;
+use Q\traits\flow\control as flow_control;
+use Q\exception\exceptions;
 use Q\cookie\cookie;
+use Q\assert\assert;
 
 /**
  * 响应请求
@@ -30,7 +31,7 @@ use Q\cookie\cookie;
  */
 class response {
     
-    use flow_condition;
+    use flow_control;
     
     /**
      * 请求实例
@@ -162,7 +163,7 @@ class response {
      */
     public function __call($sMethod, $arrArgs) {
         // 条件控制语句支持
-        if ($this->flowConditionCall_ ( $sMethod, $arrArgs ) !== false) {
+        if ($this->flowControlCall_ ( $sMethod, $arrArgs ) !== false) {
             return $this;
         }
         
@@ -176,7 +177,7 @@ class response {
             }
         }
         
-        exception::throws ( \Q::i18n ( 'response 没有实现魔法方法 %s.', $sMethod ), 'Q\request\exception' );
+        exceptions::throws ( \Q::i18n ( 'response 没有实现魔法方法 %s.', $sMethod ), 'Q\request\exception' );
     }
     
     /**
@@ -188,17 +189,16 @@ class response {
      */
     public function register($strResponseName, $calResponse) {
         // 严格验证参数
-        if (! \Q::varType ( $strResponseName, 'string' ) || in_array ( $strResponseName, [ 
+        if (! is_string ( $strResponseName ) || in_array ( $strResponseName, [ 
                 'if',
                 'elseIf',
                 'else',
                 'endIf' 
         ] ) || method_exists ( $this, $strResponseName )) {
-            exception::throws ( \Q::i18n ( '响应名字必须是一个字符串，不能占用条件表达式，且不能注册一个存在的响应方法' ), 'Q\request\exception' );
+            exceptions::throws ( \Q::i18n ( '响应名字必须是一个字符串，不能占用条件表达式，且不能注册一个存在的响应方法' ), 'Q\request\exception' );
         }
-        if (! \Q::varType ( $calResponse, 'callback' )) {
-            exception::throws ( \Q::i18n ( '响应内容必须是一个回调类型' ), 'Q\request\exception' );
-        }
+        
+        assert::callback ( $calResponse );
         
         static::$arrCustomerResponse [$strResponseName] = $calResponse;
         return $this;
@@ -213,7 +213,7 @@ class response {
      * @param array $arrOption            
      * @return $this
      */
-    static public function singleton($mixData = '', $intCode = 200, array $arrHeader = [], $arrOption = []) {
+    public static function singleton($mixData = '', $intCode = 200, array $arrHeader = [], $arrOption = []) {
         if (static::$oInstance) {
             return static::$oInstance;
         } else {
@@ -255,7 +255,7 @@ class response {
      * @return $this
      */
     public function header($mixName, $strValue = null) {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         if (is_array ( $mixName )) {
             $this->arrHeader = array_merge ( $this->arrHeader, $mixName );
@@ -287,7 +287,7 @@ class response {
      * @return $this
      */
     public function option($mixName, $strValue = null) {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         if (is_array ( $mixName )) {
             $this->arrOption = array_merge ( $this->arrOption, $mixName );
@@ -325,7 +325,7 @@ class response {
      * @return $this
      */
     public function cookie($sName, $mixValue = '', array $in = []) {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         cookie::sets ( $sName, $mixValue, $in );
         return $this;
@@ -338,7 +338,7 @@ class response {
      * @return $this
      */
     public function data($mixData) {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         $this->mixData = $mixData;
         return $this;
@@ -360,7 +360,7 @@ class response {
      * @return $this
      */
     public function code($intCode) {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         $this->intCode = intval ( $intCode );
         return $this;
@@ -382,7 +382,7 @@ class response {
      * @return $this
      */
     public function contentType($strContentType) {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         $this->strContentType = $strContentType;
         return $this;
@@ -403,7 +403,7 @@ class response {
      * @return \Q\request\response
      */
     public function charset($strCharset) {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         $this->strCharset = $strCharset;
         return $this;
@@ -424,7 +424,7 @@ class response {
      * @return $this
      */
     public function content($strContent) {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         $this->strContent = $strContent;
         return $this;
@@ -492,7 +492,7 @@ class response {
      * @return $this
      */
     public function responseType($strResponseType) {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         $this->strResponseType = $strResponseType;
         return $this;
@@ -516,7 +516,7 @@ class response {
      * @return $this
      */
     public function json($arrData = null, $intOptions = JSON_UNESCAPED_UNICODE, $strCharset = 'utf-8') {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         if (is_array ( $arrData )) {
             $this->data ( $arrData );
@@ -532,7 +532,7 @@ class response {
      * @return $this
      */
     public function jsonCallback($strJsonCallback) {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         return $this->option ( 'json_callback', $strJsonCallback );
     }
@@ -547,7 +547,7 @@ class response {
      * @return $this
      */
     public function jsonp($strJsonCallback, $arrData = null, $intOptions = JSON_UNESCAPED_UNICODE, $strCharset = 'utf-8') {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         return $this->jsonCallback ( $strJsonCallback )->json ( $arrData, $intOptions, $strCharset );
     }
@@ -563,7 +563,7 @@ class response {
      * @return void|string
      */
     public function view($sFile = '', $in = []) {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         if (! static::$objView) {
             static::$objView = view::run ();
@@ -588,7 +588,7 @@ class response {
      * @return $this
      */
     public function assign($mixName, $mixValue = null) {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         if (! static::$objView) {
             static::$objView = view::run ();
@@ -608,7 +608,7 @@ class response {
      * @return void
      */
     public function redirect($sUrl, $in = []) {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         return $this->responseType ( 'redirect' )->code ( 301 )->option ( 'redirect_url', $sUrl )->option ( 'in', $in );
     }
@@ -621,7 +621,7 @@ class response {
      * @return $this
      */
     public function xml($arrData = null, $strCharset = 'utf-8') {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         if (is_array ( $arrData )) {
             $this->data ( $arrData );
@@ -638,7 +638,7 @@ class response {
      * @return $this
      */
     public function download($sFileName, $sDownName = '', array $arrHeader = []) {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         if (! $sDownName) {
             $sDownName = basename ( $sFileName );
@@ -656,7 +656,7 @@ class response {
      * @return $this
      */
     public function file($sFileName, array $arrHeader = []) {
-        if ($this->checkFlowCondition_ ())
+        if ($this->checkFlowControl_ ())
             return $this;
         return $this->downloadAndFile_ ( $sFileName, $arrHeader )->header ( 'Content-Disposition', 'inline;filename=' . basename ( $sFileName ) );
     }
@@ -681,7 +681,7 @@ class response {
      */
     private function downloadAndFile_($sFileName, array $arrHeader = []) {
         if (! is_file ( $sFileName )) {
-            exception::throws ( \Q::i18n ( '读取的文件不存在' ), 'Q\request\exception' );
+            exceptions::throws ( \Q::i18n ( '读取的文件不存在' ), 'Q\request\exception' );
         }
         $sFileName = realpath ( $sFileName );
         

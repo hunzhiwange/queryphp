@@ -3,8 +3,21 @@
 // ©2010-2017 http://queryphp.com All rights reserved.
 namespace Q\console;
 
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
+
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Q\exception\exceptions;
 
 /**
  * 命令行参数解析 <from lavarel>
@@ -24,7 +37,7 @@ class parser {
      */
     public static function parse($strExpression) {
         if (trim ( $strExpression ) === '') {
-            exception::throws ( 'command is allowed to be empty', 'Q\console\exception' );
+            exceptions::invalidArgumentException ();
         }
         
         preg_match ( '/[^\s]+/', $strExpression, $arrMatches );
@@ -32,7 +45,7 @@ class parser {
         if (isset ( $arrMatches [0] )) {
             $strName = $arrMatches [0];
         } else {
-            exception::throws ( 'can not parse command', 'Q\console\exception' );
+            exceptions::runtimeException ();
         }
         
         preg_match_all ( '/\{\s*(.*?)\s*\}/', $strExpression, $arrMatches );

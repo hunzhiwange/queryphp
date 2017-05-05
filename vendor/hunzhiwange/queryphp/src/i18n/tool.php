@@ -15,7 +15,7 @@ namespace Q\i18n;
 ##########################################################
 queryphp;
 
-use Q\exception\exception;
+use Q\exception\exceptions;
 
 /**
  * 语言包工具类
@@ -54,7 +54,7 @@ class tool {
         // 防止空数据无法写入
         $arrTexts ['Query Yet Simple'] = 'Query Yet Simple';
         if (! file_put_contents ( $sCacheFile, "/* I18n Cache */\n;$(function(){\n    $.fn.queryphp('i18nPackage',\''.$sI18nSet.'\'," . json_encode ( $arrTexts, 256 ) . "); \n});" )) {
-            exception::throws ( sprintf ( 'Dir %s do not have permission.', $sCacheDir ) );
+            exceptions::throws ( sprintf ( 'Dir %s do not have permission.', $sCacheDir ) );
         }
         
         return $arrTexts;
@@ -85,7 +85,7 @@ class tool {
         // 防止空数据无法写入
         $arrTexts ['Query Yet Simple'] = 'Query Yet Simple';
         if (! file_put_contents ( $sCacheFile, "<?php\n /* I18n Cache */ \n return " . var_export ( $arrTexts, true ) . "\n?>" )) {
-            exception::throws ( sprintf ( 'Dir %s do not have permission.', $sDir ) );
+            exceptions::throws ( sprintf ( 'Dir %s do not have permission.', $sDir ) );
         }
         
         return $arrTexts;
@@ -152,7 +152,7 @@ class tool {
         $sContent = '';
         foreach ( $I18nFile as $sFile ) {
             if (! is_file ( $sFile )) {
-                exception::throws ( sprintf ( 'The i18n file < %s > is not exists!', $sFile ), 'Q\event\exception' );
+                exceptions::throws ( sprintf ( 'The i18n file < %s > is not exists!', $sFile ), 'Q\event\exception' );
             }
             $sContent .= \Q::escapeCharacter ( file_get_contents ( $sFile ) );
         }

@@ -1,7 +1,7 @@
 <?php
 // [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
 // ©2010-2017 http://queryphp.com All rights reserved.
-namespace Q\collection;
+namespace Q\datastruct\collection;
 
 <<<queryphp
 ##########################################################
@@ -18,7 +18,8 @@ queryphp;
 use Iterator;
 use ArrayAccess;
 use Countable;
-use Q\exception\exception;
+use Q\exception\exceptions;
+use Q\assert\assert;
 
 /**
  * 数组转对象集合
@@ -73,7 +74,7 @@ class collection implements Iterator, ArrayAccess, Countable {
      * @return void
      */
     public function __call($sMethod, $arrArgs) {
-        exception::throws ( sprintf ( 'Method %s is not implemented', $sMethod ), 'Q\collection\exception' );
+        exceptions::badMethodCallException ();
     }
     
     /**
@@ -242,10 +243,7 @@ class collection implements Iterator, ArrayAccess, Countable {
      */
     public function each() {
         $arrArgs = func_get_args ();
-        if (empty ( $arrArgs [0] ) || ! is_callable ( $arrArgs [0] )) {
-            exception::throws ( 'The first parameter must be a callback', 'Q\collection\exception' );
-        }
-        
+        assert::callback ( $arrArgs [0] );
         if (! empty ( $arrArgs [1] ) && is_string ( $arrArgs [1] )) {
             $sKeyName = $arrArgs [1];
         } else {
@@ -538,6 +536,6 @@ class collection implements Iterator, ArrayAccess, Countable {
             $sType = gettype ( $mixObject );
         }
         
-        exception::throws ( \Q::i18n ( '集合只能容纳 %s 类型的对象，而不是 %s 类型的值', $this->sType, $sType ), 'Q\collection\exception' );
+        exceptions::invalidArgumentException ();
     }
 }

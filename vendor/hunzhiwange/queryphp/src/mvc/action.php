@@ -15,7 +15,7 @@ namespace Q\mvc;
 ##########################################################
 queryphp;
 
-use Q\exception\exception;
+use Q\exception\exceptions;
 
 /**
  * 基类方法器
@@ -61,7 +61,7 @@ abstract class action {
      */
     public function __call($sMethod, $arrArgs) {
         if ($sMethod == 'run') {
-            exception::throws ( \Q::i18n ( '方法对象不允许通过 __call 方法执行  run 入口' ), 'Q\mvc\exception' );
+            exceptions::throws ( \Q::i18n ( '方法对象不允许通过 __call 方法执行  run 入口' ), 'Q\mvc\exception' );
         }
         
         $this->initController_ ();

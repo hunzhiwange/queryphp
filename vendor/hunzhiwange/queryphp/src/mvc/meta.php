@@ -159,7 +159,7 @@ class meta {
      * @param string $sModelClass            
      * @return $this
      */
-    static public function instance($sModelClass) {
+    public static function instance($sModelClass) {
         if (! isset ( static::$arrInstances [$sModelClass] )) {
             return static::$arrInstances [$sModelClass] = new self ( $sModelClass );
         } else {

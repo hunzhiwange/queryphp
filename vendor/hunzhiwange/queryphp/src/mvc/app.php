@@ -16,8 +16,8 @@ namespace Q\mvc;
 queryphp;
 
 use Q\request\response;
-use Q\traits\auto_injection;
-use Q\exception\exception;
+use Q\traits\dependency\injection as dependency_injection;
+use Q\exception\exceptions;
 use Q\cookie\cookie;
 
 /**
@@ -30,7 +30,7 @@ use Q\cookie\cookie;
  */
 class app {
     
-    use auto_injection;
+    use dependency_injection;
     
     /**
      * 当前项目
@@ -80,7 +80,7 @@ class app {
      * @param array $arrOption            
      * @return \Q\mvc\app
      */
-    static public function instance(project $objProject, $sApp, $arrOption = []) {
+    public static function instance(project $objProject, $sApp, $arrOption = []) {
         return new self ( $objProject, $sApp, $arrOption );
     }
     
@@ -174,12 +174,12 @@ class app {
             if (($mixModule = $this->getController ( $sController ))) {
                 switch (true) {
                     // 判断是否为回调
-                    case \Q::varType ( $mixModule, 'callback' ) :
+                    case is_callable ( $mixModule ) :
                         $this->registerAction ( $sController, $sAction, $mixModule );
                         break;
                     
                     // 如果为方法则注册为方法
-                    case \Q::varType ( $mixModule, 'object' ) && (method_exists ( $mixModule, 'run' ) || \Q::isKindOf ( $mixModule, 'Q\mvc\action' )) :
+                    case is_object ( $mixModule ) && (method_exists ( $mixModule, 'run' ) || \Q::isKindOf ( $mixModule, 'Q\mvc\action' )) :
                         $this->registerAction ( $sController, $sAction, [ 
                                 $mixModule,
                                 'run' 
@@ -189,12 +189,12 @@ class app {
                     // 如果为控制器实例，注册为回调
                     case \Q::isKindOf ( $mixModule, 'Q\mvc\controller' ) :
                     // 实例回调
-                    case \Q::varType ( $mixModule, 'object' ) :
+                    case is_object ( $mixModule ) :
                     // 静态类回调
-                    case \Q::varType ( $mixModule, 'string' ) && \Q::varType ( [ 
+                    case is_string ( $mixModule ) && is_callable ( [ 
                             $mixModule,
                             $sAction 
-                    ], 'callback' ) :
+                    ] ) :
                         $this->registerAction ( $sController, $sAction, [ 
                                 $mixModule,
                                 $sAction 
@@ -202,21 +202,21 @@ class app {
                         break;
                     
                     // 数组支持,方法名即数组的键值,注册方法
-                    case \Q::varType ( $mixModule, 'array' ) :
+                    case is_array ( $mixModule ) :
                         if (isset ( $mixModule [$sAction] )) {
                             $this->registerAction ( $sController, $sAction, $mixModule [$sAction] );
                         } else {
-                            exception::throws ( \Q::i18n ( '数组控制器不存在 %s 方法键值', $sAction ), 'Q\mvc\exception' );
+                            exceptions::throws ( \Q::i18n ( '数组控制器不存在 %s 方法键值', $sAction ), 'Q\mvc\exception' );
                         }
                         break;
                     
                     // 简单数据直接输出
-                    case \Q::varType ( $mixModule, 'scalar' ) :
+                    case is_scalar ( $mixModule ) :
                         $this->registerAction ( $sController, $sAction, $mixModule );
                         break;
                     
                     default :
-                        exception::throws ( \Q::i18n ( '注册的控制器类型 %s 不受支持', $sController ), 'Q\mvc\exception' );
+                        exceptions::throws ( \Q::i18n ( '注册的控制器类型 %s 不受支持', $sController ), 'Q\mvc\exception' );
                         break;
                 }
             } else {
@@ -251,7 +251,7 @@ class app {
                                     'run' 
                             ] );
                         } else {
-                            exception::throws ( \Q::i18n ( '方法 %s 必须为  Q\mvc\action 实例', $sAction ), 'Q\mvc\exception' );
+                            exceptions::throws ( \Q::i18n ( '方法 %s 必须为  Q\mvc\action 实例', $sAction ), 'Q\mvc\exception' );
                         }
                     }
                 }
@@ -277,12 +277,12 @@ class app {
         if ($mixAction !== null) {
             switch (true) {
                 // 判断是否为控制器回调
-                case \Q::varType ( $mixAction, 'array' ) && isset ( $mixAction [1] ) && \Q::isKindOf ( $mixAction [0], 'Q\mvc\controller' ) :
+                case is_array ( $mixAction ) && isset ( $mixAction [1] ) && \Q::isKindOf ( $mixAction [0], 'Q\mvc\controller' ) :
                     try {
                         if (\Q::hasPublicMethod ( $mixAction [0], $mixAction [1] )) {
                             return $this->getObjectCallbackResultWithMethodArgs_ ( $mixAction, $this->getNodeArgs_ () );
                         } else {
-                            exception::throws ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', $sController, $sAction ), 'Q\mvc\exception' );
+                            exceptions::throws ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', $sController, $sAction ), 'Q\mvc\exception' );
                         }
                     } catch ( \ReflectionException $oE ) {
                         // 请求默认子方法器
@@ -296,13 +296,13 @@ class app {
                     break;
                 
                 // 判断是否为回调
-                case \Q::varType ( $mixAction, 'callback' ) :
+                case is_callable ( $mixAction ) :
                     return $this->getObjectCallbackResultWithMethodArgs_ ( $mixAction, $this->getNodeArgs_ () );
                     break;
                 
                 // 如果为方法则注册为方法
                 case \Q::isKindOf ( $mixAction, 'Q\mvc\action' ) :
-                case \Q::varType ( $mixAction, 'object' ) :
+                case is_object ( $mixAction ) :
                     if (method_exists ( $mixAction, 'run' )) {
                         // 注册方法
                         $this->registerAction ( $sController, $sAction, [ 
@@ -311,26 +311,26 @@ class app {
                         ] );
                         return $this->action ( $sController, $sAction );
                     } else {
-                        exception::throws ( \Q::i18n ( '方法对象不存在执行入口  run' ), 'Q\mvc\exception' );
+                        exceptions::throws ( \Q::i18n ( '方法对象不存在执行入口  run' ), 'Q\mvc\exception' );
                     }
                     break;
                 
                 // 数组支持,方法名即数组的键值,注册方法
-                case \Q::varType ( $mixAction, 'array' ) :
+                case is_array ( $mixAction ) :
                     return $mixAction;
                     break;
                 
                 // 简单数据直接输出
-                case \Q::varType ( $mixAction, 'scalar' ) :
+                case is_scalar ( $mixAction ) :
                     return $mixAction;
                     break;
                 
                 default :
-                    exception::throws ( \Q::i18n ( '注册的方法类型 %s 不受支持', $sAction ), 'Q\mvc\exception' );
+                    exceptions::throws ( \Q::i18n ( '注册的方法类型 %s 不受支持', $sAction ), 'Q\mvc\exception' );
                     break;
             }
         } else {
-            exception::throws ( \Q::i18n ( '控制器 %s 的方法 %s 未注册', $sController, $sAction ), 'Q\mvc\exception' );
+            exceptions::throws ( \Q::i18n ( '控制器 %s 的方法 %s 未注册', $sController, $sAction ), 'Q\mvc\exception' );
         }
     }
     
@@ -520,7 +520,7 @@ class app {
             $arrOption = \Q::arrayMergePlus ( $arrOption );
             
             if (! file_put_contents ( $sOptionCache, "<?php\n /* option cache */ \n return " . var_export ( $arrOption, true ) . "\n?>" )) {
-                exception::throws ( sprintf ( 'Dir %s Do not have permission.', $this->optioncache_path ) );
+                exceptions::throws ( sprintf ( 'Dir %s Do not have permission.', $this->optioncache_path ) );
             }
             
             $GLOBALS ['~@option'] = \Q::option ( $arrOption );

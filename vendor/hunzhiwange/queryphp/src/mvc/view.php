@@ -62,7 +62,7 @@ class view {
      *
      * @var Q\mvc\view
      */
-    static public function run() {
+    public static function run() {
         if (! static::$objView) {
             static::$objView = new self ();
         }
@@ -148,7 +148,7 @@ class view {
      * @param string $sDir            
      * @return string
      */
-    static public function setThemeDir($sDir) {
+    public static function setThemeDir($sDir) {
         return static::$sTheme = $sDir;
     }
     
@@ -158,7 +158,7 @@ class view {
      * @param string $sDir            
      * @return string
      */
-    static public function setThemeDefault($sDir) {
+    public static function setThemeDefault($sDir) {
         return static::$sThemeDefault = $sDir;
     }
     
@@ -171,7 +171,7 @@ class view {
      *            扩展名
      * @return string
      */
-    static public function parseFile($sTpl, $sExt = '') {
+    public static function parseFile($sTpl, $sExt = '') {
         $calHelp = function ($sContent) {
             return str_replace ( [ 
                     ':',
@@ -220,7 +220,7 @@ class view {
      *            文件地址
      * @return string
      */
-    static public function parseDefaultFile($sTpl) {
+    public static function parseDefaultFile($sTpl) {
         if (is_file ( $sTpl )) {
             return $sTpl;
         }

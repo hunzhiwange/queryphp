@@ -6,10 +6,35 @@
 namespace home\application\controller;
 
 use Q\mvc\controller;
+
 // use home\infrastructure\provider;
 // use home\domain\model\test;
 // use Q\traits\test as test2;
 // use Q\exception\exception;
+
+//use Q\assert\assert;
+
+//use Q\log\test;
+
+//assert::registerExpansion(0,function($key=0,$minutes=0,$callback=0){
+  //echo  test::$xxx;
+    
+ //   print_r(func_get_args());
+//});
+
+// $xxx=function(){
+//     echo 'xx22';
+// };
+// test::registerExpansion('want2',$xxx);
+
+
+//test::xxs(111,222,44);
+
+// $test = new test();
+
+// $test->want2('xx');
+
+use Q\log\log;
 
 class index extends controller {
     
@@ -27,6 +52,13 @@ class index extends controller {
      * @return void
      */
     public function index() {
+        echo 'Hello world';
+        
+        log::runs('xxxxxxxx','debug');
+        
+        //assert::trueExpression('');
+        exit();
+        //xxxx();
         //echo 'test';
      //   test2::xxxx();
      

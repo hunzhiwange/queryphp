@@ -16,10 +16,8 @@ namespace Q\view;
 queryphp;
 
 use Q\queue\stack;
-use Q\exception\exception;
-use Q\traits\object_option;
-use Q\traits\static_entrance;
-use Q\option\option;
+use Q\exception\exceptions;
+use Q\traits\dynamic\expansion as dynamic_expansion;
 
 /**
  * 分析模板
@@ -31,8 +29,7 @@ use Q\option\option;
  */
 class parsers {
     
-    use object_option;
-    use static_entrance;
+    use dynamic_expansion;
     
     /**
      * 分析器
@@ -141,19 +138,9 @@ class parsers {
      *
      * @var array
      */
-    protected $arrDefaultObjectOption = [ 
+    protected $arrInitExpansionInstanceArgs = [ 
             'theme_strip_space' => TRUE,
             'theme_tag_note' => FALSE 
-    ];
-    
-    /**
-     * 初始化参数
-     *
-     * @var array
-     */
-    protected $arrStaticEntranceType = [ 
-            'theme_strip_space',
-            'theme_tag_note' 
     ];
     
     /**
@@ -164,8 +151,6 @@ class parsers {
      * @return void
      */
     public function __construct() {
-        $this->mergeObjectOption_ ();
-        
         // 注册编译器
         $arrMethods = get_class_methods ( __NAMESPACE__ . '\compilers' );
         
@@ -215,7 +200,7 @@ class parsers {
      *
      * @var Q\theme\parsers
      */
-    static public function run() {
+    public static function run() {
         if (! static::$objParsers) {
             static::$objParsers = new self ();
         }
@@ -262,7 +247,7 @@ class parsers {
      */
     public function doCombile($sFile, $sCachePath, $bReturn = false) {
         if (! is_file ( $sFile )) {
-            exception::throws ( printf ( 'file %s is not exits', $sFile ), 'Q\view\exception' );
+            exceptions::throws ( printf ( 'file %s is not exits', $sFile ), 'Q\view\exception' );
         }
         
         // 源码
@@ -290,7 +275,7 @@ class parsers {
         }
         
         // 清理模板编译文件空格
-        if ($this->getObjectOption_ ( 'theme_strip_space' ) === true) {
+        if ($this->getExpansionInstanceArgs_ ( 'theme_strip_space' ) === true) {
             
             /**
              * 清理 HTML 清除换行符,清除制表符,去掉注释标记
@@ -541,7 +526,7 @@ class parsers {
      * @param string $sTag            
      * @return array
      */
-    static public function regParser($sTag) {
+    public static function regParser($sTag) {
         static::$arrParses [] = $sTag;
         return $sTag;
     }
@@ -560,7 +545,7 @@ class parsers {
      *            标签对应的编译器
      * @return void
      */
-    static public function regCompilers($sType, $Name, $sTag) {
+    public static function regCompilers($sType, $Name, $sTag) {
         if (! is_array ( $Name )) {
             $Name = [ 
                     $Name 
@@ -587,7 +572,7 @@ class parsers {
      *         start_in 标签开始的所在的行的起始字节数
      *         end_in 标签结束的所在的行的起始字节数
      */
-    static public function getPosition($sContent, $sFind, $nStart) {
+    public static function getPosition($sContent, $sFind, $nStart) {
         /*
          *
          * ======= start =======
@@ -668,7 +653,7 @@ class parsers {
      *         in 第一个在第二里面，成为它的子模板
      *         out 第一个在第一个里面，成为它的子模板
      */
-    static public function positionRelative($arrOne, $arrTwo) {
+    public static function positionRelative($arrOne, $arrTwo) {
         
         /**
          * 第一个匹配的标签在第二个前面
@@ -766,7 +751,7 @@ class parsers {
         /**
          * 交叉（两个时间段相互关系）
          */
-        exception::throws ( \Q::i18n ( '标签库不支持交叉' ), 'Q\view\exception' );
+        exceptions::throws ( \Q::i18n ( '标签库不支持交叉' ), 'Q\view\exception' );
     }
     
     /**
@@ -778,7 +763,7 @@ class parsers {
      *            待加入的模板
      * @return array
      */
-    static public function addThemeTree($arrTop, $arrNew) {
+    public static function addThemeTree($arrTop, $arrNew) {
         $arrResult = [ ];
         
         foreach ( $arrTop ['children'] as $arrChild ) {
@@ -843,7 +828,7 @@ class parsers {
      *            待编译的模板
      * @return string 返回编译后的模板
      */
-    static public function compileTheme(&$arrTheme) {
+    public static function compileTheme(&$arrTheme) {
         foreach ( $arrTheme ['children'] as $intKey => $arrOne ) {
             $strSource = $arrOne ['source'];
             
@@ -878,7 +863,7 @@ class parsers {
      * @param string $sContent            
      * @return string
      */
-    static public function revertEncode($sContent) {
+    public static function revertEncode($sContent) {
         $nRand = rand ( 1000000, 9999999 );
         return "__##revert##START##{$nRand}@" . base64_encode ( $sContent ) . '##END##revert##__';
     }
@@ -889,7 +874,7 @@ class parsers {
      * @param string $sContent            
      * @return string
      */
-    static public function globalEncode($sContent) {
+    public static function globalEncode($sContent) {
         $nRand = rand ( 1000000, 9999999 );
         return "__##global##START##{$nRand}@" . base64_encode ( $sContent ) . '##END##global##__';
     }
@@ -900,7 +885,7 @@ class parsers {
      * @param string $sTxt            
      * @return string
      */
-    static public function escapeCharacter($sTxt) {
+    public static function escapeCharacter($sTxt) {
         return \Q::escapeRegexCharacter ( $sTxt );
     }
     
@@ -1026,7 +1011,7 @@ class parsers {
             if (! $arrTailTag or ! $this->findHeadTag ( $arrTag, $arrTailTag )) { // 单标签节点
                 
                 if ($arrNodeTag [$arrTag ['name']] ['single'] !== true) {
-                    exception::throws ( \Q::i18n ( '%s 类型节点 必须成对使用，没有找到对应的尾标签', $arrTag ['name'] ), 'Q\view\exception' );
+                    exceptions::throws ( \Q::i18n ( '%s 类型节点 必须成对使用，没有找到对应的尾标签', $arrTag ['name'] ), 'Q\view\exception' );
                 }
                 if ($arrTailTag) { // 退回栈中
                     $oTailStack->in ( $arrTailTag );
@@ -1099,7 +1084,7 @@ class parsers {
      */
     protected function findHeadTag($arrTag, $arrTailTag) {
         if ($arrTailTag ['type'] != 'tail') {
-            exception::throws ( \Q::i18n ( '参数必须是一个尾标签' ), 'Q\view\exception' );
+            exceptions::throws ( \Q::i18n ( '参数必须是一个尾标签' ), 'Q\view\exception' );
         }
         return preg_match ( "/^{$arrTailTag['name']}/i", $arrTag ['name'] );
     }
@@ -1111,20 +1096,7 @@ class parsers {
      * @return array
      */
     protected function getTag($sType) {
-        return $this->arrTag [$sType . ($this->getObjectOption_ ( 'theme_tag_note' ) === true ? '_node' : '')];
-    }
-    
-    /**
-     * 初始化静态入口配置
-     *
-     * @return void
-     */
-    protected function initStaticEntrance_() {
-        $arrObjectOption = [ ];
-        foreach ( $this->getStaticEntranceType_ () as $sObjectOption ) {
-            $arrObjectOption [$sObjectOption] = option::gets ( $sObjectOption );
-        }
-        return $this->setObjectOption ( $arrObjectOption );
+        return $this->arrTag [$sType . ($this->getExpansionInstanceArgs_ ( 'theme_tag_note' ) === true ? '_node' : '')];
     }
     
     // ######################################################

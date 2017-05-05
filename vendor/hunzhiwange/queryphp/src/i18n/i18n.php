@@ -15,8 +15,8 @@ namespace Q\i18n;
 ##########################################################
 queryphp;
 
-use Q\traits\object_option;
-use Q\exception\exception;
+use Q\traits\object\option as object_option;
+use Q\exception\exceptions;
 use Q\cookie\cookie;
 
 /**
@@ -105,7 +105,7 @@ class i18n {
      */
     public function addI18n($sI18nName, $arrData = []) {
         if (! $sI18nName || ! is_string ( $sI18nName )) {
-            exception::throws ( 'I18n name not allowed empty!' );
+            exceptions::throws ( 'I18n name not allowed empty!' );
         }
         
         if (array_key_exists ( $sI18nName, $this->arrText )) {
@@ -129,13 +129,13 @@ class i18n {
         } elseif ($sCookieName) {
             $sI18nSet = cookie::gets ( $sCookieName );
             if (empty ( $sI18nSet )) {
-                $sI18nSet = $this->getObjectOption_ ( 'i18n_default' );
+                $sI18nSet = $this->getExpansionInstanceArgs_ ( 'i18n_default' );
             }
-        } elseif ($this->getObjectOption_ ( 'i18n_auto_accept' ) && isset ( $_SERVER ['HTTP_ACCEPT_LANGUAGE'] )) {
+        } elseif ($this->getExpansionInstanceArgs_ ( 'i18n_auto_accept' ) && isset ( $_SERVER ['HTTP_ACCEPT_LANGUAGE'] )) {
             preg_match ( '/^([a-z\-]+)/i', $_SERVER ['HTTP_ACCEPT_LANGUAGE'], $arrMatches );
             $sI18nSet = $arrMatches [1];
         } else {
-            $sI18nSet = $this->getObjectOption_ ( 'i18n_default' );
+            $sI18nSet = $this->getExpansionInstanceArgs_ ( 'i18n_default' );
         }
         
         $this->setContext ( $sI18nSet );

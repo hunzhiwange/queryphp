@@ -27,7 +27,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Q\traits\auto_injection;
+use Q\traits\dependency\injection as dependency_injection;
 
 /**
  * 命令抽象类 <from lavarel>
@@ -39,7 +39,7 @@ use Q\traits\auto_injection;
  */
 abstract class command extends SymfonyCommand {
     
-    use auto_injection;
+    use dependency_injection;
     
     /**
      * QueryPHP 容器

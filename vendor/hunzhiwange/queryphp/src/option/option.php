@@ -15,8 +15,8 @@ namespace Q\option;
 ##########################################################
 queryphp;
 
-use Q\exception\exception;
-use Q\traits\static_entrance;
+use Q\exception\exceptions;
+use Q\traits\dynamic\expansion as dynamic_expansion;
 
 /**
  * 配置管理类
@@ -28,7 +28,7 @@ use Q\traits\static_entrance;
  */
 class option {
     
-    use static_entrance;
+    use dynamic_expansion;
     
     /**
      * 配置数据

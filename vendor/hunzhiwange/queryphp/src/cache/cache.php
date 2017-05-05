@@ -16,7 +16,7 @@ namespace Q\cache;
 queryphp;
 
 use Q\contract\cache\cache as contract_cache;
-use Q\traits\object_option;
+use Q\traits\object\option as object_option;
 
 /**
  * 缓存抽象类

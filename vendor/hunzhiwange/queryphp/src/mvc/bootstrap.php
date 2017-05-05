@@ -15,7 +15,7 @@ namespace Q\mvc;
 ##########################################################
 queryphp;
 
-use Q\exception\exception;
+use Q\exception\exceptions;
 
 /**
  * 启动程序
@@ -92,7 +92,7 @@ class bootstrap {
      */
     private function check_() {
         if (isset ( $_REQUEST ['GLOBALS'] ) or isset ( $_FILES ['GLOBALS'] )) {
-            exception::throws ( 'GLOBALS not allowed!' );
+            exceptions::throws ( 'GLOBALS not allowed!' );
         }
     }
     

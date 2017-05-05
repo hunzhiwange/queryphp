@@ -17,8 +17,8 @@ queryphp;
 
 use Q\support\container;
 use Q\mvc\view;
-use Q\traits\auto_injection;
-use Q\exception\exception;
+use Q\traits\dependency\injection as dependency_injection;
+use Q\exception\exceptions;
 
 /**
  * 项目管理
@@ -30,7 +30,7 @@ use Q\exception\exception;
  */
 class project extends container {
     
-    use auto_injection;
+    use dependency_injection;
     
     /**
      * 当前项目实例
@@ -136,7 +136,7 @@ class project extends container {
      * @param array $arrOption            
      * @return Q\mvc\project
      */
-    static public function bootstrap($arrOption = []) {
+    public static function bootstrap($arrOption = []) {
         if (static::$objProject !== null) {
             return static::$objProject;
         } else {
@@ -312,7 +312,7 @@ class project extends container {
                 'memcache' => 'Q\cache\memcache',
                 
                 // collection
-                'collection' => 'Q\collection\collection',
+                'collection' => 'Q\datastruct\collection\collection',
                 
                 // cookie
                 'cookie' => 'Q\cookie\cookie',
@@ -345,8 +345,8 @@ class project extends container {
                 'option' => 'Q\option\option',
                 
                 // queue
-                'queue' => 'Q\queue\queue',
-                'stack' => 'Q\queue\stack',
+                'queue' => 'Q\datastruct\queue\queue',
+                'stack' => 'Q\datastruct\queue\stack',
                 
                 // request
                 'request' => 'Q\request\request',
@@ -369,7 +369,7 @@ class project extends container {
     private function setPath_() {
         // 基础路径
         if (! isset ( $this->arrOption ['path'] )) {
-            exception::throws ( "project dir is not set" );
+            exceptions::throws ( "project dir is not set" );
         }
         $this->strPath = rtrim ( $this->arrOption ['path'], '\\' );
         

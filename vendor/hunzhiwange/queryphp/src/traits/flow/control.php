@@ -1,7 +1,7 @@
 <?php
 // [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
 // ©2010-2017 http://queryphp.com All rights reserved.
-namespace Q\traits;
+namespace Q\traits\flow;
 
 <<<queryphp
 ##########################################################
@@ -21,23 +21,23 @@ queryphp;
  * @author Xiangmin Liu<635750556@qq.com>
  * @package $$
  * @since 2017.04.13
- * @version 4.0
+ * @version 1.0
  */
-trait flow_condition {
+trait control {
     
     /**
      * 逻辑代码是否处于条件表达式中
      *
      * @var boolean
      */
-    protected $booInFlowCondition = false;
+    protected $booInFlowControl = false;
     
     /**
      * 条件表达式是否为真
      *
      * @var boolean
      */
-    protected $booFlowConditionIsTrue = false;
+    protected $booFlowControlIsTrue = false;
     
     /**
      * 由继承的类在 __call 中调用此方法
@@ -46,7 +46,7 @@ trait flow_condition {
      * @param 参数 $arrArgs            
      * @return $this
      */
-    protected function flowConditionCall_($sMethod, $arrArgs) {
+    protected function flowControlCall_($sMethod, $arrArgs) {
         // 条件控制语句支持
         if (in_array ( $sMethod, [ 
                 'if',
@@ -57,13 +57,13 @@ trait flow_condition {
             switch ($sMethod) {
                 case 'if' :
                 case 'elseIf' :
-                    $this->setFlowCondition_ ( true, isset ( $arrArgs [0] ) ? ( bool ) $arrArgs [0] : false );
+                    $this->setFlowControl_ ( true, isset ( $arrArgs [0] ) ? ( bool ) $arrArgs [0] : false );
                     break;
                 case 'else' :
-                    $this->setFlowCondition_ ( true, ! $this->getFlowCondition_ ()[1] );
+                    $this->setFlowControl_ ( true, ! $this->getFlowControl_ ()[1] );
                     break;
                 case 'endIf' :
-                    $this->setFlowCondition_ ( false, false );
+                    $this->setFlowControl_ ( false, false );
                     break;
             }
             return $this;
@@ -75,13 +75,13 @@ trait flow_condition {
     /**
      * 设置当前条件表达式状态
      *
-     * @param boolean $booInFlowCondition            
-     * @param boolean $booFlowConditionIsTrue            
+     * @param boolean $booInFlowControl            
+     * @param boolean $booFlowControlIsTrue            
      * @return void
      */
-    protected function setFlowCondition_($booInFlowCondition, $booFlowConditionIsTrue) {
-        $this->booInFlowCondition = $booInFlowCondition;
-        $this->booFlowConditionIsTrue = $booFlowConditionIsTrue;
+    protected function setFlowControl_($booInFlowControl, $booFlowControlIsTrue) {
+        $this->booInFlowControl = $booInFlowControl;
+        $this->booFlowControlIsTrue = $booFlowControlIsTrue;
     }
     
     /**
@@ -89,10 +89,10 @@ trait flow_condition {
      *
      * @return array
      */
-    protected function getFlowCondition_() {
+    protected function getFlowControl_() {
         return [ 
-                $this->booInFlowCondition,
-                $this->booFlowConditionIsTrue 
+                $this->booInFlowControl,
+                $this->booFlowControlIsTrue 
         ];
     }
     
@@ -101,7 +101,7 @@ trait flow_condition {
      *
      * @return boolean
      */
-    protected function checkFlowCondition_() {
-        return $this->booInFlowCondition && ! $this->booFlowConditionIsTrue;
+    protected function checkFlowControl_() {
+        return $this->booInFlowControl && ! $this->booFlowControlIsTrue;
     }
 }
