@@ -15,6 +15,8 @@ namespace Q\router;
 ##########################################################
 queryphp;
 
+use Q\traits\dynamic\expansion as dynamic_expansion;
+
 /**
  * 路由解析
  *
@@ -24,6 +26,8 @@ queryphp;
  * @version 1.0
  */
 class router {
+    
+    use dynamic_expansion;
     
     /**
      * 注册域名

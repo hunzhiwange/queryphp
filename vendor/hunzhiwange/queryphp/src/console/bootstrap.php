@@ -15,6 +15,8 @@ namespace Q\console;
 ##########################################################
 queryphp;
 
+use Q\router\router;
+
 /**
  * 命令行启动文件
  *
@@ -23,6 +25,6 @@ queryphp;
  * @since 2017.04.17
  * @version 4.0
  */
-\Q::router ()->bind ( 'console://bootstrap/index', function () {
+router::binds ( 'console://bootstrap/index', function () {
     return application::instance ()->run ();
 } );

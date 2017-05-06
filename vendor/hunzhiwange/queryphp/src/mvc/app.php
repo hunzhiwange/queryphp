@@ -19,6 +19,7 @@ use Q\request\response;
 use Q\traits\dependency\injection as dependency_injection;
 use Q\exception\exceptions;
 use Q\cookie\cookie;
+use Q\router\router;
 
 /**
  * 应用程序对象
@@ -341,11 +342,11 @@ class app {
      * @return 注册的控制器
      */
     public function getController($sControllerName) {
-        $mixController = \Q::router ()->getBind ( $this->packControllerAndAction_ ( $sControllerName ) );
+        $mixController = router::getBinds ( $this->packControllerAndAction_ ( $sControllerName ) );
         if ($mixController !== null) {
             return $mixController;
         }
-        return \Q::router ()->getBind ( $sControllerName );
+        return router::getBinds ( $sControllerName );
     }
     
     /**
@@ -355,9 +356,9 @@ class app {
      * @return boolean
      */
     public function hasController($sControllerName) {
-        $booHasController = \Q::router ()->hasBind ( $this->packControllerAndAction_ ( $sControllerName ) );
+        $booHasController = router::hasBinds ( $this->packControllerAndAction_ ( $sControllerName ) );
         if ($booHasController === false) {
-            $booHasController = \Q::router ()->hasBind ( $sControllerName );
+            $booHasController = router::hasBinds ( $sControllerName );
         }
         return $booHasController;
     }
@@ -370,7 +371,7 @@ class app {
      * @return 注册的控制器
      */
     public function registerController($sControllerName, $mixController) {
-        \Q::router ()->bind ( $this->packControllerAndAction_ ( $sControllerName ), $mixController );
+        router::binds ( $this->packControllerAndAction_ ( $sControllerName ), $mixController );
     }
     
     /**
@@ -380,11 +381,11 @@ class app {
      * @return 注册的方法
      */
     public function getAction($sControllerName, $sActionName) {
-        $mixAction = \Q::router ()->getBind ( $this->packControllerAndAction_ ( $sControllerName, $sActionName ) );
+        $mixAction = router::getBinds ( $this->packControllerAndAction_ ( $sControllerName, $sActionName ) );
         if ($mixAction !== null) {
             return $mixAction;
         }
-        return \Q::router ()->getBind ( $sControllerName . '/' . $sActionName );
+        return router::getBinds ( $sControllerName . '/' . $sActionName );
     }
     
     /**
@@ -397,9 +398,9 @@ class app {
      * @return boolean
      */
     public function hasAction($sControllerName, $sActionName) {
-        $booHasAction = \Q::router ()->hasBind ( $this->packControllerAndAction_ ( $sControllerName, $sActionName ) );
+        $booHasAction = router::hasBinds ( $this->packControllerAndAction_ ( $sControllerName, $sActionName ) );
         if ($booHasAction === false) {
-            $booHasAction = \Q::router ()->hasBind ( $sControllerName . '/' . $sActionName );
+            $booHasAction = router::hasBinds ( $sControllerName . '/' . $sActionName );
         }
         return $booHasAction;
     }
@@ -417,7 +418,7 @@ class app {
      * @return 注册的方法
      */
     public function registerAction($sControllerName, $sActionName, $mixAction) {
-        return \Q::router ()->bind ( $this->packControllerAndAction_ ( $sControllerName, $sActionName ), $mixAction );
+        return router::binds ( $this->packControllerAndAction_ ( $sControllerName, $sActionName ), $mixAction );
     }
     
     /**
@@ -445,7 +446,7 @@ class app {
             $GLOBALS ['~@option'] = \Q::option ( ( array ) (include $sOptionCache) );
             if ($this->objProject->app_name == \Q\mvc\project::INIT_APP && $arrOption ['url_router_cache']) {
                 if (! empty ( $arrOption ['url_router_cache'] )) {
-                    router::cache ( $arrOption ['url_router_cache'] );
+                    router::caches ( $arrOption ['url_router_cache'] );
                 }
             }
         } else {
@@ -512,7 +513,7 @@ class app {
                 }
                 
                 if (! empty ( $arrOption ['url_router_cache'] )) {
-                    \Q::router ()->cache ( $arrOption ['url_router_cache'] );
+                    router::caches ( $arrOption ['url_router_cache'] );
                 }
             }
             

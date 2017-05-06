@@ -22,6 +22,7 @@ use Q\contract\database\connect as contract_connect;
 use Q\exception\exceptions;
 use Q\log\log;
 use Q\assert\assert;
+use Q\debug\debug;
 
 /**
  * 数据库连接
@@ -742,7 +743,7 @@ abstract class connect implements contract_connect {
             }
             
             if ($this->objPDOStatement->bindValue ( $mixKey, $mixVal, $strParam ) === false) {
-                $this->throwException_ ( \Q::i18n ( 'sql %s 参数绑定失败: %s', $this->strSql, \Q::dump ( $arrBindParams, true ) ) );
+                $this->throwException_ ( \Q::i18n ( 'sql %s 参数绑定失败: %s', $this->strSql, debug::dump ( $arrBindParams, true ) ) );
             }
         }
     }

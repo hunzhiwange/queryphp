@@ -7,6 +7,7 @@ namespace home\application\controller;
 
 use Q\mvc\controller;
 
+use Q\safe\safe;
 // use home\infrastructure\provider;
 // use home\domain\model\test;
 // use Q\traits\test as test2;
@@ -54,7 +55,16 @@ class index extends controller {
     public function index() {
         echo 'Hello world';
         
-        log::runs('xxxxxxxx','debug');
+       // $ss= '<a href="xxx">xxx</a>';
+        
+     print_r( safe::limitThrottler() )   ;
+        
+       // if(!is_array($ss)) {
+        //    $ss = [ $ss];
+       //     print_r($ss);
+        //}
+        //echo(safe::htmlspecialchars($ss));
+        //log::runs('xxxxxxxx','debug');
         
         //assert::trueExpression('');
         exit();

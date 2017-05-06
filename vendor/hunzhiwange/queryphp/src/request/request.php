@@ -15,6 +15,9 @@ namespace Q\request;
 ##########################################################
 queryphp;
 
+use Q\router\router;
+use Q\traits\dynamic\expansion as dynamic_expansion;
+
 /**
  * 启动程序
  *
@@ -24,6 +27,8 @@ queryphp;
  * @version 1.0
  */
 class request {
+    
+    use dynamic_expansion;
     
     /**
      * url 请求实例
@@ -93,7 +98,7 @@ class request {
      */
     public function run() {
         // 非命令行模式
-        if (! \Q::isCli ()) {
+        if (! $this->isCli ()) {
             $this->parseUrlWeb_ ();
         } else {
             $this->parseUrlCli_ ();
@@ -268,6 +273,53 @@ class request {
     }
     
     /**
+     * 获取 IP 地址
+     *
+     * @return string
+     */
+    public function getIp() {
+        static $sRealip = NULL;
+    
+        if ($sRealip !== NULL) {
+            return $sRealip;
+        }
+    
+        if (isset ( $_SERVER )) {
+            if (isset ( $_SERVER ['HTTP_X_FORWARDED_FOR'] )) {
+                $arrValue = explode ( ',', $_SERVER ['HTTP_X_FORWARDED_FOR'] );
+                foreach ( $arrValue as $sIp ) { // 取X-Forwarded-For中第一个非unknown的有效IP字符串
+                    $sIp = trim ( $sIp );
+                    if ($sIp != 'unknown') {
+                        $sRealip = $sIp;
+                        break;
+                    }
+                }
+            } elseif (isset ( $_SERVER ['HTTP_CLIENT_IP'] )) {
+                $sRealip = $_SERVER ['HTTP_CLIENT_IP'];
+            } else {
+                if (isset ( $_SERVER ['REMOTE_ADDR'] )) {
+                    $sRealip = $_SERVER ['REMOTE_ADDR'];
+                } else {
+                    $sRealip = '0.0.0.0';
+                }
+            }
+        } else {
+            if (getenv ( 'HTTP_X_FORWARDED_FOR' )) {
+                $sRealip = getenv ( 'HTTP_X_FORWARDED_FOR' );
+            } elseif (getenv ( 'HTTP_CLIENT_IP' )) {
+                $sRealip = getenv ( 'HTTP_CLIENT_IP' );
+            } else {
+                $sRealip = getenv ( 'REMOTE_ADDR' );
+            }
+        }
+    
+        preg_match ( "/[\d\.]{7,15}/", $sRealip, $arrOnlineip );
+        $sRealip = ! empty ( $arrOnlineip [0] ) ? $arrOnlineip [0] : '0.0.0.0';
+    
+        return $sRealip;
+    }
+    
+    /**
      * web 分析 url 参数
      *
      * @return void
@@ -281,7 +333,7 @@ class request {
             $this->filterPathInfo_ ();
             
             // 解析结果
-            $_GET = array_merge ( $_GET, $GLOBALS ['~@option'] ['url_router_on'] === true && ($arrRouter = \Q::router ()->parse ()) ? $arrRouter : $this->parsePathInfo_ () );
+            $_GET = array_merge ( $_GET, $GLOBALS ['~@option'] ['url_router_on'] === true && ($arrRouter = router::parses ()) ? $arrRouter : $this->parsePathInfo_ () );
         }
     }
     
@@ -383,7 +435,7 @@ class request {
      * @return void
      */
     private function parsePublicAndRoot_() {
-        if (\Q::isCli ()) {
+        if ($this->isCli ()) {
             return;
         }
         
@@ -394,7 +446,7 @@ class request {
         $arrResult ['enter_bak'] = $arrResult ['enter'] = $objProject->url_enter;
         if (! $arrResult ['enter']) {
             // php 文件
-            if (\Q::isCgi ()) {
+            if ($this->isCgi ()) {
                 $arrTemp = explode ( '.php', $_SERVER ["PHP_SELF"] ); // CGI/FASTCGI模式下
                 $arrResult ['enter'] = rtrim ( str_replace ( $_SERVER ["HTTP_HOST"], '', $arrTemp [0] . '.php' ), '/' );
             } else {

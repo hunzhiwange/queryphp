@@ -17,6 +17,8 @@ queryphp;
 
 use Q\option\option;
 use Q\log\log;
+use Q\debug\debug;
+use Q\request\request;
 
 /**
  * 异常消息
@@ -70,7 +72,7 @@ class exception_message extends message {
         }
         
         // 否则定向到错误页面
-        if (! \Q::isCli () && option::gets ( 'show_exception_redirect' ) && Q_DEBUG === FALSE) {
+        if (! request::isClis () && option::gets ( 'show_exception_redirect' ) && Q_DEBUG === FALSE) {
             static::urlRedirect ( \Q::url ( option::gets ( 'show_exception_redirect' ) ) );
         } else {
             if (! option::gets ( 'show_exception_show_message', true ) && option::gets ( 'show_exception_default_message' )) {
@@ -78,7 +80,7 @@ class exception_message extends message {
             }
             
             // 包含异常页面模板
-            if (\Q::isCli ()) {
+            if (request::isClis ()) {
                 echo $mixError ['message'];
             } else {
                 if (option::gets ( 'show_exception_tpl' ) && is_file ( option::gets ( 'show_exception_tpl' ) )) {
@@ -124,7 +126,7 @@ class exception_message extends message {
                         
                         // 详细参数值
                         ob_start ();
-                        \Q::dump ( $mixArgsVal );
+                        debug::dump ( $mixArgsVal );
                         $sArgsInfoDetail .= '<div class="queryphp-message-argstitle">Args ' . ($intArgsKey + 1) . '</div><div class="queryphp-message-args">' . ob_get_contents () . '</div>';
                         ob_end_clean ();
                     }

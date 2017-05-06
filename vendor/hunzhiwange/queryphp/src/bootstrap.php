@@ -1159,52 +1159,7 @@ class Q {
         }
     }
     
-    /**
-     * 获取 IP 地址
-     *
-     * @return string
-     */
-    public static function getIp() {
-        static $sRealip = NULL;
-        
-        if ($sRealip !== NULL) {
-            return $sRealip;
-        }
-        
-        if (isset ( $_SERVER )) {
-            if (isset ( $_SERVER ['HTTP_X_FORWARDED_FOR'] )) {
-                $arrValue = explode ( ',', $_SERVER ['HTTP_X_FORWARDED_FOR'] );
-                foreach ( $arrValue as $sIp ) { // 取X-Forwarded-For中第一个非unknown的有效IP字符串
-                    $sIp = trim ( $sIp );
-                    if ($sIp != 'unknown') {
-                        $sRealip = $sIp;
-                        break;
-                    }
-                }
-            } elseif (isset ( $_SERVER ['HTTP_CLIENT_IP'] )) {
-                $sRealip = $_SERVER ['HTTP_CLIENT_IP'];
-            } else {
-                if (isset ( $_SERVER ['REMOTE_ADDR'] )) {
-                    $sRealip = $_SERVER ['REMOTE_ADDR'];
-                } else {
-                    $sRealip = '0.0.0.0';
-                }
-            }
-        } else {
-            if (getenv ( 'HTTP_X_FORWARDED_FOR' )) {
-                $sRealip = getenv ( 'HTTP_X_FORWARDED_FOR' );
-            } elseif (getenv ( 'HTTP_CLIENT_IP' )) {
-                $sRealip = getenv ( 'HTTP_CLIENT_IP' );
-            } else {
-                $sRealip = getenv ( 'REMOTE_ADDR' );
-            }
-        }
-        
-        preg_match ( "/[\d\.]{7,15}/", $sRealip, $arrOnlineip );
-        $sRealip = ! empty ( $arrOnlineip [0] ) ? $arrOnlineip [0] : '0.0.0.0';
-        
-        return $sRealip;
-    }
+
     
     /**
      * URL 重定向
@@ -1609,12 +1564,13 @@ class Q {
      * @param 参数 $arrArgs            
      * @return boolean
      */
-    public static function __callStatic($sMethod, $arrArgs) {
-        if (($objFacades = static::project ()->make ( $sMethod ))) {
-            return $objFacades;
-        }
-        \Exceptions::throws ( static::i18n ( '未实现 facades 方法 %s', $sMethod ) );
-    }
+    //public static function __callStatic($sMethod, $arrArgs) {
+    //    if (($objFacades = static::project ()->make ( $sMethod ))) {
+    //        return $objFacades;
+    //    }
+    //    echo $sMethod;
+        //\Exceptions::throws ( static::i18n ( '未实现 facades 方法 %s', $sMethod ) );
+    //}
 }
 
 /**

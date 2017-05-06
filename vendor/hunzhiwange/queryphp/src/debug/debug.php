@@ -15,7 +15,7 @@ namespace Q\debug;
 ##########################################################
 queryphp;
 
-use Q\traits\dynamic\expansion as dynamic_expansion;
+use Q\request\request;
 
 /**
  * 调试
@@ -26,8 +26,6 @@ use Q\traits\dynamic\expansion as dynamic_expansion;
  * @version 4.0
  */
 class debug {
-    
-    use dynamic_expansion;
     
     /**
      * 调试工具
@@ -53,7 +51,7 @@ class debug {
             $sOutput = ob_get_clean ();
             if (! extension_loaded ( 'xdebug' )) {
                 $sOutput = preg_replace ( "/\]\=\>\n(\s+)/m", "] => ", $sOutput );
-                $sOutput = '<pre>' . $sLabel . (\Q::isCli () ? $sOutput : htmlspecialchars ( $sOutput, ENT_QUOTES )) . '</pre>';
+                $sOutput = '<pre>' . $sLabel . (request::isClis () ? $sOutput : htmlspecialchars ( $sOutput, ENT_QUOTES )) . '</pre>';
             }
         }
         
