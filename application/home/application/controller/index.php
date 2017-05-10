@@ -37,11 +37,17 @@ class index extends controller {
                 ),
         );
         
-//         $jobId = Resque::enqueue('default', 'PHP_Job', $args, true);
+//        $jobId = Resque::enqueue('default', 'PHP_Job', $args, true);
 //         echo "Queued job ".$jobId."\n\n";
+        
+     //   queue::statuss('5ee87bdef018c74c8cc9d96aae004766');
+        
+      //  queue::works();
         
        $jobId= queue::dispatchs('PHP_Job','default', $args, true);
        echo "\n\n"."Queued job ".$jobId."\n\n";
+       
+        
        // echo 'Hello world';
         //throw new \BadFunctionCallException('sdf');
         //$this->display();
