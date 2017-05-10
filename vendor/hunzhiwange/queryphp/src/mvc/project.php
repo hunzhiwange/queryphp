@@ -19,6 +19,7 @@ use Q\support\container;
 use Q\mvc\view;
 use Q\traits\dependency\injection as dependency_injection;
 use Q\exception\exceptions;
+use Q\helper\helper;
 
 /**
  * 项目管理
@@ -284,12 +285,12 @@ class project extends container {
         
         // 注册 controller
         $this->register ( 'Q\mvc\controller', function () {
-            return \Q::newInstanceArgs ( 'Q\mvc\controller', func_get_args () );
+            return helper::newInstanceArgs ( 'Q\mvc\controller', func_get_args () );
         } );
         
         // 注册 action
         $this->register ( 'Q\mvc\action', function () {
-            return \Q::newInstanceArgs ( 'Q\mvc\action', func_get_args () );
+            return helper::newInstanceArgs ( 'Q\mvc\action', func_get_args () );
         } );
         
         // 注册 view
@@ -349,8 +350,8 @@ class project extends container {
                 'stack' => 'Q\datastruct\queue\stack',
                 
                 // request
-                'request' => 'Q\request\request',
-                'response' => 'Q\request\response',
+                'request' => 'Q\http\request',
+                'response' => 'Q\http\response',
                 
                 // router
                 'router' => 'Q\router\router',

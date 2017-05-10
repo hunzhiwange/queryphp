@@ -18,6 +18,9 @@ queryphp;
 use Q\mvc\view;
 use Q\exception\exceptions;
 use Q\traits\dynamic\expansion as dynamic_expansion;
+use Q\filesystem\file;
+use Q\operating\system;
+use Q\mvc\project;
 
 /**
  * 模板处理类
@@ -66,7 +69,7 @@ class theme {
             $sFile = view::parseDefaultFile ( $sFile );
         }
         if (! is_file ( $sFile )) {
-            exceptions::throws ( \Q::i18n ( '模板文件 %s 不存在', $sFile ), 'Q\view\exception' );
+            exceptions::throws ( __ ( '模板文件 %s 不存在', $sFile ), 'Q\view\exception' );
         }
         
         // 变量赋值
@@ -87,7 +90,7 @@ class theme {
                 $sChildCache = file_get_contents ( $sCachePath );
                 
                 // 替换
-                $sTargetContent = preg_replace ( "/<!--<\#\#\#\#incl\*" . $sMd5 . "\*ude\#\#\#\#>-->(.*?)<!--<\/\#\#\#\#incl\*" . $sMd5 . "\*ude\#\#\#\#\/>-->/s", substr ( $sChildCache, strpos ( $sChildCache, \Q::osNewline () ) - 1 ), $sTargetContent );
+                $sTargetContent = preg_replace ( "/<!--<\#\#\#\#incl\*" . $sMd5 . "\*ude\#\#\#\#>-->(.*?)<!--<\/\#\#\#\#incl\*" . $sMd5 . "\*ude\#\#\#\#\/>-->/s", substr ( $sChildCache, strpos ( $sChildCache, system::osNewline () ) - 1 ), $sTargetContent );
                 file_put_contents ( $sTargetCache, $sTargetContent );
                 
                 unset ( $sChildCache, $sTargetContent );
@@ -145,10 +148,19 @@ class theme {
         $sFile = str_replace ( '//', '/', $sFile );
         
         // 统一缓存文件
-        $sFile = basename ( $sFile, '.' . \Q::getExtName ( $sFile ) ) . '.' . md5 ( $sFile ) . '.php';
+        $sFile = basename ( $sFile, '.' . file::getExtName ( $sFile ) ) . '.' . md5 ( $sFile ) . '.php';
         
         // 返回真实路径
-        return \Q::project ()->path_cache_theme . '/' . $sFile;
+        return $this->project ()->path_cache_theme . '/' . $sFile;
+    }
+    
+    /**
+     * 返回项目容器
+     *
+     * @return \Q\mvc\project
+     */
+    public function project() {
+        return project::bootstrap ();
     }
     
     /**

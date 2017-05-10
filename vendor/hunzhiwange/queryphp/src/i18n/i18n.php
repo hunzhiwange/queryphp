@@ -15,7 +15,7 @@ namespace Q\i18n;
 ##########################################################
 queryphp;
 
-use Q\traits\object\option as object_option;
+use Q\traits\dynamic\expansion as dynamic_expansion;
 use Q\exception\exceptions;
 use Q\cookie\cookie;
 
@@ -29,7 +29,14 @@ use Q\cookie\cookie;
  */
 class i18n {
     
-    use object_option;
+    use dynamic_expansion;
+    
+    /**
+     * 是否开启语言
+     *
+     * @var boolean
+     */
+    private static $booOpen = true;
     
     /**
      * 当前语言上下文
@@ -64,7 +71,7 @@ class i18n {
      *
      * @var array
      */
-    protected $arrDefaultObjectOption = [ 
+    protected $arrInitExpansionInstanceArgs = [ 
             'i18n_default' => 'zh-cn',
             'i18n_auto_accept' => TRUE 
     ];
@@ -75,7 +82,25 @@ class i18n {
      * @return void
      */
     public function __construct() {
-        $this->mergeObjectOption_ ();
+    }
+    
+    /**
+     * 语言包状态设置
+     *
+     * @param boolean $booOpen
+     * @return void
+     */
+    public static function open($booOpen = true) {
+        static::$booOpen = $booOpen;
+    }
+    
+    /**
+     * 返回语言包状态
+     *
+     * @return boolean
+     */
+    public static function getOpen() {
+        return static::$booOpen;
     }
     
     /**
@@ -85,6 +110,15 @@ class i18n {
      * @return string
      */
     public function getText($sValue/*Argvs*/){
+        // 未开启直接返回
+        if (! static::$booOpen) {
+            if (func_num_args () > 1) { // 代入参数
+                $sValue = call_user_func_array ( 'sprintf', func_get_args () );
+            }
+            return $sValue;
+        }
+        
+        // 开启读取语言包
         $sContext = $this->getContext ();
         $sValue = $sContext && isset ( $this->arrText [$sContext] [$sValue] ) ? $this->arrText [$sContext] [$sValue] : $sValue;
         if (func_num_args () > 1) {

@@ -16,6 +16,7 @@ namespace Q\event;
 queryphp;
 
 use Q\traits\dependency\injection as dependency_injection;
+use Q\mvc\project;
 
 /**
  * 事件
@@ -63,8 +64,10 @@ class event {
             $mixEvent = get_class ( $mixEvent );
         } else {
             $objEvent = $this->getObjectByClassAndArgs_ ( $mixEvent, [ 
-                    \Q::project () 
+                    $this->project () 
             ] );
+
+            
         }
         
         $arrArgs = func_get_args ();
@@ -171,10 +174,21 @@ class event {
         // 注入构造器
         if (is_string ( $mixSubscriber )) {
             $mixSubscriber = $this->getObjectByClassAndArgs_ ( $mixSubscriber, [ 
-                    \Q::project () 
+                    $this->project () 
             ] );
+
+            
         }
         $mixSubscriber->subscribe ( $this );
+    }
+    
+    /**
+     * 返回项目容器
+     *
+     * @return \Q\mvc\project
+     */
+    public function project() {
+        return project::bootstrap ();
     }
     
     /**

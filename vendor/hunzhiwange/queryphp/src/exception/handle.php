@@ -32,8 +32,7 @@ class handle {
      * @return void
      */
     public static function exceptionHandle($oException) {
-        $objMessage = new exception_message ( $oException );
-        $objMessage->run ();
+        (new exception_message ( $oException ))->run ();
         exit ();
     }
     
@@ -47,8 +46,7 @@ class handle {
      * @return void
      */
     public static function errorHandle($nErrorNo, $sErrStr, $sErrFile, $nErrLine) {
-        $objMessage = new error_message ( $nErrorNo, $sErrStr, $sErrFile, $nErrLine );
-        $objMessage->run ();
+        (new error_message ( $nErrorNo, $sErrStr, $sErrFile, $nErrLine ))->run ();
         exit ();
     }
     
@@ -58,8 +56,7 @@ class handle {
      * @return void
      */
     public static function shutdownHandle() {
-        $objMessage = new shutdown_message ();
-        $objMessage->run ();
+        (new shutdown_message ())->run ();
         exit ();
     }
 }

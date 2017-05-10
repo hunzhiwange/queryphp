@@ -72,6 +72,80 @@ abstract class cache implements contract_cache {
     }
     
     /**
+     * 缓存统一入口
+     *
+     * @param string $sId            
+     * @param string $mixData            
+     * @param array $arrOption            
+     * @param string $sBackendClass            
+     * @return boolean
+     */
+    public static function run($sId, $mixData = '', $arrOption = null, $sBackendClass = null) {
+        static $arrCache;
+        
+        if (! is_array ( $arrOption )) {
+            $arrOption = [ ];
+        }
+        $arrOption = array_merge ( [ 
+                'cache_time' => static::cacheTime_ ( $sId, $GLOBALS ['~@option'] ['runtime_cache_time'] ),
+                'cache_prefix' => $GLOBALS ['~@option'] ['runtime_cache_prefix'],
+                'cache_backend' => ! is_null ( $sBackendClass ) ? $sBackendClass : $GLOBALS ['~@option'] ['runtime_cache_backend'] 
+        ], $arrOption );
+        
+        if (empty ( $arrCache [$arrOption ['cache_backend']] )) {
+            $arrObjectOption = [ ];
+            foreach ( [ 
+                    'runtime_file_path',
+                    'runtime_memcache_compressed',
+                    'runtime_memcache_persistent',
+                    'runtime_memcache_servers',
+                    'runtime_memcache_host',
+                    'runtime_memcache_port' 
+            ] as $sObjectOption ) {
+                $arrObjectOption [$sObjectOption] = $GLOBALS ['~@option'] [$sObjectOption];
+            }
+            $arrObjectOption ['path_cache_file'] = static::project ()->path_cache_file;
+            $arrCache [$arrOption ['cache_backend']] = static::project ()->make ( $arrOption ['cache_backend'], $arrOption )->setObjectOption ( $arrObjectOption );
+        }
+        
+        if ($mixData === '') {
+            // 强制刷新页面数据
+            if (static::in ( $GLOBALS ['~@option'] ['runtime_cache_force_name'] ) == 1) {
+                return false;
+            }
+            return $arrCache [$arrOption ['cache_backend']]->get ( $sId, $arrOption );
+        }
+        if ($mixData === null) {
+            return $arrCache [$arrOption ['cache_backend']]->delele ( $sId, $arrOption );
+        }
+        return $arrCache [$arrOption ['cache_backend']]->set ( $sId, $mixData, $arrOption );
+    }
+    
+
+    /**
+     * 读取缓存时间配置
+     *
+     * @param string $sId
+     * @param int $intDefaultTime
+     * @return number
+     */
+    private static function cacheTime_($sId, $intDefaultTime = 0) {
+        if (isset ( $GLOBALS ['~@option'] ['runtime_cache_times'] [$sId] )) {
+            return $GLOBALS ['~@option'] ['runtime_cache_times'] [$sId];
+        }
+    
+        foreach ( $GLOBALS ['~@option'] ['runtime_cache_times'] as $sKey => $nValue ) {
+            $sKeyCache = '/^' . str_replace ( '*', '(\S+)', $sKey ) . '$/';
+            if (preg_match ( $sKeyCache, $sId, $arrRes )) {
+                return $GLOBALS ['~@option'] ['runtime_cache_times'] [$sKey];
+            }
+        }
+    
+        return $intDefaultTime;
+    }
+    
+    
+    /**
      * 获取缓存名字
      *
      * @param string $sCacheName            

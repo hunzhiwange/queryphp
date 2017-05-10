@@ -3,9 +3,9 @@
  * 项目调试
  */
 define ( 'Q_DEBUG', true );
-define ( 'Q_DEVELOPMENT', 'develop' );
+define ( 'Q_DEVELOPMENT', 'development' );
 
-if (Q_DEVELOPMENT === 'develop')
+if (Q_DEVELOPMENT === 'development')
     error_reporting ( E_ALL );
 else
     error_reporting ( E_ERROR | E_PARSE | E_STRICT );

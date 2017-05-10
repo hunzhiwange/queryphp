@@ -55,7 +55,7 @@ abstract class message {
      */
     protected function log_($strMessage) {
         if (option::gets ( 'log_error_enabled', false )) {
-            log::runs ( $strMessage, 'error' );
+           // log::runs ( $strMessage, 'error' );
         }
     }
     

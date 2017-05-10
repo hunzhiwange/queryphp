@@ -181,12 +181,12 @@ class string {
         if ($nHover == 0) {
             $nMin = floor ( $nSec / 60 );
             if ($nMin == 0) {
-                $sReturn = $nSec . ' ' . \Q::i18n ( "秒前" );
+                $sReturn = $nSec . ' ' . __ ( "秒前" );
             } else {
-                $sReturn = $nMin . ' ' . \Q::i18n ( "分钟前" );
+                $sReturn = $nMin . ' ' . __ ( "分钟前" );
             }
         } elseif ($nHover < 24) {
-            $sReturn = \Q::i18n ( "大约 %d 小时前", $nHover );
+            $sReturn = __ ( "大约 %d 小时前", $nHover );
         } else {
             $sReturn = date ( $sDateFormat, $nDateTemp );
         }
@@ -209,7 +209,7 @@ class string {
         } elseif ($nFileSize >= 1024) {
             $nFileSize = round ( $nFileSize / 1024, 2 ) . ($booUnit ? 'KB' : '');
         } else {
-            $nFileSize = $nFileSize . ($booUnit ? \Q::i18n ( '字节' ) : '');
+            $nFileSize = $nFileSize . ($booUnit ? __ ( '字节' ) : '');
         }
         
         return $nFileSize;

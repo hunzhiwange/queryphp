@@ -18,6 +18,7 @@ queryphp;
 use Q\exception\exceptions;
 use Q\traits\dynamic\expansion as dynamic_expansion;
 use Q\option\option;
+use Q\helper\helper;
 
 /**
  * 数据库入口
@@ -77,10 +78,10 @@ class database {
         
         // 连接数据库
         $strConnectClass = '\\Q\\database\\' . $mixOption ['db_type'];
-        if (\Q::classExists ( $strConnectClass, false, true )) {
+        if (class_exists ( $strConnectClass )) {
             return $arrConnect [$strUnique] = new $strConnectClass ( $mixOption );
         } else {
-            exceptions::throws ( \Q::i18n ( '数据库驱动 %s 不存在！', $mixOption ['db_type'] ), 'Q\database\exception' );
+            exceptions::throws ( __ ( '数据库驱动 %s 不存在！', $mixOption ['db_type'] ), 'Q\database\exception' );
         }
     }
     
@@ -160,10 +161,10 @@ class database {
         // 填充数据库服务器参数
         $arrResult ['db_master'] = array_merge ( $arrResult ['db_master'], $arrOption );
         if ($arrResult ['db_slave']) {
-            if (\Q::oneImensionArray ( $arrResult ['db_slave'] )) {
-                $arrTemp = $arrResult ['db_slave'];
-                $arrResult ['db_slave'] = [ ];
-                $arrResult ['db_slave'] [] = $arrTemp;
+            if (count ( $arrResult ['db_slave'] ) == count ( $arrResult ['db_slave'], 1 )) {
+                $arrResult ['db_slave'] = [ 
+                        $arrResult ['db_slave'] 
+                ];
             }
             foreach ( $arrResult ['db_slave'] as &$arrSlave ) {
                 $arrSlave = array_merge ( $arrSlave, $arrOption );
@@ -171,7 +172,7 @@ class database {
         }
         
         // + 合并支持
-        $arrResult = \Q::arrayMergePlus ( $arrResult );
+        $arrResult = helper::arrayMergePlus ( $arrResult );
         
         // 返回结果
         unset ( $arrOption, $arrDefaultOption );

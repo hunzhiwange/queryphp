@@ -114,7 +114,7 @@ class assert {
      * @return void
      */
     public static function trueExpression($mixExpression, $strDescription = null) {
-        static::checkExpression_ ( $mixExpression, 'trueExpression', $strDescription );
+        return static::checkExpression_ ( $mixExpression, 'trueExpression', $strDescription );
     }
     
     /**
@@ -127,7 +127,7 @@ class assert {
      * @return void
      */
     public static function notTrueExpression($mixExpression, $strDescription = null) {
-        static::checkExpression_ ( ! $mixExpression, 'notTrueExpression', $strDescription );
+        return static::checkExpression_ ( ! $mixExpression, 'notTrueExpression', $strDescription );
     }
     
     /**
@@ -138,7 +138,7 @@ class assert {
      * @return void
      */
     public static function true($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( $mixVariable === true, 'true', $strDescription );
+        return static::checkExpression_ ( $mixVariable === true, 'true', $strDescription );
     }
     
     /**
@@ -149,7 +149,7 @@ class assert {
      * @return void
      */
     public static function notTrue($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( $mixVariable === false, 'notTrue', $strDescription );
+        return static::checkExpression_ ( $mixVariable === false, 'notTrue', $strDescription );
     }
     
     /**
@@ -160,7 +160,7 @@ class assert {
      * @return void
      */
     public static function null($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( $mixVariable === null, 'null', $strDescription );
+        return static::checkExpression_ ( $mixVariable === null, 'null', $strDescription );
     }
     
     /**
@@ -171,7 +171,7 @@ class assert {
      * @return void
      */
     public static function notNull($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( $mixVariable !== null, 'notNull', $strDescription );
+        return static::checkExpression_ ( $mixVariable !== null, 'notNull', $strDescription );
     }
     
     /**
@@ -182,7 +182,7 @@ class assert {
      * @return void
      */
     public static function zero($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( $mixVariable === 0 || $mixVariable === '0', 'zero', $strDescription );
+        return static::checkExpression_ ( $mixVariable === 0 || $mixVariable === '0', 'zero', $strDescription );
     }
     
     /**
@@ -193,7 +193,7 @@ class assert {
      * @return void
      */
     public static function notZero($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( $mixVariable !== 0 && $mixVariable !== '0', 'notZero', $strDescription );
+        return static::checkExpression_ ( $mixVariable !== 0 && $mixVariable !== '0', 'notZero', $strDescription );
     }
     
     /**
@@ -204,7 +204,7 @@ class assert {
      * @return void
      */
     public static function stringZero($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( $mixVariable === '0', 'stringZero', $strDescription );
+        return static::checkExpression_ ( $mixVariable === '0', 'stringZero', $strDescription );
     }
     
     /**
@@ -215,7 +215,7 @@ class assert {
      * @return void
      */
     public static function strictZero($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( $mixVariable === 0, 'strictZero', $strDescription );
+        return static::checkExpression_ ( $mixVariable === 0, 'strictZero', $strDescription );
     }
     
     /**
@@ -226,7 +226,7 @@ class assert {
      * @return void
      */
     public static function notStrictZero($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( $mixVariable !== 0, 'notStrictZero', $strDescription );
+        return static::checkExpression_ ( $mixVariable !== 0, 'notStrictZero', $strDescription );
     }
     
     /**
@@ -237,7 +237,7 @@ class assert {
      * @return void
      */
     public static function stringEmpty($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( $mixVariable === '', 'stringEmpty', $strDescription );
+        return static::checkExpression_ ( $mixVariable === '', 'stringEmpty', $strDescription );
     }
     
     /**
@@ -248,7 +248,7 @@ class assert {
      * @return void
      */
     public static function notStringEmpty($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( $mixVariable !== '', 'notStringEmpty', $strDescription );
+        return static::checkExpression_ ( $mixVariable !== '', 'notStringEmpty', $strDescription );
     }
     
     /**
@@ -259,7 +259,7 @@ class assert {
      * @return void
      */
     public static function integer($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( is_int ( $mixVariable ), 'integer', $strDescription );
+        return static::checkExpression_ ( is_int ( $mixVariable ), 'integer', $strDescription );
     }
     
     /**
@@ -270,7 +270,7 @@ class assert {
      * @return void
      */
     public static function notInteger($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( ! is_int ( $mixVariable ), 'notInteger', $strDescription );
+        return static::checkExpression_ ( ! is_int ( $mixVariable ), 'notInteger', $strDescription );
     }
     
     /**
@@ -281,7 +281,7 @@ class assert {
      * @return void
      */
     public static function float($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( is_float ( $mixVariable ), 'float', $strDescription );
+        return static::checkExpression_ ( is_float ( $mixVariable ), 'float', $strDescription );
     }
     
     /**
@@ -292,7 +292,7 @@ class assert {
      * @return void
      */
     public static function notFloat($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( ! is_float ( $mixVariable ), 'notFloat', $strDescription );
+        return static::checkExpression_ ( ! is_float ( $mixVariable ), 'notFloat', $strDescription );
     }
     
     /**
@@ -303,7 +303,7 @@ class assert {
      * @return void
      */
     public static function numeric($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( is_numeric ( $mixVariable ), 'numeric', $strDescription );
+        return static::checkExpression_ ( is_numeric ( $mixVariable ), 'numeric', $strDescription );
     }
     
     /**
@@ -314,7 +314,7 @@ class assert {
      * @return void
      */
     public static function notNumeric($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( ! is_numeric ( $mixVariable ), 'notNumeric', $strDescription );
+        return static::checkExpression_ ( ! is_numeric ( $mixVariable ), 'notNumeric', $strDescription );
     }
     
     /**
@@ -325,7 +325,7 @@ class assert {
      * @return void
      */
     public static function string($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( is_string ( $mixVariable ), 'string', $strDescription );
+        return static::checkExpression_ ( is_string ( $mixVariable ), 'string', $strDescription );
     }
     
     /**
@@ -336,7 +336,7 @@ class assert {
      * @return void
      */
     public static function notString($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( ! is_string ( $mixVariable ), 'notString', $strDescription );
+        return static::checkExpression_ ( ! is_string ( $mixVariable ), 'notString', $strDescription );
     }
     
     /**
@@ -347,7 +347,7 @@ class assert {
      * @return void
      */
     public static function scalar($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( is_scalar ( $mixVariable ), 'scalar', $strDescription );
+        return static::checkExpression_ ( is_scalar ( $mixVariable ), 'scalar', $strDescription );
     }
     
     /**
@@ -358,7 +358,7 @@ class assert {
      * @return void
      */
     public static function notScalar($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( ! is_scalar ( $mixVariable ), 'notScalar', $strDescription );
+        return static::checkExpression_ ( ! is_scalar ( $mixVariable ), 'notScalar', $strDescription );
     }
     
     /**
@@ -369,7 +369,7 @@ class assert {
      * @return void
      */
     public static function resource($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( is_resource ( $mixVariable ), 'resource', $strDescription );
+        return static::checkExpression_ ( is_resource ( $mixVariable ), 'resource', $strDescription );
     }
     
     /**
@@ -380,7 +380,7 @@ class assert {
      * @return void
      */
     public static function notResource($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( ! is_resource ( $mixVariable ), 'notResource', $strDescription );
+        return static::checkExpression_ ( ! is_resource ( $mixVariable ), 'notResource', $strDescription );
     }
     
     /**
@@ -391,7 +391,7 @@ class assert {
      * @return void
      */
     public static function object($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( is_object ( $mixVariable ), 'object', $strDescription );
+        return static::checkExpression_ ( is_object ( $mixVariable ), 'object', $strDescription );
     }
     
     /**
@@ -402,7 +402,7 @@ class assert {
      * @return void
      */
     public static function notObject($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( ! is_object ( $mixVariable ), 'notObject', $strDescription );
+        return static::checkExpression_ ( ! is_object ( $mixVariable ), 'notObject', $strDescription );
     }
     
     /**
@@ -413,7 +413,7 @@ class assert {
      * @return void
      */
     public static function callback($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( is_callable ( $mixVariable ), 'callback', $strDescription );
+        return static::checkExpression_ ( is_callable ( $mixVariable ), 'callback', $strDescription );
     }
     
     /**
@@ -424,7 +424,7 @@ class assert {
      * @return void
      */
     public static function notCallback($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( ! is_callable ( $mixVariable ), 'notCallback', $strDescription );
+        return static::checkExpression_ ( ! is_callable ( $mixVariable ), 'notCallback', $strDescription );
     }
     
     /**
@@ -435,7 +435,7 @@ class assert {
      * @return void
      */
     public static function boolean($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( is_bool ( $mixVariable ), 'boolean', $strDescription );
+        return static::checkExpression_ ( is_bool ( $mixVariable ), 'boolean', $strDescription );
     }
     
     /**
@@ -446,7 +446,7 @@ class assert {
      * @return void
      */
     public static function notBoolean($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( ! is_bool ( $mixVariable ), 'notBoolean', $strDescription );
+        return static::checkExpression_ ( ! is_bool ( $mixVariable ), 'notBoolean', $strDescription );
     }
     
     /**
@@ -457,7 +457,7 @@ class assert {
      * @return void
      */
     public static function isArray($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( is_array ( $mixVariable ), 'isArray', $strDescription );
+        return static::checkExpression_ ( is_array ( $mixVariable ), 'isArray', $strDescription );
     }
     
     /**
@@ -468,7 +468,7 @@ class assert {
      * @return void
      */
     public static function notIsArray($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( ! is_array ( $mixVariable ), 'notIsArray', $strDescription );
+        return static::checkExpression_ ( ! is_array ( $mixVariable ), 'notIsArray', $strDescription );
     }
     
     /**
@@ -479,7 +479,7 @@ class assert {
      * @return void
      */
     public static function path($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( file_exists ( $mixVariable ), 'path', $strDescription );
+        return static::checkExpression_ ( file_exists ( $mixVariable ), 'path', $strDescription );
     }
     
     /**
@@ -490,7 +490,7 @@ class assert {
      * @return void
      */
     public static function notPath($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( ! file_exists ( $mixVariable ), 'notPath', $strDescription );
+        return static::checkExpression_ ( ! file_exists ( $mixVariable ), 'notPath', $strDescription );
     }
     
     /**
@@ -501,7 +501,7 @@ class assert {
      * @return void
      */
     public static function file($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( file_exists ( $mixVariable ), 'file', $strDescription );
+        return static::checkExpression_ ( file_exists ( $mixVariable ), 'file', $strDescription );
     }
     
     /**
@@ -512,7 +512,7 @@ class assert {
      * @return void
      */
     public static function notFile($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( ! file_exists ( $mixVariable ), 'notFile', $strDescription );
+        return static::checkExpression_ ( ! file_exists ( $mixVariable ), 'notFile', $strDescription );
     }
     
     /**
@@ -523,7 +523,7 @@ class assert {
      * @return void
      */
     public static function dir($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( is_dir ( $mixVariable ), 'dir', $strDescription );
+        return static::checkExpression_ ( is_dir ( $mixVariable ), 'dir', $strDescription );
     }
     
     /**
@@ -534,7 +534,7 @@ class assert {
      * @return void
      */
     public static function notDir($mixVariable, $strDescription = null) {
-        static::checkExpression_ ( ! is_dir ( $mixVariable ), 'notDir', $strDescription );
+        return static::checkExpression_ ( ! is_dir ( $mixVariable ), 'notDir', $strDescription );
     }
     
     /**
@@ -545,7 +545,7 @@ class assert {
      */
     private static function checkExpression_($mixExpression, $strType, $strDescription = null) {
         if (static::$booOpen === false || $mixExpression)
-            return;
+            return true;
         static::throwException_ ( $strType, $strDescription );
     }
     

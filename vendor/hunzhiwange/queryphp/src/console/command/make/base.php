@@ -16,6 +16,9 @@ namespace Q\console\command\make;
 queryphp;
 
 use Q\console\command;
+use Q\filesystem\directory;
+use Q\option\option;
+use Q\psr4\psr4;
 
 /**
  * 生成器基类
@@ -105,7 +108,7 @@ abstract class base extends command {
     protected function saveTemplateResult_() {
         $strSaveFilePath = $this->getSaveFilePath_ ();
         if (! is_dir ( dirname ( $strSaveFilePath ) )) {
-            \Q::makeDir ( dirname ( $strSaveFilePath ) );
+            directory::create ( dirname ( $strSaveFilePath ) );
         }
         if (is_file ( $strSaveFilePath )) {
             $this->error ( 'File is already exits.' );
@@ -157,7 +160,7 @@ abstract class base extends command {
      * @return array
      */
     protected function parseSourceAndReplace_() {
-        $arrReplaceKeyValue = array_merge ( $this->getDefaultReplaceKeyValue_ (), \Q::option ( 'console_template' ) );
+        $arrReplaceKeyValue = array_merge ( $this->getDefaultReplaceKeyValue_ (), option::gets ( 'console_template' ) );
         $arrSourceKey = array_map ( function ($strItem) {
             return '{{' . $strItem . '}}';
         }, array_keys ( $arrReplaceKeyValue ) );
@@ -206,8 +209,8 @@ abstract class base extends command {
      * @return string
      */
     protected function getNamespacePath_() {
-        if (! ($strNamespacePath = \Q::getNamespace ( $this->getNamespace_ () ))) {
-            $strNamespacePath = $this->getQueryPHP ()->path_application_source . '/' . $this->getNamespace_ () . '/';
+        if (! ($strNamespacePath = psr4::getNamespace ( $this->getNamespace_ () ))) {
+            $strNamespacePath = $this->getQueryPHP ()->path_application . '/' . $this->getNamespace_ () . '/';
         }
         return $strNamespacePath;
     }
@@ -220,7 +223,7 @@ abstract class base extends command {
     protected function parseNamespace_() {
         $strNamespace = $this->option ( 'namespace' );
         if (empty ( $strNamespace )) {
-            $strNamespace = \Q::option ( 'default_app' );
+            $strNamespace = option::gets ( 'default_app' );
         }
         $this->setNamespace_ ( $strNamespace );
     }
@@ -294,21 +297,6 @@ abstract class base extends command {
      * @return void
      */
     protected function commentFilePath_() {
-        $this->comment ( $this->formatFilePath_ ( $this->getSaveFilePath_ () ) );
-    }
-    
-    /**
-     * 格式化保存文件
-     *
-     * @param string $strFilePath            
-     * @return string
-     */
-    protected function formatFilePath_($strFilePath) {
-        $strFilePath = ltrim ( \Q::tidyPath ( $strFilePath, true ), '//' );
-        if (strpos ( $strFilePath, ':\\' ) !== false) {
-            $arrTemp = explode ( ':\\', $strFilePath );
-            $strFilePath = strtolower ( $arrTemp [0] ) . '/' . $arrTemp [1];
-        }
-        return '/' . $strFilePath;
+        $this->comment ( directory::tidyPathLinux ( $this->getSaveFilePath_ () ) );
     }
 }  

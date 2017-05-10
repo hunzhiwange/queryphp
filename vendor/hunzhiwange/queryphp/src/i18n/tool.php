@@ -16,6 +16,8 @@ namespace Q\i18n;
 queryphp;
 
 use Q\exception\exceptions;
+use Q\filesystem\directory;
+use Q\safe\safe;
 
 /**
  * 语言包工具类
@@ -49,7 +51,7 @@ class tool {
         
         $sDir = dirname ( $sCacheFile );
         if (! is_dir ( $sDir )) {
-            \Q::makeDir ( $sDir );
+            directory::create ( $sDir );
         }
         // 防止空数据无法写入
         $arrTexts ['Query Yet Simple'] = 'Query Yet Simple';
@@ -80,7 +82,7 @@ class tool {
         
         $sDir = dirname ( $sCacheFile );
         if (! is_dir ( $sDir )) {
-            \Q::makeDir ( $sDir );
+            directory::create ( $sDir );
         }
         // 防止空数据无法写入
         $arrTexts ['Query Yet Simple'] = 'Query Yet Simple';
@@ -124,10 +126,10 @@ class tool {
                 continue;
             }
             if (is_dir ( $sDir . '/js' )) {
-                $arrFiles ['js'] = array_merge ( $arrFiles ['js'], \Q::listDir ( $sDir . '/js', $arrParams ) );
+                $arrFiles ['js'] = array_merge ( $arrFiles ['js'], directory::lists ( $sDir . '/js', $arrParams ) );
             }
             if (is_dir ( $sDir . '/php' )) {
-                $arrFiles ['php'] = array_merge ( $arrFiles ['php'], \Q::listDir ( $sDir . '/php', $arrParams ) );
+                $arrFiles ['php'] = array_merge ( $arrFiles ['php'], directory::lists ( $sDir . '/php', $arrParams ) );
             }
         }
         
@@ -154,7 +156,7 @@ class tool {
             if (! is_file ( $sFile )) {
                 exceptions::throws ( sprintf ( 'The i18n file < %s > is not exists!', $sFile ), 'Q\event\exception' );
             }
-            $sContent .= \Q::escapeCharacter ( file_get_contents ( $sFile ) );
+            $sContent .= safe::escapeCharacter ( file_get_contents ( $sFile ) );
         }
         
         $arrResult = [ ];
@@ -162,13 +164,13 @@ class tool {
             foreach ( $arrSource [1] as $nKey => $sSource ) {
                 $sSource = trim ( $sSource );
                 if ($sSource) {
-                    $sSource = \Q::escapeCharacter ( $sSource, true );
+                    $sSource = safe::escapeCharacter ( $sSource, true );
                 }
                 
                 if ($sSource) {
                     $sNew = trim ( $arrNew [1] [$nKey] );
                     if ($sNew) {
-                        $sNew = \Q::escapeCharacter ( $sNew, true );
+                        $sNew = safe::escapeCharacter ( $sNew, true );
                     } else {
                         $sNew = $sSource;
                     }

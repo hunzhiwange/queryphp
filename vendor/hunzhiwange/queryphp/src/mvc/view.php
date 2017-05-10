@@ -17,6 +17,9 @@ queryphp;
 
 use Q\view\theme;
 use Q\database\database;
+use Q\filesystem\directory;
+use Q\filesystem\file;
+use Q\http\request;
 
 /**
  * 视图
@@ -118,8 +121,8 @@ class view {
             $sFile = static::parseFile ( $sFile );
         }
         
-       $sContent = theme::displays ( $sFile, false );
-
+        $sContent = theme::displays ( $sFile, false );
+        
         // 过滤编译文件子模板定位注释标签，防止在网页头部出现注释，导致 IE 浏览器不居中
         if (Q_DEBUG === TRUE && $GLOBALS ['~@option'] ['theme_cache_children'] === true) {
             $sContent = preg_replace ( "/<!--<\#\#\#\#incl\*(.*?)\*ude\#\#\#\#>-->/", '', $sContent );
@@ -127,7 +130,7 @@ class view {
         }
         
         // 调试信息
-        if (! \Q::isAjax ()) {
+        if (! request::isAjaxs ()) {
             if (Q_DEBUG === TRUE && $GLOBALS ['~@option'] ['show_page_trace']) {
                 $sContent .= $this->trace ();
             }
@@ -185,12 +188,12 @@ class view {
         $sTpl = trim ( str_replace ( '->', '.', $sTpl ) );
         
         // 完整路径 或者变量
-        if (\Q::getExtName ( $sTpl ) || strpos ( $sTpl, '$' ) === 0) {
+        if (file::getExtName ( $sTpl ) || strpos ( $sTpl, '$' ) === 0) {
             return $calHelp ( $sTpl );
         } elseif (strpos ( $sTpl, '(' ) !== false) { // 存在表达式
             return $calHelp ( $sTpl );
         } else {
-            $objProject = \Q::project ();
+            $objProject = static::projects ();
             
             // 空取默认控制器和方法
             if ($sTpl == '') {
@@ -226,11 +229,11 @@ class view {
         }
         
         $sBakTpl = $sTpl;
-        $objProject = \Q::project ();
+        $objProject = $this->project ();
         
         // 物理路径
         if (strpos ( $sTpl, ':' ) !== false || strpos ( $sTpl, '/' ) === 0 || strpos ( $sTpl, '\\' ) === 0) {
-            $sTpl = str_replace ( \Q::tidypath ( $objProject->path_app_theme . '/' . $objProject->name_app_theme . '/' ), '', \Q::tidypath ( $sTpl ) );
+            $sTpl = str_replace ( directory::tidypath ( $objProject->path_app_theme . '/' . $objProject->name_app_theme . '/' ), '', directory::tidypath ( $sTpl ) );
         }
         
         // 当前主题
@@ -266,20 +269,20 @@ class view {
                 'SELECT title FROM blog WHERE id = 1;' 
         ];
         if ($arrLog) {
-            $arrTrace [\Q::i18n ( 'SQL记录' ) . ' (' . count ( $arrLog ) . ')'] = implode ( '\n', $arrLog );
+            $arrTrace [__ ( 'SQL记录' ) . ' (' . count ( $arrLog ) . ')'] = implode ( '\n', $arrLog );
         }
         
         // 其它日志
         // $arrLog = Log::$_arrLog;
         $arrLog = [ ];
         if ($arrLog) {
-            $arrTrace [\Q::i18n ( '日志记录' ) . ' (' . count ( $arrLog ) . ')'] = '';
+            $arrTrace [__ ( '日志记录' ) . ' (' . count ( $arrLog ) . ')'] = '';
             $arrTrace = array_merge ( $arrTrace, $arrLog );
         }
         
         // 加载文件
         $arrInclude = get_included_files ();
-        $arrTrace [\Q::i18n ( '加载文件' ) . ' (' . count ( $arrInclude ) . ')'] = implode ( '\n', array_map ( function ($sVal) {
+        $arrTrace [__ ( '加载文件' ) . ' (' . count ( $arrInclude ) . ')'] = implode ( '\n', array_map ( function ($sVal) {
             return str_replace ( '\\', '/', $sVal );
         }, $arrInclude ) );
         
@@ -289,5 +292,23 @@ class view {
         ob_end_clean ();
         
         return $sContent;
+    }
+    
+    /**
+     * 返回项目容器
+     *
+     * @return \Q\mvc\project
+     */
+    public function project() {
+        return project::bootstrap ();
+    }
+    
+    /**
+     * 返回项目容器
+     *
+     * @return \Q\mvc\project
+     */
+    public static function projects() {
+        return project::bootstrap ();
     }
 }

@@ -15,7 +15,7 @@ namespace Q\datastruct\queue;
 ##########################################################
 queryphp;
 
-use Q\contract\queue\stack_queue as contract_stack_queue;
+use Q\contract\datastruct\queue\stack_queue as contract_stack_queue;
 
 /**
  * 队列和栈抽象类

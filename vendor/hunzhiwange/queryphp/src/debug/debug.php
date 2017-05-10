@@ -15,7 +15,7 @@ namespace Q\debug;
 ##########################################################
 queryphp;
 
-use Q\request\request;
+use Q\http\request;
 
 /**
  * 调试

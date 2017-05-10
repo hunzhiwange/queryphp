@@ -17,6 +17,8 @@ queryphp;
 
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Q\traits\dependency\injection as dependency_injection;
+use Q\option\option;
+use Q\mvc\project;
 
 /**
  * 命令行应用程序
@@ -29,13 +31,6 @@ use Q\traits\dependency\injection as dependency_injection;
 class application {
     
     use dependency_injection;
-    
-    /**
-     * 当前应用实例
-     *
-     * @var Q\console\application
-     */
-    private static $objApplication = null;
     
     /**
      * symfony application
@@ -51,9 +46,18 @@ class application {
      */
     private $arrDefaultCommands = [ 
             'Q\console\command\demo',
-            'Q\console\command\make\model', 
-            'Q\console\command\make\controller', 
+            'Q\console\command\make\model',
+            'Q\console\command\make\controller',
             'Q\console\command\make\action',
+            'Q\console\command\migrate\init',
+            'Q\console\command\migrate\create',
+            'Q\console\command\migrate\breakpoint',
+            'Q\console\command\migrate\migrate',
+            'Q\console\command\migrate\rollback',
+            'Q\console\command\migrate\seedcreate',
+            'Q\console\command\migrate\seedrun',
+            'Q\console\command\migrate\status',
+            'Q\console\command\migrate\test',
     ];
     
     /**
@@ -70,19 +74,10 @@ class application {
         
         // 注册用户自定义命令
         registerUserCommands_ ();
-    }
-    
-    /**
-     * 返回应用
-     *
-     * @return Q\console\application
-     */
-    public static function instance() {
-        if (static::$objApplication !== null) {
-            return static::$objApplication;
-        } else {
-            return static::$objApplication = new self ();
-        }
+        
+       // $this->objSymfonyApplication->add ( new \Phinx\Console\Command\Init() );
+      // $this->objSymfonyApplication->add ( new \Phinx\Console\Command\Create() );
+        
     }
     
     /**
@@ -109,7 +104,7 @@ class application {
      * @return $this
      */
     private function registerUserCommands_() {
-        return $this->doRegisterCommands_ ( ( array ) \Q::option ( 'console' ) );
+        return $this->doRegisterCommands_ ( ( array ) option::gets ( 'console' ) );
     }
     
     /**
@@ -121,7 +116,10 @@ class application {
     private function doRegisterCommands_($arrCommands) {
         foreach ( $arrCommands as $strCommand ) {
             $objCommand = $this->getObjectByClassAndArgs_ ( $strCommand, [ ] );
-            $objCommand->setQueryPHP ( $this->getQueryPHP_ () );
+            // 基于 Phinx 数据库迁移组件无法设置 setQueryPHP
+            if(method_exists($objCommand, 'setQueryPHP')){
+                $objCommand->setQueryPHP ( $this->getQueryPHP_ () );
+            }
             $this->getQueryPHP_ ()->instance ( 'command_' . $objCommand->getName (), $objCommand );
             $this->objSymfonyApplication->add ( $objCommand );
         }
@@ -134,7 +132,7 @@ class application {
      * @return \Q\mvc\project
      */
     private function getQueryPHP_() {
-        return \Q::project ();
+        return project::bootstrap ();
     }
     
     /**

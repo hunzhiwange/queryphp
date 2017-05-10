@@ -15,6 +15,8 @@ namespace Q\cache;
 ##########################################################
 queryphp;
 
+use Q\filesystem\directory;
+
 /**
  * 文件缓存
  *
@@ -199,7 +201,7 @@ class filecache extends cache {
      */
     private function getCachePath_($sCacheName, $arrOption) {
         if (! is_dir ( $arrOption ['cache_path'] )) {
-            \Q::makeDir ( $arrOption ['cache_path'] );
+            directory::create ( $arrOption ['cache_path'] );
         }
         return $arrOption ['cache_path'] . '/' . $this->getCacheName_ ( $sCacheName, $arrOption ) . '.php';
     }
@@ -212,7 +214,7 @@ class filecache extends cache {
      * @return boolean
      */
     private function writeData_($sFileName, $sData) {
-        ! is_dir ( dirname ( $sFileName ) ) && \Q::makeDir ( dirname ( $sFileName ) );
+        ! is_dir ( dirname ( $sFileName ) ) && directory::create ( dirname ( $sFileName ) );
         return file_put_contents ( $sFileName, $sData, LOCK_EX );
     }
     

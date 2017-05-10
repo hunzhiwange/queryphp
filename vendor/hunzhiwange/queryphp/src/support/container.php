@@ -19,6 +19,7 @@ use ArrayAccess;
 use Q\traits\flow\control as flow_control;
 use Q\contract\support\container as contract_container;
 use Q\exception\exceptions;
+use Q\assert\test;
 
 /**
  * 工厂容器
@@ -80,7 +81,7 @@ class container implements ArrayAccess, contract_container {
             return $this;
         }
         
-        exceptions::throws ( \Q::i18n ( 'container 没有实现魔法方法 %s.', $sMethod ), 'Q\support\exception' );
+        exceptions::throws ( __ ( 'container 没有实现魔法方法 %s.', $sMethod ), 'Q\support\exception' );
     }
     
     /**
@@ -135,11 +136,11 @@ class container implements ArrayAccess, contract_container {
      * @return void
      */
     public function instance($mixFactoryName, $mixFactory = null) {
-        if (! \Q::isThese ( $mixFactoryName, [ 
+        if (! test::isThese ( $mixFactoryName, [ 
                 'scalar',
                 'array' 
         ] )) {
-            exceptions::throws ( \Q::i18n ( 'instance 第一个参数只能为 scalar 或者 array' ), 'Q\support\exception' );
+            exceptions::throws ( __ ( 'instance 第一个参数只能为 scalar 或者 array' ), 'Q\support\exception' );
         }
         
         if (is_array ( $mixFactoryName )) {
@@ -161,11 +162,11 @@ class container implements ArrayAccess, contract_container {
      * @return void
      */
     public function singleton($mixFactoryName, $mixFactory = null) {
-        if (! \Q::isThese ( $mixFactoryName, [ 
+        if (! test::isThese ( $mixFactoryName, [ 
                 'scalar',
                 'array' 
         ] )) {
-            exceptions::throws ( \Q::i18n ( 'singleton 第一个参数只能为 scalar 或者 array' ), 'Q\support\exception' );
+            exceptions::throws ( __ ( 'singleton 第一个参数只能为 scalar 或者 array' ), 'Q\support\exception' );
         }
         
         if (is_array ( $mixFactoryName )) {
@@ -275,7 +276,7 @@ class container implements ArrayAccess, contract_container {
      */
     public function makeWithArgs($strFactoryName, array $arrArgs = []) {
         if (! is_array ( $arrArgs )) {
-            exceptions::throws ( \Q::i18n ( 'makeWithArgs 第二个参数只能为 array' ), 'Q\support\exception' );
+            exceptions::throws ( __ ( 'makeWithArgs 第二个参数只能为 array' ), 'Q\support\exception' );
         }
         array_unshift ( $arrArgs, $strFactoryName );
         return call_user_func_array ( [ 

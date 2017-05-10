@@ -110,7 +110,9 @@ trait expansion {
         
         $arrArgs = [ ];
         foreach ( $this->initExpansionInstanceArgs_ () as $sArgs ) {
-            $arrArgs [$sArgs] = option::gets ( $sArgs );
+            if (is_null ( $mixTemp = option::gets ( $sArgs ) ))
+                continue;
+            $arrArgs [$sArgs] = $mixTemp;
         }
         return $this->setExpansionInstanceArgs ( $arrArgs );
     }

@@ -17,7 +17,7 @@ queryphp;
 
 use Q\traits\dynamic\expansion as dynamic_expansion;
 use Q\exception\exceptions;
-use Q\request\request;
+use Q\http\request;
 use Q\cookie\cookie;
 
 /**
@@ -451,15 +451,15 @@ class safe {
     /**
      * 限制请求频率
      *
-     * @param string $strName
-     *            验证类型
+     * @param string $strKey            
+     * @param string $strName            
      * @param boolean $booException            
      * @param int $intXRateLimitLimit            
      * @param int $intXRateLimitTime            
      * @param array $arrHandle            
      * @return array|void
      */
-    public static function limitThrottler($strName = null, $booException = true, $intXRateLimitLimit = 60, $intXRateLimitTime = 60, array $arrHandle = []) {
+    public static function limitThrottler($strKey = null, $strName = null, $booException = true, $intXRateLimitLimit = 60, $intXRateLimitTime = 60, array $arrHandle = []) {
         // 判断处理器是否存在
         if (empty ( $arrHandle ) || count ( $arrHandle ) < 2 || ! is_callable ( $arrHandle [0] ) || ! is_callable ( $arrHandle [1] )) {
             $arrHandle = [ 
@@ -473,8 +473,8 @@ class safe {
         }
         
         // 验证请求频率
-        $sCurrentKey = md5 ( request::getIps () . md5 ( $strName ?  : $_SERVER ['PHP_SELF'] . '?' . $_SERVER ['QUERY_STRING'] ) );
-        $sRequestKey = 'last_http_request_' . $sCurrentKey;
+        $sRequestKey = $strKey ?  : (md5 ( request::getIps () . md5 ( $strName ?  : $_SERVER ['PHP_SELF'] . '?' . $_SERVER ['QUERY_STRING'] ) ));
+        $sRequestKey = 'last_http_request_' . $sRequestKey;
         
         if (($arrLastInfo = call_user_func_array ( $arrHandle [0], [ 
                 $sRequestKey 

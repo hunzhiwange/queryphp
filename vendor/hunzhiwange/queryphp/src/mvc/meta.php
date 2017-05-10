@@ -15,6 +15,8 @@ namespace Q\mvc;
 ##########################################################
 queryphp;
 
+use Q\database\database;
+
 /**
  * 数据库元对象
  *
@@ -169,7 +171,7 @@ class meta {
     private function initConnect_() {
         // $objConnect
         // if(is_null($this->objConnect)){
-        $this->objConnect = \Q::database ()->connect ( $this->strConnect );
+        $this->objConnect = database::connects ( $this->strConnect );
         // }
     }
     

@@ -203,7 +203,7 @@ abstract class connect implements contract_connect {
                 'select',
                 'procedure' 
         ] )) {
-            $this->throwException_ ( \Q::i18n ( 'query 方法只允许运行 select sql 语句' ) );
+            $this->throwException_ ( __ ( 'query 方法只允许运行 select sql 语句' ) );
         }
         
         // 预处理
@@ -245,7 +245,7 @@ abstract class connect implements contract_connect {
         
         // 验证 sql 类型
         if (($strSqlType = $this->getSqlType ( $strSql )) == 'select') {
-            $this->throwException_ ( \Q::i18n ( 'execute 方法不允许运行 select sql 语句' ) );
+            $this->throwException_ ( __ ( 'execute 方法不允许运行 select sql 语句' ) );
         }
         
         // 预处理
@@ -284,7 +284,7 @@ abstract class connect implements contract_connect {
      */
     public function transaction($calAction) {
         // 严格验证参数
-        assert::callback($calAction);
+        assert::callback ( $calAction );
         
         // 事务过程
         $this->beginTransaction ();
@@ -390,7 +390,7 @@ abstract class connect implements contract_connect {
      * @return void
      */
     public function registerListen($calSqlListen) {
-        assert::callback($calSqlListen);
+        assert::callback ( $calSqlListen );
         static::$calSqlListen = $calSqlListen;
     }
     
@@ -743,7 +743,7 @@ abstract class connect implements contract_connect {
             }
             
             if ($this->objPDOStatement->bindValue ( $mixKey, $mixVal, $strParam ) === false) {
-                $this->throwException_ ( \Q::i18n ( 'sql %s 参数绑定失败: %s', $this->strSql, debug::dump ( $arrBindParams, true ) ) );
+                $this->throwException_ ( __ ( 'sql %s 参数绑定失败: %s', $this->strSql, debug::dump ( $arrBindParams, true ) ) );
             }
         }
     }
@@ -831,7 +831,7 @@ abstract class connect implements contract_connect {
         
         // 记录 SQL 日志
         $arrLastSql = $this->getLastSql ( true );
-        log::runs ( $arrLastSql [0] . (! empty ( $arrLastSql [1] ) ? ' @ ' . \Q::jsonEncode ( $arrLastSql [1] ) : ''), 'sql' );
+        log::runs ( $arrLastSql [0] . (! empty ( $arrLastSql [1] ) ? ' @ ' . json_encode ( $arrLastSql [1], JSON_UNESCAPED_UNICODE ) : ''), 'sql' );
     }
     
     /**

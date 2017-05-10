@@ -73,10 +73,11 @@ class xml {
      * @param string $sXml            
      * @return resource
      */
-    public function xmlUnSerialize($sXml) {
-        $this->initParser_ ();
-        $arrData = $this->parse_ ( $sXml );
-        $this->destroyParser_ ();
+    public static function xmlUnSerialize($sXml) {
+        $objXml = new self ();
+        $objXml->initParser ();
+        $arrData = $objXml->parse ( $sXml );
+        $objXml->destroyParser ();
         return $arrData;
     }
     
@@ -90,7 +91,7 @@ class xml {
      * @param string $sCharset            
      * @return string
      */
-    public function xmlSerialize(&$arrData, $bHtmlOn = true, $nLevel = 0, $sPriorKey = NULL, $sCharset = 'UTF-8') {
+    public static function xmlSerialize(&$arrData, $bHtmlOn = true, $nLevel = 0, $sPriorKey = NULL, $sCharset = 'UTF-8') {
         if ($nLevel == 0) {
             ob_start ();
             echo '<?xml version="1.0" encoding="' . $sCharset . '"?>' . "\n" . '<root>' . "\n";
@@ -137,7 +138,7 @@ class xml {
      * @param string $sData            
      * @return resource
      */
-    private function parse_(&$sData) {
+    public function parse(&$sData) {
         $this->arrDocument = [ ];
         $this->arrStack = [ ];
         $this->arrParent = &$this->arrDocument;
@@ -234,7 +235,7 @@ class xml {
      *
      * @return void
      */
-    private function initParser_() {
+    public function initParser() {
         $this->resParser = xml_parser_create ();
         xml_parser_set_option ( $this->resParser, XML_OPTION_CASE_FOLDING, false );
         xml_set_object ( $this->resParser, $this );
@@ -247,7 +248,7 @@ class xml {
      *
      * @return void
      */
-    private function destroyParser_() {
+    public function destroyParser() {
         xml_parser_free ( $this->resParser );
     }
 }

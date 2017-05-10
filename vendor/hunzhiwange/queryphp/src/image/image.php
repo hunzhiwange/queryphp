@@ -16,6 +16,8 @@ namespace Q\image;
 queryphp;
 
 use Q\exception\exceptions;
+use Q\traits\dynamic\expansion as dynamic_expansion;
+use Q\filesystem\directory;
 
 /**
  * 图像处理
@@ -26,6 +28,8 @@ use Q\exception\exceptions;
  * @version 1.0
  */
 class image {
+    
+    use dynamic_expansion;
     
     /**
      * 创建缩略图
@@ -40,9 +44,9 @@ class image {
      * @param number $nQuality            
      * @return mixed
      */
-    public function thumb($sImage, $sThumbName, $sType = '', $nMaxWidth = 200, $nMaxHeight = 50, $bInterlace = true, $bFixed = false, $nQuality = 100) {
+    public static function thumb($sImage, $sThumbName, $sType = '', $nMaxWidth = 200, $nMaxHeight = 50, $bInterlace = true, $bFixed = false, $nQuality = 100) {
         // 获取原图信息
-        $arrInfo = $this->getImageInfo ( $sImage );
+        $arrInfo = static::getImageInfo ( $sImage );
         
         if ($arrInfo !== false) {
             $nSrcWidth = $arrInfo ['width'];
@@ -121,7 +125,7 @@ class image {
      * @param number $nThumbHeight            
      * @return void
      */
-    public function thumbPreview($sTargetFile, $nThumbWidth, $nThumbHeight) {
+    public static function thumbPreview($sTargetFile, $nThumbWidth, $nThumbHeight) {
         $arrAttachInfo = @getimagesize ( $sTargetFile );
         
         list ( $nImgW, $nImgH ) = $arrAttachInfo;
@@ -190,7 +194,7 @@ class image {
      * @param boolean $bDeleteBackgroupPath            
      * @return boolean
      */
-    public function imageWaterMark($sBackgroundPath, $arrWaterArgs, $nWaterPos = 0, $bDeleteBackgroupPath = true) {
+    public static function imageWaterMark($sBackgroundPath, $arrWaterArgs, $nWaterPos = 0, $bDeleteBackgroupPath = true) {
         $bIsWaterImage = FALSE;
         
         if (! empty ( $sBackgroundPath ) && is_file ( $sBackgroundPath )) { // 读取背景图片
@@ -208,10 +212,10 @@ class image {
                     $oBackgroundIm = @imagecreatefrompng ( $sBackgroundPath );
                     break;
                 default :
-                    exceptions::throws ( \Q::i18n ( '错误的图像格式' ), 'Q\image\exception' );
+                    exceptions::throws ( __ ( '错误的图像格式' ), 'Q\image\exception' );
             }
         } else {
-            exceptions::throws ( \Q::i18n ( '图像 %s 为空或者不存在', $sBackgroundPath ), 'Q\image\exception' );
+            exceptions::throws ( __ ( '图像 %s 为空或者不存在', $sBackgroundPath ), 'Q\image\exception' );
         }
         
         @imagealphablending ( $oBackgroundIm, true ); // 设定图像的混色模式
@@ -239,13 +243,13 @@ class image {
                         $oWaterIm = @imagecreatefrompng ( $arrWaterArgs ['path'] );
                         break;
                     default :
-                        exceptions::throws ( \Q::i18n ( '错误的图像格式' ), 'Q\image\exception' );
+                        exceptions::throws ( __ ( '错误的图像格式' ), 'Q\image\exception' );
                 }
             } elseif ($arrWaterArgs ['type'] === 'text' && $arrWaterArgs ['content'] != '') {
                 $sFontfileTemp = $sFontfile = isset ( $arrWaterArgs ['textFile'] ) && ! empty ( $arrWaterArgs ['textFile'] ) ? $arrWaterArgs ['textFile'] : 'Microsoft YaHei.ttf';
-                $sFontfile = (! empty ( $arrWaterArgs ['textPath'] ) ? \Q::tidyPath ( $arrWaterArgs ['textPath'] ) : 'C:\WINDOWS\Fonts') . '/' . $sFontfile;
+                $sFontfile = (! empty ( $arrWaterArgs ['textPath'] ) ? directory::tidyPath ( $arrWaterArgs ['textPath'] ) : 'C:\WINDOWS\Fonts') . '/' . $sFontfile;
                 if (! is_file ( $sFontfile )) {
-                    exceptions::throws ( \Q::i18n ( '字体文件 %s 无法找到', $sFontfile ), 'Q\image\exception' );
+                    exceptions::throws ( __ ( '字体文件 %s 无法找到', $sFontfile ), 'Q\image\exception' );
                 }
                 
                 $sWaterText = $arrWaterArgs ['content'];
@@ -258,10 +262,10 @@ class image {
                 $nWaterHeight = $arrTemp [3] - $arrTemp [7];
                 unset ( $arrTemp );
             } else {
-                exceptions::throws ( \Q::i18n ( '水印参数 type 不为 img 和 text' ), 'Q\image\exception' );
+                exceptions::throws ( __ ( '水印参数 type 不为 img 和 text' ), 'Q\image\exception' );
             }
         } else {
-            exceptions::throws ( \Q::i18n ( '水印参数必须为一个数组' ), 'Q\image\exception' );
+            exceptions::throws ( __ ( '水印参数必须为一个数组' ), 'Q\image\exception' );
         }
         
         if (($nGroundWidth < ($nWaterWidth * 2)) || ($nGroundHeight < ($nWaterHeight * 2))) { // 如果水印占了原图一半就不搞水印了.影响浏览.抵制影响正常浏览的广告
@@ -321,7 +325,7 @@ class image {
                 $G = hexdec ( substr ( $sTextColor, 3, 2 ) );
                 $B = hexdec ( substr ( $sTextColor, 5 ) );
             } else {
-                exceptions::throws ( \Q::i18n ( '水印文字颜色错误' ), 'Q\image\exception' );
+                exceptions::throws ( __ ( '水印文字颜色错误' ), 'Q\image\exception' );
             }
             @imagettftext ( $oBackgroundIm, $nTextFont, 0, $nPosX, $nPosY, @imagecolorallocate ( $oBackgroundIm, $R, $G, $B ), $sFontfile, $sWaterText );
         }
@@ -341,7 +345,7 @@ class image {
                 @imagepng ( $oBackgroundIm, $sBackgroundPath );
                 break;
             default :
-                exceptions::throws ( \Q::i18n ( '错误的图像格式' ), 'Q\image\exception' );
+                exceptions::throws ( __ ( '错误的图像格式' ), 'Q\image\exception' );
         }
         
         if (isset ( $oWaterIm )) {
@@ -360,7 +364,7 @@ class image {
      * @param string $sFilename            
      * @return void
      */
-    public function outputImage($oImage, $sType = 'png', $sFilename = '') {
+    public static function outputImage($oImage, $sType = 'png', $sFilename = '') {
         header ( "Content-type: image/" . $sType );
         
         $sImageFun = 'image' . $sType;
@@ -380,14 +384,14 @@ class image {
      * @param string $sFilename            
      * @return void
      */
-    public function outerImage($sUrl, $sFilename) {
+    public static function outerImage($sUrl, $sFilename) {
         if ($sUrl == '' || $sFilename == '') {
             return false;
         }
         
         // 创建文件
         if (! is_dir ( dirname ( $sFilename ) )) {
-            \Q::makeDir ( dirname ( $sFilename ) );
+            directory::create ( dirname ( $sFilename ) );
         }
         
         // 写入文件
@@ -408,7 +412,7 @@ class image {
      * @param number $nMaxHeight            
      * @return array
      */
-    public function returnChangeSize($sImgPath, $nMaxWidth, $nMaxHeight) {
+    public static function returnChangeSize($sImgPath, $nMaxWidth, $nMaxHeight) {
         $arrSize = @getimagesize ( $sImgPath );
         
         $nW = $arrSize [0];
@@ -442,7 +446,7 @@ class image {
      * @param string $sImagesPath            
      * @return mixed
      */
-    public function getImageInfo($sImagesPath) {
+    public static function getImageInfo($sImagesPath) {
         $arrImageInfo = getimagesize ( $sImagesPath );
         
         if ($arrImageInfo !== false) {

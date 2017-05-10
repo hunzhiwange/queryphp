@@ -53,6 +53,15 @@ abstract class action {
     }
     
     /**
+     * 返回项目容器
+     *
+     * @return \Q\mvc\project
+     */
+    public function project() {
+        return project::bootstrap ();
+    }
+    
+    /**
      * 实现 isPost,isGet等
      *
      * @param string $sMethod            
@@ -61,7 +70,7 @@ abstract class action {
      */
     public function __call($sMethod, $arrArgs) {
         if ($sMethod == 'run') {
-            exceptions::throws ( \Q::i18n ( '方法对象不允许通过 __call 方法执行  run 入口' ), 'Q\mvc\exception' );
+            exceptions::throws ( __ ( '方法对象不允许通过 __call 方法执行  run 入口' ), 'Q\mvc\exception' );
         }
         
         $this->initController_ ();
@@ -81,8 +90,8 @@ abstract class action {
             return;
         }
         
-        if (! ($this->objController = \Q::app ()->getController ( \Q::project ()->controller_name ))) {
-            $this->objController = \Q::app ()->controllerDefault ();
+        if (! ($this->objController = $this->project ()->make ( 'app' )->getController ( $this->project ()->controller_name ))) {
+            $this->objController = $this->project ()->make ( 'app' )->controllerDefault ();
         }
     }
 }

@@ -100,6 +100,7 @@ class option {
                 }
             }
         }
+        return $this->get ();
     }
     
     /**
@@ -132,5 +133,8 @@ class option {
                 }
             }
         }
+        return $this->get ();
     }
+    
+
 }

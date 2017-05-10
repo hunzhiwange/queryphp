@@ -25,6 +25,6 @@ use Q\router\router;
  * @since 2017.04.17
  * @version 4.0
  */
-router::binds ( 'console://bootstrap/index', function () {
-    return application::instance ()->run ();
+router::binds ( '~_~@console://bootstrap/index', function () {
+    return (new application ())->run ();
 } );

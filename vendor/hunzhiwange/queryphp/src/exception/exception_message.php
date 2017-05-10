@@ -18,7 +18,9 @@ queryphp;
 use Q\option\option;
 use Q\log\log;
 use Q\debug\debug;
-use Q\request\request;
+use Q\http\request;
+use Q\router\router;
+use Q\filesystem\directory;
 
 /**
  * 异常消息
@@ -45,7 +47,7 @@ class exception_message extends message {
      */
     public function __construct($objException) {
         $this->objException = $objException;
-        $this->strMessage = "[{$this->objException->getCode ()}] {$this->objException->getMessage ()} " . basename ( $this->objException->getFile () ) . \Q::i18n ( " 第 %d 行", $this->objException->getLine () );
+        $this->strMessage = "[{$this->objException->getCode ()}] {$this->objException->getMessage ()} " . basename ( $this->objException->getFile () ) . __ ( " 第 %d 行", $this->objException->getLine () );
     }
     
     /**
@@ -73,7 +75,7 @@ class exception_message extends message {
         
         // 否则定向到错误页面
         if (! request::isClis () && option::gets ( 'show_exception_redirect' ) && Q_DEBUG === FALSE) {
-            static::urlRedirect ( \Q::url ( option::gets ( 'show_exception_redirect' ) ) );
+            static::urlRedirect ( router::url ( option::gets ( 'show_exception_redirect' ) ) );
         } else {
             if (! option::gets ( 'show_exception_show_message', true ) && option::gets ( 'show_exception_default_message' )) {
                 $mixError ['message'] = option::gets ( 'show_exception_default_message' );
@@ -113,7 +115,7 @@ class exception_message extends message {
                 $arrVal ['class'] = isset ( $arrVal ['class'] ) ? $arrVal ['class'] : '';
                 $arrVal ['type'] = isset ( $arrVal ['type'] ) ? $arrVal ['type'] : '';
                 $arrVal ['function'] = isset ( $arrVal ['function'] ) ? $arrVal ['function'] : '';
-                $arrVal ['file'] = isset ( $arrVal ['file'] ) ? $arrVal ['file'] : '';
+                $arrVal ['file'] = isset ( $arrVal ['file'] ) ? directory::tidyPathLinux ( $arrVal ['file'] ) : '';
                 $arrVal ['line'] = isset ( $arrVal ['line'] ) ? $arrVal ['line'] : '';
                 $arrVal ['args'] = isset ( $arrVal ['args'] ) ? $arrVal ['args'] : '';
                 
@@ -142,12 +144,12 @@ class exception_message extends message {
                 unset ( $sArgsInfo, $sArgsInfoDetail );
             }
             $arrError ['trace'] = $sTraceInfo;
-            unset ( $sTraceInfo );
+            unset ( $sTraceInfo);
         }
         
         // 调试消息
         $arrError ['message'] = $oException->getMessage ();
-        $arrError ['type'] = $arrVal ['type'];
+        $arrError ['type'] = isset ( $arrVal ['type'] ) ? $arrVal ['type'] : '';
         $arrError ['class'] = isset ( $arrTrace ['0'] ['class'] ) ? $arrTrace ['0'] ['class'] : '';
         $arrError ['code'] = $oException->getCode ();
         $arrError ['function'] = isset ( $arrTrace ['0'] ['function'] ) ? $arrTrace ['0'] ['function'] : '';

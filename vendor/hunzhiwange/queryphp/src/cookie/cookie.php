@@ -16,11 +16,10 @@ namespace Q\cookie;
 queryphp;
 
 use Q\traits\dynamic\expansion as dynamic_expansion;
-use Q\exception\exceptions;
 use Q\assert\assert;
 
 /**
- * 对 PHP 原生Cookie 函数库的封装
+ * cookie 封装
  *
  * @author Xiangmin Liu<635750556@qq.com>
  * @package $$
@@ -87,7 +86,7 @@ class cookie {
     }
     
     /**
-     * 获取cookie
+     * 获取 cookie
      *
      * @param string $sName            
      * @param string $bPrefix            
@@ -99,7 +98,7 @@ class cookie {
     }
     
     /**
-     * 删除cookie
+     * 删除 cookie
      *
      * @param string $sName            
      * @param string $sCookieDomain            
@@ -117,7 +116,7 @@ class cookie {
     }
     
     /**
-     * 清空cookie
+     * 清空 cookie
      *
      * @param boolean $bOnlyDeletePrefix            
      * @param string $sCookieDomain            

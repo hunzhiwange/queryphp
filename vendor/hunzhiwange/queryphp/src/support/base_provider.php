@@ -15,6 +15,8 @@ namespace Q\support;
 ##########################################################
 queryphp;
 
+use Q\helper\helper;
+
 /**
  * 注册基础服务提供者
  *
@@ -61,8 +63,8 @@ class base_provider extends provider {
             'Q\option\option',
             
             // request
-            'Q\request\request',
-            'Q\request\response',
+            'Q\http\request',
+            'Q\http\response',
             
             // router
             'Q\router\router',
@@ -111,7 +113,7 @@ class base_provider extends provider {
     private function registerSingleton_() {
         foreach ( $this->arrSingleton as $strCore ) {
             $this->objProject->singleton ( $strCore, function () use($strCore) {
-                return \Q::newInstanceArgs ( $strCore, func_get_args () );
+                return helper::newInstanceArgs ( $strCore, func_get_args () );
             } );
         }
     }
@@ -124,7 +126,7 @@ class base_provider extends provider {
     private function registerOther_() {
         foreach ( $this->arrOther as $strOther ) {
             $this->objProject->register ( $strOther, function () use($strOther) {
-                return \Q::newInstanceArgs ( $strOther, func_get_args () );
+                return helper::newInstanceArgs ( $strOther, func_get_args () );
             } );
         }
     }

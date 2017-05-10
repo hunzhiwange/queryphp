@@ -1,6 +1,12 @@
 {
     "require": {
         "php": ">=5.5.0",
-        "symfony/console": "^3.2"
+        "robmorgan/phinx": "^0.8.0",
+        "fzaninotto/faker": "^1.6",
+        "chrisboulton/php-resque": "^1.2"
+    },
+    "require-dev": {
+        "symfony/console": "^3.2",
+        "phpunit/phpunit": "~4.0"
     }
 }

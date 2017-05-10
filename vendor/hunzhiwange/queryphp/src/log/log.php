@@ -20,6 +20,7 @@ use Q\option\option;
 use Q\exception\exceptions;
 use Q\assert\assert;
 use Q\mvc\project;
+use Q\filesystem\directory;
 
 /**
  * 日志
@@ -195,8 +196,8 @@ class log {
      */
     private function checkSize_($sFilePath) {
         // 如果不是文件，则创建
-        if (! is_file ( $sFilePath ) && ! is_dir ( dirname ( $sFilePath ) ) && ! \Q::makeDir ( dirname ( $sFilePath ) )) {
-            exceptions::throws ( \Q::i18n ( '无法创建日志文件：“%s”', $sFilePath ), 'Q\log\exception' );
+        if (! is_file ( $sFilePath ) && ! is_dir ( dirname ( $sFilePath ) ) && ! directory::create ( dirname ( $sFilePath ) )) {
+            exceptions::throws ( __ ( '无法创建日志文件：“%s”', $sFilePath ), 'Q\log\exception' );
         }
         
         // 检测日志文件大小，超过配置大小则备份日志文件重新生成

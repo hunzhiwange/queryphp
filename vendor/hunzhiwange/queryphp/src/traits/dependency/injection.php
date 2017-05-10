@@ -15,11 +15,13 @@ namespace Q\traits\dependency;
 ##########################################################
 queryphp;
 
+use Closure;
 use ReflectionFunction;
 use ReflectionMethod;
 use ReflectionClass;
 use ReflectionParameter;
 use Q\mvc\project;
+use Q\helper\helper;
 
 /**
  * 依赖注入复用
@@ -55,9 +57,9 @@ trait injection {
     protected function getObjectByClassAndArgs_($strClassName, $arrArgs = []) {
         // 注入构造器
         if (($arrDependencyInjection = $this->parseDependencyInjection_ ( $strClassName )) && ! empty ( $arrDependencyInjection ['constructor'] )) {
-            return \Q::newInstanceArgs ( $strClassName, $this->getDependencyInjectionArgs_ ( $arrDependencyInjection ['constructor'], $arrArgs ) );
+            return $this->newInstanceArgs ( $strClassName, $this->getDependencyInjectionArgs_ ( $arrDependencyInjection ['constructor'], $arrArgs ) );
         } else {
-            return \Q::newInstanceArgs ( $strClassName, $arrArgs );
+            return $this->newInstanceArgs ( $strClassName, $arrArgs );
         }
     }
     
@@ -95,7 +97,7 @@ trait injection {
                 'method' => false 
         ];
         
-        if ($mixClassOrCallback instanceof \Closure) {
+        if ($mixClassOrCallback instanceof Closure) {
             $objReflection = new ReflectionFunction ( $mixClassOrCallback );
             if (($arrParameters = $objReflection->getParameters ())) {
                 $arrFunctions ['method'] = $arrParameters;
@@ -116,7 +118,7 @@ trait injection {
             foreach ( $arrFunction as $intIndex => $objFunction ) {
                 if ($objFunction instanceof ReflectionParameter && ($objFunction = $objFunction->getClass ()) && $objFunction instanceof ReflectionClass && ($objFunction = $objFunction->getName ())) {
                     // 接口绑定实现
-                    if (($objFunctionMake = project::bootstrap ()->make ( $objFunction )) !== false) {
+                    if (($objFunctionMake = $this->getProject_ ()->make ( $objFunction )) !== false) {
                         // 实例对象
                         if (is_object ( $objFunctionMake )) {
                             $booFindClass [$sType] = true;
@@ -124,12 +126,12 @@ trait injection {
                         }                        
 
                         // 接口绑定实现
-                        elseif (\Q::classExists ( $objFunctionMake, false, true )) {
+                        elseif (class_exists ( $objFunctionMake )) {
                             $booFindClass [$sType] = true;
-                            $arrResult [$sType] [$intIndex] = new $objFunctionMake ( project::bootstrap () );
+                            $arrResult [$sType] [$intIndex] = new $objFunctionMake ( $this->getProject_ () );
                         }
-                    } elseif (\Q::classExists ( $objFunction, false, true )) {
-                        $arrResult [$sType] [$intIndex] = new $objFunction ( project::bootstrap () );
+                    } elseif (class_exists ( $objFunction )) {
+                        $arrResult [$sType] [$intIndex] = new $objFunction ( $this->getProject_ () );
                         $booFindClass [$sType] = true;
                     } else {
                         $arrResult [$sType] [$intIndex] = '';
@@ -147,5 +149,28 @@ trait injection {
         }
         
         return $arrResult;
+    }
+    
+    /**
+     * 动态创建实例对象
+     *
+     * @param string $strClass            
+     * @param array $arrArgs            
+     * @return mixed
+     */
+    public function newInstanceArgs($strClass, $arrArgs) {
+        return helper::newInstanceArgs ( $strClass, $arrArgs );
+    }
+    
+    /**
+     * 返回项目
+     *
+     * @return \Q\mvc\project
+     */
+    protected function getProject_() {
+        if (! class_exists ( '\Q\mvc\project' )) {
+            return $this;
+        }
+        return project::bootstrap ();
     }
 }

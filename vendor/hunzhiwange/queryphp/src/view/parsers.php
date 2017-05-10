@@ -15,9 +15,12 @@ namespace Q\view;
 ##########################################################
 queryphp;
 
-use Q\queue\stack;
+use Q\datastruct\queue\stack;
 use Q\exception\exceptions;
 use Q\traits\dynamic\expansion as dynamic_expansion;
+use Q\operating\system;
+use Q\filesystem\directory;
+use Q\safe\safe;
 
 /**
  * 分析模板
@@ -307,7 +310,7 @@ class parsers {
         }
         
         // 返回编译文件
-        $sOsNewline = \Q::osNewline ();
+        $sOsNewline = system::osNewline ();
         $sCache = "<?php !defined('Q_PATH') && exit; /* QueryPHP Cache " . date ( 'Y-m-d H:i:s', time () ) . "  */ ?>" . $sOsNewline . $sCache;
         
         // 解决不同操作系统源代码换行混乱
@@ -751,7 +754,7 @@ class parsers {
         /**
          * 交叉（两个时间段相互关系）
          */
-        exceptions::throws ( \Q::i18n ( '标签库不支持交叉' ), 'Q\view\exception' );
+        exceptions::throws ( __ ( '标签库不支持交叉' ), 'Q\view\exception' );
     }
     
     /**
@@ -886,7 +889,7 @@ class parsers {
      * @return string
      */
     public static function escapeCharacter($sTxt) {
-        return \Q::escapeRegexCharacter ( $sTxt );
+        return safe::escapeRegexCharacter ( $sTxt );
     }
     
     // ######################################################
@@ -916,7 +919,7 @@ class parsers {
      * @return void
      */
     protected function makeCacheFile($sCachePath, &$sCompiled) {
-        ! is_file ( $sCachePath ) && ! is_dir ( dirname ( $sCachePath ) ) && \Q::makeDir ( dirname ( $sCachePath ) );
+        ! is_file ( $sCachePath ) && ! is_dir ( dirname ( $sCachePath ) ) && directory::create ( dirname ( $sCachePath ) );
         file_put_contents ( $sCachePath, $sCompiled );
     }
     
@@ -1011,7 +1014,7 @@ class parsers {
             if (! $arrTailTag or ! $this->findHeadTag ( $arrTag, $arrTailTag )) { // 单标签节点
                 
                 if ($arrNodeTag [$arrTag ['name']] ['single'] !== true) {
-                    exceptions::throws ( \Q::i18n ( '%s 类型节点 必须成对使用，没有找到对应的尾标签', $arrTag ['name'] ), 'Q\view\exception' );
+                    exceptions::throws ( __ ( '%s 类型节点 必须成对使用，没有找到对应的尾标签', $arrTag ['name'] ), 'Q\view\exception' );
                 }
                 if ($arrTailTag) { // 退回栈中
                     $oTailStack->in ( $arrTailTag );
@@ -1084,7 +1087,7 @@ class parsers {
      */
     protected function findHeadTag($arrTag, $arrTailTag) {
         if ($arrTailTag ['type'] != 'tail') {
-            exceptions::throws ( \Q::i18n ( '参数必须是一个尾标签' ), 'Q\view\exception' );
+            exceptions::throws ( __ ( '参数必须是一个尾标签' ), 'Q\view\exception' );
         }
         return preg_match ( "/^{$arrTailTag['name']}/i", $arrTag ['name'] );
     }

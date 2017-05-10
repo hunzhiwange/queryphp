@@ -6,42 +6,10 @@
 namespace home\application\controller;
 
 use Q\mvc\controller;
-
-use Q\safe\safe;
-// use home\infrastructure\provider;
-// use home\domain\model\test;
-// use Q\traits\test as test2;
-// use Q\exception\exception;
-
-//use Q\assert\assert;
-
-//use Q\log\test;
-
-//assert::registerExpansion(0,function($key=0,$minutes=0,$callback=0){
-  //echo  test::$xxx;
-    
- //   print_r(func_get_args());
-//});
-
-// $xxx=function(){
-//     echo 'xx22';
-// };
-// test::registerExpansion('want2',$xxx);
-
-
-//test::xxs(111,222,44);
-
-// $test = new test();
-
-// $test->want2('xx');
-
-use Q\log\log;
+use Resque;
+use Q\message\queue;
 
 class index extends controller {
-    
-    // public function __construct( $test){
-    // print_r($test);
-    // }
     
     // public function __construct(test_provider $test ){
     // print_r($test);
@@ -53,51 +21,30 @@ class index extends controller {
      * @return void
      */
     public function index() {
-        echo 'Hello world';
         
-       // $ss= '<a href="xxx">xxx</a>';
-        
-     print_r( safe::limitThrottler() )   ;
-        
-       // if(!is_array($ss)) {
-        //    $ss = [ $ss];
-       //     print_r($ss);
+        //if(empty($argv[1])) {
+         //   die('Specify the name of a job to add. e.g, php queue.php PHP_Job');
         //}
-        //echo(safe::htmlspecialchars($ss));
-        //log::runs('xxxxxxxx','debug');
         
-        //assert::trueExpression('');
-        exit();
-        //xxxx();
-        //echo 'test';
-     //   test2::xxxx();
-     
-      //  exception::throws('dsfsdf222');
-      
-       //echo \Q\cookie\cookie::clears();
-       
-       // print_r() \Q::database()->wher;
+       // require './../lib/Resque.php';
+       // date_default_timezone_set('GMT');
+//         Resque::setBackend('127.0.0.1:6379');
         
-       // echo 'hello world';
+        $args = array(
+                'time' => time(),
+                'array' => array(
+                        'test' => 'test',
+                ),
+        );
         
-      //  $obj = new test([ 'id2' =>35, 'name' => 'hello', 'value' => '222222','ge' => 'xxxx','create_int' =>'22' ]);
-      //  $obj->value = '22222222222222222222222';
-      
-        //$obj->changeProp('xxx',5);
+//         $jobId = Resque::enqueue('default', 'PHP_Job', $args, true);
+//         echo "Queued job ".$jobId."\n\n";
         
-       // print_r($obj->save());
-       
-       // print_r( \Q::database()->connect()->table('test')->getAll() );
-        
-      // print_r( \Q\database\database::table('test')->getAll() ) ;
-       
-        //echo 'xx';
-        //$this->assign('xxx',55);
-       // $this->display();
-       // echo '1234';
-        
-         //\Q\database\test::xxx();
-        $this->display();
+       $jobId= queue::dispatchs('PHP_Job','default', $args, true);
+       echo "\n\n"."Queued job ".$jobId."\n\n";
+       // echo 'Hello world';
+        //throw new \BadFunctionCallException('sdf');
+        //$this->display();
         exit();
     }
 }

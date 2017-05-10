@@ -20,6 +20,7 @@ use Q\traits\flow\control as flow_control;
 use Q\datastruct\collection\collection;
 use Q\exception\exceptions;
 use Q\assert\assert;
+use Q\assert\test;
 
 /**
  * 数据库查询器
@@ -280,14 +281,14 @@ class select {
                 $sMethod = substr ( $sMethod, 2 );
                 $arrKeys = explode ( 'And', $sMethod );
                 if (count ( $arrKeys ) != count ( $arrArgs )) {
-                    exceptions::throws ( \Q::i18n ( 'getBy 参数数量不对应' ), 'Q\database\exception' );
+                    exceptions::throws ( __ ( 'getBy 参数数量不对应' ), 'Q\database\exception' );
                 }
                 return $this->where ( array_combine ( $arrKeys, $arrArgs ) )->getOne ();
             } elseif (strncasecmp ( $sMethod, 'AllBy', 5 ) === 0) { // support getAllByNameAndSex etc.
                 $sMethod = substr ( $sMethod, 5 );
                 $arrKeys = explode ( 'And', $sMethod );
                 if (count ( $arrKeys ) != count ( $arrArgs )) {
-                    exceptions::throws ( \Q::i18n ( 'getAllBy 参数数量不对应' ), 'Q\database\exception' );
+                    exceptions::throws ( __ ( 'getAllBy 参数数量不对应' ), 'Q\database\exception' );
                 }
                 return $this->where ( array_combine ( $arrKeys, $arrArgs ) )->getAll ();
             }
@@ -417,7 +418,7 @@ class select {
             }
         }
         
-        exceptions::throws ( \Q::i18n ( 'select 没有实现魔法方法 %s.', $sMethod ), 'Q\database\exception' );
+        exceptions::throws ( __ ( 'select 没有实现魔法方法 %s.', $sMethod ), 'Q\database\exception' );
     }
     
     // ######################################################
@@ -434,12 +435,12 @@ class select {
      * @return mixed
      */
     public function select($mixData = null, $arrBind = [], $bFlag = false) {
-        if (! \Q::isThese ( $mixData, [ 
+        if (! test::isThese ( $mixData, [ 
                 'string',
                 'null',
                 'callback' 
         ] ) && ! $mixData instanceof select) {
-            exceptions::throws ( \Q::i18n ( 'select 查询数据第一个参数只能为 null、callback、select 或者 string' ), 'Q\database\exception' );
+            exceptions::throws ( __ ( 'select 查询数据第一个参数只能为 null、callback、select 或者 string' ), 'Q\database\exception' );
         }
         
         // 查询对象直接查询
@@ -481,11 +482,11 @@ class select {
      * @return int 最后插入ID
      */
     public function insert($mixData, $arrBind = [], $booReplace = false, $bFlag = false) {
-        if (! \Q::isThese ( $mixData, [ 
+        if (! test::isThese ( $mixData, [ 
                 'string',
                 'array' 
         ] )) {
-            exceptions::throws ( \Q::i18n ( 'insert 插入数据第一个参数只能为 string 或者 array' ), 'Q\database\exception' );
+            exceptions::throws ( __ ( 'insert 插入数据第一个参数只能为 string 或者 array' ), 'Q\database\exception' );
         }
         
         // 绑定参数
@@ -540,7 +541,7 @@ class select {
      */
     public function insertAll($arrData, $arrBind = [], $booReplace = false, $bFlag = false) {
         if (! is_array ( $arrData )) {
-            exceptions::throws ( \Q::i18n ( 'insertAll 批量插入数据第一个参数必须为数组' ), 'Q\database\exception' );
+            exceptions::throws ( __ ( 'insertAll 批量插入数据第一个参数必须为数组' ), 'Q\database\exception' );
         }
         
         // 绑定参数
@@ -603,11 +604,11 @@ class select {
      * @return int 影响记录
      */
     public function update($mixData, $arrBind = [], $bFlag = false) {
-        if (! \Q::isThese ( $mixData, [ 
+        if (! test::isThese ( $mixData, [ 
                 'string',
                 'array' 
         ] )) {
-            exceptions::throws ( \Q::i18n ( 'update 更新数据第一个参数只能为 string 或者 array' ), 'Q\database\exception' );
+            exceptions::throws ( __ ( 'update 更新数据第一个参数只能为 string 或者 array' ), 'Q\database\exception' );
         }
         
         // 绑定参数
@@ -666,7 +667,7 @@ class select {
      */
     public function updateColumn($strColumn, $mixValue, $arrBind = [], $bFlag = false) {
         if (! is_string ( $strColumn )) {
-            exceptions::throws ( \Q::i18n ( 'updateColumn 第一个参数必须为字符串' ), 'Q\database\exception' );
+            exceptions::throws ( __ ( 'updateColumn 第一个参数必须为字符串' ), 'Q\database\exception' );
         }
         
         return $this->sql ( $bFlag )->update ( [ 
@@ -712,11 +713,11 @@ class select {
      * @return int 影响记录
      */
     public function delete($mixData = null, $arrBind = [], $bFlag = false) {
-        if (! \Q::isThese ( $mixData, [ 
+        if (! test::isThese ( $mixData, [ 
                 'string',
                 'null' 
         ] )) {
-            exceptions::throws ( \Q::i18n ( 'delete 删除数据第一个参数只能为 null 或者 string' ), 'Q\database\exception' );
+            exceptions::throws ( __ ( 'delete 删除数据第一个参数只能为 null 或者 string' ), 'Q\database\exception' );
         }
         
         // 构造数据删除
@@ -1105,9 +1106,9 @@ class select {
     public function prefix($mixPrefix) {
         if ($this->checkFlowControl_ ())
             return $this;
-        $mixPrefix = \Q::normalize ( $mixPrefix );
+        $mixPrefix = helper::arrys ( $mixPrefix );
         foreach ( $mixPrefix as $strValue ) {
-            $strValue = \Q::normalize ( $strValue );
+            $strValue = helper::arrys ( $strValue );
             foreach ( $strValue as $strTemp ) {
                 $strTemp = trim ( $strTemp );
                 if (empty ( $strTemp )) {
@@ -1144,7 +1145,7 @@ class select {
     public function using($mixName) {
         if ($this->checkFlowControl_ ())
             return $this;
-        $mixName = \Q::normalize ( $mixName );
+        $mixName = helper::arrys ( $mixName );
         foreach ( $mixName as $sAlias => $sTable ) {
             // 字符串指定别名
             if (preg_match ( '/^(.+)\s+AS\s+(.+)$/i', $sTable, $arrMatch )) {
@@ -1325,9 +1326,8 @@ class select {
         if (is_array ( $mixName )) {
             foreach ( $mixName as $mixKey => $mixValue ) {
                 if (! is_array ( $mixValue )) {
-                    $mixTemp = $mixValue;
                     $mixValue = [ 
-                            $mixTemp,
+                            $mixValue,
                             $intType 
                     ];
                 }
@@ -1342,9 +1342,8 @@ class select {
                 $this->arrBindParams [] = $mixValue;
             } else {
                 if (! is_array ( $mixValue )) {
-                    $mixTemp = $mixValue;
                     $mixValue = [ 
-                            $mixTemp,
+                            $mixValue,
                             $intType 
                     ];
                 }
@@ -1366,12 +1365,12 @@ class select {
         if ($this->checkFlowControl_ ())
             return $this;
         if (! isset ( static::$arrIndexTypes [$sType] )) {
-            exceptions::throws ( \Q::i18n ( '无效的 Index 类型 %s', $sType ), 'Q\database\exception' );
+            exceptions::throws ( __ ( '无效的 Index 类型 %s', $sType ), 'Q\database\exception' );
         }
         $sType = strtoupper ( $sType );
-        $mixIndex = \Q::normalize ( $mixIndex );
+        $mixIndex = helper::arrys ( $mixIndex );
         foreach ( $mixIndex as $strValue ) {
-            $strValue = \Q::normalize ( $strValue );
+            $strValue = helper::arrys ( $strValue );
             foreach ( $strValue as $strTemp ) {
                 $strTemp = trim ( $strTemp );
                 if (empty ( $strTemp )) {
@@ -1429,13 +1428,13 @@ class select {
         if ($this->checkFlowControl_ ())
             return $this;
         if (! isset ( static::$arrUnionTypes [$sType] )) {
-            exceptions::throws ( \Q::i18n ( '无效的 UNION 类型 %s', $sType ), 'Q\database\exception' );
+            exceptions::throws ( __ ( '无效的 UNION 类型 %s', $sType ), 'Q\database\exception' );
         }
         
         if (! is_array ( $mixSelect )) {
-            $mixTemp = $mixSelect;
-            $mixSelect = [ ];
-            $mixSelect [] = $mixTemp;
+            $mixSelect = [ 
+                    $mixSelect 
+            ];
         }
         
         foreach ( $mixSelect as $mixTemp ) {
@@ -1473,7 +1472,7 @@ class select {
         if (is_string ( $mixExpr ) && strpos ( $mixExpr, ',' ) !== false && strpos ( $mixExpr, '{' ) !== false && preg_match_all ( '/{(.+?)}/', $mixExpr, $arrRes )) {
             $mixExpr = str_replace ( $arrRes [1] [0], base64_encode ( $arrRes [1] [0] ), $mixExpr );
         }
-        $mixExpr = \Q::normalize ( $mixExpr );
+        $mixExpr = helper::arrys ( $mixExpr );
         // 还原
         if (! empty ( $arrRes )) {
             foreach ( $arrRes [1] as $strTemp ) {
@@ -1487,7 +1486,7 @@ class select {
             if (is_string ( $strValue ) && strpos ( $strValue, ',' ) !== false && strpos ( $strValue, '{' ) !== false && preg_match_all ( '/{(.+?)}/', $strValue, $arrResTwo )) {
                 $strValue = str_replace ( $arrResTwo [1] [0], base64_encode ( $arrResTwo [1] [0] ), $strValue );
             }
-            $strValue = \Q::normalize ( $strValue );
+            $strValue = helper::arrys ( $strValue );
             // 还原
             if (! empty ( $arrResTwo )) {
                 foreach ( $arrResTwo [1] as $strTemp ) {
@@ -1565,7 +1564,7 @@ class select {
         if (is_string ( $mixExpr ) && strpos ( $mixExpr, ',' ) !== false && strpos ( $mixExpr, '{' ) !== false && preg_match_all ( '/{(.+?)}/', $mixExpr, $arrRes )) {
             $mixExpr = str_replace ( $arrRes [1] [0], base64_encode ( $arrRes [1] [0] ), $mixExpr );
         }
-        $mixExpr = \Q::normalize ( $mixExpr );
+        $mixExpr = helper::arrys ( $mixExpr );
         // 还原
         if (! empty ( $arrRes )) {
             foreach ( $arrRes [1] as $strTemp ) {
@@ -1579,7 +1578,7 @@ class select {
             if (is_string ( $strValue ) && strpos ( $strValue, ',' ) !== false && strpos ( $strValue, '{' ) !== false && preg_match_all ( '/{(.+?)}/', $strValue, $arrResTwo )) {
                 $strValue = str_replace ( $arrResTwo [1] [0], base64_encode ( $arrResTwo [1] [0] ), $strValue );
             }
-            $strValue = \Q::normalize ( $strValue );
+            $strValue = helper::arrys ( $strValue );
             // 还原
             if (! empty ( $arrResTwo )) {
                 foreach ( $arrResTwo [1] as $strTemp ) {
@@ -2251,7 +2250,7 @@ class select {
                         }
                     }
                     if ($strFindTime === null) {
-                        exceptions::throws ( \Q::i18n ( '你正在尝试一个不受支持的时间处理语法' ), 'Q\database\exception' );
+                        exceptions::throws ( __ ( '你正在尝试一个不受支持的时间处理语法' ), 'Q\database\exception' );
                     }
                 }
                 
@@ -2259,9 +2258,9 @@ class select {
                 if (isset ( $mixCond [2] )) {
                     $booIsArray = true;
                     if (! is_array ( $mixCond [2] )) {
-                        $mixTemp = $mixCond [2];
-                        $mixCond [2] = [ ];
-                        $mixCond [2] [] = $mixTemp;
+                        $mixCond [2] = [ 
+                                $mixCond [2] 
+                        ];
                         $booIsArray = false;
                     }
                     
@@ -2322,7 +2321,7 @@ class select {
                         'not between' 
                 ] )) {
                     if (! is_array ( $mixCond [2] ) || count ( $mixCond [2] ) < 2) {
-                        exceptions::throws ( \Q::i18n ( '[not] between 参数值必须是一个数组，不能少于 2 个元素' ), 'Q\database\exception' );
+                        exceptions::throws ( __ ( '[not] between 参数值必须是一个数组，不能少于 2 个元素' ), 'Q\database\exception' );
                     }
                     $arrSqlCond [] = $mixCond [0] . ' ' . strtoupper ( $mixCond [1] ) . ' ' . $mixCond [2] [0] . ' AND ' . $mixCond [2] [1];
                 } elseif (is_scalar ( $mixCond [2] )) {
@@ -2401,9 +2400,9 @@ class select {
         
         // 整理多个参数到二维数组
         if (! is_array ( $arrArgs [0] )) {
-            $mixTemp = $arrArgs;
-            $arrArgs [0] = [ ];
-            $arrArgs [0] [] = $mixTemp;
+            $arrArgs [0] = [ 
+                    $arrArgs [0] 
+            ];
         } else {
             // 一维数组统一成二维数组格式
             $booOneImension = false;
@@ -2413,11 +2412,10 @@ class select {
                 }
                 break;
             }
-            
             if ($booOneImension === true) {
-                $arrTemp = $arrArgs [0];
-                $arrArgs [0] = [ ];
-                $arrArgs [0] [] = $arrTemp;
+                $arrArgs [0] = [ 
+                        $arrArgs [0] 
+                ];
             }
         }
         
@@ -2431,7 +2429,7 @@ class select {
             if (is_string ( $strKey ) && $strKey == 'string__') {
                 // 不符合规则抛出异常
                 if (! is_string ( $arrTemp )) {
-                    exceptions::throws ( \Q::i18n ( 'string__ 只支持字符串' ), 'Q\database\exception' );
+                    exceptions::throws ( __ ( 'string__ 只支持字符串' ), 'Q\database\exception' );
                 }
                 
                 // 表达式支持
@@ -2482,7 +2480,7 @@ class select {
             ] )) {
                 // having 不支持 [not] exists
                 if ($this->getTypeAndLogic_ ()[0] == 'having') {
-                    exceptions::throws ( \Q::i18n ( 'having 不支持 [not] exists  写法' ), 'Q\database\exception' );
+                    exceptions::throws ( __ ( 'having 不支持 [not] exists  写法' ), 'Q\database\exception' );
                 }
                 
                 if ($arrTemp instanceof select) {
@@ -2508,9 +2506,9 @@ class select {
             else {
                 // 处理字符串 "null"
                 if (is_string ( $arrTemp )) {
-                    $mixTemp = $arrTemp;
-                    $arrTemp = [ ];
-                    $arrTemp [] = $mixTemp;
+                    $arrTemp = [ 
+                            $arrTemp 
+                    ];
                 }
                 
                 // 合并字段到数组
@@ -2523,9 +2521,8 @@ class select {
                         'null',
                         'not null' 
                 ] )) {
-                    $mixTemp = $arrTemp [1];
+                    $arrTemp [2] = $arrTemp [1];
                     $arrTemp [1] = '=';
-                    $arrTemp [2] = $mixTemp;
                 }
                 
                 // 字段
@@ -2661,12 +2658,12 @@ class select {
     private function join_($sJoinType, $mixName, $mixCols, $mixCond = null/* args */) {
         // 验证 join 类型
         if (! isset ( static::$arrJoinTypes [$sJoinType] )) {
-            exceptions::throws ( \Q::i18n ( '无效的 JOIN 类型 %s', $sJoinType ), 'Q\database\exception' );
+            exceptions::throws ( __ ( '无效的 JOIN 类型 %s', $sJoinType ), 'Q\database\exception' );
         }
         
         // 不能在使用 UNION 查询的同时使用 JOIN 查询
         if (count ( $this->arrOption ['union'] )) {
-            exceptions::throws ( \Q::i18n ( '不能在使用 UNION 查询的同时使用 JOIN 查询' ), 'Q\database\exception' );
+            exceptions::throws ( __ ( '不能在使用 UNION 查询的同时使用 JOIN 查询' ), 'Q\database\exception' );
         }
         
         // 是否分析 schema，子表达式不支持
@@ -2823,7 +2820,7 @@ class select {
         if (is_string ( $mixCols ) && strpos ( $mixCols, ',' ) !== false && strpos ( $mixCols, '{' ) !== false && preg_match_all ( '/{(.+?)}/', $mixCols, $arrRes )) {
             $mixCols = str_replace ( $arrRes [1] [0], base64_encode ( $arrRes [1] [0] ), $mixCols );
         }
-        $mixCols = \Q::normalize ( $mixCols );
+        $mixCols = helper::arrys ( $mixCols );
         // 还原
         if (! empty ( $arrRes )) {
             foreach ( $arrRes [1] as $strTemp ) {
@@ -2846,14 +2843,14 @@ class select {
                 if (is_string ( $mixCol ) && strpos ( $mixCol, ',' ) !== false && strpos ( $mixCol, '{' ) !== false && preg_match_all ( '/{(.+?)}/', $mixCol, $arrResTwo )) {
                     $mixCol = str_replace ( $arrResTwo [1] [0], base64_encode ( $arrResTwo [1] [0] ), $mixCol );
                 }
-                $mixCol = \Q::normalize ( $mixCol );
+                $mixCol = helper::arrys ( $mixCol );
                 // 还原
                 if (! empty ( $arrResTwo )) {
                     foreach ( $arrResTwo [1] as $strTemp ) {
                         $mixCol [array_search ( '{' . base64_encode ( $strTemp ) . '}', $mixCol, true )] = '{' . $strTemp . '}';
                     }
                 }
-                foreach ( \Q::normalize ( $mixCol ) as $sCol ) { // 将包含多个字段的字符串打散
+                foreach ( helper::arrys ( $mixCol ) as $sCol ) { // 将包含多个字段的字符串打散
                     $strThisTableName = $sTableName;
                     
                     if (preg_match ( '/^(.+)\s+' . 'AS' . '\s+(.+)$/i', $sCol, $arrMatch )) { // 检查是不是 "字段名 AS 别名"这样的形式
@@ -3005,13 +3002,12 @@ class select {
         
         // 模型类不存在，直接以数组结果返回
         $sClassName = $this->arrQueryParams ['as_class'];
-        if (! \Q::classExists ( $sClassName )) {
+        if (! class_exists ( $sClassName )) {
             $this->queryDefault_ ( $arrData );
         }
         
         foreach ( $arrData as &$mixTemp ) {
-            $mixTemp = ( array ) $mixTemp;
-            $mixTemp = new $sClassName ( $mixTemp );
+            $mixTemp = new $sClassName ( ( array ) $mixTemp );
         }
         
         // 创建一个单独的对象
@@ -3043,7 +3039,7 @@ class select {
                 $strSqlType = 'select';
             }
             if ($strSqlType != $strNativeSql) {
-                exceptions::throws ( \Q::i18n ( '%s 方法只允许运行 %s sql 语句', $strNativeSql, $strNativeSql ), 'Q\database\exception' );
+                exceptions::throws ( __ ( '%s 方法只允许运行 %s sql 语句', $strNativeSql, $strNativeSql ), 'Q\database\exception' );
             }
             
             $arrArgs = func_get_args ();
@@ -3058,7 +3054,7 @@ class select {
                     $strNativeSql == 'select' ? 'query' : 'execute' 
             ], $arrArgs );
         } else {
-            exceptions::throws ( \Q::i18n ( '%s 方法第一个参数只允许是 null 或者字符串', $strNativeSql ), 'Q\database\exception' );
+            exceptions::throws ( __ ( '%s 方法第一个参数只允许是 null 或者字符串', $strNativeSql ), 'Q\database\exception' );
         }
     }
     
@@ -3264,11 +3260,11 @@ class select {
             case 'date' :
                 $mixValue = strtotime ( $mixValue );
                 if ($mixValue === false) {
-                    exceptions::throws ( \Q::i18n ( '请输入一个支持 strtotime 正确的时间' ), 'Q\database\exception' );
+                    exceptions::throws ( __ ( '请输入一个支持 strtotime 正确的时间' ), 'Q\database\exception' );
                 }
                 break;
             default :
-                exceptions::throws ( \Q::i18n ( '不受支持的时间格式化类型 %s', $strType ), 'Q\database\exception' );
+                exceptions::throws ( __ ( '不受支持的时间格式化类型 %s', $strType ), 'Q\database\exception' );
                 break;
         }
         

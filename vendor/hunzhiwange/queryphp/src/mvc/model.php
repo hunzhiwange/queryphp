@@ -442,7 +442,7 @@ class model implements ArrayAccess {
             return ! empty ( $this->arrChangedProp );
         }
         
-        $arrPropsName = \Q::normalize ( $sPropsName );
+        $arrPropsName = helper::arrys ( $sPropsName );
         foreach ( $arrPropsName as $sPropName ) {
             if (isset ( $this->arrChangedProp [$sPropName] ))
                 return true;
@@ -460,7 +460,7 @@ class model implements ArrayAccess {
         if (is_null ( $mixProp )) {
             $this->arrChangedProp = [ ];
         } else {
-            $mixProp = \Q::normalize ( $mixProp );
+            $mixProp = helper::arrys ( $mixProp );
             foreach ( $mixProp as $sProp ) {
                 if (isset ( $this->arrChangedProp [$sProp] ))
                     unset ( $this->arrChangedProp [$sProp] );

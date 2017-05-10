@@ -16,6 +16,9 @@ namespace Q\mvc;
 queryphp;
 
 use Q\exception\exceptions;
+use Q\asset\test;
+use Q\http\request;
+use Q\http\response;
 
 /**
  * 基类控制器
@@ -66,23 +69,23 @@ class controller {
      */
     public function action($sActionName) {
         // 判断是否已经注册过
-        if (($objAction = \Q::app ()->getAction ( \Q::project ()->controller_name, $sActionName )) && ! (is_array ( $objAction ) && isset ( $objAction [1] ) && \Q::isKindOf ( $objAction [0], 'Q\mvc\controller' ))) {
-            return \Q::app ()->action ( \Q::project ()->controller_name, $sActionName );
+        if (($objAction = $this->project ()->make ( 'app' )->getAction ( $this->project ()->controller_name, $sActionName )) && ! (is_array ( $objAction ) && isset ( $objAction [1] ) && test::isKindOf ( $objAction [0], 'Q\mvc\controller' ))) {
+            return $this->project ()->make ( 'app' )->action ( $this->project ()->controller_name, $sActionName );
         }
         
         // 读取默认方法器
         $sActionName = get_class ( $this ) . '\\' . $sActionName;
-        if (\Q::classExists ( $sActionName, false, true )) {
+        if (class_exists ( $sActionName )) {
             // 注册方法器
-            \Q::app ()->registerAction ( \Q::project ()->controller_name, $sActionName, [ 
+            $this->project ()->make ( 'app' )->registerAction ( $this->project ()->controller_name, $sActionName, [ 
                     $sActionName,
                     'run' 
             ] );
             
             // 运行方法器
-            return \Q::app ()->action ( \Q::project ()->controller_name, $sActionName );
+            return $this->project ()->make ( 'app' )->action ( $this->project ()->controller_name, $sActionName );
         } else {
-            exceptions::throws ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sActionName ), 'Q\mvc\exception' );
+            exceptions::throws ( __ ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sActionName ), 'Q\mvc\exception' );
         }
     }
     
@@ -94,7 +97,7 @@ class controller {
      * @return this
      */
     public function assign($Name, $Value = '') {
-        \Q::view ()->assign ( $Name, $Value );
+        $this->project ()->make ( 'view' )->assign ( $Name, $Value );
         return $this;
     }
     
@@ -114,7 +117,16 @@ class controller {
                 'content_type' => 'text/html',
                 'return' => false 
         ], $in );
-        return \Q::view ()->display ( $sThemeFile, $in );
+        return $this->project ()->make ( 'view' )->display ( $sThemeFile, $in );
+    }
+    
+    /**
+     * 返回项目容器
+     *
+     * @return \Q\mvc\project
+     */
+    public function project() {
+        return project::bootstrap ();
     }
     
     /**
@@ -124,7 +136,7 @@ class controller {
      * @return mixed
      */
     protected function getAssign($sName) {
-        return \Q::view ()->getVar ( $sName );
+        return $this->project ()->make ( 'view' )->getVar ( $sName );
     }
     
     /**
@@ -140,7 +152,7 @@ class controller {
      */
     protected function error($sMessage = '', $in = []) {
         $in = array_merge ( [ 
-                'message' => $sMessage ?  : \Q::i18n ( '操作失败' ),
+                'message' => $sMessage ?  : __ ( '操作失败' ),
                 'url' => '',
                 'time' => 3 
         ], $in );
@@ -161,7 +173,7 @@ class controller {
      */
     protected function success($sMessage = '', $in = []) {
         $in = array_merge ( [ 
-                'message' => $sMessage ?  : \Q::i18n ( '操作成功' ),
+                'message' => $sMessage ?  : __ ( '操作成功' ),
                 'url' => '',
                 'time' => 1 
         ], $in );
@@ -185,7 +197,7 @@ class controller {
                 'message' => $sMessage 
         ], $in );
         header ( "Content-Type:text/html; charset=utf-8" );
-        exit ( \Q::jsonEncode ( $in ) );
+        exit ( json_encode ( $in, JSON_UNESCAPED_UNICODE ) );
     }
     
     /**
@@ -199,7 +211,7 @@ class controller {
      * @return void
      */
     protected function redirect($sUrl, $in = []) {
-        return \Q::redirect ( $sUrl, $in );
+        return response::redirects ( $sUrl, $in );
     }
     
     /**
@@ -212,17 +224,17 @@ class controller {
     public function __call($sMethod = '', $arrArgs = []) {
         switch ($sMethod) {
             case 'isPost' :
-                return \Q::isPost ();
+                return request::isPosts ();
             case 'isGet' :
-                return \Q::isGet ();
+                return request::isGets ();
             case 'in' :
                 if (! empty ( $arrArgs [0] )) {
-                    return \Q::in ( $arrArgs [0], isset ( $arrArgs [1] ) ? $arrArgs [1] : 'R' );
+                    return request::ins ( $arrArgs [0], isset ( $arrArgs [1] ) ? $arrArgs [1] : 'R' );
                 } else {
                     exceptions::throws ( 'Can not find method.', 'Q\mvc\exception' );
                 }
             default :
-                exceptions::throws ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sMethod ), 'Q\mvc\exception' );
+                exceptions::throws ( __ ( '控制器 %s 的方法 %s 不存在', get_class ( $this ), $sMethod ), 'Q\mvc\exception' );
         }
     }
 }

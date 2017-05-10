@@ -15,11 +15,18 @@ namespace Q\mvc;
 ##########################################################
 queryphp;
 
-use Q\request\response;
+use ReflectionException;
+use ReflectionMethod;
+use Q\http\response;
 use Q\traits\dependency\injection as dependency_injection;
 use Q\exception\exceptions;
 use Q\cookie\cookie;
 use Q\router\router;
+use Q\filesystem\directory;
+use Q\psr4\psr4;
+use Q\option\option;
+use Q\helper\helper;
+use Q\assert\test;
 
 /**
  * 应用程序对象
@@ -43,7 +50,7 @@ class app {
     /**
      * 当前请求
      *
-     * @var Q\request\request
+     * @var Q\http\request
      */
     private $objRequest = null;
     
@@ -95,11 +102,11 @@ class app {
         $this->initApp_ ();
         
         // 注册命名空间
-        \Q::import ( $this->objProject->app_name, $this->objProject->path_application . '/' . $this->objProject->app_name, [ 
+        psr4::import ( $this->objProject->app_name, $this->objProject->path_application . '/' . $this->objProject->app_name, [ 
                 'ignore' => [ 
                         'interfaces' 
                 ],
-                'force' => Q_DEVELOPMENT !== 'develop' ? false : true 
+                'force' => Q_DEVELOPMENT !== 'development' ? false : true 
         ] );
         
         // 加载配置文件
@@ -125,6 +132,12 @@ class app {
      * @return void
      */
     public function app() {
+        // 接管 PHP 异常
+        set_exception_handler ( is_callable ( $GLOBALS ['~@option'] ['exception'] ) ? $GLOBALS ['~@option'] ['exception'] : [ 
+                'Q\exception\handle',
+                'exceptionHandle' 
+        ] );
+        
         // 初始化时区和GZIP压缩
         if (function_exists ( 'date_defaault_timezone_set' )) {
             date_default_timezone_set ( $GLOBALS ['~@option'] ['time_zone'] );
@@ -136,7 +149,7 @@ class app {
         }
         
         // 载入 app 引导文件
-        if (is_file ( ($strBootstrap = $this->objProject->path_application . '/' . $this->objProject->app_name . '/bootstrap.php') )) {
+        if (is_file ( ($strBootstrap = (defined ( 'PATH_APP_BOOTSTRAP' ) ? PATH_APP_BOOTSTRAP : $this->objProject->path_application . '/' . $this->objProject->app_name . '/bootstrap.php')) )) {
             require $strBootstrap;
         }
         
@@ -180,7 +193,7 @@ class app {
                         break;
                     
                     // 如果为方法则注册为方法
-                    case is_object ( $mixModule ) && (method_exists ( $mixModule, 'run' ) || \Q::isKindOf ( $mixModule, 'Q\mvc\action' )) :
+                    case is_object ( $mixModule ) && (method_exists ( $mixModule, 'run' ) || test::isKindOf ( $mixModule, 'Q\mvc\action' )) :
                         $this->registerAction ( $sController, $sAction, [ 
                                 $mixModule,
                                 'run' 
@@ -188,7 +201,7 @@ class app {
                         break;
                     
                     // 如果为控制器实例，注册为回调
-                    case \Q::isKindOf ( $mixModule, 'Q\mvc\controller' ) :
+                    case test::isKindOf ( $mixModule, 'Q\mvc\controller' ) :
                     // 实例回调
                     case is_object ( $mixModule ) :
                     // 静态类回调
@@ -207,7 +220,7 @@ class app {
                         if (isset ( $mixModule [$sAction] )) {
                             $this->registerAction ( $sController, $sAction, $mixModule [$sAction] );
                         } else {
-                            exceptions::throws ( \Q::i18n ( '数组控制器不存在 %s 方法键值', $sAction ), 'Q\mvc\exception' );
+                            exceptions::throws ( __ ( '数组控制器不存在 %s 方法键值', $sAction ), 'Q\mvc\exception' );
                         }
                         break;
                     
@@ -217,13 +230,13 @@ class app {
                         break;
                     
                     default :
-                        exceptions::throws ( \Q::i18n ( '注册的控制器类型 %s 不受支持', $sController ), 'Q\mvc\exception' );
+                        exceptions::throws ( __ ( '注册的控制器类型 %s 不受支持', $sController ), 'Q\mvc\exception' );
                         break;
                 }
             } else {
                 // 尝试读取默认控制器
                 $sModuleClass = '\\' . $this->objProject->app_name . '\\application\\controller\\' . $sController;
-                if (\Q::classExists ( $sModuleClass, false, true )) {
+                if (class_exists ( $sModuleClass )) {
                     // 自动注入
                     $oModule = $this->getObjectByClassAndArgs_ ( $sModuleClass, $this->getNodeArgs_ () );
                     
@@ -238,21 +251,21 @@ class app {
                 } else {
                     // 默认控制器不存在，尝试直接读取方法类
                     $sActionClass = '\\' . $this->objProject->app_name . '\\application\\controller\\' . $sController . '\\' . $sAction;
-                    if (\Q::classExists ( $sActionClass, false, true )) {
+                    if (class_exists ( $sActionClass )) {
                         // 注册控制器
                         $this->registerController ( $sController, $this->objProject->makeWithArgs ( 'controller', $this->getNodeArgs_ () ) );
                         
                         // 自动注入
                         $oAction = $this->getObjectByClassAndArgs_ ( $sActionClass, $this->getNodeArgs_ () );
                         
-                        if (\Q::isKindOf ( $oAction, 'Q\mvc\action' )) {
+                        if (test::isKindOf ( $oAction, 'Q\mvc\action' )) {
                             // 注册方法
                             $this->registerAction ( $sController, $sAction, [ 
                                     $oAction,
                                     'run' 
                             ] );
                         } else {
-                            exceptions::throws ( \Q::i18n ( '方法 %s 必须为  Q\mvc\action 实例', $sAction ), 'Q\mvc\exception' );
+                            exceptions::throws ( __ ( '方法 %s 必须为  Q\mvc\action 实例', $sAction ), 'Q\mvc\exception' );
                         }
                     }
                 }
@@ -278,14 +291,15 @@ class app {
         if ($mixAction !== null) {
             switch (true) {
                 // 判断是否为控制器回调
-                case is_array ( $mixAction ) && isset ( $mixAction [1] ) && \Q::isKindOf ( $mixAction [0], 'Q\mvc\controller' ) :
+                case is_array ( $mixAction ) && isset ( $mixAction [1] ) && test::isKindOf ( $mixAction [0], 'Q\mvc\controller' ) :
                     try {
-                        if (\Q::hasPublicMethod ( $mixAction [0], $mixAction [1] )) {
+                        $objClass = new ReflectionMethod ( $mixAction [0], $mixAction [1] );
+                        if ($objClass->isPublic () && ! $objClass->isStatic ()) {
                             return $this->getObjectCallbackResultWithMethodArgs_ ( $mixAction, $this->getNodeArgs_ () );
                         } else {
-                            exceptions::throws ( \Q::i18n ( '控制器 %s 的方法 %s 不存在', $sController, $sAction ), 'Q\mvc\exception' );
+                            exceptions::throws ( __ ( '控制器 %s 的方法 %s 不存在', $sController, $sAction ), 'Q\mvc\exception' );
                         }
-                    } catch ( \ReflectionException $oE ) {
+                    } catch ( ReflectionException $oE ) {
                         // 请求默认子方法器
                         return call_user_func_array ( [ 
                                 $mixAction [0],
@@ -302,7 +316,7 @@ class app {
                     break;
                 
                 // 如果为方法则注册为方法
-                case \Q::isKindOf ( $mixAction, 'Q\mvc\action' ) :
+                case test::isKindOf ( $mixAction, 'Q\mvc\action' ) :
                 case is_object ( $mixAction ) :
                     if (method_exists ( $mixAction, 'run' )) {
                         // 注册方法
@@ -312,7 +326,7 @@ class app {
                         ] );
                         return $this->action ( $sController, $sAction );
                     } else {
-                        exceptions::throws ( \Q::i18n ( '方法对象不存在执行入口  run' ), 'Q\mvc\exception' );
+                        exceptions::throws ( __ ( '方法对象不存在执行入口  run' ), 'Q\mvc\exception' );
                     }
                     break;
                 
@@ -327,11 +341,11 @@ class app {
                     break;
                 
                 default :
-                    exceptions::throws ( \Q::i18n ( '注册的方法类型 %s 不受支持', $sAction ), 'Q\mvc\exception' );
+                    exceptions::throws ( __ ( '注册的方法类型 %s 不受支持', $sAction ), 'Q\mvc\exception' );
                     break;
             }
         } else {
-            exceptions::throws ( \Q::i18n ( '控制器 %s 的方法 %s 未注册', $sController, $sAction ), 'Q\mvc\exception' );
+            exceptions::throws ( __ ( '控制器 %s 的方法 %s 未注册', $sController, $sAction ), 'Q\mvc\exception' );
         }
     }
     
@@ -442,8 +456,8 @@ class app {
         $sOptionCache = $this->objProject->path_cache_option . '/' . $this->objProject->app_name . '.php';
         
         // 开发模式不用读取缓存
-        if (Q_DEVELOPMENT !== 'develop' && is_file ( $sOptionCache )) {
-            $GLOBALS ['~@option'] = \Q::option ( ( array ) (include $sOptionCache) );
+        if (Q_DEVELOPMENT !== 'development' && is_file ( $sOptionCache )) {
+            $GLOBALS ['~@option'] = option::sets ( ( array ) (include $sOptionCache) );
             if ($this->objProject->app_name == \Q\mvc\project::INIT_APP && $arrOption ['url_router_cache']) {
                 if (! empty ( $arrOption ['url_router_cache'] )) {
                     router::caches ( $arrOption ['url_router_cache'] );
@@ -485,11 +499,11 @@ class app {
             }
             
             if (! is_dir ( $this->objProject->path_cache_option )) {
-                \Q::makeDir ( $this->objProject->path_cache_option );
+                directory::create ( $this->objProject->path_cache_option );
             }
             
             // 缓存所有应用名字
-            $arrOption ['~apps~'] = \Q::listDir ( $this->objProject->path_application );
+            $arrOption ['~apps~'] = directory::lists ( $this->objProject->path_application );
             if ($this->objProject->app_name == \Q\mvc\project::INIT_APP) {
                 foreach ( $arrOption ['~apps~'] as $strApp ) {
                     if ($strApp == \Q\mvc\project::INIT_APP) {
@@ -507,7 +521,7 @@ class app {
                                 continue;
                             }
                             $arrOption ['url_router_cache'] = array_merge ( $arrOption ['url_router_cache'], ( array ) (include $sDir . '/' . $sVal . '.php') );
-                            $arrOption ['url_router_cache'] = \Q::arrayMergePlus ( $arrOption ['url_router_cache'] );
+                            $arrOption ['url_router_cache'] = helper::arrayMergePlus ( $arrOption ['url_router_cache'] );
                         }
                     }
                 }
@@ -518,13 +532,13 @@ class app {
             }
             
             // 配置合并 + 语法支持
-            $arrOption = \Q::arrayMergePlus ( $arrOption );
+            $arrOption = helper::arrayMergePlus ( $arrOption );
             
             if (! file_put_contents ( $sOptionCache, "<?php\n /* option cache */ \n return " . var_export ( $arrOption, true ) . "\n?>" )) {
                 exceptions::throws ( sprintf ( 'Dir %s Do not have permission.', $this->optioncache_path ) );
             }
             
-            $GLOBALS ['~@option'] = \Q::option ( $arrOption );
+            $GLOBALS ['~@option'] = option::sets ( $arrOption );
             unset ( $arrOption, $sAppOptionPath, $arrOptionDir, $arrOptionExtend, $arrRouterExtend );
         }
     }
@@ -570,7 +584,7 @@ class app {
      * @return void
      */
     private function initI18n_() {
-        $objI18n = \Q::i18n ();
+        $objI18n = __ ();
         if (! $GLOBALS ['~@option'] ['i18n_switch']) {
             $sI18nSet = $GLOBALS ['~@option'] ['i18n_default'];
             $objI18n->setContext ( $sI18nSet );
@@ -591,11 +605,10 @@ class app {
         }
         
         $this->objProject->instance ( 'name_app_i18n', $sI18nSet );
-        \Q::$booI18nOn = TRUE; // 开启语言
         $sCacheFile = '/' . $sI18nSet . '/default.php';
         
         // 开发模式不用读取缓存
-        if (Q_DEVELOPMENT !== 'develop' && is_file ( $this->objProject->path_cache_i18n . $sCacheFile ) && is_file ( $this->objProject->path_cache_i18n_js . $sCacheFile )) {
+        if (Q_DEVELOPMENT !== 'development' && is_file ( $this->objProject->path_cache_i18n . $sCacheFile ) && is_file ( $this->objProject->path_cache_i18n_js . $sCacheFile )) {
             $objI18n->addI18n ( $sI18nSet, ( array ) (include $this->objProject->path_cache_i18n . $sCacheFile) );
         } else {
             
@@ -616,13 +629,13 @@ class app {
                     $arrAllI18nDir [] = $this->objProject->path_app_i18n_extend;
                 }
             }
-            $arrFiles = \Q::i18n_tool ()->findPoFile ( $arrAllI18nDir );
+            $arrFiles = ___tool ()->findPoFile ( $arrAllI18nDir );
             
             /**
              * 保存到缓存文件
              */
-            $objI18n->addI18n ( $sI18nSet, \Q::i18n_tool ()->saveToPhp ( $arrFiles ['php'], $this->objProject->path_cache_i18n . $sCacheFile ) );
-            \Q::i18n_tool ()->saveToJs ( $arrFiles ['js'], $this->objProject->path_cache_i18n_js . $sCacheFile, $sI18nSet );
+            $objI18n->addI18n ( $sI18nSet, ___tool ()->saveToPhp ( $arrFiles ['php'], $this->objProject->path_cache_i18n . $sCacheFile ) );
+            ___tool ()->saveToJs ( $arrFiles ['js'], $this->objProject->path_cache_i18n_js . $sCacheFile, $sI18nSet );
             
             unset ( $arrFiles, $arrAllI18nDir, $sCacheFile );
         }
@@ -683,7 +696,7 @@ class app {
      */
     private function response_($mixResponse) {
         if (! ($mixResponse instanceof response)) {
-            $mixResponse = \Q::response ( $mixResponse );
+            $mixResponse = response::makes ( $mixResponse );
         }
         $mixResponse->output ();
     }

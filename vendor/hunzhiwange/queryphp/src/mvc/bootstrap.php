@@ -16,6 +16,7 @@ namespace Q\mvc;
 queryphp;
 
 use Q\exception\exceptions;
+use Q\psr4\psr4;
 
 /**
  * 启动程序
@@ -37,7 +38,7 @@ class bootstrap {
     /**
      * 请求
      *
-     * @var Q\request\request
+     * @var Q\http\request
      */
     private $objRequest = null;
     
@@ -103,15 +104,15 @@ class bootstrap {
      */
     private function initProject_() {
         // 注册公共组件命名空间
-        \Q::import ( 'common', $this->objProject->path_common, [ 
+        psr4::import ( 'common', $this->objProject->path_common, [ 
                 'ignore' => [ 
                         'interfaces' 
                 ],
-                'force' => Q_DEVELOPMENT !== 'develop' ? false : true 
+                'force' => Q_DEVELOPMENT !== 'development' ? false : true 
         ] );
         
-        // 尝试导入 Composer PSR-4
-        \Q::importComposer ( $this->objProject->path_vendor );
+        // 尝试导入 Composer
+        psr4::importComposer ( $this->objProject->path_vendor );
         
         // 载入 project 引导文件
         if (is_file ( ($strBootstrap = $this->objProject->path_common . '/bootstrap.php') )) {

@@ -1,8 +1,30 @@
 <?php
+// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
+// ©2010-2017 http://queryphp.com All rights reserved.
+namespace tests;
+
+<<<queryphp
+##########################################################
+#   ____                          ______  _   _ ______   #
+#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
+# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
+#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
+#       \__   | \___ |_|    \__  || |    | | | || |      #
+#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
+#                          |___ /  Since 2010.10.03      #
+##########################################################
+queryphp;
+
+use Q\router\router;
+
 /**
- * 单元测试引导文件
+ * phpunit 内部启动文件
  *
- * @date 2017.01.07
- * @author Xiangmin Liu
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2017.05.09
+ * @version 1.0
  */
-require __DIR__ . '/../src/bootstrap.php';
+router::binds ( 'tests://bootstrap/index', function () {
+    return (new application ())->run ();
+} );
