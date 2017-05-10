@@ -13,6 +13,6 @@ class test extends controller {
     public static function test(){
         
      echo 'xxxx';
-    }       
+    }
     
 }
