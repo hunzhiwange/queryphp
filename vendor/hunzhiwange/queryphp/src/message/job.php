@@ -1,7 +1,7 @@
 <?php
-require_once dirname(__FILE__) . '/Event.php';
-require_once dirname(__FILE__) . '/Job/Status.php';
-require_once dirname(__FILE__) . '/Job/DontPerform.php';
+namespace Q\message;
+
+use Resque_Job;
 
 /**
  * Resque job.
@@ -10,7 +10,7 @@ require_once dirname(__FILE__) . '/Job/DontPerform.php';
  * @author		Chris Boulton <chris@bigcommerce.com>
  * @license		http://www.opensource.org/licenses/mit-license.php
  */
-class Resque_Job
+abstract class job extends Resque_Job
 {
 	/**
 	 * @var string The name of the queue that this job belongs to.
@@ -31,8 +31,20 @@ class Resque_Job
 	 * @var object Instance of the class performing work for this job.
 	 */
 	private $instance;
+	
+	protected static $objQueue;
 
+	
+	public static function queue($objQueue=null){
+	    if(!is_null($objQueue)){
+	        static::$objQueue=$objQueue;
+	    }else{
+	       return static::$objQueue;
+	    }
+	}
+	
 	/**
+	 * 
 	 * Instantiate a new instance of a job.
 	 *
 	 * @param string $queue The queue that the job belongs to.
@@ -62,14 +74,15 @@ class Resque_Job
 			);
 		}
 		$id = md5(uniqid('', true));
-		Resque::push($queue, array(
+
+		call_user_func_array([static::queue(),'push'], [
 			'class'	=> $class,
 			'args'	=> array($args),
 			'id'	=> $id,
-		));
+		]);
 
 		if($monitor) {
-			Resque_Job_Status::create($id);
+			status::create($id);
 		}
 
 		return $id;

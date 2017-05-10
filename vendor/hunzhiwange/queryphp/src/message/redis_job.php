@@ -1,7 +1,6 @@
 <?php
-require_once dirname(__FILE__) . '/Event.php';
-require_once dirname(__FILE__) . '/Job/Status.php';
-require_once dirname(__FILE__) . '/Job/DontPerform.php';
+namespace Q\message;
+
 
 /**
  * Resque job.
@@ -10,8 +9,12 @@ require_once dirname(__FILE__) . '/Job/DontPerform.php';
  * @author		Chris Boulton <chris@bigcommerce.com>
  * @license		http://www.opensource.org/licenses/mit-license.php
  */
-class Resque_Job
+class redis_job extends job
+
 {
+    
+    static protected  $strJobType = 'redis';
+    
 	/**
 	 * @var string The name of the queue that this job belongs to.
 	 */
@@ -54,7 +57,7 @@ class Resque_Job
 	 *
 	 * @return string
 	 */
-	public static function create($queue, $class, $args = null, $monitor = false)
+	public static function create2($queue, $class, $args = null, $monitor = false)
 	{
 		if($args !== null && !is_array($args)) {
 			throw new InvalidArgumentException(
@@ -84,12 +87,12 @@ class Resque_Job
 	 */
 	public static function reserve($queue)
 	{
-		$payload = Resque::pop($queue);
+		$payload = static::$objQueue->pop($queue);
 		if(!is_array($payload)) {
 			return false;
 		}
 
-		return new Resque_Job($queue, $payload);
+		return new self($queue, $payload);
 	}
 
 	/**
@@ -247,9 +250,7 @@ class Resque_Job
 		if(!empty($this->payload['id'])) {
 			$name[] = 'ID: ' . $this->payload['id'];
 		}
-		
-		//print_r($this->payload);
-		//exit();
+		//throw new \Exception('xxx');
 		$name[] = $this->payload['class'];
 		if(!empty($this->payload['args'])) {
 			$name[] = json_encode($this->payload['args']);
