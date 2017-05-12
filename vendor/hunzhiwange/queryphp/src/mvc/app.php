@@ -101,16 +101,27 @@ class app {
         // 初始化应用
         $this->initApp_ ();
         
-        // 注册命名空间
-        psr4::import ( $this->objProject->app_name, $this->objProject->path_application . '/' . $this->objProject->app_name, [ 
-                'ignore' => [ 
-                        'interfaces' 
-                ],
-                'force' => Q_DEVELOPMENT !== 'development' ? false : true 
-        ] );
-        
         // 加载配置文件
         $this->loadOption_ ();
+        
+        // 注册所有应用命名空间
+        if ($this->objProject->app_name == '~_~') {
+            foreach ( option::gets ( '~apps~' ) as $strApp ) {
+                psr4::import ( $strApp, $this->objProject->path_application . '/' . $strApp, [ 
+                        'ignore' => [ 
+                                'interfaces' 
+                        ],
+                        'force' => Q_DEVELOPMENT !== 'development' ? false : true 
+                ] );
+            }
+            
+            foreach ( option::gets ( 'namespace' ) as $strNamespace => $strPath ) {
+                psr4::import ( $strNamespace, $strPath, [ 
+                        'ignore' => [ ],
+                        'force' => Q_DEVELOPMENT !== 'development' ? false : true 
+                ] );
+            }
+        }
         
         // 返回自身
         return $this;
@@ -133,10 +144,12 @@ class app {
      */
     public function app() {
         // 接管 PHP 异常
-        set_exception_handler ( is_callable ( $GLOBALS ['~@option'] ['exception'] ) ? $GLOBALS ['~@option'] ['exception'] : [ 
-                'Q\exception\handle',
-                'exceptionHandle' 
-        ] );
+        if (PHP_SAPI != 'cli') {
+            set_exception_handler ( is_callable ( $GLOBALS ['~@option'] ['exception'] ) ? $GLOBALS ['~@option'] ['exception'] : [ 
+                    'Q\exception\handle',
+                    'exceptionHandle' 
+            ] );
+        }
         
         // 初始化时区和GZIP压缩
         if (function_exists ( 'date_defaault_timezone_set' )) {

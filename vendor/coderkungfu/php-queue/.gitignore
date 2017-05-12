@@ -1,0 +1,9 @@
+.DS_Store
+build
+cache.properties
+composer.lock
+*.log
+phpunit.xml
+vendor
+composer.phar
+downloads

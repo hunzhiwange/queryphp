@@ -65,7 +65,7 @@ class log {
             'log_level' => 'error,sql,debug,info',
             'log_error_enabled' => FALSE,
             'log_sql_enabled' => FALSE,
-            'log_time_format' => '【Y-m-d H:i】',
+            'log_time_format' => '[Y-m-d H:i]',
             'log_file_size' => 2097152,
             'log_file_name' => 'Y-m-d H',
             'path_cache_log' => '' 

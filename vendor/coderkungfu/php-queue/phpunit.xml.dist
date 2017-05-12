@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    colors="true"
+    backupGlobals="false"
+    backupStaticAttributes="false"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    processIsolation="false"
+    stopOnError="false"
+    stopOnFailure="false"
+    stopOnIncomplete="false"
+    stopOnSkipped="false"
+    syntaxCheck="false"
+    strict="true"
+    bootstrap="test/bootstrap.php"
+>
+   <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+    <testsuites>
+        <testsuite name="PHPQueue">
+            <directory suffix="Test.php">test</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

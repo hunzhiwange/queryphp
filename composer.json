@@ -3,7 +3,8 @@
         "php": ">=5.5.0",
         "robmorgan/phinx": "^0.8.0",
         "fzaninotto/faker": "^1.6",
-        "chrisboulton/php-resque": "^1.2"
+        "coderkungfu/php-queue": "^0.9.1",
+        "predis/predis": "^1.1"
     },
     "require-dev": {
         "symfony/console": "^3.2",

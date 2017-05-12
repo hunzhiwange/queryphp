@@ -244,6 +244,17 @@ abstract class command extends SymfonyCommand {
     }
     
     /**
+     * 返回一个带有时间的消息
+     *
+     * @param string $strMessage            
+     * @param string $strFormat            
+     * @return string
+     */
+    protected function time($strMessage, $strFormat = 'H:i:s') {
+        return sprintf ( '[%s]', date ( $strFormat ) ) . $strMessage;
+    }
+    
+    /**
      * 输出一个注释信息
      *
      * @param string $strMessage            

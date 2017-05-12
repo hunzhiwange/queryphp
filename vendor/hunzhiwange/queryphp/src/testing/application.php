@@ -15,10 +15,6 @@ namespace Q\testing;
 ##########################################################
 queryphp;
 
-use Q\mvc\project;
-use Q\psr4\psr4;
-use Q\option\option;
-
 /**
  * phpunit 应用程序
  *
@@ -35,8 +31,6 @@ class application {
      * @return Q\testing\application
      */
     public function __construct() {
-        // 注册所有应用命名空间
-        $this->registerAppNamespace_ ();
     }
     
     /**
@@ -45,31 +39,5 @@ class application {
      * @return void
      */
     public function run() {
-    }
-    
-    /**
-     * 注册所有应用命名空间
-     *
-     * @return $this
-     */
-    private function registerAppNamespace_() {
-        foreach ( option::gets ( '~apps~' ) as $strApp ) {
-            psr4::import ( $strApp, $this->getQueryPHP_ ()->path_application . '/' . $strApp, [ 
-                    'ignore' => [ 
-                            'interfaces' 
-                    ],
-                    'force' => Q_DEVELOPMENT !== 'development' ? false : true 
-            ] );
-        }
-        return $this;
-    }
-    
-    /**
-     * 返回 QueryPHP
-     *
-     * @return \Q\mvc\project
-     */
-    private function getQueryPHP_() {
-        return project::bootstrap ();
     }
 }

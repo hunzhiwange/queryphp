@@ -15,7 +15,9 @@ return array(
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
     'Symfony\\Component\\Config\\' => array($vendorDir . '/symfony/config'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
+    'Predis\\' => array($vendorDir . '/predis/predis/src'),
     'Phinx\\' => array($vendorDir . '/robmorgan/phinx/src/Phinx'),
+    'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
 );

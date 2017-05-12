@@ -1619,6 +1619,251 @@
         ]
     },
     {
+        "name": "clio/clio",
+        "version": "0.1.8",
+        "version_normalized": "0.1.8.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/nramenta/clio.git",
+            "reference": "6a9f600b73fa213e817d5c1e67a4641aecd156ef"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/nramenta/clio/6a9f600b73fa213e817d5c1e67a4641aecd156ef.zip",
+            "reference": "6a9f600b73fa213e817d5c1e67a4641aecd156ef",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2"
+        },
+        "time": "2014-06-22T14:49:41+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Clio": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nofriandi Ramenta",
+                "email": "nramenta@gmail.com"
+            }
+        ],
+        "description": "Lightweight utility and helper classes for CLI applications",
+        "keywords": [
+            "cli",
+            "console",
+            "daemon"
+        ]
+    },
+    {
+        "name": "monolog/monolog",
+        "version": "1.22.1",
+        "version_normalized": "1.22.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Seldaek/monolog.git",
+            "reference": "1e044bc4b34e91743943479f1be7a1d5eb93add0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/Seldaek/monolog/1e044bc4b34e91743943479f1be7a1d5eb93add0.zip",
+            "reference": "1e044bc4b34e91743943479f1be7a1d5eb93add0",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0",
+            "psr/log": "~1.0"
+        },
+        "provide": {
+            "psr/log-implementation": "1.0.0"
+        },
+        "require-dev": {
+            "aws/aws-sdk-php": "^2.4.9 || ^3.0",
+            "doctrine/couchdb": "~1.0@dev",
+            "graylog2/gelf-php": "~1.0",
+            "jakub-onderka/php-parallel-lint": "0.9",
+            "php-amqplib/php-amqplib": "~2.4",
+            "php-console/php-console": "^3.1.3",
+            "phpunit/phpunit": "~4.5",
+            "phpunit/phpunit-mock-objects": "2.3.0",
+            "ruflin/elastica": ">=0.90 <3.0",
+            "sentry/sentry": "^0.13",
+            "swiftmailer/swiftmailer": "~5.3"
+        },
+        "suggest": {
+            "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
+            "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
+            "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
+            "ext-mongo": "Allow sending log messages to a MongoDB server",
+            "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
+            "mongodb/mongodb": "Allow sending log messages to a MongoDB server via PHP Driver",
+            "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
+            "php-console/php-console": "Allow sending log messages to Google Chrome",
+            "rollbar/rollbar": "Allow sending log messages to Rollbar",
+            "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
+            "sentry/sentry": "Allow sending log messages to a Sentry server"
+        },
+        "time": "2017-03-13T07:08:03+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Monolog\\": "src/Monolog"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jordi Boggiano",
+                "email": "j.boggiano@seld.be",
+                "homepage": "http://seld.be"
+            }
+        ],
+        "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
+        "homepage": "http://github.com/Seldaek/monolog",
+        "keywords": [
+            "log",
+            "logging",
+            "psr-3"
+        ]
+    },
+    {
+        "name": "coderkungfu/php-queue",
+        "version": "0.9.1",
+        "version_normalized": "0.9.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CoderKungfu/php-queue.git",
+            "reference": "c567952fee3260df39fd23df49e50eeef96592b3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/CoderKungfu/php-queue/c567952fee3260df39fd23df49e50eeef96592b3.zip",
+            "reference": "c567952fee3260df39fd23df49e50eeef96592b3",
+            "shasum": ""
+        },
+        "require": {
+            "clio/clio": "@stable",
+            "monolog/monolog": "~1.3",
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "amazonwebservices/aws-sdk-for-php": "dev-master",
+            "aws/aws-sdk-php": "dev-master",
+            "ext-memcache": "*",
+            "iron-io/iron_mq": "dev-master",
+            "microsoft/windowsazure": "dev-master",
+            "mrpoundsign/pheanstalk-5.3": "dev-master",
+            "predis/predis": "v0.8.0"
+        },
+        "suggest": {
+            "Respect/Rest": "For a REST server to post job data",
+            "amazonwebservices/aws-sdk-for-php": "For AWS SQS backend support (legacy version)",
+            "aws/aws-sdk-php": "For AWS SQS backend support",
+            "clio/clio": "Support for daemonizing PHP CLI runner",
+            "iron-io/iron_mq": "For IronMQ backend support",
+            "microsoft/windowsazure": "For Windows Azure Service Bus backend support",
+            "mrpoundsign/pheanstalk-5.3": "For Beanstalkd backend support",
+            "pecl-mongodb": "For MongoDB backend support",
+            "predis/predis": "For Redis backend support"
+        },
+        "time": "2013-12-29T07:42:11+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "PHPQueue": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Michael Cheng",
+                "email": "mcheng.work@gmail.com"
+            }
+        ],
+        "description": "A unified front-end for different queuing backends. Includes a REST server, CLI interface and daemon runners.",
+        "homepage": "http://github.com/CoderKungfu/php-queue",
+        "keywords": [
+            "queue",
+            "transaction"
+        ]
+    },
+    {
+        "name": "predis/predis",
+        "version": "v1.1.1",
+        "version_normalized": "1.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/nrk/predis.git",
+            "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/nrk/predis/f0210e38881631afeafb56ab43405a92cafd9fd1.zip",
+            "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.8"
+        },
+        "suggest": {
+            "ext-curl": "Allows access to Webdis when paired with phpiredis",
+            "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+        },
+        "time": "2016-06-16T16:22:20+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Predis\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Daniele Alessandri",
+                "email": "suppakilla@gmail.com",
+                "homepage": "http://clorophilla.net"
+            }
+        ],
+        "description": "Flexible and feature-complete Redis client for PHP and HHVM",
+        "homepage": "http://github.com/nrk/predis",
+        "keywords": [
+            "nosql",
+            "predis",
+            "redis"
+        ]
+    },
+    {
         "name": "chrisboulton/php-resque",
         "version": "1.2",
         "version_normalized": "1.2.0.0",

@@ -78,15 +78,17 @@ Q\psr4\psr4::import ( 'Q', Q_PATH, [
 /**
  * QueryPHP 系统错误处理
  */
-set_error_handler ( [ 
-        'Q\exception\handle',
-        'errorHandle' 
-] );
-
-register_shutdown_function ( [ 
-        'Q\exception\handle',
-        'shutdownHandle' 
-] );
+if (PHP_SAPI != 'cli') {
+    set_error_handler ( [ 
+            'Q\exception\handle',
+            'errorHandle' 
+    ] );
+    
+    register_shutdown_function ( [ 
+            'Q\exception\handle',
+            'shutdownHandle' 
+    ] );
+}
 
 if (! function_exists ( '__' )) {
     /**

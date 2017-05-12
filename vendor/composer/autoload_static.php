@@ -31,7 +31,12 @@ class ComposerStaticInit2506d333c81b0b660a71132e3de47c23
         'P' => 
         array (
             'Psr\\Log\\' => 8,
+            'Predis\\' => 7,
             'Phinx\\' => 6,
+        ),
+        'M' => 
+        array (
+            'Monolog\\' => 8,
         ),
         'F' => 
         array (
@@ -82,9 +87,17 @@ class ComposerStaticInit2506d333c81b0b660a71132e3de47c23
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
+        'Predis\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/predis/predis/src',
+        ),
         'Phinx\\' => 
         array (
             0 => __DIR__ . '/..' . '/robmorgan/phinx/src/Phinx',
+        ),
+        'Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
         'Faker\\' => 
         array (
@@ -109,6 +122,17 @@ class ComposerStaticInit2506d333c81b0b660a71132e3de47c23
             'Prophecy\\' => 
             array (
                 0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
+            ),
+            'PHPQueue' => 
+            array (
+                0 => __DIR__ . '/..' . '/coderkungfu/php-queue/src',
+            ),
+        ),
+        'C' => 
+        array (
+            'Clio' => 
+            array (
+                0 => __DIR__ . '/..' . '/clio/clio/src',
             ),
         ),
     );

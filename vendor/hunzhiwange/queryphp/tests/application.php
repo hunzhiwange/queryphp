@@ -15,8 +15,6 @@ namespace tests;
 ##########################################################
 queryphp;
 
-use Q\mvc\project;
-
 /**
  * phpunit 内部应用程序
  *
@@ -41,14 +39,5 @@ class application {
      * @return void
      */
     public function run() {
-    }
-    
-    /**
-     * 返回 QueryPHP
-     *
-     * @return \Q\mvc\project
-     */
-    private function getQueryPHP_() {
-        return project::bootstrap ();
     }
 }

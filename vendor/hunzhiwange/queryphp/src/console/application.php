@@ -40,27 +40,6 @@ class application {
     private $objSymfonyApplication = null;
     
     /**
-     * 默认的命令
-     *
-     * @var array
-     */
-    private $arrDefaultCommands = [ 
-            'Q\console\command\demo',
-            'Q\console\command\make\model',
-            'Q\console\command\make\controller',
-            'Q\console\command\make\action',
-            'Q\console\command\migrate\init',
-            'Q\console\command\migrate\create',
-            'Q\console\command\migrate\breakpoint',
-            'Q\console\command\migrate\migrate',
-            'Q\console\command\migrate\rollback',
-            'Q\console\command\migrate\seedcreate',
-            'Q\console\command\migrate\seedrun',
-            'Q\console\command\migrate\status',
-            'Q\console\command\migrate\test',
-    ];
-    
-    /**
      * 创建一个命令行应用程序
      *
      * @return Q\console\application
@@ -74,10 +53,6 @@ class application {
         
         // 注册用户自定义命令
         registerUserCommands_ ();
-        
-       // $this->objSymfonyApplication->add ( new \Phinx\Console\Command\Init() );
-      // $this->objSymfonyApplication->add ( new \Phinx\Console\Command\Create() );
-        
     }
     
     /**
@@ -95,7 +70,7 @@ class application {
      * @return $this
      */
     private function registerDefaultCommands_() {
-        return $this->doRegisterCommands_ ( $this->arrDefaultCommands );
+        return $this->doRegisterCommands_ ( ( array ) require __DIR__ . '/default.php' );
     }
     
     /**
@@ -117,7 +92,7 @@ class application {
         foreach ( $arrCommands as $strCommand ) {
             $objCommand = $this->getObjectByClassAndArgs_ ( $strCommand, [ ] );
             // 基于 Phinx 数据库迁移组件无法设置 setQueryPHP
-            if(method_exists($objCommand, 'setQueryPHP')){
+            if (method_exists ( $objCommand, 'setQueryPHP' )) {
                 $objCommand->setQueryPHP ( $this->getQueryPHP_ () );
             }
             $this->getQueryPHP_ ()->instance ( 'command_' . $objCommand->getName (), $objCommand );

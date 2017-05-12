@@ -6,8 +6,8 @@
 namespace home\application\controller;
 
 use Q\mvc\controller;
-use Resque;
 use Q\message\queue;
+use home\application\job\my_job;
 
 class index extends controller {
     
@@ -36,7 +36,7 @@ class index extends controller {
                         'test' => 'test',
                 ),
         );
-        
+        //$args=[];
 //        $jobId = Resque::enqueue('default', 'PHP_Job', $args, true);
 //         echo "Queued job ".$jobId."\n\n";
         
@@ -44,8 +44,10 @@ class index extends controller {
         
       //  queue::works();
         
-       $jobId= queue::dispatchs('PHP_Job','default', $args, true);
-       echo "\n\n"."Queued job ".$jobId."\n\n";
+       //$jobId= queue::dispatchs('PHP_Job','default', $args, true);
+       //$jobId=queue::dispatchs(new my_job(),'default');
+       $jobId2=queue::dispatchs(new my_job(),'default');
+       echo "\n\n"."Queued job ".$jobId2."\n\n";
        
         
        // echo 'Hello world';

@@ -15,8 +15,15 @@
         }
     ],
     "require": {
-        "php": ">=5.5.0"
+        "php": ">=5.5.0",
+        "symfony/console": "^3.2",
+        "predis/predis": "^1.1",
+        "coderkungfu/php-queue": "^0.9.1",
+        "robmorgan/phinx": "^0.8.0"
     },
+    "require-dev": {
+        "fzaninotto/faker": "^1.6"
+    }
     "autoload": {
         "psr-4": {
             "Q\\": "src"

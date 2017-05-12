@@ -66,8 +66,6 @@ class event {
             $objEvent = $this->getObjectByClassAndArgs_ ( $mixEvent, [ 
                     $this->project () 
             ] );
-
-            
         }
         
         $arrArgs = func_get_args ();
