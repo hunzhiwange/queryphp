@@ -15,8 +15,6 @@ namespace queryyetsimple\rss;
 ##########################################################
 queryphp;
 
-use queryyetsimple\operating\system;
-
 /**
  * rss 2.0
  *
@@ -29,7 +27,7 @@ class rss {
     
     /**
      * 频道信息
-     * 
+     *
      * @var array
      */
     private $arrOption = [ 
@@ -105,7 +103,7 @@ class rss {
     
     /**
      * 实现 __get
-     * 
+     *
      * @param string $sKey            
      * @return string
      */
@@ -115,7 +113,7 @@ class rss {
     
     /**
      * 实现 __set
-     * 
+     *
      * @param string $sKey            
      * @param string $sValue            
      * @return void
@@ -183,7 +181,7 @@ class rss {
             $arrRss [] = '</image>';
         }
         
-        return implode ( system::osNewline (), $arrRss );
+        return implode ( PHP_EOL, $arrRss );
     }
     
     /**
@@ -194,7 +192,7 @@ class rss {
     private function body_() {
         $arrResult = [ ];
         
-        $strNewLine = system::osNewline ();
+        $strNewLine = PHP_EOL;
         foreach ( $this->arrItems as $arrItem ) {
             $arrTemp = [ ];
             $arrTemp [] = '<item>';

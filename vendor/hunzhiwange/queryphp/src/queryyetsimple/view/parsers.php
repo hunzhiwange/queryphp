@@ -18,7 +18,6 @@ queryphp;
 use queryyetsimple\datastruct\queue\stack;
 use queryyetsimple\exception\exceptions;
 use queryyetsimple\traits\dynamic\expansion as dynamic_expansion;
-use queryyetsimple\operating\system;
 use queryyetsimple\filesystem\directory;
 use queryyetsimple\helper\helper;
 
@@ -310,8 +309,7 @@ class parsers {
         }
         
         // 返回编译文件
-        $sOsNewline = system::osNewline ();
-        $sCache = "<?php !defined('Q_PATH') && exit; /* QueryPHP Cache " . date ( 'Y-m-d H:i:s', time () ) . "  */ ?>" . $sOsNewline . $sCache;
+        $sCache = "<?php !defined('Q_PATH') && exit; /* QueryPHP Cache " . date ( 'Y-m-d H:i:s', time () ) . "  */ ?>" . PHP_EOL . $sCache;
         
         // 解决不同操作系统源代码换行混乱
         $sCache = str_replace ( [ 
@@ -320,7 +318,7 @@ class parsers {
         ], '~^^!queryphp_newline!^^~', $sCache );
         
         $sCache = preg_replace ( "/(~^^!queryphp_newline!^^~)+/i", '~^^!queryphp_newline!^^~', $sCache );
-        $sCache = str_replace ( '~^^!queryphp_newline!^^~', $sOsNewline, $sCache );
+        $sCache = str_replace ( '~^^!queryphp_newline!^^~', PHP_EOL, $sCache );
         
         // 生成编译文件
         if ($bReturn === false) {

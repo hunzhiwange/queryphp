@@ -19,7 +19,6 @@ use queryyetsimple\mvc\view;
 use queryyetsimple\exception\exceptions;
 use queryyetsimple\traits\dynamic\expansion as dynamic_expansion;
 use queryyetsimple\filesystem\file;
-use queryyetsimple\operating\system;
 use queryyetsimple\mvc\project;
 
 /**
@@ -90,7 +89,7 @@ class theme {
                 $sChildCache = file_get_contents ( $sCachePath );
                 
                 // 替换
-                $sTargetContent = preg_replace ( "/<!--<\#\#\#\#incl\*" . $sMd5 . "\*ude\#\#\#\#>-->(.*?)<!--<\/\#\#\#\#incl\*" . $sMd5 . "\*ude\#\#\#\#\/>-->/s", substr ( $sChildCache, strpos ( $sChildCache, system::osNewline () ) - 1 ), $sTargetContent );
+                $sTargetContent = preg_replace ( "/<!--<\#\#\#\#incl\*" . $sMd5 . "\*ude\#\#\#\#>-->(.*?)<!--<\/\#\#\#\#incl\*" . $sMd5 . "\*ude\#\#\#\#\/>-->/s", substr ( $sChildCache, strpos ( $sChildCache, PHP_EOL ) - 1 ), $sTargetContent );
                 file_put_contents ( $sTargetCache, $sTargetContent );
                 
                 unset ( $sChildCache, $sTargetContent );

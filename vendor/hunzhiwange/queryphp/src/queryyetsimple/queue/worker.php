@@ -17,7 +17,6 @@ queryphp;
 
 use Clio\Console;
 use PHPQueue\Worker as PHPQueueWorker;
-use queryyetsimple\operating\system;
 
 /**
  * 基类 worker
@@ -75,6 +74,6 @@ abstract class worker extends PHPQueueWorker {
      * @return string
      */
     protected function formatMessage_($strMessage) {
-        Console::stdout ( sprintf ( '[%s]', date ( 'H:i:s' ) ) . $strMessage . system::osNewline () );
+        Console::stdout ( sprintf ( '[%s]', date ( 'H:i:s' ) ) . $strMessage . PHP_EOL );
     }
 }

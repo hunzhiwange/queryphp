@@ -67,12 +67,6 @@ class system {
      * @return string
      */
     public static function osNewline() {
-        if (static::isWindows ()) {
-            return "\r\n";
-        } elseif (static::isMac ()) {
-            return "\r";
-        } else {
-            return "\n";
-        }
+        return PHP_EOL;
     }
 }
