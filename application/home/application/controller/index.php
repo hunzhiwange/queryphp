@@ -23,10 +23,10 @@ class index extends controller {
      * @return void
      */
     public function index() {
-        echo 'xx';
+        //echo 'xx';
         
         dump(database::connects()->table('test')->getAll());
-        dump(database::connects()->table('test')->getAll());
+        //dump(database::connects()->table('test')->getAll());
         exit();
        // var_dump(project()->);
        

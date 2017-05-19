@@ -158,10 +158,6 @@ class response {
      * @return boolean
      */
     public function __call($sMethod, $arrArgs) {
-        // 条件控制语句支持
-        if ($this->flowControlCall_ ( $sMethod, $arrArgs ) !== false) {
-            return $this;
-        }
         
         // 调用 trait __call 实现扩展方法
         $mixData = $this->__callExpansion ( $sMethod, $arrArgs );

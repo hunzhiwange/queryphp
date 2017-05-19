@@ -293,129 +293,6 @@ class select {
                 return $this->where ( array_combine ( $arrKeys, $arrArgs ) )->getAll ();
             }
             return $this->top ( intval ( substr ( $sMethod, 3 ) ) );
-        }        
-
-        // 时间控制语句支持
-        elseif (in_array ( $sMethod, [ 
-                'time',
-                'endTime' 
-        ] )) {
-            if ($this->checkFlowControl_ ())
-                return $this;
-            switch ($sMethod) {
-                case 'time' :
-                    $this->setInTimeCondition_ ( isset ( $arrArgs [0] ) && in_array ( $arrArgs [0], [ 
-                            'date',
-                            'month',
-                            'year',
-                            'day' 
-                    ] ) ? $arrArgs [0] : null );
-                    break;
-                case 'endTime' :
-                    $this->setInTimeCondition_ ( null );
-                    break;
-            }
-            return $this;
-        }
-        
-        // where 别名支持
-        if (in_array ( $sMethod, [ 
-                'whereBetween',
-                'whereNotBetween',
-                'whereIn',
-                'whereNotIn',
-                'whereNull',
-                'whereNotNull',
-                'whereLike',
-                'whereNotLike' 
-        ] )) {
-            if ($this->checkFlowControl_ ())
-                return $this;
-            $this->setTypeAndLogic_ ( 'where', static::LOGIC_AND );
-            array_unshift ( $arrArgs, str_replace ( 'not', 'not ', strtolower ( ltrim ( $sMethod, 'where' ) ) ) );
-            return call_user_func_array ( [ 
-                    $this,
-                    'aliasCondition_' 
-            ], $arrArgs );
-        }        
-
-        // where 时间函数自动格式化支持
-        elseif (in_array ( $sMethod, [ 
-                'whereDate',
-                'whereMonth',
-                'whereDay',
-                'whereYear' 
-        ] )) {
-            $this->setInTimeCondition_ ( strtolower ( ltrim ( $sMethod, 'where' ) ) );
-            call_user_func_array ( [ 
-                    $this,
-                    'where' 
-            ], $arrArgs );
-            $this->setInTimeCondition_ ( null );
-            return $this;
-        }
-        
-        // having 别名支持
-        if (in_array ( $sMethod, [ 
-                'havingBetween',
-                'havingNotBetween',
-                'havingIn',
-                'havingNotIn',
-                'havingNull',
-                'havingNotNull',
-                'havingLike',
-                'havingNotLike' 
-        ] )) {
-            if ($this->checkFlowControl_ ())
-                return $this;
-            $this->setTypeAndLogic_ ( 'having', static::LOGIC_AND );
-            array_unshift ( $arrArgs, str_replace ( 'not', 'not ', strtolower ( ltrim ( $sMethod, 'having' ) ) ) );
-            return call_user_func_array ( [ 
-                    $this,
-                    'aliasCondition_' 
-            ], $arrArgs );
-        }        
-
-        // having 时间函数自动格式化支持
-        elseif (in_array ( $sMethod, [ 
-                'havingDate',
-                'havingMonth',
-                'havingDay',
-                'havingYear' 
-        ] )) {
-            $this->setInTimeCondition_ ( strtolower ( ltrim ( $sMethod, 'having' ) ) );
-            call_user_func_array ( [ 
-                    $this,
-                    'having' 
-            ], $arrArgs );
-            $this->setInTimeCondition_ ( null );
-            return $this;
-        }        
-
-        // join 别名支持
-        elseif (in_array ( $sMethod, [ 
-                'innerJoin',
-                'leftJoin',
-                'rightJoin',
-                'fullJoin',
-                'crossJoin',
-                'naturalJoin' 
-        ] )) {
-            if ($this->checkFlowControl_ ())
-                return $this;
-            array_unshift ( $arrArgs, str_replace ( 'join', ' join', strtolower ( $sMethod ) ) );
-            return call_user_func_array ( [ 
-                    $this,
-                    'join_' 
-            ], $arrArgs );
-        }         
-
-        // 条件控制语句支持
-        else {
-            // 条件控制语句支持
-            if ($this->flowControlCall_ ( $sMethod, $arrArgs ) !== false) {
-                return $this;
-            }
         }
         
         exceptions::throwException ( __ ( 'select 没有实现魔法方法 %s.', $sMethod ), 'queryyetsimple\database\exception' );
@@ -987,6 +864,34 @@ class select {
     // ######################################################
     
     /**
+     * 时间控制语句开始
+     *
+     * @return void
+     */
+    public function time() {
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $arrArgs = func_get_args ();
+        $this->setInTimeCondition_ ( isset ( $arrArgs [0] ) && in_array ( $arrArgs [0], [ 
+                'date',
+                'month',
+                'year',
+                'day' 
+        ] ) ? $arrArgs [0] : null );
+    }
+    
+    /**
+     * 时间控制语句结束
+     *
+     * @return void
+     */
+    public function endTime() {
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setInTimeCondition_ ( null );
+    }
+    
+    /**
      * 指定返回 SQL 不做任何操作
      *
      * @param bool $bFlag
@@ -1257,6 +1162,214 @@ class select {
     }
     
     /**
+     * whereBetween 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function whereBetween($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'where', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'between' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * whereNotBetween 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function whereNotBetween($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'where', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'not between' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * whereIn 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function whereIn($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'where', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'in' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * whereNotIn 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function whereNotIn($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'where', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'not in' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * whereNull 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function whereNull($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'where', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'null' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * whereNotNull 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function whereNotNull($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'where', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'not null' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * whereLike 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function whereLike($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'where', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'like' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * whereNotLike 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function whereNotLike($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'where', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'not like' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * whereDate 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function whereDate($mixCond /* args */){
+        $this->setInTimeCondition_ ( 'date' );
+        call_user_func_array ( [ 
+                $this,
+                'where' 
+        ], func_get_args () );
+        $this->setInTimeCondition_ ( null );
+        return $this;
+    }
+    
+    /**
+     * whereMonth 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function whereMonth($mixCond /* args */){
+        $this->setInTimeCondition_ ( 'month' );
+        call_user_func_array ( [ 
+                $this,
+                'where' 
+        ], func_get_args () );
+        $this->setInTimeCondition_ ( null );
+        return $this;
+    }
+    
+    /**
+     * whereDay 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function whereDay($mixCond /* args */){
+        $this->setInTimeCondition_ ( 'day' );
+        call_user_func_array ( [ 
+                $this,
+                'where' 
+        ], func_get_args () );
+        $this->setInTimeCondition_ ( null );
+        return $this;
+    }
+    
+    /**
+     * whereYear 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function whereYear($mixCond /* args */){
+        $this->setInTimeCondition_ ( 'year' );
+        call_user_func_array ( [ 
+                $this,
+                'where' 
+        ], func_get_args () );
+        $this->setInTimeCondition_ ( null );
+        return $this;
+    }
+    
+    /**
      * orWhere 查询条件
      *
      * @param mixed $mixCond            
@@ -1418,6 +1531,138 @@ class select {
     }
     
     /**
+     * innerJoin 查询
+     *
+     * @param mixed $mixTable
+     *            同 table $mixTable
+     * @param string|array $mixCols
+     *            同 table $mixCols
+     * @param mixed $mixCond
+     *            同 where $mixCond
+     * @return $this
+     */
+    public function innerJoin($mixTable, $mixCols = '*', $mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'inner join' );
+        return call_user_func_array ( [ 
+                $this,
+                'join_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * leftJoin 查询
+     *
+     * @param mixed $mixTable
+     *            同 table $mixTable
+     * @param string|array $mixCols
+     *            同 table $mixCols
+     * @param mixed $mixCond
+     *            同 where $mixCond
+     * @return $this
+     */
+    public function leftJoin($mixTable, $mixCols = '*', $mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'left join' );
+        return call_user_func_array ( [ 
+                $this,
+                'join_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * rightJoin 查询
+     *
+     * @param mixed $mixTable
+     *            同 table $mixTable
+     * @param string|array $mixCols
+     *            同 table $mixCols
+     * @param mixed $mixCond
+     *            同 where $mixCond
+     * @return $this
+     */
+    public function rightJoin($mixTable, $mixCols = '*', $mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'right join' );
+        return call_user_func_array ( [ 
+                $this,
+                'join_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * fullJoin 查询
+     *
+     * @param mixed $mixTable
+     *            同 table $mixTable
+     * @param string|array $mixCols
+     *            同 table $mixCols
+     * @param mixed $mixCond
+     *            同 where $mixCond
+     * @return $this
+     */
+    public function fullJoin($mixTable, $mixCols = '*', $mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'full join' );
+        return call_user_func_array ( [ 
+                $this,
+                'join_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * crossJoin 查询
+     *
+     * @param mixed $mixTable
+     *            同 table $mixTable
+     * @param string|array $mixCols
+     *            同 table $mixCols
+     * @param mixed $mixCond
+     *            同 where $mixCond
+     * @return $this
+     */
+    public function crossJoin($mixTable, $mixCols = '*', $mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'cross join' );
+        return call_user_func_array ( [ 
+                $this,
+                'join_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * naturalJoin 查询
+     *
+     * @param mixed $mixTable
+     *            同 table $mixTable
+     * @param string|array $mixCols
+     *            同 table $mixCols
+     * @param mixed $mixCond
+     *            同 where $mixCond
+     * @return $this
+     */
+    public function naturalJoin($mixTable, $mixCols = '*', $mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'natural join' );
+        return call_user_func_array ( [ 
+                $this,
+                'join_' 
+        ], $arrArgs );
+    }
+    
+    /**
      * 添加一个 UNION 查询
      *
      * @param array|string|callable $mixSelect            
@@ -1527,6 +1772,214 @@ class select {
                 $this,
                 'aliasTypeAndLogic_' 
         ], $arrArgs );
+    }
+    
+    /**
+     * havingBetween 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function havingBetween($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'having', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'between' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * havingNotBetween 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function havingNotBetween($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'having', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'not between' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * havingIn 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function havingIn($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'having', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'in' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * havingNotIn 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function havingNotIn($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'having', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'not in' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * havingNull 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function havingNull($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'having', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'null' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * havingNotNull 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function havingNotNull($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'having', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'not null' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * havingLike 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function havingLike($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'having', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'like' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * havingNotLike 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function havingNotLike($mixCond /* args */){
+        if ($this->checkFlowControl_ ())
+            return $this;
+        $this->setTypeAndLogic_ ( 'having', static::LOGIC_AND );
+        $arrArgs = func_get_args ();
+        array_unshift ( $arrArgs, 'not like' );
+        return call_user_func_array ( [ 
+                $this,
+                'aliasCondition_' 
+        ], $arrArgs );
+    }
+    
+    /**
+     * havingDate 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function havingDate($mixCond /* args */){
+        $this->setInTimeCondition_ ( 'date' );
+        call_user_func_array ( [ 
+                $this,
+                'having' 
+        ], func_get_args () );
+        $this->setInTimeCondition_ ( null );
+        return $this;
+    }
+    
+    /**
+     * havingMonth 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function havingMonth($mixCond /* args */){
+        $this->setInTimeCondition_ ( 'month' );
+        call_user_func_array ( [ 
+                $this,
+                'having' 
+        ], func_get_args () );
+        $this->setInTimeCondition_ ( null );
+        return $this;
+    }
+    
+    /**
+     * havingDay 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function havingDay($mixCond /* args */){
+        $this->setInTimeCondition_ ( 'day' );
+        call_user_func_array ( [ 
+                $this,
+                'having' 
+        ], func_get_args () );
+        $this->setInTimeCondition_ ( null );
+        return $this;
+    }
+    
+    /**
+     * havingYear 查询条件
+     *
+     * @param mixed $mixCond            
+     * @return $this
+     */
+    public function havingYear($mixCond /* args */){
+        $this->setInTimeCondition_ ( 'year' );
+        call_user_func_array ( [ 
+                $this,
+                'having' 
+        ], func_get_args () );
+        $this->setInTimeCondition_ ( null );
+        return $this;
     }
     
     /**

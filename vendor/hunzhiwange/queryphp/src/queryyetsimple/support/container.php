@@ -73,22 +73,6 @@ class container implements ArrayAccess, interfaces_container {
     protected $arrGroups = [ ];
     
     /**
-     * 拦截一些别名和快捷方式
-     *
-     * @param 方法名 $sMethod            
-     * @param 参数 $arrArgs            
-     * @return boolean
-     */
-    public function __call($sMethod, $arrArgs) {
-        // 条件控制语句支持
-        if ($this->flowControlCall_ ( $sMethod, $arrArgs ) !== false) {
-            return $this;
-        }
-        
-        exceptions::throwException ( __ ( 'container 没有实现魔法方法 %s.', $sMethod ), 'queryyetsimple\support\exception' );
-    }
-    
-    /**
      * 注册工厂
      *
      * @param mixed $mixFactoryName            
@@ -279,8 +263,8 @@ class container implements ArrayAccess, interfaces_container {
     /**
      * 生产产品 (数组参数)
      *
-     * @param string $strFactoryName
-     * @param array $arrArgs
+     * @param string $strFactoryName            
+     * @param array $arrArgs            
      * @return object
      */
     public function makeWithArgs($strFactoryName, array $arrArgs = []) {
@@ -288,9 +272,9 @@ class container implements ArrayAccess, interfaces_container {
             exceptions::throwException ( __ ( 'makeWithArgs 第二个参数只能为 array' ), 'Q\support\exception' );
         }
         array_unshift ( $arrArgs, $strFactoryName );
-        return call_user_func_array ( [
+        return call_user_func_array ( [ 
                 $this,
-                'make'
+                'make' 
         ], $arrArgs );
     }
     

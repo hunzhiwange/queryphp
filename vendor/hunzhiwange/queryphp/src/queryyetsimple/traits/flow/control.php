@@ -40,36 +40,41 @@ trait control {
     protected $booFlowControlIsTrue = false;
     
     /**
-     * 由继承的类在 __call 中调用此方法
+     * 条件语句 ifs
      *
-     * @param 方法名 $sMethod            
-     * @param 参数 $arrArgs            
+     * @param boolean $booValue            
      * @return $this
      */
-    protected function flowControlCall_($sMethod, $arrArgs) {
-        // 条件控制语句支持
-        if (in_array ( $sMethod, [ 
-                'if',
-                'elseIf',
-                'else',
-                'endIf' 
-        ] )) {
-            switch ($sMethod) {
-                case 'if' :
-                case 'elseIf' :
-                    $this->setFlowControl_ ( true, isset ( $arrArgs [0] ) ? ( bool ) $arrArgs [0] : false );
-                    break;
-                case 'else' :
-                    $this->setFlowControl_ ( true, ! $this->getFlowControl_ ()[1] );
-                    break;
-                case 'endIf' :
-                    $this->setFlowControl_ ( false, false );
-                    break;
-            }
-            return $this;
-        }
-        
-        return false;
+    protected function ifs($booValue = false) {
+        return $this->setFlowControl_ ( true, $booValue );
+    }
+    
+    /**
+     * 条件语句 elseIfs
+     *
+     * @param boolean $booValue            
+     * @return $this
+     */
+    protected function elseIfs($booValue = false) {
+        return $this->setFlowControl_ ( true, $booValue );
+    }
+    
+    /**
+     * 条件语句 elses
+     *
+     * @return $this
+     */
+    protected function elses() {
+        return $this->setFlowControl_ ( true, ! $this->getFlowControl_ ()[1] );
+    }
+    
+    /**
+     * 条件语句 endIfs
+     *
+     * @return $this
+     */
+    protected function endIfs() {
+        return $this->setFlowControl_ ( false, false );
     }
     
     /**
@@ -82,6 +87,7 @@ trait control {
     protected function setFlowControl_($booInFlowControl, $booFlowControlIsTrue) {
         $this->booInFlowControl = $booInFlowControl;
         $this->booFlowControlIsTrue = $booFlowControlIsTrue;
+        return $this;
     }
     
     /**
