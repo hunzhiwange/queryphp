@@ -192,7 +192,6 @@ class rss {
     private function body_() {
         $arrResult = [ ];
         
-        $strNewLine = PHP_EOL;
         foreach ( $this->arrItems as $arrItem ) {
             $arrTemp = [ ];
             $arrTemp [] = '<item>';
@@ -211,6 +210,6 @@ class rss {
             $arrResult [] = implode ( $strNewLine, $arrTemp );
         }
         
-        return implode ( $strNewLine, $arrResult );
+        return implode ( PHP_EOL, $arrResult );
     }
 }
