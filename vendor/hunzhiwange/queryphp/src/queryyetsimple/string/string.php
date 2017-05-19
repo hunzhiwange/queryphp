@@ -214,4 +214,46 @@ class string {
         
         return $nFileSize;
     }
+    
+    /**
+     * 判断字符串中是否包含给定的字符开始
+     *
+     * @param string $strToSearched            
+     * @param string $strSearch            
+     * @return bool
+     */
+    public static function startsWith($strToSearched, $strSearch) {
+        if ($strSearch != '' && strpos ( $strToSearched, $strSearch ) === 0) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * 判断字符串中是否包含给定的字符结尾
+     *
+     * @param string $strToSearched            
+     * @param string $strSearch            
+     * @return bool
+     */
+    public static function endsWith($strToSearched, $strSearch) {
+        if (( string ) $strSearch === substr ( $strToSearched, - strlen ( $strSearch ) )) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * 判断字符串中是否包含给定的字符串集合
+     *
+     * @param string $strToSearched            
+     * @param string $strSearch            
+     * @return bool
+     */
+    public static function contains($strToSearched, $strSearch) {
+        if ($strSearch != '' && strpos ( $strToSearched, $strSearch ) !== false) {
+            return true;
+        }
+        return false;
+    }
 }

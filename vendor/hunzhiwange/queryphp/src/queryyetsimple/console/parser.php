@@ -18,6 +18,7 @@ queryphp;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use queryyetsimple\exception\exceptions;
+use queryyetsimple\string\string;
 
 /**
  * 命令行参数解析 <from lavarel>
@@ -75,7 +76,7 @@ class parser {
         $arrArguments = $arrOptions = [ ];
         
         foreach ( $arrTokens as $strToken ) {
-            if (! static::startsWith_ ( $strToken, '--' )) {
+            if (! string::startsWith ( $strToken, '--' )) {
                 $arrArguments [] = static::parseArgument_ ( $strToken );
             } else {
                 $arrOptions [] = static::parseOption_ ( ltrim ( $strToken, '-' ) );
@@ -97,20 +98,20 @@ class parser {
     private static function parseArgument_($strToken) {
         $strDescription = null;
         
-        if (static::contains_ ( $strToken, ' : ' )) {
+        if (string::contains ( $strToken, ' : ' )) {
             list ( $strToken, $strDescription ) = explode ( ' : ', $strToken, 2 );
             $strToken = trim ( $strToken );
             $strDescription = trim ( $strDescription );
         }
         
         switch (true) {
-            case static::endsWith_ ( $strToken, '?*' ) :
+            case string::endsWith ( $strToken, '?*' ) :
                 return new InputArgument ( trim ( $strToken, '?*' ), InputArgument::IS_ARRAY, $strDescription );
             
-            case static::endsWith_ ( $strToken, '*' ) :
+            case string::endsWith ( $strToken, '*' ) :
                 return new InputArgument ( trim ( $strToken, '*' ), InputArgument::IS_ARRAY | InputArgument::REQUIRED, $strDescription );
             
-            case static::endsWith_ ( $strToken, '?' ) :
+            case string::endsWith ( $strToken, '?' ) :
                 return new InputArgument ( trim ( $strToken, '?' ), InputArgument::OPTIONAL, $strDescription );
             
             case preg_match ( '/(.+)\=(.+)/', $strToken, $arrMatches ) :
@@ -130,7 +131,7 @@ class parser {
     private static function parseOption_($strToken) {
         $strDescription = null;
         
-        if (static::contains_ ( $strToken, ' : ' )) {
+        if (string::contains ( $strToken, ' : ' )) {
             list ( $strToken, $strDescription ) = explode ( ' : ', $strToken );
             $strToken = trim ( $strToken );
             $strDescription = trim ( $strDescription );
@@ -145,10 +146,10 @@ class parser {
         }
         
         switch (true) {
-            case static::endsWith_ ( $strToken, '=' ) :
+            case string::endsWith ( $strToken, '=' ) :
                 return new InputOption ( trim ( $strToken, '=' ), $strShortcut, InputOption::VALUE_OPTIONAL, $strDescription );
             
-            case static::endsWith_ ( $strToken, '=*' ) :
+            case string::endsWith ( $strToken, '=*' ) :
                 return new InputOption ( trim ( $strToken, '=*' ), $strShortcut, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, $strDescription );
             
             case preg_match ( '/(.+)\=(.+)/', $strToken, $arrMatches ) :
@@ -158,46 +159,5 @@ class parser {
                 return new InputOption ( $strToken, $strShortcut, InputOption::VALUE_NONE, $strDescription );
         }
     }
-    
-    /**
-     * 判断字符串中是否包含给定的字符开始
-     *
-     * @param string $strToSearched            
-     * @param string $strSearch            
-     * @return bool
-     */
-    private static function startsWith_($strToSearched, $strSearch) {
-        if ($strSearch != '' && strpos ( $strToSearched, $strSearch ) === 0) {
-            return true;
-        }
-        return false;
-    }
-    
-    /**
-     * 判断字符串中是否包含给定的字符结尾
-     *
-     * @param string $strToSearched            
-     * @param string $strSearch            
-     * @return bool
-     */
-    private static function endsWith_($strToSearched, $strSearch) {
-        if (( string ) $strSearch === substr ( $strToSearched, - strlen ( $strSearch ) )) {
-            return true;
-        }
-        return false;
-    }
-    
-    /**
-     * 判断字符串中是否包含给定的字符串集合
-     *
-     * @param string $strToSearched            
-     * @param string $strSearch            
-     * @return bool
-     */
-    private static function contains_($strToSearched, $strSearch) {
-        if ($strSearch != '' && strpos ( $strToSearched, $strSearch ) !== false) {
-            return true;
-        }
-        return false;
-    }
+   
 }
