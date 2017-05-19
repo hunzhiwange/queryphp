@@ -17,6 +17,7 @@
     "require": {
         "php": ">=5.5.0",
         "symfony/console": "^3.2",
+        "symfony/var-dumper": "2.8.*|3.0.*",
         "predis/predis": "^1.1",
         "coderkungfu/php-queue": "^0.9.1",
         "robmorgan/phinx": "^0.8.0"
@@ -26,7 +27,7 @@
     }
     "autoload": {
         "psr-4": {
-            "Q\\": "src"
+            "queryyetsimple\\": "src\queryyetsimple"
         }
     } 
 }

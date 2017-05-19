@@ -15,7 +15,7 @@ namespace tests\option;
 ##########################################################
 queryphp;
 
-use Q\option\option;
+use queryyetsimple\option\option;
 use tests\testcase;
 
 /**
@@ -35,8 +35,8 @@ class Option_test extends testcase {
      */
     private static $arrTest = [ 
             'hello' => 'world',
-            'name' => '小牛仔',
-            'child' => [ 
+            'router\name' => '小牛仔',
+            'test\child' => [ 
                     'sub1' => 'hello',
                     'sub2' => 'world',
                     'sub3' => '新式软件',
@@ -52,7 +52,45 @@ class Option_test extends testcase {
      * @return void
      */
     protected function setUp() {
+        option::resets ();
         option::sets ( self::$arrTest );
+    }
+    
+    /**
+     * 读取生成的命名空间配置结构
+     *
+     * @return void
+     */
+    public function testGetsAll() {
+        $this->assertTrue ( option::gets ( true ) === [ 
+                'app' => [ 
+                        'hello' => 'world' 
+                ],
+                'router' => [ 
+                        'name' => '小牛仔' 
+                ],
+                'test' => [ 
+                        'child' => [ 
+                                'sub1' => 'hello',
+                                'sub2' => 'world',
+                                'sub3' => '新式软件',
+                                'goods' => [ 
+                                        'world' => 'new' 
+                                ] 
+                        ] 
+                ] 
+        ] );
+    }
+    
+    /**
+     * 读取生成的命名空间配置结构
+     *
+     * @return void
+     */
+    public function testGetsOneNamespace() {
+        $this->assertTrue ( option::gets ( 'router\\' ) === [ 
+                'name' => '小牛仔' 
+        ] );
     }
     
     /**
@@ -61,8 +99,8 @@ class Option_test extends testcase {
      * @return void
      */
     public function testGets() {
-        $this->assertEquals ( '小牛仔', option::gets ( 'name' ) );
-        $this->assertEquals ( 'new', option::gets ( 'child.goods.world' ) );
+        $this->assertEquals ( '小牛仔', option::gets ( 'router\name' ) );
+        $this->assertEquals ( 'new', option::gets ( 'test\child.goods.world' ) );
         $this->assertEquals ( 'default value', option::gets ( 'not_found', 'default value' ) );
     }
     
@@ -74,7 +112,7 @@ class Option_test extends testcase {
     public function testSets() {
         option::sets ( 'hello', '技术成就未来' );
         $this->assertEquals ( '技术成就未来', option::gets ( 'hello' ) );
-        option::sets ( 'child.sub2', '卧槽' );
-        $this->assertEquals ( '卧槽', option::gets ( 'child.sub2' ) );
+        option::sets ( 'router\child.sub2', '卧槽' );
+        $this->assertEquals ( '卧槽', option::gets ( 'router\child.sub2' ) );
     }
 }

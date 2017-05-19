@@ -1,0 +1,25 @@
+<?php
+{{header_comment}}
+namespace {{namespace}}\application\controller\{{controller}};
+
+use queryyetsimple\mvc\action;
+
+{{file_comment}}
+class {{file_name}} extends action {
+
+    /**
+     * 构造函数
+     *
+     * @return void
+     */      
+    public function __construct() {
+    }
+
+    /**
+     * 执行入口
+     *
+     * @return void
+     */
+    public function run() {
+    }
+}

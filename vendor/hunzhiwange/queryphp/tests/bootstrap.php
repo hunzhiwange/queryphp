@@ -15,7 +15,7 @@ namespace tests;
 ##########################################################
 queryphp;
 
-use Q\router\router;
+use queryyetsimple\router\router;
 
 /**
  * phpunit 内部启动文件

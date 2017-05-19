@@ -18,7 +18,5 @@ define ( 'PATH', dirname ( __DIR__ ) );
 /**
  * 执行项目
  */
-require_once PATH . '/vendor/hunzhiwange/queryphp/src/bootstrap.php';
-\Q\mvc\project::bootstrap ( [ 
-        'path' => PATH 
-] )->run ();
+require_once PATH . '/vendor/hunzhiwange/queryphp/src/queryyetsimple/bootstrap.php';
+\queryyetsimple\mvc\project::bootstrap ( PATH )->run ();

@@ -38,7 +38,5 @@ define ( 'PATH', __DIR__ );
 /**
  * 执行项目
  */
-require __DIR__ . '/src/bootstrap.php';
-\Q\mvc\project::bootstrap ( [ 
-        'path' => PATH 
-] )->run ();
+require __DIR__ . '/src/queryyetsimple/bootstrap.php';
+\queryyetsimple\mvc\project::bootstrap ( PATH )->run ();
