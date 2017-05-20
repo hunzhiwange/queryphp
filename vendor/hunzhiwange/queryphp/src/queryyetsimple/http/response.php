@@ -345,8 +345,9 @@ class response {
     }
     
     /**
+     * 编码设置
      *
-     * @param unknown $strCharset            
+     * @param string $strCharset            
      * @return \queryyetsimple\http\response
      */
     public function charset($strCharset) {
@@ -357,6 +358,7 @@ class response {
     }
     
     /**
+     * 获取编码
      *
      * @return string
      */
