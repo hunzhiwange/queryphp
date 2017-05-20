@@ -24,47 +24,47 @@ queryphp;
 return [ 
         
         /**
-         * cookie
+         * ---------------------------------------------------------------
+         * cookie 前缀
+         * ---------------------------------------------------------------
+         *
+         * 设置 cookie 前缀可以用来解决冲突
          */
+        'prefix' => 'q_',
         
         /**
-         * enable the browse pointer
-         * see also BrowsePointerColor
-         * in layout.inc.php
+         * ---------------------------------------------------------------
+         * cookie 域名
+         * ---------------------------------------------------------------
          *
-         * @global boolean $cfg['BrowsePointerEnable']
+         * Cookie 的有效域名/子域名。 设置成子域名（例如 'www.example.com'），会使 Cookie
+         * 对这个子域名和它的三级域名有效（例如 w2.www.example.com）。 要让 Cookie 对整个域名
+         * 有效（包括它的全部子域名），只要设置成域名就可以了（这个例子里是 'example.com'）
+         * 相关技术文档：http://php.net/manual/zh/function.setcookie.php
          */
-        'prefix' => 'q_', // cookie 前缀
+        'domain' => '',
         
         /**
-         * enable the browse pointer
-         * see also BrowsePointerColor
-         * in layout.inc.php
+         * ---------------------------------------------------------------
+         * cookie 路径
+         * ---------------------------------------------------------------
          *
-         * @global boolean $cfg['BrowsePointerEnable']
+         * Cookie 有效的服务器路径。 设置成 '/' 时，Cookie 对整个域名 domain 有效。 如果设置成 '/foo/'，
+         * Cookie 仅仅对 domain 中 /foo/ 目录及其子目录有效（比如 /foo/bar/）。 默认值是设置 Cookie 时的当前目录
+         * 相关技术文档：http://php.net/manual/zh/function.setcookie.php
          */
-        'langtheme_app' => true, // 语言包和模板 cookie 是否包含应用名
+        'path' => '/',
         
         /**
-         * enable the browse pointer
-         * see also BrowsePointerColor
-         * in layout.inc.php
+         * ---------------------------------------------------------------
+         * cookie 默认过期时间
+         * ---------------------------------------------------------------
          *
-         * @global boolean $cfg['BrowsePointerEnable']
+         * Cookie 的过期时间。 这是个 Unix 时间戳，即 Unix 纪元以来（格林威治时间 1970 年 1 月 1 日 00:00:00）
+         * 的秒数。 也就是说，基本可以用 time() 函数的结果加上希望过期的秒数。 或者也可以用 mktime()。 time()+60*60*24*30
+         * 就是设置 Cookie 30 天后过期。 如果设置成零，或者忽略参数， Cookie 会在会话结束时过期（也就是关掉浏览器时）
+         * 这里的过期时间为我们在当前时间上加上了过期的秒数量即为过期时间
+         * 相关技术文档：http://php.net/manual/zh/function.setcookie.php
          */
-        'domain' => '', // cookie 域名
-        
-        /*
-         * --------------------------------------------------------------------------
-         * Cache Stores
-         * --------------------------------------------------------------------------
-         *
-         * Here you may define all of the cache "stores" for your application as
-         * well as their drivers. You may even define multiple stores for the
-         * same cache driver to group types of items stored in your caches.
-         */
-        'path' => '/', // cookie 路径
         'expire' => 86400 
-]; // cookie 默认过期时间一天
-
-
+]; 

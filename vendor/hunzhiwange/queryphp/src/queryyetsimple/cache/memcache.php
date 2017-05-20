@@ -127,6 +127,8 @@ class memcache extends cache {
     /**
      * 设置缓存
      *
+     * memcache 0 表示永不过期
+     *
      * @param string $sCacheName            
      * @param mixed $mixData            
      * @param array $arrOption            
@@ -134,7 +136,7 @@ class memcache extends cache {
      */
     public function set($sCacheName, $mixData, array $arrOption = []) {
         $arrOption = $this->option ( $arrOption, null, false );
-        $this->hHandel->set ( $this->getCacheName_ ( $sCacheName, $arrOption ), $mixData, $arrOption ['compressed'] ? MEMCACHE_COMPRESSED : 0, $arrOption ['cache_time'] );
+        $this->hHandel->set ( $this->getCacheName_ ( $sCacheName, $arrOption ), $mixData, $arrOption ['compressed'] ? MEMCACHE_COMPRESSED : 0, ( int ) $arrOption ['cache_time'] === - 1 ? 0 : ( int ) $arrOption ['cache_time'] );
     }
     
     /**

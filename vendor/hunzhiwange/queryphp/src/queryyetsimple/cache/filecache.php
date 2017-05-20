@@ -189,7 +189,7 @@ class filecache extends cache {
             return true;
         }
         ! isset ( $arrOption ['cache_time'] ) && $arrOption ['cache_time'] = - 1;
-        return $arrOption ['cache_time'] !== - 1 && filemtime ( $sFilePath ) + $arrOption ['cache_time'] < time ();
+        return ( int ) $arrOption ['cache_time'] !== - 1 && filemtime ( $sFilePath ) + ( int ) $arrOption ['cache_time'] < time ();
     }
     
     /**
