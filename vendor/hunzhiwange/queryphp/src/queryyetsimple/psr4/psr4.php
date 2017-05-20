@@ -362,6 +362,7 @@ class psr4 {
                         'node_modules',
                         '.git',
                         '~@~',
+                        'resource',
                         'www',
                         'ignore',
                         '.gitkeep' 

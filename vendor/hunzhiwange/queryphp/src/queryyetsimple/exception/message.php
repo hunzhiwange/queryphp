@@ -66,6 +66,6 @@ abstract class message {
      * @return void
      */
     protected function errorMessage_($sMessage) {
-        require_once Q_PATH . '/~@~/template/error.php';
+        require_once Q_PATH . '/resource/template/error.php';
     }
 }

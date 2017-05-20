@@ -88,7 +88,7 @@ class exception_message extends message {
                 if (option::gets ( 'show_exception_template' ) && is_file ( option::gets ( 'show_exception_template' ) )) {
                     include option::gets ( 'show_exception_template' );
                 } else {
-                    include Q_PATH . '/~@~/template/exception.php';
+                    include Q_PATH . '/resource/template/exception.php';
                 }
             }
         }
