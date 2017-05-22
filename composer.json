@@ -19,7 +19,7 @@
         "hunzhiwange/framework": "dev"
     },
     "require-dev": {
-    }
+    },
     "autoload": {
         "psr-4": {
         }
