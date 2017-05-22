@@ -16,7 +16,8 @@
     ],
     "require": {
         "php": ">=5.5.0",
-        "hunzhiwange/framework": "dev-master"
+        "hunzhiwange/framework": "dev-master",
+        "queryyetsimple/cookie": "dev-master"
     },
     "require-dev": {
     },
