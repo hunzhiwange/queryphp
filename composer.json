@@ -16,13 +16,18 @@
     ],
     "require": {
         "php": ">=5.5.0",
-        "hunzhiwange/framework": "dev-master",
-        "queryyetsimple/cookie": "dev-master"
+        "hunzhiwange/framework": "dev-master"
     },
     "require-dev": {
     },
     "autoload": {
         "psr-4": {
         }
-    } 
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "minimum-stability": "dev"
 }
