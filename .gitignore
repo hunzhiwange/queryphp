@@ -3,9 +3,8 @@
 .metadata
 .classpath
 .settings/
-lib/composer.lock
-lib/composer.phar
+composer.lock
 node_modules/
 .settings/
-lib/vendor/
 ~@~/
+vendor/
