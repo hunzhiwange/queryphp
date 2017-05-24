@@ -36,6 +36,7 @@ class index extends controller {
         
         
        echo env('APP_DEBUG');
+       echo env('xxxx');
         
 //print_r($_ENV);
         //dump(database::connects()->table('test')->getAll());

@@ -23,5 +23,5 @@ queryphp;
  * @since 2017.04.28
  * @version 1.0
  */
-define ( 'Q_CONSOLE', true );
+putenv ( 'queryphp_console=(true)' );
 require_once './www/index.php';
