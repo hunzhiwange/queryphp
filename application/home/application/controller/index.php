@@ -8,6 +8,7 @@ namespace home\application\controller;
 use queryyetsimple\mvc\controller;
 use queryyetsimple\log\log;
 use queryyetsimple\database\database;
+use queryyetsimple\stack\queue;
 
 class index extends controller {
     
@@ -25,9 +26,21 @@ class index extends controller {
     public function index() {
         //echo 'xx';
         
-        dump(database::connects()->table('test')->getAll());
+       // $objStack = new queue('array');
+        
+      //  $objStack->in('11');
+       // $objStack->dequeue();
+       
+       // $dotenv = new \Dotenv\Dotenv(PATH);
+       // $dotenv->load();
+        
+        
+       echo env('APP_DEBUG');
+        
+//print_r($_ENV);
         //dump(database::connects()->table('test')->getAll());
-        exit();
+        //dump(database::connects()->table('test')->getAll());
+        //exit();
        // var_dump(project()->);
        
        // project('event');
