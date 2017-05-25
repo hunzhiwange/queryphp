@@ -6,14 +6,17 @@
 namespace home\application\controller;
 
 use queryyetsimple\mvc\controller;
-use queryyetsimple\log\log;
+//use queryyetsimple\log\log;
 use queryyetsimple\database\database;
 use queryyetsimple\stack\queue;
+use queryyetsimple\http\request;
+use queryyetsimple\log\log;
+
 
 class index extends controller {
     
-     public function __construct( $str,$test = [1,2],$hello=55 ){
-      //  print_r($test);
+     public function __construct( request $xxx ,log $yyy){
+        print_r($yyy);
         
        // print_r(func_get_args());
      }
@@ -24,6 +27,11 @@ class index extends controller {
      * @return void
      */
     public function index() {
+        
+        throw new \Exception('xx');
+        
+        //project('r')
+        
         //echo 'xx';
         
        // $objStack = new queue('array');
@@ -34,9 +42,9 @@ class index extends controller {
        // $dotenv = new \Dotenv\Dotenv(PATH);
        // $dotenv->load();
         
-        
-       echo env('APP_DEBUG');
-       echo env('xxxx');
+        echo 'x';
+     //  echo env('APP_DEBUG');
+       //echo env('xxxx');
         
 //print_r($_ENV);
         //dump(database::connects()->table('test')->getAll());
