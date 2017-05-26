@@ -16,7 +16,8 @@
     ],
     "require": {
         "php": ">=5.5.0",
-        "hunzhiwange/framework": "dev-master"
+        "hunzhiwange/framework": "dev-master",
+        "league/pipeline": "^0.3.0"
     },
     "require-dev": {
     },
