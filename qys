@@ -24,4 +24,4 @@ queryphp;
  * @version 1.0
  */
 putenv ( 'queryphp_console=(true)' );
-require_once './www/index.php';
+require __DIR__ . '/www/index.php';

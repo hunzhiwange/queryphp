@@ -22,5 +22,5 @@ queryphp;
  * @since 2017.05.08
  * @version 1.0
  */
-define ( 'Q_PHPUNIT', true );
-require_once './www/index.php';
+putenv ( 'queryphp_phpunit=(true)' );
+require __DIR__ . '/www/index.php';
