@@ -9,10 +9,7 @@ use Q\mvc\controller;
 use Q\option\option;
 
 class test extends controller {
-    
-    public static function test(){
-        
-     echo 'xxxx';
+    public static function test() {
+        echo 'xxxx';
     }
-    
 }

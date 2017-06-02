@@ -1,9 +1,6 @@
 <?php
-
 use Phinx\Migration\AbstractMigration;
-
-class Hello extends AbstractMigration
-{
+class Hello extends AbstractMigration {
     /**
      * Change Method.
      *
@@ -15,22 +12,19 @@ class Hello extends AbstractMigration
      * The following commands can be used in this method and Phinx will
      * automatically reverse them when rolling back:
      *
-     *    createTable
-     *    renameTable
-     *    addColumn
-     *    renameColumn
-     *    addIndex
-     *    addForeignKey
+     * createTable
+     * renameTable
+     * addColumn
+     * renameColumn
+     * addIndex
+     * addForeignKey
      *
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change()
-    {
+    public function change() {
         // create the table
-        $table = $this->table('auser_logins2');
-        $table->addColumn('user_id', 'integer')
-        ->addColumn('created', 'datetime')
-        ->create();
+        $table = $this->table ( 'auser_logins2' );
+        $table->addColumn ( 'user_id', 'integer' )->addColumn ( 'created', 'datetime' )->create ();
     }
 }

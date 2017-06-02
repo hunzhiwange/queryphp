@@ -2,32 +2,28 @@
 /**
  * 默认配置文件
  */
-return [    
+return [ 
         
-       'test'=>[
-               
-               'xxx',
-               'xxxxxx',
-               'yyy' => [
-                   'sssssssssss' =>'xxx'
-               ],
-       ],
-
-       'console' => [
+        'test' => [ 
+                
+                'xxx',
+                'xxxxxx',
+                'yyy' => [ 
+                        'sssssssssss' => 'xxx' 
+                ] 
+        ],
+        
+        'console' => [
                 // 'home\infrastructure\provider\event2'
-             'common\console\controller',
-       ],
+                'common\console\controller' 
+        ],
         
-       
-        
-       'console_template' => [
-         'header_comment' =>       
-'// console_template.header_comment
+        'console_template' => [ 
+                'header_comment' => '// console_template.header_comment
 // [{{product_name}}] {{product_description}} <{{product_slogan}}>
 // ©{{date_y}}-2099 {{product_homepage}} All rights reserved.',
-               
-               'file_comment' =>
-'// console_template.file_comment
+                
+                'file_comment' => '// console_template.file_comment
 /**
  * {{file_name}}
  *
@@ -35,24 +31,23 @@ return [
  * @package {{file_package}}
  * @since {{file_since}}
  * @version {{file_version}}
- */',         
-
-           //'file_name' => '',
-           'file_since' => date('Y.m.d'),
-           'file_version' => '1.0',
-           'file_package' => '$$',
-           'file_author' => 'your.name<your.email>',
-               
-           'product_homepage' => 'http://www.youdomain.com',
-           'product_name' => 'Your.Product',
-           'product_description' => 'This project can help people to do things very funny.',
-           'product_slogan' => 'To make the world better'
-       ],
+ */',
+                
+                // 'file_name' => '',
+                'file_since' => date ( 'Y.m.d' ),
+                'file_version' => '1.0',
+                'file_package' => '$$',
+                'file_author' => 'your.name<your.email>',
+                
+                'product_homepage' => 'http://www.youdomain.com',
+                'product_name' => 'Your.Product',
+                'product_description' => 'This project can help people to do things very funny.',
+                'product_slogan' => 'To make the world better' 
+        ],
         
-       'provider' => [
-         // 'home\infrastructure\provider\event2'
-       ], 
+        'provider' => [ ],
         
+        // 'home\infrastructure\provider\event2'
         
         'url_router_on' => true,
         'url_router_strict' => false,
@@ -94,12 +89,13 @@ return [
         'db_char' => 'utf8', // 数据库编码
         'db_name' => 'candao_project', // 数据库名字
         'db_type' => 'mysql', // 数据库类型
-//         'db_schema' => '', // 数据库SCHEMA
-         'db_port' => 3306, // 端口
-//         'db_cache' => FALSE, // 数据库查询是否缓存
-//         'db_meta_cached' => TRUE, // 数据库元是否缓存
-//         'db_distributed' => FALSE, // 是否采用分布式
-//         'db_rw_separate' => FALSE, // 数据库读写是否分离主从式有效
-//         'db_dsn' => 'mysql://username:password@localhost:3306/dbname', // 数据 dsn 解析
-//         'db_params' => [ ], // 数据库连接参数
- ];
+                              // 'db_schema' => '', // 数据库SCHEMA
+        'db_port' => 3306 
+]; // 端口
+  // 'db_cache' => FALSE, // 数据库查询是否缓存
+  // 'db_meta_cached' => TRUE, // 数据库元是否缓存
+  // 'db_distributed' => FALSE, // 是否采用分布式
+  // 'db_rw_separate' => FALSE, // 数据库读写是否分离主从式有效
+  // 'db_dsn' => 'mysql://username:password@localhost:3306/dbname', // 数据 dsn 解析
+  // 'db_params' => [ ], // 数据库连接参数
+

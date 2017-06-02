@@ -1,7 +1,6 @@
 <?php
 use queryyetsimple\router\router;
 
-
 router::groups ( [ 
         'prepend' => true 
 ], [ 

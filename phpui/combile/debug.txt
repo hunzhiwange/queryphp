@@ -1,0 +1,66 @@
+@echo off
+
+prompt -$g  
+title PHP-GTK调式保持工具 
+
+if not exist %PHPGTK_ROOT% (
+        echo  PHPGTK 未安装或者PHPGTK_ROOT 环境变量未设置
+        pause
+        goto :eof
+)
+
+if not exist %PHPGTK_ROOT%\run.exe (
+        if not exist  %cd%\combile\source\run.exe (
+              echo  当前执行文件 %cd%\source\run.exe 不存在，请确认
+              pause
+              goto :eof
+        )
+        copy  %cd%\resource\run.exe %PHPGTK_ROOT%
+        echo  run.exe 自定义图标的执行文件复制成功
+)
+
+goto menu   
+  
+:menu   
+echo ^ 欢迎使用 PHP-GTK调式保持工具   
+echo ^--------------------------------------------   
+echo ^ 本工具可以帮助你调式 PHP-GTK 开发过程中的错误
+echo ^----------------------   
+echo ^  1 调试（默认）  2 执行  0 退出   
+echo ^----------------------   
+set /p input=-^> 请选择：   
+echo.   
+if "%input%"== "0" goto end  
+if "%input%"== "1" goto debug   
+if "%input%"== "2" goto run 
+if "%input%"== "" goto debug   
+goto end  
+  
+:debug   
+php.exe start.gtk
+echo ^上面为 PHP-GTK 调式的信息   
+echo ^----------------------   
+echo ^  1 调试（默认）  2 执行  0 退出          
+echo ^----------------------   
+set /p input=-^>请选择 :   
+if "%input%"=="0" goto end  
+if "%input%"=="1" goto debug   
+if "%input%"=="2" goto run   
+if "%input%"=="" goto debug   
+goto end  
+
+:run   
+run.exe start.gtk
+echo ^----------------------   
+echo ^  1 调试（默认）  2 执行  0 退出          
+echo ^----------------------   
+set /p nSelect=-^>请选择 :   
+if "%input%"=="0" goto end  
+if "%input%"=="1" goto debug   
+if "%input%"=="2" goto run 
+if "%input%"=="" goto debug   
+goto end  
+  
+:end  
+prompt   
+popd

@@ -1,0 +1,3 @@
+﻿<?php   
+putenv ( 'queryphp_phpui=(true)' );
+require dirname(__DIR__) . '/www/index.php';

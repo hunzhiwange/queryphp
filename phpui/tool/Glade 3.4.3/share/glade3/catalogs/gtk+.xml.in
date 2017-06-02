@@ -1,0 +1,1760 @@
+<glade-catalog name="gtk+"
+               icon-prefix="gtk"
+               library="gladegtk"
+               domain="glade3"
+               book="gtk">
+  <glade-widget-classes>
+
+    <glade-widget-class name="GtkWidget" _title="Widget" default-width="100" default-height="60">
+
+      <deep-post-create-function>glade_gtk_widget_deep_post_create</deep-post-create-function>
+      <set-property-function>glade_gtk_widget_set_property</set-property-function>
+      <get-property-function>glade_gtk_widget_get_property</get-property-function>
+      <action-activate-function>glade_gtk_widget_action_activate</action-activate-function>
+
+      <actions>
+        <action id="remove_parent" _name="Remove Parent" stock="gtk-remove"/>
+        <action id="add_parent" _name="Add Parent" stock="gtk-add">
+	  <action id="alignment" _name="Alignment"/>
+	  <action id="viewport" _name="Viewport"/>
+	  <action id="eventbox" _name="Event Box"/>
+	  <action id="frame" _name="Frame"/>
+	  <action id="aspect_frame" _name="Aspect Frame"/>
+	  <action id="scrolled_window" _name="Scrolled Window"/>
+	  <action id="expander" _name="Expander"/>
+	  <action id="table" _name="Table"/>
+	  <action id="hbox" _name="Horizontal Box"/>
+	  <action id="vbox" _name="Vertical Box"/>
+	  <action id="hpaned" _name="Horizontal Panes"/>
+	  <action id="vpaned" _name="Vertical Panes"/>
+        </action>
+      </actions>
+
+
+      <properties>
+	<property id="visible" default="True" common="True" ignore="True"/>
+	<property id="width-request"  common="True" optional="True" optional-default="False" default="0"/>
+	<property id="height-request" common="True" optional="True" optional-default="False" default="0"/>
+	<property id="no-show-all" weight="4.6" ignore="True"/>
+
+	<property common="True" id="tooltip" _name="Tooltip" default="" translatable="True" weight="4.5">
+	  <spec>glade_standard_string_spec</spec>
+	  <_tooltip>A tooltip text for this widget</_tooltip>
+	</property>
+
+	<property common="True" id="extension-events">
+  	  <displayable-values>
+	    <value id="GDK_EXTENSION_EVENTS_NONE" _name="None"/>
+	    <value id="GDK_EXTENSION_EVENTS_ALL" _name="All"/>
+	    <value id="GDK_EXTENSION_EVENTS_CURSOR" _name="Cursor"/>
+	  </displayable-values>
+	</property>
+
+	<property common="True" id="events" ignore="True">
+  	  <displayable-values>
+	    <value id="GDK_EXPOSURE_MASK" _name="Exposure"/>
+	    <value id="GDK_POINTER_MOTION_MASK" _name="Pointer Motion"/>
+	    <value id="GDK_POINTER_MOTION_HINT_MASK" _name="Pointer Motion Hint"/>
+	    <value id="GDK_BUTTON_MOTION_MASK" _name="Button Motion"/>
+	    <value id="GDK_BUTTON1_MOTION_MASK" _name="Button 1 Motion"/>
+	    <value id="GDK_BUTTON2_MOTION_MASK" _name="Button 2 Motion"/>
+	    <value id="GDK_BUTTON3_MOTION_MASK" _name="Button 3 Motion"/>
+	    <value id="GDK_BUTTON_PRESS_MASK" _name="Button Press"/>
+	    <value id="GDK_BUTTON_RELEASE_MASK" _name="Button Release"/>
+	    <value id="GDK_KEY_PRESS_MASK" _name="Key Press"/>
+	    <value id="GDK_KEY_RELEASE_MASK" _name="Key Release"/>
+	    <value id="GDK_ENTER_NOTIFY_MASK" _name="Enter Notify"/>
+	    <value id="GDK_LEAVE_NOTIFY_MASK" _name="Leave Notify"/>
+	    <value id="GDK_FOCUS_CHANGE_MASK" _name="Focus Change"/>
+	    <value id="GDK_STRUCTURE_MASK" _name="Structure"/>
+	    <value id="GDK_PROPERTY_CHANGE_MASK" _name="Property Change"/>
+	    <value id="GDK_VISIBILITY_NOTIFY_MASK" _name="Visibility Notify"/>
+	    <value id="GDK_PROXIMITY_IN_MASK" _name="Proximity In"/>
+	    <value id="GDK_PROXIMITY_OUT_MASK" _name="Proximity  Out"/>
+	    <value id="GDK_SUBSTRUCTURE_MASK" _name="Substructure"/>
+	    <value id="GDK_SCROLL_MASK" _name="Scroll"/>
+	    <value id="GDK_ALL_EVENTS_MASK" _name="All Events"/>
+	  </displayable-values>
+	</property>
+
+	<property id="name" disabled="True"/>
+	<property id="parent" disabled="True"/>
+	<property id="style" disabled="True"/>
+	<property id="sensitive" ignore="True"/>
+	<property id="has-default" ignore="True" common="True"/>
+
+	<!-- Accelerators -->
+	<property id="accelerator" _name="Accelerators" ignore="True" common="True">
+	  <spec>glade_standard_accel_spec</spec>
+	</property>
+
+	<!-- Atk name and description properties -->
+	<property id="accessible-name" _name="Accessible Name" ignore="True" atk-property="True" translatable="True">
+	  <_tooltip>Object instance's name formatted for assistive technology access</_tooltip>
+	  <spec>glade_standard_string_spec</spec>
+	  <visible-lines>2</visible-lines>
+	</property>
+
+	<property id="accessible-description" _name="Accessible Description" ignore="True" atk-property="True" translatable="True">
+	  <_tooltip>Description of an object, formatted for assistive technology access</_tooltip>
+	  <spec>glade_standard_string_spec</spec>
+	  <visible-lines>2</visible-lines>
+	</property>
+
+	<!-- Atk relationset properties -->
+	<property id="controlled-by" _name="Controlled By" ignore="True" atk-property="True">
+	  <_tooltip>Indicates an object controlled by one or more target objects</_tooltip>
+	  <spec>glade_standard_objects_spec</spec>
+	</property>
+
+	<property id="controller-for" _name="Controller For" ignore="True" atk-property="True">
+	  <_tooltip>Indicates an object is a controller for one or more target objects</_tooltip>
+	  <spec>glade_standard_objects_spec</spec>
+	</property>
+
+	<property id="labelled-by" _name="Labelled By" ignore="True" atk-property="True">
+	  <_tooltip>Indicates an object is labelled by one or more target objects</_tooltip>
+	  <spec>glade_standard_objects_spec</spec>
+	</property>
+
+	<property id="label-for" _name="Label For" ignore="True" atk-property="True">
+	  <_tooltip>Indicates an object is a label for one or more target objects</_tooltip>
+	  <spec>glade_standard_objects_spec</spec>
+	</property>
+
+	<property id="member-of" _name="Member Of" ignore="True" atk-property="True">
+	  <_tooltip>Indicates an object is a member of a group of one or more target objects</_tooltip>
+	  <spec>glade_standard_objects_spec</spec>
+	</property>
+
+	<property id="node-child-of" _name="Node Child Of" ignore="True" atk-property="True">
+	  <_tooltip>Indicates an object is a cell in a treetable which is displayed because a 
+cell in the same column is expanded and identifies that cell</_tooltip>
+	  <spec>glade_standard_objects_spec</spec>
+	</property>
+
+	<property id="flows-to" _name="Flows To" ignore="True" atk-property="True">
+	  <_tooltip>Indicates that the object has content that flows logically to another 
+AtkObject in a sequential way, (for instance text-flow)</_tooltip>
+	  <spec>glade_standard_objects_spec</spec>
+	</property>
+
+	<property id="flows-from" _name="Flows From" ignore="True" atk-property="True">
+	  <_tooltip>Indicates that the object has content that flows logically from another 
+AtkObject in a sequential way, (for instance text-flow)</_tooltip>
+	  <spec>glade_standard_objects_spec</spec>
+	</property>
+
+	<property id="subwindow-of" _name="Subwindow Of" ignore="True" atk-property="True">
+	  <_tooltip>Indicates a subwindow attached to a component but otherwise has no 
+connection in the UI hierarchy to that component</_tooltip>
+	  <spec>glade_standard_objects_spec</spec>
+	</property>
+
+	<property id="embeds" _name="Embeds" ignore="True" atk-property="True">
+	  <_tooltip>Indicates that the object visually embeds another object's content, i.e. 
+this object's content flows around another's content</_tooltip>
+	  <spec>glade_standard_objects_spec</spec>
+	</property>
+
+	<property id="embedded-by" _name="Embedded By" ignore="True" atk-property="True">
+	  <_tooltip>Inverse of 'Embeds', indicates that this object's content is visually 
+embedded in another object</_tooltip>
+	  <spec>glade_standard_objects_spec</spec>
+	</property>
+
+	<property id="popup-for" _name="Popup For" ignore="True" atk-property="True">
+	  <_tooltip>Indicates that an object is a popup for another object</_tooltip>
+	  <spec>glade_standard_objects_spec</spec>
+	</property>
+
+	<property id="parent-window-of" _name="Parent Window Of" ignore="True" atk-property="True">
+	  <_tooltip>Indicates that an object is a parent window of another object</_tooltip>
+	  <spec>glade_standard_objects_spec</spec>
+	</property>
+
+	<property id="described-by" _name="Described By" ignore="True" atk-property="True">
+	  <_tooltip>Indicates that another object provides descriptive information about this object; more verbose than 'Labelled By'</_tooltip>
+	  <spec>glade_standard_objects_spec</spec>
+	</property>
+
+	<property id="description-for" _name="Description For" ignore="True" atk-property="True">
+	  <_tooltip>Indicates that an object provides descriptive information about another object; more verbose than 'Label For'</_tooltip>
+	  <spec>glade_standard_objects_spec</spec>
+	</property>
+      </properties>
+
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkContainer" _title="Container" use-placeholders="True">
+      <post-create-function>glade_gtk_container_post_create</post-create-function>
+
+      <add-child-function>glade_gtk_container_add_child</add-child-function>
+      <remove-child-function>glade_gtk_container_remove_child</remove-child-function> 
+      <replace-child-function>glade_gtk_container_replace_child</replace-child-function>
+      <child-set-property-function>glade_gtk_container_set_child_property</child-set-property-function>
+      <child-get-property-function>glade_gtk_container_get_child_property</child-get-property-function>
+      <get-children-function>glade_gtk_container_get_children</get-children-function>
+
+      <properties>
+        <property id="border-width" common="True" weight="2.5"/>
+        <property id="resize-mode" common="True" weight="4.7">
+  	  <displayable-values>
+	    <value id="GTK_RESIZE_PARENT" _name="Parent"/>
+	    <value id="GTK_RESIZE_QUEUE" _name="Queue"/>
+	    <value id="GTK_RESIZE_IMMEDIATE" _name="Immediate"/>
+	  </displayable-values>
+	</property>
+	<property id="child" disabled="True"/>
+      </properties>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkBox" _title="Box" fixed="True">
+      <post-create-function>glade_gtk_box_post_create</post-create-function>
+      <get-internal-child-function>glade_gtk_box_get_internal_child</get-internal-child-function>
+      <set-property-function>glade_gtk_box_set_property</set-property-function>
+      <get-property-function>glade_gtk_box_get_property</get-property-function>
+      <verify-function>glade_gtk_box_verify_property</verify-function>
+      <add-child-function>glade_gtk_box_add_child</add-child-function>
+      <remove-child-function>glade_gtk_box_remove_child</remove-child-function>
+      <replace-child-function>glade_gtk_box_replace_child</replace-child-function>
+      <child-set-property-function>glade_gtk_box_set_child_property</child-set-property-function>
+      <child-action-activate-function>glade_gtk_box_child_action_activate</child-action-activate-function>
+
+      <packing-actions>
+        <action id="insert_before" _name="Insert Before" stock="gtk-add"/>
+        <action id="insert_after" _name="Insert After" stock="gtk-add"/>
+        <action id="remove_slot" _name="Remove Slot" stock="gtk-remove"/>
+      </packing-actions>
+
+      <properties>
+	<property id="size" _name="Number of items" query="True" default="3" save="False">
+	  <spec>glade_standard_int_spec</spec>
+	  <_tooltip>The number of items in the box</_tooltip>
+	</property>
+      </properties>
+
+      <packing-properties>
+        <property id="position" weight="0"/>
+        <property id="padding" transfer-on-paste="True" weight="0.5"/>
+        <property id="expand" transfer-on-paste="True"/>
+        <property id="fill" transfer-on-paste="True"/>
+        <property id="pack-type" transfer-on-paste="True">
+          <displayable-values>
+            <value id="GTK_PACK_START" _name="Start"/>
+            <value id="GTK_PACK_END" _name="End"/>
+          </displayable-values>
+        </property>
+      </packing-properties>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkWindow" generic-name="window" _title="Window" toplevel="True" default-width="440" default-height="250">
+      <post-create-function>glade_gtk_window_post_create</post-create-function>
+
+      <properties> 
+	<property id="visible" default="False"/>
+     	<property common="True" id="gravity">
+  	  <displayable-values>
+	    <value id="GDK_GRAVITY_NORTH_WEST" _name="North West"/>
+	    <value id="GDK_GRAVITY_NORTH" _name="North"/>
+	    <value id="GDK_GRAVITY_NORTH_EAST" _name="North East"/>
+	    <value id="GDK_GRAVITY_WEST" _name="West"/>
+	    <value id="GDK_GRAVITY_CENTER" _name="Center"/>
+	    <value id="GDK_GRAVITY_EAST" _name="East"/>
+	    <value id="GDK_GRAVITY_SOUTH_WEST" _name="South West"/>
+	    <value id="GDK_GRAVITY_SOUTH" _name="South"/>
+	    <value id="GDK_GRAVITY_SOUTH_EAST" _name="South East"/>
+	    <value id="GDK_GRAVITY_STATIC" _name="Static"/>
+	  </displayable-values>
+	</property>
+	<property id="modal" ignore="True"/>
+	<property id="default-width" default="0" optional="True" optional-default="False"/>
+	<property id="default-height" default="0" optional="True" optional-default="False"/>
+	<property id="type-hint" ignore="True">
+  	  <displayable-values>
+	    <value id="GDK_WINDOW_TYPE_HINT_NORMAL" _name="Normal"/>
+	    <value id="GDK_WINDOW_TYPE_HINT_DIALOG" _name="Dialog"/>
+	    <value id="GDK_WINDOW_TYPE_HINT_MENU" _name="Menu"/>
+	    <value id="GDK_WINDOW_TYPE_HINT_TOOLBAR" _name="Toolbar"/>
+	    <value id="GDK_WINDOW_TYPE_HINT_SPLASHSCREEN" _name="Splash Screen"/>
+	    <value id="GDK_WINDOW_TYPE_HINT_UTILITY" _name="Utility"/>
+	    <value id="GDK_WINDOW_TYPE_HINT_DOCK" _name="Dock"/>
+	    <value id="GDK_WINDOW_TYPE_HINT_DESKTOP" _name="Desktop"/>
+	    <value id="GDK_WINDOW_TYPE_HINT_DROPDOWN_MENU" _name="Drop Down Menu"/>
+	    <value id="GDK_WINDOW_TYPE_HINT_POPUP_MENU" _name="Popup Menu"/>
+	    <value id="GDK_WINDOW_TYPE_HINT_TOOLTIP" _name="Tooltip"/>
+	    <value id="GDK_WINDOW_TYPE_HINT_NOTIFICATION" _name="Notification"/>
+	    <value id="GDK_WINDOW_TYPE_HINT_COMBO" _name="Combo"/>
+	    <value id="GDK_WINDOW_TYPE_HINT_DND" _name="Drag and Drop"/>
+	  </displayable-values>
+	</property>
+	<property id="type" ignore="True">
+	  <displayable-values>
+	    <value id="GTK_WINDOW_TOPLEVEL" _name="Top Level"/>
+	    <value id="GTK_WINDOW_POPUP" _name="Popup"/>
+	  </displayable-values>
+	</property>
+	<property id="allow-shrink" disabled="True" />
+	<property id="allow-grow" disabled="True" />
+	<property id="resize-mode" disabled="True" />
+	<property id="screen" disabled="True" />
+	<property id="resizable" ignore="True" />
+	<property id="decorated" ignore="True" />
+	<property id="title" ignore="True" translatable="True"/>
+      	<property id="window-position" ignore="True">
+  	  <displayable-values>
+	    <value id="GTK_WIN_POS_NONE" _name="None"/>
+	    <value id="GTK_WIN_POS_CENTER" _name="Center"/>
+	    <value id="GTK_WIN_POS_MOUSE" _name="Mouse"/>
+	    <value id="GTK_WIN_POS_CENTER_ALWAYS" _name="Always Center"/>
+	    <value id="GTK_WIN_POS_CENTER_ON_PARENT" _name="Center on Parent"/>
+          </displayable-values>
+	</property>
+	<property id="accept-focus" ignore="True"/>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkMenuShell" _title="Menu Shell" use-placeholders="False">
+      <post-create-function>empty</post-create-function>
+      <add-child-function>glade_gtk_menu_shell_add_child</add-child-function>
+      <remove-child-function>glade_gtk_menu_shell_remove_child</remove-child-function>
+      <child-set-property-function>glade_gtk_menu_shell_set_child_property</child-set-property-function>
+      <child-get-property-function>glade_gtk_menu_shell_get_child_property</child-get-property-function>
+      <action-activate-function>glade_gtk_menu_shell_action_activate</action-activate-function>
+      <packing-properties>
+        <property id="position" _name="Position" default="-1" save="False">
+          <spec>glade_standard_int_spec</spec>
+          <_tooltip>The position of the menu item in the menu shell</_tooltip>
+        </property>
+      </packing-properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkMenuItem" generic-name="menuitem" _title="Menu Item" use-placeholders="False">
+      <constructor-function>glade_gtk_menu_item_constructor</constructor-function>
+      <post-create-function>glade_gtk_menu_item_post_create</post-create-function>
+      <get-children-function>glade_gtk_menu_item_get_children</get-children-function>
+      <set-property-function>glade_gtk_menu_item_set_property</set-property-function>
+      <add-child-function>glade_gtk_menu_item_add_child</add-child-function>
+      <remove-child-function>glade_gtk_menu_item_remove_child</remove-child-function>
+      <action-activate-function>glade_gtk_menu_item_action_activate</action-activate-function>
+      <actions>
+        <action id="launch_editor" _name="Edit&#8230;" stock="gtk-edit" important="True"/>
+      </actions>
+      <properties>
+        <property id="submenu" disabled="True"/>
+        <property id="label" _name="Label" translatable="True">
+	  <_tooltip>The text of the menu item</_tooltip>
+          <spec>glade_standard_string_spec</spec>
+        </property>
+        <property id="use-underline" _name="Use Underline">
+          <spec>glade_standard_boolean_spec</spec>
+        </property>
+	<!-- Atk click property -->
+	<property id="atk-click" _name="Click" ignore="True" atk-action="True">
+	  <_tooltip>Set the description of the Click atk action</_tooltip>
+	  <spec>glade_standard_string_spec</spec>
+	  <visible-lines>2</visible-lines>
+	</property>
+	<!--
+	This property is added by glade2 gnome support and makes reference to
+	GNOMEUIINFO_MENU_* macros. The set-property-function maps these properties to 
+	existing non deprecated gtk ones
+	-->
+        <property id="stock-item" visible="False" save="False">
+          <spec>glade_gtk_gnome_ui_info_spec</spec>
+        </property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkCheckMenuItem" generic-name="checkmenuitem" _title="Check Menu Item"/>
+
+    <glade-widget-class name="GtkRadioMenuItem" generic-name="radiomenuitem" _title="Radio Menu Item">
+      <set-property-function>glade_gtk_radio_menu_item_set_property</set-property-function>
+      <properties>
+        <property id="draw-as-radio" default="True"/>
+	<property id="inconsistent" visible="False" save="False" default="False"/>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkImageMenuItem" generic-name="imagemenuitem" _title="Image Menu Item">
+      <get-internal-child-function>glade_gtk_image_menu_item_get_internal_child</get-internal-child-function>
+      <set-property-function>glade_gtk_image_menu_item_set_property</set-property-function>
+      <properties>
+        <property id="use-stock" visible="False">
+	  <spec>glade_standard_boolean_spec</spec>
+        </property>
+	<property id="stock" _name="Stock Item" save="False">
+	  <_tooltip>A stock item, select None to choose a custom image and label</_tooltip>
+	  <spec>glade_standard_stock_spec</spec>
+	</property>
+	<property id="image" disabled="True" />
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkSeparatorMenuItem" generic-name="separatormenuitem" _title="Separator Menu Item">
+      <properties>
+        <property id="label" visible="False"/>
+        <property id="use-underline" visible="False"/>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkMenuBar" generic-name="menubar" _title="Menu Bar">
+      <post-create-function>glade_gtk_menu_bar_post_create</post-create-function>
+      <!-- menubar is a container you can't add placeholders to it -->
+      <actions>
+        <action id="launch_editor" _name="Edit&#8230;" stock="gtk-edit" important="True"/>
+      </actions>
+      <properties>
+        <property id="child-pack-direction">
+          <displayable-values>
+	    <value id="GTK_PACK_DIRECTION_LTR" _name="Left to Right"/>
+	    <value id="GTK_PACK_DIRECTION_RTL" _name="Right to Left"/>
+	    <value id="GTK_PACK_DIRECTION_TTB" _name="Top to Bottom"/>
+	    <value id="GTK_PACK_DIRECTION_BTT" _name="Bottom to Top"/>
+	  </displayable-values>
+	</property>
+        <property id="pack-direction">
+          <displayable-values>
+	    <value id="GTK_PACK_DIRECTION_LTR" _name="Left to Right"/>
+	    <value id="GTK_PACK_DIRECTION_RTL" _name="Right to Left"/>
+	    <value id="GTK_PACK_DIRECTION_TTB" _name="Top to Bottom"/>
+	    <value id="GTK_PACK_DIRECTION_BTT" _name="Bottom to Top"/>
+	  </displayable-values>
+	</property>
+      </properties>
+      <packing-defaults>
+	<parent-class name="GtkVBox">
+	  <child-property id="expand" default="false"/>
+	</parent-class>
+      </packing-defaults>
+    </glade-widget-class>
+      
+    <glade-widget-class name="GtkToolbar" generic-name="toolbar" _title="Tool Bar" use-placeholders="False">
+      <post-create-function>glade_gtk_toolbar_post_create</post-create-function>
+      <add-child-function>glade_gtk_toolbar_add_child</add-child-function>
+      <remove-child-function>glade_gtk_toolbar_remove_child</remove-child-function>
+      <child-set-property-function>glade_gtk_toolbar_set_child_property</child-set-property-function>
+      <child-get-property-function>glade_gtk_toolbar_get_child_property</child-get-property-function>
+      <action-activate-function>glade_gtk_toolbar_action_activate</action-activate-function>
+
+      <actions>
+        <action id="launch_editor" _name="Edit&#8230;" stock="gtk-edit" important="True"/>
+      </actions>
+      <properties>
+	<property id="orientation">
+  	  <displayable-values>
+	    <value id="GTK_ORIENTATION_HORIZONTAL" _name="Horizontal"/>
+	    <value id="GTK_ORIENTATION_VERTICAL" _name="Vertical"/>
+	  </displayable-values>
+	</property>
+      	<property id="toolbar-style" save-always="True" optional="True" optional-default="False">
+  	  <displayable-values>
+	    <value id="GTK_TOOLBAR_ICONS" _name="Icons only"/>
+	    <value id="GTK_TOOLBAR_TEXT" _name="Text only"/>
+	    <value id="GTK_TOOLBAR_BOTH" _name="Text below icons"/>
+	    <value id="GTK_TOOLBAR_BOTH_HORIZ" _name="Text beside icons"/>
+	  </displayable-values>
+	</property>
+      	<property id="icon-size">
+  	  <displayable-values>
+	    <value id="GTK_ICON_SIZE_INVALID" _name="Invalid"/>
+	    <value id="GTK_ICON_SIZE_MENU" _name="Menu"/>
+	    <value id="GTK_ICON_SIZE_SMALL_TOOLBAR" _name="Small Toolbar"/>
+	    <value id="GTK_ICON_SIZE_LARGE_TOOLBAR" _name="Large Toolbar"/>
+	    <value id="GTK_ICON_SIZE_BUTTON" _name="Button"/>
+	    <value id="GTK_ICON_SIZE_DND" _name="Drag &amp; Drop"/>
+	    <value id="GTK_ICON_SIZE_DIALOG" _name="Dialog"/>
+	  </displayable-values>
+	</property>
+      </properties>
+
+      <packing-properties>
+        <property id="position" _name="Position" default="-1" save="False">
+          <spec>glade_standard_int_spec</spec>
+          <_tooltip>The position of the tool item in the toolbar</_tooltip>
+        </property>
+	<property id="expand" transfer-on-paste="True"/>
+        <property id="homogeneous" transfer-on-paste="True"/>
+      </packing-properties>
+
+      <packing-defaults>
+	<parent-class name="GtkVBox">
+	  <child-property id="expand" default="false"/>
+	</parent-class>
+      </packing-defaults>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkToolItem" generic-name="toolitem" title="GtkToolItem">
+      <post-create-function>glade_gtk_tool_item_post_create</post-create-function>
+      <constructor-function>glade_gtk_tool_item_constructor</constructor-function>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkSeparatorToolItem" generic-name="separatortoolitem" _title="Separator Tool Item"/>
+	
+
+    <glade-widget-class name="GtkToolButton" generic-name="toolbutton" _title="Tool Button">
+
+      <set-property-function>glade_gtk_tool_button_set_property</set-property-function>
+      <properties>
+        <property id="icon-widget" disabled="True"/>
+	<property id="label-widget" disabled="True"/>
+        <property id="glade-type" _name="Image Type" save="False">
+	  <spec>glade_gtk_image_type_spec</spec>
+           <displayable-values>
+             <value id="GLADEGTK_IMAGE_FILENAME" _name="Filename"/>
+             <value id="GLADEGTK_IMAGE_STOCK" _name="Stock"/>
+             <value id="GLADEGTK_IMAGE_ICONTHEME" _name="Icon Theme"/>
+           </displayable-values>
+	</property>
+	<property id="glade-stock" _name="Stock Image" save="False">
+	  <spec>glade_standard_stock_image_spec</spec>
+	</property>
+        <property id="label" translatable="True"/>
+	<property id="icon" _name="File Name">
+	  <spec>glade_standard_pixbuf_spec</spec>
+	</property>
+      </properties>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkToggleToolButton" generic-name="toggletoolbutton" _title="Toggle Tool Button"/>
+    
+    <glade-widget-class name="GtkRadioToolButton" generic-name="radiotoolbutton" _title="Radio Tool Button"/>
+    
+    <glade-widget-class name="GtkMenuToolButton" generic-name="menutoolbutton" _title="Menu Tool Button"/>
+    
+    <glade-widget-class name="GtkHandleBox" generic-name="handlebox" _title="Handle Box">
+      <properties>
+      	<property id="handle-position">
+  	  <displayable-values>
+	    <value id="GTK_POS_LEFT" _name="Left"/>
+	    <value id="GTK_POS_RIGHT" _name="Right"/>
+	    <value id="GTK_POS_TOP" _name="Top"/>
+	    <value id="GTK_POS_BOTTOM" _name="Bottom"/>
+	  </displayable-values>
+	</property>
+	<property id="shadow" disabled="True"/>
+      	<property id="shadow-type">
+  	  <displayable-values>
+	    <value id="GTK_SHADOW_NONE" _name="None"/>
+	    <value id="GTK_SHADOW_IN" _name="In"/>
+	    <value id="GTK_SHADOW_OUT" _name="Out"/>
+	    <value id="GTK_SHADOW_ETCHED_IN" _name="Etched In"/>
+	    <value id="GTK_SHADOW_ETCHED_OUT" _name="Etched Out"/>
+	  </displayable-values>
+	</property>
+      	<property id="snap-edge">
+  	  <displayable-values>
+	    <value id="GTK_POS_LEFT" _name="Left"/>
+	    <value id="GTK_POS_RIGHT" _name="Right"/>
+	    <value id="GTK_POS_TOP" _name="Top"/>
+	    <value id="GTK_POS_BOTTOM" _name="Bottom"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkLabel" generic-name="label" _title="Label">
+      <post-create-function>glade_gtk_label_post_create</post-create-function>
+      <set-property-function>glade_gtk_label_set_property</set-property-function>
+
+      <properties>
+        <property id="selectable" ignore="True"/>
+	<property id="pattern" default=""/>
+	<property id="max-width-chars" _name="Maximum Width"/>
+      	<property id="label" default="label" translatable="True">
+            <visible-lines>2</visible-lines>
+        </property>
+      	<property id="justify">
+  	  <displayable-values>
+	    <value id="GTK_JUSTIFY_LEFT" _name="Left"/>
+	    <value id="GTK_JUSTIFY_RIGHT" _name="Right"/>
+	    <value id="GTK_JUSTIFY_CENTER" _name="Center"/>
+	    <value id="GTK_JUSTIFY_FILL" _name="Fill"/>
+	  </displayable-values>
+	</property>
+      	<property id="ellipsize">
+  	  <displayable-values>
+	    <value id="PANGO_ELLIPSIZE_NONE" _name="None"/>
+	    <value id="PANGO_ELLIPSIZE_START" _name="Start"/>
+	    <value id="PANGO_ELLIPSIZE_MIDDLE" _name="Middle"/>
+	    <value id="PANGO_ELLIPSIZE_END" _name="End"/>
+	  </displayable-values>
+	</property>
+      	<property id="wrap-mode">
+  	  <displayable-values>
+             <value id="PANGO_WRAP_WORD" _name="Word"/>
+	    <value id="PANGO_WRAP_CHAR" _name="Character"/>
+	    <value id="PANGO_WRAP_WORD_CHAR" _name="Word Character"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkEntry" generic-name="entry" _title="Text Entry">
+      <post-create-function>glade_gtk_entry_post_create</post-create-function>
+      <properties>
+	<property id="text" translatable="True"/>
+    <property id="shadow-type">
+  	  <displayable-values>
+	    <value id="GTK_SHADOW_NONE" _name="None"/>
+	    <value id="GTK_SHADOW_IN" _name="In"/>
+	    <value id="GTK_SHADOW_OUT" _name="Out"/>
+	    <value id="GTK_SHADOW_ETCHED_IN" _name="Etched In"/>
+	    <value id="GTK_SHADOW_ETCHED_OUT" _name="Etched Out"/>
+	  </displayable-values>
+	</property>
+	<!-- Atk activate property -->
+	<property id="atk-activate" _name="Activate" ignore="True" atk-action="True">
+	  <_tooltip>Set the description of the Activate atk action</_tooltip>
+	  <spec>glade_standard_string_spec</spec>
+	  <visible-lines>2</visible-lines>
+	</property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkTextView" generic-name="textview" _title="Text View">
+      <post-create-function>glade_gtk_text_view_post_create</post-create-function>
+      <set-property-function>glade_gtk_text_view_set_property</set-property-function>
+
+      <properties>
+	<!-- Text of the textview -->
+	<property id="text" _name="Text" translatable="True">
+	  <_tooltip>Set the text in the view's text buffer</_tooltip>
+	  <spec>glade_standard_string_spec</spec>
+	  <visible-lines>2</visible-lines>
+	</property>
+	<property id="justification">
+  	  <displayable-values>
+	    <value id="GTK_JUSTIFY_LEFT" _name="Left"/>
+	    <value id="GTK_JUSTIFY_RIGHT" _name="Right"/>
+	    <value id="GTK_JUSTIFY_CENTER" _name="Center"/>
+	    <value id="GTK_JUSTIFY_FILL" _name="Fill"/>
+	  </displayable-values>
+	</property>
+      	<property id="wrap-mode">
+  	  <displayable-values>
+	    <value id="GTK_WRAP_NONE" _name="None"/>
+	    <value id="GTK_WRAP_CHAR" _name="Character"/>
+	    <value id="GTK_WRAP_WORD" _name="Word"/>
+	    <value id="GTK_WRAP_WORD_CHAR" _name="Word Character"/>
+	  </displayable-values>
+	</property>
+	<property id="buffer" disabled="True"/>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkButton" generic-name="button" _title="Button">
+      <post-create-function>glade_gtk_button_post_create</post-create-function>
+      <add-child-function>glade_gtk_button_add_child</add-child-function>
+      <remove-child-function>glade_gtk_button_remove_child</remove-child-function>
+      <replace-child-function>glade_gtk_button_replace_child</replace-child-function>
+      <set-property-function>glade_gtk_button_set_property</set-property-function>
+
+      <properties>
+	<property id="image" disabled="True"/>
+	<property id="use-stock" visible="False"/>
+
+      	<property id="label" default="button" translatable="True">
+            <visible-lines>2</visible-lines>
+	</property>
+
+	<property id="use-underline" weight="1.5"/>
+
+	<property id="stock" _name="Stock Button" save="False" weight="1.6">
+	  <spec>glade_standard_stock_spec</spec>
+	  <_tooltip>The stock item for this button</_tooltip>
+	</property>
+
+	<property id="image-position" weight="1.7">
+  	  <displayable-values>
+	    <value id="GTK_POS_LEFT" _name="Left"/>
+	    <value id="GTK_POS_RIGHT" _name="Right"/>
+	    <value id="GTK_POS_TOP" _name="Top"/>
+	    <value id="GTK_POS_BOTTOM" _name="Bottom"/>
+	  </displayable-values>
+	</property>
+
+
+	<property id="glade-type" _name="Edit Type" save="False" weight="0">
+	  <spec>glade_gtk_button_type_spec</spec>
+  	  <displayable-values>
+	    <value id="GLADEGTK_BUTTON_LABEL" _name="Label"/>
+	    <value id="GLADEGTK_BUTTON_STOCK" _name="Stock"/>
+	    <value id="GLADEGTK_BUTTON_CONTAINER" _name="Container"/>
+	  </displayable-values>
+	</property>
+
+	<property id="response-id" _name="Response ID" default="0" common="False" ignore="True" save-always="True">
+	  <spec>glade_standard_int_spec</spec>
+	  <_tooltip>The response ID of this button in a dialog (it's NOT useful if this button is not in a GtkDialog)</_tooltip>
+	</property>
+
+      	<property id="relief">
+  	  <displayable-values>
+	    <value id="GTK_RELIEF_NORMAL" _name="Normal"/>
+	    <value id="GTK_RELIEF_HALF" _name="Half"/>
+	    <value id="GTK_RELIEF_NONE" _name="None"/>
+	  </displayable-values>
+	</property>
+
+	<!-- Atk click property -->
+	<property id="atk-click" _name="Click" ignore="True" atk-action="True">
+	  <_tooltip>Set the description of the Click atk action</_tooltip>
+	  <spec>glade_standard_string_spec</spec>
+	  <visible-lines>2</visible-lines>
+	</property>
+
+	<!-- Atk press property -->
+	<property id="atk-press" _name="Press" ignore="True" atk-action="True">
+	  <_tooltip>Set the description of the Press atk action</_tooltip>
+	  <spec>glade_standard_string_spec</spec>
+	  <visible-lines>2</visible-lines>
+	</property>
+
+	<!-- Atk release property -->
+	<property id="atk-release" _name="Release" ignore="True" atk-action="True">
+	  <_tooltip>Set the description of the Release atk action</_tooltip>
+	  <spec>glade_standard_string_spec</spec>
+	  <visible-lines>2</visible-lines>
+	</property>
+      </properties>
+
+    </glade-widget-class>
+  
+    <glade-widget-class name="GtkToggleButton" generic-name="togglebutton" _title="Toggle Button">
+      <properties>
+      	<property id="label" default="togglebutton"/>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkCheckButton" generic-name="checkbutton" _title="Check Button">
+      <properties>
+      	<property id="label" default="checkbutton"/>
+	<property id="draw-indicator" default="True"/>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkSpinButton" generic-name="spinbutton" _title="Spin Button">
+      <post-create-function>empty</post-create-function>
+      <set-property-function>glade_gtk_spin_button_set_property</set-property-function>
+      <properties>
+        <property id="text" disabled="True"/>
+        <property id="value" disabled="True"/>
+	<property id="can-focus" default="True"/>
+        <property id="adjustment" default="0 0 100 1 10 10"/>
+        <property id="update-policy">
+  	  <displayable-values>
+	    <value id="GTK_UPDATE_ALWAYS" _name="Always"/>
+	    <value id="GTK_UPDATE_IF_VALID" _name="If Valid"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkRadioButton" generic-name="radiobutton" _title="Radio Button">
+      <set-property-function>glade_gtk_radio_button_set_property</set-property-function>
+      <properties>
+      	<property id="label" default="radiobutton"/>
+	<property id="draw-indicator" default="True"/>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkFileChooserButton" generic-name="filechooserbutton" _title="File Chooser Button">
+      <properties>
+	<property id="title" translatable="True"/>
+	<property id="size" disabled="True"/>
+	<property id="dialog" disabled="True"/>
+        <property id="action">
+  	  <displayable-values>
+	    <value id="GTK_FILE_CHOOSER_ACTION_SAVE" _name="Save"/>
+	    <value id="GTK_FILE_CHOOSER_ACTION_OPEN" _name="Open"/>
+	    <value id="GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER" _name="Select Folder"/>
+	    <value id="GTK_FILE_CHOOSER_ACTION_CREATE_FOLDER" _name="Create Folder"/>
+	  </displayable-values>
+        </property>
+	<property id="extra-widget" disabled="True" />
+	<property id="preview-widget" disabled="True" />
+	<property id="filter" disabled="True" />
+      </properties>
+    </glade-widget-class>
+
+    
+    <!-- Commenting out new widgets untill string freeze is over
+
+    <glade-widget-class name="GtkScaleButton" generic-name="scalebutton" _title="Scale Button">
+      <properties>
+        <property id="size">
+  	  <displayable-values>
+	    <value id="GTK_ICON_SIZE_INVALID" _name="Invalid"/>
+	    <value id="GTK_ICON_SIZE_MENU" _name="Menu"/>
+	    <value id="GTK_ICON_SIZE_SMALL_TOOLBAR" _name="Small Toolbar"/>
+	    <value id="GTK_ICON_SIZE_LARGE_TOOLBAR" _name="Large Toolbar"/>
+	    <value id="GTK_ICON_SIZE_BUTTON" _name="Button"/>
+	    <value id="GTK_ICON_SIZE_DND" _name="Drag'n Drop"/>
+	    <value id="GTK_ICON_SIZE_DIALOG" _name="Dialog"/>
+	  </displayable-values>
+        </property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkVolumeButton" generic-name="volumebutton" _title="Volume Button"/>
+
+    -->
+
+    <glade-widget-class name="GtkFileChooserWidget" generic-name="filechooserwidget" _title="File Chooser Widget">
+      <post-create-function>glade_gtk_file_chooser_widget_post_create</post-create-function>
+      <properties>
+        <property id="size" default="1"  query="False" />
+        <property id="action">
+  	  <displayable-values>
+	    <value id="GTK_FILE_CHOOSER_ACTION_SAVE" _name="Save"/>
+	    <value id="GTK_FILE_CHOOSER_ACTION_OPEN" _name="Open"/>
+	    <value id="GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER" _name="Select Folder"/>
+	    <value id="GTK_FILE_CHOOSER_ACTION_CREATE_FOLDER" _name="Create Folder"/>
+	  </displayable-values>
+        </property>
+	<property id="extra-widget" disabled="True" />
+	<property id="preview-widget" disabled="True" />
+	<property id="filter" disabled="True" />
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkColorButton" generic-name="colorbutton" _title="Color Button">
+      <properties>
+	<property id="title" translatable="True"/>
+	<property id="color" default="Black"/>
+
+	<!-- These props dont apply to color buttons -->
+	<property id="glade-type" disabled="True"/>
+	<property id="label" disabled="True"/>
+	<property id="use-underline" disabled="True"/>
+	<property id="stock" disabled="True"/>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkFontButton" generic-name="fontbutton" _title="Font Button">
+      <properties>
+	<property id="title" translatable="True"/>
+
+	<!-- These props dont apply to font buttons -->
+	<property id="glade-type" disabled="True"/>
+	<property id="label" disabled="True"/>
+	<property id="use-underline" disabled="True"/>
+	<property id="stock" disabled="True"/>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkComboBox" generic-name="combobox" _title="Combo Box">
+      <post-create-function>glade_gtk_combo_box_post_create</post-create-function>
+      <set-property-function>glade_gtk_combo_box_set_property</set-property-function>
+      <properties>
+        <property id="model" disabled="True"/>
+        <property id="active" ignore="True"/>
+        <property id="column-span-column" ignore="True"/>
+        <property id="row-span-column" ignore="True"/>
+	<property id="items" _name="Items" translatable="True">
+	  <spec>glade_standard_strv_spec</spec>
+	  <_tooltip>The items in this combo box</_tooltip>
+	</property>
+
+	<!-- Atk press property -->
+	<property id="atk-press" _name="Press" ignore="True" atk-action="True">
+	  <_tooltip>Set the description of the Press atk action</_tooltip>
+	  <spec>glade_standard_string_spec</spec>
+	  <visible-lines>2</visible-lines>
+	</property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkComboBoxEntry" generic-name="comboboxentry" _title="Combo Box Entry">
+      <post-create-function>glade_gtk_combo_box_entry_post_create</post-create-function>
+      <get-internal-child-function>glade_gtk_combo_box_entry_get_internal_child</get-internal-child-function>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkTreeView" generic-name="treeview" _title="Tree View">
+      <post-create-function>glade_gtk_tree_view_post_create</post-create-function>
+      <properties>
+        <property id="enable-grid-lines"  ignore="True">
+  	  <displayable-values>
+	    <value id="GTK_TREE_VIEW_GRID_LINES_NONE" _name="None"/>
+	    <value id="GTK_TREE_VIEW_GRID_LINES_HORIZONTAL" _name="Horizontal"/>
+	    <value id="GTK_TREE_VIEW_GRID_LINES_VERTICAL" _name="Vertical"/>
+	    <value id="GTK_TREE_VIEW_GRID_LINES_BOTH" _name="Horizontal and Vertical"/>
+	  </displayable-values>
+	</property>
+        <property id="hadjustment" disabled="True"/>
+	<property id="vadjustment" disabled="True"/>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkIconView" generic-name="iconview" _title="Icon View">
+      <properties>
+        <property id="selection-mode">
+  	  <displayable-values>
+	    <value id="GTK_SELECTION_NONE" _name="None"/>
+	    <value id="GTK_SELECTION_SINGLE" _name="Single"/>
+	    <value id="GTK_SELECTION_BROWSE" _name="Browse"/>
+	    <value id="GTK_SELECTION_MULTIPLE" _name="Multiple"/>
+	    <value id="GTK_SELECTION_EXTENDED" _name="Extended"/>
+	  </displayable-values>
+	</property>
+	<property id="orientation">
+  	  <displayable-values>
+	    <value id="GTK_ORIENTATION_HORIZONTAL" _name="Horizontal"/>
+	    <value id="GTK_ORIENTATION_VERTICAL" _name="Vertical"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkProgressBar" generic-name="progressbar" _title="Progress Bar">
+      <properties>
+        <property id="text" translatable="True"/>
+        <property id="activity-blocks" disabled="True"/>
+	<property id="activity-step" disabled="True"/>
+	<property id="adjustment" disabled="True"/>
+	<property id="bar-style" disabled="True"/>
+       	<property id="orientation">
+  	  <displayable-values>
+	    <value id="GTK_PROGRESS_LEFT_TO_RIGHT" _name="Left to Right"/>
+	    <value id="GTK_PROGRESS_RIGHT_TO_LEFT" _name="Right to Left"/>
+	    <value id="GTK_PROGRESS_BOTTOM_TO_TOP" _name="Bottom to Top"/>
+	    <value id="GTK_PROGRESS_TOP_TO_BOTTOM" _name="Top to Bottom"/>
+	  </displayable-values>
+	</property>
+      	<property id="ellipsize">
+  	  <displayable-values>
+	    <value id="PANGO_ELLIPSIZE_NONE" _name="None"/>
+	    <value id="PANGO_ELLIPSIZE_START" _name="Start"/>
+	    <value id="PANGO_ELLIPSIZE_MIDDLE" _name="Middle"/>
+	    <value id="PANGO_ELLIPSIZE_END" _name="End"/>
+	  </displayable-values>
+	</property>
+       	<property id="bar-style">
+  	  <displayable-values>
+	    <value id="GTK_PROGRESS_CONTINUOUS" _name="Continuous"/>
+	    <value id="GTK_PROGRESS_DISCRETE" _name="Discrete"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkImage" generic-name="image" _title="Image">
+      <post-create-function>glade_gtk_image_post_create</post-create-function>
+      <set-property-function>glade_gtk_image_set_property</set-property-function>
+      <properties>
+	<property id="stock" visible="False" default="gtk-missing-image"/>
+	<property id="glade-type" _name="Edit Type" save="False" weight="0">
+	  <spec>glade_gtk_image_type_spec</spec>
+           <displayable-values>
+             <value id="GLADEGTK_IMAGE_FILENAME" _name="Filename"/>
+             <value id="GLADEGTK_IMAGE_STOCK" _name="Stock"/>
+             <value id="GLADEGTK_IMAGE_ICONTHEME" _name="Icon Theme"/>
+           </displayable-values>
+	</property>
+	<property id="pixbuf-animation" disabled="True"/>
+	<property id="file" disabled="True"/>
+	<property id="pixmap" disabled="True"/>
+	<property id="image" disabled="True"/>
+	<property id="mask" disabled="True"/>
+	<property id="pixbuf" _name="File Name"/>
+	<property id="glade-stock" _name="Stock Image" save="False" weight="1.5" default="gtk-missing-image">
+	  <_tooltip>A builtin stock image</_tooltip>
+	  <spec>glade_standard_stock_image_spec</spec>
+	  <_tooltip>The stock item for this image</_tooltip>
+	</property>
+	<property id="icon-name" _name="Icon Name" weight="1.6"/>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkDialog" generic-name="dialog" _title="Dialog Box" default-width="320" default-height="260">
+      <post-create-function>glade_gtk_dialog_post_create</post-create-function>
+      <get-internal-child-function>glade_gtk_dialog_get_internal_child</get-internal-child-function>
+      <get-children-function>glade_gtk_dialog_get_children</get-children-function>
+      <set-property-function>glade_gtk_dialog_set_property</set-property-function>
+      <properties>
+	<property id="default-width"  default="0" optional="True" optional-default="False"/>
+	<property id="default-height" default="0" optional="True" optional-default="False"/>
+	<property id="has-separator"  default="False"/>
+	<property id="type-hint"  save-always="True"/>
+      </properties>
+
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkHBox" generic-name="hbox" _title="Horizontal Box"/>
+    <glade-widget-class name="GtkVBox" generic-name="vbox" _title="Vertical Box"/>
+
+    <glade-widget-class name="GtkTable" generic-name="table" _title="Table" fixed="True">
+      <post-create-function>glade_gtk_table_post_create</post-create-function>
+      <child-set-property-function>glade_gtk_table_set_child_property</child-set-property-function>
+      <child-verify-function>glade_gtk_table_child_verify_property</child-verify-function>
+      <add-child-function>glade_gtk_table_add_child</add-child-function>
+      <remove-child-function>glade_gtk_table_remove_child</remove-child-function>
+      <replace-child-function>glade_gtk_table_replace_child</replace-child-function>
+      <set-property-function>glade_gtk_table_set_property</set-property-function>
+      <verify-function>glade_gtk_table_verify_property</verify-function>
+      <child-action-activate-function>glade_gtk_table_child_action_activate</child-action-activate-function>
+
+      <packing-actions>
+        <action id="insert_row" _name="Insert Row" stock="gtk-add">
+          <action id="before" _name="Before"/>
+          <action id="after" _name="After"/>
+        </action>
+        <action id="insert_column" _name="Insert Column" stock="gtk-add">
+          <action id="before" _name="Before"/>
+          <action id="after" _name="After"/>
+        </action>
+        <action id="remove_row" _name="Remove Row" stock="gtk-remove"/>
+        <action id="remove_column" _name="Remove Column" stock="gtk-remove"/>
+      </packing-actions>
+
+      <properties>
+	<property id="n-rows" default="3" query="True"/>
+	<property id="n-columns" default="3" query="True"/>
+      </properties>
+      
+      <packing-properties>
+        <property id="x-options" transfer-on-paste="True">
+          <displayable-values>
+            <value id="GTK_EXPAND" _name="Expand"/>
+            <value id="GTK_SHRINK" _name="Shrink"/>
+            <value id="GTK_FILL" _name="Fill"/>
+          </displayable-values>
+        </property>
+        <property id="y-options" transfer-on-paste="True">
+          <displayable-values>
+            <value id="GTK_EXPAND" _name="Expand"/>
+            <value id="GTK_SHRINK" _name="Shrink"/>
+            <value id="GTK_FILL" _name="Fill"/>
+          </displayable-values>
+        </property>
+        <property id="x-padding" transfer-on-paste="True"/>
+        <property id="y-padding" transfer-on-paste="True"/>
+      </packing-properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkPaned" _title="Paned">
+      <post-create-function>glade_gtk_paned_post_create</post-create-function>
+      <add-child-function>glade_gtk_paned_add_child</add-child-function>
+      <remove-child-function>glade_gtk_paned_remove_child</remove-child-function>
+      <child-set-property-function>glade_gtk_paned_set_child_property</child-set-property-function>
+      <child-get-property-function>glade_gtk_paned_get_child_property</child-get-property-function>
+      <packing-properties>
+        <property id="resize" transfer-on-paste="True" save-always="True"/>
+        <property id="shrink" transfer-on-paste="True" save-always="True"/>
+        <!--
+	Whether to add the child to the top/left or bottom/right pane.
+	This virtual property is used to remember child position in undo/redo.
+        -->
+        <property id="first" save="False" visible="False">
+          <spec>glade_standard_boolean_spec</spec>
+        </property>
+      </packing-properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkHPaned" generic-name="hpaned" _title="Horizontal Panes"/>
+
+    <glade-widget-class name="GtkVPaned" generic-name="vpaned" _title="Vertical Panes"/>
+  
+    <glade-widget-class name="GtkNotebook" generic-name="notebook" _title="Notebook">
+      <post-create-function>glade_gtk_notebook_post_create</post-create-function>
+      <add-child-function>glade_gtk_notebook_add_child</add-child-function>
+      <remove-child-function>glade_gtk_notebook_remove_child</remove-child-function>
+      <replace-child-function>glade_gtk_notebook_replace_child</replace-child-function>
+      <child-set-property-function>glade_gtk_notebook_set_child_property</child-set-property-function>
+      <child-get-property-function>glade_gtk_notebook_get_child_property</child-get-property-function>
+      <child-verify-function>glade_gtk_notebook_child_verify_property</child-verify-function>
+      <special-child-type>type</special-child-type>
+      <set-property-function>glade_gtk_notebook_set_property</set-property-function>
+      <verify-function>glade_gtk_notebook_verify_property</verify-function>
+      <child-action-activate-function>glade_gtk_notebook_child_action_activate</child-action-activate-function>
+
+      <packing-actions>
+        <action id="insert_page_before" _name="Insert Page Before" stock="gtk-add"/>
+        <action id="insert_page_after" _name="Insert Page After" stock="gtk-add"/>
+        <action id="remove_page" _name="Remove Page"  stock="gtk-remove"/>
+      </packing-actions>
+
+      <properties>
+	<property id="page" save="False">
+	  <_tooltip>Set the current page (strictly for editing purposes)</_tooltip>
+	</property>
+
+	<property id="pages" _name="Number of pages" save="False" default="3" query="True">
+	  <spec>glade_standard_int_spec</spec>
+	  <_tooltip>The number of pages in the notebook</_tooltip>
+	</property>
+      	<property id="tab-pos">
+  	  <displayable-values>
+	    <value id="GTK_POS_LEFT" _name="Left"/>
+	    <value id="GTK_POS_RIGHT" _name="Right"/>
+	    <value id="GTK_POS_TOP" _name="Top"/>
+	    <value id="GTK_POS_BOTTOM" _name="Bottom"/>
+	  </displayable-values>
+	</property>
+      </properties>
+
+      <packing-properties>
+        <property id="tab-label" disabled="True"/>
+        <property id="tab-pack">
+          <displayable-values>
+            <value id="GTK_PACK_START" _name="Start"/>
+            <value id="GTK_PACK_END" _name="End"/>
+          </displayable-values>
+        </property>	    
+      </packing-properties>
+    </glade-widget-class>
+
+
+    <glade-widget-class name="GtkAlignment" generic-name="alignment" _title="Alignment"/>
+
+    <glade-widget-class name="GtkFrame" generic-name="frame" _title="Frame">
+      <post-create-function>glade_gtk_frame_post_create</post-create-function>
+      <add-child-function>glade_gtk_frame_add_child</add-child-function>
+      <replace-child-function>glade_gtk_frame_replace_child</replace-child-function>
+      <special-child-type>type</special-child-type>
+
+      <properties>
+	<property id="label" disabled="True"/>
+	<property id="shadow" disabled="True"/>
+	<property id="label-widget" disabled="True"/>
+	<property id="label-xalign" default="0.0" save-always="True"/>
+      	<property id="shadow-type" default="GTK_SHADOW_NONE">
+  	  <displayable-values>
+	    <value id="GTK_SHADOW_NONE" _name="None"/>
+	    <value id="GTK_SHADOW_IN" _name="In"/>
+	    <value id="GTK_SHADOW_OUT" _name="Out"/>
+	    <value id="GTK_SHADOW_ETCHED_IN" _name="Etched In"/>
+	    <value id="GTK_SHADOW_ETCHED_OUT" _name="Etched Out"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkAspectFrame" generic-name="aspectframe" _title="Aspect Frame"/>
+
+    <glade-widget-class name="GtkRange" _title="Range">
+      <properties>
+        <property id="adjustment" default="0 0 100 1 10 10"/>
+      	<property id="update-policy">
+  	  <displayable-values>
+	    <value id="GTK_UPDATE_CONTINUOUS" _name="Continuous"/>
+	    <value id="GTK_UPDATE_DISCONTINUOUS" _name="Discontinuous"/>
+	    <value id="GTK_UPDATE_DELAYED" _name="Delayed"/>
+	  </displayable-values>
+	</property>
+      	<property id="upper-stepper-sensitivity">
+  	  <displayable-values>
+	    <value id="GTK_SENSITIVITY_AUTO" _name="Automatic"/>
+	    <value id="GTK_SENSITIVITY_ON" _name="On"/>
+	    <value id="GTK_SENSITIVITY_OFF" _name="Off"/>
+	  </displayable-values>
+         </property>
+      	<property id="lower-stepper-sensitivity">
+  	  <displayable-values>
+	    <value id="GTK_SENSITIVITY_AUTO" _name="Automatic"/>
+	    <value id="GTK_SENSITIVITY_ON" _name="On"/>
+	    <value id="GTK_SENSITIVITY_OFF" _name="Off"/>
+	  </displayable-values>
+         </property>
+      </properties>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkScale" _title="Scale">
+      <properties>
+      	<property id="value-pos">
+  	  <displayable-values>
+            <value id="GTK_POS_LEFT" _name="Left"/>
+            <value id="GTK_POS_RIGHT" _name="Right"/>
+            <value id="GTK_POS_TOP" _name="Top"/>
+            <value id="GTK_POS_BOTTOM" _name="Bottom"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkHScale" generic-name="hscale" _title="Horizontal Scale"/>
+    
+    <glade-widget-class name="GtkVScale" generic-name="vscale" _title="Vertical Scale"/>
+
+    <glade-widget-class name="GtkCalendar" generic-name="calendar" _title="Calendar"/>
+    
+    <glade-widget-class name="GtkMenu" generic-name="menu" _title="Popup Menu" toplevel="True">
+      <!-- We do not want glade_gtk_container_post_create be executed -->
+      <constructor-function>glade_gtk_menu_constructor</constructor-function>
+      <post-create-function>empty</post-create-function>
+      <actions>
+        <action id="launch_editor" _name="Edit&#8230;" stock="gtk-edit" important="True"/>
+      </actions>
+   </glade-widget-class>
+    
+    <glade-widget-class name="GtkHScrollbar" generic-name="hscrollbar" _title="Horizontal Scrollbar"/>
+
+    <glade-widget-class name="GtkVScrollbar" generic-name="vscrollbar" _title="Vertical Scrollbar"/>
+
+    <glade-widget-class name="GtkButtonBox" _title="Button Box">
+      <properties>
+      	<property id="layout-style">
+  	  <displayable-values>
+	    <value id="GTK_BUTTONBOX_DEFAULT_STYLE" _name="Default"/>
+	    <value id="GTK_BUTTONBOX_SPREAD" _name="Spread"/>
+	    <value id="GTK_BUTTONBOX_EDGE" _name="Edge"/>
+	    <value id="GTK_BUTTONBOX_START" _name="Start"/>
+	    <value id="GTK_BUTTONBOX_END" _name="End"/>
+	    <value id="GTK_BUTTONBOX_CENTER" _name="Center"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkHButtonBox" generic-name="hbuttonbox" _title="Horizontal Button Box"/>
+
+    <glade-widget-class name="GtkVButtonBox" generic-name="vbuttonbox" _title="Vertical Button Box"/>
+
+    <glade-widget-class name="GtkHSeparator" generic-name="hseparator" _title="Horizontal Separator">
+      
+      <packing-defaults>
+	<parent-class name="GtkVBox">
+	  <child-property id="expand" default="false"/>
+	</parent-class>
+      </packing-defaults>
+
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkVSeparator" generic-name="vseparator" _title="Vertical Separator">
+      <packing-defaults>
+	<parent-class name="GtkHBox">
+	  <child-property id="expand" default="false"/>
+	</parent-class>
+      </packing-defaults>
+    </glade-widget-class>
+    <glade-widget-class name="GtkStatusbar" generic-name="statusbar" _title="Status Bar">
+      <properties>
+	<property id="size" disabled="True" />
+      </properties>
+      <packing-defaults>
+	<parent-class name="GtkVBox">
+	  <child-property id="expand" default="false"/>
+	</parent-class>
+      </packing-defaults>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkAccelLabel" generic-name="accellabel" _title="Accel Label"/>
+
+    <glade-widget-class name="GtkArrow" generic-name="arrow" _title="Arrow">
+      <properties>
+      	<property id="arrow-type">
+  	  <displayable-values>
+	    <value id="GTK_ARROW_UP" _name="Up"/>
+	    <value id="GTK_ARROW_DOWN" _name="Down"/>
+	    <value id="GTK_ARROW_LEFT" _name="Left"/>
+	    <value id="GTK_ARROW_RIGHT" _name="Right"/>
+	    <value id="GTK_ARROW_NONE" _name="None"/>
+	  </displayable-values>
+	</property>
+      	<property id="shadow-type">
+  	  <displayable-values>
+	    <value id="GTK_SHADOW_NONE" _name="None"/>
+	    <value id="GTK_SHADOW_IN" _name="In"/>
+	    <value id="GTK_SHADOW_OUT" _name="Out"/>
+	    <value id="GTK_SHADOW_ETCHED_IN" _name="Etched In"/>
+	    <value id="GTK_SHADOW_ETCHED_OUT" _name="Etched Out"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkLayout" generic-name="layout" _title="Layout" fixed="True" use-placeholders="False">
+      <post-create-function>glade_gtk_fixed_layout_post_create</post-create-function>
+      <add-child-function>glade_gtk_fixed_layout_add_child</add-child-function>
+      <remove-child-function>glade_gtk_fixed_layout_remove_child</remove-child-function> 
+      <properties>
+        <property id="hadjustment" disabled="True"/>
+	<property id="vadjustment" disabled="True"/>
+      </properties>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkFixed" generic-name="fixed" _title="Fixed" fixed="True" use-placeholders="False">
+      <post-create-function>glade_gtk_fixed_layout_post_create</post-create-function>
+      <add-child-function>glade_gtk_fixed_layout_add_child</add-child-function>
+      <remove-child-function>glade_gtk_fixed_layout_remove_child</remove-child-function> 
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkDrawingArea" generic-name="drawingarea" _title="Drawing Area"/>
+
+    <glade-widget-class name="GtkEventBox" generic-name="eventbox" _title="Event Box"/>
+
+    <glade-widget-class name="GtkExpander" generic-name="expander" _title="Expander">
+      <post-create-function>glade_gtk_expander_post_create</post-create-function>
+      <add-child-function>glade_gtk_expander_add_child</add-child-function>
+      <remove-child-function>glade_gtk_expander_remove_child</remove-child-function>
+      <replace-child-function>glade_gtk_expander_replace_child</replace-child-function>
+      <special-child-type>type</special-child-type>
+
+      <properties>
+	<property id="label" disabled="True"/>
+	<property id="label-widget" disabled="True"/>
+
+	<!-- Atk activate property -->
+	<property id="atk-activate" _name="Activate" ignore="True" atk-action="True">
+	  <_tooltip>Set the description of the Activate atk action</_tooltip>
+	  <spec>glade_standard_string_spec</spec>
+	  <visible-lines>2</visible-lines>
+	</property>
+      </properties>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkViewport" generic-name="viewport" _title="Viewport">
+      <properties>
+        <property id="hadjustment" disabled="True"/>
+	<property id="vadjustment" disabled="True"/>
+      	<property id="shadow-type">
+  	  <displayable-values>
+	    <value id="GTK_SHADOW_NONE" _name="None"/>
+	    <value id="GTK_SHADOW_IN" _name="In"/>
+	    <value id="GTK_SHADOW_OUT" _name="Out"/>
+	    <value id="GTK_SHADOW_ETCHED_IN" _name="Etched In"/>
+	    <value id="GTK_SHADOW_ETCHED_OUT" _name="Etched Out"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkScrolledWindow" generic-name="scrolledwindow" _title="Scrolled Window">
+      <properties>
+        <property id="can-focus" save-always="True"/>
+        <property id="hadjustment" disabled="True"/>
+        <property id="vadjustment" disabled="True"/>
+        <property id="window-placement-set" ignore="True"/>
+      	<property id="shadow-type">
+  	  <displayable-values>
+	    <value id="GTK_SHADOW_NONE" _name="None"/>
+	    <value id="GTK_SHADOW_IN" _name="In"/>
+	    <value id="GTK_SHADOW_OUT" _name="Out"/>
+	    <value id="GTK_SHADOW_ETCHED_IN" _name="Etched In"/>
+	    <value id="GTK_SHADOW_ETCHED_OUT" _name="Etched Out"/>
+	  </displayable-values>
+	</property>
+      	<property id="hscrollbar-policy" default="GTK_POLICY_AUTOMATIC">
+  	  <displayable-values>
+	    <value id="GTK_POLICY_ALWAYS" _name="Always"/>
+	    <value id="GTK_POLICY_AUTOMATIC" _name="Automatic"/>
+	    <value id="GTK_POLICY_NEVER" _name="Never"/>
+	  </displayable-values>
+	</property>
+      	<property id="vscrollbar-policy" default="GTK_POLICY_AUTOMATIC">
+  	  <displayable-values>
+	    <value id="GTK_POLICY_ALWAYS" _name="Always"/>
+	    <value id="GTK_POLICY_AUTOMATIC" _name="Automatic"/>
+	    <value id="GTK_POLICY_NEVER" _name="Never"/>
+	  </displayable-values>
+	</property>
+      	<property id="window-placement">
+  	  <displayable-values>
+	    <value id="GTK_CORNER_TOP_LEFT" _name="Top Left"/>
+	    <value id="GTK_CORNER_BOTTOM_LEFT" _name="Bottom Left"/>
+	    <value id="GTK_CORNER_TOP_RIGHT" _name="Top Right"/>
+	    <value id="GTK_CORNER_BOTTOM_RIGHT" _name="Bottom Right"/>
+	  </displayable-values>
+	</property>
+      </properties> 
+    </glade-widget-class>
+
+    <!-- NOT AVAILABLES ON WIN32
+    <glade-widget-class name="GtkPlug" generic-name="plug" _title="Plug"/>
+    <glade-widget-class name="GtkSocket" generic-name="socket" _title="Socket"/>
+    -->
+    
+   <glade-widget-class name="GtkAboutDialog" generic-name="aboutdialog" _title="About Dialog">
+      <properties>
+	<property id="copyright" translatable="True">
+	  <visible-lines>2</visible-lines>
+	</property>
+	<property id="comments" translatable="True">
+	  <visible-lines>2</visible-lines>
+	</property>
+	<property id="license" translatable="True">
+	  <visible-lines>2</visible-lines>
+	</property>
+	<property id="website-label" translatable="True">
+	  <visible-lines>2</visible-lines>
+	</property>
+	
+	<!-- It is disputable whether this should really be translatable -->
+	<property id="translator-credits" translatable="True">
+	  <_tooltip>You can mark this as translatable and set one name/address if you want to show a translation specific translator, otherwise you should list all translators and unmark this string for translation</_tooltip>
+	  <visible-lines>2</visible-lines>
+	</property>
+      </properties>
+   </glade-widget-class>
+
+    <glade-widget-class name="GtkColorSelectionDialog" generic-name="colorselectiondialog" _title="Color Selection Dialog">
+      <properties>
+        <property id="has-separator"  disabled="True"/>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkFileChooserDialog" generic-name="filechooserdialog" _title="File Chooser Dialog">
+      <properties>
+	<property id="action">
+  	  <displayable-values>
+	    <value id="GTK_FILE_CHOOSER_ACTION_OPEN" _name="Open"/>
+	    <value id="GTK_FILE_CHOOSER_ACTION_SAVE" _name="Save"/>
+	    <value id="GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER" _name="Select Folder"/>
+	    <value id="GTK_FILE_CHOOSER_ACTION_CREATE_FOLDER" _name="Create Folder"/>
+	  </displayable-values>
+	</property>
+	<property id="extra-widget" disabled="True" />
+	<property id="preview-widget" disabled="True" />
+	<property id="filter" disabled="True" />
+      </properties>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkFontSelectionDialog" generic-name="fontselectiondialog" _title="Font Selection Dialog">
+      <properties>
+        <property id="has-separator"  disabled="True"/>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkInputDialog" generic-name="inputdialog" _title="Input Dialog">
+      <properties>
+        <property id="has-separator"  disabled="True"/>
+      </properties>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkMessageDialog" generic-name="messagedialog" _title="Message Dialog" default-width="400" default-height="115">
+      <properties>
+	<property id="default-width"  default="0" optional="True" optional-default="False"/>
+	<property id="default-height" default="0" optional="True" optional-default="False"/>
+
+	<property common="True" id="sensitive"/>
+	<property common="True" id="can-default"/>
+	<property common="True" id="has-default"/>
+	<property common="True" id="can-focus"/>
+	<property id="message-type">
+  	  <displayable-values>
+	    <value id="GTK_MESSAGE_INFO" _name="Info"/>
+	    <value id="GTK_MESSAGE_WARNING" _name="Warning"/>
+	    <value id="GTK_MESSAGE_QUESTION" _name="Question"/>
+	    <value id="GTK_MESSAGE_ERROR" _name="Error"/>
+	    <value id="GTK_MESSAGE_OTHER" _name="Other"/>
+	  </displayable-values>
+	</property>
+	<property id="buttons">
+  	  <displayable-values>
+	    <value id="GTK_BUTTONS_NONE" _name="None"/>
+	    <value id="GTK_BUTTONS_OK" _name="Ok"/>
+	    <value id="GTK_BUTTONS_CLOSE" _name="Close"/>
+	    <value id="GTK_BUTTONS_CANCEL" _name="Cancel"/>
+	    <value id="GTK_BUTTONS_YES_NO" _name="Yes, No"/>
+	    <value id="GTK_BUTTONS_OK_CANCEL" _name="Ok, Cancel"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkRuler" generic-name="ruler" _title="Ruler">
+      <properties>
+	<property default="10.0" id="upper"/>
+	<property default="5.0" id="position"/>
+	<property default="10.0" id="max-size"/>
+        <property id="metric">
+  	  <displayable-values>
+	    <value id="GTK_PIXELS" _name="Pixels"/>
+	    <value id="GTK_INCHES" _name="Inches"/>
+	    <value id="GTK_CENTIMETERS" _name="Centimeters"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkHRuler" generic-name="hruler" _title="Horizontal Ruler"/>
+    
+    <glade-widget-class name="GtkVRuler" generic-name="vruler" _title="Vertical Ruler"/>
+
+    <glade-widget-class name="GtkCombo" generic-name="combo" _title="Combo">
+      <post-create-function>glade_gtk_combo_post_create</post-create-function>
+      <get-internal-child-function>glade_gtk_combo_get_internal_child</get-internal-child-function>
+      <get-children-function>glade_gtk_combo_get_children</get-children-function>
+
+      <properties>
+	<property id="size" disabled="True"/>
+
+	<!-- Atk press property -->
+	<property id="atk-press" _name="Press" ignore="True" atk-action="True">
+	  <_tooltip>Set the description of the Press atk action</_tooltip>
+	  <spec>glade_standard_string_spec</spec>
+	  <visible-lines>2</visible-lines>
+	</property>
+      </properties>
+
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkOptionMenu" generic-name="optionmenu" _title="Option Menu">
+      <properties>
+	<!-- Atk press property -->
+	<property id="atk-press" _name="Press" ignore="True" atk-action="True">
+	  <_tooltip>Set the description of the Press atk action</_tooltip>
+	  <spec>glade_standard_string_spec</spec>
+	  <visible-lines>2</visible-lines>
+	</property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkList" generic-name="list" _title="List">
+      <add-child-function>glade_gtk_listitem_add_child</add-child-function>
+      <remove-child-function>glade_gtk_listitem_remove_child</remove-child-function>
+      <properties>
+        <property id="selection-mode">
+  	  <displayable-values>
+	    <value id="GTK_SELECTION_NONE" _name="None"/>
+	    <value id="GTK_SELECTION_SINGLE" _name="Single"/>
+	    <value id="GTK_SELECTION_BROWSE" _name="Browse"/>
+	    <value id="GTK_SELECTION_MULTIPLE" _name="Multiple"/>
+	    <value id="GTK_SELECTION_EXTENDED" _name="Extended"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkListItem" generic-name="listitem" _title="List Item">
+      <post-create-function>glade_gtk_list_item_post_create</post-create-function>
+      <set-property-function>glade_gtk_list_item_set_property</set-property-function>
+      <get-property-function>glade_gtk_list_item_get_property</get-property-function>
+      <properties>
+	<property id="label" _name="Label" translatable="True">
+	  <spec>glade_standard_string_spec</spec>
+	  <_tooltip>The text to display</_tooltip>
+	</property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkCList" generic-name="clist" _title="Columned List">
+      <properties>
+        <property id="selection-mode">
+  	  <displayable-values>
+	    <value id="GTK_SELECTION_NONE" _name="None"/>
+	    <value id="GTK_SELECTION_SINGLE" _name="Single"/>
+	    <value id="GTK_SELECTION_BROWSE" _name="Browse"/>
+	    <value id="GTK_SELECTION_MULTIPLE" _name="Multiple"/>
+	    <value id="GTK_SELECTION_EXTENDED" _name="Extended"/>
+	  </displayable-values>
+	</property>
+      	<property id="shadow-type">
+  	  <displayable-values>
+	    <value id="GTK_SHADOW_NONE" _name="None"/>
+	    <value id="GTK_SHADOW_IN" _name="In"/>
+	    <value id="GTK_SHADOW_OUT" _name="Out"/>
+	    <value id="GTK_SHADOW_ETCHED_IN" _name="Etched In"/>
+	    <value id="GTK_SHADOW_ETCHED_OUT" _name="Etched Out"/>
+	  </displayable-values>
+	</property>
+        <property id="sort-type">
+  	  <displayable-values>
+	    <value id="GTK_SORT_ASCENDING" _name="Ascending"/>
+	    <value id="GTK_SORT_DESCENDING" _name="Descending"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkColorSelection" generic-name="colorselection" _title="Color Selection"/>
+    
+    <glade-widget-class name="GtkFontSelection" generic-name="fontselection" _title="Font Selection"/>
+    
+    <glade-widget-class name="GtkCurve" generic-name="curve" _title="Curve">
+      <properties>
+	<property id="curve-type" default="GTK_CURVE_TYPE_SPLINE">
+  	  <displayable-values>
+	    <value id="GTK_CURVE_TYPE_LINEAR" _name="Linear"/>
+	    <value id="GTK_CURVE_TYPE_SPLINE" _name="Spline"/>
+	    <value id="GTK_CURVE_TYPE_FREE" _name="Free"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkGammaCurve" generic-name="gammacurve" _title="Gamma Curve"/>
+
+    <glade-widget-class name="GtkFileSelection" generic-name="fileselection" _title="File Selection"/>
+    <glade-widget-class name="Custom" generic-name="custom" _title="Custom widget">
+      <properties>
+	<property id="creation-function"/>
+	<property id="string1"/>
+	<property id="string2"/>
+      </properties>
+    </glade-widget-class>
+
+    <glade-widget-class name="GtkAssistant" generic-name="assistant" _title="Assistant">
+      <post-create-function>glade_gtk_assistant_post_create</post-create-function>
+      <add-child-function>glade_gtk_assistant_add_child</add-child-function>
+      <remove-child-function>glade_gtk_assistant_remove_child</remove-child-function>
+      <replace-child-function>glade_gtk_assistant_replace_child</replace-child-function>
+      <set-property-function>glade_gtk_assistant_set_property</set-property-function>
+      <get-property-function>glade_gtk_assistant_get_property</get-property-function>
+      <verify-function>glade_gtk_assistant_verify_property</verify-function>
+      <child-set-property-function>glade_gtk_assistant_set_child_property</child-set-property-function>
+      <child-get-property-function>glade_gtk_assistant_get_child_property</child-get-property-function>
+      <properties>
+        <property save="False" id="size" _name="Size">
+	  <_tooltip>Number of pages</_tooltip>
+	  <spec>glade_standard_int_spec</spec>
+	</property>
+      </properties>
+      <packing-properties>
+        <property id="complete" disabled="True"/>
+	<property id="page-type" ignore="True">
+  	  <displayable-values>
+	    <value id="GTK_ASSISTANT_PAGE_CONTENT" _name="Content"/>
+	    <value id="GTK_ASSISTANT_PAGE_INTRO" _name="Intro"/>
+	    <value id="GTK_ASSISTANT_PAGE_CONFIRM" _name="Confirm"/>
+	    <value id="GTK_ASSISTANT_PAGE_SUMMARY" _name="Summary"/>
+	    <value id="GTK_ASSISTANT_PAGE_PROGRESS" _name="Progress"/>
+	  </displayable-values>
+	</property>
+        <property save="False" id="position" name="Position">
+	  <spec>glade_standard_int_spec</spec>
+	  <_tooltip>The page position in the Assistant</_tooltip>
+	</property>
+      </packing-properties>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkLinkButton" generic-name="linkbutton" _title="Link Button">
+      <properties>
+        <!-- The pspec of this prop says that the default is http://www.gtk.org but gtk_link_button_init() does not set it up
+               do we need to override it to avoid seting a NULL value. -->
+        <property id="uri" default="http://glade.gnome.org"/>
+      </properties>
+   </glade-widget-class>
+
+    <glade-widget-class name="GtkRecentChooserWidget" generic-name="recentchooser" _title="Recent Chooser">
+      <properties>
+	<property id="size" disabled="True"/>
+        <property id="sort-type">
+  	  <displayable-values>
+	    <value id="GTK_RECENT_SORT_NONE" _name="None"/>
+	    <value id="GTK_RECENT_SORT_MRU" _name="Most Recently Used first"/>
+	    <value id="GTK_RECENT_SORT_LRU" _name="Least Recently Used first"/>
+	    <value id="GTK_RECENT_SORT_CUSTOM" _name="Custom"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+    
+    <glade-widget-class name="GtkRecentChooserDialog" generic-name="recentchooserdialog" _title="Recent Chooser Dialog">
+      <properties>
+        <property id="sort-type">
+  	  <displayable-values>
+	    <value id="GTK_RECENT_SORT_NONE" _name="None"/>
+	    <value id="GTK_RECENT_SORT_MRU" _name="Most Recently Used first"/>
+	    <value id="GTK_RECENT_SORT_LRU" _name="Least Recently Used first"/>
+	    <value id="GTK_RECENT_SORT_CUSTOM" _name="Custom"/>
+	  </displayable-values>
+	</property>
+      </properties>
+    </glade-widget-class>
+  </glade-widget-classes>
+  
+  <glade-widget-group name="gtk-toplevels" _title="Toplevels">
+    <glade-widget-class-ref name="GtkWindow"/>
+    <glade-widget-class-ref name="GtkDialog"/>
+    <glade-widget-class-ref name="GtkAboutDialog"/>
+    <glade-widget-class-ref name="GtkColorSelectionDialog"/>
+    <glade-widget-class-ref name="GtkFileChooserDialog"/>
+    <glade-widget-class-ref name="GtkFontSelectionDialog"/>
+    <glade-widget-class-ref name="GtkInputDialog"/>
+    <glade-widget-class-ref name="GtkMessageDialog"/>
+    <glade-widget-class-ref name="GtkRecentChooserDialog"/>
+    <glade-widget-class-ref name="GtkAssistant"/>
+  </glade-widget-group>
+
+  <glade-widget-group name="gtk-containers" _title="Containers">
+    <glade-widget-class-ref name="GtkHBox"/>
+    <glade-widget-class-ref name="GtkVBox"/>
+    <glade-widget-class-ref name="GtkTable"/>
+    <glade-widget-class-ref name="GtkNotebook"/>
+    <glade-widget-class-ref name="GtkFrame"/>
+    <glade-widget-class-ref name="GtkAspectFrame"/>
+    <glade-widget-class-ref name="GtkMenuBar"/>
+    <glade-widget-class-ref name="GtkToolbar"/>
+    <glade-widget-class-ref name="GtkHPaned"/>
+    <glade-widget-class-ref name="GtkVPaned"/>
+    <glade-widget-class-ref name="GtkHButtonBox"/>
+    <glade-widget-class-ref name="GtkVButtonBox"/>
+    <glade-widget-class-ref name="GtkLayout"/>
+    <glade-widget-class-ref name="GtkFixed"/>
+    <glade-widget-class-ref name="GtkEventBox"/>
+    <glade-widget-class-ref name="GtkExpander"/>
+    <glade-widget-class-ref name="GtkViewport"/>
+    <glade-widget-class-ref name="GtkScrolledWindow"/>
+    <glade-widget-class-ref name="GtkAlignment"/>
+  </glade-widget-group>
+
+  <glade-widget-group name="gtk-control-display" _title="Control and Display">
+
+    <glade-widget-class-ref name="GtkButton"/>
+    <glade-widget-class-ref name="GtkToggleButton"/>
+    <glade-widget-class-ref name="GtkCheckButton"/>
+    <glade-widget-class-ref name="GtkSpinButton"/>
+    <glade-widget-class-ref name="GtkRadioButton"/>
+    <glade-widget-class-ref name="GtkFileChooserButton"/>
+    <glade-widget-class-ref name="GtkColorButton"/>
+    <glade-widget-class-ref name="GtkFontButton"/>
+    <glade-widget-class-ref name="GtkLinkButton"/>
+
+
+    <!-- Commenting out these widgets until freeze is over
+    <glade-widget-class-ref name="GtkScaleButton"/>
+    <glade-widget-class-ref name="GtkVolumeButton"/>\
+    -->
+
+    <glade-widget-class-ref name="GtkImage"/>
+    <glade-widget-class-ref name="GtkLabel"/>
+    <glade-widget-class-ref name="GtkAccelLabel"/>
+    <glade-widget-class-ref name="GtkEntry"/>
+    <glade-widget-class-ref name="GtkTextView"/>
+
+    <glade-widget-class-ref name="GtkHScale"/>
+    <glade-widget-class-ref name="GtkVScale"/>
+    <glade-widget-class-ref name="GtkHScrollbar"/>
+    <glade-widget-class-ref name="GtkVScrollbar"/>
+
+    <glade-widget-class-ref name="GtkComboBox"/>
+    <glade-widget-class-ref name="GtkComboBoxEntry"/>
+    <glade-widget-class-ref name="GtkProgressBar"/>
+
+    <glade-widget-class-ref name="GtkTreeView"/>
+    <glade-widget-class-ref name="GtkIconView"/>
+
+    <glade-widget-class-ref name="GtkHandleBox"/>
+    <glade-widget-class-ref name="GtkStatusbar"/>
+
+    <glade-widget-class-ref name="GtkCalendar"/>
+    <glade-widget-class-ref name="GtkMenu"/>
+    <glade-widget-class-ref name="GtkHSeparator"/>
+    <glade-widget-class-ref name="GtkVSeparator"/>
+    <glade-widget-class-ref name="GtkArrow"/>
+    <glade-widget-class-ref name="GtkDrawingArea"/>
+    
+    <glade-widget-class-ref name="GtkRecentChooserWidget"/>
+    <glade-widget-class-ref name="GtkFileChooserWidget"/>
+  </glade-widget-group>
+
+  <glade-widget-group name="gtk-obsolete" _title="Gtk+ Obsolete">
+
+    <default-palette-state expanded="False" />
+
+    <glade-widget-class-ref name="GtkCombo"/>
+    <glade-widget-class-ref name="GtkOptionMenu"/>
+    <glade-widget-class-ref name="GtkHRuler"/>
+    <glade-widget-class-ref name="GtkVRuler"/>
+    <glade-widget-class-ref name="GtkList"/>
+    <glade-widget-class-ref name="GtkCList"/>
+    <glade-widget-class-ref name="GtkColorSelection"/>
+    <glade-widget-class-ref name="GtkFontSelection"/>
+    <glade-widget-class-ref name="GtkCurve"/>
+    <glade-widget-class-ref name="GtkGammaCurve"/>
+    <glade-widget-class-ref name="GtkFileSelection"/>
+    <glade-widget-class-ref name="Custom"/>
+  </glade-widget-group>
+</glade-catalog>

@@ -1,0 +1,85 @@
+gtk-color-scheme =
+"bg_color:#eaeaea\nfg_color:#000\nbase_color:#fff\ntext_color:#000\nselected_fg_color:#fff\nselected_bg_color:#729fcf"
+
+style "default"
+{
+        fg[NORMAL]              = @fg_color
+        fg[ACTIVE]              = @fg_color
+        fg[INSENSITIVE]         = mix (0.4, @fg_color, shade (0.85, @bg_color)) #shaded to bg[INSENSITIVE]
+
+        fg[PRELIGHT]            = @fg_color
+        fg[SELECTED]            = @selected_fg_color
+        
+        bg[ACTIVE]              = shade (0.9, @bg_color)
+	bg[NORMAL]              = @bg_color
+        bg[INSENSITIVE]         = shade (0.95, @bg_color)
+        bg[PRELIGHT]            = shade (1.03, @bg_color)
+        bg[SELECTED]            = @selected_bg_color
+
+        base[NORMAL]            = @base_color
+        base[ACTIVE]            = shade (0.9, @selected_bg_color)
+        base[INSENSITIVE]       = @base_color
+        base[PRELIGHT]          = @bg_color
+	base[SELECTED]          = @selected_bg_color
+        
+        text[NORMAL]            = @text_color
+        text[ACTIVE]            = @text_color
+        text[PRELIGHT]          = @text_color
+        text[SELECTED]          = @selected_fg_color
+        text[INSENSITIVE]       = mix (0.5, @text_color, @base_color)
+	
+
+	GtkRange::trough_border = 0
+	GtkRange::slider_width = 15
+	GtkRange::stepper_size = 15
+
+	GtkScrollbar::min_slider_length = 15
+	GtkCheckButton::indicator_size=10
+	GtkCheckMenuItem::indicator_size=10
+	GtkRadioButton::indicator_size=12
+
+	GtkNotebook::tab_vborder = 1
+	GtkNotebook::tab_hborder = 1
+	xthickness = 1
+	ythickness = 1
+
+	NautilusIconContainer::dark_info_color="#888888"
+	NautilusIconContainer::light_info_color="#bbbbbb"
+	NautilusIconContainer::highlight_alpha=200
+
+	GtkMenu::horizontal_padding=0
+	GtkMenu::vertical_padding=0
+
+	engine "mist"
+ 	{
+	}
+}
+
+style "menuitem"
+{
+	ythickness = 2
+	xthickness = 2
+        text[PRELIGHT]          = "#ffffff"
+        fg[PRELIGHT]          = "#ffffff"
+}
+
+style "menu" 
+{
+	ythickness = 2
+	xthickness = 2
+} 
+
+class "GtkWidget" style "default"
+class "GtkMenu" style "menu"
+class "*MenuItem*" style "menuitem"
+
+widget_class "*MenuItem*" style "menuitem"
+widget_class "*.GtkImageMenuItem.*" style "menuitem"
+widget_class "*.GtkAccelMenuItem.*" style "menuitem"
+widget_class "*.GtkRadioMenuItem.*" style "menuitem"
+widget_class "*.GtkCheckMenuItem.*" style "menuitem"
+widget_class "*.GtkMenu.*" style "menuitem"
+
+
+
+

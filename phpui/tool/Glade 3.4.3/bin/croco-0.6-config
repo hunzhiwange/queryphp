@@ -1,0 +1,92 @@
+#! /bin/sh
+
+prefix=/target
+case `uname` in
+MINGW32* | CYGWIN*)
+    prefix="`dirname $0`/.."
+    ;;
+esac
+exec_prefix=${prefix}
+exec_prefix_set=no
+includedir=${prefix}/include
+libdir=${exec_prefix}/lib
+
+usage()
+{
+    cat <<EOF
+Usage: croco-config [OPTION]...
+
+Known values for OPTION are:
+
+  --prefix=DIR		change CROCO prefix [default $prefix]
+  --exec-prefix=DIR	change CROCO executable prefix [default $exec_prefix]
+  --libs		print library linking information
+  --cflags		print pre-processor and compiler flags
+  --help		display this help and exit
+  --version		output version information
+EOF
+
+    exit $1
+}
+
+if test $# -eq 0; then
+    usage 1
+fi
+
+cflags=false
+libs=false
+
+while test $# -gt 0; do
+    case "$1" in
+    -*=*) optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
+    *) optarg= ;;
+    esac
+
+    case "$1" in
+    --prefix=*)
+	prefix=$optarg
+	if test $exec_prefix_set = no ; then
+	    exec_prefix=$optarg
+	fi
+	;;
+
+    --prefix)
+	echo $prefix
+	;;
+
+    --exec-prefix=*)
+	exec_prefix=$optarg
+	exec_prefix_set=yes
+	;;
+
+    --exec-prefix)
+	echo $exec_prefix
+	;;
+
+    --version)
+	echo 0.6.1
+	exit 0
+	;;
+
+    --help)
+	usage 0
+	;;
+
+    --cflags)
+	echo -I${prefix}/include/libcroco-0.6 -I/home/ivan/cross/build/include/glib-2.0 -I/home/ivan/cross/build/lib/glib-2.0/include   -I/home/ivan/cross/build/include/libxml2  
+       	;;
+
+    --libs)
+	echo -L${exec_prefix}/lib -lcroco-0.6 -L/home/ivan/cross/build/lib -lglib-2.0 -lintl -liconv   -L/home/ivan/cross/build/lib -lxml2  
+       	;;
+
+    *)
+	usage
+	exit 1
+	;;
+    esac
+    shift
+done
+
+
+exit 0

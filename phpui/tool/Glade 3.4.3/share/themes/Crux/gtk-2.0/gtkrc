@@ -1,0 +1,149 @@
+#  gtkrc -- gtkrc for crux-engine theme
+#
+#  Copyright (C) 2000, 2001 Eazel, Inc.
+#  Copyright (C) 2005, 2006 Thomas Wood <thos@gnome.org>
+
+#  Authors
+#   Design: Lapo Calamandrei  <calamandrei@gmail.com>
+#   Code:   Thomas Wood  <thos@gnome.org>
+#
+#  Original Authors
+#   John Harper <jsh@eazel.com>
+
+
+#  This program is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU General Public License as
+#  published by the Free Software Foundation; either version 2 of the
+#  License, or (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#  General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#  $Id: gtkrc,v 1.11 2006/10/02 17:57:25 thos Exp $
+
+# Default style for all widgets to build from
+
+gtk_color_scheme = "fg_color:#000\nbg_color:#c4c6c0\nbase_color:#fff\ntext_color:#000\nselected_bg_color:#75507b\nselected_fg_color:#fff\ntooltip_bg_color:#F5F5B5\ntooltip_fg_color:#000"
+
+
+style "default"
+{
+  fg[NORMAL]        = @fg_color           # was 000000 --> OK
+  fg[PRELIGHT]      = @fg_color           # was 000000 --> OK
+  fg[SELECTED]      = @selected_fg_color  # was ffffff --> OK
+  fg[ACTIVE]        = @fg_color           # was 000000 --> OK
+  fg[INSENSITIVE]   = darker (@bg_color)  # was 888a85 --> ??
+
+  bg[NORMAL]        = @bg_color                # was d3d7cf --> NO?
+  bg[PRELIGHT]      = shade (1.02, @bg_color)  # was ededeb --> NO?
+  bg[SELECTED]      = @selected_bg_color       # was 75507b --> OK
+  bg[INSENSITIVE]   = @bg_color                # was c4c6c0 --> OK?
+  bg[ACTIVE]        = shade (0.9, @bg_color)   # was a3a69f --> ??
+
+  base[NORMAL]      = @base_color              # was ffffff --> OK
+  base[PRELIGHT]    = shade (0.95, @bg_color)  # was 000000 --> NO?
+  base[ACTIVE]      = shade (0.9, @selected_bg_color)  # undefined
+  base[SELECTED]    = @selected_bg_color       # 75507b --> OK
+  base[INSENSITIVE] = @bg_color                # dddddd --> NO
+
+  text[NORMAL]      = @text_color         # was 000000 --> OK
+  text[PRELIGHT]    = @text_color         # was 000000 --> OK
+  text[ACTIVE]      = @selected_fg_color  # was 000000 --> OK 
+  text[SELECTED]    = @selected_fg_color  # was undefined
+  text[INSENSITIVE] = darker (@bg_color)  # was 888a85 --> ??
+
+  GtkRange::slider_width = 13
+  GtkRange::stepper_size = 13
+  GtkRange::trough_border = 1
+
+  GtkScale::slider_width = 12
+  GtkScale::stepper_size = 12
+  GtkScale::trough_border = 0
+
+  GtkScale::slider_length = 16
+  GtkCheckButton::indicator_size = 12
+  GtkCheckButton::indicator_spacing = 3
+  GtkCheckMenuItem::indicator_size = 10
+
+  GtkOptionMenu::indicator_size = { 11, 6 }
+  GtkOptionMenu::indicator_spacing = { 30, 5, 2, 2 }
+
+  GtkScrollbar::min_slider_length = 25
+
+  engine "crux-engine" {  }
+}
+
+# common default
+class "GtkWidget" style "default"
+
+# Style used for (prelighted) menu items
+style "menuitem"
+{
+  fg[PRELIGHT] = @selected_fg_color # was 000000 --> OK
+  bg[PRELIGHT] = @selected_bg_color # was 75507b --> OK
+}
+
+class "GtkMenuItem" style "menuitem"
+widget_class "*.*MenuItem.*" style "menuitem"
+
+
+style "menu"
+{
+  xthickness = 3
+}
+
+# This enables gradiented menu backgrounds
+class "GtkMenu" style "menu"
+
+style "entry"
+{
+  xthickness = 3
+  ythickness = 3
+
+  engine "crux-engine"
+  {
+    thickness = 3
+  }
+}
+
+# some extra padding around text entries, so the focus marking fits
+class "GtkEntry" style "entry"
+class "GtkText" style "entry"
+
+style "trough"
+{
+   bg[NORMAL] =  darker (@bg_color) # was babdb6 --> ??
+}
+class "GtkProgressBar" style "trough"
+
+style "statusbar"
+{
+   xthickness = 3
+   ythickness = 3
+}
+class "GtkStatusbar" style "statusbar"
+
+style "crux-tooltips"
+{
+        xthickness = 4
+        ythickness = 4
+
+        bg[NORMAL] = @tooltip_bg_color
+        fg[NORMAL] = @tooltip_fg_color
+}
+
+# The window of the tooltip is called "gtk-tooltip"
+################################
+# FIXME:
+# This will not work if one embeds eg. a button into the tooltip.
+# As far as I can tell right now we will need to rework the theme
+# quite a bit to get this working correctly.
+# (It will involve setting different priorities, etc.)
+################################
+widget "gtk-tooltip*" style "crux-tooltips"

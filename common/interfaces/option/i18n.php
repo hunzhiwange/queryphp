@@ -2,6 +2,6 @@
 /**
  * 默认配置文件
  */
-return [    
-        'default' => 'en-us'
- ];
+return [ 
+        'default' => 'en-us' 
+];

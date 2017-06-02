@@ -1,0 +1,56 @@
+style "redmond95-default"
+{
+  GtkWidget::interior_focus = 1
+  GtkButton::default_border = { 1, 1, 1, 1 }
+  GtkButton::default_outside_border = { 0, 0, 0, 0 }
+  GtkOptionMenu::indicator_size = { 9, 5 }
+  GtkOptionMenu::indicator_spacing = { 7, 5, 2, 2 }
+  GtkSpinButton::shadow-type = in
+
+  GtkButton::child_displacement_x = 1
+  GtkButton::child_displacement_y = 1
+
+  bg[NORMAL] = "#c0c0c0"
+  bg[PRELIGHT] = "#c0c0c0"
+  engine "redmond95" 
+  {
+  }
+}
+
+class "GtkWidget" style "redmond95-default"
+
+style "redmond95-menu"
+{
+  bg[PRELIGHT] = { 0.0, 0.0, 0.5 }
+  fg[PRELIGHT] = { 1.0, 1.0, 1.0 }
+}
+
+widget_class "*.GtkMenu*" style "redmond95-menu"
+
+style "redmond95-list"
+{
+   bg[NORMAL] = { 0.9, 0.9, 0.9 }
+   bg[PRELIGHT] = { 0.9, 0.9, 0.9 }
+}
+
+class "GtkList" style "redmond95-list"
+
+style "redmond95-scrollbar"
+{
+  GtkRange::trough_border = 0
+  GtkRange::slider_width = 15
+  GtkRange::stepper_size = 15
+  GtkRange::stepper_spacing = 0
+}
+
+class "GtkScrollbar" style "redmond95-scrollbar"
+
+style "redmond95-option-menu"
+{
+  GtkOptionMenu::indicator_width = 7
+  GtkOptionMenu::indicator_left_spacing = 6
+  GtkOptionMenu::indicator_right_spacing = 4
+}
+
+class "GtkOptionMenu" style "redmond95-option-menu"
+

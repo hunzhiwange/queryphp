@@ -22,8 +22,12 @@ class  extends action {
      *
      * @return void
      */      
-    public function __construct() {
-    }
+    public 
+
+
+
+function __construct() {
+}
 
     /**
      * 执行入口

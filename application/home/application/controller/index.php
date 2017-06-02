@@ -13,10 +13,10 @@ use queryyetsimple\stack\queue;
 use queryyetsimple\http\request;
 use queryyetsimple\log\log;
 use queryyetsimple\pipeline\pipeline;
+use queryyetsimple\rss\rss;
 
 class index extends controller {
     public function __construct() {
-
     }
     
     /**

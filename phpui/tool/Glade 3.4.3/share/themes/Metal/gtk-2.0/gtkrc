@@ -1,0 +1,72 @@
+style "metal-default"
+{
+  GtkWidget::interior_focus = 1
+  GtkButton::default_spacing = { 1, 1, 1, 1 }
+  GtkButton::default_outside_spacing = { 0, 0, 0, 0 }
+  GtkOptionMenu::indicator_size = { 11, 6 }
+  GtkOptionMenu::indicator_spacing = { 4, 5, 2, 2 }
+
+  font = "-b&h-lucida-bold-r-normal-sans-12-*-*-*-p-*-iso8859-1"
+  bg[NORMAL]      = { 0.80, 0.80, 0.80 }
+  fg[NORMAL]      = { 0.40, 0.40, 0.60 }
+  bg[PRELIGHT]    = { 0.80, 0.80, 1.00 }
+  fg[PRELIGHT]    = { 0.40, 0.40, 0.60 }
+  bg[ACTIVE]      = { 0.80, 0.80, 0.80 }
+  fg[ACTIVE]      = { 0.40, 0.40, 0.60 }
+  bg[SELECTED]    = { 0.60, 0.60, 0.80 }
+  fg[SELECTED]    = { 0.00, 0.00, 0.00 }
+  base[SELECTED]  = { 0.60, 0.60, 0.80 }
+  text[SELECTED]  = { 0.00, 0.00, 0.00 }
+  base[ACTIVE]    = { 0.80, 0.80, 0.80 }
+  text[ACTIVE]    = { 0.00, 0.00, 0.00 }
+  engine "metal" 
+  {
+  }
+}
+
+style "metal-black-fg"
+{
+  fg[NORMAL]      = { 0.00, 0.00, 0.00 }
+  fg[PRELIGHT]    = { 0.00, 0.00, 0.00 }
+  fg[ACTIVE]      = { 0.00, 0.00, 0.00 }
+  fg[SELECTED]    = { 0.00, 0.00, 0.00 }
+}
+
+style "metal-paned"
+{
+  GtkPaned::handle_size = 8
+}
+
+style "metal-range"
+{
+  GtkRange::trough_border = 0
+  GtkRange::slider_width = 17
+  GtkRange::stepper_size = 15
+  GtkRange::stepper_spacing = 0
+}
+
+style "metal-scale"
+{
+  GtkRange::slider_width = 15
+#  GtkScale::slider_length = 15 # for drawing the scale more jlf-like
+}
+
+style "metal-spin-button"
+{
+  GtkSpinButton::shadow_type = etched-in
+}
+
+class "GtkWidget" style "metal-default"
+class "GtkPaned" style "metal-paned"
+class "GtkRange" style "metal-range"
+class "GtkScale" style "metal-scale"
+class "GtkSpinButton" style "metal-spin-button"
+
+widget_class "*.*MenuItem*" style "metal-black-fg"
+widget_class "*.GtkOptionMenu*" style "metal-black-fg"
+widget_class "*.GtkCheckButton.*" style "metal-black-fg"
+widget_class "*.GtkRadioButton.*" style "metal-black-fg"
+widget_class "*.GtkButton.*" style "metal-black-fg"
+widget_class "*.GtkToggleButton.*" style "metal-black-fg"
+
+
