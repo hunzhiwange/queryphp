@@ -14,9 +14,14 @@ use queryyetsimple\http\request;
 use queryyetsimple\log\log;
 use queryyetsimple\pipeline\pipeline;
 use queryyetsimple\rss\rss;
+use queryyetsimple\http\response;
+use queryyetsimple\cache\filecache;
+use queryyetsimple\cache\memcache;
+use queryyetsimple\cache\cache;
 
 class index extends controller {
     public function __construct() {
+        
     }
     
     /**
@@ -25,7 +30,13 @@ class index extends controller {
      * @return void
      */
     public function index() {
-        $this->display ();
+        //dump(database::tables('test')->getAll());
+        
+        $str = (array)'hello';
+        print_r($str);
+        
+        echo __('sdff%sfff',2);
+        
         exit ();
     }
 }

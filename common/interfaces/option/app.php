@@ -7,5 +7,9 @@ return [
                 'helloword22',
                 'yess22',
                 'cookie' 
-        ] 
+        ],
+        'provider_with_cache' => [ 
+            'home\application',
+            'test\application',
+        ],
 ];
