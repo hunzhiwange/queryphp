@@ -21,7 +21,6 @@ queryphp;
  * @since 2017.05.08
  * @version 1.0
  */
-putenv ( 'queryphp_phpunit=(true)' );
 putenv ( 'app_name=~_~@testing' );
 putenv ( 'controller_name=bootstrap' );
 putenv ( 'action_name=index' );
