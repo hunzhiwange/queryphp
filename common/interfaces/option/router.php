@@ -1,8 +1,8 @@
 <?php
-use queryyetsimple\router\router;
+use queryyetsimple\router;
 
-router::imports ( 'topic-{id}-{orderby}', 'home://topic/show' );
-router::imports ( [ 
+router::import ( 'topic-{id}-{orderby}', 'home://topic/show' );
+router::import ( [ 
         [ 
                 'new',
                 'home://new/index' 
@@ -14,7 +14,7 @@ router::imports ( [
 ] );
 
 // 用法1
-router::imports ( 'new-{id}', 'home://new/index', [ 
+router::import ( 'new-{id}', 'home://new/index', [ 
         'where' => [ 
                 'id',
                 '[0-9]+' 
@@ -22,14 +22,14 @@ router::imports ( 'new-{id}', 'home://new/index', [
 ] );
 
 // 用法2
-router::imports ( 'new-{id}-{name}', 'home://new/index', [ 
+router::import ( 'new-{id}-{name}', 'home://new/index', [ 
         'where' => [ 
                 'id' => '[0-9]+',
                 'name' => '[a-z]+' 
         ] 
 ] );
 
-router::groups ( [ 
+router::group ( [ 
         'domain' => '{domain}.queryphp.com' 
 ], [ 
         [ 
@@ -42,7 +42,7 @@ router::groups ( [
         ] 
 ] );
 
-router::groups ( [ 
+router::group ( [ 
         'prepend' => true 
 ], [ 
         [ 
@@ -55,24 +55,24 @@ router::groups ( [
         ] 
 ] );
 
-router::groups ( [ 
+router::group ( [ 
         'prefix' => 'myprefix-' 
 ], function () {
-    router::imports ( 'new-{id}-{name}', 'home://new/index' );
-    router::imports ( 'hello-{goods}', 'home://goods/index' );
+    router::import ( 'new-{id}-{name}', 'home://new/index' );
+    router::import ( 'hello-{goods}', 'home://goods/index' );
 } );
 
-router::groups ( [ 
+router::group ( [ 
         'prefix' => 'myprefix-' 
 ], function () {
-    router::groups ( [ 
+    router::group ( [ 
             'params' => [ 
                     'args1' => '你',
                     'args2' => '好' 
             ] 
     ], function () {
-        router::imports ( 'new-{id}-{name}', 'home://new/index' );
-        router::imports ( 'hello-{goods}', 'home://goods/index' );
+        router::import ( 'new-{id}-{name}', 'home://new/index' );
+        router::import ( 'hello-{goods}', 'home://goods/index' );
     } );
 } );
 
