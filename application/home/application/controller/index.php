@@ -19,17 +19,10 @@ use queryyetsimple\mvc\controller;
 // use queryyetsimple\cache\memcache;
 // use queryyetsimple\cache\redis;
 // use queryyetsimple\cache;
-// use queryyetsimple\session\session;
+use queryyetsimple\session\session;
 use queryyetsimple\cookie;
-//use qys\cookie;
-//use qys\assert;
-//use qys\assert\assert;
-use qys\cache;
-use qys\command;
-use queryyetsimple\session;
+use queryyetsimple\encryption;
 
-class test extends command{
-}
 class index extends controller {
     public function __construct() {
     }
@@ -41,16 +34,27 @@ class index extends controller {
      */
     public function index() {
         
+        dump(encryption::encrypt());
+        
+        //dump::dump(11);
+        
         
     //  $sesson =  project('session');
      // dump($sesson);
-      
+     
+      //   $database =  project('database');
+         //dump($database);
+         
+       // print_r($database->connect()->table('test')->getAll()) ;
+         
+       // print_r(database::table('test')->getAll());
+         
        
-       dump($x=session::connect('redis'));
-       $x->start();
+       //dump($x=session::connect('redis'));
+       //$x->start();
       //session::set('sdfsdf','sdffffffffff');
       
-       $x->set('xx','sdf');
+      // $x->set('xx','sdf');
        
      //assert::string(1);
     // dump(session::get('sdfsdf'));
