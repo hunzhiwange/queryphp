@@ -17,7 +17,12 @@
     "require": {
         "php": ">=5.5.0",
         "hunzhiwange/framework": "dev-master",
-        "league/pipeline": "^0.3.0"
+        "league/pipeline": "^0.3.0",
+        "nesbot/carbon": "^1.22",
+        "swiftmailer/swiftmailer": "^5.0",
+        "league/flysystem": "^1.0",
+        "league/flysystem-ziparchive": "^1.0",
+        "monolog/monolog": "^1.23"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0"
@@ -31,5 +36,11 @@
             "dev-master": "1.0-dev"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "repositories": {
+      "packagist": {
+        "type": "composer",
+        "url": "https://packagist.phpcomposer.com"
+      }
+    }
 }

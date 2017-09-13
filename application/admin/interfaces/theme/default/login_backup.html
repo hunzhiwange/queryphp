@@ -1,0 +1,124 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Login</title>
+  </head>
+  <body>
+      <form class="form-horizontal validate"  action="{:url('auth/checkLogin')}" method='post' name="login_form" id="login_form">
+
+            <div class="control-group">
+
+              <div class="controls">
+
+                <div id="result" class="none"></div>
+
+              </div>
+
+            </div>
+
+            <div class="control-group">
+
+              <label class="control-label" for="user_name">用户名/E-mail</label>
+
+              <div class="controls">
+
+                <input class="input-xlarge" id="user_name" name="user_name" type="text" class="email" value="" required title="用户名/E-mail不能为空">
+
+                <p class="input_tips none">用户名/E-mail不能为空</p>
+
+                <p class="input_errortips"></p>
+
+              </div>
+
+            </div>
+
+            <div class="control-group">
+
+              <label class="control-label" for="user_password">密码</label>
+
+              <div class="controls">
+
+                <input class="input-xlarge" type="password" id="user_password" name="user_password" type="text" class="required" value="" onkeypress="submitKeycode(event,submitLogin);" required title="用户密码不能为空">
+
+                <p class="input_tips none">用户密码不能为空</p>
+
+                <p class="input_errortips"></p>
+
+              </div>
+
+            </div>
+
+            <div class="control-group">
+
+              <label class="control-label" for="remember_me"></label>
+
+              <div class="controls">
+
+                <label class="checkbox">
+
+                  <input id="remember_me" type="checkbox" class="input-short" name="remember_me" value="1" onclick="rememberme();" checked style="position:relative;top:2px;"><span class="remember_me">记住我</span>
+
+                  <span class="pipe">,</span>
+
+                  <a href="/index.php?app=home&c=getpassword" class="resetpassword-link">忘记密码?</a>&nbsp;
+
+                  <span class="pipe">|</span>&nbsp;
+
+                  <a href="/index.php?app=home&a=register">新用户注册</a>
+
+                  
+                </label>
+
+              </div>
+
+            </div>
+
+            <div id="remember_time" class="none">
+
+              <div class="control-group">
+
+                <label class="control-label" for="remember_time">有效期</label>
+
+                <div class="controls">
+
+                  <select name="remember_time" id="remembertime">
+
+                    <option value="0" >及时</option>
+
+                    <option value="3600" >一小时</option>
+
+                    <option value="86400" >一天</option>
+
+                    <option value="604800" selected>一星期</option>
+
+                    <option value="2592000" >一月</option>
+
+                    <option value="31536000" >一年</option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            
+            <div class="form-actions">
+              <input type="hidden" name="ajax" value="1">
+              <button id="submit_button" name="submit_button" type="submit" class="btn btn-large width_300">登录</button>
+
+            </div>
+
+        </form>
+
+  </body>
+</html>
