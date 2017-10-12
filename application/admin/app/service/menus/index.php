@@ -44,32 +44,32 @@ class index {
     /**
      * 将节点载入节点树并返回树结构
      *
-     * @param array $arrMenuList            
+     * @param \queryyetsimple\support\collection $objMenu          
      * @return array
      */
-    protected function parseMenuList($arrMenuList) {
-        return $this->createTree ( $arrMenuList )->forList ();
+    protected function parseMenuList($objMenu) {
+        return $this->createTree ( $objMenu )->forList ();
     }
     
     /**
      * 生成节点树
      *
-     * @param array $arrMenuList            
+     * @param \queryyetsimple\support\collection $objMenu            
      * @return \common\is\tree\tree
      */
-    protected function createTree($arrMenuList) {
-        return new tree ( $this->parseToNode ( $arrMenuList ) );
+    protected function createTree($objMenu) {
+        return new tree ( $this->parseToNode ( $objMenu ) );
     }
     
     /**
      * 转换为节点数组
      *
-     * @param array $arrMenuList            
+     * @param \queryyetsimple\support\collection $objMenu            
      * @return array
      */
-    protected function parseToNode($arrMenuList) {
+    protected function parseToNode($objMenu) {
         $arrNode = [ ];
-        foreach ( $arrMenuList as $oMenu ) {
+        foreach ( $objMenu as $oMenu ) {
             $arrNode [] = [ 
                     $oMenu->id,
                     $oMenu->pid,

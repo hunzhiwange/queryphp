@@ -18,30 +18,14 @@ use admin\app\service\menus\index as service;
 class index extends aaction {
     
     /**
-     * 应用服务
-     *
-     * @var \admin\app\service\menus\index
-     */
-    protected $oService;
-    
-    /**
-     * 构造函数
-     *
-     * @param \admin\app\service\menus\index $oService            
-     * @return void
-     */
-    public function __construct(service $oService) {
-        $this->oService = $oService;
-    }
-    
-    /**
      * 响应方法
-     *
+     * 
+     * @param \admin\app\service\menus\index $oService    
      * @return mixed
      */
-    public function run() {
+    public function run(service $oService) {
         try {
-            return $this->oService->run ();
+            return $oService->run ();
         } catch ( Exception $oE ) {
             return response::apiError ( $oE->getMessage () );
         }
