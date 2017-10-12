@@ -13,5 +13,4 @@ use common\app\controller\acontroller as acontrollers;
  * @version 1.0
  */
 abstract class acontroller extends acontrollers {
-
 }

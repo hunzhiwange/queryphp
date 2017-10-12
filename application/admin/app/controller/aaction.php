@@ -13,5 +13,4 @@ use common\app\controller\aaction as aactions;
  * @version 1.0
  */
 class aaction extends aactions {
-    
 }

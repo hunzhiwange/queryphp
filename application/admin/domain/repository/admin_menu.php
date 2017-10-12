@@ -12,6 +12,5 @@ use common\domain\interfaces\irepository;
  * @since 2017.10.12
  * @version 1.0
  */
-interface admin_menu extends irepository{
-  
+interface admin_menu extends irepository {
 }

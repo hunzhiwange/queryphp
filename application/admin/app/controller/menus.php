@@ -11,5 +11,4 @@ namespace admin\app\controller;
  * @version 1.0
  */
 class menus extends acontroller {
-
 }

@@ -14,65 +14,68 @@ use admin\is\repository\admin_menu as repository;
  * @version 1.0
  */
 class index {
-
+    
     /**
      * 后台菜单仓储
-     * 
+     *
      * @var \admin\is\repository\admin_menu
      */
     protected $oRepository;
-
+    
     /**
      * 构造函数
-     * 
-     * @param \admin\is\repository\admin_menu $oRepository
-     * @return  void
+     *
+     * @param \admin\is\repository\admin_menu $oRepository            
+     * @return void
      */
-    public function __construct(repository $oRepository){
+    public function __construct(repository $oRepository) {
         $this->oRepository = $oRepository;
     }
-
+    
     /**
      * 响应方法
-     * 
+     *
      * @return array
      */
-    public function run() { 
-        return $this->parseMenuList( $this->oRepository->all() );
+    public function run() {
+        return $this->parseMenuList ( $this->oRepository->all () );
     }
-
+    
     /**
      * 将节点载入节点树并返回树结构
-     * 
-     * @param  array $arrMenuList
+     *
+     * @param array $arrMenuList            
      * @return array
      */
-    protected function parseMenuList($arrMenuList){
-       return $this->createTree($arrMenuList)->forList();
+    protected function parseMenuList($arrMenuList) {
+        return $this->createTree ( $arrMenuList )->forList ();
     }
-
+    
     /**
      * 生成节点树
-     * 
-     * @param  array $arrMenuList
+     *
+     * @param array $arrMenuList            
      * @return \common\is\tree\tree
      */
-    protected function createTree($arrMenuList){
-       return new tree (  $this->parseToNode($arrMenuList)  );
+    protected function createTree($arrMenuList) {
+        return new tree ( $this->parseToNode ( $arrMenuList ) );
     }
-
+    
     /**
      * 转换为节点数组
-     * 
-     * @param  array $arrMenuList
-     * @return array       
+     *
+     * @param array $arrMenuList            
+     * @return array
      */
-    protected function parseToNode($arrMenuList){
-        $arrNode = [];
-        foreach($arrMenuList as $oMenu){
-          $arrNode[] = [$oMenu->id,$oMenu->pid,$oMenu->title ];
+    protected function parseToNode($arrMenuList) {
+        $arrNode = [ ];
+        foreach ( $arrMenuList as $oMenu ) {
+            $arrNode [] = [ 
+                    $oMenu->id,
+                    $oMenu->pid,
+                    $oMenu->title 
+            ];
         }
         return $arrNode;
     }
-
 }

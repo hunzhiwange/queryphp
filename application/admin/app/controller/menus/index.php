@@ -16,36 +16,34 @@ use admin\app\service\menus\index as service;
  * @version 1.0
  */
 class index extends aaction {
-
+    
     /**
      * 应用服务
-     * 
+     *
      * @var \admin\app\service\menus\index
      */
     protected $oService;
-
+    
     /**
      * 构造函数
      *
-     * @param \admin\app\service\menus\index $oService
+     * @param \admin\app\service\menus\index $oService            
      * @return void
      */
-    public function __construct(service $oService)
-    {
-        $this->oService   = $oService;
+    public function __construct(service $oService) {
+        $this->oService = $oService;
     }
-
+    
     /**
      * 响应方法
-     * 
+     *
      * @return mixed
      */
-     public function run() {
-        try {     
-            return $this->oService->run();
-        } catch (Exception $oE) {
-            return response::apiError($oE->getMessage());
+    public function run() {
+        try {
+            return $this->oService->run ();
+        } catch ( Exception $oE ) {
+            return response::apiError ( $oE->getMessage () );
         }
     }
-
 }

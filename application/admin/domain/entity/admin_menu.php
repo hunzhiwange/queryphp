@@ -14,6 +14,5 @@ use common\domain\interfaces\iaggregate;
  * @since 2017.10.12
  * @version 1.0
  */
-class  admin_menu extends model implements ientity,iaggregate{
-
+class admin_menu extends model implements ientity, iaggregate {
 }
