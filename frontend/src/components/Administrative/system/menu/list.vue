@@ -1,34 +1,46 @@
 <template>
     <div>
-        <div class="m-b-20">
-        <router-link class="btn-link-large add-btn" to="add">
-          <i class="el-icon-plus"></i>&nbsp;&nbsp;添加菜单
-        </router-link>
-        </div>
+      <el-row :gutter="20">
+        <el-col :span="16">
+          <div class="m-b-20">
+            <breadcrumb ref="breadcrumb"></breadcrumb>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <router-link class="el-button el-button--success is-plain el-button--small pull-right" to="add">
+            <i class="el-icon-plus"></i>&nbsp;&nbsp;添加菜单
+          </router-link>
+        </el-col>
+      </el-row>
 
-    <el-input
-      placeholder="输入关键字进行过滤"
-      v-model="filterText">
-    </el-input>
+      <div class="m-b-5">
+        <el-input
+          placeholder="试试搜索"
+          v-model="filterText">
+        </el-input>
+      </div>
 
-    <el-tree
-      class="filter-tree"
-      :data="data2"
-      :props="defaultProps"
-      default-expand-all
-      :filter-node-method="filterNode"
-      ref="tree2"
-      node-key="id"
-      accordion
-      :render-content="renderContent">
-    </el-tree>
+      <el-tree
+        class="filter-tree"
+        :data="data2"
+        :props="defaultProps"
+        :filter-node-method="filterNode"
+        ref="tree2"
+        node-key="id"
+        accordion2
+        show-checkbox
+        :render-content="renderContent">
+      </el-tree>
 
+      <div class="pos-rel p-t-20">
+        <btnGroup :selectedData="multipleSelection" :type="'menus'"></btnGroup>
+      </div>
     </div>
 </template>
 
 <script>
-  let id = 1000
-
+  import btnGroup from '../../../Common/btn-group.vue'
+  import breadcrumb from './breadcrumb_list.vue'
   import http from '../../../../assets/js/http'
 
   export default {
@@ -45,6 +57,27 @@
       },
       append(store, data) {
         store.append({ id: id++, label: 'testtest', children: [] }, data)
+      },
+      child(store, data, event) {
+        window.event ? window.event.cancelBubble = true : event.stopPropagation()
+        router.replace('/admin/menu/add/' + data.id)
+      },
+      edit(store, data, event) {
+        window.event ? window.event.cancelBubble = true : event.stopPropagation()
+        router.replace('/admin/menu/edit/' + data.id)
+      },
+      top(store, data, event) {
+        window.event ? window.event.cancelBubble = true : event.stopPropagation()
+        _g.openGlobalLoading()
+        this.apiPut('admin/menus/top', item.id).then((res) => {
+          _g.closeGlobalLoading()
+          this.handelResponse(res, (data) => {
+            _g.toastMsg('success', res.message)
+            setTimeout(() => {
+              _g.shallowRefresh(this.$route.name)
+            }, 1000)
+          })
+        })
       },
       remove(store, data, event) {
         // store.remove(data)
@@ -80,9 +113,9 @@
               <span>{node.label}</span>
             </span>
             <span style='float: right; margin-right: 20px'>
-              <el-button size='mini' icon='plus' on-click={ () => this.append(store, data, event) }>添加子菜单</el-button>
-              <el-button size='mini' icon='edit' on-click={ () => this.remove(store, data, event) }>修改</el-button>
-              <el-button size='mini' icon='star-on' on-click={ () => this.append(store, data, event) }>置顶</el-button>
+              <el-button size='mini' icon='plus' on-click={ () => this.child(store, data, event) }>添加子菜单</el-button>
+              <el-button size='mini' icon='edit' on-click={ () => this.edit(store, data, event) }>修改</el-button>
+              <el-button size='mini' icon='star-on' on-click={ () => this.top(store, data, event) }>置顶</el-button>
               <el-button size='mini' icon='delete' on-click={ () => this.remove(store, data, event) }>删除</el-button>
             </span>
           </span>)
@@ -105,6 +138,9 @@
           this.data2 = data
         })
       })
+    },
+    components: {
+      breadcrumb, btnGroup
     },
     mixins: [http]
   }

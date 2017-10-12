@@ -31,23 +31,24 @@ import usersEdit from './components/Administrative/personnel/users/edit.vue'
 const routes = [
   { path: '/', component: Login, name: 'Login' },
   {
-    path: '/home',
+    path: '/admin',
     component: Home,
     children: [
       { path: '/refresh', component: refresh, name: 'refresh' }
     ]
   },
   {
-    path: '/home',
+    path: '/admin',
     component: Home,
     children: [
       { path: 'menu/list', component: menuList, name: 'menuList', meta: { hideLeft: false, module: 'Administrative', menu: 'menu' }},
       { path: 'menu/add', component: menuAdd, name: 'menuAdd', meta: { hideLeft: false, module: 'Administrative', menu: 'menu' }},
+      { path: 'menu/add/:pid', component: menuAdd, name: 'menuAdd', meta: { hideLeft: false, module: 'Administrative', menu: 'menu' }},
       { path: 'menu/edit/:id', component: menuEdit, name: 'menuEdit', meta: { hideLeft: false, module: 'Administrative', menu: 'menu' }}
     ]
   },
   {
-    path: '/home',
+    path: '/admin',
     component: Home,
     children: [
       { path: 'config/add', component: systemConfig, name: 'systemConfig', meta: { hideLeft: false, module: 'Administrative', menu: 'systemConfig' }}
@@ -55,7 +56,7 @@ const routes = [
   },
 
   {
-    path: '/home',
+    path: '/admin',
     component: Home,
     children: [
       { path: 'rule/list', component: ruleList, name: 'ruleList', meta: { hideLeft: false, module: 'Administrative', menu: 'rule' }},
@@ -64,7 +65,7 @@ const routes = [
     ]
   },
   {
-    path: '/home',
+    path: '/admin',
     component: Home,
     children: [
       { path: 'position/list', component: positionList, name: 'positionList', meta: { hideLeft: false, module: 'Administrative', menu: 'position' }},
@@ -73,7 +74,7 @@ const routes = [
     ]
   },
   {
-    path: '/home',
+    path: '/admin',
     component: Home,
     children: [
       { path: 'structures/list', component: structuresList, name: 'structuresList', meta: { hideLeft: false, module: 'Administrative', menu: 'structures' }},
@@ -82,7 +83,7 @@ const routes = [
     ]
   },
   {
-    path: '/home',
+    path: '/admin',
     component: Home,
     children: [
       { path: 'groups/list', component: groupsList, name: 'groupsList', meta: { hideLeft: false, module: 'Administrative', menu: 'groups' }},
@@ -91,7 +92,7 @@ const routes = [
     ]
   },
   {
-    path: '/home',
+    path: '/admin',
     component: Home,
     children: [
       { path: 'users/list', component: usersList, name: 'usersList', meta: { hideLeft: false, module: 'Administrative', menu: 'users' }},

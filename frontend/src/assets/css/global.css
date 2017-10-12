@@ -24,6 +24,14 @@ a {
   float: right
 }
 
+.pull-right {
+  float: right
+}
+
+.pull-left {
+  float: left
+}
+
 .m-w-1280 {
   min-width: 1280px !important;
 }
