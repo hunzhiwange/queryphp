@@ -3,8 +3,7 @@
 namespace admin\domain\entity;
 
 use queryyetsimple\mvc\model;
-use common\domain\interfaces\ientity;
-use common\domain\interfaces\iaggregate;
+use queryyetsimple\mvc\interfaces\iaggregate_root;
 
 /**
  * 后台菜单实体（聚合根）
@@ -14,5 +13,5 @@ use common\domain\interfaces\iaggregate;
  * @since 2017.10.12
  * @version 1.0
  */
-class admin_menu extends model implements ientity, iaggregate {
+class admin_menu extends model implements iaggregate_root {
 }

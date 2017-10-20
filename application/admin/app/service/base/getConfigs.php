@@ -13,7 +13,7 @@ use common\is\repository\common_option as repository;
  * @version 1.0
  */
 class getConfigs {
-
+    
     /**
      * 后台菜单仓储
      *
@@ -30,7 +30,7 @@ class getConfigs {
     public function __construct(repository $oRepository) {
         $this->oRepository = $oRepository;
     }
-
+    
     /**
      * 响应方法
      *
@@ -39,19 +39,18 @@ class getConfigs {
     public function run() {
         return $this->parseToMap ( $this->oRepository->all () );
     }
-
+    
     /**
      * 解析配置隐射
-     * 
-     * @param  \queryyetsimple\support\collection $objOption
+     *
+     * @param \queryyetsimple\support\collection $objOption            
      * @return array
      */
-    protected function parseToMap($objOption){
-        $arr = [];
-        foreach ($objOption as $oVal) {
-            $arr[$oVal->name] = $oVal->value;
+    protected function parseToMap($objOption) {
+        $arr = [ ];
+        foreach ( $objOption as $oVal ) {
+            $arr [$oVal->name] = $oVal->value;
         }
         return $arr;
     }
-
 }

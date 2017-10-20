@@ -1,20 +1,25 @@
 <template>
   <div class="m-l-10 w-500">
     <div class="m-b-20">
-      <breadcrumb ref="breadcrumb"></breadcrumb>
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/admin/menu/list' }">菜单管理</el-breadcrumb-item>
+        <el-breadcrumb-item>添加菜单</el-breadcrumb-item>
+      </el-breadcrumb>
     </div>
-		<el-form ref="form" :model="form" :rules="rules" label-width="110px">
-			<el-form-item label="标题" prop="title">
-				<el-input v-model.trim="form.title" class="h-40 w-200"></el-input>
-			</el-form-item>
-			<el-form-item label="菜单类型" prop="menu_type">
-				<el-radio-group v-model="form.menu_type">
-					<el-radio label="1">普通三级菜单</el-radio>
-					<el-radio label="2">单页菜单</el-radio>
-					<el-radio label="3">外链</el-radio>
-				</el-radio-group>
-			</el-form-item>
-			<el-form-item label="上级菜单" prop="pid">
+    
+    <el-form ref="form" :model="form" :rules="rules" label-width="110px">
+      <el-form-item label="标题" prop="title">
+        <el-input v-model.trim="form.title" class="h-40 w-200"></el-input>
+      </el-form-item>
+      <el-form-item label="菜单类型" prop="menu_type">
+        <el-radio-group v-model="form.menu_type">
+          <el-radio label="1">普通三级菜单</el-radio>
+          <el-radio label="2">单页菜单</el-radio>
+          <el-radio label="3">外链</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="上级菜单" prop="pid">
         <el-cascader
           class="w-200"
           :options="pid_options"
@@ -23,94 +28,86 @@
           filterable
           change-on-select>
         </el-cascader>
-			</el-form-item>
-			<el-form-item label="路径">
-				<el-input v-model.trim="form.url" class="h-40 w-200"></el-input>
-			</el-form-item>
-			<el-form-item label="模块" prop="module">
-				<el-input v-model.trim="form.module" class="h-40 w-200"></el-input>
-			</el-form-item>
-			<el-form-item label="所属菜单">
-				<el-input v-model.trim="form.menu" class="h-40 w-200"></el-input>
-			</el-form-item>
-			<el-form-item label="排序">
-				<el-input v-model="form.sort" class="h-40 w-200"></el-input>
-			</el-form-item>
-			<el-form-item>
-				<el-button type="primary" @click="add('form')" :loading="isLoading">提交</el-button>
-				<el-button @click="goback()">返回</el-button>
-			</el-form-item>
-		</el-form>
-	</div>
+      </el-form-item>
+      <el-form-item label="路径">
+        <el-input v-model.trim="form.url" class="h-40 w-200"></el-input>
+      </el-form-item>
+      <el-form-item label="模块" prop="module">
+        <el-input v-model.trim="form.module" class="h-40 w-200"></el-input>
+      </el-form-item>
+      <el-form-item label="所属菜单">
+        <el-input v-model.trim="form.menu" class="h-40 w-200"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="add('form')" :loading="isLoading">提交</el-button>
+        <el-button @click="goback()">返回</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
-<script>
-  import breadcrumb from './breadcrumb_add.vue'
-  import http from '../../../../assets/js/http'
-  import fomrMixin from '../../../../assets/js/form_com'
+<script type="java/script">
+import http from '../../../../assets/js/http'
+import fomrMixin from '../../../../assets/js/form_com'
 
-  export default {
-    data() {
-      return {
-        isLoading: false,
-        form: {
-          title: '',
-          pid: [-1],
-          menu_type: '1',
-          url: '',
-          module: '',
-          menu: '',
-          sort: 500
-        },
-        pid_options: [],
-        rules: {
-          title: [
-            { required: true, message: '请输入菜单标题' }
-          ],
-          menu_type: [
-            { required: true, message: '请选择菜单类型' }
-          ],
-          module: [
-            { required: true, message: '请填写菜单模块' }
-          ]
-        }
-      }
-    },
-    methods: {
-      add(form) {
-        this.$refs.form.validate((pass) => {
-          if (pass) {
-            this.isLoading = !this.isLoading
-            this.apiPost('admin/menus', this.form).then((res) => {
-              this.handelResponse(res, (data) => {
-                _g.clearVuex('setRules')
-                _g.toastMsg('success', '添加成功')
-                setTimeout(() => {
-                  // this.goback()
-                  router.replace('/admin/menu/list')
-                }, 1500)
-              }, () => {
-                this.isLoading = !this.isLoading
-              })
-            })
-          }
-        })
+export default {
+  data() {
+    return {
+      isLoading: false,
+      form: {
+        title: '',
+        pid: [-1],
+        menu_type: '1',
+        url: '',
+        module: '',
+        menu: ''
       },
-      openRule() {
-        this.$refs.ruleList.open()
+      pid_options: [],
+      rules: {
+        title: [
+          { required: true, message: '请输入菜单标题' }
+        ],
+        menu_type: [
+          { required: true, message: '请选择菜单类型' }
+        ],
+        module: [
+          { required: true, message: '请填写菜单模块' }
+        ]
       }
-    },
-    created() {
-      this.apiGet('admin/menus/create' + (this.$route.params.pid ? '?pid=' + this.$route.params.pid : '')).then((res) => {
-        this.handelResponse(res, (data) => {
-          this.pid_options = data.list
-          this.form.pid = data.selected.length > 0 ? data.selected : [-1]
-        })
+    }
+  },
+  methods: {
+    add(form) {
+      this.$refs.form.validate((pass) => {
+        if (pass) {
+          this.isLoading = !this.isLoading
+          this.apiPost('/admin/menu', this.form).then((res) => {
+            this.handelResponse(res, (data) => {
+              _g.clearVuex('setRules')
+              _g.toastMsg('success', res.message)
+              setTimeout(() => {
+                router.replace('/admin/menu/list')
+              }, 1000)
+            }, () => {
+              this.isLoading = !this.isLoading
+            })
+          })
+        }
       })
     },
-    components: {
-      breadcrumb
-    },
-    mixins: [http, fomrMixin]
-  }
+    openRule() {
+      this.$refs.ruleList.open()
+    }
+  },
+  created() {
+    this.apiGet('/admin/menu/create' + (this.$route.params.pid ? '?pid=' + this.$route.params.pid : '')).then((res) => {
+      this.handelResponse(res, (data) => {
+        this.pid_options = data.list
+        this.form.pid = data.selected.length > 0 ? data.selected : [-1]
+      })
+    })
+  },
+  components: {},
+  mixins: [http, fomrMixin]
+}
 </script>

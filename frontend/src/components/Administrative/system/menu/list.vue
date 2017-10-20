@@ -1,76 +1,89 @@
 <template>
-    <div>
-      <el-row :gutter="20">
-        <el-col :span="16">
-          <div class="m-b-20">
-            <breadcrumb ref="breadcrumb"></breadcrumb>
-          </div>
-        </el-col>
-        <el-col :span="8">
-          <router-link class="el-button el-button--success is-plain el-button--small pull-right" to="add">
-            <i class="el-icon-plus"></i>&nbsp;&nbsp;添加菜单
-          </router-link>
-        </el-col>
-      </el-row>
+  <div>
+    <el-row :gutter="20">
+      <el-col :span="16">
+        <div class="m-b-20">
+          <el-breadcrumb separator="/">
+            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>菜单管理</el-breadcrumb-item>
+          </el-breadcrumb>
+        </div>
+      </el-col>
+      <el-col :span="8">
+         <router-link :to="{path: '/admin/menu/add'}">
+          <el-button class="pull-right" type="primary" size="mini" plain round><i class="el-icon-plus"></i>&nbsp;添加菜单</el-button>
+         </router-link>
+      </el-col>
+    </el-row>
 
-      <div class="m-b-5">
-        <el-input
-          placeholder="试试搜索"
-          v-model="filterText">
-        </el-input>
-      </div>
-
-      <el-tree
-        class="filter-tree"
-        :data="data2"
-        :props="defaultProps"
-        :filter-node-method="filterNode"
-        ref="tree2"
-        node-key="id"
-        accordion2
-        show-checkbox
-        :render-content="renderContent">
-      </el-tree>
-
-      <div class="pos-rel p-t-20">
-        <btnGroup :selectedData="multipleSelection" :type="'menus'"></btnGroup>
-      </div>
+    <div class="m-b-5">
+      <el-input
+        placeholder="试试过滤"
+        v-model="filterText">
+      </el-input>
     </div>
+
+    <el-tree
+      class="filter-tree"
+      :data="dataTree"
+      :props="defaultProps"
+      :filter-node-method="filterNode"
+      ref="tree"
+      node-key="id"
+      show-checkbox
+      default-expand-all
+      highlight-current
+      :render-content="renderContent">
+    </el-tree>
+    <div class="pos-rel p-t-20">
+      <el-button size="mini" @click="enables('enable')">启用</el-button>
+      <el-button size="mini"type="danger" plain @click="enables('disable')">禁用</el-button>
+    </div>
+  </div>
 </template>
 
 <script>
-  import btnGroup from '../../../Common/btn-group.vue'
-  import breadcrumb from './breadcrumb_list.vue'
-  import http from '../../../../assets/js/http'
+import http from '../../../../assets/js/http'
 
-  export default {
-    watch: {
-      filterText(val) {
-        this.$refs.tree2.filter(val)
-      }
+export default {
+  methods: {
+    child(node, data, store, event) {
+      this.stopPropagation(event)
+      router.replace('/admin/menu/add/' + data.id)
     },
-
-    methods: {
-      filterNode(value, data) {
-        if (!value) return true
-        return data.label.indexOf(value) !== -1
-      },
-      append(store, data) {
-        store.append({ id: id++, label: 'testtest', children: [] }, data)
-      },
-      child(store, data, event) {
-        window.event ? window.event.cancelBubble = true : event.stopPropagation()
-        router.replace('/admin/menu/add/' + data.id)
-      },
-      edit(store, data, event) {
-        window.event ? window.event.cancelBubble = true : event.stopPropagation()
-        router.replace('/admin/menu/edit/' + data.id)
-      },
-      top(store, data, event) {
-        window.event ? window.event.cancelBubble = true : event.stopPropagation()
-        _g.openGlobalLoading()
-        this.apiPut('admin/menus/top', item.id).then((res) => {
-          _g.closeGlobalLoading()
+    edit(node, data, store, event) {
+      this.stopPropagation(event)
+      router.replace('/admin/menu/edit/' + data.id)
+    },
+    top(node, data, store, event) {
+      this.order(node, data, store, event, 'top')
+    },
+    up(node, data, store, event) {
+      this.order(node, data, store, event, 'up')
+    },
+    down(node, data, store, event) {
+      this.order(node, data, store, 'down')
+    },
+    enable(node, data, store, event, status) {
+      this.stopPropagation(event)
+      this.apiPut('/admin/menu/enable/', data.id, { status: status }).then((res) => {
+        this.handelResponse(res, (data) => {
+          _g.toastMsg('success', res.message)
+          setTimeout(() => {
+            _g.shallowRefresh(this.$route.name)
+          }, 1000)
+        })
+      })
+    },
+    remove(node, data, store, event) {
+      this.stopPropagation(event)
+      if (node.childNodes.length) return
+      this.$confirm('确认删除该菜单?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.apiDelete('/admin/menu/', data.id).then((res) => {
           this.handelResponse(res, (data) => {
             _g.toastMsg('success', res.message)
             setTimeout(() => {
@@ -78,70 +91,92 @@
             }, 1000)
           })
         })
-      },
-      remove(store, data, event) {
-        // store.remove(data)
-       // console.log(store, data)
-       // console.log(data.id)
-        // console.log(event)
-        this.open2(data)
-        window.event ? window.event.cancelBubble = true : event.stopPropagation()
-      },
-      open2(item) {
-        this.$confirm('确认删除该菜单?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          _g.openGlobalLoading()
-          this.apiDelete('admin/menus/', item.id).then((res) => {
-            _g.closeGlobalLoading()
-            this.handelResponse(res, (data) => {
-              _g.toastMsg('success', res.message)
-              setTimeout(() => {
-                _g.shallowRefresh(this.$route.name)
-              }, 1000)
-            })
-          })
-        }).catch(() => {
-        })
-      },
-      renderContent(h, { node, data, store }) {
-        return (
-          <span>
-            <span class='el-tree-node__label'>
-              <span>{node.label}</span>
-            </span>
-            <span style='float: right; margin-right: 20px'>
-              <el-button size='mini' icon='plus' on-click={ () => this.child(store, data, event) }>添加子菜单</el-button>
-              <el-button size='mini' icon='edit' on-click={ () => this.edit(store, data, event) }>修改</el-button>
-              <el-button size='mini' icon='star-on' on-click={ () => this.top(store, data, event) }>置顶</el-button>
-              <el-button size='mini' icon='delete' on-click={ () => this.remove(store, data, event) }>删除</el-button>
-            </span>
-          </span>)
-      }
+      }).catch(() => {
+      })
     },
+    enables(type) {
+      let selectedIds = this.$refs.tree.getCheckedKeys()
+      if (!selectedIds.length) {
+        _g.toastMsg('warning', '请勾选数据')
+        return
+      }
 
-    data() {
-      return {
-        filterText: '',
-        data2: [],
-        defaultProps: {
-          children: 'children',
-          label: 'label'
-        }
+      let data = {
+        ids: selectedIds,
+        status: type
       }
-    },
-    created() {
-      this.apiGet('admin/menus').then((res) => {
+
+      this.apiPost('/admin/menu/enables', data).then((res) => {
         this.handelResponse(res, (data) => {
-          this.data2 = data
+          _g.toastMsg('success', res.message)
+          setTimeout(() => {
+            _g.shallowRefresh(this.$route.name)
+          }, 1500)
         })
       })
     },
-    components: {
-      breadcrumb, btnGroup
+    filterNode(value, data) {
+      if (!value) return true
+      return data.label.indexOf(value) !== -1
     },
-    mixins: [http]
-  }
+    order(node, data, store, event, type) {
+      this.stopPropagation(event)
+      this.apiPut('/admin/menu/order/', data.id, { type: type }).then((res) => {
+        this.handelResponse(res, (data) => {
+          _g.toastMsg('success', res.message)
+          setTimeout(() => {
+            _g.shallowRefresh(this.$route.name)
+          }, 1000)
+        })
+      })
+    },
+    stopPropagation(event) {
+      window.event ? window.event.cancelBubble = true : event.stopPropagation()
+    },
+    renderContent(h, { node, data, store }) {
+      return (
+        <span style='flex: 1; display: flex; align-items: center; justify-content: space-between; font-size: 14px; padding-right: 8px;'>
+          <span>
+            <span>{node.label}</span>
+          </span>
+          <span>
+            <el-button type='text' style='font-size: 12px;' on-click={ () => this.enable(node, data, store, event, this.status[data.id] == 'enable' ? 'diable' : 'enable') } domPropsInnerHTML={this.status[data.id] == 'enable' ? '<span style="color:#67C23A;" class="el-icon-circle-check"> 已启用</span>' : '<span style="color:#EB9E05;" class="el-icon-circle-close"> 已禁用</span>'}></el-button>
+            <el-button type='text' style='font-size: 12px;' icon='el-icon-plus' on-click={ () => this.child(store, data, event) }>子菜单</el-button>
+            <el-button type='text' style='font-size: 12px;' icon='el-icon-edit' on-click={ () => this.edit(node, data, store, event) }>修改</el-button>
+            <el-button type='text' style='font-size: 12px;' icon='el-icon-star-on' on-click={ () => this.top(node, data, store, event) }>置顶</el-button>
+            <el-button type='text' style='font-size: 12px;' icon='fa fa fa-arrow-up' on-click={ () => this.up(node, data, store, event) }>上移</el-button>
+            <el-button type='text' style='font-size: 12px;' icon='fa fa fa-arrow-down' on-click={ () => this.down(node, data, store, event) }>下移</el-button>
+            <el-button type='text' style='font-size: 12px;' icon={node.childNodes.length ? 'el-icon-warning' : 'el-icon-delete'} on-click={ () => this.remove(node, data, store, event) } ref={{ disabled: true }}>{node.childNodes.length ? '禁止' : '删除'}</el-button>
+          </span>
+        </span>)
+    }
+  },
+
+  data() {
+    return {
+      filterText: '',
+      dataTree: [],
+      status: [],
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      }
+    }
+  },
+  created() {
+    this.apiGet('/admin/menu').then((res) => {
+      this.handelResponse(res, (data) => {
+        this.dataTree = data.menu
+        this.status = data.status
+      })
+    })
+  },
+  watch: {
+    filterText(val) {
+      this.$refs.tree.filter(val)
+    }
+  },
+  components: {},
+  mixins: [http]
+}
 </script>

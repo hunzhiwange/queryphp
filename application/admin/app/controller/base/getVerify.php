@@ -14,15 +14,14 @@ use admin\app\controller\aaction;
  * @version 1.0
  */
 class getVerify extends aaction {
-
+    
     /**
      * 响应方法
      *
-     * @param \admin\is\verify\image $oImage
+     * @param \admin\is\verify\image $oImage            
      * @return mixed
      */
     public function run(image $oImage) {
-        return $oImage->run();
+        return $oImage->run ();
     }
-
 }

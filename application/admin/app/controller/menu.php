@@ -3,12 +3,12 @@
 namespace admin\app\controller;
 
 /**
- * 基础控制器
+ * 后台菜单控制器
  *
  * @author Name Your <your@mail.com>
  * @package $$
  * @since 2017.10.12
  * @version 1.0
  */
-class base extends acontroller {
+class menu extends acontroller {
 }

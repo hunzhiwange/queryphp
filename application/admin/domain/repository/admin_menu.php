@@ -2,7 +2,7 @@
 // ©2017 http://your.domain.com All rights reserved.
 namespace admin\domain\repository;
 
-use common\domain\interfaces\irepository;
+use queryyetsimple\mvc\interfaces\irepository;
 
 /**
  * 后台菜单实体（聚合根）接口

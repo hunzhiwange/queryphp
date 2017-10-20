@@ -16,11 +16,11 @@ use admin\app\service\base\getConfigs as service;
  * @version 1.0
  */
 class getConfigs extends aaction {
-
+    
     /**
      * 响应方法
-     * 
-     * @param \admin\app\service\base\getConfigs $oService 
+     *
+     * @param \admin\app\service\base\getConfigs $oService            
      * @return mixed
      */
     public function run(service $oService) {
