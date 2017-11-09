@@ -1,5 +1,5 @@
 paths:
-    migrations: database/migrations
+    migrations: database/migrations22
     seeds: database/seeds
 
 environments:
