@@ -1,2 +1,0 @@
-　　Bat To Exe Converter 可以把批处理文件bat转换为exe可执行文件，甚至运用密码保护文件，生成的.EXE是独立的文件，不需要任何的.DLL运行。
-　　中文设置方法：program settings--language--中国的。
