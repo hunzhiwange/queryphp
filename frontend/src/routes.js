@@ -5,15 +5,12 @@ import menuList from './components/Administrative/system/menu/list.vue'
 import menuAdd from './components/Administrative/system/menu/add.vue'
 import menuEdit from './components/Administrative/system/menu/edit.vue'
 import systemConfig from './components/Administrative/system/config/add.vue'
-import ruleList from './components/Administrative/system/rule/list.vue'
-import ruleAdd from './components/Administrative/system/rule/add.vue'
-import ruleEdit from './components/Administrative/system/rule/edit.vue'
 import positionList from './components/Administrative/structures/position/list.vue'
 import positionAdd from './components/Administrative/structures/position/add.vue'
 import positionEdit from './components/Administrative/structures/position/edit.vue'
-import structuresList from './components/Administrative/structures/structures/list.vue'
-import structuresAdd from './components/Administrative/structures/structures/add.vue'
-import structuresEdit from './components/Administrative/structures/structures/edit.vue'
+import structuresList from './components/Administrative/structures/structure/list.vue'
+import structuresAdd from './components/Administrative/structures/structure/add.vue'
+import structuresEdit from './components/Administrative/structures/structure/edit.vue'
 import groupsList from './components/Administrative/structures/groups/list.vue'
 import groupsAdd from './components/Administrative/structures/groups/add.vue'
 import groupsEdit from './components/Administrative/structures/groups/edit.vue'
@@ -54,16 +51,6 @@ const routes = [
       { path: 'config/add', component: systemConfig, name: 'systemConfig', meta: { hideLeft: false, module: 'Administrative', menu: 'systemConfig' }}
     ]
   },
-
-  {
-    path: '/admin',
-    component: Home,
-    children: [
-      { path: 'rule/list', component: ruleList, name: 'ruleList', meta: { hideLeft: false, module: 'Administrative', menu: 'rule' }},
-      { path: 'rule/add', component: ruleAdd, name: 'ruleAdd', meta: { hideLeft: false, module: 'Administrative', menu: 'rule' }},
-      { path: 'rule/edit/:id', component: ruleEdit, name: 'ruleEdit', meta: { hideLeft: false, module: 'Administrative', menu: 'rule' }}
-    ]
-  },
   {
     path: '/admin',
     component: Home,
@@ -77,9 +64,10 @@ const routes = [
     path: '/admin',
     component: Home,
     children: [
-      { path: 'structures/list', component: structuresList, name: 'structuresList', meta: { hideLeft: false, module: 'Administrative', menu: 'structures' }},
-      { path: 'structures/add', component: structuresAdd, name: 'structuresAdd', meta: { hideLeft: false, module: 'Administrative', menu: 'structures' }},
-      { path: 'structures/edit/:id', component: structuresEdit, name: 'structuresEdit', meta: { hideLeft: false, module: 'Administrative', menu: 'structures' }}
+      { path: 'structure/list', component: structuresList, name: 'structuresList', meta: { hideLeft: false, module: 'Administrative', menu: 'structures' }},
+      { path: 'structure/add/:pid', component: structuresAdd, name: 'structuresAdd', meta: { hideLeft: false, module: 'Administrative', menu: 'structures' }},
+      { path: 'structure/add', component: structuresAdd, name: 'structuresAdd', meta: { hideLeft: false, module: 'Administrative', menu: 'structures' }},
+      { path: 'structure/edit/:id', component: structuresEdit, name: 'structuresEdit', meta: { hideLeft: false, module: 'Administrative', menu: 'structures' }}
     ]
   },
   {

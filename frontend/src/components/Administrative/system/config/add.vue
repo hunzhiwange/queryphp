@@ -1,43 +1,52 @@
 <template>
-	<div class="m-l-50 m-t-30 w-500">
-		<el-form ref="form" :model="form" :rules="rules" label-width="130px">
-			<el-form-item label="系统名称" prop="SYSTEM_NAME">
-				<el-input v-model.trim="form.SYSTEM_NAME" class="h-40 w-200"></el-input>
-			</el-form-item>
-			<el-form-item label="LOGO">
-				<el-upload
-				:action="uploadUrl"
-				type="drag"
-				:thumbnail-mode="true"
-				:on-preview="viewPic"
-				:on-remove="handleRemove"
-				:on-success="uploadSuccess"
-				:on-error="uploadFail"
-				:default-file-list="fileList">
-					<i class="el-icon-upload"></i>
-					<div class="el-dragger__text">将文件拖到此处，或<em>点击上传</em></div>
-					<div class="el-upload__tip" slot="tip">只能上传jpg/png文件</div>
-				</el-upload>
-			</el-form-item>
-      <el-form-item label="LOGO类型">
-        <el-radio-group v-model="form.LOGO_TYPE">
-          <el-radio label="1">图片</el-radio>
-          <el-radio label="2">文字</el-radio>
-        </el-radio-group>
-      </el-form-item>
-			<el-form-item label="登录验证码">
-				<el-radio-group v-model="form.IDENTIFYING_CODE">
-					<el-radio label="1">打开</el-radio>
-					<el-radio label="0">关闭</el-radio>
-				</el-radio-group>
-			</el-form-item>
-			<el-form-item label="登录会话有效期" prop="LOGIN_SESSION_VALID">
-				<el-input v-model.number="form.LOGIN_SESSION_VALID" class="h-40 w-200"></el-input>
-			</el-form-item>
-			<el-form-item>
-				<el-button type="primary" @click="add()" :loading="isLoading">提交</el-button>
-			</el-form-item>
-		</el-form>
+	<div>
+    <div class="m-b-20 content-title">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>系统设置</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+    
+    <el-card class="box-card" style="width:100%;">
+  		<el-form ref="form" :model="form" :rules="rules" label-width="130px">
+  			<el-form-item label="系统名称" prop="SYSTEM_NAME">
+  				<el-input v-model.trim="form.SYSTEM_NAME" class="h-40 w-200"></el-input>
+  			</el-form-item>
+  			<el-form-item label="LOGO">
+  				<el-upload
+  				:action="uploadUrl"
+  				type="drag"
+  				:thumbnail-mode="true"
+  				:on-preview="viewPic"
+  				:on-remove="handleRemove"
+  				:on-success="uploadSuccess"
+  				:on-error="uploadFail"
+  				:default-file-list="fileList">
+  					<i class="el-icon-upload"></i>
+  					<div class="el-dragger__text">将文件拖到此处，或<em>点击上传</em></div>
+  					<div class="el-upload__tip" slot="tip">只能上传jpg/png文件</div>
+  				</el-upload>
+  			</el-form-item>
+        <el-form-item label="LOGO类型">
+          <el-radio-group v-model="form.LOGO_TYPE">
+            <el-radio label="1">图片</el-radio>
+            <el-radio label="2">文字</el-radio>
+          </el-radio-group>
+        </el-form-item>
+  			<el-form-item label="登录验证码">
+  				<el-radio-group v-model="form.IDENTIFYING_CODE">
+  					<el-radio label="1">打开</el-radio>
+  					<el-radio label="0">关闭</el-radio>
+  				</el-radio-group>
+  			</el-form-item>
+  			<el-form-item label="登录会话有效期" prop="LOGIN_SESSION_VALID">
+  				<el-input v-model.number="form.LOGIN_SESSION_VALID" class="h-40 w-200"></el-input>
+  			</el-form-item>
+  			<el-form-item>
+  				<el-button type="primary" @click="add()" :loading="isLoading">提交</el-button>
+  			</el-form-item>
+  		</el-form>
+    </el-card>
 		<preview ref="preview" :url="propsImg"></preview>
 	</div>
 </template>
@@ -64,8 +73,7 @@
             { required: true, message: '请输入系统名称' }
           ],
           LOGIN_SESSION_VALID: [
-            { required: true, message: '请输入登录有效期' },
-            { type: 'number', message: '请输入数字' }
+            { required: true, message: '请输入登录有效期' }
           ]
         }
       }
@@ -77,7 +85,7 @@
             this.isLoading = !this.isLoading
             this.apiPost('admin/systemConfigs', this.form).then((res) => {
               this.handelResponse(res, (data) => {
-                _g.toastMsg('success', '提交成功')
+                _g.toastMsg('success', res.message)
                 this.isLoading = !this.isLoading
               }, () => {
                 this.isLoading = !this.isLoading

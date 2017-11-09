@@ -1,50 +1,77 @@
 <template>
-	<el-row class="panel m-w-1280">
-		<el-col :span="24" class="panel-top">
-			<el-col :span="4">
-        <template v-if="logo_type == '1'">
-          <img :src="img" class="logo">
-        </template>
-        <template v-else>
-          <span class="p-l-20">{{title}}</span>
-        </template>
-			</el-col>
-			<el-col :span="16" class="ofv-hd">
-				<div class="fl p-l-20 p-r-20 top-menu" :class="{'top-active': menu.selected}" v-for="menu in topMenu" @click="switchTopMenu(menu)">{{menu.title}}</div>
-			</el-col>
-			<el-col :span="4" class="pos-rel">
-				<el-dropdown @command="handleMenu" class="user-menu">
-		      <span class="el-dropdown-link c-gra" style="cursor: default">
-		        {{username}}&nbsp;&nbsp;<i class="fa fa-user" aria-hidden="true"></i>
-		      </span>
-		      <el-dropdown-menu slot="dropdown">
-		        <el-dropdown-item command="changePwd">修改密码</el-dropdown-item>
-		        <el-dropdown-item command="logout">退出</el-dropdown-item>
-		      </el-dropdown-menu>
-		    </el-dropdown>
-			</el-col>
-		</el-col>
-		<el-col :span="24" class="panel-center">
-			<!--<el-col :span="4">-->
-			<aside class="w-180 ovf-hd" v-show="!showLeftMenu">
-				<leftMenu :menuData="menuData" :menu="menu" ref="leftMenu"></leftMenu>
-			</aside>
-			<section class="panel-c-c" :class="{'hide-leftMenu': hasChildMenu}">
-				<div class="grid-content bg-purple-light">
-					<el-col :span="24">
-						<transition name="fade" mode="out-in" appear>
-							<router-view v-loading="showLoading"></router-view>
-						</transition>
-					</el-col>
-				</div>
-			</section>
-		</el-col>
+	<el-row >
+    <el-container class="panel m-w-1280">
+      <el-header>
+        <el-row type="flex" justify="space-between">
+          <el-col :span="2">
+            <template v-if="logo_type == '1'">
+              <img :src="img" class="logo">
+            </template>
+            <template v-else>
+              <span class="p-l-20 logo-text">{{title}}</span>
+            </template>
+          </el-col>
+          <el-col :span="16" class="menu-box">
+            <div class="fl p-l-20 p-r-20 top-menu" :class="{'top-active': menu.selected}" v-for="menu in topMenu" @click="switchTopMenu(menu)">{{menu.title}}</div>
+          </el-col>
+          <el-col :span="7" style="text-align:right;padding-right:10px;">
+            <el-dropdown class="top-menu">
+              <span class="el-dropdown-link">
+                <i class="fa fa-user" aria-hidden="true"></i> {{username}}
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>修改密码</el-dropdown-item>
+                <el-dropdown-item>退出</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
 
+            <el-dropdown class="top-menu">
+              <span class="el-dropdown-link">
+               <i class="el-icon-setting"></i> 配置
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>选项1</el-dropdown-item>
+                <el-dropdown-item>选项2</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+
+            <el-dropdown class="top-menu">
+              <span class="el-dropdown-link " >
+                <el-badge :value="200" :max="99" class="system-message">
+                  <i class="fa fa-bell"></i> 消息
+                </el-badge>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>业务消息 <el-badge class="mark" :value="12" /></el-dropdown-item>
+                <el-dropdown-item>系统消息 <el-badge class="mark" :value="12" /></el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </el-col>
+        </el-row>
+      </el-header>
+      <el-container>
+        <el-aside width="150px">
+          <aside v-show="!showLeftMenu">
+            <leftMenu :menuData="menuData" :menu="menu" :isCollapse="isCollapse" ref="leftMenu"></leftMenu>
+          </aside>
+        </el-aside>
+        <el-main>
+          <section :class="{'hide-leftMenu': hasChildMenu}">
+            <el-col :span="24">
+              <transition name="fade" mode="out-in" appear>
+                <router-view v-loading="showLoading"></router-view>
+              </transition>
+            </el-col>
+          </section>
+        </el-main>
+      </el-container>
+    </el-container>
 		<changePwd ref="changePwd"></changePwd>
-
 	</el-row>
 </template>
+
 <style>
+
 	.fade-enter-active,
 	.fade-leave-active {
 		transition: opacity .5s
@@ -63,14 +90,14 @@
 	}
 	
 	.panel-top {
-		height: 60px;
+		height: 65px;
 		line-height: 60px;
-		background: #1F2D3D;
+		background: #545c64;
 		color: #c0ccda;
 	}
 	
 	.panel-center {
-		background: #324057;
+		background: #545c64;
 		position: absolute;
 		top: 60px;
 		bottom: 0px;
@@ -79,11 +106,9 @@
 	
 	.panel-c-c {
 		background: #f1f2f7;
-		position: absolute;
 		right: 0px;
 		top: 0px;
 		bottom: 0px;
-		left: 180px;
 		overflow-y: scroll;
 		padding: 20px;
 	}
@@ -101,6 +126,13 @@
 		float: left;
 		margin: 10px 10px 10px 18px;
 	}
+
+  .logo-text {
+    color: #02d629;
+    font-weight: bold;
+    font-size:25px;
+    color:#ffffff;
+  }
 	
 	.tip-logout {
 		float: right;
@@ -116,6 +148,118 @@
 	.hide-leftMenu {
 		left: 0px;
 	}
+
+  .system-message .el-badge__content {
+    margin-top: 11px;
+  }
+
+  .left-mini {
+    width: 50px;
+  }
+
+  .el-menu {
+    border-right: none
+  }
+
+  .el-header, .el-footer {
+    color: #ffffff;
+    line-height: 60px;
+    padding:0 0;
+    background: #327ddc;
+  }
+   .el-header .el-badge__content {
+    border:none;
+  }
+   .el-header .menu-box{
+    padding-left:12px;
+   }
+
+
+   .el-header .el-dropdown-link{
+    height: 60px;
+    display: block;
+    padding:0 20px;
+    color:#ffffff;
+   }
+  .el-header .el-dropdown-link:hover{
+    
+  }
+
+  .el-aside {
+    background-color: #ffffff;
+    color: #333;
+    overflow: inherit;
+    position: fixed;
+    bottom:0;
+    top:61px;
+    border-right:1px solid #ededed;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+  }
+
+ .el-aside  .el-submenu__title {
+        font-weight: bold;
+    color: #3a3d46;
+  }
+
+  .el-aside .el-submenu .el-menu-item{
+    min-width:0;
+  }
+  
+  .el-main {
+    background-color: transparent;
+    color: #333;
+    overflow: inherit;height: 100%;
+    position: fixed;
+    left:150px;
+    right: 0px;
+    top:60px;
+    padding:22px 10px;
+  }
+
+  .content-main{
+    margin-top:-10px;
+  }
+  
+  body > .el-container {
+
+  }
+  
+  .el-container:nth-child(5) .el-aside,
+  .el-container:nth-child(6) .el-aside {
+    line-height: 260px;
+  }
+  
+  .el-container:nth-child(7) .el-aside {
+    line-height: 320px;
+  }
+
+
+  .el-row {
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+
+  .el-menu-header {
+    background: transparent;
+  }
 </style>
 <script>
   import leftMenu from './Common/leftMenu.vue'
@@ -134,7 +278,12 @@
         module: null,
         img: '',
         title: '',
-        logo_type: null
+        logo_type: null,
+        activeIndex: '1',
+        activeIndex2: '1',
+        isCollapse: false,
+        leftClass: 'w-180 ovf-hd',
+        sectionLeft: '180px'
       }
     },
     methods: {

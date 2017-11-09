@@ -68,7 +68,8 @@ class store {
                 'sort' => 500,
                 'title' => $aMenu ['title'],
                 'url' => $aMenu ['url'],
-                'menu_type' => intval ( $aMenu ['menu_type'] ) 
+                'menu_type' => intval ( $aMenu ['menu_type'] ),
+                'menu_icon' => $aMenu['menu_icon']
         ];
     }
     

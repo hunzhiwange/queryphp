@@ -50,7 +50,8 @@ class update extends aaction {
                 'pid',
                 'title|trim',
                 'url|trim',
-                'menu_type|intval' 
+                'menu_type|intval',
+                'menu_icon|trim'
         ] );
     }
 }

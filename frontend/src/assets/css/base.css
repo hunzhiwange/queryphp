@@ -1,13 +1,16 @@
+.top-menu{
+    font-weight: bold;
+}
 .top-menu:hover {
 	cursor: pointer;
-	background: #324057;
+	background: #409EFF;
 	/*color: #20a0ff;*/
 }
 .top-menu:active, .left-menu:active {
 	color: #20a0ff;
 }
 .top-active {
-	color: #44B5DF
+	color: #ffffff
 }
 .top-menu, .left-menu {
 	user-select:none;
@@ -103,4 +106,8 @@
   font-weight: bold;
   font-size: 20px;
   border-bottom: 1px solid #ccc;
+}
+
+.menu-right {
+ /* margin-top: -8px;*/
 }

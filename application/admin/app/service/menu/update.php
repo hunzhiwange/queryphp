@@ -71,7 +71,7 @@ class update {
     /**
      * 查找实体
      *
-     * @param array $aMenu            
+     * @param int $intId            
      * @return \admin\domain\entity\admin_menu|void
      */
     protected function find($intId) {
@@ -122,7 +122,8 @@ class update {
                 'pid' => intval ( $aMenu ['pid'] ),
                 'title' => $aMenu ['title'],
                 'url' => $aMenu ['url'],
-                'menu_type' => intval ( $aMenu ['menu_type'] ) 
+                'menu_type' => intval ( $aMenu ['menu_type'] ),
+                'menu_icon' => $aMenu['menu_icon']
         ];
     }
     
@@ -130,7 +131,7 @@ class update {
      * 分析父级数据
      *
      * @param
-     *            array aPid
+     *            array $aPid
      * @return int
      */
     protected function parseParentId(array $aPid) {

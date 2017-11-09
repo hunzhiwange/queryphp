@@ -94,7 +94,7 @@
         })
       },
       getPositions() {
-        this.apiGet('admin/posts').then((res) => {
+        this.apiGet('admin/position').then((res) => {
           this.handelResponse(res, (data) => {
             this.tableData = data
           })

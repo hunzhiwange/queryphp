@@ -52,7 +52,7 @@ class destroy {
     /**
      * 查找实体
      *
-     * @param array $aMenu            
+     * @param int $intId            
      * @return \admin\domain\entity\admin_menu|void
      */
     protected function find($intId) {

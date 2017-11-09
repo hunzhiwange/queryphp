@@ -60,7 +60,7 @@ class admin_menu extends repository implements admin_menu_repository {
         return [ 
                 'id' => - 1,
                 'pid' => 0,
-                'lable' => '选择父级菜单' 
+                'lable' => '选择上级菜单' 
         ];
     }
 }

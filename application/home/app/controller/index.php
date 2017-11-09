@@ -1,15 +1,19 @@
 <?php
-
-namespace home\application\controller;
+// ©2017 http://your.domain.com All rights reserved.
+namespace home\app\controller;
 
 use queryyetsimple\mvc\controller;
-use qys\log;
-use queryyetsimple\auth\manager;
-use qys\auth;
-use qys\session;
 
+/**
+ * index 控制器
+ *
+ * @author Name Your <your@mail.com>
+ * @package $$
+ * @since 2017.10.12
+ * @version 1.0
+ */
 class index extends controller {
-
+    
     /**
      * 默认方法
      *
@@ -18,11 +22,4 @@ class index extends controller {
     public function index() {
         return $this->display ();
     }
-    
-    public function show(){
-    }
-
-    public function yes(request $xx,$what){
-    }
-
 }

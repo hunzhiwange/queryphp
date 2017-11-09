@@ -1,22 +1,10 @@
 <?php
-// [$QueryPHP] The PHP Framework For Code Poem As Free As Wind. <Query Yet Simple>
-// ©2010-2017 http://queryphp.com All rights reserved.
-<<<queryphp
-##########################################################
-#   ____                          ______  _   _ ______   #
-#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
-# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
-#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
-#       \__   | \___ |_|    \__  || |    | | | || |      #
-#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
-#                          |___ /  Since 2010.10.03      #
-##########################################################
-queryphp;
+// ©2017 http://your.domain.com All rights reserved.
 
 /**
  * url 默认配置文件
  *
- * @author Xiangmin Liu <635750556@qq.com>
+ * @author Name Your <your@mail.com>
  * @package $$
  * @since 2016.11.19
  * @version 1.0
@@ -93,7 +81,7 @@ return [
          *
          * 例如 queryphp.com，用于路由解析以及 \queryyetsimple\router\router::url 生成
          */
-        'router_domain_top' => 'queryphp.cn',
+        'router_domain_top' => '',
         
         /**
          * ---------------------------------------------------------------
@@ -176,5 +164,15 @@ return [
          * 是否启用严格 HTTP 方法匹配模式,使用启用严格匹配，参数匹配正则结尾会加入 $ 标志
          * see \queryyetsimple\router\router::getMethod
          */
-        'method_strict' => false 
+        'method_strict' => false,
+        
+        /**
+         * ---------------------------------------------------------------
+         * 模板控制器目录
+         * ---------------------------------------------------------------
+         *
+         * 系统指定的模板控制器目录，建议不用更改
+         * see \queryyetsimple\router\router::parseDefaultBind
+         */
+        'controller_dir' => 'app\controller' 
 ]; 

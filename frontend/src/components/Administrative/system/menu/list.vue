@@ -1,44 +1,42 @@
 <template>
   <div>
-    <el-row :gutter="20">
-      <el-col :span="16">
-        <div class="m-b-20">
-          <el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>菜单管理</el-breadcrumb-item>
-          </el-breadcrumb>
-        </div>
-      </el-col>
-      <el-col :span="8">
-         <router-link :to="{path: '/admin/menu/add'}">
-          <el-button class="pull-right" type="primary" size="mini" plain round><i class="el-icon-plus"></i>&nbsp;添加菜单</el-button>
-         </router-link>
-      </el-col>
-    </el-row>
-
-    <div class="m-b-5">
-      <el-input
-        placeholder="试试过滤"
-        v-model="filterText">
-      </el-input>
+    <div class="m-b-20 content-title" style="position:relative;">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>菜单管理</el-breadcrumb-item>
+      </el-breadcrumb>
+      <div style="position:absolute;right:0px;top:-7px;">
+        <router-link :to="{path: '/admin/menu/add'}">
+          <el-button class="pull-right menu-right" type="primary" size="mini" plain><i class="el-icon-plus"></i>&nbsp;添加菜单</el-button>
+        </router-link>
+      </div>
     </div>
 
-    <el-tree
-      class="filter-tree"
-      :data="dataTree"
-      :props="defaultProps"
-      :filter-node-method="filterNode"
-      ref="tree"
-      node-key="id"
-      show-checkbox
-      default-expand-all
-      highlight-current
-      :render-content="renderContent">
-    </el-tree>
-    <div class="pos-rel p-t-20">
-      <el-button size="mini" @click="enables('enable')">启用</el-button>
-      <el-button size="mini"type="danger" plain @click="enables('disable')">禁用</el-button>
+    <div class="content-main2">
+      <div class="m-b-5">
+        <el-input placeholder="试试过滤" v-model="filterText"></el-input>
+      </div>
+
+      <el-tree
+        class="filter-tree"
+        :data="dataTree"
+        :props="defaultProps"
+        :filter-node-method="filterNode"
+        ref="tree"
+        node-key="id"
+        show-checkbox
+        default-expand-all
+        highlight-current
+        check-strictly="true"
+        :render-content="renderContent">
+      </el-tree>
+
+      <div class="pos-rel p-t-20">
+        <el-button size="mini" @click="enables('enable')">启用</el-button>
+        <el-button size="mini"type="danger" plain @click="enables('disable')">禁用</el-button>
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -62,7 +60,7 @@ export default {
       this.order(node, data, store, event, 'up')
     },
     down(node, data, store, event) {
-      this.order(node, data, store, 'down')
+      this.order(node, data, store, event, 'down')
     },
     enable(node, data, store, event, status) {
       this.stopPropagation(event)

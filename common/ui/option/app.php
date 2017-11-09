@@ -1,22 +1,10 @@
 <?php
-// [$QueryPHP] The PHP Framework For Code Poem As Free As Wind. <Query Yet Simple>
-// ©2010-2017 http://queryphp.com All rights reserved.
-<<<queryphp
-##########################################################
-#   ____                          ______  _   _ ______   #
-#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
-# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
-#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
-#       \__   | \___ |_|    \__  || |    | | | || |      #
-#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
-#                          |___ /  Since 2010.10.03      #
-##########################################################
-queryphp;
+// ©2017 http://your.domain.com All rights reserved.
 
 /**
  * 应用全局配置文件
  *
- * @author Xiangmin Liu <635750556@qq.com>
+ * @author Name Your <your@mail.com>
  * @package $$
  * @since 2016.11.19
  * @version 1.0
@@ -31,7 +19,7 @@ return [
          * 根据不同的阶段设置不同的开发环境
          * 可以为 production : 生产环境 testing : 测试环境 development : 开发环境
          */
-        'app_environment' => env ( 'app_development', 'development' ),
+        'app_environment' => env ( 'app_environment', 'development' ),
         
         /**
          * ---------------------------------------------------------------
@@ -41,7 +29,7 @@ return [
          * 打开调试模式可以显示更多精确的错误信息
          */
         'app_debug' => env ( 'app_debug', false ),
-
+        
         /**
          * ---------------------------------------------------------------
          * 自定义命名空间 （ 名字 = 入口路径）
@@ -52,55 +40,86 @@ return [
          * see https://github.com/hunzhiwange/document/blob/master/execution-flow/namespace-and-autoload.md
          */
         'namespace' => [ ],
-
+        
         /**
          * ---------------------------------------------------------------
          * 应用提供者
          * ---------------------------------------------------------------
          *
-         * 这里的服务提供者为类的名字，例如 home\infrastructure\provider\test
+         * 这里的服务提供者为类的名字，例如 home\is\provider\test
          * 每一个服务提供者必须包含一个 register 方法，还可以包含一个 bootstrap 方法
          * 系统所有 register 方法注册后，bootstrap 才开始执行以便于调用其它服务提供者 register 注册的服务
          * 相关文档请访问 [系统架构\应用服务提供者]
          * see https://github.com/hunzhiwange/document/blob/master/system-architecture/service-provider.md
          */
-        'provider' => [ ],
+        'provider' => [ 
+                'queryyetsimple\auth',
+                'queryyetsimple\cache',
+                'queryyetsimple\cookie',
+                'queryyetsimple\database',
+                'queryyetsimple\encryption',
+                'queryyetsimple\event',
+                'queryyetsimple\filesystem',
+                'queryyetsimple\http',
+                'queryyetsimple\i18n',
+                'queryyetsimple\log',
+                'queryyetsimple\mail',
+                'queryyetsimple\mvc',
+                'queryyetsimple\option',
+                'queryyetsimple\page',
+                'queryyetsimple\pipeline',
+                'queryyetsimple\queue',
+                'queryyetsimple\router',
+                'queryyetsimple\session',
+                'queryyetsimple\throttler',
+                'queryyetsimple\validate',
+                'queryyetsimple\view' 
+        ],
         
         /**
          * ---------------------------------------------------------------
-         * 具有缓存功能的应用服务提供者
+         * 中间件分组
          * ---------------------------------------------------------------
          *
-         * 这里的服务提供者严格意义上是服务提供者包，例如 queryyetsimple\log,queryyetsimple\http，系统会自动合并 queryyetsimple/log/provider 目录下面的 ['register.php', 'bootstrap.php']
-         * register 为预先注册服务提供者，bootstrap 为系统注册完毕所有服务提供者后再注册其它服务
-         * 正如其名具有缓存功能的服务提供者，他们会被自动缓存到 {缓存目录}/provider 下面,并且有两组一组是应用服务提供者，一组为系统服务提供者
+         * 分组可以很方便地批量调用组件
          */
-        'provider_with_cache' => [ 
-                'queryyetsimple\mvc',
-                'queryyetsimple\option',
-                'queryyetsimple\http',
-                'queryyetsimple\log',
-                'queryyetsimple\session',
-                'queryyetsimple\cookie',
-                'queryyetsimple\i18n',
-                'queryyetsimple\database',
-                'queryyetsimple\event',
-                'queryyetsimple\router',
-                'queryyetsimple\pipeline',
-                'queryyetsimple\cache',
-                'queryyetsimple\validate',
-                'queryyetsimple\throttler',
-                'queryyetsimple\collection',
-                'queryyetsimple\router',
-                'queryyetsimple\encryption',
-                'queryyetsimple\rss',
-                'queryyetsimple\stack',
-                'queryyetsimple\page',
-                'queryyetsimple\view',
-                'queryyetsimple\mail',
-                'queryyetsimple\auth'
+        'middleware_group' => [ 
+                'web' => [ 
+                        'session' 
+                ],
+                
+                'api' => [ 
+                        'throttler:60,1' 
+                ],
+                
+                'common' => [ 
+                        'log' 
+                ] 
         ],
         
+        /**
+         * ---------------------------------------------------------------
+         * 中间件别名
+         * ---------------------------------------------------------------
+         *
+         * HTTP 中间件提供一个方便的机制来过滤进入应用程序的 HTTP 请求
+         * 例外在应用执行结束后响应环节也会调用 HTTP 中间件
+         */
+        'middleware_alias' => [ 
+                'session' => 'queryyetsimple\session\middleware\session',
+                'throttler' => 'queryyetsimple\throttler\middleware\throttler',
+                'log' => 'queryyetsimple\log\middleware\log' 
+        ],
+        
+        /**
+         * ---------------------------------------------------------------
+         * 自定义命令
+         * ---------------------------------------------------------------
+         *
+         * 如果你创建了一个命令，你需要在这里注册这个命令
+         * 命令一行一条，直接书写完整的命名空间类
+         */
+        'console' => [ ],
         
         /**
          * ---------------------------------------------------------------
@@ -167,7 +186,7 @@ return [
          * $参数不包含文件参数 $_FILES
          */
         'var_pjax' => '_pjax',
-
+        
         /**
          * ---------------------------------------------------------------
          * Gzip 压缩

@@ -3,7 +3,6 @@
 namespace admin\domain\service\admin_menu;
 
 use admin\is\repository\admin_menu as repository;
-use queryyetsimple\mvc\exception\model_not_found;
 
 /**
  * 后台菜单启用禁用服务
