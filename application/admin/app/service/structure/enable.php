@@ -2,7 +2,7 @@
 // ©2017 http://your.domain.com All rights reserved.
 namespace admin\app\service\structure;
 
-use queryyetsimple\mvc\exception\model_not_found;
+use queryyetsimple\mvc\model_not_found;
 use admin\is\repository\admin_structure as repository;
 
 /**
@@ -14,40 +14,40 @@ use admin\is\repository\admin_structure as repository;
  * @version 1.0
  */
 class enable {
-    
+
     /**
      * 后台部门仓储
      *
      * @var \admin\is\repository\admin_structure
      */
     protected $oRepository;
-    
+
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_structure $oRepository            
+     * @param \admin\is\repository\admin_structure $oRepository
      * @return void
      */
     public function __construct(repository $oRepository) {
         $this->oRepository = $oRepository;
     }
-    
+
     /**
      * 响应方法
      *
-     * @param int $intId            
-     * @param string $strStatus            
+     * @param int $intId
+     * @param string $strStatus
      * @return array
      */
     public function run($intId, $strStatus) {
         return $this->oRepository->update ( $this->entify ( $intId, $strStatus ) );
     }
-    
+
     /**
      * 验证参数
      *
-     * @param int $intId            
-     * @param string $strStatus            
+     * @param int $intId
+     * @param string $strStatus
      * @return \admin\domain\entity\admin_structure
      */
     protected function entify($intId, $strStatus) {
@@ -55,11 +55,11 @@ class enable {
         $objStructure->forceProp ( 'status', $strStatus );
         return $objStructure;
     }
-    
+
     /**
      * 查找实体
      *
-     * @param int $intId            
+     * @param int $intId
      * @return \admin\domain\entity\admin_structure|void
      */
     protected function find($intId) {

@@ -1,27 +1,30 @@
 <template>
+	<div>
 	<el-row >
     <el-container class="panel m-w-1280">
       <el-header>
-        <el-row type="flex" justify="space-between">
-          <el-col :span="2">
-            <template v-if="logo_type == '1'">
-              <img :src="img" class="logo">
-            </template>
-            <template v-else>
-              <span class="p-l-20 logo-text">{{title}}</span>
-            </template>
-          </el-col>
-          <el-col :span="16" class="menu-box">
-            <div class="fl p-l-20 p-r-20 top-menu" :class="{'top-active': menu.selected}" v-for="menu in topMenu" @click="switchTopMenu(menu)">{{menu.title}}</div>
+        <el-row type="flex" justify="space-between" class="menu-box">
+          <el-col :span="18">
+		  	<div class="fl" style="display:block;width: 138px;height:60px;overflow:hidden;">
+	            <template v-if="logo_type == '1'">
+	              <img :src="img" class="logo">
+	            </template>
+	            <template v-else>
+	              <span class="logo-text">{{title}}</span>
+	            </template>
+			</div>
+
+			<div class="fl p-l-20 p-r-20 top-menu" :class="{'top-active': menu.selected}" v-for="menu in topMenu" @click="switchTopMenu(menu)">{{menu.title}}</div>
           </el-col>
           <el-col :span="7" style="text-align:right;padding-right:10px;">
-            <el-dropdown class="top-menu">
+            <el-dropdown @command="handleMenu" class="top-menu">
               <span class="el-dropdown-link">
                 <i class="fa fa-user" aria-hidden="true"></i> {{username}}
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>修改密码</el-dropdown-item>
-                <el-dropdown-item>退出</el-dropdown-item>
+                <el-dropdown-item command="information">账号设置</el-dropdown-item>
+                <el-dropdown-item command="changePwd">修改密码</el-dropdown-item>
+                <el-dropdown-item command="logout">退出</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
 
@@ -66,8 +69,12 @@
         </el-main>
       </el-container>
     </el-container>
-		<changePwd ref="changePwd"></changePwd>
+
 	</el-row>
+
+    	<changePwd ref="changePwd"></changePwd>
+    	<information ref="information" :nikename="informationData.nikename" :email="informationData.email" :mobile="informationData.mobile"></information>
+	</div>
 </template>
 
 <style>
@@ -76,26 +83,26 @@
 	.fade-leave-active {
 		transition: opacity .5s
 	}
-	
+
 	.fade-enter,
 	.fade-leave-active {
 		opacity: 0
 	}
-	
+
 	.panel {
 		position: absolute;
 		top: 0px;
 		bottom: 0px;
 		width: 100%;
 	}
-	
+
 	.panel-top {
 		height: 65px;
 		line-height: 60px;
 		background: #545c64;
 		color: #c0ccda;
 	}
-	
+
 	.panel-center {
 		background: #545c64;
 		position: absolute;
@@ -103,7 +110,7 @@
 		bottom: 0px;
 		overflow: hidden;
 	}
-	
+
 	.panel-c-c {
 		background: #f1f2f7;
 		right: 0px;
@@ -112,7 +119,7 @@
 		overflow-y: scroll;
 		padding: 20px;
 	}
-	
+
 	.logout {
 		background: url(../assets/images/logout_36.png);
 		background-size: contain;
@@ -120,7 +127,7 @@
 		height: 20px;
 		float: left;
 	}
-	
+
 	.logo {
 		width: 150px;
 		float: left;
@@ -133,14 +140,14 @@
     font-size:25px;
     color:#ffffff;
   }
-	
+
 	.tip-logout {
 		float: right;
 		margin-right: 20px;
 		padding-top: 5px;
 		cursor: pointer;
 	}
-	
+
 	.admin {
 		color: #c0ccda;
 		text-align: center;
@@ -182,7 +189,7 @@
     color:#ffffff;
    }
   .el-header .el-dropdown-link:hover{
-    
+
   }
 
   .el-aside {
@@ -204,7 +211,7 @@
   .el-aside .el-submenu .el-menu-item{
     min-width:0;
   }
-  
+
   .el-main {
     background-color: transparent;
     color: #333;
@@ -219,16 +226,16 @@
   .content-main{
     margin-top:-10px;
   }
-  
+
   body > .el-container {
 
   }
-  
+
   .el-container:nth-child(5) .el-aside,
   .el-container:nth-child(6) .el-aside {
     line-height: 260px;
   }
-  
+
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
   }
@@ -264,6 +271,7 @@
 <script>
   import leftMenu from './Common/leftMenu.vue'
   import changePwd from './Account/changePwd.vue'
+  import information from './Account/Information.vue'
   import http from '../assets/js/http'
 
   export default {
@@ -283,7 +291,13 @@
         activeIndex2: '1',
         isCollapse: false,
         leftClass: 'w-180 ovf-hd',
-        sectionLeft: '180px'
+        sectionLeft: '180px',
+        dialogVisible: false,
+        informationData: {
+          nikename: '',
+          email: '',
+          mobile: ''
+        }
       }
     },
     methods: {
@@ -294,8 +308,7 @@
         }).then(() => {
           _g.openGlobalLoading()
           let data = {
-            authkey: Lockr.get('authKey'),
-            sessionId: Lockr.get('sessionId')
+            authkey: Lockr.get('authKey')
           }
           this.apiPost('admin/base/logout', data).then((res) => {
             _g.closeGlobalLoading()
@@ -305,9 +318,8 @@
               Lockr.rm('rememberKey')
               Lockr.rm('authList')
               Lockr.rm('userInfo')
-              Lockr.rm('sessionId')
               Cookies.remove('rememberPwd')
-              _g.toastMsg('success', '退出成功')
+              _g.toastMsg('success', res.message)
               setTimeout(() => {
                 router.replace('/')
               }, 1500)
@@ -332,10 +344,16 @@
           case 'changePwd':
             this.changePwd()
             break
+          case 'information':
+            this.information()
+            break
         }
       },
       changePwd() {
         this.$refs.changePwd.open()
+      },
+      information() {
+        this.$refs.information.open()
       },
       getTitleAndLogo() {
         this.apiPost('admin/base/getConfigs').then((res) => {
@@ -354,8 +372,7 @@
     created() {
       this.getTitleAndLogo()
       let authKey = Lockr.get('authKey')
-      let sessionId = Lockr.get('sessionId')
-      if (!authKey || !sessionId) {
+      if (!authKey) {
         _g.toastMsg('warning', '您尚未登录')
         setTimeout(() => {
           router.replace('/')
@@ -367,6 +384,10 @@
       this.menu = this.$route.meta.menu
       this.module = this.$route.meta.module
       this.topMenu = menus
+      let userInfo = Lockr.get('userInfo')
+      this.informationData.nikename = userInfo.nikename
+      this.informationData.email = userInfo.email
+      this.informationData.mobile = userInfo.mobile
       _(menus).forEach((res) => {
         if (res.module == this.module) {
           this.menuData = res.child
@@ -387,7 +408,8 @@
     },
     components: {
       leftMenu,
-      changePwd
+      changePwd,
+      information
     },
     watch: {
       '$route' (to, from) {

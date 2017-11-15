@@ -2,7 +2,7 @@
 // ©2017 http://your.domain.com All rights reserved.
 namespace admin\domain\service\admin_position;
 
-use queryyetsimple\mvc\exception\model_not_found;
+use queryyetsimple\mvc\model_not_found;
 use admin\is\repository\admin_position as repository;
 
 /**
@@ -14,41 +14,41 @@ use admin\is\repository\admin_position as repository;
  * @version 1.0
  */
 class order {
-    
+
     /**
      * 后台职位仓储
      *
      * @var \admin\is\repository\admin_position
      */
     protected $oRepository;
-    
+
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_position $oRepository            
+     * @param \admin\is\repository\admin_position $oRepository
      * @return void
      */
     public function __construct(repository $oRepository) {
         $this->oRepository = $oRepository;
     }
-    
+
     /**
      * 响应方法
      *
-     * @param int $intId            
-     * @param string $strType            
+     * @param int $intId
+     * @param string $strType
      * @return void
      */
     public function run($intId, $strType) {
         $objStructure = $this->find ( $intId );
-        
+
         $objCollection = $this->siblings ( $objStructure ['pid'] );
         $intIndex = $this->validAndReturnIndex ( $intId, $objCollection, $strType );
-        
+
         $this->registerUnitOfWork ( $objCollection, $intIndex, $strType );
         $this->commit ();
     }
-    
+
     /**
      * 验证并返回索引 ID
      *
@@ -66,16 +66,16 @@ class order {
             default :
                 throw new order_failed ( '不受支持的排序操作方式' );
         }
-        
+
         return $intIndex;
     }
-    
+
     /**
      * 注册工作单元
      *
-     * @param \queryyetsimple\support\collection $objCollection            
-     * @param int $intIndex            
-     * @param string $strType            
+     * @param \queryyetsimple\support\collection $objCollection
+     * @param int $intIndex
+     * @param string $strType
      * @return void
      */
     protected function registerUnitOfWork($objCollection, $intIndex, $strType) {
@@ -84,7 +84,7 @@ class order {
             $this->oRepository->registerUpdate ( $objChild );
         }
     }
-    
+
     /**
      * 提交工作单元
      *
@@ -93,12 +93,12 @@ class order {
     protected function commit() {
         $this->oRepository->registerCommit ();
     }
-    
+
     /**
      * 获取当前索引
      *
-     * @param \queryyetsimple\support\collection $objCollection            
-     * @param int $intId            
+     * @param \queryyetsimple\support\collection $objCollection
+     * @param int $intId
      * @return int
      */
     protected function currentIndex($objCollection, $intId) {
@@ -109,14 +109,14 @@ class order {
                 break;
             }
         }
-        
+
         return $intIndex;
     }
-    
+
     /**
      * 验证是否为最顶层节点
      *
-     * @param int $intIndex            
+     * @param int $intIndex
      * @return void
      */
     protected function validTopIndex($intIndex) {
@@ -124,12 +124,12 @@ class order {
             throw new order_failed ( '已经是顶层节点' );
         }
     }
-    
+
     /**
      * 验证是否为最底层节点
      *
-     * @param int $intIndex            
-     * @param int $intTotal            
+     * @param int $intIndex
+     * @param int $intTotal
      * @return void
      */
     protected function validBottomIndex($intIndex, $intTotal) {
@@ -137,22 +137,22 @@ class order {
             throw new order_failed ( '已经是最底层节点' );
         }
     }
-    
+
     /**
      * 返回真实排序 KEY
      *
-     * @param int $intOrderKey            
+     * @param int $intOrderKey
      * @return int
      */
     protected function parseOrder($intOrderKey) {
         return 500 - $intOrderKey;
     }
-    
+
     /**
      * 分析置顶排序索引 KEY
      *
-     * @param int $intKey            
-     * @param int $intIndex            
+     * @param int $intKey
+     * @param int $intIndex
      * @return int
      */
     protected function parseTopOrderIndex($intKey, $intIndex) {
@@ -161,15 +161,15 @@ class order {
         } else {
             $intTemp = $intKey + 1;
         }
-        
+
         return $intTemp;
     }
-    
+
     /**
      * 分析上移排序索引 KEY
      *
-     * @param int $intKey            
-     * @param int $intIndex            
+     * @param int $intKey
+     * @param int $intIndex
      * @return int
      */
     protected function parseUpOrderIndex($intKey, $intIndex) {
@@ -180,15 +180,15 @@ class order {
         } else {
             $intTemp = $intKey;
         }
-        
+
         return $intTemp;
     }
-    
+
     /**
      * 分析下移排序索引 KEY
      *
-     * @param int $intKey            
-     * @param int $intIndex            
+     * @param int $intKey
+     * @param int $intIndex
      * @return int
      */
     protected function parseDownOrderIndex($intKey, $intIndex) {
@@ -199,14 +199,14 @@ class order {
         } else {
             $intTemp = $intKey;
         }
-        
+
         return $intTemp;
     }
-    
+
     /**
      * 查找实体
      *
-     * @param array $aMenu            
+     * @param array $aMenu
      * @return \admin\domain\entity\admin_menu|void
      */
     protected function find($intId) {
@@ -216,11 +216,11 @@ class order {
             throw new order_failed ( $oE->getMessage () );
         }
     }
-    
+
     /**
      * 查找当前节点的兄弟节点
      *
-     * @param int $intParentId            
+     * @param int $intParentId
      * @return \queryyetsimple\support\collection
      */
     protected function siblings($intParentId) {

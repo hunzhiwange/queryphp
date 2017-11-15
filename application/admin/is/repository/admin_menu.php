@@ -3,8 +3,8 @@
 namespace admin\is\repository;
 
 use queryyetsimple\mvc\repository;
+use queryyetsimple\mvc\iaggregate_root;
 use admin\domain\entity\admin_menu as aggregate;
-use queryyetsimple\mvc\interfaces\iaggregate_root;
 use admin\domain\repository\admin_menu as admin_menu_repository;
 
 /**
@@ -16,21 +16,21 @@ use admin\domain\repository\admin_menu as admin_menu_repository;
  * @version 1.0
  */
 class admin_menu extends repository implements admin_menu_repository {
-    
+
     /**
      * 构造函数
      *
-     * @param \admin\domain\entity\admin_menu $oAggregate            
+     * @param \admin\domain\entity\admin_menu $oAggregate
      * @return void
      */
     public function __construct(aggregate $objAggregate) {
         parent::__construct ( $objAggregate );
     }
-    
+
     /**
      * 取得所有记录
      *
-     * @param null|callback $mixCallback            
+     * @param null|callback $mixCallback
      * @return \queryyetsimple\support\collection
      */
     public function all($mixSpecification = null) {
@@ -38,11 +38,11 @@ class admin_menu extends repository implements admin_menu_repository {
             $objSelect->orderBy ( 'sort DESC' );
         }, $mixSpecification ) );
     }
-    
+
     /**
      * 是否存在子菜单
      *
-     * @param int $nId            
+     * @param int $nId
      * @return boolean
      */
     public function hasChildren($nId) {
@@ -50,17 +50,17 @@ class admin_menu extends repository implements admin_menu_repository {
             $objSelect->where ( 'pid', $nId );
         } ) ? true : false;
     }
-    
+
     /**
      * 后台菜单
      *
      * @return array
      */
     public function topNode() {
-        return [ 
+        return [
                 'id' => - 1,
                 'pid' => 0,
-                'lable' => '选择上级菜单' 
+                'lable' => '选择上级菜单'
         ];
     }
 }

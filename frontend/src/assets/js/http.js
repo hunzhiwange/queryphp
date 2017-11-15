@@ -72,12 +72,11 @@ const apiMethods = {
       if (res.code) {
         switch (res.code) {
           case 101:
-            console.log('cookie = ', Cookies.get('rememberPwd'))
             if (Cookies.get('rememberPwd')) {
               let data = {
-                rememberKey: Lockr.get('rememberKey')
+                remember_key: Lockr.get('rememberKey')
               }
-              this.reAjax('admin/base/relogin', data).then((res) => {
+              this.reAjax('admin/base/login', data).then((res) => {
                 this.handelResponse(res, (data) => {
                   this.resetCommonData(data)
                 })
@@ -118,7 +117,6 @@ const apiMethods = {
       Lockr.set('rememberKey', data.rememberKey)      // 记住密码的加密字符串
       Lockr.set('authList', data.authList)            // 权限节点列表
       Lockr.set('userInfo', data.userInfo)            // 用户信息
-      Lockr.set('sessionId', data.sessionId)          // 用户sessionid
       window.axios.defaults.headers.authKey = Lockr.get('authKey')
       let routerUrl = ''
       if (data.menusList[0].url) {

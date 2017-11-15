@@ -13,6 +13,7 @@ import VueRouter from 'vue-router'
 import store from './vuex/store'
 import filter from './assets/js/filter'
 import _g from './assets/js/global'
+import validate from './assets/js/validate'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import 'assets/css/global.css'
@@ -21,7 +22,6 @@ import 'assets/css/base.css'
 axios.defaults.baseURL = HOST
 axios.defaults.timeout = 1000 * 15
 axios.defaults.headers.authKey = Lockr.get('authKey')
-axios.defaults.headers.sessionId = Lockr.get('sessionId')
 axios.defaults.headers['Content-Type'] = 'application/json'
 
 const router = new VueRouter({
@@ -54,6 +54,7 @@ window.moment = moment
 window.Lockr = Lockr
 window.Cookies = Cookies
 window._g = _g
+window.validate = validate
 window.pageSize = 15
 
 const bus = new Vue()

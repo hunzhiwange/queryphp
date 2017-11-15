@@ -2,7 +2,7 @@
   <div>
     <div class="m-b-20 content-title" style="position:relative;">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/admin/home/index' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item>菜单管理</el-breadcrumb-item>
       </el-breadcrumb>
       <div style="position:absolute;right:0px;top:-7px;">
@@ -27,7 +27,7 @@
         show-checkbox
         default-expand-all
         highlight-current
-        check-strictly="true"
+        :check-strictly="checkStrictly"
         :render-content="renderContent">
       </el-tree>
 
@@ -155,6 +155,7 @@ export default {
       filterText: '',
       dataTree: [],
       status: [],
+      checkStrictly: true,
       defaultProps: {
         children: 'children',
         label: 'label'

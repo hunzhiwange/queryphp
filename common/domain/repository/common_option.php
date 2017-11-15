@@ -2,7 +2,7 @@
 // ©2017 http://your.domain.com All rights reserved.
 namespace common\domain\repository;
 
-use queryyetsimple\mvc\interfaces\irepository;
+use queryyetsimple\mvc\irepository;
 
 /**
  * 公共配置（聚合根）接口

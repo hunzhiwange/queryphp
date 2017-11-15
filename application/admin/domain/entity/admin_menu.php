@@ -3,7 +3,7 @@
 namespace admin\domain\entity;
 
 use queryyetsimple\mvc\model;
-use queryyetsimple\mvc\interfaces\iaggregate_root;
+use queryyetsimple\mvc\iaggregate_root;
 
 /**
  * 后台菜单实体（聚合根）

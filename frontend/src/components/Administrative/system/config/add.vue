@@ -2,11 +2,11 @@
 	<div>
     <div class="m-b-20 content-title">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/admin/home/index' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item>系统设置</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    
+
     <el-card class="box-card" style="width:100%;">
   		<el-form ref="form" :model="form" :rules="rules" label-width="130px">
   			<el-form-item label="系统名称" prop="SYSTEM_NAME">

@@ -3,8 +3,8 @@
 namespace admin\app\service\menu;
 
 use common\is\tree\tree;
+use queryyetsimple\mvc\model_not_found;
 use admin\is\repository\admin_menu as repository;
-use queryyetsimple\mvc\exception\model_not_found;
 
 /**
  * 后台菜单编辑更新
@@ -15,63 +15,63 @@ use queryyetsimple\mvc\exception\model_not_found;
  * @version 1.0
  */
 class update {
-    
+
     /**
      * 后台菜单仓储
      *
      * @var \admin\is\repository\admin_menu
      */
     protected $oRepository;
-    
+
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_menu $oRepository            
+     * @param \admin\is\repository\admin_menu $oRepository
      * @return void
      */
     public function __construct(repository $oRepository) {
         $this->oRepository = $oRepository;
     }
-    
+
     /**
      * 响应方法
      *
-     * @param array $aMenu            
+     * @param array $aMenu
      * @return array
      */
     public function run($aMenu) {
         return $this->oRepository->update ( $this->entify ( $aMenu ) );
     }
-    
+
     /**
      * 验证参数
      *
-     * @param array $aMenu            
+     * @param array $aMenu
      * @return \admin\domain\entity\admin_menu
      */
     protected function entify(array $aMenu) {
         $objMenu = $this->find ( $aMenu ['id'] );
-        
+
         $aMenu ['pid'] = $this->parseParentId ( $aMenu ['pid'] );
         if ($aMenu ['id'] == $aMenu ['pid']) {
             throw new update_failed ( '菜单父级不能为自己' );
         }
-        
-        if ($this->createTree ()->hasChildren ( $aMenu ['id'], [ 
-                $aMenu ['pid'] 
+
+        if ($this->createTree ()->hasChildren ( $aMenu ['id'], [
+                $aMenu ['pid']
         ] )) {
             throw new update_failed ( '菜单父级不能为自己的子菜单' );
         }
-        
+
         $objMenu->forceProps ( $this->data ( $aMenu ) );
-        
+
         return $objMenu;
     }
-    
+
     /**
      * 查找实体
      *
-     * @param int $intId            
+     * @param int $intId
      * @return \admin\domain\entity\admin_menu|void
      */
     protected function find($intId) {
@@ -81,7 +81,7 @@ class update {
             throw new update_failed ( $oE->getMessage () );
         }
     }
-    
+
     /**
      * 生成节点树
      *
@@ -90,33 +90,33 @@ class update {
     protected function createTree() {
         return new tree ( $this->parseToNode ( $this->oRepository->all () ) );
     }
-    
+
     /**
      * 转换为节点数组
      *
-     * @param \queryyetsimple\support\collection $objMenu            
+     * @param \queryyetsimple\support\collection $objMenu
      * @return array
      */
     protected function parseToNode($objMenu) {
         $arrNode = [ ];
         foreach ( $objMenu as $oMenu ) {
-            $arrNode [] = [ 
+            $arrNode [] = [
                     $oMenu->id,
                     $oMenu->pid,
-                    $oMenu->title 
+                    $oMenu->title
             ];
         }
         return $arrNode;
     }
-    
+
     /**
      * 组装 POST 数据
      *
-     * @param array $aMenu            
+     * @param array $aMenu
      * @return array
      */
     protected function data(array $aMenu) {
-        return [ 
+        return [
                 'menu' => $aMenu ['menu'],
                 'module' => $aMenu ['module'],
                 'pid' => intval ( $aMenu ['pid'] ),
@@ -126,7 +126,7 @@ class update {
                 'menu_icon' => $aMenu['menu_icon']
         ];
     }
-    
+
     /**
      * 分析父级数据
      *
@@ -139,7 +139,7 @@ class update {
         if ($intPid < 0) {
             $intPid = 0;
         }
-        
+
         return $intPid;
     }
 }

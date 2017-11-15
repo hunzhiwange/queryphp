@@ -3,7 +3,7 @@
 namespace admin\is\repository;
 
 use queryyetsimple\mvc\repository;
-use queryyetsimple\mvc\interfaces\iaggregate_root;
+use queryyetsimple\mvc\iaggregate_root;
 use admin\domain\entity\admin_structure as aggregate;
 use admin\domain\repository\admin_structure as admin_structure_repository;
 
@@ -16,21 +16,21 @@ use admin\domain\repository\admin_structure as admin_structure_repository;
  * @version 1.0
  */
 class admin_structure extends repository implements admin_structure_repository {
-    
+
     /**
      * 构造函数
      *
-     * @param \admin\domain\entity\admin_structure $oAggregate            
+     * @param \admin\domain\entity\admin_structure $oAggregate
      * @return void
      */
     public function __construct(aggregate $objAggregate) {
         parent::__construct ( $objAggregate );
     }
-    
+
     /**
      * 取得所有记录
      *
-     * @param null|callback $mixCallback            
+     * @param null|callback $mixCallback
      * @return \queryyetsimple\support\collection
      */
     public function all($mixSpecification = null) {
@@ -38,11 +38,11 @@ class admin_structure extends repository implements admin_structure_repository {
             $objSelect->orderBy ( 'sort DESC' );
         }, $mixSpecification ) );
     }
-    
+
     /**
      * 是否存在子部门
      *
-     * @param int $nId            
+     * @param int $nId
      * @return boolean
      */
     public function hasChildren($nId) {
@@ -50,17 +50,17 @@ class admin_structure extends repository implements admin_structure_repository {
             $objSelect->where ( 'pid', $nId );
         } ) ? true : false;
     }
-    
+
     /**
      * 后台部门
      *
      * @return array
      */
     public function topNode() {
-        return [ 
+        return [
                 'id' => - 1,
                 'pid' => 0,
-                'lable' => '选择上级部门' 
+                'lable' => '选择上级部门'
         ];
     }
 }

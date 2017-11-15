@@ -2,6 +2,7 @@
 // ©2017 http://your.domain.com All rights reserved.
 namespace common\app\controller;
 
+use queryyetsimple\request;
 use queryyetsimple\mvc\controller;
 
 /**
@@ -19,20 +20,24 @@ abstract class acontroller extends controller {
      *
      * @return  void
      */
-    public function __construct(){    
+    public function __construct(){
         // header('Access-Control-Allow-Origin: '.(isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN']: ''));
         header("Access-Control-Allow-Origin: *");
         header('Access-Control-Allow-Credentials: true');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
         header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, authKey, sessionId");
+
+        if(request::isOptions()){
+            exit('cross-domain options validate');
+        }
     }
 
     /**
      * IOC 容器调用回调实现自定义业务实例方法依赖注入
-     * 
-     * @param  calable $calClass 
-     * @param  array  $arrArgs 
-     * @return mixed 
+     *
+     * @param  calable $calClass
+     * @param  array  $arrArgs
+     * @return mixed
      */
     public function call($calClass, array $arrArgs = []){
         return $this->container()->call($calClass, $arrArgs);
@@ -40,8 +45,8 @@ abstract class acontroller extends controller {
 
     /**
      * 返回 IOC 容器
-     * 
-     * @return \queryyetsimple\support\interfaces\container
+     *
+     * @return \queryyetsimple\support\icontainer
      */
     public function container(){
         return app();

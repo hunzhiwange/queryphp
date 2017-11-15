@@ -1,28 +1,34 @@
 <?php
-
+// ©2017 http://your.domain.com All rights reserved.
 namespace admin\app\controller\base;
 
 use queryyetsimple\mvc\action;
-use queryyetsimple\bootstrap\auth\login_api as auth_login_api;
+use queryyetsimple\bootstrap\auth\login as auth_login_api;
 use queryyetsimple\http\request;
 use queryyetsimple\support\tree;
-use common\domain\model\admin_menu;
+use admin\domain\entity\admin_menu;
+use queryyetsimple\option;
+use queryyetsimple\response;
+use queryyetsimple\auth;
 
 class login extends action {
 
     use auth_login_api;
 
     public function run(request $oRequest) {
-        //return [];
-        //return $oGet->run();
-       // print_r($_POST);
-       // return $this->checkLogin($oRequest);
-   // print_r($oRequest->allAll());
+       $oRequest->setPost(option::get('var_ajax'),true);
+       
+       $mixLogin = $this->checkLogin($oRequest);
+       if($mixLogin instanceof response){
+           return $mixLogin;
+       }
 
-    //exit();
-       //$_POST['name'] = $oRequest->all('username');
+       $arrData = [
+           'authKey' => $mixLogin['api_token'],
+           'userInfo' => $mixLogin['user'],
+           'rememberKey' => $mixLogin['remember_key']
+       ];
 
-       $arrData = $this->checkLogin($oRequest);
        $arrData['menusList'] = $this->getMenu();
        $arrData['authList'] = $this->getAuth();
 

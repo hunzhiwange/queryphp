@@ -1,13 +1,11 @@
 <template>
  <el-menu
     v-bind:collapse="isCollapse"
-    unique-opened="true"
+    v-bind:unique-opened="unique_opened"
     default-active="2"
     class="el-menu-vertical-demo"
-    @open="handleOpen"
-    @close="handleClose"
     active-text-color="#1d232f">
-    <el-submenu v-for="secMenu in menuData" v-bind:index="secMenu.id">
+    <el-submenu v-for="secMenu in menuData" v-bind:index="(secMenu.id.toString())">
       <template slot="title">
         <i v-bind:class="secMenu.menu_icon"></i>
         <span>{{secMenu.title}}</span>
@@ -22,6 +20,7 @@ export default {
   props: ['menuData', 'menu', 'isCollapse'],
   data() {
     return {
+      unique_opened: true
     }
   },
   methods: {

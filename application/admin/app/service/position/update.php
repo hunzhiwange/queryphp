@@ -3,7 +3,7 @@
 namespace admin\app\service\position;
 
 use common\is\tree\tree;
-use queryyetsimple\mvc\exception\model_not_found;
+use queryyetsimple\mvc\model_not_found;
 use admin\is\repository\admin_position as repository;
 
 /**
@@ -15,63 +15,63 @@ use admin\is\repository\admin_position as repository;
  * @version 1.0
  */
 class update {
-    
+
     /**
      * 后台职位仓储
      *
      * @var \admin\is\repository\admin_position
      */
     protected $oRepository;
-    
+
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_position $oRepository            
+     * @param \admin\is\repository\admin_position $oRepository
      * @return void
      */
     public function __construct(repository $oRepository) {
         $this->oRepository = $oRepository;
     }
-    
+
     /**
      * 响应方法
      *
-     * @param array $aStructure            
+     * @param array $aStructure
      * @return array
      */
     public function run($aStructure) {
         return $this->oRepository->update ( $this->entify ( $aStructure ) );
     }
-    
+
     /**
      * 验证参数
      *
-     * @param array $aStructure            
+     * @param array $aStructure
      * @return \admin\domain\entity\admin_position
      */
     protected function entify(array $aStructure) {
         $objStructure = $this->find ( $aStructure ['id'] );
-        
+
         $aStructure ['pid'] = $this->parseParentId ( $aStructure ['pid'] );
         if ($aStructure ['id'] == $aStructure ['pid']) {
             throw new update_failed ( '职位父级不能为自己' );
         }
-        
-        if ($this->createTree ()->hasChildren ( $aStructure ['id'], [ 
-                $aStructure ['pid'] 
+
+        if ($this->createTree ()->hasChildren ( $aStructure ['id'], [
+                $aStructure ['pid']
         ] )) {
             throw new update_failed ( '职位父级不能为自己的子职位' );
         }
-        
+
         $objStructure->forceProps ( $this->data ( $aStructure ) );
-        
+
         return $objStructure;
     }
-    
+
     /**
      * 查找实体
      *
-     * @param int $intId            
+     * @param int $intId
      * @return \admin\domain\entity\admin_position|void
      */
     protected function find($intId) {
@@ -81,7 +81,7 @@ class update {
             throw new update_failed ( $oE->getMessage () );
         }
     }
-    
+
     /**
      * 生成节点树
      *
@@ -90,38 +90,38 @@ class update {
     protected function createTree() {
         return new tree ( $this->parseToNode ( $this->oRepository->all () ) );
     }
-    
+
     /**
      * 转换为节点数组
      *
-     * @param \queryyetsimple\support\collection $objStructure           
+     * @param \queryyetsimple\support\collection $objStructure
      * @return array
      */
     protected function parseToNode($objStructure) {
         $arrNode = [ ];
         foreach ( $objStructure as $oStructure ) {
-            $arrNode [] = [ 
+            $arrNode [] = [
                     $oStructure->id,
                     $oStructure->pid,
-                    $oStructure->name 
+                    $oStructure->name
             ];
         }
         return $arrNode;
     }
-    
+
     /**
      * 组装 POST 数据
      *
-     * @param array $aStructure            
+     * @param array $aStructure
      * @return array
      */
     protected function data(array $aStructure) {
-        return [ 
+        return [
                 'name' => $aStructure ['name'],
                 'pid' => intval ( $aStructure ['pid'] )
         ];
     }
-    
+
     /**
      * 分析父级数据
      *
@@ -134,7 +134,7 @@ class update {
         if ($intPid < 0) {
             $intPid = 0;
         }
-        
+
         return $intPid;
     }
 }

@@ -268,8 +268,7 @@
         }).then(() => {
           _g.openGlobalLoading()
           let data = {
-            authkey: Lockr.get('authKey'),
-            sessionId: Lockr.get('sessionId')
+            authkey: Lockr.get('authKey')
           }
           this.apiPost('admin/base/logout', data).then((res) => {
             _g.closeGlobalLoading()
@@ -279,7 +278,6 @@
               Lockr.rm('rememberKey')
               Lockr.rm('authList')
               Lockr.rm('userInfo')
-              Lockr.rm('sessionId')
               Cookies.remove('rememberPwd')
               _g.toastMsg('success', '退出成功')
               setTimeout(() => {
@@ -340,8 +338,7 @@
     created() {
       this.getTitleAndLogo()
       let authKey = Lockr.get('authKey')
-      let sessionId = Lockr.get('sessionId')
-      if (!authKey || !sessionId) {
+      if (!authKey) {
         _g.toastMsg('warning', '您尚未登录')
         setTimeout(() => {
           router.replace('/')

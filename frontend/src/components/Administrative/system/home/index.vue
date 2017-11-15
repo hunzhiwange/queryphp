@@ -2,12 +2,12 @@
   <div>
     <div class="m-b-20 content-title" style="position:relative;">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/admin/home/index' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>部门管理</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>菜单管理</el-breadcrumb-item>
       </el-breadcrumb>
       <div style="position:absolute;right:0px;top:-7px;">
-        <router-link :to="{path: '/admin/structure/add'}">
-          <el-button class="pull-right menu-right" type="primary" size="mini" plain><i class="el-icon-plus"></i>&nbsp;添加部门</el-button>
+        <router-link :to="{path: '/admin/menu/add'}">
+          <el-button class="pull-right menu-right" type="primary" size="mini" plain><i class="el-icon-plus"></i>&nbsp;添加菜单</el-button>
         </router-link>
       </div>
     </div>
@@ -47,11 +47,11 @@ export default {
   methods: {
     child(node, data, store, event) {
       this.stopPropagation(event)
-      router.replace('/admin/structure/add/' + data.id)
+      router.replace('/admin/menu/add/' + data.id)
     },
     edit(node, data, store, event) {
       this.stopPropagation(event)
-      router.replace('/admin/structure/edit/' + data.id)
+      router.replace('/admin/menu/edit/' + data.id)
     },
     top(node, data, store, event) {
       this.order(node, data, store, event, 'top')
@@ -64,7 +64,7 @@ export default {
     },
     enable(node, data, store, event, status) {
       this.stopPropagation(event)
-      this.apiPut('/admin/structure/enable/', data.id, { status: status }).then((res) => {
+      this.apiPut('/admin/menu/enable/', data.id, { status: status }).then((res) => {
         this.handelResponse(res, (data) => {
           _g.toastMsg('success', res.message)
           setTimeout(() => {
@@ -76,12 +76,12 @@ export default {
     remove(node, data, store, event) {
       this.stopPropagation(event)
       if (node.childNodes.length) return
-      this.$confirm('确认删除该部门?', '提示', {
+      this.$confirm('确认删除该菜单?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.apiDelete('/admin/structure/', data.id).then((res) => {
+        this.apiDelete('/admin/menu/', data.id).then((res) => {
           this.handelResponse(res, (data) => {
             _g.toastMsg('success', res.message)
             setTimeout(() => {
@@ -104,7 +104,7 @@ export default {
         status: type
       }
 
-      this.apiPost('/admin/structure/enables', data).then((res) => {
+      this.apiPost('/admin/menu/enables', data).then((res) => {
         this.handelResponse(res, (data) => {
           _g.toastMsg('success', res.message)
           setTimeout(() => {
@@ -119,7 +119,7 @@ export default {
     },
     order(node, data, store, event, type) {
       this.stopPropagation(event)
-      this.apiPut('/admin/structure/order/', data.id, { type: type }).then((res) => {
+      this.apiPut('/admin/menu/order/', data.id, { type: type }).then((res) => {
         this.handelResponse(res, (data) => {
           _g.toastMsg('success', res.message)
           setTimeout(() => {
@@ -139,7 +139,7 @@ export default {
           </span>
           <span>
             <el-button type='text' style='font-size: 12px;' on-click={ () => this.enable(node, data, store, event, this.status[data.id] == 'enable' ? 'diable' : 'enable') } domPropsInnerHTML={this.status[data.id] == 'enable' ? '<span style="color:#67C23A;" class="el-icon-circle-check"> 已启用</span>' : '<span style="color:#EB9E05;" class="el-icon-circle-close"> 已禁用</span>'}></el-button>
-            <el-button type='text' style='font-size: 12px;' icon='el-icon-plus' on-click={ () => this.child(store, data, event) }>子部门</el-button>
+            <el-button type='text' style='font-size: 12px;' icon='el-icon-plus' on-click={ () => this.child(store, data, event) }>子菜单</el-button>
             <el-button type='text' style='font-size: 12px;' icon='el-icon-edit' on-click={ () => this.edit(node, data, store, event) }>修改</el-button>
             <el-button type='text' style='font-size: 12px;' icon='el-icon-star-on' on-click={ () => this.top(node, data, store, event) }>置顶</el-button>
             <el-button type='text' style='font-size: 12px;' icon='fa fa fa-arrow-up' on-click={ () => this.up(node, data, store, event) }>上移</el-button>
@@ -162,9 +162,9 @@ export default {
     }
   },
   created() {
-    this.apiGet('/admin/structure').then((res) => {
+    this.apiGet('/admin/menu').then((res) => {
       this.handelResponse(res, (data) => {
-        this.dataTree = data.structure
+        this.dataTree = data.menu
         this.status = data.status
       })
     })

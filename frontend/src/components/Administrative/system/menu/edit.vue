@@ -2,12 +2,12 @@
   <div>
     <div class="m-b-20 content-title">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/admin/home/index' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item :to="{ path: '/admin/menu/list' }">菜单管理</el-breadcrumb-item>
         <el-breadcrumb-item>编辑菜单</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    
+
     <el-card class="box-card" style="width:100%;">
       <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-form-item label="标题" prop="title">

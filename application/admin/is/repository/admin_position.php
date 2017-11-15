@@ -3,7 +3,7 @@
 namespace admin\is\repository;
 
 use queryyetsimple\mvc\repository;
-use queryyetsimple\mvc\interfaces\iaggregate_root;
+use queryyetsimple\mvc\iaggregate_root;
 use admin\domain\entity\admin_position as aggregate;
 use admin\domain\repository\admin_position as admin_position_repository;
 
@@ -16,21 +16,21 @@ use admin\domain\repository\admin_position as admin_position_repository;
  * @version 1.0
  */
 class admin_position extends repository implements admin_position_repository {
-    
+
     /**
      * 构造函数
      *
-     * @param \admin\domain\entity\admin_position $oAggregate            
+     * @param \admin\domain\entity\admin_position $oAggregate
      * @return void
      */
     public function __construct(aggregate $objAggregate) {
         parent::__construct ( $objAggregate );
     }
-    
+
     /**
      * 取得所有记录
      *
-     * @param null|callback $mixCallback            
+     * @param null|callback $mixCallback
      * @return \queryyetsimple\support\collection
      */
     public function all($mixSpecification = null) {
