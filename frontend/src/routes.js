@@ -26,75 +26,242 @@ import usersEdit from './components/Administrative/personnel/users/edit.vue'
  * menu: 所属菜单，用于判断三级菜单是否显示高亮，如菜单列表、添加菜单、编辑菜单都是'menu'，用户列表、添加用户、编辑用户都是'user'，如此类推
  */
 
-const routes = [
-  { path: '/', component: Login, name: 'Login' },
-  {
-    path: '/admin',
-    component: Home,
-    children: [
-      { path: '/refresh', component: refresh, name: 'refresh' }
-    ]
-  },
-  {
-    path: '/admin',
-    component: Home,
-    children: [
-      { path: 'home/index', component: homeIndex, name: 'homeIndex', meta: { hideLeft: false, module: 'Administrative', menu: 'home' }}
-    ]
-  },
-  {
-    path: '/admin',
-    component: Home,
-    children: [
-      { path: 'menu/list', component: menuList, name: 'menuList', meta: { hideLeft: false, module: 'Administrative', menu: 'menu' }},
-      { path: 'menu/add', component: menuAdd, name: 'menuAdd', meta: { hideLeft: false, module: 'Administrative', menu: 'menu' }},
-      { path: 'menu/add/:pid', component: menuAdd, name: 'menuAdd', meta: { hideLeft: false, module: 'Administrative', menu: 'menu' }},
-      { path: 'menu/edit/:id', component: menuEdit, name: 'menuEdit', meta: { hideLeft: false, module: 'Administrative', menu: 'menu' }}
-    ]
-  },
-  {
-    path: '/admin',
-    component: Home,
-    children: [
-      { path: 'config/add', component: systemConfig, name: 'systemConfig', meta: { hideLeft: false, module: 'Administrative', menu: 'systemConfig' }}
-    ]
-  },
-  {
-    path: '/admin',
-    component: Home,
-    children: [
-      { path: 'position/list', component: positionList, name: 'positionList', meta: { hideLeft: false, module: 'Administrative', menu: 'position' }},
-      { path: 'position/add', component: positionAdd, name: 'positionAdd', meta: { hideLeft: false, module: 'Administrative', menu: 'position' }},
-      { path: 'position/edit/:id', component: positionEdit, name: 'positionEdit', meta: { hideLeft: false, module: 'Administrative', menu: 'position' }}
-    ]
-  },
-  {
-    path: '/admin',
-    component: Home,
-    children: [
-      { path: 'structure/list', component: structuresList, name: 'structuresList', meta: { hideLeft: false, module: 'Administrative', menu: 'structures' }},
-      { path: 'structure/add/:pid', component: structuresAdd, name: 'structuresAdd', meta: { hideLeft: false, module: 'Administrative', menu: 'structures' }},
-      { path: 'structure/add', component: structuresAdd, name: 'structuresAdd', meta: { hideLeft: false, module: 'Administrative', menu: 'structures' }},
-      { path: 'structure/edit/:id', component: structuresEdit, name: 'structuresEdit', meta: { hideLeft: false, module: 'Administrative', menu: 'structures' }}
-    ]
-  },
-  {
-    path: '/admin',
-    component: Home,
-    children: [
-      { path: 'groups/list', component: groupsList, name: 'groupsList', meta: { hideLeft: false, module: 'Administrative', menu: 'groups' }},
-      { path: 'groups/add', component: groupsAdd, name: 'groupsAdd', meta: { hideLeft: false, module: 'Administrative', menu: 'groups' }},
-      { path: 'groups/edit/:id', component: groupsEdit, name: 'groupsEdit', meta: { hideLeft: false, module: 'Administrative', menu: 'groups' }}
-    ]
-  },
-  {
-    path: '/admin',
-    component: Home,
-    children: [
-      { path: 'users/list', component: usersList, name: 'usersList', meta: { hideLeft: false, module: 'Administrative', menu: 'users' }},
-      { path: 'users/add', component: usersAdd, name: 'usersAdd', meta: { hideLeft: false, module: 'Administrative', menu: 'users' }},
-      { path: 'users/edit/:id', component: usersEdit, name: 'usersEdit', meta: { hideLeft: false, module: 'Administrative', menu: 'users' }}
-    ]
-  }
+const routes = [{
+        path: '/',
+        component: Login,
+        name: 'Login'
+    },
+    {
+        path: '/admin',
+        component: Home,
+        children: [{
+            path: '/refresh',
+            component: refresh,
+            name: 'refresh'
+        }]
+    },
+    {
+        path: '/admin',
+        component: Home,
+        children: [{
+            path: 'home/index',
+            component: homeIndex,
+            name: 'homeIndex',
+            meta: {
+                hideLeft: false,
+                module: 'Administrative',
+                menu: 'home'
+            }
+        }]
+    },
+    {
+        path: '/admin',
+        component: Home,
+        children: [{
+                path: 'menu/list',
+                component: menuList,
+                name: 'menuList',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'menu'
+                }
+            },
+            {
+                path: 'menu/add',
+                component: menuAdd,
+                name: 'menuAdd',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'menu'
+                }
+            },
+            {
+                path: 'menu/add/:pid',
+                component: menuAdd,
+                name: 'menuAdd',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'menu'
+                }
+            },
+            {
+                path: 'menu/edit/:id',
+                component: menuEdit,
+                name: 'menuEdit',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'menu'
+                }
+            }
+        ]
+    },
+    {
+        path: '/admin',
+        component: Home,
+        children: [{
+            path: 'config/add',
+            component: systemConfig,
+            name: 'systemConfig',
+            meta: {
+                hideLeft: false,
+                module: 'Administrative',
+                menu: 'systemConfig'
+            }
+        }]
+    },
+    {
+        path: '/admin',
+        component: Home,
+        children: [{
+                path: 'position/list',
+                component: positionList,
+                name: 'positionList',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'position'
+                }
+            },
+            {
+                path: 'position/add',
+                component: positionAdd,
+                name: 'positionAdd',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'position'
+                }
+            },
+            {
+                path: 'position/edit/:id',
+                component: positionEdit,
+                name: 'positionEdit',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'position'
+                }
+            }
+        ]
+    },
+    {
+        path: '/admin',
+        component: Home,
+        children: [{
+                path: 'structure/list',
+                component: structuresList,
+                name: 'structuresList',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'structures'
+                }
+            },
+            {
+                path: 'structure/add/:pid',
+                component: structuresAdd,
+                name: 'structuresAdd',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'structures'
+                }
+            },
+            {
+                path: 'structure/add',
+                component: structuresAdd,
+                name: 'structuresAdd',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'structures'
+                }
+            },
+            {
+                path: 'structure/edit/:id',
+                component: structuresEdit,
+                name: 'structuresEdit',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'structures'
+                }
+            }
+        ]
+    },
+    {
+        path: '/admin',
+        component: Home,
+        children: [{
+                path: 'groups/list',
+                component: groupsList,
+                name: 'groupsList',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'groups'
+                }
+            },
+            {
+                path: 'groups/add',
+                component: groupsAdd,
+                name: 'groupsAdd',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'groups'
+                }
+            },
+            {
+                path: 'groups/edit/:id',
+                component: groupsEdit,
+                name: 'groupsEdit',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'groups'
+                }
+            }
+        ]
+    },
+    {
+        path: '/admin',
+        component: Home,
+        children: [{
+                path: 'users/list',
+                component: usersList,
+                name: 'usersList',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'users'
+                }
+            },
+            {
+                path: 'users/add',
+                component: usersAdd,
+                name: 'usersAdd',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'users'
+                }
+            },
+            {
+                path: 'users/edit/:id',
+                component: usersEdit,
+                name: 'usersEdit',
+                meta: {
+                    hideLeft: false,
+                    module: 'Administrative',
+                    menu: 'users'
+                }
+            }
+        ]
+    }
 ]
 export default routes

@@ -25,21 +25,21 @@ axios.defaults.headers.authKey = Lockr.get('authKey')
 axios.defaults.headers['Content-Type'] = 'application/json'
 
 const router = new VueRouter({
-  mode: 'history',
-  base: __dirname,
-  routes
+    mode: 'history',
+    base: __dirname,
+    routes
 })
 
 router.beforeEach((to, from, next) => {
-  const hideLeft = to.meta.hideLeft
-  store.dispatch('showLeftMenu', hideLeft)
-  store.dispatch('showLoading', true)
-  NProgress.start()
-  next()
+    const hideLeft = to.meta.hideLeft
+    store.dispatch('showLeftMenu', hideLeft)
+    store.dispatch('showLoading', true)
+    NProgress.start()
+    next()
 })
 
 router.afterEach(transition => {
-  NProgress.done()
+    NProgress.done()
 })
 
 Vue.use(ElementUI)
@@ -61,11 +61,13 @@ const bus = new Vue()
 window.bus = bus
 
 new Vue({
-  el: '#app',
-  template: '<App/>',
-  filters: filter,
-  router,
-  store,
-  components: { App }
-// render: h => h(Login)
+    el: '#app',
+    template: '<App/>',
+    filters: filter,
+    router,
+    store,
+    components: {
+        App
+    }
+    // render: h => h(Login)
 }).$mount('#app')

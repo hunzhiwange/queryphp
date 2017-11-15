@@ -1,5 +1,5 @@
 const getters = {
-  // getCount: state => state.count,
+    // getCount: state => state.count,
 }
 
 export default getters
