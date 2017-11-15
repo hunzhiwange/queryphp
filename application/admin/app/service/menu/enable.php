@@ -13,7 +13,8 @@ use admin\is\repository\admin_menu as repository;
  * @since 2017.10.19
  * @version 1.0
  */
-class enable {
+class enable
+{
 
     /**
      * 后台菜单仓储
@@ -28,7 +29,8 @@ class enable {
      * @param \admin\is\repository\admin_menu $oRepository
      * @return void
      */
-    public function __construct(repository $oRepository) {
+    public function __construct(repository $oRepository)
+    {
         $this->oRepository = $oRepository;
     }
 
@@ -39,8 +41,9 @@ class enable {
      * @param string $strStatus
      * @return array
      */
-    public function run($intId, $strStatus) {
-        return $this->oRepository->update ( $this->entify ( $intId, $strStatus ) );
+    public function run($intId, $strStatus)
+    {
+        return $this->oRepository->update($this->entify($intId, $strStatus));
     }
 
     /**
@@ -50,9 +53,10 @@ class enable {
      * @param string $strStatus
      * @return \admin\domain\entity\admin_menu
      */
-    protected function entify($intId, $strStatus) {
-        $objMenu = $this->find ( $intId );
-        $objMenu->forceProp ( 'status', $strStatus );
+    protected function entify($intId, $strStatus)
+    {
+        $objMenu = $this->find($intId);
+        $objMenu->forceProp('status', $strStatus);
         return $objMenu;
     }
 
@@ -62,11 +66,12 @@ class enable {
      * @param int $intId
      * @return \admin\domain\entity\admin_menu|void
      */
-    protected function find($intId) {
+    protected function find($intId)
+    {
         try {
-            return $this->oRepository->findOrFail ( $intId );
-        } catch ( model_not_found $oE ) {
-            throw new update_failed ( $oE->getMessage () );
+            return $this->oRepository->findOrFail($intId);
+        } catch (model_not_found $oE) {
+            throw new update_failed($oE->getMessage());
         }
     }
 }

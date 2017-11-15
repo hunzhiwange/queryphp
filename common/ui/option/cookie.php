@@ -9,8 +9,8 @@
  * @since 2016.11.19
  * @version 1.0
  */
-return [ 
-        
+return [
+
         /**
          * ---------------------------------------------------------------
          * cookie 前缀
@@ -19,7 +19,7 @@ return [
          * 设置 cookie 前缀可以用来解决冲突
          */
         'prefix' => 'q_',
-        
+
         /**
          * ---------------------------------------------------------------
          * cookie 域名
@@ -31,7 +31,7 @@ return [
          * 相关技术文档：http://php.net/manual/zh/function.setcookie.php
          */
         'domain' => '',
-        
+
         /**
          * ---------------------------------------------------------------
          * cookie 路径
@@ -42,7 +42,7 @@ return [
          * 相关技术文档：http://php.net/manual/zh/function.setcookie.php
          */
         'path' => '/',
-        
+
         /**
          * ---------------------------------------------------------------
          * cookie 默认过期时间
@@ -55,7 +55,7 @@ return [
          * 相关技术文档：http://php.net/manual/zh/function.setcookie.php
          */
         'expire' => 86400,
-        
+
         /**
          * ---------------------------------------------------------------
          * cookie 仅 HTTP 协议访问
@@ -66,5 +66,5 @@ return [
          * TRUE 或 FALSE
          * 相关技术文档：http://php.net/manual/zh/function.setcookie.php
          */
-        'httponly' => false 
-]; 
+        'httponly' => false
+];

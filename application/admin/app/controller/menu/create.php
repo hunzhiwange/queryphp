@@ -14,24 +14,27 @@ use admin\app\service\menu\create as service;
  * @since 2017.10.12
  * @version 1.0
  */
-class create extends aaction {
-    
+class create extends aaction
+{
+
     /**
      * 响应方法
      *
-     * @param \admin\app\service\menu\create $oService            
+     * @param \admin\app\service\menu\create $oService
      * @return mixed
      */
-    public function run(service $oService) {
-        return $oService->run ( $this->parentId () );
+    public function run(service $oService)
+    {
+        return $oService->run($this->parentId());
     }
-    
+
     /**
      * 父级 ID
      *
      * @return int
      */
-    protected function parentId() {
-        return request::all ( 'pid|intval' );
+    protected function parentId()
+    {
+        return request::all('pid|intval');
     }
 }

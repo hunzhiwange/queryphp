@@ -14,77 +14,83 @@ use admin\is\repository\admin_menu as repository;
  * @since 2017.10.12
  * @version 1.0
  */
-class store {
-    
+class store
+{
+
     /**
      * 后台菜单仓储
      *
      * @var \admin\is\repository\admin_menu
      */
     protected $oRepository;
-    
+
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_menu $oRepository            
+     * @param \admin\is\repository\admin_menu $oRepository
      * @return void
      */
-    public function __construct(repository $oRepository) {
+    public function __construct(repository $oRepository)
+    {
         $this->oRepository = $oRepository;
     }
-    
+
     /**
      * 响应方法
      *
-     * @param array $aMenu            
+     * @param array $aMenu
      * @return array
      */
-    public function run($aMenu) {
-        $aMenu ['pid'] = $this->parseParentId ( $aMenu ['pid'] );
-        return $this->oRepository->create ( $this->entity ( $aMenu ) );
+    public function run($aMenu)
+    {
+        $aMenu ['pid'] = $this->parseParentId($aMenu ['pid']);
+        return $this->oRepository->create($this->entity($aMenu));
     }
-    
+
     /**
      * 创建实体
      *
-     * @param array $aMenu            
+     * @param array $aMenu
      * @return \admin\domain\entity\admin_menu
      */
-    protected function entity(array $aMenu) {
-        return new entity ( $this->data ( $aMenu ) );
+    protected function entity(array $aMenu)
+    {
+        return new entity($this->data($aMenu));
     }
-    
+
     /**
      * 组装 POST 数据
      *
-     * @param array $aMenu            
+     * @param array $aMenu
      * @return array
      */
-    protected function data(array $aMenu) {
-        return [ 
+    protected function data(array $aMenu)
+    {
+        return [
                 'menu' => $aMenu ['menu'],
                 'module' => $aMenu ['module'],
-                'pid' => intval ( $aMenu ['pid'] ),
+                'pid' => intval($aMenu ['pid']),
                 'sort' => 500,
                 'title' => $aMenu ['title'],
                 'url' => $aMenu ['url'],
-                'menu_type' => intval ( $aMenu ['menu_type'] ),
+                'menu_type' => intval($aMenu ['menu_type']),
                 'menu_icon' => $aMenu['menu_icon']
         ];
     }
-    
+
     /**
      * 分析父级数据
      *
-     * @param array $aPid            
+     * @param array $aPid
      * @return int
      */
-    protected function parseParentId(array $aPid) {
-        $intPid = intval ( array_pop ( $aPid ) );
+    protected function parseParentId(array $aPid)
+    {
+        $intPid = intval(array_pop($aPid));
         if ($intPid < 0) {
             $intPid = 0;
         }
-        
+
         return $intPid;
     }
 }

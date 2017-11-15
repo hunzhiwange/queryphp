@@ -9,8 +9,8 @@
  * @since 2016.11.19
  * @version 1.0
  */
-return [ 
-        
+return [
+
         /**
          * ---------------------------------------------------------------
          * 运行环境
@@ -19,8 +19,8 @@ return [
          * 根据不同的阶段设置不同的开发环境
          * 可以为 production : 生产环境 testing : 测试环境 development : 开发环境
          */
-        'app_environment' => env ( 'app_environment', 'development' ),
-        
+        'app_environment' => env('app_environment', 'development'),
+
         /**
          * ---------------------------------------------------------------
          * 是否打开调试模式
@@ -28,8 +28,8 @@ return [
          *
          * 打开调试模式可以显示更多精确的错误信息
          */
-        'app_debug' => env ( 'app_debug', false ),
-        
+        'app_debug' => env('app_debug', false),
+
         /**
          * ---------------------------------------------------------------
          * 自定义命名空间 （ 名字 = 入口路径）
@@ -40,7 +40,7 @@ return [
          * see https://github.com/hunzhiwange/document/blob/master/execution-flow/namespace-and-autoload.md
          */
         'namespace' => [ ],
-        
+
         /**
          * ---------------------------------------------------------------
          * 应用提供者
@@ -52,7 +52,7 @@ return [
          * 相关文档请访问 [系统架构\应用服务提供者]
          * see https://github.com/hunzhiwange/document/blob/master/system-architecture/service-provider.md
          */
-        'provider' => [ 
+        'provider' => [
                 'queryyetsimple\auth',
                 'queryyetsimple\cache',
                 'queryyetsimple\cookie',
@@ -73,9 +73,9 @@ return [
                 'queryyetsimple\session',
                 'queryyetsimple\throttler',
                 'queryyetsimple\validate',
-                'queryyetsimple\view' 
+                'queryyetsimple\view'
         ],
-        
+
         /**
          * ---------------------------------------------------------------
          * 中间件分组
@@ -83,20 +83,20 @@ return [
          *
          * 分组可以很方便地批量调用组件
          */
-        'middleware_group' => [ 
-                'web' => [ 
-                        'session' 
+        'middleware_group' => [
+                'web' => [
+                        'session'
                 ],
-                
-                'api' => [ 
-                        'throttler:60,1' 
+
+                'api' => [
+                        'throttler:60,1'
                 ],
-                
-                'common' => [ 
-                        'log' 
-                ] 
+
+                'common' => [
+                        'log'
+                ]
         ],
-        
+
         /**
          * ---------------------------------------------------------------
          * 中间件别名
@@ -105,12 +105,12 @@ return [
          * HTTP 中间件提供一个方便的机制来过滤进入应用程序的 HTTP 请求
          * 例外在应用执行结束后响应环节也会调用 HTTP 中间件
          */
-        'middleware_alias' => [ 
+        'middleware_alias' => [
                 'session' => 'queryyetsimple\session\middleware\session',
                 'throttler' => 'queryyetsimple\throttler\middleware\throttler',
-                'log' => 'queryyetsimple\log\middleware\log' 
+                'log' => 'queryyetsimple\log\middleware\log'
         ],
-        
+
         /**
          * ---------------------------------------------------------------
          * 自定义命令
@@ -120,7 +120,7 @@ return [
          * 命令一行一条，直接书写完整的命名空间类
          */
         'console' => [ ],
-        
+
         /**
          * ---------------------------------------------------------------
          * 默认应用
@@ -129,7 +129,7 @@ return [
          * 默认应用非常重要，与路由解析息息相关
          */
         'default_app' => 'home',
-        
+
         /**
          * ---------------------------------------------------------------
          * 默认控制器
@@ -138,7 +138,7 @@ return [
          * 未指定的控制器，此时会默认指定为此控制器
          */
         'default_controller' => 'index',
-        
+
         /**
          * ---------------------------------------------------------------
          * 默认方法
@@ -147,7 +147,7 @@ return [
          * 未指定的方法，此时会默认指定为此方法
          */
         'default_action' => 'index',
-        
+
         /**
          * ---------------------------------------------------------------
          * 默认响应方式
@@ -157,7 +157,7 @@ return [
          * api 接口模式，json、view 和默认返回 api 格式数据
          */
         'default_response' => 'default',
-        
+
         /**
          * ---------------------------------------------------------------
          * 约定请求方法
@@ -166,7 +166,7 @@ return [
          * 系统约束后台请求类型，通过 $_POST['_method'] 判断
          */
         'var_method' => '_method',
-        
+
         /**
          * ---------------------------------------------------------------
          * 约定 ajax
@@ -176,7 +176,7 @@ return [
          * 所有参数不包含文件参数 $_FILES
          */
         'var_ajax' => '_ajax',
-        
+
         /**
          * ---------------------------------------------------------------
          * 约定 pjax
@@ -186,7 +186,7 @@ return [
          * $参数不包含文件参数 $_FILES
          */
         'var_pjax' => '_pjax',
-        
+
         /**
          * ---------------------------------------------------------------
          * Gzip 压缩
@@ -195,7 +195,7 @@ return [
          * 启用页面 gzip 压缩，需要系统支持 gz_handler 函数
          */
         'start_gzip' => true,
-        
+
         /**
          * ---------------------------------------------------------------
          * 系统时区
@@ -205,7 +205,7 @@ return [
          * 此功能会影响到 date.time 相关功能
          */
         'time_zone' => 'Asia/Shanghai',
-        
+
         /**
          * ---------------------------------------------------------------
          * 安全 key
@@ -214,8 +214,8 @@ return [
          * 请妥善保管此安全 key,防止密码被人破解
          * queryyetsimple\encryption\encryption 安全 key
          */
-        'app_auth_key' => env ( 'app_auth_key', '7becb888f518b20224a988906df51e05' ),
-        
+        'app_auth_key' => env('app_auth_key', '7becb888f518b20224a988906df51e05'),
+
         /**
          * ---------------------------------------------------------------
          * 安全过期时间
@@ -225,7 +225,7 @@ return [
          * queryyetsimple\encryption\encryption 安全过期时间
          */
         'app_auth_expiry' => 0,
-        
+
         /**
          * ---------------------------------------------------------------
          * 系统所有应用
@@ -234,5 +234,5 @@ return [
          * 系统在运行过程中会自动缓存 {项目}/application 下面的目录
          * 这个缓存将会用于注册命名空间以及用于路由解析
          */
-        '~apps~' => [ ] 
-]; 
+        '~apps~' => [ ]
+];

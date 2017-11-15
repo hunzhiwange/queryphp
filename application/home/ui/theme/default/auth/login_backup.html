@@ -1,34 +1,32 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Login</title>
-  </head>
-  <body>
-      <form class="form-horizontal validate"  action="{:url('auth/checkLogin')}" method='post' name="login_form" id="login_form">
+</head>
 
-            <div class="control-group">
+<body>
+    <form class="form-horizontal validate" action="{:url('auth/checkLogin')}" method='post' name="login_form" id="login_form">
 
-              <div class="controls">
+        <div class="control-group">
+
+            <div class="controls">
 
                 <div id="result" class="none"></div>
 
-              </div>
-
             </div>
 
-            <div class="control-group">
+        </div>
 
-              <label class="control-label" for="user_name">用户名/E-mail</label>
+        <div class="control-group">
 
-              <div class="controls">
+            <label class="control-label" for="user_name">用户名/E-mail</label>
+
+            <div class="controls">
 
                 <input class="input-xlarge" id="user_name" name="user_name" type="text" class="email" value="" required title="用户名/E-mail不能为空">
 
@@ -36,15 +34,15 @@
 
                 <p class="input_errortips"></p>
 
-              </div>
-
             </div>
 
-            <div class="control-group">
+        </div>
 
-              <label class="control-label" for="user_password">密码</label>
+        <div class="control-group">
 
-              <div class="controls">
+            <label class="control-label" for="user_password">密码</label>
+
+            <div class="controls">
 
                 <input class="input-xlarge" type="password" id="user_password" name="user_password" type="text" class="required" value="" onkeypress="submitKeycode(event,submitLogin);" required title="用户密码不能为空">
 
@@ -52,15 +50,15 @@
 
                 <p class="input_errortips"></p>
 
-              </div>
-
             </div>
 
-            <div class="control-group">
+        </div>
 
-              <label class="control-label" for="remember_me"></label>
+        <div class="control-group">
 
-              <div class="controls">
+            <label class="control-label" for="remember_me"></label>
+
+            <div class="controls">
 
                 <label class="checkbox">
 
@@ -74,22 +72,22 @@
 
                   <a href="/index.php?app=home&a=register">新用户注册</a>
 
-                  
-                </label>
 
-              </div>
+                </label>
 
             </div>
 
-            <div id="remember_time" class="none">
+        </div>
 
-              <div class="control-group">
+        <div id="remember_time" class="none">
+
+            <div class="control-group">
 
                 <label class="control-label" for="remember_time">有效期</label>
 
                 <div class="controls">
 
-                  <select name="remember_time" id="remembertime">
+                    <select name="remember_time" id="remembertime">
 
                     <option value="0" >及时</option>
 
@@ -107,18 +105,19 @@
 
                 </div>
 
-              </div>
-
             </div>
 
-            
-            <div class="form-actions">
-              <input type="hidden" name="ajax" value="1">
-              <button id="submit_button" name="submit_button" type="submit" class="btn btn-large width_300">登录</button>
+        </div>
 
-            </div>
 
-        </form>
+        <div class="form-actions">
+            <input type="hidden" name="ajax" value="1">
+            <button id="submit_button" name="submit_button" type="submit" class="btn btn-large width_300">登录</button>
 
-  </body>
+        </div>
+
+    </form>
+
+</body>
+
 </html>

@@ -12,5 +12,6 @@ use queryyetsimple\mvc\irepository;
  * @since 2017.11.12
  * @version 1.0
  */
-interface user extends irepository {
+interface user extends irepository
+{
 }

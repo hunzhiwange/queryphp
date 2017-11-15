@@ -13,7 +13,8 @@ use common\is\repository\user as repository;
  * @since 2017.11.12
  * @version 1.0
  */
-class updateInfo {
+class updateInfo
+{
 
     /**
      * 后台菜单仓储
@@ -28,7 +29,8 @@ class updateInfo {
      * @param \admin\is\repository\user $oRepository
      * @return void
      */
-    public function __construct(repository $oRepository) {
+    public function __construct(repository $oRepository)
+    {
         $this->oRepository = $oRepository;
     }
 
@@ -39,8 +41,9 @@ class updateInfo {
      * @param array $arrData
      * @return \queryyetsimple\mvc\imodel
      */
-    public function run($intId, array $aData) {
-        return $this->oRepository->update ( $this->entify ( $intId,$aData ) );
+    public function run($intId, array $aData)
+    {
+        return $this->oRepository->update($this->entify($intId, $aData));
     }
 
     /**
@@ -50,10 +53,11 @@ class updateInfo {
      * @param array $aData
      * @return \admin\domain\entity\user
      */
-    protected function entify($intId,array $aData) {
-        $objUser = $this->find ( $intId );
+    protected function entify($intId, array $aData)
+    {
+        $objUser = $this->find($intId);
 
-        $objUser->forceProps ( $this->data ( $aData ) );
+        $objUser->forceProps($this->data($aData));
 
         return $objUser;
     }
@@ -64,11 +68,12 @@ class updateInfo {
      * @param int $intId
      * @return \admin\domain\entity\user|void
      */
-    protected function find($intId) {
+    protected function find($intId)
+    {
         try {
-            return $this->oRepository->findOrFail ( $intId );
-        } catch ( model_not_found $oE ) {
-            throw new updateInfo_failed ( $oE->getMessage () );
+            return $this->oRepository->findOrFail($intId);
+        } catch (model_not_found $oE) {
+            throw new updateInfo_failed($oE->getMessage());
         }
     }
 
@@ -78,11 +83,12 @@ class updateInfo {
      * @param array $aData
      * @return array
      */
-    protected function data(array $aData) {
+    protected function data(array $aData)
+    {
         return [
-                'nikename' => trim ( $aData ['nikename'] ),
-                'email' => trim ( $aData ['email'] ),
-                'mobile' => trim ( $aData ['mobile'] )
+                'nikename' => trim($aData ['nikename']),
+                'email' => trim($aData ['email']),
+                'mobile' => trim($aData ['mobile'])
         ];
     }
 }

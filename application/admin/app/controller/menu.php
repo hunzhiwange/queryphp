@@ -10,5 +10,6 @@ namespace admin\app\controller;
  * @since 2017.10.12
  * @version 1.0
  */
-class menu extends acontroller {
+class menu extends acontroller
+{
 }

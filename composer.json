@@ -8,12 +8,10 @@
         "issues": "https://github.com/hunzhiwange/queryphp/issues",
         "source": "https://github.com/hunzhiwange/queryphp"
     },
-    "authors": [
-        {
-            "name": "Xiangmin Liu",
-            "email": "635750556@qq.com"
-        }
-    ],
+    "authors": [{
+        "name": "Xiangmin Liu",
+        "email": "635750556@qq.com"
+    }],
     "require": {
         "php": ">=5.5.0",
         "hunzhiwange/framework": "dev-master",
@@ -28,8 +26,7 @@
         "phpunit/phpunit": "~4.0"
     },
     "autoload": {
-        "psr-4": {
-        }
+        "psr-4": {}
     },
     "extra": {
         "branch-alias": {
@@ -38,9 +35,9 @@
     },
     "minimum-stability": "dev",
     "repositories": {
-      "packagist": {
-        "type": "composer",
-        "url": "https://packagist.phpcomposer.com"
-      }
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
     }
 }

@@ -12,5 +12,6 @@ use RuntimeException;
  * @since 2017.10.12
  * @version 1.0
  */
-class order_failed extends RuntimeException {
+class order_failed extends RuntimeException
+{
 }

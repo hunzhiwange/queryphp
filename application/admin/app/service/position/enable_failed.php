@@ -12,5 +12,6 @@ use RuntimeException;
  * @since 2017.10.23
  * @version 1.0
  */
-class enable_failed extends RuntimeException {
+class enable_failed extends RuntimeException
+{
 }

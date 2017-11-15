@@ -27,6 +27,5 @@ class HelloItIs extends AbstractMigration
      */
     public function change()
     {
-
     }
 }

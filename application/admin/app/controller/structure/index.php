@@ -13,15 +13,17 @@ use admin\app\service\structure\index as service;
  * @since 2017.10.23
  * @version 1.0
  */
-class index extends aaction {
-    
+class index extends aaction
+{
+
     /**
      * 响应方法
      *
-     * @param \admin\app\service\structure\index $oService            
+     * @param \admin\app\service\structure\index $oService
      * @return mixed
      */
-    public function run(service $oService) {
-        return $oService->run ();
+    public function run(service $oService)
+    {
+        return $oService->run();
     }
 }

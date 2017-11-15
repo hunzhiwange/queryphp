@@ -12,43 +12,47 @@ use common\is\repository\common_option as repository;
  * @since 2017.10.12
  * @version 1.0
  */
-class getConfigs {
-    
+class getConfigs
+{
+
     /**
      * 后台菜单仓储
      *
      * @var \admin\is\repository\admin_menu
      */
     protected $oRepository;
-    
+
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_menu $oRepository            
+     * @param \admin\is\repository\admin_menu $oRepository
      * @return void
      */
-    public function __construct(repository $oRepository) {
+    public function __construct(repository $oRepository)
+    {
         $this->oRepository = $oRepository;
     }
-    
+
     /**
      * 响应方法
      *
      * @return array
      */
-    public function run() {
-        return $this->parseToMap ( $this->oRepository->all () );
+    public function run()
+    {
+        return $this->parseToMap($this->oRepository->all());
     }
-    
+
     /**
      * 解析配置隐射
      *
-     * @param \queryyetsimple\support\collection $objOption            
+     * @param \queryyetsimple\support\collection $objOption
      * @return array
      */
-    protected function parseToMap($objOption) {
+    protected function parseToMap($objOption)
+    {
         $arr = [ ];
-        foreach ( $objOption as $oVal ) {
+        foreach ($objOption as $oVal) {
             $arr [$oVal->name] = $oVal->value;
         }
         return $arr;

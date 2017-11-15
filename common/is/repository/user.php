@@ -14,7 +14,8 @@ use common\domain\repository\user as user_repository;
  * @since 2017.11.12
  * @version 1.0
  */
-class user extends repository implements user_repository {
+class user extends repository implements user_repository
+{
 
     /**
      * 后台菜单聚合根
@@ -29,8 +30,8 @@ class user extends repository implements user_repository {
      * @param \common\domain\entity\user $objAggregate
      * @return void
      */
-    public function __construct(aggregate $objAggregate) {
+    public function __construct(aggregate $objAggregate)
+    {
         parent::__construct($objAggregate);
     }
-
 }

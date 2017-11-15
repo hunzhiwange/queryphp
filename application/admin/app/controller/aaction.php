@@ -12,5 +12,6 @@ use common\app\controller\aaction as aactions;
  * @since 2017.10.12
  * @version 1.0
  */
-class aaction extends aactions {
+class aaction extends aactions
+{
 }

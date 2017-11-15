@@ -14,28 +14,31 @@ use admin\app\service\menu\store as service;
  * @since 2017.10.12
  * @version 1.0
  */
-class store extends aaction {
-    
+class store extends aaction
+{
+
     /**
      * 响应方法
      *
-     * @param \admin\app\service\menu\store $oService            
+     * @param \admin\app\service\menu\store $oService
      * @return mixed
      */
-    public function run(service $oService) {
-        $mixResult = $oService->run ( $this->data () );
-        return [ 
-                'message' => '菜单保存成功' 
+    public function run(service $oService)
+    {
+        $mixResult = $oService->run($this->data());
+        return [
+                'message' => '菜单保存成功'
         ];
     }
-    
+
     /**
      * POST 数据
      *
      * @return array
      */
-    protected function data() {
-        return request::alls ( [ 
+    protected function data()
+    {
+        return request::alls([
                 'menu|trim',
                 'module|trim',
                 'pid',
@@ -43,6 +46,6 @@ class store extends aaction {
                 'url|trim',
                 'menu_type|intval',
                 'menu_icon|trim'
-        ] );
+        ]);
     }
 }

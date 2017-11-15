@@ -15,34 +15,37 @@ use admin\app\service\structure\destroy as service;
  * @since 2017.10.23
  * @version 1.0
  */
-class destroy extends aaction {
-    
+class destroy extends aaction
+{
+
     /**
      * 响应方法
      *
-     * @param \admin\app\service\structure\destroy $oService            
+     * @param \admin\app\service\structure\destroy $oService
      * @return mixed
      */
-    public function run(service $oService) {
+    public function run(service $oService)
+    {
         try {
-            $mixResult = $oService->run ( $this->id () );
-            return [ 
-                    'message' => '部门删除成功' 
+            $mixResult = $oService->run($this->id());
+            return [
+                    'message' => '部门删除成功'
             ];
-        } catch ( destroy_failed $oE ) {
-            return [ 
+        } catch (destroy_failed $oE) {
+            return [
                     'code' => 400,
-                    'message' => $oE->getMessage () 
+                    'message' => $oE->getMessage()
             ];
         }
     }
-    
+
     /**
      * 删除 ID
      *
      * @return int
      */
-    protected function id() {
-        return intval ( request::all ( 'args\0' ) );
+    protected function id()
+    {
+        return intval(request::all('args\0'));
     }
 }

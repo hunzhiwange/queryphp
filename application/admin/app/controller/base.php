@@ -1,7 +1,9 @@
 <?php
 // ©2017 http://your.domain.com All rights reserved.
 namespace admin\app\controller;
+
 use common\app\controller\acontroller as acontrollers;
+
 /**
  * 基础控制器
  *
@@ -10,5 +12,6 @@ use common\app\controller\acontroller as acontrollers;
  * @since 2017.10.12
  * @version 1.0
  */
-class base extends acontrollers {
+class base extends acontrollers
+{
 }

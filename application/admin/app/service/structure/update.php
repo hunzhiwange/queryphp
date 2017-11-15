@@ -14,7 +14,8 @@ use admin\is\repository\admin_structure as repository;
  * @since 2017.10.23
  * @version 1.0
  */
-class update {
+class update
+{
 
     /**
      * 后台部门仓储
@@ -29,7 +30,8 @@ class update {
      * @param \admin\is\repository\admin_structure $oRepository
      * @return void
      */
-    public function __construct(repository $oRepository) {
+    public function __construct(repository $oRepository)
+    {
         $this->oRepository = $oRepository;
     }
 
@@ -39,8 +41,9 @@ class update {
      * @param array $aStructure
      * @return array
      */
-    public function run($aStructure) {
-        return $this->oRepository->update ( $this->entify ( $aStructure ) );
+    public function run($aStructure)
+    {
+        return $this->oRepository->update($this->entify($aStructure));
     }
 
     /**
@@ -49,21 +52,22 @@ class update {
      * @param array $aStructure
      * @return \admin\domain\entity\admin_structure
      */
-    protected function entify(array $aStructure) {
-        $objStructure = $this->find ( $aStructure ['id'] );
+    protected function entify(array $aStructure)
+    {
+        $objStructure = $this->find($aStructure ['id']);
 
-        $aStructure ['pid'] = $this->parseParentId ( $aStructure ['pid'] );
+        $aStructure ['pid'] = $this->parseParentId($aStructure ['pid']);
         if ($aStructure ['id'] == $aStructure ['pid']) {
-            throw new update_failed ( '部门父级不能为自己' );
+            throw new update_failed('部门父级不能为自己');
         }
 
-        if ($this->createTree ()->hasChildren ( $aStructure ['id'], [
+        if ($this->createTree()->hasChildren($aStructure ['id'], [
                 $aStructure ['pid']
-        ] )) {
-            throw new update_failed ( '部门父级不能为自己的子部门' );
+        ])) {
+            throw new update_failed('部门父级不能为自己的子部门');
         }
 
-        $objStructure->forceProps ( $this->data ( $aStructure ) );
+        $objStructure->forceProps($this->data($aStructure));
 
         return $objStructure;
     }
@@ -74,11 +78,12 @@ class update {
      * @param int $intId
      * @return \admin\domain\entity\admin_structure|void
      */
-    protected function find($intId) {
+    protected function find($intId)
+    {
         try {
-            return $this->oRepository->findOrFail ( $intId );
-        } catch ( model_not_found $oE ) {
-            throw new update_failed ( $oE->getMessage () );
+            return $this->oRepository->findOrFail($intId);
+        } catch (model_not_found $oE) {
+            throw new update_failed($oE->getMessage());
         }
     }
 
@@ -87,8 +92,9 @@ class update {
      *
      * @return \common\is\tree\tree
      */
-    protected function createTree() {
-        return new tree ( $this->parseToNode ( $this->oRepository->all () ) );
+    protected function createTree()
+    {
+        return new tree($this->parseToNode($this->oRepository->all()));
     }
 
     /**
@@ -97,9 +103,10 @@ class update {
      * @param \queryyetsimple\support\collection $objStructure
      * @return array
      */
-    protected function parseToNode($objStructure) {
+    protected function parseToNode($objStructure)
+    {
         $arrNode = [ ];
-        foreach ( $objStructure as $oStructure ) {
+        foreach ($objStructure as $oStructure) {
             $arrNode [] = [
                     $oStructure->id,
                     $oStructure->pid,
@@ -115,10 +122,11 @@ class update {
      * @param array $aStructure
      * @return array
      */
-    protected function data(array $aStructure) {
+    protected function data(array $aStructure)
+    {
         return [
                 'name' => $aStructure ['name'],
-                'pid' => intval ( $aStructure ['pid'] )
+                'pid' => intval($aStructure ['pid'])
         ];
     }
 
@@ -129,8 +137,9 @@ class update {
      *            array $aPid
      * @return int
      */
-    protected function parseParentId(array $aPid) {
-        $intPid = intval ( array_pop ( $aPid ) );
+    protected function parseParentId(array $aPid)
+    {
+        $intPid = intval(array_pop($aPid));
         if ($intPid < 0) {
             $intPid = 0;
         }

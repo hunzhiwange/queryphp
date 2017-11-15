@@ -13,7 +13,8 @@ use admin\is\repository\admin_structure as repository;
  * @since 2017.10.23
  * @version 1.0
  */
-class order {
+class order
+{
 
     /**
      * 后台部门仓储
@@ -28,7 +29,8 @@ class order {
      * @param \admin\is\repository\admin_structure $oRepository
      * @return void
      */
-    public function __construct(repository $oRepository) {
+    public function __construct(repository $oRepository)
+    {
         $this->oRepository = $oRepository;
     }
 
@@ -39,14 +41,15 @@ class order {
      * @param string $strType
      * @return void
      */
-    public function run($intId, $strType) {
-        $objStructure = $this->find ( $intId );
+    public function run($intId, $strType)
+    {
+        $objStructure = $this->find($intId);
 
-        $objCollection = $this->siblings ( $objStructure ['pid'] );
-        $intIndex = $this->validAndReturnIndex ( $intId, $objCollection, $strType );
+        $objCollection = $this->siblings($objStructure ['pid']);
+        $intIndex = $this->validAndReturnIndex($intId, $objCollection, $strType);
 
-        $this->registerUnitOfWork ( $objCollection, $intIndex, $strType );
-        $this->commit ();
+        $this->registerUnitOfWork($objCollection, $intIndex, $strType);
+        $this->commit();
     }
 
     /**
@@ -54,17 +57,18 @@ class order {
      *
      * @return int
      */
-    protected function validAndReturnIndex($intId, $objCollection, $strType) {
+    protected function validAndReturnIndex($intId, $objCollection, $strType)
+    {
         switch ($strType) {
-            case 'top' :
-            case 'up' :
-                $this->validTopIndex ( $intIndex = $this->currentIndex ( $objCollection, $intId ) );
+            case 'top':
+            case 'up':
+                $this->validTopIndex($intIndex = $this->currentIndex($objCollection, $intId));
                 break;
-            case 'down' :
-                $this->validBottomIndex ( $intIndex = $this->currentIndex ( $objCollection, $intId ), count ( $objCollection ) );
+            case 'down':
+                $this->validBottomIndex($intIndex = $this->currentIndex($objCollection, $intId), count($objCollection));
                 break;
-            default :
-                throw new order_failed ( '不受支持的排序操作方式' );
+            default:
+                throw new order_failed('不受支持的排序操作方式');
         }
 
         return $intIndex;
@@ -78,10 +82,11 @@ class order {
      * @param string $strType
      * @return void
      */
-    protected function registerUnitOfWork($objCollection, $intIndex, $strType) {
-        foreach ( $objCollection as $intKey => $objChild ) {
-            $objChild->forceProp ( 'sort', $intId = $this->parseOrder ( $this->{'parse' . ucwords ( $strType ) . 'OrderIndex'} ( $intKey, $intIndex ) ) );
-            $this->oRepository->registerUpdate ( $objChild );
+    protected function registerUnitOfWork($objCollection, $intIndex, $strType)
+    {
+        foreach ($objCollection as $intKey => $objChild) {
+            $objChild->forceProp('sort', $intId = $this->parseOrder($this->{'parse' . ucwords($strType) . 'OrderIndex'} ($intKey, $intIndex)));
+            $this->oRepository->registerUpdate($objChild);
         }
     }
 
@@ -90,8 +95,9 @@ class order {
      *
      * @return void
      */
-    protected function commit() {
-        $this->oRepository->registerCommit ();
+    protected function commit()
+    {
+        $this->oRepository->registerCommit();
     }
 
     /**
@@ -101,9 +107,10 @@ class order {
      * @param int $intId
      * @return int
      */
-    protected function currentIndex($objCollection, $intId) {
+    protected function currentIndex($objCollection, $intId)
+    {
         $intIndex = 0;
-        foreach ( $objCollection as $intKey => $objChild ) {
+        foreach ($objCollection as $intKey => $objChild) {
             if ($objChild->id == $intId) {
                 $intIndex = $intKey;
                 break;
@@ -119,9 +126,10 @@ class order {
      * @param int $intIndex
      * @return void
      */
-    protected function validTopIndex($intIndex) {
+    protected function validTopIndex($intIndex)
+    {
         if ($intIndex == 0) {
-            throw new order_failed ( '已经是顶层节点' );
+            throw new order_failed('已经是顶层节点');
         }
     }
 
@@ -132,9 +140,10 @@ class order {
      * @param int $intTotal
      * @return void
      */
-    protected function validBottomIndex($intIndex, $intTotal) {
+    protected function validBottomIndex($intIndex, $intTotal)
+    {
         if ($intIndex == $intTotal - 1) {
-            throw new order_failed ( '已经是最底层节点' );
+            throw new order_failed('已经是最底层节点');
         }
     }
 
@@ -144,7 +153,8 @@ class order {
      * @param int $intOrderKey
      * @return int
      */
-    protected function parseOrder($intOrderKey) {
+    protected function parseOrder($intOrderKey)
+    {
         return 500 - $intOrderKey;
     }
 
@@ -155,7 +165,8 @@ class order {
      * @param int $intIndex
      * @return int
      */
-    protected function parseTopOrderIndex($intKey, $intIndex) {
+    protected function parseTopOrderIndex($intKey, $intIndex)
+    {
         if ($intKey == $intIndex) {
             $intTemp = 0;
         } else {
@@ -172,7 +183,8 @@ class order {
      * @param int $intIndex
      * @return int
      */
-    protected function parseUpOrderIndex($intKey, $intIndex) {
+    protected function parseUpOrderIndex($intKey, $intIndex)
+    {
         if ($intKey == $intIndex - 1) {
             $intTemp = $intIndex;
         } elseif ($intKey == $intIndex) {
@@ -191,7 +203,8 @@ class order {
      * @param int $intIndex
      * @return int
      */
-    protected function parseDownOrderIndex($intKey, $intIndex) {
+    protected function parseDownOrderIndex($intKey, $intIndex)
+    {
         if ($intKey == $intIndex) {
             $intTemp = $intIndex + 1;
         } elseif ($intKey == $intIndex + 1) {
@@ -209,11 +222,12 @@ class order {
      * @param array $aMenu
      * @return \admin\domain\entity\admin_menu|void
      */
-    protected function find($intId) {
+    protected function find($intId)
+    {
         try {
-            return $this->oRepository->findOrFail ( $intId );
-        } catch ( model_not_found $oE ) {
-            throw new order_failed ( $oE->getMessage () );
+            return $this->oRepository->findOrFail($intId);
+        } catch (model_not_found $oE) {
+            throw new order_failed($oE->getMessage());
         }
     }
 
@@ -223,9 +237,10 @@ class order {
      * @param int $intParentId
      * @return \queryyetsimple\support\collection
      */
-    protected function siblings($intParentId) {
-        return $this->oRepository->all ( function ($oSelect) use($intParentId) {
-            $oSelect->where ( 'pid', $intParentId )->setColumns ( 'id,sort' );
-        } );
+    protected function siblings($intParentId)
+    {
+        return $this->oRepository->all(function ($oSelect) use ($intParentId) {
+            $oSelect->where('pid', $intParentId)->setColumns('id,sort');
+        });
     }
 }

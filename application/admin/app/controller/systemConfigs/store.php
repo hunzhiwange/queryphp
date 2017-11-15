@@ -14,33 +14,36 @@ use common\domain\service\common_option\update as service;
  * @since 2017.10.23
  * @version 1.0
  */
-class store extends aaction {
-    
+class store extends aaction
+{
+
     /**
      * 响应方法
      *
-     * @param \common\domain\service\common_option\update $oService            
+     * @param \common\domain\service\common_option\update $oService
      * @return mixed
      */
-    public function run(service $oService) {
-        $mixResult = $oService->run ( $this->data () );
-        return [ 
-                'message' => '配置更新成功' 
+    public function run(service $oService)
+    {
+        $mixResult = $oService->run($this->data());
+        return [
+                'message' => '配置更新成功'
         ];
     }
-    
+
     /**
      * POST 数据
      *
      * @return array
      */
-    protected function data() {
-        return request::alls ( [ 
+    protected function data()
+    {
+        return request::alls([
                 'SYSTEM_NAME|trim',
                 'IDENTIFYING_CODE|intval',
                 'LOGO_TYPE|intval',
                 'LOGIN_SESSION_VALID|intval',
                 'SYSTEM_LOGO|trim'
-        ] );
+        ]);
     }
 }

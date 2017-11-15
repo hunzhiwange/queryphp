@@ -15,7 +15,8 @@ use admin\app\service\user\updateInfo as service;
  * @since 2017.11.12
  * @version 1.0
  */
-class updateInfo extends aaction {
+class updateInfo extends aaction
+{
 
     /**
      * 响应方法
@@ -23,14 +24,15 @@ class updateInfo extends aaction {
      * @param \admin\app\service\user\updateInfo $oService
      * @return mixed
      */
-    public function run(service $oService) {
+    public function run(service $oService)
+    {
         try {
-            $oService->run ($this->id(),$this->data());
+            $oService->run($this->id(), $this->data());
             return ['message' => '更新账号信息成功'];
-        } catch ( Exception $oE ) {
+        } catch (Exception $oE) {
             return [
                     'code' => 400,
-                    'message' => $oE->getMessage ()
+                    'message' => $oE->getMessage()
             ];
         }
     }
@@ -40,12 +42,13 @@ class updateInfo extends aaction {
      *
      * @return array
      */
-    protected function data() {
-        return request::alls ( [
+    protected function data()
+    {
+        return request::alls([
                 'nikename|trim',
                 'email|trim',
                 'mobile|trim'
-        ] );
+        ]);
     }
 
     /**
@@ -53,7 +56,8 @@ class updateInfo extends aaction {
      *
      * @return int
      */
-    protected function id() {
+    protected function id()
+    {
         return $this->objController->login()['id'];
     }
 }

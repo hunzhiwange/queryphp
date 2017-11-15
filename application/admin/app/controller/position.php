@@ -10,5 +10,6 @@ namespace admin\app\controller;
  * @since 2017.10.25
  * @version 1.0
  */
-class position extends acontroller {
+class position extends acontroller
+{
 }

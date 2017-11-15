@@ -13,5 +13,6 @@ use queryyetsimple\mvc\iaggregate_root;
  * @since 2017.10.24
  * @version 1.0
  */
-class admin_position extends model implements iaggregate_root {
+class admin_position extends model implements iaggregate_root
+{
 }

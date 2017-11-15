@@ -10,14 +10,16 @@ use queryyetsimple\bootstrap\testing\testcase;
  * @since 2017.10.12
  * @version 1.0
  */
-class ExampleTest extends testcase {
-    
+class ExampleTest extends testcase
+{
+
     /**
      * 基本测试
      *
      * @return void
      */
-    public function testBase() {
-        $this->assertEquals ( 'QueryPHP', 'QueryPHP' );
+    public function testBase()
+    {
+        $this->assertEquals('QueryPHP', 'QueryPHP');
     }
 }

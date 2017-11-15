@@ -12,5 +12,6 @@ use RuntimeException;
  * @since 2017.10.12
  * @version 1.0
  */
-class update_failed extends RuntimeException {
+class update_failed extends RuntimeException
+{
 }

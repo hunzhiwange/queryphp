@@ -9,8 +9,8 @@
  * @since 2016.11.19
  * @version 1.0
  */
-return [ 
-        
+return [
+
         /**
          * ---------------------------------------------------------------
          * 默认缓存驱动
@@ -19,8 +19,8 @@ return [
          * 这里可以可以设置为 file、memcache 等
          * 系统为所有缓存提供了统一的接口，在使用上拥有一致性
          */
-        'default' => env ( 'cache_driver', 'file' ),
-        
+        'default' => env('cache_driver', 'file'),
+
         /**
          * ---------------------------------------------------------------
          * 缓存调试 REQUEST 参数，强制不启用缓存
@@ -30,7 +30,7 @@ return [
          * 来让缓存系统强制重新获取，可以用来判断缓存数据是否错误和重新刷新缓存数据
          */
         'nocache_force' => '~@nocache_force',
-        
+
         /**
          * ---------------------------------------------------------------
          * 缓存键值前缀
@@ -39,7 +39,7 @@ return [
          * 为了防止与别的应用程序在缓存键值上出现冲突，可以设置一个应用特殊的前缀
          */
         'prefix' => '~@',
-        
+
         /**
          * ---------------------------------------------------------------
          * 程序默认缓存时间
@@ -49,7 +49,7 @@ return [
          * 缓存时间为当前时间加上以秒为单位的数量
          */
         'expire' => 86400,
-        
+
         /**
          * ---------------------------------------------------------------
          * 缓存时间预置
@@ -60,7 +60,7 @@ return [
          * 键值 = 缓存值，键值不带前缀,例如 ['option' => 60]
          */
         'time_preset' => [ ],
-        
+
         /**
          * ---------------------------------------------------------------
          * 缓存连接参数
@@ -69,81 +69,81 @@ return [
          * 这里为所有的缓存的连接参数，每一种不同的驱动拥有不同的配置
          * 虽然有不同的驱动，但是在缓存使用上却有着一致性
          */
-        '+connect' => [ 
-                
+        '+connect' => [
+
                 '+file' => [
                         // driver
                         'driver' => 'file',
-                        
+
                         // 文件缓存路径
-                        'path' => project ()->pathApplicationCache ( 'file' ),
-                        
+                        'path' => project()->pathApplicationCache('file'),
+
                         // 是否 serialize 格式化
                         'serialize' => true,
-                        
+
                         // 前缀
                         'prefix' => null,
-                        
+
                         // 默认过期时间
-                        'expire' => null 
+                        'expire' => null
                 ],
-                
+
                 '+memcache' => [
                         // driver
                         'driver' => 'memcache',
-                        
+
                         // 多台服务器
                         'servers' => [ ],
-                        
+
                         // 默认缓存服务器
-                        'host' => env ( 'session_memcache_host', '127.0.0.1' ),
-                        
+                        'host' => env('session_memcache_host', '127.0.0.1'),
+
                         // 默认缓存服务器端口
-                        'port' => env ( 'session_memcache_port', 11211 ),
-                        
+                        'port' => env('session_memcache_port', 11211),
+
                         // 是否压缩缓存数据
                         'compressed' => false,
-                        
+
                         // 是否使用持久连接
                         'persistent' => true,
-                        
+
                         // 前缀
                         'prefix' => null,
-                        
+
                         // 默认过期时间
-                        'expire' => null 
+                        'expire' => null
                 ],
-                
+
                 '+redis' => [
                         // driver
                         'driver' => 'redis',
-                        
+
                         // 默认缓存服务器
-                        'host' => env ( 'session_redis_host', '127.0.0.1' ),
-                        
+                        'host' => env('session_redis_host', '127.0.0.1'),
+
                         // 默认缓存服务器端口
-                        'port' => env ( 'session_redis_port', 6379 ),
-                        
+                        'port' => env('session_redis_port', 6379),
+
                         // 认证密码
-                        'password' => env ( 'session_redis_password', '' ),
-                        
+                        'password' => env('session_redis_password', ''),
+
                         // redis 数据库索引
                         'select' => 0,
-                        
+
                         // 超时设置
                         'timeout' => 0,
-                        
+
                         // 是否使用持久连接
                         'persistent' => false,
-                        
+
                         // 是否使用 serialize 编码
                         'serialize' => true,
-                        
+
                         // 前缀
                         'prefix' => null,
-                        
+
                         // 默认过期时间
-                        'expire' => null 
-                ] 
-        ] 
+                        'expire' => null
+                ]
+        ]
 ];

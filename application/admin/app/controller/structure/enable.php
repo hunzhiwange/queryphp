@@ -15,43 +15,47 @@ use admin\app\service\structure\enable as service;
  * @since 2017.10.23
  * @version 1.0
  */
-class enable extends aaction {
-    
+class enable extends aaction
+{
+
     /**
      * 响应方法
      *
-     * @param \admin\app\service\structure\enable $oService            
+     * @param \admin\app\service\structure\enable $oService
      * @return mixed
      */
-    public function run(service $oService) {
+    public function run(service $oService)
+    {
         try {
-            $mixResult = $oService->run ( $this->id (), $this->status () );
-            return [ 
-                    'message' => '部门状态更新成功' 
+            $mixResult = $oService->run($this->id(), $this->status());
+            return [
+                    'message' => '部门状态更新成功'
             ];
-        } catch ( update_failed $oE ) {
-            return [ 
+        } catch (update_failed $oE) {
+            return [
                     'code' => 400,
-                    'message' => $oE->getMessage () 
+                    'message' => $oE->getMessage()
             ];
         }
     }
-    
+
     /**
      * 启用禁用状态
      *
      * @return string
      */
-    protected function status() {
-        return trim ( request::all ( 'status' ) );
+    protected function status()
+    {
+        return trim(request::all('status'));
     }
 
     /**
      * ID 数据
-     * 
+     *
      * @return int
      */
-    protected function id(){
+    protected function id()
+    {
         return request::all('args\0');
     }
 }

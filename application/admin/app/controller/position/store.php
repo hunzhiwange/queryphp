@@ -14,30 +14,33 @@ use admin\app\service\position\store as service;
  * @since 2017.10.23
  * @version 1.0
  */
-class store extends aaction {
-    
+class store extends aaction
+{
+
     /**
      * 响应方法
      *
-     * @param \admin\app\service\position\store $oService            
+     * @param \admin\app\service\position\store $oService
      * @return mixed
      */
-    public function run(service $oService) {
-        $mixResult = $oService->run ( $this->data () );
-        return [ 
-                'message' => '职位保存成功' 
+    public function run(service $oService)
+    {
+        $mixResult = $oService->run($this->data());
+        return [
+                'message' => '职位保存成功'
         ];
     }
-    
+
     /**
      * POST 数据
      *
      * @return array
      */
-    protected function data() {
-        return request::alls ( [ 
+    protected function data()
+    {
+        return request::alls([
                 'name|trim',
                 'pid'
-        ] );
+        ]);
     }
 }

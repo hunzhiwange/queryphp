@@ -12,14 +12,16 @@ use queryyetsimple\mvc\controller;
  * @since 2017.10.12
  * @version 1.0
  */
-class index extends controller {
-    
+class index extends controller
+{
+
     /**
      * 默认方法
      *
      * @return void
      */
-    public function index() {
-        return $this->display ();
+    public function index()
+    {
+        return $this->display();
     }
 }

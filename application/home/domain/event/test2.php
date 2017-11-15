@@ -2,8 +2,6 @@
 
 namespace home\domain\event;
 
-class test2 extends abstracts{
-
-
-
+class test2 extends abstracts
+{
 }

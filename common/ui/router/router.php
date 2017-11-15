@@ -10,14 +10,14 @@ use queryyetsimple\router;
  * 绑定全局中间件，区别 API 和 WEB
  * 基于当前开发模式读取对应的分组组件
  */
-if (api ()) {
-    router::middleware ( '*', [ 
+if (api()) {
+    router::middleware('*', [
             'common',
-            'api' 
-    ] );
+            'api'
+    ]);
 } else {
-    router::middleware ( '*', [ 
+    router::middleware('*', [
             'common',
-            'web' 
-    ] );
+            'web'
+    ]);
 }

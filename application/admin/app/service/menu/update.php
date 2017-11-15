@@ -14,7 +14,8 @@ use admin\is\repository\admin_menu as repository;
  * @since 2017.10.12
  * @version 1.0
  */
-class update {
+class update
+{
 
     /**
      * 后台菜单仓储
@@ -29,7 +30,8 @@ class update {
      * @param \admin\is\repository\admin_menu $oRepository
      * @return void
      */
-    public function __construct(repository $oRepository) {
+    public function __construct(repository $oRepository)
+    {
         $this->oRepository = $oRepository;
     }
 
@@ -39,8 +41,9 @@ class update {
      * @param array $aMenu
      * @return array
      */
-    public function run($aMenu) {
-        return $this->oRepository->update ( $this->entify ( $aMenu ) );
+    public function run($aMenu)
+    {
+        return $this->oRepository->update($this->entify($aMenu));
     }
 
     /**
@@ -49,21 +52,22 @@ class update {
      * @param array $aMenu
      * @return \admin\domain\entity\admin_menu
      */
-    protected function entify(array $aMenu) {
-        $objMenu = $this->find ( $aMenu ['id'] );
+    protected function entify(array $aMenu)
+    {
+        $objMenu = $this->find($aMenu ['id']);
 
-        $aMenu ['pid'] = $this->parseParentId ( $aMenu ['pid'] );
+        $aMenu ['pid'] = $this->parseParentId($aMenu ['pid']);
         if ($aMenu ['id'] == $aMenu ['pid']) {
-            throw new update_failed ( '菜单父级不能为自己' );
+            throw new update_failed('菜单父级不能为自己');
         }
 
-        if ($this->createTree ()->hasChildren ( $aMenu ['id'], [
+        if ($this->createTree()->hasChildren($aMenu ['id'], [
                 $aMenu ['pid']
-        ] )) {
-            throw new update_failed ( '菜单父级不能为自己的子菜单' );
+        ])) {
+            throw new update_failed('菜单父级不能为自己的子菜单');
         }
 
-        $objMenu->forceProps ( $this->data ( $aMenu ) );
+        $objMenu->forceProps($this->data($aMenu));
 
         return $objMenu;
     }
@@ -74,11 +78,12 @@ class update {
      * @param int $intId
      * @return \admin\domain\entity\admin_menu|void
      */
-    protected function find($intId) {
+    protected function find($intId)
+    {
         try {
-            return $this->oRepository->findOrFail ( $intId );
-        } catch ( model_not_found $oE ) {
-            throw new update_failed ( $oE->getMessage () );
+            return $this->oRepository->findOrFail($intId);
+        } catch (model_not_found $oE) {
+            throw new update_failed($oE->getMessage());
         }
     }
 
@@ -87,8 +92,9 @@ class update {
      *
      * @return \common\is\tree\tree
      */
-    protected function createTree() {
-        return new tree ( $this->parseToNode ( $this->oRepository->all () ) );
+    protected function createTree()
+    {
+        return new tree($this->parseToNode($this->oRepository->all()));
     }
 
     /**
@@ -97,9 +103,10 @@ class update {
      * @param \queryyetsimple\support\collection $objMenu
      * @return array
      */
-    protected function parseToNode($objMenu) {
+    protected function parseToNode($objMenu)
+    {
         $arrNode = [ ];
-        foreach ( $objMenu as $oMenu ) {
+        foreach ($objMenu as $oMenu) {
             $arrNode [] = [
                     $oMenu->id,
                     $oMenu->pid,
@@ -115,14 +122,15 @@ class update {
      * @param array $aMenu
      * @return array
      */
-    protected function data(array $aMenu) {
+    protected function data(array $aMenu)
+    {
         return [
                 'menu' => $aMenu ['menu'],
                 'module' => $aMenu ['module'],
-                'pid' => intval ( $aMenu ['pid'] ),
+                'pid' => intval($aMenu ['pid']),
                 'title' => $aMenu ['title'],
                 'url' => $aMenu ['url'],
-                'menu_type' => intval ( $aMenu ['menu_type'] ),
+                'menu_type' => intval($aMenu ['menu_type']),
                 'menu_icon' => $aMenu['menu_icon']
         ];
     }
@@ -134,8 +142,9 @@ class update {
      *            array $aPid
      * @return int
      */
-    protected function parseParentId(array $aPid) {
-        $intPid = intval ( array_pop ( $aPid ) );
+    protected function parseParentId(array $aPid)
+    {
+        $intPid = intval(array_pop($aPid));
         if ($intPid < 0) {
             $intPid = 0;
         }

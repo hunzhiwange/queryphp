@@ -15,19 +15,21 @@ use admin\app\service\base\getConfigs as service;
  * @since 2017.10.12
  * @version 1.0
  */
-class getConfigs extends aaction {
-    
+class getConfigs extends aaction
+{
+
     /**
      * 响应方法
      *
-     * @param \admin\app\service\base\getConfigs $oService            
+     * @param \admin\app\service\base\getConfigs $oService
      * @return mixed
      */
-    public function run(service $oService) {
+    public function run(service $oService)
+    {
         try {
-            return $oService->run ();
-        } catch ( Exception $oE ) {
-            return response::apiError ( $oE->getMessage () );
+            return $oService->run();
+        } catch (Exception $oE) {
+            return response::apiError($oE->getMessage());
         }
     }
 }

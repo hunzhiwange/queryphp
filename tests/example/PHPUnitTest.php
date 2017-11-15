@@ -10,14 +10,16 @@ use PHPUnit\Framework\TestCase;
  * @since 2017.10.12
  * @version 1.0
  */
-class PHPUnitTest extends TestCase {
-    
+class PHPUnitTest extends TestCase
+{
+
     /**
      * 基本测试
      *
      * @return void
      */
-    public function testBase() {
-        $this->assertEquals ( 'QueryPHP', 'QueryPHP' );
+    public function testBase()
+    {
+        $this->assertEquals('QueryPHP', 'QueryPHP');
     }
 }

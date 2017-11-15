@@ -9,8 +9,8 @@
  * @since 2016.11.19
  * @version 1.0
  */
-return [ 
-        
+return [
+
         /**
          * ---------------------------------------------------------------
          * url 模式
@@ -19,7 +19,7 @@ return [
          * default = 普通，pathinfo = pathinfo 模式
          */
         'model' => 'pathinfo',
-        
+
         /**
          * ---------------------------------------------------------------
          * 是否开启重写
@@ -28,7 +28,7 @@ return [
          * 开启了重写将会去掉 生成的 url 中的入口文件 index.php
          */
         'rewrite' => false,
-        
+
         /**
          * ---------------------------------------------------------------
          * url 分割符
@@ -37,7 +37,7 @@ return [
          * 你也可以设置为 “-”等，不能设置特殊字符如“=&”等
          */
         'pathinfo_depr' => '/',
-        
+
         /**
          * ---------------------------------------------------------------
          * 伪静态后缀
@@ -46,7 +46,7 @@ return [
          * 系统进行路由解析时将会去掉后缀后然后继续执行 url 解析
          */
         'html_suffix' => '.html',
-        
+
         /**
          * ---------------------------------------------------------------
          * 缓存路由
@@ -55,7 +55,7 @@ return [
          * 设置路由解析后，系统会将所有路由一并缓存到一个文件中免去分析开销从而提高系统运行性能
          */
         'router_cache' => true,
-        
+
         /**
          * ---------------------------------------------------------------
          * 严格 router 匹配模式
@@ -64,7 +64,7 @@ return [
          * 是否启用严格 router 匹配模式,使用启用严格匹配，路由匹配正则结尾会加入 $ 标志
          */
         'router_strict' => false,
-        
+
         /**
          * ---------------------------------------------------------------
          * 是否开启域名路由解析
@@ -73,7 +73,7 @@ return [
          * 开启域名解析路由会首先去尝试匹配域名中是否存在路由
          */
         'router_domain_on' => true,
-        
+
         /**
          * ---------------------------------------------------------------
          * 顶级域名
@@ -82,7 +82,7 @@ return [
          * 例如 queryphp.com，用于路由解析以及 \queryyetsimple\router\router::url 生成
          */
         'router_domain_top' => '',
-        
+
         /**
          * ---------------------------------------------------------------
          * url 生成是否开启子域名
@@ -91,7 +91,7 @@ return [
          * 开启 url 子域名功能，用于 \queryyetsimple\router\router::url 生成
          */
         'make_subdomain_on' => false,
-        
+
         /**
          * ---------------------------------------------------------------
          * public　资源地址
@@ -99,8 +99,8 @@ return [
          *
          * 设置公共资源 url 地址
          */
-        'public' => env ( 'url_public', 'http://public.foo.bar' ),
-        
+        'public' => env('url_public', 'http://public.foo.bar'),
+
         /**
          * ---------------------------------------------------------------
          * pathinfo 是否自动 restinfo 解析
@@ -112,7 +112,7 @@ return [
          * @see \queryyetsimple\router\router::pathinfoRestful
          */
         'pathinfo_restful' => true,
-        
+
         /**
          * ---------------------------------------------------------------
          * pathinfo 是否自动 restinfo 解析
@@ -123,7 +123,7 @@ return [
          * see \queryyetsimple\router\router:parsePathInfo
          */
         'args_protected' => [ ],
-        
+
         /**
          * ---------------------------------------------------------------
          * args 匹配正则
@@ -135,7 +135,7 @@ return [
          * see \queryyetsimple\router\router::parsePathInfo
          */
         'args_regex' => [ ],
-        
+
         /**
          * ---------------------------------------------------------------
          * 严格 args 匹配模式
@@ -145,7 +145,7 @@ return [
          * see \queryyetsimple\router\router::parsePathInfo
          */
         'args_strict' => false,
-        
+
         /**
          * ---------------------------------------------------------------
          * 严格中间件匹配模式
@@ -155,7 +155,7 @@ return [
          * see \queryyetsimple\router\router::getMiddleware
          */
         'middleware_strict' => false,
-        
+
         /**
          * ---------------------------------------------------------------
          * 严格 HTTP 方法匹配模式
@@ -165,7 +165,7 @@ return [
          * see \queryyetsimple\router\router::getMethod
          */
         'method_strict' => false,
-        
+
         /**
          * ---------------------------------------------------------------
          * 模板控制器目录
@@ -174,5 +174,5 @@ return [
          * 系统指定的模板控制器目录，建议不用更改
          * see \queryyetsimple\router\router::parseDefaultBind
          */
-        'controller_dir' => 'app\controller' 
-]; 
+        'controller_dir' => 'app\controller'
+];

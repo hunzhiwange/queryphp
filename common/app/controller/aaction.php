@@ -12,17 +12,18 @@ use queryyetsimple\mvc\action;
  * @since 2017.10.12
  * @version 1.0
  */
-class aaction extends action {
-    
+class aaction extends action
+{
+
     /**
      * IOC 容器调用回调实现依赖注入
-     * 
-     * @param  calable $calClass 
-     * @param  array  $arrArgs 
-     * @return mixed 
+     *
+     * @param  calable $calClass
+     * @param  array  $arrArgs
+     * @return mixed
      */
-    public function call($calClass, array $arrArgs = []){
+    public function call($calClass, array $arrArgs = [])
+    {
         return $this->objController->call($calClass, $arrArgs);
     }
-
 }

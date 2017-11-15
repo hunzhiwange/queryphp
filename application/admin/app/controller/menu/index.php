@@ -13,15 +13,17 @@ use admin\app\service\menu\index as service;
  * @since 2017.10.12
  * @version 1.0
  */
-class index extends aaction {
-    
+class index extends aaction
+{
+
     /**
      * 响应方法
      *
-     * @param \admin\app\service\menu\index $oService            
+     * @param \admin\app\service\menu\index $oService
      * @return mixed
      */
-    public function run(service $oService) {
-        return $oService->run ();
+    public function run(service $oService)
+    {
+        return $oService->run();
     }
 }

@@ -13,7 +13,8 @@ use admin\is\repository\admin_structure as repository;
  * @since 2017.10.23
  * @version 1.0
  */
-class enable {
+class enable
+{
 
     /**
      * 后台部门仓储
@@ -28,7 +29,8 @@ class enable {
      * @param \admin\is\repository\admin_structure $oRepository
      * @return void
      */
-    public function __construct(repository $oRepository) {
+    public function __construct(repository $oRepository)
+    {
         $this->oRepository = $oRepository;
     }
 
@@ -39,8 +41,9 @@ class enable {
      * @param string $strStatus
      * @return array
      */
-    public function run($intId, $strStatus) {
-        return $this->oRepository->update ( $this->entify ( $intId, $strStatus ) );
+    public function run($intId, $strStatus)
+    {
+        return $this->oRepository->update($this->entify($intId, $strStatus));
     }
 
     /**
@@ -50,9 +53,10 @@ class enable {
      * @param string $strStatus
      * @return \admin\domain\entity\admin_structure
      */
-    protected function entify($intId, $strStatus) {
-        $objStructure = $this->find ( $intId );
-        $objStructure->forceProp ( 'status', $strStatus );
+    protected function entify($intId, $strStatus)
+    {
+        $objStructure = $this->find($intId);
+        $objStructure->forceProp('status', $strStatus);
         return $objStructure;
     }
 
@@ -62,11 +66,12 @@ class enable {
      * @param int $intId
      * @return \admin\domain\entity\admin_structure|void
      */
-    protected function find($intId) {
+    protected function find($intId)
+    {
         try {
-            return $this->oRepository->findOrFail ( $intId );
-        } catch ( model_not_found $oE ) {
-            throw new update_failed ( $oE->getMessage () );
+            return $this->oRepository->findOrFail($intId);
+        } catch (model_not_found $oE) {
+            throw new update_failed($oE->getMessage());
         }
     }
 }

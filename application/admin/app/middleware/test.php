@@ -17,28 +17,30 @@ namespace home\application\middleware;
  * @since 2017.06.27
  * @version 1.0
  */
-class test {
+class test
+{
 
     /**
      * 请求
-     * 
+     *
      * @param  mixed|\queryyetsimple\request $mixRequest
      * @return mixed
      */
-    public function handle($mixRequest){
-       // echo 'sdfsdfsdf';
+    public function handle($mixRequest)
+    {
+        // echo 'sdfsdfsdf';
         $mixRequest->setUrl('333333333');
         return $mixRequest;
     }
 
     /**
      * 响应
-     * 
+     *
      * @param  mixed|\queryyetsimple\response $mixResponse
      * @return mixed
      */
-    public function terminate($mixResponse){
+    public function terminate($mixResponse)
+    {
         return $mixResponse;
     }
-
 }

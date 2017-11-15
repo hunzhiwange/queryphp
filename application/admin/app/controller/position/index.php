@@ -15,17 +15,19 @@ use queryyetsimple\db;
  * @since 2017.10.23
  * @version 1.0
  */
-class index extends aaction {
-    
+class index extends aaction
+{
+
     /**
      * 响应方法
      *
-     * @param \admin\app\service\position\index $oService            
+     * @param \admin\app\service\position\index $oService
      * @return mixed
      */
-    public function run(service $oService) {
+    public function run(service $oService)
+    {
         print_r(admin_position::paginate(5));
         exit();
-        return $oService->run ();
+        return $oService->run();
     }
 }

@@ -1,7 +1,7 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -15,18 +15,19 @@
 
     <!-- Custom styles for this template -->
     <link href="https://v4.bootcss.com/docs/4.0/examples/starter-template/starter-template.css" rel="stylesheet">
-  </head>
+</head>
 
-  <body>
+<body>
 
     <div class="container">
 
-      <div class="starter-template">
-        <h1>成功消息</h1>
-        <p class="lead">{$message}</p>
-      </div>
+        <div class="starter-template">
+            <h1>成功消息</h1>
+            <p class="lead">{$message}</p>
+        </div>
 
-    </div><!-- /.container -->
+    </div>
+    <!-- /.container -->
 
 
     <!-- Bootstrap core JavaScript
@@ -37,11 +38,13 @@
     <script src="https://v4.bootcss.com/dist/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
-        $(function(){
-            setTimeout(function(){
-                window.location.href="{:$url?:prev_url()}";
-            }, {:1000*$time});
+        $(function() {
+            setTimeout(function() {
+                window.location.href = "{:$url?:prev_url()}";
+            }, {: 1000 * $time
+            });
         });
     </script>>
-  </body>
+</body>
+
 </html>

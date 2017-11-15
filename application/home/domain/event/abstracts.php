@@ -2,6 +2,6 @@
 
 namespace home\domain\event;
 
-abstract class abstracts{
-
+abstract class abstracts
+{
 }

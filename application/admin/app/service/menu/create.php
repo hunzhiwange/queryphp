@@ -13,79 +13,85 @@ use admin\is\repository\admin_menu as repository;
  * @since 2017.10.12
  * @version 1.0
  */
-class create {
-    
+class create
+{
+
     /**
      * 后台菜单仓储
      *
      * @var \admin\is\repository\admin_menu
      */
     protected $oRepository;
-    
+
     /**
      * 父级菜单
      *
      * @var int
      */
     protected $intParentId;
-    
+
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_menu $oRepository            
+     * @param \admin\is\repository\admin_menu $oRepository
      * @return void
      */
-    public function __construct(repository $oRepository) {
+    public function __construct(repository $oRepository)
+    {
         $this->oRepository = $oRepository;
     }
-    
+
     /**
      * 响应方法
      *
-     * @param int $intParentId            
+     * @param int $intParentId
      * @return array
      */
-    public function run($intParentId = null) {
+    public function run($intParentId = null)
+    {
         $this->intParentId = $intParentId;
-        return $this->parseMenuList ( $this->oRepository->all () );
+        return $this->parseMenuList($this->oRepository->all());
     }
-    
+
     /**
      * 将节点载入节点树并返回树结构
      *
-     * @param \queryyetsimple\support\collection $objMenu            
+     * @param \queryyetsimple\support\collection $objMenu
      * @return array
      */
-    protected function parseMenuList($objMenu) {
-        return $this->createTree ( $objMenu )->forSelect ( $this->intParentId );
+    protected function parseMenuList($objMenu)
+    {
+        return $this->createTree($objMenu)->forSelect($this->intParentId);
     }
-    
+
     /**
      * 生成节点树
      *
-     * @param \queryyetsimple\support\collection $objMenu            
+     * @param \queryyetsimple\support\collection $objMenu
      * @return \common\is\tree\tree
      */
-    protected function createTree($objMenu) {
-        $oTree = new tree ( $this->parseToNode ( $objMenu ) );
-        $arrTopMenu = $this->oRepository->topNode ();
-        $oTree->setNode ( $arrTopMenu ['id'], $arrTopMenu ['pid'], $arrTopMenu ['lable'], true );
+    protected function createTree($objMenu)
+    {
+        $oTree = new tree($this->parseToNode($objMenu));
+        $arrTopMenu = $this->oRepository->topNode();
+        $oTree->setNode($arrTopMenu ['id'], $arrTopMenu ['pid'], $arrTopMenu ['lable'], true);
         return $oTree;
     }
-    
+
     /**
      * 转换为节点数组
      *
-     * @param \queryyetsimple\support\collection $objMenu            
+     * @param \queryyetsimple\support\collection $objMenu
      * @return array
      */
-    protected function parseToNode($objMenu) {
+    protected function parseToNode($objMenu)
+    {
         $arrNode = [ ];
-        foreach ( $objMenu as $oMenu ) {
-            $arrNode [] = [ 
+        foreach ($objMenu as $oMenu) {
+            $arrNode [] = [
                     $oMenu->id,
                     $oMenu->pid,
-                    $oMenu->title 
+                    $oMenu->title
             ];
         }
         return $arrNode;

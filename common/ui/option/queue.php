@@ -9,8 +9,8 @@
  * @since 2017.05.17
  * @version 1.0
  */
-return [ 
-        
+return [
+
         /**
          * ---------------------------------------------------------------
          * 默认消息队列驱动
@@ -18,8 +18,8 @@ return [
          *
          * 默认采用 redis 来做消息队列性能比较好
          */
-        'default' => env ( 'redis_driver', 'redis' ),
-        
+        'default' => env('redis_driver', 'redis'),
+
         /**
          * ---------------------------------------------------------------
          * 消息队列连接
@@ -29,16 +29,16 @@ return [
          * 如果 redis 设置了认证密码，请加上 password 参数
          */
         '+connect' => [
-                
+
                 // redis 驱动采用 https://github.com/nrk/predis(访问查看详情文档) 作为底层
                 // 分别对应 new \Predis\Client($arrServers, $arrOptions) 构造器两个参数
-                '+redis' => [ 
-                        'servers' => [ 
-                                'host' => env ( 'queue_redis_host', '127.0.0.1' ),
-                                'port' => env ( 'queue_redis_port', 6379 ),
-                                'password' => env ( 'queue_redis_password', null ) 
+                '+redis' => [
+                        'servers' => [
+                                'host' => env('queue_redis_host', '127.0.0.1'),
+                                'port' => env('queue_redis_port', 6379),
+                                'password' => env('queue_redis_password', null)
                         ],
-                        'options' => [ ] 
-                ] 
-        ] 
+                        'options' => [ ]
+                ]
+        ]
 ];

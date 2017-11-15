@@ -10,5 +10,6 @@ namespace admin\app\controller;
  * @since 2017.11.12
  * @version 1.0
  */
-class user extends acontroller {
+class user extends acontroller
+{
 }

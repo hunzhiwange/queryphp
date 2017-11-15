@@ -15,7 +15,8 @@ use admin\domain\repository\admin_menu as admin_menu_repository;
  * @since 2017.10.12
  * @version 1.0
  */
-class admin_menu extends repository implements admin_menu_repository {
+class admin_menu extends repository implements admin_menu_repository
+{
 
     /**
      * 构造函数
@@ -23,8 +24,9 @@ class admin_menu extends repository implements admin_menu_repository {
      * @param \admin\domain\entity\admin_menu $oAggregate
      * @return void
      */
-    public function __construct(aggregate $objAggregate) {
-        parent::__construct ( $objAggregate );
+    public function __construct(aggregate $objAggregate)
+    {
+        parent::__construct($objAggregate);
     }
 
     /**
@@ -33,10 +35,11 @@ class admin_menu extends repository implements admin_menu_repository {
      * @param null|callback $mixCallback
      * @return \queryyetsimple\support\collection
      */
-    public function all($mixSpecification = null) {
-        return parent::all ( $this->specification ( function ($objSelect) {
-            $objSelect->orderBy ( 'sort DESC' );
-        }, $mixSpecification ) );
+    public function all($mixSpecification = null)
+    {
+        return parent::all($this->specification(function ($objSelect) {
+            $objSelect->orderBy('sort DESC');
+        }, $mixSpecification));
     }
 
     /**
@@ -45,10 +48,11 @@ class admin_menu extends repository implements admin_menu_repository {
      * @param int $nId
      * @return boolean
      */
-    public function hasChildren($nId) {
-        return $this->count ( function ($objSelect) use($nId) {
-            $objSelect->where ( 'pid', $nId );
-        } ) ? true : false;
+    public function hasChildren($nId)
+    {
+        return $this->count(function ($objSelect) use ($nId) {
+            $objSelect->where('pid', $nId);
+        }) ? true : false;
     }
 
     /**
@@ -56,7 +60,8 @@ class admin_menu extends repository implements admin_menu_repository {
      *
      * @return array
      */
-    public function topNode() {
+    public function topNode()
+    {
         return [
                 'id' => - 1,
                 'pid' => 0,

@@ -12,5 +12,6 @@ use queryyetsimple\mvc\irepository;
  * @since 2017.10.25
  * @version 1.0
  */
-interface admin_position extends irepository {
+interface admin_position extends irepository
+{
 }

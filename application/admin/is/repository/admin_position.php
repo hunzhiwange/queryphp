@@ -15,7 +15,8 @@ use admin\domain\repository\admin_position as admin_position_repository;
  * @since 2017.10.23
  * @version 1.0
  */
-class admin_position extends repository implements admin_position_repository {
+class admin_position extends repository implements admin_position_repository
+{
 
     /**
      * 构造函数
@@ -23,8 +24,9 @@ class admin_position extends repository implements admin_position_repository {
      * @param \admin\domain\entity\admin_position $oAggregate
      * @return void
      */
-    public function __construct(aggregate $objAggregate) {
-        parent::__construct ( $objAggregate );
+    public function __construct(aggregate $objAggregate)
+    {
+        parent::__construct($objAggregate);
     }
 
     /**
@@ -33,9 +35,10 @@ class admin_position extends repository implements admin_position_repository {
      * @param null|callback $mixCallback
      * @return \queryyetsimple\support\collection
      */
-    public function all($mixSpecification = null) {
-        return parent::all ( $this->specification ( function ($objSelect) {
-            $objSelect->orderBy ( 'sort DESC' );
-        }, $mixSpecification ) );
+    public function all($mixSpecification = null)
+    {
+        return parent::all($this->specification(function ($objSelect) {
+            $objSelect->orderBy('sort DESC');
+        }, $mixSpecification));
     }
 }

@@ -13,5 +13,6 @@ use queryyetsimple\mvc\iaggregate_root;
  * @since 2017.11.10
  * @version 1.0
  */
-class user extends model implements iaggregate_root {
+class user extends model implements iaggregate_root
+{
 }

@@ -25,52 +25,56 @@ use Q\console\command;
  * @since 2017.04.28
  * @version 1.0
  */
-class controller extends command {
-    
+class controller extends command
+{
+
     /**
      * 命令名字
      *
      * @var string
      */
     protected $strName = 'controller';
-    
+
     /**
      * 命令行描述
      *
      * @var string
      */
     protected $strDescription = 'Only2222 test for a command';
-    
+
     /**
      * 注册命令
      *
      * @var string
      */
     protected $strSignature = '';
-    
+
     /**
      * 命令参数
      *
      * @return array
      */
-    protected function getArguments() {
+    protected function getArguments()
+    {
         return [ ];
     }
-    
+
     /**
      * 命令配置
      *
      * @return array
      */
-    protected function getOptions() {
+    protected function getOptions()
+    {
         return [ ];
     }
-    
+
     /**
      * 响应命令
      *
      * @return void
      */
-    public function handle() {
+    public function handle()
+    {
     }
-}  
+}

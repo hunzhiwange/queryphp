@@ -11,14 +11,15 @@ use home\domain\model\common_user;
 use queryyetsimple\session;
 use queryyetsimple\bootstrap\auth\login_register as login_register;
 
-class auth extends controller {
-
+class auth extends controller
+{
     use login_register;
 
     protected $oAuth;
     protected $oUser;
 
-    public function __construct(auth_connect $oAuth){
+    public function __construct(auth_connect $oAuth)
+    {
         $this->oAuth = $oAuth;
 
         session::start();
@@ -29,9 +30,9 @@ class auth extends controller {
      *
      * @return void
      */
-    public function index() {
-        $this->assign('oUser',$this->getLogin());
-        return $this->display ();
+    public function index()
+    {
+        $this->assign('oUser', $this->getLogin());
+        return $this->display();
     }
-
 }

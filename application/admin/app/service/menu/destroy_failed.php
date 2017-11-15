@@ -12,5 +12,6 @@ use RuntimeException;
  * @since 2017.10.12
  * @version 1.0
  */
-class destroy_failed extends RuntimeException {
+class destroy_failed extends RuntimeException
+{
 }

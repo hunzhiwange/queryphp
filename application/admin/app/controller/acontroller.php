@@ -14,7 +14,8 @@ use common\app\controller\acontroller as acontrollers;
  * @since 2017.10.12
  * @version 1.0
  */
-abstract class acontroller extends acontrollers {
+abstract class acontroller extends acontrollers
+{
 
     /**
      * 登录信息
@@ -28,13 +29,14 @@ abstract class acontroller extends acontrollers {
      *
      * @return  void
      */
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
-            $strApiToken = request::header('authKey');
+        $strApiToken = request::header('authKey');
 
-          if (empty($strApiToken) || (auth::setTokenName($strApiToken) &&  !($this->arrLogin =auth::getLogin()))) {
-              exit(json_encode(['code'=>101, 'error'=>'登录已失效'],JSON_UNESCAPED_UNICODE));
-          }
+        if (empty($strApiToken) || (auth::setTokenName($strApiToken) &&  !($this->arrLogin =auth::getLogin()))) {
+            exit(json_encode(['code'=>101, 'error'=>'登录已失效'], JSON_UNESCAPED_UNICODE));
+        }
     }
 
     /**
@@ -42,8 +44,8 @@ abstract class acontroller extends acontrollers {
      *
      * @return  array
      */
-    public function login(){
+    public function login()
+    {
         return $this->arrLogin;
     }
-
 }

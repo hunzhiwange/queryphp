@@ -10,5 +10,6 @@ namespace admin\app\controller;
  * @since 2017.10.23
  * @version 1.0
  */
-class systemConfigs extends acontroller {
+class systemConfigs extends acontroller
+{
 }

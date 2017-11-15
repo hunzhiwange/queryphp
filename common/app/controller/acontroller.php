@@ -13,21 +13,23 @@ use queryyetsimple\mvc\controller;
  * @since 2017.10.12
  * @version 1.0
  */
-abstract class acontroller extends controller {
+abstract class acontroller extends controller
+{
 
     /**
      * 构造函数
      *
      * @return  void
      */
-    public function __construct(){
+    public function __construct()
+    {
         // header('Access-Control-Allow-Origin: '.(isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN']: ''));
         header("Access-Control-Allow-Origin: *");
         header('Access-Control-Allow-Credentials: true');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
         header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, authKey, sessionId");
 
-        if(request::isOptions()){
+        if (request::isOptions()) {
             exit('cross-domain options validate');
         }
     }
@@ -39,7 +41,8 @@ abstract class acontroller extends controller {
      * @param  array  $arrArgs
      * @return mixed
      */
-    public function call($calClass, array $arrArgs = []){
+    public function call($calClass, array $arrArgs = [])
+    {
         return $this->container()->call($calClass, $arrArgs);
     }
 
@@ -48,8 +51,8 @@ abstract class acontroller extends controller {
      *
      * @return \queryyetsimple\support\icontainer
      */
-    public function container(){
+    public function container()
+    {
         return app();
     }
-
 }
