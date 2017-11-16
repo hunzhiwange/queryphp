@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\menu;
 
 use common\is\tree\tree;
@@ -54,15 +54,15 @@ class update
      */
     protected function entify(array $aMenu)
     {
-        $objMenu = $this->find($aMenu ['id']);
+        $objMenu = $this->find($aMenu['id']);
 
-        $aMenu ['pid'] = $this->parseParentId($aMenu ['pid']);
-        if ($aMenu ['id'] == $aMenu ['pid']) {
+        $aMenu['pid'] = $this->parseParentId($aMenu['pid']);
+        if ($aMenu['id'] == $aMenu['pid']) {
             throw new update_failed('菜单父级不能为自己');
         }
 
-        if ($this->createTree()->hasChildren($aMenu ['id'], [
-                $aMenu ['pid']
+        if ($this->createTree()->hasChildren($aMenu['id'], [
+            $aMenu['pid']
         ])) {
             throw new update_failed('菜单父级不能为自己的子菜单');
         }
@@ -105,12 +105,12 @@ class update
      */
     protected function parseToNode($objMenu)
     {
-        $arrNode = [ ];
+        $arrNode = [];
         foreach ($objMenu as $oMenu) {
-            $arrNode [] = [
-                    $oMenu->id,
-                    $oMenu->pid,
-                    $oMenu->title
+            $arrNode[] = [
+                $oMenu->id,
+                $oMenu->pid,
+                $oMenu->title
             ];
         }
         return $arrNode;
@@ -125,13 +125,13 @@ class update
     protected function data(array $aMenu)
     {
         return [
-                'menu' => $aMenu ['menu'],
-                'module' => $aMenu ['module'],
-                'pid' => intval($aMenu ['pid']),
-                'title' => $aMenu ['title'],
-                'url' => $aMenu ['url'],
-                'menu_type' => intval($aMenu ['menu_type']),
-                'menu_icon' => $aMenu['menu_icon']
+            'menu' => $aMenu['menu'],
+            'module' => $aMenu['module'],
+            'pid' => intval($aMenu['pid']),
+            'title' => $aMenu['title'],
+            'url' => $aMenu['url'],
+            'menu_type' => intval($aMenu['menu_type']),
+            'menu_icon' => $aMenu['menu_icon']
         ];
     }
 

@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\structure;
 
 use common\is\tree\tree;
@@ -41,9 +41,9 @@ class index
      */
     public function run()
     {
-        $arrResult = [ ];
-        $arrResult ['structure'] = $this->parseStructureList($objStructure = $this->oRepository->all());
-        $arrResult ['status'] = $this->parseStatus($objStructure);
+        $arrResult = [];
+        $arrResult['structure'] = $this->parseStructureList($objStructure = $this->oRepository->all());
+        $arrResult['status'] = $this->parseStatus($objStructure);
         return $arrResult;
     }
 
@@ -66,9 +66,9 @@ class index
      */
     protected function parseStatus($objStructure)
     {
-        $arrStatus = [ ];
+        $arrStatus = [];
         foreach ($objStructure as $objValue) {
-            $arrStatus [$objValue ['id']] = $objValue ['status'];
+            $arrStatus[$objValue['id']] = $objValue['status'];
         }
         return $arrStatus;
     }
@@ -92,12 +92,12 @@ class index
      */
     protected function parseToNode($objStructure)
     {
-        $arrNode = [ ];
+        $arrNode = [];
         foreach ($objStructure as $oStructure) {
-            $arrNode [] = [
-                    $oStructure->id,
-                    $oStructure->pid,
-                    $oStructure->name
+            $arrNode[] = [
+                $oStructure->id,
+                $oStructure->pid,
+                $oStructure->name
             ];
         }
         return $arrNode;

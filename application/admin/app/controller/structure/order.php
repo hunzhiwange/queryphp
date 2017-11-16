@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller\structure;
 
 use queryyetsimple\request;
@@ -29,12 +29,12 @@ class order extends aaction
         try {
             $mixResult = $oService->run($this->id(), $this->type());
             return [
-                    'message' => '部门排序成功'
+                'message' => '部门排序成功'
             ];
         } catch (order_failed $oE) {
             return [
-                    'code' => 400,
-                    'message' => $oE->getMessage()
+                'code' => 400,
+                'message' => $oE->getMessage()
             ];
         }
     }

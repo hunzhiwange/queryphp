@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace common\domain\service\common_option;
 
 use common\is\repository\common_option as repository;

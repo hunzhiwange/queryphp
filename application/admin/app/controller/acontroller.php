@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller;
 
 use queryyetsimple\auth;
@@ -34,8 +34,11 @@ abstract class acontroller extends acontrollers
         parent::__construct();
         $strApiToken = request::header('authKey');
 
-        if (empty($strApiToken) || (auth::setTokenName($strApiToken) &&  !($this->arrLogin =auth::getLogin()))) {
-            exit(json_encode(['code'=>101, 'error'=>'登录已失效'], JSON_UNESCAPED_UNICODE));
+        if (empty($strApiToken) || (auth::setTokenName($strApiToken) && ! ($this->arrLogin = auth::getLogin()))) {
+            exit(json_encode([
+                'code' => 101,
+                'error' => '登录已失效'
+            ], JSON_UNESCAPED_UNICODE));
         }
     }
 

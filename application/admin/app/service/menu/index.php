@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\menu;
 
 use common\is\tree\tree;
@@ -41,9 +41,9 @@ class index
      */
     public function run()
     {
-        $arrResult = [ ];
-        $arrResult ['menu'] = $this->parseMenuList($objMenu = $this->oRepository->all());
-        $arrResult ['status'] = $this->parseStatus($objMenu);
+        $arrResult = [];
+        $arrResult['menu'] = $this->parseMenuList($objMenu = $this->oRepository->all());
+        $arrResult['status'] = $this->parseStatus($objMenu);
         return $arrResult;
     }
 
@@ -66,9 +66,9 @@ class index
      */
     protected function parseStatus($objMenu)
     {
-        $arrStatus = [ ];
+        $arrStatus = [];
         foreach ($objMenu as $objValue) {
-            $arrStatus [$objValue ['id']] = $objValue ['status'];
+            $arrStatus[$objValue['id']] = $objValue['status'];
         }
         return $arrStatus;
     }
@@ -92,12 +92,12 @@ class index
      */
     protected function parseToNode($objMenu)
     {
-        $arrNode = [ ];
+        $arrNode = [];
         foreach ($objMenu as $oMenu) {
-            $arrNode [] = [
-                    $oMenu->id,
-                    $oMenu->pid,
-                    $oMenu->title
+            $arrNode[] = [
+                $oMenu->id,
+                $oMenu->pid,
+                $oMenu->title
             ];
         }
         return $arrNode;

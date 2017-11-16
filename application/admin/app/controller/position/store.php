@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller\position;
 
 use queryyetsimple\request;
@@ -27,7 +27,7 @@ class store extends aaction
     {
         $mixResult = $oService->run($this->data());
         return [
-                'message' => '职位保存成功'
+            'message' => '职位保存成功'
         ];
     }
 

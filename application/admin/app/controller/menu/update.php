@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller\menu;
 
 use queryyetsimple\request;
@@ -29,12 +29,12 @@ class update extends aaction
         try {
             $mixResult = $oService->run($this->data());
             return [
-                    'message' => '菜单更新成功'
+                'message' => '菜单更新成功'
             ];
         } catch (update_failed $oE) {
             return [
-                    'code' => 400,
-                    'message' => $oE->getMessage()
+                'code' => 400,
+                'message' => $oE->getMessage()
             ];
         }
     }
@@ -47,11 +47,11 @@ class update extends aaction
     protected function data()
     {
         return request::alls([
-                'id|intval',
-                'menu|trim',
-                'module|trim',
-                'pid',
-                'title|trim',
+            'id|intval',
+            'menu|trim',
+            'module|trim',
+            'pid',
+            'title|trim',
                 'url|trim',
                 'menu_type|intval',
                 'menu_icon|trim'

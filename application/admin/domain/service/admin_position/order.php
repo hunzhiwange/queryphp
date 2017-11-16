@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\domain\service\admin_position;
 
 use queryyetsimple\mvc\model_not_found;
@@ -45,7 +45,7 @@ class order
     {
         $objStructure = $this->find($intId);
 
-        $objCollection = $this->siblings($objStructure ['pid']);
+        $objCollection = $this->siblings($objStructure['pid']);
         $intIndex = $this->validAndReturnIndex($intId, $objCollection, $strType);
 
         $this->registerUnitOfWork($objCollection, $intIndex, $strType);
@@ -85,7 +85,7 @@ class order
     protected function registerUnitOfWork($objCollection, $intIndex, $strType)
     {
         foreach ($objCollection as $intKey => $objChild) {
-            $objChild->forceProp('sort', $intId = $this->parseOrder($this->{'parse' . ucwords($strType) . 'OrderIndex'} ($intKey, $intIndex)));
+            $objChild->forceProp('sort', $intId = $this->parseOrder($this->{'parse' . ucwords($strType) . 'OrderIndex'}($intKey, $intIndex)));
             $this->oRepository->registerUpdate($objChild);
         }
     }

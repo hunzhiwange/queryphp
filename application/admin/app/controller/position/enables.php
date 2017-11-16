@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller\position;
 
 use queryyetsimple\request;
@@ -29,12 +29,12 @@ class enables extends aaction
         try {
             $mixResult = $oService->run($this->ids(), $this->status());
             return [
-                    'message' => sprintf('职位%s成功', $this->status() == 'enable' ? '启用' : '禁用')
+                'message' => sprintf('职位%s成功', $this->status() == 'enable' ? '启用' : '禁用')
             ];
         } catch (enables_failed $oE) {
             return [
-                    'code' => 400,
-                    'message' => $oE->getMessage()
+                'code' => 400,
+                'message' => $oE->getMessage()
             ];
         }
     }

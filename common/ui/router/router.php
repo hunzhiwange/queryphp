@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 use queryyetsimple\router;
 
 /**
@@ -12,12 +12,12 @@ use queryyetsimple\router;
  */
 if (api()) {
     router::middleware('*', [
-            'common',
-            'api'
+        'common',
+        'api'
     ]);
 } else {
     router::middleware('*', [
-            'common',
-            'web'
+        'common',
+        'web'
     ]);
 }

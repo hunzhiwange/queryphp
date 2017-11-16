@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\position;
 
 use common\is\tree\tree;
@@ -43,7 +43,7 @@ class store
      */
     public function run($aStructure)
     {
-        $aStructure ['pid'] = $this->parseParentId($aStructure ['pid']);
+        $aStructure['pid'] = $this->parseParentId($aStructure['pid']);
         return $this->oRepository->create($this->entity($aStructure));
     }
 
@@ -67,9 +67,9 @@ class store
     protected function data(array $aStructure)
     {
         return [
-                'name' => $aStructure ['name'],
-                'pid' => intval($aStructure ['pid']),
-                'sort' => 500
+            'name' => $aStructure['name'],
+            'pid' => intval($aStructure['pid']),
+            'sort' => 500
         ];
     }
 

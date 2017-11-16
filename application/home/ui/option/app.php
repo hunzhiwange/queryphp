@@ -1,5 +1,6 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
+
 
 /**
  * app 默认配置文件
@@ -9,4 +10,4 @@
  * @since 2017.09.07
  * @version 1.0
  */
-return [ ];
+return [];

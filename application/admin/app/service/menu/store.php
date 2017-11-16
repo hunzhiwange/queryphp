@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\menu;
 
 use common\is\tree\tree;
@@ -43,7 +43,7 @@ class store
      */
     public function run($aMenu)
     {
-        $aMenu ['pid'] = $this->parseParentId($aMenu ['pid']);
+        $aMenu['pid'] = $this->parseParentId($aMenu['pid']);
         return $this->oRepository->create($this->entity($aMenu));
     }
 
@@ -67,14 +67,14 @@ class store
     protected function data(array $aMenu)
     {
         return [
-                'menu' => $aMenu ['menu'],
-                'module' => $aMenu ['module'],
-                'pid' => intval($aMenu ['pid']),
-                'sort' => 500,
-                'title' => $aMenu ['title'],
-                'url' => $aMenu ['url'],
-                'menu_type' => intval($aMenu ['menu_type']),
-                'menu_icon' => $aMenu['menu_icon']
+            'menu' => $aMenu['menu'],
+            'module' => $aMenu['module'],
+            'pid' => intval($aMenu['pid']),
+            'sort' => 500,
+            'title' => $aMenu['title'],
+            'url' => $aMenu['url'],
+            'menu_type' => intval($aMenu['menu_type']),
+            'menu_icon' => $aMenu['menu_icon']
         ];
     }
 

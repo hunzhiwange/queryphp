@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller\structure;
 
 use queryyetsimple\request;
@@ -27,7 +27,7 @@ class store extends aaction
     {
         $mixResult = $oService->run($this->data());
         return [
-                'message' => '部门保存成功'
+            'message' => '部门保存成功'
         ];
     }
 

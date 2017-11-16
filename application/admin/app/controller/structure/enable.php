@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller\structure;
 
 use queryyetsimple\request;
@@ -29,12 +29,12 @@ class enable extends aaction
         try {
             $mixResult = $oService->run($this->id(), $this->status());
             return [
-                    'message' => '部门状态更新成功'
+                'message' => '部门状态更新成功'
             ];
         } catch (update_failed $oE) {
             return [
-                    'code' => 400,
-                    'message' => $oE->getMessage()
+                'code' => 400,
+                'message' => $oE->getMessage()
             ];
         }
     }

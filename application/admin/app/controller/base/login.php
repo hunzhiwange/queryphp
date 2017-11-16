@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller\base;
 
 use queryyetsimple\mvc\action;
@@ -14,7 +14,6 @@ use queryyetsimple\auth;
 class login extends action
 {
     use auth_login_api;
-
     public function run(request $oRequest)
     {
         $oRequest->setPost(option::get('var_ajax'), true);
@@ -25,27 +24,29 @@ class login extends action
         }
 
         $arrData = [
-           'authKey' => $mixLogin['api_token'],
-           'userInfo' => $mixLogin['user'],
-           'rememberKey' => $mixLogin['remember_key']
-       ];
+            'authKey' => $mixLogin['api_token'],
+            'userInfo' => $mixLogin['user'],
+            'rememberKey' => $mixLogin['remember_key']
+        ];
 
         $arrData['menusList'] = $this->getMenu();
         $arrData['authList'] = $this->getAuth();
 
         return $arrData;
     }
-
     public function getAuth()
     {
     }
-
     public function getMenu()
     {
         $arrList = admin_menu::getAll();
         $arrNode = [];
         foreach ($arrList as $arr) {
-            $arrNode[] = [$arr['id'],$arr['pid'],$arr->toArray() ];
+            $arrNode[] = [
+                $arr['id'],
+                $arr['pid'],
+                $arr->toArray()
+            ];
         }
 
         $oTree = new tree($arrNode);

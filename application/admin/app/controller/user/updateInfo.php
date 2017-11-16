@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller\user;
 
 use Exception;
@@ -28,11 +28,13 @@ class updateInfo extends aaction
     {
         try {
             $oService->run($this->id(), $this->data());
-            return ['message' => '更新账号信息成功'];
+            return [
+                'message' => '更新账号信息成功'
+            ];
         } catch (Exception $oE) {
             return [
-                    'code' => 400,
-                    'message' => $oE->getMessage()
+                'code' => 400,
+                'message' => $oE->getMessage()
             ];
         }
     }
@@ -45,9 +47,9 @@ class updateInfo extends aaction
     protected function data()
     {
         return request::alls([
-                'nikename|trim',
-                'email|trim',
-                'mobile|trim'
+            'nikename|trim',
+            'email|trim',
+            'mobile|trim'
         ]);
     }
 

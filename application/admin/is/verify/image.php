@@ -15,8 +15,8 @@ class image
     public function run()
     {
         $this->oSeccode->options([
-                'width' => 100,
-                'height' => 30
+            'width' => 100,
+            'height' => 30
         ])->display(4, true);
 
         cache::set('admin_seccode', $this->oSeccode->getCode());

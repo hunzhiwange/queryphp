@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller\systemConfigs;
 
 use queryyetsimple\request;
@@ -27,7 +27,7 @@ class store extends aaction
     {
         $mixResult = $oService->run($this->data());
         return [
-                'message' => '配置更新成功'
+            'message' => '配置更新成功'
         ];
     }
 
@@ -39,11 +39,11 @@ class store extends aaction
     protected function data()
     {
         return request::alls([
-                'SYSTEM_NAME|trim',
-                'IDENTIFYING_CODE|intval',
-                'LOGO_TYPE|intval',
-                'LOGIN_SESSION_VALID|intval',
-                'SYSTEM_LOGO|trim'
+            'SYSTEM_NAME|trim',
+            'IDENTIFYING_CODE|intval',
+            'LOGO_TYPE|intval',
+            'LOGIN_SESSION_VALID|intval',
+            'SYSTEM_LOGO|trim'
         ]);
     }
 }

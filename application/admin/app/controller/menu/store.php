@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller\menu;
 
 use queryyetsimple\request;
@@ -27,7 +27,7 @@ class store extends aaction
     {
         $mixResult = $oService->run($this->data());
         return [
-                'message' => '菜单保存成功'
+            'message' => '菜单保存成功'
         ];
     }
 
@@ -39,11 +39,11 @@ class store extends aaction
     protected function data()
     {
         return request::alls([
-                'menu|trim',
-                'module|trim',
-                'pid',
-                'title|trim',
-                'url|trim',
+            'menu|trim',
+            'module|trim',
+            'pid',
+            'title|trim',
+            'url|trim',
                 'menu_type|intval',
                 'menu_icon|trim'
         ]);

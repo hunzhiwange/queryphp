@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller\menu;
 
 use queryyetsimple\request;
@@ -29,12 +29,12 @@ class destroy extends aaction
         try {
             $mixResult = $oService->run($this->id());
             return [
-                    'message' => '菜单删除成功'
+                'message' => '菜单删除成功'
             ];
         } catch (destroy_failed $oE) {
             return [
-                    'code' => 400,
-                    'message' => $oE->getMessage()
+                'code' => 400,
+                'message' => $oE->getMessage()
             ];
         }
     }

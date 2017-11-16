@@ -1,5 +1,6 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
+
 
 /**
  * app 默认配置文件
@@ -20,4 +21,4 @@ return [
      * api 接口模式，json、view 和默认返回 api 格式数据
      */
     'default_response' => 'api'
- ];
+];

@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\structure;
 
 use common\is\tree\tree;
@@ -50,14 +50,14 @@ class edit
     public function run($intId)
     {
         $arrStructure = $this->oRepository->find($intId)->toArray();
-        $arrSelect = $this->getSelectTree($arrStructure ['pid']);
-        $arrStructure ['pid'] = $arrSelect ['selected'] ?  : [
-                - 1
+        $arrSelect = $this->getSelectTree($arrStructure['pid']);
+        $arrStructure['pid'] = $arrSelect['selected'] ?  : [
+            - 1
         ];
 
         return [
-                'one' => $arrStructure,
-                'list' => $arrSelect ['list']
+            'one' => $arrStructure,
+            'list' => $arrSelect['list']
         ];
     }
 
@@ -94,7 +94,7 @@ class edit
     {
         $oTree = new tree($this->parseToNode($objStructure));
         $arrTopStructure = $this->oRepository->topNode();
-        $oTree->setNode($arrTopStructure ['id'], $arrTopStructure ['pid'], $arrTopStructure ['lable'], true);
+        $oTree->setNode($arrTopStructure['id'], $arrTopStructure['pid'], $arrTopStructure['lable'], true);
         return $oTree;
     }
 
@@ -106,12 +106,12 @@ class edit
      */
     protected function parseToNode($objStructure)
     {
-        $arrNode = [ ];
+        $arrNode = [];
         foreach ($objStructure as $oStructure) {
-            $arrNode [] = [
-                    $oStructure->id,
-                    $oStructure->pid,
-                    $oStructure->name
+            $arrNode[] = [
+                $oStructure->id,
+                $oStructure->pid,
+                $oStructure->name
             ];
         }
         return $arrNode;

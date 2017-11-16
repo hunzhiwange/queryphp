@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\base;
 
 use common\is\repository\common_option as repository;
@@ -51,9 +51,9 @@ class getConfigs
      */
     protected function parseToMap($objOption)
     {
-        $arr = [ ];
+        $arr = [];
         foreach ($objOption as $oVal) {
-            $arr [$oVal->name] = $oVal->value;
+            $arr[$oVal->name] = $oVal->value;
         }
         return $arr;
     }

@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\domain\service\admin_menu;
 
 use admin\is\repository\admin_menu as repository;
@@ -56,8 +56,8 @@ class enables
     protected function checkStatus($strStatus)
     {
         if (! in_array($strStatus, [
-                'disable',
-                'enable'
+            'disable',
+            'enable'
         ])) {
             throw new enables_failed('启用禁用状态不受支持');
         }

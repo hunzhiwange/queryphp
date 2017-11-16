@@ -12,7 +12,6 @@ use queryyetsimple\auth;
 class logout extends action
 {
     use auth_login_api;
-
     public function run(request $oRequest)
     {
         $oRequest->setPost(option::get('var_ajax'), true);

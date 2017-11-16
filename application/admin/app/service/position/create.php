@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\position;
 
 use common\is\tree\tree;
@@ -74,7 +74,7 @@ class create
     {
         $oTree = new tree($this->parseToNode($objStructure));
         $arrTopStructure = $this->oRepository->topNode();
-        $oTree->setNode($arrTopStructure ['id'], $arrTopStructure ['pid'], $arrTopStructure ['lable'], true);
+        $oTree->setNode($arrTopStructure['id'], $arrTopStructure['pid'], $arrTopStructure['lable'], true);
         return $oTree;
     }
 
@@ -86,12 +86,12 @@ class create
      */
     protected function parseToNode($objStructure)
     {
-        $arrNode = [ ];
+        $arrNode = [];
         foreach ($objStructure as $oStructure) {
-            $arrNode [] = [
-                    $oStructure->id,
-                    $oStructure->pid,
-                    $oStructure->name
+            $arrNode[] = [
+                $oStructure->id,
+                $oStructure->pid,
+                $oStructure->name
             ];
         }
         return $arrNode;

@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller\position;
 
 use queryyetsimple\request;
@@ -29,12 +29,12 @@ class update extends aaction
         try {
             $mixResult = $oService->run($this->data());
             return [
-                    'message' => '职位更新成功'
+                'message' => '职位更新成功'
             ];
         } catch (update_failed $oE) {
             return [
-                    'code' => 400,
-                    'message' => $oE->getMessage()
+                'code' => 400,
+                'message' => $oE->getMessage()
             ];
         }
     }

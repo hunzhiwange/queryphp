@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\structure;
 
 use common\is\tree\tree;
@@ -54,15 +54,15 @@ class update
      */
     protected function entify(array $aStructure)
     {
-        $objStructure = $this->find($aStructure ['id']);
+        $objStructure = $this->find($aStructure['id']);
 
-        $aStructure ['pid'] = $this->parseParentId($aStructure ['pid']);
-        if ($aStructure ['id'] == $aStructure ['pid']) {
+        $aStructure['pid'] = $this->parseParentId($aStructure['pid']);
+        if ($aStructure['id'] == $aStructure['pid']) {
             throw new update_failed('部门父级不能为自己');
         }
 
-        if ($this->createTree()->hasChildren($aStructure ['id'], [
-                $aStructure ['pid']
+        if ($this->createTree()->hasChildren($aStructure['id'], [
+            $aStructure['pid']
         ])) {
             throw new update_failed('部门父级不能为自己的子部门');
         }
@@ -105,12 +105,12 @@ class update
      */
     protected function parseToNode($objStructure)
     {
-        $arrNode = [ ];
+        $arrNode = [];
         foreach ($objStructure as $oStructure) {
-            $arrNode [] = [
-                    $oStructure->id,
-                    $oStructure->pid,
-                    $oStructure->name
+            $arrNode[] = [
+                $oStructure->id,
+                $oStructure->pid,
+                $oStructure->name
             ];
         }
         return $arrNode;
@@ -125,8 +125,8 @@ class update
     protected function data(array $aStructure)
     {
         return [
-                'name' => $aStructure ['name'],
-                'pid' => intval($aStructure ['pid'])
+            'name' => $aStructure['name'],
+            'pid' => intval($aStructure['pid'])
         ];
     }
 

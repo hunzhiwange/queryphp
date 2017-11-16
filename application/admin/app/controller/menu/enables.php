@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller\menu;
 
 use queryyetsimple\request;
@@ -17,7 +17,7 @@ use admin\domain\service\admin_menu\enables as service;
  */
 class enables extends aaction
 {
-
+    
     /**
      * 响应方法
      *
@@ -29,16 +29,16 @@ class enables extends aaction
         try {
             $mixResult = $oService->run($this->ids(), $this->status());
             return [
-                    'message' => sprintf('菜单%s成功', $this->status() == 'enable' ? '启用' : '禁用')
+                'message' => sprintf('菜单%s成功', $this->status() == 'enable' ? '启用' : '禁用')
             ];
         } catch (enables_failed $oE) {
             return [
-                    'code' => 400,
-                    'message' => $oE->getMessage()
+                'code' => 400, 
+                'message' => $oE->getMessage()
             ];
         }
     }
-
+    
     /**
      * 启用禁用状态
      *

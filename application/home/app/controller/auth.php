@@ -14,10 +14,8 @@ use queryyetsimple\bootstrap\auth\login_register as login_register;
 class auth extends controller
 {
     use login_register;
-
     protected $oAuth;
     protected $oUser;
-
     public function __construct(auth_connect $oAuth)
     {
         $this->oAuth = $oAuth;

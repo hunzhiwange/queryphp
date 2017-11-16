@@ -1,4 +1,4 @@
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 
 /**
  * 公共验证规则

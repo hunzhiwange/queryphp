@@ -56,7 +56,7 @@ class controller extends command
      */
     protected function getArguments()
     {
-        return [ ];
+        return [];
     }
 
     /**
@@ -66,7 +66,7 @@ class controller extends command
      */
     protected function getOptions()
     {
-        return [ ];
+        return [];
     }
 
     /**

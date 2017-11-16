@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\user;
 
 use queryyetsimple\mvc\model_not_found;
@@ -86,9 +86,9 @@ class updateInfo
     protected function data(array $aData)
     {
         return [
-                'nikename' => trim($aData ['nikename']),
-                'email' => trim($aData ['email']),
-                'mobile' => trim($aData ['mobile'])
+            'nikename' => trim($aData['nikename']),
+            'email' => trim($aData['email']),
+            'mobile' => trim($aData ['mobile'])
         ];
     }
 }

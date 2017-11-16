@@ -1,5 +1,6 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
+
 
 /**
  * ---------------------------------------------------------------
@@ -11,4 +12,4 @@
  * see http://www.queryphp.com/v4/execution-flow/single-entry-index.php.html
  */
 $oComposer = require dirname(__DIR__) . '/vendor/autoload.php';
-queryyetsimple\bootstrap\project::singletons($oComposer, [ ]);
+queryyetsimple\bootstrap\project::singletons($oComposer, []);

@@ -13,12 +13,12 @@ class my_job
         //
         // dump(func_get_args());
 
+
         //fwrite(STDOUT, json_encode($arrArgs)."\n\r");
         fwrite(STDOUT, 'hello my job22!' . "\n\r");
 
         throw new \Exception('s');
     }
-
     public function failed()
     {
         fwrite(STDOUT, 'failed' . "\n\r");

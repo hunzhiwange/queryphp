@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller\menu;
 
 use admin\app\controller\aaction;
@@ -15,7 +15,7 @@ use admin\app\service\menu\index as service;
  */
 class index extends aaction
 {
-
+    
     /**
      * 响应方法
      *

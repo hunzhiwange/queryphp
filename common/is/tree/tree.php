@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace common\is\tree;
 
 use queryyetsimple\support\tree as support_tree;
@@ -40,10 +40,10 @@ class tree
      */
     public function forList()
     {
-        return  $this->oTree->toArray(function ($arrItem) {
+        return $this->oTree->toArray(function ($arrItem) {
             return [
                 'id' => $arrItem['value'],
-                'label' => $arrItem['data'],
+                'label' => $arrItem['data']
             ];
         });
     }
@@ -54,12 +54,12 @@ class tree
      * @param  int $iParentId
      * @return array
      */
-    public function forSelect($iParentId=null)
+    public function forSelect($iParentId = null)
     {
         $arrTree = $this->oTree->toArray(function ($arrItem) {
             return [
                 'value' => $arrItem['value'],
-                'label' => $arrItem['data'],
+                'label' => $arrItem['data']
             ];
         });
 
@@ -69,7 +69,10 @@ class tree
             $arrSelected = [];
         }
 
-        return ['list' => $arrTree,'selected' => $arrSelected];
+        return [
+            'list' => $arrTree,
+            'selected' => $arrSelected
+        ];
     }
 
     /**
@@ -91,7 +94,7 @@ class tree
      * @param  boolean $booStrict
      * @return boolean
      */
-    public function hasChildren($intId, array $arrCheckChildren=[], $booStrict=true)
+    public function hasChildren($intId, array $arrCheckChildren = [], $booStrict = true)
     {
         return $this->oTree->hasChildren($intId, $arrCheckChildren, $booStrict);
     }
@@ -104,7 +107,7 @@ class tree
      */
     protected function createTree(array $arrNode)
     {
-        return  new support_tree($arrNode);
+        return new support_tree($arrNode);
     }
 
     /**
@@ -117,8 +120,8 @@ class tree
     public function __call($sMethod, $arrArgs)
     {
         return call_user_func_array([
-                $this->oTree,
-                $sMethod
+            $this->oTree,
+            $sMethod
         ], $arrArgs);
     }
 }

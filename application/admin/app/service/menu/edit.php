@@ -1,5 +1,5 @@
 <?php
-// ©2017 http://your.domain.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\menu;
 
 use common\is\tree\tree;
@@ -50,14 +50,14 @@ class edit
     public function run($intId)
     {
         $arrMenu = $this->oRepository->find($intId)->toArray();
-        $arrSelect = $this->getSelectTree($arrMenu ['pid']);
-        $arrMenu ['pid'] = $arrSelect ['selected'] ?  : [
-                - 1
+        $arrSelect = $this->getSelectTree($arrMenu['pid']);
+        $arrMenu['pid'] = $arrSelect['selected'] ?  : [
+            - 1
         ];
 
         return [
-                'one' => $arrMenu,
-                'list' => $arrSelect ['list']
+            'one' => $arrMenu,
+            'list' => $arrSelect['list']
         ];
     }
 
@@ -94,7 +94,7 @@ class edit
     {
         $oTree = new tree($this->parseToNode($objMenu));
         $arrTopMenu = $this->oRepository->topNode();
-        $oTree->setNode($arrTopMenu ['id'], $arrTopMenu ['pid'], $arrTopMenu ['lable'], true);
+        $oTree->setNode($arrTopMenu['id'], $arrTopMenu['pid'], $arrTopMenu['lable'], true);
         return $oTree;
     }
 
@@ -106,12 +106,12 @@ class edit
      */
     protected function parseToNode($objMenu)
     {
-        $arrNode = [ ];
+        $arrNode = [];
         foreach ($objMenu as $oMenu) {
-            $arrNode [] = [
-                    $oMenu->id,
-                    $oMenu->pid,
-                    $oMenu->title
+            $arrNode[] = [
+                $oMenu->id,
+                $oMenu->pid,
+                $oMenu->title
             ];
         }
         return $arrNode;
