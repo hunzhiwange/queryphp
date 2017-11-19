@@ -1,7 +1,7 @@
 {
-    "name": "QueryVue",
+    "name": "QueryPHP",
     "version": "1.0.0",
-    "description": "QueryVue made by vue 2.0 For QueryPHP",
+    "description": "QueryPHP made by vue 2.0 For The QueryPHP Framework",
     "scripts": {
         "dev": "node build/dev-server.js",
         "build": "node build/build.js"

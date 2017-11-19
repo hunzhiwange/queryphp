@@ -23,6 +23,30 @@ const validate = {
             }
         }, timeout)
     },
+    alphaUpper: (rule, value, callback) => {
+        if (!value) {
+            return callback()
+        }
+        setTimeout(() => {
+            if (!/^[A-Z]*$/.test(value)) {
+                callback(new Error('只能是大写字母'))
+            } else {
+                return callback()
+            }
+        }, timeout)
+    },
+    alphaLower: (rule, value, callback) => {
+        if (!value) {
+            return callback()
+        }
+        setTimeout(() => {
+            if (!/^[a-z]*$/.test(value)) {
+                callback(new Error('只能是小写字母'))
+            } else {
+                return callback()
+            }
+        }, timeout)
+    },
     alphaNum: (rule, value, callback) => {
         if (!value) {
             return callback()

@@ -32,59 +32,80 @@
 <script>
 import http from '../../../../assets/js/http'
 
-export default {
-    methods: {
-        child(node, data, store, event) {
+export default
+{
+    methods:
+    {
+        child(node, data, store, event)
+        {
             this.stopPropagation(event)
             router.replace('/admin/menu/add/' + data.id)
         },
-        edit(node, data, store, event) {
+        edit(node, data, store, event)
+        {
             this.stopPropagation(event)
             router.replace('/admin/menu/edit/' + data.id)
         },
-        top(node, data, store, event) {
+        top(node, data, store, event)
+        {
             this.order(node, data, store, event, 'top')
         },
-        up(node, data, store, event) {
+        up(node, data, store, event)
+        {
             this.order(node, data, store, event, 'up')
         },
-        down(node, data, store, event) {
+        down(node, data, store, event)
+        {
             this.order(node, data, store, event, 'down')
         },
-        enable(node, data, store, event, status) {
+        enable(node, data, store, event, status)
+        {
             this.stopPropagation(event)
-            this.apiPut('/admin/menu/enable/', data.id, {
+            this.apiPut('/admin/menu/enable/', data.id,
+            {
                 status: status
-            }).then((res) => {
-                this.handelResponse(res, (data) => {
+            }).then((res) =>
+            {
+                this.handelResponse(res, (data) =>
+                {
                     _g.toastMsg('success', res.message)
-                    setTimeout(() => {
+                    setTimeout(() =>
+                    {
                         _g.shallowRefresh(this.$route.name)
                     }, 1000)
                 })
             })
         },
-        remove(node, data, store, event) {
+        remove(node, data, store, event)
+        {
             this.stopPropagation(event)
             if (node.childNodes.length) return
-            this.$confirm('确认删除该菜单?', '提示', {
+            this.$confirm('确认删除该菜单?', '提示',
+            {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
-            }).then(() => {
-                this.apiDelete('/admin/menu/', data.id).then((res) => {
-                    this.handelResponse(res, (data) => {
+            }).then(() =>
+            {
+                this.apiDelete('/admin/menu/', data.id).then((res) =>
+                {
+                    this.handelResponse(res, (data) =>
+                    {
                         _g.toastMsg('success', res.message)
-                        setTimeout(() => {
+                        setTimeout(() =>
+                        {
                             _g.shallowRefresh(this.$route.name)
                         }, 1000)
                     })
                 })
-            }).catch(() => {})
+            }).catch(() =>
+            {})
         },
-        enables(type) {
+        enables(type)
+        {
             let selectedIds = this.$refs.tree.getCheckedKeys()
-            if (!selectedIds.length) {
+            if (!selectedIds.length)
+            {
                 _g.toastMsg('warning', '请勾选数据')
                 return
             }
@@ -94,135 +115,128 @@ export default {
                 status: type
             }
 
-            this.apiPost('/admin/menu/enables', data).then((res) => {
-                this.handelResponse(res, (data) => {
+            this.apiPost('/admin/menu/enables', data).then((res) =>
+            {
+                this.handelResponse(res, (data) =>
+                {
                     _g.toastMsg('success', res.message)
-                    setTimeout(() => {
+                    setTimeout(() =>
+                    {
                         _g.shallowRefresh(this.$route.name)
                     }, 1500)
                 })
             })
         },
-        filterNode(value, data) {
+        filterNode(value, data)
+        {
             if (!value) return true
             return data.label.indexOf(value) !== -1
         },
-        order(node, data, store, event, type) {
+
+        /**
+         * [order description]
+         * @param  {[type]} node  [description]
+         * @param  {[type]} data  [description]
+         * @param  {[type]} store [description]
+         * @param  {[type]} event [description]
+         * @param  {[type]} type  [description]
+         * @return {[type]}       [description]
+         */
+        order(node, data, store, event, type)
+        {
             this.stopPropagation(event)
-            this.apiPut('/admin/menu/order/', data.id, {
+            this.apiPut('/admin/menu/order/', data.id,
+            {
                 type: type
-            }).then((res) => {
-                this.handelResponse(res, (data) => {
+            }).then((res) =>
+            {
+                this.handelResponse(res, (data) =>
+                {
                     _g.toastMsg('success', res.message)
-                    setTimeout(() => {
+                    setTimeout(() =>
+                    {
                         _g.shallowRefresh(this.$route.name)
                     }, 1000)
                 })
             })
         },
-        stopPropagation(event) {
+
+        /**
+         * [stopPropagation description]
+         * @param  {[type]} event [description]
+         * @return {[type]}       [description]
+         */
+        stopPropagation(event)
+        {
             window.event ? window.event.cancelBubble = true : event.stopPropagation()
         },
-        renderContent(h, {
+
+        /**
+         * [renderContent description]
+         * @param  {[type]} h     [description]
+         * @param  {[type]} node  [description]
+         * @param  {[type]} data  [description]
+         * @param  {[type]} store [description]
+         * @return {[type]}       [description]
+         */
+        renderContent(h,
+        {
             node,
             data,
             store
-        }) {
-            return ( <
-                span style = 'flex: 1; display: flex; align-items: center; justify-content: space-between; font-size: 14px; padding-right: 8px;' >
-                <
-                span >
-                <
-                span > {
-                    node.label
-                } < /span> <
-                /span> <
-                span >
-                <
-                el - button type = 'text'
-                style = 'font-size: 12px;'
-                on - click = {
-                    () => this.enable(node, data, store, event, this.status[data.id] == 'enable' ? 'diable' : 'enable')
-                }
-                domPropsInnerHTML = {
-                    this.status[data.id] == 'enable' ? '<span style="color:#67C23A;" class="el-icon-circle-check"> 已启用</span>' : '<span style="color:#EB9E05;" class="el-icon-circle-close"> 已禁用</span>'
-                } > < /el-button> <
-                el - button type = 'text'
-                style = 'font-size: 12px;'
-                icon = 'el-icon-plus'
-                on - click = {
-                    () => this.child(store, data, event)
-                } > 子菜单 < /el-button> <
-                el - button type = 'text'
-                style = 'font-size: 12px;'
-                icon = 'el-icon-edit'
-                on - click = {
-                    () => this.edit(node, data, store, event)
-                } > 修改 < /el-button> <
-                el - button type = 'text'
-                style = 'font-size: 12px;'
-                icon = 'el-icon-star-on'
-                on - click = {
-                    () => this.top(node, data, store, event)
-                } > 置顶 < /el-button> <
-                el - button type = 'text'
-                style = 'font-size: 12px;'
-                icon = 'fa fa fa-arrow-up'
-                on - click = {
-                    () => this.up(node, data, store, event)
-                } > 上移 < /el-button> <
-                el - button type = 'text'
-                style = 'font-size: 12px;'
-                icon = 'fa fa fa-arrow-down'
-                on - click = {
-                    () => this.down(node, data, store, event)
-                } > 下移 < /el-button> <
-                el - button type = 'text'
-                style = 'font-size: 12px;'
-                icon = {
-                    node.childNodes.length ? 'el-icon-warning' : 'el-icon-delete'
-                }
-                on - click = {
-                    () => this.remove(node, data, store, event)
-                }
-                ref = {
-                    {
-                        disabled: true
-                    }
-                } > {
-                    node.childNodes.length ? '禁止' : '删除'
-                } < /el-button> <
-                /span> <
-                /span>)
+        })
+        {
+            return (
+                <span style='flex: 1; display: flex; align-items: center; justify-content: space-between; font-size: 14px; padding-right: 8px;'>
+                    <span>
+                        <span>{node.label}</span>
+                    </span>
+                    <span>
+                        <el-button type='text' style='font-size: 12px;' on-click={ () => this.enable(node, data, store, event, this.status[data.id] == 'enable' ? 'diable' : 'enable') } domPropsInnerHTML={this.status[data.id] == 'enable' ? '<span style="color:#67C23A;" class="el-icon-circle-check"> 已启用</span>' : '<span style="color:#EB9E05;" class="el-icon-circle-close"> 已禁用</span>'}></el-button>
+                        <el-button type='text' style='font-size: 12px;' icon='el-icon-plus' on-click={ () => this.child(store, data, event) }>子菜单</el-button>
+                        <el-button type='text' style='font-size: 12px;' icon='el-icon-edit' on-click={ () => this.edit(node, data, store, event) }>修改</el-button>
+                        <el-button type='text' style='font-size: 12px;' icon='el-icon-star-on' on-click={ () => this.top(node, data, store, event) }>置顶</el-button>
+                        <el-button type='text' style='font-size: 12px;' icon='fa fa fa-arrow-up' on-click={ () => this.up(node, data, store, event) }>上移</el-button>
+                        <el-button type='text' style='font-size: 12px;' icon='fa fa fa-arrow-down' on-click={ () => this.down(node, data, store, event) }>下移</el-button>
+                        <el-button type='text' style='font-size: 12px;' icon={node.childNodes.length ? 'el-icon-warning' : 'el-icon-delete'} on-click={ () => this.remove(node, data, store, event) } ref={{ disabled: true }}>{node.childNodes.length ? '禁止' : '删除'}</el-button>
+                    </span>
+                </span>)
             }
         },
-
-        data() {
+        data()
+        {
             return {
                 filterText: '',
                 dataTree: [],
                 status: [],
                 checkStrictly: true,
-                defaultProps: {
+                defaultProps:
+                {
                     children: 'children',
                     label: 'label'
                 }
             }
         },
-        created() {
-            this.apiGet('/admin/menu').then((res) => {
-                this.handelResponse(res, (data) => {
+        created()
+        {
+            this.apiGet('/admin/menu').then((res) =>
+            {
+                this.handelResponse(res, (data) =>
+                {
                     this.dataTree = data.menu
                     this.status = data.status
                 })
             })
         },
-        watch: {
-            filterText(val) {
+        watch:
+        {
+            filterText(val)
+            {
                 this.$refs.tree.filter(val)
             }
         },
-        components: {},
+        components:
+        {},
         mixins: [http]
     }
 </script>

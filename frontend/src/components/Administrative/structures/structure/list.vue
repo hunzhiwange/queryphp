@@ -128,72 +128,21 @@ export default {
             data,
             store
         }) {
-            return ( <
-                span style = 'flex: 1; display: flex; align-items: center; justify-content: space-between; font-size: 14px; padding-right: 8px;' >
-                <
-                span >
-                <
-                span > {
-                    node.label
-                } < /span> <
-                /span> <
-                span >
-                <
-                el - button type = 'text'
-                style = 'font-size: 12px;'
-                on - click = {
-                    () => this.enable(node, data, store, event, this.status[data.id] == 'enable' ? 'diable' : 'enable')
-                }
-                domPropsInnerHTML = {
-                    this.status[data.id] == 'enable' ? '<span style="color:#67C23A;" class="el-icon-circle-check"> 已启用</span>' : '<span style="color:#EB9E05;" class="el-icon-circle-close"> 已禁用</span>'
-                } > < /el-button> <
-                el - button type = 'text'
-                style = 'font-size: 12px;'
-                icon = 'el-icon-plus'
-                on - click = {
-                    () => this.child(store, data, event)
-                } > 子部门 < /el-button> <
-                el - button type = 'text'
-                style = 'font-size: 12px;'
-                icon = 'el-icon-edit'
-                on - click = {
-                    () => this.edit(node, data, store, event)
-                } > 修改 < /el-button> <
-                el - button type = 'text'
-                style = 'font-size: 12px;'
-                icon = 'el-icon-star-on'
-                on - click = {
-                    () => this.top(node, data, store, event)
-                } > 置顶 < /el-button> <
-                el - button type = 'text'
-                style = 'font-size: 12px;'
-                icon = 'fa fa fa-arrow-up'
-                on - click = {
-                    () => this.up(node, data, store, event)
-                } > 上移 < /el-button> <
-                el - button type = 'text'
-                style = 'font-size: 12px;'
-                icon = 'fa fa fa-arrow-down'
-                on - click = {
-                    () => this.down(node, data, store, event)
-                } > 下移 < /el-button> <
-                el - button type = 'text'
-                style = 'font-size: 12px;'
-                icon = {
-                    node.childNodes.length ? 'el-icon-warning' : 'el-icon-delete'
-                }
-                on - click = {
-                    () => this.remove(node, data, store, event)
-                }
-                ref = {
-                    {
-                        disabled: true
-                    }
-                } > {
-                    node.childNodes.length ? '禁止' : '删除'
-                } < /el-button> <
-                /span> <
-                /span>)
+            return (
+                <span style='flex: 1; display: flex; align-items: center; justify-content: space-between; font-size: 14px; padding-right: 8px;'>
+                    <span>
+                        <span>{node.label}</span>
+                    </span>
+                    <span>
+                        <el-button type='text' style='font-size: 12px;' on-click={ () => this.enable(node, data, store, event, this.status[data.id] == 'enable' ? 'diable' : 'enable') } domPropsInnerHTML={this.status[data.id] == 'enable' ? '<span style="color:#67C23A;" class="el-icon-circle-check"> 已启用</span>' : '<span style="color:#EB9E05;" class="el-icon-circle-close"> 已禁用</span>'}></el-button>
+                        <el-button type='text' style='font-size: 12px;' icon='el-icon-plus' on-click={ () => this.child(store, data, event) }>子部门</el-button>
+                        <el-button type='text' style='font-size: 12px;' icon='el-icon-edit' on-click={ () => this.edit(node, data, store, event) }>修改</el-button>
+                        <el-button type='text' style='font-size: 12px;' icon='el-icon-star-on' on-click={ () => this.top(node, data, store, event) }>置顶</el-button>
+                        <el-button type='text' style='font-size: 12px;' icon='fa fa fa-arrow-up' on-click={ () => this.up(node, data, store, event) }>上移</el-button>
+                        <el-button type='text' style='font-size: 12px;' icon='fa fa fa-arrow-down' on-click={ () => this.down(node, data, store, event) }>下移</el-button>
+                        <el-button type='text' style='font-size: 12px;' icon={node.childNodes.length ? 'el-icon-warning' : 'el-icon-delete'} on-click={ () => this.remove(node, data, store, event) } ref={{ disabled: true }}>{node.childNodes.length ? '禁止' : '删除'}</el-button>
+                    </span>
+                </span>)
             }
         },
 
