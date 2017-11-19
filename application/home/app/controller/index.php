@@ -23,19 +23,6 @@ class index extends controller
      */
     public function index()
     {
-        echo 'hello world';
-
-        $oValidate = new validate(['hello' => 'lihao'], [
-            'hello' => 'required|email|max_length:5'
-        ],  [
-            'hello' => '帝王级别',
-        ]);
-
-        if($oValidate->fail()){
-            print_r($oValidate->error());
-        }
-
-        exit();
         return $this->display();
     }
 }
