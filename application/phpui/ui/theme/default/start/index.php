@@ -21,18 +21,34 @@ use UI\Controls\ColorButton;
  */
 class index extends Window
 {
-    public function __construct($sTitle)
+    /**
+     * 构造哈叔
+     *
+     * @param string $sTitle
+     * @return void
+     */
+    public function __construct(string $sTitle)
     {
         parent::__construct("QueryPHP For PHPUI 启动界面 - ".$sTitle, new Size(640, 480), true);
         // $this->setMargin(true);
         $this->init();
     }
 
+    /**
+     * 初始化
+     *
+     * @return void
+     */
     protected function init()
     {
         $this->mainTab();
     }
 
+    /**
+     * 创建主标签
+     *
+     * @return void
+     */
     protected function mainTab()
     {
         $oMainTab = new Tab();
@@ -50,6 +66,11 @@ class index extends Window
         $this->add($oMainTab);
     }
 
+    /**
+     * 关于我们标签
+     *
+     * @return \UI\Controls\Box
+     */
     protected function aboutTabBox()
     {
         $oVBox = new Box(Box::Vertical);
@@ -88,6 +109,11 @@ class index extends Window
         return $oVBox;
     }
 
+    /**
+     * 官方示例标签
+     *
+     * @return \UI\Controls\Box
+     */
     protected function demoTabBox()
     {
         $oVBox = new Box(Box::Vertical);
@@ -125,3 +151,5 @@ $oWindow = new index($strHelloworld);
 $oWindow->show();
 
 UI\run();
+
+return 'phpui exit';
