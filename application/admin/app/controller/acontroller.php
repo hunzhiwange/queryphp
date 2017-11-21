@@ -3,6 +3,7 @@
 namespace admin\app\controller;
 
 use queryyetsimple\auth;
+use queryyetsimple\option;
 use queryyetsimple\request;
 use common\app\controller\acontroller as acontrollers;
 
@@ -32,8 +33,12 @@ abstract class acontroller extends acontrollers
     public function __construct()
     {
         parent::__construct();
-        $strApiToken = request::header('authKey');
 
+        // 强制设置为 ajax
+        request::setPost(option::get('var_ajax'), true);
+
+        // 验证登录状态
+        $strApiToken = request::header('authKey');
         if (empty($strApiToken) || (auth::setTokenName($strApiToken) && ! ($this->arrLogin = auth::getLogin()))) {
             exit(json_encode([
                 'code' => 101,

@@ -8,7 +8,7 @@ use queryyetsimple\http\request;
 use queryyetsimple\support\tree;
 use admin\domain\entity\admin_menu;
 use queryyetsimple\option;
-use queryyetsimple\response;
+use queryyetsimple\http\response;
 use queryyetsimple\auth;
 
 class login extends action
@@ -16,17 +16,15 @@ class login extends action
     use auth_login_api;
     public function run(request $oRequest)
     {
-        $oRequest->setPost(option::get('var_ajax'), true);
-
-        $mixLogin = $this->checkLogin($oRequest);
-        if ($mixLogin instanceof response) {
-            return $mixLogin;
+        $arrLogin = $this->checkLogin($oRequest);
+        if (isset($arrLogin['code'])) {
+            return $arrLogin;
         }
 
         $arrData = [
-            'authKey' => $mixLogin['api_token'],
-            'userInfo' => $mixLogin['user'],
-            'rememberKey' => $mixLogin['remember_key']
+            'authKey' => $arrLogin['api_token'],
+            'userInfo' => $arrLogin['user'],
+            'rememberKey' => $arrLogin['remember_key']
         ];
 
         $arrData['menusList'] = $this->getMenu();

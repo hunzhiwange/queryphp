@@ -2,6 +2,8 @@
 // (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller;
 
+use queryyetsimple\option;
+use queryyetsimple\request;
 use common\app\controller\acontroller as acontrollers;
 
 /**
@@ -14,4 +16,17 @@ use common\app\controller\acontroller as acontrollers;
  */
 class base extends acontrollers
 {
+
+    /**
+     * 构造函数
+     *
+     * @return  void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        // 强制设置为 ajax
+        request::setPost(option::get('var_ajax'), true);
+    }
 }

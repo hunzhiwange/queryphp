@@ -3,10 +3,10 @@
     <div>
         <el-form ref="form" :model="form" :rules="rules" label-width="80px">
             <el-form-item label="用户昵称" prop="nikename">
-                <el-input v-model="form.nikename"></el-input>
+                <el-input v-model.trim="form.nikename"></el-input>
             </el-form-item>
             <el-form-item label="邮箱" prop="email">
-                <el-input v-model="form.email"></el-input>
+                <el-input v-model.trim="form.email"></el-input>
             </el-form-item>
             <el-form-item label="手机号" prop="mobile">
                 <el-input type="number" v-model.number="form.mobile"></el-input>
