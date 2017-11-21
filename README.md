@@ -1,3 +1,5 @@
+![](public/images/queryphp.png)
+
 # The QueryPHP Application
 
 QueryPHP is a powerful PHP framework for code poem as free as wind. [Query Yet Simple]
