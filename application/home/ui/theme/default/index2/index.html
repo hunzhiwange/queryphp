@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.0.5/lib/theme-chalk/index.css">
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <el-row class="tac2" type="flex" justify="space-between">
+                    <el-col :span="20">
+                        <div class="layout-logo"></div>
+                        <div class="layout-nav">
+                            <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+                                <el-menu-item index="1">处理中心</el-menu-item>
+                                <el-submenu index="2">
+                                    <template slot="title">我的工作台</template>
+                                    <el-menu-item index="2-1">选项1</el-menu-item>
+                                    <el-menu-item index="2-2">选项2</el-menu-item>
+                                    <el-menu-item index="2-3">选项3</el-menu-item>
+                                </el-submenu>
+                                <el-menu-item index="3"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+                            </el-menu>
+                        </div>
+                    </el-col>
+                    <el-col :span="4" >
+
+                            <el-menu style="float:right;" :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+                                <el-menu-item index="1">登录</el-menu-item>
+                                <el-menu-item index="3"><a href="https://www.ele.me" target="_blank">注册</a></el-menu-item>
+                            </el-menu>
+
+                    </el-col>
+                </el-row>
+
+
+
+
+            </el-header>
+            <el-container>
+                <el-aside width="200px">
+                    <el-row class="tac">
+                        <el-col :span="24">
+
+                            <el-menu default-active="2" class="el-menu-vertical-demo2" @open="handleOpen" @close="handleClose">
+                                <el-submenu index="1">
+                                    <template slot="title">
+                  <i class="el-icon-location"></i>
+                  <span>导航一</span>
+                </template>
+                                    <el-menu-item-group>
+                                        <template slot="title">分组一</template>
+                                        <el-menu-item index="1-1">选项1</el-menu-item>
+                                        <el-menu-item index="1-2">选项2</el-menu-item>
+                                    </el-menu-item-group>
+                                    <el-menu-item-group title="分组2">
+                                        <el-menu-item index="1-3">选项3</el-menu-item>
+                                    </el-menu-item-group>
+                                    <el-submenu index="1-4">
+                                        <template slot="title">选项4</template>
+                                        <el-menu-item index="1-4-1">选项1</el-menu-item>
+                                    </el-submenu>
+                                </el-submenu>
+                                <el-menu-item index="2">
+                                    <i class="el-icon-menu"></i>
+                                    <span slot="title">导航二</span>
+                                </el-menu-item>
+                                <el-menu-item index="3">
+                                    <i class="el-icon-setting"></i>
+                                    <span slot="title">导航三</span>
+                                </el-menu-item>
+                            </el-menu>
+                        </el-col>
+                </el-aside>
+                <el-main>
+                    <el-row>
+                        <el-col :span="24">
+
+                            <el-breadcrumb separator="/">
+                                <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+                                <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+                                <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+                                <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+                            </el-breadcrumb>
+                        </el-col>
+                        <el-col :span="24">
+                            wewewe
+                        </el-col>
+                    </el-row>
+
+                </el-main>
+            </el-container>
+            <el-footer>©2017 http://queryphp.com All rights reserved.</el-footer>
+        </el-container>
+
+
+    </div>
+</body>
+<script src="https://unpkg.com/vue@2.5.7/dist/vue.js"></script>
+<script src="https://unpkg.com/element-ui@2.0.5/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                visible: false
+            }
+        }
+    })
+</script>
+<style>
+    .layout-logo {
+        width: 100px;
+        height: 30px;
+        background: #5b6270;
+        border-radius: 3px;
+        float: left;
+        position: relative;
+        top: 15px;
+        left: 20px;
+    }
+
+    .layout-nav {
+        width: 420px;
+        margin-left: 179px;
+    }
+
+    .el-header,
+    .el-footer {
+        background-color: #B3C0D1;
+        color: #333;
+        text-align: center;
+        line-height: 60px;
+    }
+
+    .el-aside {
+        background-color: #D3DCE6;
+        color: #333;
+        text-align: center;
+        line-height: 200px;
+    }
+
+    .el-main {
+        background-color: #E9EEF3;
+        color: #333;
+        text-align: center;
+        line-height: 160px;
+    }
+
+    body>.el-container {
+        margin-bottom: 40px;
+    }
+
+    .el-container:nth-child(5) .el-aside,
+    .el-container:nth-child(6) .el-aside {
+        line-height: 260px;
+    }
+
+    .el-container:nth-child(7) .el-aside {
+        line-height: 320px;
+    }
+</style>
+
+</html>
