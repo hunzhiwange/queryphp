@@ -4,7 +4,7 @@
         <el-row type="flex" class="row-bg" justify="center">
             <el-col :span="16" class="header">
                 <div class="inner">
-                    <div class="login-logo-text pull-left">{{systemName}}</div>
+                    <div class="login-logo pull-left"><img src="../../assets/images/logo.png" alt="QueryPHP" /></div>
                     <div class="login-logo-description">用户登录</div>
                 </div>
             </el-col>
@@ -16,7 +16,7 @@
             <el-row type="flex" class="row-bg" justify="center">
                 <el-col :span="15" class="header">
                     <div class="pull-left big-logo">
-                        <img src="../../assets/images/logo_queryphp.png" alt="">
+                        <img src="../../assets/images/login_banner.png" alt="">
                     </div>
                 </el-col>
                 <el-col :span="9">
@@ -76,7 +76,7 @@
         <el-row type="flex" class="row-bg" justify="center">
             <el-col :span="24" class="header">
                 <div class="inner">
-                    <div>©2017 {{systemName}} All rights reserved.</div>
+                    <div>©2017 http://queryphp.com All rights reserved.</div>
                 </div>
             </el-col>
         </el-row>
@@ -92,7 +92,6 @@ export default {
     data() {
         return {
             title: '',
-            systemName: '',
             loading: false,
             form: {
                 name: '',
@@ -188,8 +187,6 @@ export default {
         this.checkIsRememberPwd()
         this.apiPost('admin/base/getConfigs').then((res) => {
             this.handelResponse(res, (data) => {
-                document.title = data.SYSTEM_NAME
-                this.systemName = data.SYSTEM_NAME
                 this.remember_time = data.LOGIN_SESSION_VALID
                 if (parseInt(data.IDENTIFYING_CODE)) {
                     this.requireVerify = true
@@ -215,10 +212,12 @@ body {
     background: #ffffff;
 }
 
-.header {}
+.header {
+    height:75px;
+}
 
 .header>.inner {
-    padding-top: 25px;
+    padding-top: 15px;
 }
 
 .inner {
@@ -230,11 +229,13 @@ body {
     float: left;
 }
 
-.login-logo-text {
-    color: #327ddc;
-    font-size: 40px;
-    line-height: 60px;
+.login-logo {
+    line-height: 30px;
     font-weight: bold;
+}
+
+.login-logo img{
+    height: 60px;
 }
 
 .login-logo-description {
