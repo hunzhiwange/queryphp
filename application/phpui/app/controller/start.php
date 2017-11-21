@@ -1,18 +1,18 @@
 <?php
 // (c) 2018 http://your.domain.com All rights reserved.
-namespace home\app\controller;
+namespace phpui\app\controller;
 
 use queryyetsimple\mvc\controller;
 
 /**
- * index 控制器
+ * phpui start 控制器
  *
  * @author Name Your <your@mail.com>
  * @package $$
- * @since 2017.10.12
+ * @since 2017.11.21
  * @version 1.0
  */
-class index extends controller
+class start extends controller
 {
 
     /**
@@ -22,6 +22,7 @@ class index extends controller
      */
     public function index()
     {
+        $this->assign('strHelloworld', 'Say hello to phpui');
         return $this->display();
     }
 }

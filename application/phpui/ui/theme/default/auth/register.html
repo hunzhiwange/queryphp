@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Signin Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://v4.bootcss.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="https://v4.bootcss.com/docs/4.0/examples/signin/signin.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <?php if(flash('errors')):?>
+        <?php foreach(flash('errors') as $strType=>$mixError) :?>
+        <div class="alert alert-danger" role="alert">
+            <?php echo is_array($mixError) ? implode('<br />',$mixError) : $mixError;?>
+        </div>
+        <?php endforeach;?>
+        <?php endif;?>
+
+        <form class="form-signin" method='post' action="{:url('auth/registerUser')}">
+            <h2 class="form-signin-heading">注 册</h2>
+            <label for="inputName" class="sr-only">用户名</label>
+            <input type="text" name="name" id="inputName" class="form-control" placeholder="用户名" value="{:flash('inputs\name')}" required2 autofocus>
+            <label for="inputNikename" class="sr-only">昵称</label>
+            <input type="text" name="nikename" id="inputNikename" class="form-control" placeholder="昵称" required2 value="{:flash('inputs\nikename')}">
+            <label for="inputPassword" class="sr-only">密码</label>
+            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="密码" required2>
+            <label for="inputComfirmPassword" class="sr-only">确认密码</label>
+            <input type="password" name="comfirm_password" id="inputComfirmPassword" class="form-control" placeholder="确认密码" required2>
+            <label for="inputEmail" class="sr-only">邮件地址</label>
+            <input type="text" name="email" id="inputEmail" class="form-control" placeholder="邮件地址" value="{:flash('inputs\email')}" required2>
+            <label for="inputMobile" class="sr-only">手机号码</label>
+            <input type="text" name="mobile" id="inputMobile" class="form-control" placeholder="手机号码" value="{:flash('inputs\mobile')}" required2>
+            <a href="{:url('auth/login')}">已有账户？</a>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">注 册</button>
+        </form>
+
+    </div>
+    <!-- /container -->
+</body>
+
+</html>
