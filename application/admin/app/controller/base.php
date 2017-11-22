@@ -27,6 +27,6 @@ class base extends acontrollers
         parent::__construct();
 
         // 强制设置为 ajax
-        request::setPost(option::get('var_ajax'), true);
+        set_ajax_request();
     }
 }

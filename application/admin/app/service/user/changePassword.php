@@ -41,7 +41,7 @@ class changePassword
      *
      * @param int $intId
      * @param array $arrData
-     * @return \queryyetsimple\http\response
+     * @return \queryyetsimple\http\response|array
      */
     public function run($intId, array $aData)
     {

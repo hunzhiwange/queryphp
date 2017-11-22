@@ -22,7 +22,7 @@ class changePassword extends aaction
      * 响应方法
      *
      * @param \admin\app\service\user\changePassword $oService
-     * @return \queryyetsimple\http\response
+     * @return \queryyetsimple\http\response|array
      */
     public function run(service $oService)
     {
