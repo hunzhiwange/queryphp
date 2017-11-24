@@ -1,7 +1,8 @@
 import Login from './components/Account/Login.vue'
 import refresh from './components/refresh.vue'
 import Home from './components/Home.vue'
-import homeIndex from './components/Administrative/system/home/index.vue'
+import layout from './components/layout.vue'
+import home_index from './views/home/index.vue'
 import menuList from './components/Administrative/system/menu/list.vue'
 import menuAdd from './components/Administrative/system/menu/add.vue'
 import menuEdit from './components/Administrative/system/menu/edit.vue'
@@ -27,31 +28,21 @@ import usersEdit from './components/Administrative/personnel/users/edit.vue'
  */
 
 const routes = [{
-        path: '/',
+        path: '/login',
         component: Login,
         name: 'Login'
     },
     {
-        path: '/admin',
-        component: Home,
+        path: '/',
+        component: layout,
         children: [{
             path: '/refresh',
             component: refresh,
             name: 'refresh'
-        }]
-    },
-    {
-        path: '/admin',
-        component: Home,
-        children: [{
-            path: 'home/index',
-            component: homeIndex,
-            name: 'homeIndex',
-            meta: {
-                hideLeft: false,
-                module: 'Administrative',
-                menu: 'home'
-            }
+        }, {
+            path: '/',
+            component: home_index,
+            name: 'home_index'
         }]
     },
     {

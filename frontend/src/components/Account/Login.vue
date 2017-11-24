@@ -37,7 +37,7 @@
                                     <img :src="verifyUrl" @click="refreshVerify()" class="verify-pos" />
                                 </el-form-item>
 
-                                <el-checkbox v-model="checked" style="margin:0px 0px 35px 0px;">记住密码</el-checkbox>
+                                <el-checkbox v-model="checked" style="margin:0px 0px 35px 0px;">保持登录</el-checkbox>
 
 
                                 <el-form-item style="width:100%;">
@@ -181,10 +181,21 @@ export default {
                     })
                 })
             }
+        },
+        checkIsLogin() {
+            let data = {
+                is_login: 'T'
+            }
+            this.apiPost('admin/login/is_login', data).then((res) => {
+                if (res.code == 200) {
+                    router.replace('/admin/menu/list')
+                }
+            })
         }
     },
     created() {
-        this.checkIsRememberPwd()
+        // this.checkIsRememberPwd()
+        this.checkIsLogin()
         this.apiPost('admin/base/getConfigs').then((res) => {
             this.handelResponse(res, (data) => {
                 this.remember_time = data.LOGIN_SESSION_VALID

@@ -44,8 +44,8 @@ class store extends aaction
             'pid',
             'title|trim',
             'url|trim',
-                'menu_type|intval',
-                'menu_icon|trim'
+            'menu_type|intval',
+            'menu_icon|trim'
         ]);
     }
 }

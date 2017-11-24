@@ -3,7 +3,6 @@
 namespace admin\app\controller;
 
 use queryyetsimple\auth;
-use queryyetsimple\option;
 use queryyetsimple\request;
 use common\app\controller\acontroller as acontrollers;
 

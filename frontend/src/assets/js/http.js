@@ -118,12 +118,12 @@ const apiMethods = {
             Lockr.set('authList', data.authList) // 权限节点列表
             Lockr.set('userInfo', data.userInfo) // 用户信息
             window.axios.defaults.headers.authKey = Lockr.get('authKey')
-            let routerUrl = ''
-            if (data.menusList[0].url) {
-                routerUrl = data.menusList[0].url
-            } else {
-                routerUrl = data.menusList[0].child[0].child[0].url
-            }
+            let routerUrl = '/'
+            // if (data.menusList[0].url) {
+            //     routerUrl = data.menusList[0].url
+            // } else {
+            //     routerUrl = data.menusList[0].child[0].child[0].url
+            // }
             setTimeout(() => {
                 let path = this.$route.path
                 if (routerUrl != path) {

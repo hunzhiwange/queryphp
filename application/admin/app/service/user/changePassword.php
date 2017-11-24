@@ -2,7 +2,6 @@
 // (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\user;
 
-use queryyetsimple\option;
 use queryyetsimple\http\request;
 use queryyetsimple\bootstrap\auth\change_password;
 

@@ -52,9 +52,9 @@ class update extends aaction
             'module|trim',
             'pid',
             'title|trim',
-                'url|trim',
-                'menu_type|intval',
-                'menu_icon|trim'
+            'url|trim',
+            'menu_type|intval',
+            'menu_icon|trim'
         ]);
     }
 }

@@ -346,7 +346,7 @@ export default {
         if (!authKey) {
             _g.toastMsg('warning', '您尚未登录')
             setTimeout(() => {
-                router.replace('/')
+                router.replace('/login')
             }, 1500)
             return
         }
