@@ -5,7 +5,8 @@ namespace admin\app\controller\user;
 use Exception;
 use queryyetsimple\request;
 use admin\app\controller\aaction;
-use admin\app\service\user\updateInfo as service;
+use admin\app\service\user\update_info_failed;
+use admin\app\service\user\update_info as service;
 
 /**
  * 修改账号信息
@@ -15,13 +16,13 @@ use admin\app\service\user\updateInfo as service;
  * @since 2017.11.12
  * @version 1.0
  */
-class updateInfo extends aaction
+class update_info extends aaction
 {
 
     /**
      * 响应方法
      *
-     * @param \admin\app\service\user\updateInfo $oService
+     * @param \admin\app\service\user\update_info $oService
      * @return mixed
      */
     public function run(service $oService)
@@ -31,7 +32,7 @@ class updateInfo extends aaction
             return [
                 'message' => '更新账号信息成功'
             ];
-        } catch (Exception $oE) {
+        } catch (update_info_failed $oE) {
             return [
                 'code' => 400,
                 'message' => $oE->getMessage()

@@ -13,7 +13,7 @@ use common\is\repository\user as repository;
  * @since 2017.11.12
  * @version 1.0
  */
-class updateInfo
+class update_info
 {
 
     /**
@@ -73,7 +73,7 @@ class updateInfo
         try {
             return $this->oRepository->findOrFail($intId);
         } catch (model_not_found $oE) {
-            throw new updateInfo_failed($oE->getMessage());
+            throw new update_info_failed($oE->getMessage());
         }
     }
 

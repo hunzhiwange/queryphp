@@ -5,7 +5,6 @@
             <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         </el-breadcrumb>
     </div>
-
     <div class="content-main2">
         <el-row>
             <el-col :span="24">
@@ -52,101 +51,15 @@
                 </el-card>
             </el-col>
         </el-row>
-
         <el-row>
             <el-col :span="24">
                 <el-alert title="感谢信" type="success" description="感谢 VueThink 提供的基础框架，使得我们才能够站在巨人的肩膀上腾飞。" show-icon>
                 </el-alert>
-                <el-tree
-  :data="data4"
-  :props="defaultProps"
-  show-checkbox
-  node-key="id"
-  default-expand-all
-  :expand-on-click-node="false"
-  :render-content="renderContent">
-</el-tree>
             </el-col>
         </el-row>
     </div>
 </div>
 </template>
 
-<style>
-img.home-logo {
-    height: 80px
-}
-</style>
-
-<script>
-export default {
-    methods: {
-        officeSite() {
-            window.open('http://www.queryphp.com')
-        },
-        supportSite() {
-            window.open('http://www.queryphp.com/support/')
-        },
-        githubSite() {
-            window.open('https://github.com/hunzhiwange/queryphp')
-        }
-    },
-
-    data() {
-        return {
-            data4: [{
-              id: 1,
-              label: '一级 1',
-              children: [{
-                id: 4,
-                label: '二级 1-1',
-                children: [{
-                  id: 9,
-                  label: '三级 1-1-1'
-                }, {
-                  id: 10,
-                  label: '三级 1-1-2'
-                }]
-              }]
-            }, {
-              id: 2,
-              label: '一级 2',
-              children: [{
-                id: 5,
-                label: '二级 2-1'
-              }, {
-                id: 6,
-                label: '二级 2-2'
-              }]
-            }, {
-              id: 3,
-              label: '一级 3',
-              children: [{
-                id: 7,
-                label: '二级 3-1'
-              }, {
-                id: 8,
-                label: '二级 3-2'
-              }]
-            }]
-
-        }
-    },
-    methods: {
-        renderContent(h, { node, data, store }) {
-          return (
-            <span style="flex: 1; display: flex; align-items: center; justify-content: space-between; font-size: 14px; padding-right: 8px;">
-              <span>
-                <span>{node.label}</span>
-              </span>
-              <span>
-                <el-button style="font-size: 12px;" type="text" on-click={ () => this.append(data) }>Append</el-button>
-                <el-button style="font-size: 12px;" type="text" on-click={ () => this.remove(node, data) }>Delete</el-button>
-              </span>
-            </span>)
-        }
-    },
-    created() {},
-    components: {}
-}
-</script>
+<script src="./js/index.js"></script>
+<style src="./css/index.css"></style>

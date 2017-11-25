@@ -5,7 +5,7 @@ namespace admin\app\controller\user;
 use Exception;
 use queryyetsimple\request;
 use admin\app\controller\aaction;
-use admin\app\service\user\changePassword as service;
+use admin\app\service\user\change_password as service;
 
 /**
  * 修改用户登录密码
@@ -15,7 +15,7 @@ use admin\app\service\user\changePassword as service;
  * @since 2017.11.21
  * @version 1.0
  */
-class changePassword extends aaction
+class change_password extends aaction
 {
 
     /**

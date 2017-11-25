@@ -3,7 +3,7 @@
 namespace admin\app\service\user;
 
 use queryyetsimple\http\request;
-use queryyetsimple\bootstrap\auth\change_password;
+use queryyetsimple\bootstrap\auth\change_password as change_passwords;
 
 /**
  * 修改密码
@@ -13,9 +13,9 @@ use queryyetsimple\bootstrap\auth\change_password;
  * @since 2017.11.21
  * @version 1.0
  */
-class changePassword
+class change_password
 {
-    use change_password;
+    use change_passwords;
 
     /**
      * HTTP REQUEST

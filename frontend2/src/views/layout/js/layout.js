@@ -1,6 +1,6 @@
 import leftMenu from '@/views/layout/leftMenu.vue'
-import changePwd from '@/views/user/change_password.vue'
-import information from '@/views/user/information.vue'
+import changePassword from '@/views/layout/block/change_password.vue'
+import information from '@/views/layout/block/information.vue'
 import http from '@/utils/http'
 
 export default {
@@ -29,25 +29,28 @@ export default {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消'
             }).then(() => {
-                _g.openGlobalLoading()
-                let data = {
-                    authkey: Lockr.get('authKey')
-                }
-                this.apiPost(_g.url('user/logout'), data).then((res) => {
-                    _g.closeGlobalLoading()
-                    this.handelResponse(res, (data) => {
-                        Lockr.rm('menus')
-                        Lockr.rm('authKey')
-                        Lockr.rm('authList')
-                        Lockr.rm('userInfo')
-                        _g.toastMsg('success', res.message)
-                        setTimeout(() => {
-                            router.replace('/login')
-                        }, 1500)
-                    })
-                })
+                this.changePasswordLogout()
             }).catch(() => {
 
+            })
+        },
+        changePasswordLogout(){
+            _g.openGlobalLoading()
+            let data = {
+                authkey: Lockr.get('authKey')
+            }
+            this.apiPost('user/logout', data).then((res) => {
+                _g.closeGlobalLoading()
+                this.handelResponse(res, (data) => {
+                    Lockr.rm('menus')
+                    Lockr.rm('authKey')
+                    Lockr.rm('authList')
+                    Lockr.rm('userInfo')
+                    _g.toastMsg('success', res.message)
+                    setTimeout(() => {
+                        router.replace('/login')
+                    }, 1500)
+                })
             })
         },
         switchTopMenu(item) {
@@ -62,16 +65,16 @@ export default {
                 case 'logout':
                     this.logout()
                     break
-                case 'changePwd':
-                    this.changePwd()
+                case 'changePassword':
+                    this.changePassword()
                     break
                 case 'information':
                     this.information()
                     break
             }
         },
-        changePwd() {
-            this.$refs.changePwd.open()
+        changePassword() {
+            this.$refs.changePassword.open()
         },
         information() {
             this.$refs.information.open()
@@ -118,8 +121,8 @@ export default {
     },
     components: {
         leftMenu,
-        changePwd,
-        information
+        information,
+        changePassword
     },
     watch: {
         '$route' (to, from) {

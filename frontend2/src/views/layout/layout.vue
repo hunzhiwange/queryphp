@@ -17,11 +17,11 @@
                             </span>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item command="information">账号设置</el-dropdown-item>
-                                <el-dropdown-item command="changePwd">修改密码</el-dropdown-item>
+                                <el-dropdown-item command="changePassword">修改密码</el-dropdown-item>
                                 <el-dropdown-item command="logout">退出</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
-                        <el-dropdown class="top-menu">
+                        <!-- <el-dropdown class="top-menu">
                             <span class="el-dropdown-link">
                                 <i class="el-icon-setting"></i> 配置
                             </span>
@@ -42,7 +42,7 @@
                                 <el-dropdown-item>系统消息
                                     <el-badge class="mark" :value="12" /></el-dropdown-item>
                             </el-dropdown-menu>
-                        </el-dropdown>
+                        </el-dropdown> -->
                     </el-col>
                 </el-row>
             </el-header>
@@ -64,7 +64,7 @@
             </el-container>
         </el-container>
     </el-row>
-    <changePwd ref="changePwd"></changePwd>
+    <changePassword ref="changePassword" @logout="changePasswordLogout"></changePassword>
     <information ref="information" :nikename="informationData.nikename" :email="informationData.email" :mobile="informationData.mobile"></information>
 </div>
 </template>

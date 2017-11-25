@@ -15,7 +15,7 @@ export default {
                 seccode: ''
             },
             seccodeUrl: '',
-            seccodeImg: window.HOST + _g.url('login/seccode'),
+            seccodeImg: window.HOST + '/admin/login/seccode',
             rules: {
                 name: [{
                     required: true,
@@ -76,7 +76,7 @@ export default {
                     } else {
                         data.remember_me = 0
                     }
-                    this.apiPost(_g.url('login/check'), data).then((res) => {
+                    this.apiPost('login/check', data).then((res) => {
                         if (res.code != 200) {
                             this.loading = !this.loading
                             this.handleError(res)
@@ -95,7 +95,7 @@ export default {
             let data = {
                 is_login: 'T'
             }
-            this.apiPost(_g.url('login/is_login'), data).then((res) => {
+            this.apiPost('login/is_login', data).then((res) => {
                 if (res.code == 200) {
                     router.replace('/')
                 }

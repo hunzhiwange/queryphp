@@ -18,7 +18,7 @@ import './mock'  // 该项目所有请求使用mockjs模拟
 import 'assets/css/global.css'
 import 'assets/css/base.css'
 
-axios.defaults.baseURL = HOST
+axios.defaults.baseURL = HOST+'/admin/'
 axios.defaults.timeout = 1000 * 15
 axios.defaults.headers.authKey = Lockr.get('authKey')
 axios.defaults.headers['Content-Type'] = 'application/json'

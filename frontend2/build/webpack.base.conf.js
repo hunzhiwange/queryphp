@@ -9,8 +9,8 @@ function resolve(dir) {
 }
 
 // define the different HOST between development and production environment
-var DEV_HOST = JSON.stringify('http://queryphp.cn/')
-var PROD_HOST = JSON.stringify('http://queryphp.cn/')
+var DEV_HOST = JSON.stringify('http://queryphp.cn')
+var PROD_HOST = JSON.stringify('http://queryphp.cn')
 
 module.exports = {
   entry: {

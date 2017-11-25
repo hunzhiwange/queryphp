@@ -2,9 +2,6 @@ const commonFn = {
     j2s(obj) {
         return JSON.stringify(obj)
     },
-    url(url) {
-        return 'admin/' + url
-    },
     shallowRefresh(name) {
         router.replace({
             path: '/refresh',
