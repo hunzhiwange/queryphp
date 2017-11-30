@@ -43,7 +43,7 @@ class seccode
     {
         $this->oSeccode->options([
             'width' => 120,
-            'height' => 40
+            'height' => 36
         ])->display(4, true);
 
         cache::set('admin_seccode', $this->oSeccode->getCode());

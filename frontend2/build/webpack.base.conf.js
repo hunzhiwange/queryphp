@@ -8,10 +8,6 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
-// define the different HOST between development and production environment
-var DEV_HOST = JSON.stringify('http://queryphp.cn')
-var PROD_HOST = JSON.stringify('http://queryphp.cn')
-
 module.exports = {
   entry: {
     app: './src/main.js'
@@ -23,7 +19,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      HOST: process.env.NODE_ENV === 'production' ? PROD_HOST : DEV_HOST
+      BASE_API: process.env.NODE_ENV === 'production' ? (process.env.env_config === 'prod' ? config.build.env.prodEnv.BASE_API :  config.build.env.sitEnv.BASE_API) : config.dev.env.BASE_API
     })
   ],
   resolve: {

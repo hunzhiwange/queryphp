@@ -13,8 +13,8 @@ export default {
         }
 
         return {
-            disable: false,
             dialogVisible: false,
+            loading: false,
             form: {
                 auth_key: '',
                 old_pwd: '',
@@ -22,35 +22,35 @@ export default {
                 confirm_pwd: ''
             },
             rules: {
-                old_pwd: [{
-                        required: true,
-                        message: '请输入旧密码',
-                        trigger: 'blur'
-                    },
-                    {
-                        min: 6,
-                        max: 12,
-                        message: '长度在 6 到 12 个字符',
-                        trigger: 'blur'
-                    }
+                old_pwd: [
+                        {
+                            required: true,
+                            message: '请输入旧密码',
+                            trigger: 'blur'
+                        }, {
+                            min: 6,
+                            max: 12,
+                            message: '长度在 6 到 12 个字符',
+                            trigger: 'blur'
+                        }
                 ],
-                new_pwd: [{
+                new_pwd: [
+                    {
                         required: true,
                         message: '请输入新密码',
                         trigger: 'blur'
-                    },
-                    {
+                    }, {
                         min: 6,
                         max: 12,
                         message: '长度在 6 到 12 个字符',
                         trigger: 'blur'
                     }
                 ],
-                confirm_pwd: [{
+                confirm_pwd: [
+                    {
                         validator: validateConfirmPassword,
                         trigger: 'blur'
-                    },
-                    {
+                    }, {
                         min: 6,
                         max: 12,
                         message: '长度在 6 到 12 个字符',
@@ -64,25 +64,25 @@ export default {
         open() {
             this.dialogVisible = true
         },
-        close() {
-            this.dialogVisible = false
-        },
-        submit() {
+        ok() {
             this.$refs.form.validate((pass) => {
                 if (pass) {
-                    this.disable = !this.disable
+                    this.loading = true
                     this.apiPost('user/change_password', this.form).then((res) => {
                         this.handelResponse(res, (data) => {
-                            _g.toastMsg('success', res.message)
+                            _g.success(res.message)
                             setTimeout(() => {
                                 this.$emit('logout')
                             }, 1000)
                         }, () => {
-                            this.disable = !this.disable
+                            this.loading = !this.loading
                         })
                     })
                 }
             })
+        },
+        cancel() {
+            this.dialogVisible = false
         }
     },
     created() {

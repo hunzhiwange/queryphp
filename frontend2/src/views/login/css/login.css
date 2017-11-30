@@ -37,21 +37,11 @@ body {
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
 }
 
-.login-content .el-tabs--border-card {
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
-
 .login-content .seccode {
     position: absolute;
     right: 100px;
     top: 0px;
     cursor: pointer;
-}
-
-.login-content .card-box {
-    margin: 120px auto;
-    width: 400px;
 }
 
 .login-content .big-logo {
@@ -62,10 +52,8 @@ body {
 
 .login-content .login-box {
     margin-top: 70px;
-}
-
-.login-content .login-box .el-tabs__content {
-    height: 370px;
+    background: #fff;
+    padding: 10px;
 }
 
 .login-content .login-box .login-form {

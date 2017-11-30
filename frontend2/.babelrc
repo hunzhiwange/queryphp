@@ -1,9 +1,11 @@
 {
-  "presets": [
-    ["env", { "modules": false }],
-    "stage-2",
-    "es2016"
-  ],
-  "plugins": ["transform-runtime","transform-vue-jsx"],
-  "comments": false
+    "presets": [
+        ["env", {
+            "modules": false
+        }],
+        "stage-2",
+        "es2016"
+    ],
+    "plugins": ["transform-runtime", "transform-vue-jsx", "transform-es2015-modules-umd"],
+    "comments": false
 }

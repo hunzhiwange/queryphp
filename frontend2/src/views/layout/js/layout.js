@@ -2,6 +2,7 @@ import leftMenu from '@/views/layout/leftMenu.vue'
 import changePassword from '@/views/layout/block/change_password.vue'
 import information from '@/views/layout/block/information.vue'
 import http from '@/utils/http'
+import tabsView from '@/views/layout/TabsView'
 
 export default {
     data() {
@@ -46,7 +47,7 @@ export default {
                     Lockr.rm('authKey')
                     Lockr.rm('authList')
                     Lockr.rm('userInfo')
-                    _g.toastMsg('success', res.message)
+                    _g.success(res.message)
                     setTimeout(() => {
                         router.replace('/login')
                     }, 1500)
@@ -86,7 +87,7 @@ export default {
     created() {
         let authKey = Lockr.get('authKey')
         if (!authKey) {
-            _g.toastMsg('warning', '您尚未登录')
+            _g.warning('您尚未登录')
             setTimeout(() => {
                 router.replace('/login')
             }, 1500)
@@ -122,7 +123,8 @@ export default {
     components: {
         leftMenu,
         information,
-        changePassword
+        changePassword,
+        tabsView
     },
     watch: {
         '$route' (to, from) {

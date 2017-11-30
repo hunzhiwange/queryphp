@@ -23,27 +23,32 @@ const commonFn = {
     cloneJson(obj) {
         return JSON.parse(JSON.stringify(obj))
     },
-    toastMsg(type, msg) {
-        switch (type) {
-            case 'normal':
-                bus.$message(msg)
-                break
-            case 'success':
-                bus.$message({
-                    message: msg,
-                    type: 'success'
-                })
-                break
-            case 'warning':
-                bus.$message({
-                    message: msg,
-                    type: 'warning'
-                })
-                break
-            case 'error':
-                bus.$message.error(msg)
-                break
-        }
+    success(message, title) {
+        bus.$Notice.success({
+            title: title
+                ? title
+                : '',
+            desc: message
+        })
+    },
+    info(message, title) {
+        bus.$Notice.info({
+            title: title
+                ? title
+                : '',
+            desc: message
+        })
+    },
+    warning(message, title) {
+        bus.$Notice.warning({
+            title: title
+                ? title
+                : '',
+            desc: message
+        })
+    },
+    error(message) {
+        bus.$Message.error(message)
     },
     clearVuex(cate) {
         store.dispatch(cate, [])

@@ -7,8 +7,8 @@ export default {
     ],
     data() {
         return {
-            disable: false,
             dialogVisible: false,
+            loading: false,
             form: {
                 nikename: '',
                 email: '',
@@ -43,26 +43,26 @@ export default {
         open() {
             this.dialogVisible = true
         },
-        close() {
-            this.dialogVisible = false
-        },
-        submit(form) {
+        ok() {
             this.$refs.form.validate((pass) => {
                 if (pass) {
-                    this.disable = !this.disable
+                    this.loading = true
                     this.apiPost('user/update_info', this.form).then((res) => {
                         this.handelResponse(res, (data) => {
-                            _g.toastMsg('success', res.message)
+                            _g.success(res.message)
                             setTimeout(() => {
-                                this.disable = !this.disable
-                                this.close()
+                                this.loading = !this.loading
+                                this.cancel()
                             }, 1000)
                         }, () => {
-                            this.disable = !this.disable
+                            this.loading = !this.loading
                         })
                     })
                 }
             })
+        },
+        cancel() {
+            this.dialogVisible = false
         }
     },
     created() {

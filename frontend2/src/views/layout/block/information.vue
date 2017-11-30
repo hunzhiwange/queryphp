@@ -1,23 +1,23 @@
 <template>
-<el-dialog title="账号设置" :visible.sync="dialogVisible" width="30%">
+<Modal v-model="dialogVisible" title="账号设置" width="500" >
     <div>
-        <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-            <el-form-item label="用户昵称" prop="nikename">
-                <el-input v-model.trim="form.nikename"></el-input>
-            </el-form-item>
-            <el-form-item label="邮箱" prop="email">
-                <el-input v-model.trim="form.email"></el-input>
-            </el-form-item>
-            <el-form-item label="手机号" prop="mobile">
-                <el-input type="number" v-model.number="form.mobile"></el-input>
-            </el-form-item>
-        </el-form>
+        <Form ref="form" :model="form" :rules="rules" :label-width="80">
+            <FormItem label="用户昵称" prop="nikename">
+                <Input v-model.trim="form.nikename" placeholder=""></Input>
+            </FormItem>
+            <FormItem label="邮箱" prop="email">
+                <Input v-model.trim="form.email" placeholder=""></Input>
+            </FormItem>
+            <FormItem label="手机号" prop="mobile">
+                <Input v-model.number="form.mobile" placeholder=""></Input>
+            </FormItem>
+        </Form>
     </div>
-    <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" :disabled="disable" @click="submit('form')">确 定</el-button>
-        </span>
-</el-dialog>
+    <div slot="footer">
+        <Button type="text" @click="cancel">取消</Button>
+        <Button type="primary" :loading="loading" @click="ok">确认</Button>
+    </div>
+</Modal>
 </template>
 
 <script src="./../js/information.js"></script>

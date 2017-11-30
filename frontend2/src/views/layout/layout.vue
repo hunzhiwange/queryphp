@@ -1,73 +1,91 @@
 <template>
-<div>
-    <el-row>
-        <el-container class="m-w-1280">
-            <el-header>
-                <el-row type="flex" justify="space-between" class="menu-box">
-                    <el-col :span="18">
-                        <div class="fl logo">
-                            <span>QueryPHP</span>
-                        </div>
-                        <div class="fl p-l-20 p-r-20 top-menu" :class="{'top-active': menu.selected}" v-for="menu in topMenu" @click="switchTopMenu(menu)">{{menu.title}}</div>
-                    </el-col>
-                    <el-col :span="7" style="text-align:right;padding-right:10px;">
-                        <el-dropdown @command="handleMenu" class="top-menu">
-                            <span class="el-dropdown-link">
-                                <i class="fa fa-user" aria-hidden="true"></i> {{username}}
+<div class="main" :class="{'main-hide-text': shrink}">
+    <div slot="top" class="logo-con" :style="{width: shrink?'60px':'200px'}">
+        <img v-show="!shrink" :src="img_logo" key="max-logo" />
+        <img v-show="shrink" :src="img_mini_logo" key="min-logo" />
+    </div>
+    <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
+        <shrinkable-menu :shrink="shrink" @on-change="handleSubmenuChange" :theme="menuTheme" :before-push="beforePush" :open-names="openedSubmenuArr" :menu-list="menuList">
+        </shrinkable-menu>
+    </div>
+    <div class="main-header-con" :style="{paddingLeft: shrink?'60px':'200px'}">
+        <div class="main-header">
+            <div class="navicon-con">
+                <Button :style="{transform: 'rotateZ(' + (this.shrink ? '180' : '0') + 'deg)'}" type="text" @click="toggleClick">
+                        <Icon type="arrow-return-left" size="22"></Icon>
+                    </Button>
+            </div>
+            <div class="header-middle-con">
+                <div class="tags-con">
+                    <tags-page-opened :pageTagsList="pageTagsList"></tags-page-opened>
+                </div>
+            </div>
+            <div class="header-avator-con">
+                <Menu mode="horizontal" theme="primary" class="pull-right">
+
+                    <MenuItem name="2">
+                    <Dropdown transfer class="header-menuitem">
+                        <span class="main-option">
+                            <Icon type="ios-gear" :size="22"></Icon>
+                        </span>
+                        <DropdownMenu slot="list">
+                            <DropdownItem>
+                                <lock-screen></lock-screen>
+                            </DropdownItem>
+                            <DropdownItem>
+                                <full-screen v-model="isFullScreen" @on-change="fullscreenChange"></full-screen>
+                            </DropdownItem>
+                            <!-- <DropdownItem>
+                                <theme-switch></theme-switch>
+                            </DropdownItem> -->
+                        </DropdownMenu>
+                    </Dropdown>
+
+                    </MenuItem>
+                    <MenuItem name="3">
+                        <message-tip v-model="mesCount"></message-tip>
+                    </MenuItem>
+                    <MenuItem name="1" class="header-user">
+                        <Dropdown transfer @on-click="handleClickUserDropdown" class="header-menuitem">
+                            <span class="header-username">
+                                <Tooltip :content="username" placement="left">
+                                    {{username}}
+                                </Tooltip>
                             </span>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item command="information">账号设置</el-dropdown-item>
-                                <el-dropdown-item command="changePassword">修改密码</el-dropdown-item>
-                                <el-dropdown-item command="logout">退出</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                        <!-- <el-dropdown class="top-menu">
-                            <span class="el-dropdown-link">
-                                <i class="el-icon-setting"></i> 配置
-                            </span>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item>选项1</el-dropdown-item>
-                                <el-dropdown-item>选项2</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                        <el-dropdown class="top-menu">
-                            <span class="el-dropdown-link ">
-                                <el-badge :value="200" :max="99" class="system-message">
-                                    <i class="fa fa-bell"></i> 消息
-                                </el-badge>
-                            </span>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item>业务消息
-                                    <el-badge class="mark" :value="12" /></el-dropdown-item>
-                                <el-dropdown-item>系统消息
-                                    <el-badge class="mark" :value="12" /></el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown> -->
-                    </el-col>
-                </el-row>
-            </el-header>
-            <el-container>
-                <el-aside width="150px">
-                    <aside v-show="!showLeftMenu">
-                        <leftMenu :menuData="menuData" :menu="menu" :isCollapse="isCollapse" ref="leftMenu"></leftMenu>
-                    </aside>
-                </el-aside>
-                <el-main>
-                    <section :class="{'hide-leftMenu': hasChildMenu}">
-                        <el-col :span="24">
-                            <transition name="fade" mode="out-in" appear>
-                                <router-view v-loading="showLoading"></router-view>
-                            </transition>
-                        </el-col>
-                    </section>
-                </el-main>
-            </el-container>
-        </el-container>
-    </el-row>
+                            <DropdownMenu slot="list">
+                                <DropdownItem name="information">
+                                    <Icon type="person"></Icon> 账号设置</DropdownItem>
+                                <DropdownItem name="changePassword">
+                                    <Icon type="key"></Icon> 修改密码</DropdownItem>
+                                <DropdownItem name="logout">
+                                    <Icon type="log-out"></Icon> 退出</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                        <Avatar :src="avatorPath" class="user-avatar"></Avatar>
+                    </MenuItem>
+
+                </Menu>
+            </div>
+        </div>
+    </div>
+    <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
+        <div class="single-page">
+
+            <Row>
+                    <div class="main-breadcrumb">
+                        <breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>
+                    </div>
+                </Row>
+
+            <keep-alive :include="cachePage">
+                <router-view></router-view>
+            </keep-alive>
+        </div>
+    </div>
     <changePassword ref="changePassword" @logout="changePasswordLogout"></changePassword>
     <information ref="information" :nikename="informationData.nikename" :email="informationData.email" :mobile="informationData.mobile"></information>
 </div>
 </template>
 
-<script src="./js/layout.js"></script>
-<style src="./css/layout.css"></style>
+<style lang="less" src="./assets/layout.less"></style>
+<script src="./assets/layout.js"></script>

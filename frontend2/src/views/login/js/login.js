@@ -15,7 +15,7 @@ export default {
                 seccode: ''
             },
             seccodeUrl: '',
-            seccodeImg: window.HOST + '/admin/login/seccode',
+            seccodeImg: window.BASE_API + '/admin/login/seccode',
             rules: {
                 name: [{
                     required: true,
@@ -83,7 +83,7 @@ export default {
                         } else {
                             this.refreshSeccode()
                             this.resetCommonData(res.data)
-                            _g.toastMsg('success', res.message)
+                            _g.success(res.message)
                         }
                     })
                 } else {
