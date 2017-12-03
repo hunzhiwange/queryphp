@@ -43,7 +43,7 @@ class tree
         return $this->oTree->toArray(function ($arrItem) {
             return [
                 'id' => $arrItem['value'],
-                'label' => $arrItem['data']
+                'title' => $arrItem['data']
             ];
         });
     }

@@ -10,6 +10,9 @@
             <Row>
                 <Col span="10">
                 <Card dis-hover>
+                    <span class="publish-button"><Button>预览</Button></span>
+                    <span class="publish-button"><Button >保存草稿</Button></span>
+                    <span class="publish-button"><Button icon="ios-checkmark" style="width:90px;" type="primary">发布</Button></span>
                     {{gettext('前往')}}
                 </Card>
                 </Col>
@@ -49,68 +52,11 @@ import draggable from 'vuedraggable'
 export default {
     methods: {
         dragMove(evt) {
-            console.log(evt.draggedContext.element.id)
         },
         dragEnd(evt) {
-            console.log('拖动前的索引 :' + evt.oldIndex)
-            console.log('拖动后的索引 :' + evt.newIndex)
-            console.log(this.tags)
+
         },
         officeSite() {
-
-            //console.log(__('共 %d 条',7))
-
-            //console.log(en)
-            //alert(queryphp.sprintf('The first 4 letters of the english alphabet are: %s, %s, %s and %s', 'cracker', 'Polly', 'wants', 'wants'))
-
-            //获取当前目录绝对路径，这里resolve()不传入参数
-            //let filePath = path.resolve()
-
-            //读取文件存储数组
-            //let fileArr = []
-
-            //console.log(filePath)
-
-            // //读取文件目录
-            // fs.readdir(filePath,function(err,files){
-            //     if(err){
-            //         console.log(err);
-            //         return;
-            //     }
-            //     var count = files.length;
-            //     //console.log(files);
-            //     var results = {};
-            //     files.forEach(function(filename){
-            //
-            //         //filePath+"/"+filename不能用/直接连接，Unix系统是”/“，Windows系统是”\“
-            //         fs.stat(path.join(filePath,filename),function(err, stats){
-            //             if (err) throw err;
-            //             //文件
-            //             if(stats.isFile()){
-            //                 if(getdir(filename) == 'html'){
-            //                     var newUrl=remotePath+filename;
-            //                     fileArr.push(newUrl);
-            //                     writeFile(fileArr);
-            //                 }
-            //                 // (getdir(filename) == 'html')&&(fileArr.push(filename);writeFile(newUrl));
-            //             //    console.log("%s is file", filename);
-            //             }else if(stats.isDirectory()){
-            //                 // console.log("%s is a directory文件目录", filename);
-            // 　　　　　　　　　//返回指定文件名的扩展名称
-            // 　　　　　　　 　//console.log(path.extname("pp/index.html"));
-            //
-            //                  if(filename == 'css' || filename == 'images'){
-            // //var readurl = filePath+'/'+filename;
-            //                          //filePath+"/"+filename不能用/直接连接，Unix系统是”/“，Windows系统是”\“
-            //                      //    console.log(path.join(filePath,filename));
-            //                          var name = filename;
-            //                          readFile(path.join(filePath,filename),name);
-            //                  }
-            //             }
-            //         });
-            //     });
-            // });
-
         },
         supportSite() {
             window.open('http://www.queryphp.com/support/')

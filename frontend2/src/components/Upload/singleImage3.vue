@@ -65,7 +65,6 @@ export default {
           this.tempUrl = response.data.qiniu_url
           resolve(true)
         }).catch(err => {
-          console.log(err)
           reject(false)
         })
       })

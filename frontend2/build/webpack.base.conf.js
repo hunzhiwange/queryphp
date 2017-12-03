@@ -19,6 +19,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
+      ENV: '"'+process.env.NODE_ENV+'"',
       BASE_API: process.env.NODE_ENV === 'production' ? (process.env.env_config === 'prod' ? config.build.env.prodEnv.BASE_API :  config.build.env.sitEnv.BASE_API) : config.dev.env.BASE_API
     })
   ],

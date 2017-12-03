@@ -10,6 +10,9 @@ const commonFn = {
             }
         })
     },
+    needRefresh(vm) {
+        return vm.$route.query.refresh == 'page'
+    },
     closeGlobalLoading() {
         setTimeout(() => {
             store.dispatch('showLoading', false)

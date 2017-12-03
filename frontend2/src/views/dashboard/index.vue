@@ -9,8 +9,8 @@
             </p>
             <Button slot="extra" type="text" @click="officeSite()">官方网站</Button>
             <div>
-                <Row>
-                    <Col span="16">
+                <Row :gutter="16">
+                    <Col span="15">
                     <p>欢迎使用 QueryPHP Vue 单页面通用极速后台开发框架，本框架包含了基本认证、权限和账号管理功能，开发者可以在此基础上快速构建自己的应用。</p>
                     <div>
                         <div style="margin-top: 20px">
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     </Col>
-                    <Col span="8" style="text-align:right;">
+                    <Col span="9" style="text-align:right;">
                     <Card>
                         <div style="text-align:center">
                             <img :src="logo" class="home-logo" alt="QueryPHP" />

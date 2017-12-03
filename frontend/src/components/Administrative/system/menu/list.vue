@@ -186,43 +186,6 @@ export default
             store
         })
         {
-
-            // renderContent(h, {
-            //     node,
-            //     data,
-            //     store
-            // }) {
-            //     return h('span', {
-            //             style: {
-            //                 flex: '1',
-            //                 display: 'flex',
-            //                 'align-items': 'center',
-            //                 'justify-content': 'space-between',
-            //                 'font-size': '14px',
-            //                 'padding-right': 'padding-right: 8px'
-            //             }
-            //         }, [
-            //             h('span', [
-            //                 h('span', node.label)
-            //             ]),
-            //             h('span', [
-            //                 h('el-button', {
-            //                     style: {
-            //                         'font-size': '12px'
-            //                     },
-            //                     attrs: {
-            //                         type: 'text'
-            //                     },
-            //                     domProps: {
-            //                         innerHTML: 'append'
-            //                     },
-            //                     on: {
-            //                         click: () => this.append(data)
-            //                     }
-            //                 }),
-            //
-            //             ]),
-            //         ])
             return (
                 <span style='flex: 1; display: flex; align-items: center; justify-content: space-between; font-size: 14px; padding-right: 8px;'>
                     <span>

@@ -1,8 +1,8 @@
 <template>
 <div ref="scrollCon" @DOMMouseScroll="handlescroll" @mousewheel="handlescroll" class="tags-outer-scroll-con">
-    <div class="leftmove-tag-con">
+    <div ref="leftmoveTagCon" class="leftmove-tag-con">
         <Dropdown transfer @on-click="handleTagsOption">
-            <Button size="small" type="primary">
+            <Button size="small" type="primary" @click="seeLeftTag()">
                 <Icon type="android-more-vertical" :size="22"></Icon>
             </button>
             <DropdownMenu slot="list">
@@ -15,9 +15,9 @@
             </DropdownMenu>
         </Dropdown>
     </div>
-    <div class="close-all-tag-con">
+    <div ref="closeAllTagCon" class="close-all-tag-con">
         <Dropdown transfer @on-click="handleTagsOption">
-            <Button size="small" type="primary">
+            <Button size="small" type="primary" @click="seeRightTag()">
                 <Icon type="android-more-vertical" :size="22"></Icon>
             </Button>
             <DropdownMenu slot="list">
@@ -30,10 +30,17 @@
             </DropdownMenu>
         </Dropdown>
     </div>
+    <div ref="tagDashboardCon" class="tag-dashboard">
+        <Tag type="dot" @click.native="linkTo(pageOpenedDashboard)" :color="pageOpenedDashboard.name===currentPageName?'blue':'default'">
+            <Tooltip :content="itemTitle(pageOpenedDashboard)" placement="bottom">
+                {{ itemTitle(pageOpenedDashboard) }}
+            </Tooltip>
+        </Tag>
+    </div>
     <div ref="scrollBody" class="tags-inner-scroll-body" :style="{left: tagBodyLeft + 'px'}">
-        <draggable v-model="pageTagsList" :move="dragMove" @update="dragEnd">
+        <draggable v-model="pageTagsLists">
             <transition-group name="taglist-moving-animation">
-                <Tag type="dot" v-for="(item, index) in pageTagsList" ref="tagsPageOpened" :key="item.name" :name="item.name" @on-close="closePage" @click.native="linkTo(item)" :closable="item.name==='dashboard'?false:true" :color="item.children?(item.children[0].name===currentPageName?'blue':'default'):(item.name===currentPageName?'blue':'default')">
+                <Tag type="dot" v-for="(item, index) in pageTagsLists" ref="tagsPageOpened" :key="item.name" :name="item.name"  @on-close="closePage" @click.native="linkTo(item)" :closable="true" :color="item.children?(item.children[0].name===currentPageName?'blue':'default'):(item.name===currentPageName?'blue':'default')">
                     <Tooltip :content="itemTitle(item)" placement="bottom">
                         {{ itemTitle(item) }}
                     </Tooltip>
@@ -48,6 +55,8 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 Vue.use(VueI18n);
+
+//see https://github.com/SortableJS/Vue.Draggable
 import draggable from 'vuedraggable'
 
 export default {
@@ -57,7 +66,9 @@ export default {
             currentPageName: this.$route.name,
             tagBodyLeft: 0,
             refsTag: [],
-            tagsCount: 1
+            tagsCount: 1,
+            tagsOpenModel: [],
+            pageOpenedDashboard: this.$store.state.app.pageOpenedDashboard
         };
     },
     components: {
@@ -73,23 +84,25 @@ export default {
         }
     },
     computed: {
+        pageTagsLists: {
+            get() {
+                return this.$store.state.app.pageOpenedList
+            },
+            set(value) {
+                this.$store.commit('dragTags', value)
+            }
+        },
         title() {
-            return this.$store.state.app.currentTitle;
+            return this.$store.state.app.currentTitle
         },
         tagsList() {
-            return this.$store.state.app.pageOpenedList;
+            return this.$store.state.app.pageOpenedList
         }
     },
+    created() {
+        this.tagsOpenModel = this.pageTagsList
+    },
     methods: {
-        dragMove(evt) {
-            // console.log(evt.draggedContext.element.id)
-        },
-        dragEnd(evt) {
-            // console.log('拖动前的索引 :' + evt.oldIndex)
-            // console.log('拖动后的索引 :' + evt.newIndex)
-            //console.log(this.tags)
-            this.$store.commit('saveTagLocalStorage', this)
-        },
         itemTitle(item) {
             return item.title;
         },
@@ -136,21 +149,11 @@ export default {
             if (type === 'DOMMouseScroll' || type === 'mousewheel') {
                 delta = (e.wheelDelta) ? e.wheelDelta : -(e.detail || 0) * 40;
             }
-            let left = 0;
             if (delta > 0) {
-                left = Math.min(0, this.tagBodyLeft + delta);
+                this.seeRightTag(delta)
             } else {
-                if (this.$refs.scrollCon.offsetWidth - 100 < this.$refs.scrollBody.offsetWidth) {
-                    if (this.tagBodyLeft < -(this.$refs.scrollBody.offsetWidth - this.$refs.scrollCon.offsetWidth + 100)) {
-                        left = this.tagBodyLeft;
-                    } else {
-                        left = Math.max(this.tagBodyLeft + delta, this.$refs.scrollCon.offsetWidth - this.$refs.scrollBody.offsetWidth - 100);
-                    }
-                } else {
-                    this.tagBodyLeft = 0;
-                }
+                this.seeLeftTag(-delta)
             }
-            this.tagBodyLeft = left;
         },
         handleTagsOption(type) {
             switch (type) {
@@ -159,37 +162,79 @@ export default {
                     break
 
                 case 'clearOthers':
-                    this.$store.commit('clearOtherTags', this);
+                    this.$store.commit('clearOtherTags', this)
                     break
 
                 case 'clearTag':
-                    this.$store.commit('clearCurrentTag', this);
+                    this.$store.commit('clearCurrentTag', this)
                     break
 
                 case 'clearLefts':
-                    this.$store.commit('clearLeftsTag', this);
+                    this.$store.commit('clearLeftsTag', this)
                     break
 
                 case 'clearRights':
-                    this.$store.commit('clearRightsTag', this);
+                    this.$store.commit('clearRightsTag', this)
                     break
 
                 case 'refreshTag':
                     _g.shallowRefresh(this.currentPageName)
                     break
             }
-            this.tagBodyLeft = 0;
+            this.tagBodyLeft = 0
         },
         moveToView(tag) {
-            if (tag.offsetLeft < -this.tagBodyLeft) {
-                // 标签在可视区域左侧
-                this.tagBodyLeft = -tag.offsetLeft + 10;
-            } else if (tag.offsetLeft + 10 > -this.tagBodyLeft && tag.offsetLeft + tag.offsetWidth < -this.tagBodyLeft + this.$refs.scrollCon.offsetWidth - 100) {
-                // 标签在可视区域
-            } else {
-                // 标签在可视区域右侧
-                this.tagBodyLeft = -(tag.offsetLeft - (this.$refs.scrollCon.offsetWidth - 100 - tag.offsetWidth) + 20);
+            let rightWidth = 0
+
+            // 标签在可视区域左侧
+             if (tag.offsetLeft < -this.tagBodyLeft) {
+                 this.tagBodyLeft = -tag.offsetLeft;
+             }
+
+             // 标签在可视区域右侧
+             else if(rightWidth = this.tagBodyLeft+tag.offsetLeft+tag.offsetWidth - this.viewWidth()) {
+                 if(this.tagBodyLeft - rightWidth > 0) {
+                     this.tagBodyLeft = 0
+                 }else{
+                     this.tagBodyLeft -= rightWidth
+                 }
+             }
+        },
+        seeLeftTag(step) {
+            if(this.refsTag.length == 0 || this.tagBodyLeft >= 0){
+                return;
             }
+
+            step = step || 150
+
+            if(this.tagBodyLeft + step > 0){
+                this.tagBodyLeft = 0
+            }else{
+                this.tagBodyLeft += step
+            }
+        },
+        seeRightTag(step) {
+            let viewWidth = this.viewWidth()
+            let bodyWidth = 0
+            this.refsTag.forEach((item, index) => {
+                bodyWidth += this.refsTag[index].$el.offsetWidth;
+            })
+            let max = bodyWidth-viewWidth
+
+            if(!max || -this.tagBodyLeft >= max){
+                return
+            }
+
+            step = step || 150
+
+            if(-(this.tagBodyLeft-step) >= max){
+                this.tagBodyLeft = -max
+            }else{
+                this.tagBodyLeft -= step
+            }
+        },
+        viewWidth(){
+            return this.$refs.scrollCon.offsetWidth- this.$refs.leftmoveTagCon.offsetWidth- this.$refs.closeAllTagCon.offsetWidth - this.$refs.tagDashboardCon.offsetWidth
         }
     },
     mounted() {

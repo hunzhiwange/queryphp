@@ -50,8 +50,12 @@ window.bus = bus
 window._g = _g
 window.store = store
 window.BASE_API = BASE_API
+window.ENV = ENV
 window._ = _
+
+// 语言包
 window.__ = window.gettext = gettext
+
 window.Lockr = Lockr
 window.router = router
 window.Cookies = Cookies

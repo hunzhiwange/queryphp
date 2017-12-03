@@ -22,12 +22,6 @@ queryphp.locale('zh-TW',twApp)
 
 queryphp.lang('zh-CN')
 
-// console.log(zhApp)
-// console.log(enApp)
-// console.log(twApp)
-//
- //console.log(zhApp)
- //console.log(zhLocale.i)
 
 // 多语言配置
 // const mergeZH = Object.assign(zhLocale, zhApp);

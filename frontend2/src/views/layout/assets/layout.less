@@ -17,6 +17,24 @@ html {
     transition: all 3s;
 }
 
+.switch-theme-con .ivu-icon {
+    color: #2b85e4;
+}
+
+.switch-theme-select {
+    .ivu-col {
+        padding: 5px;
+    }
+
+    .ivu-modal-close {
+        z-index: 20;
+    }
+
+    .ivu-modal-footer {
+        display: none;
+    }
+}
+
 .main {
     position: absolute;
     width: 100%;
@@ -94,6 +112,110 @@ html {
         z-index: -1;
         overflow: hidden;
 
+        .ivu-tag-dot {
+            border: none !important;
+            padding: 0 20px;
+        }
+
+        .ivu-tag-blue {
+            background: #2b85e4 !important;
+            opacity: 1;
+        }
+
+        .ivu-tag-dot-inner {
+            float: left !important;
+            top: 24px;
+        }
+
+        .ivu-tag-blue.ivu-tag-dot .ivu-tag-dot-inner {
+            background: #08fa34;
+        }
+
+        .ivu-tag:hover {
+            opacity: 1;
+            background: #2b85e4 !important;
+
+            .ivu-icon-ios-close-empty {
+                visibility: visible;
+            }
+        }
+
+        .ivu-tag-text {
+            display: block;
+            text-overflow: clip;
+            overflow: hidden;
+            max-width: 64px;
+            float: left;
+            letter-spacing: 1px;
+        }
+
+        .ivu-icon-ios-close-empty {
+            position: absolute;
+            right: 8px;
+            top: 5px;
+            visibility: hidden;
+        }
+
+        .ivu-tag {
+            margin: 0;
+            height: 60px;
+            line-height: 60px;
+            border-radius: 0;
+            background: transparent !important;
+            color: #fff !important;
+            font-size: 14px;
+            position: relative;
+            opacity: 0.9;
+
+            .ivu-icon {
+                color: #fff !important;
+            }
+        }
+
+        .ivu-tag-dot {
+            border: none !important;
+            padding: 0 20px;
+        }
+
+        .ivu-tag-blue {
+            background: #2b85e4 !important;
+            opacity: 1;
+        }
+
+        .ivu-tag-dot-inner {
+            float: left !important;
+            top: 24px;
+        }
+
+        .ivu-tag-blue.ivu-tag-dot .ivu-tag-dot-inner {
+            background: rgba(255, 222, 0, 1);
+        }
+
+        .ivu-tag:hover {
+            opacity: 1;
+            background: #2b85e4 !important;
+
+            .ivu-icon-ios-close-empty {
+                visibility: visible;
+            }
+        }
+
+        .ivu-tag-text {
+            display: block;
+            text-overflow: clip;
+            overflow: hidden;
+            max-width: 64px;
+            float: left;
+            letter-spacing: 1px;
+        }
+
+        .ivu-icon-ios-close-empty {
+            position: absolute;
+            right: 8px;
+            top: 5px;
+            visibility: hidden;
+        }
+
         .tags-outer-scroll-con {
             position: relative;
             box-sizing: border-box;
@@ -106,70 +228,11 @@ html {
                 overflow: visible;
                 white-space: nowrap;
                 transition: left 0.3s ease;
-                padding-left: 30px;
-
-                .ivu-tag {
-                    margin: 0;
-                    height: 60px;
-                    line-height: 60px;
-                    border-radius: 0;
-                    background: transparent !important;
-                    color: #fff !important;
-                    font-size: 14px;
-                    position: relative;
-                    opacity: 0.9;
-
-                    .ivu-icon {
-                        color: #fff !important;
-                    }
-                }
-
-                .ivu-tag-dot {
-                    border: none !important;
-                    padding: 0 20px;
-                }
-
-                .ivu-tag-blue {
-                    background: #2b85e4 !important;
-                    opacity: 1;
-                }
-
-                .ivu-tag-dot-inner {
-                    float: left !important;
-                    top: 24px;
-                }
-
-                .ivu-tag-blue.ivu-tag-dot .ivu-tag-dot-inner {
-                    background: #08fa34;
-                }
-
-                .ivu-tag:hover {
-                    opacity: 1;
-                    background: #2b85e4 !important;
-
-                    .ivu-icon-ios-close-empty {
-                        visibility: visible;
-                    }
-                }
-
-                .ivu-tag-text {
-                    display: block;
-                    text-overflow: clip;
-                    overflow: hidden;
-                    max-width: 64px;
-                    float: left;
-                    letter-spacing: 1px;
-                }
-
-                .ivu-icon-ios-close-empty {
-                    position: absolute;
-                    right: 8px;
-                    top: 5px;
-                    visibility: hidden;
-                }
+                margin-left: 125px;
             }
 
-            .close-all-tag-con, .leftmove-tag-con {
+            .close-all-tag-con,
+            .leftmove-tag-con {
                 position: absolute;
                 right: 0;
                 top: 0;
@@ -180,6 +243,7 @@ html {
                 height: 100%;
                 box-shadow: 1px 0 9px 1px rgba(0, 0, 0, .1);
                 z-index: 10;
+                background: #327ddc;
 
                 .ivu-dropdown {
                     width: 100%;
@@ -207,6 +271,19 @@ html {
                 left: 0;
                 top: 0;
                 box-shadow: 0 -3px 7px 2px rgba(0, 0, 0, .1);
+                z-index: 30;
+            }
+
+            .tag-dashboard {
+                position: absolute;
+                left: 30px;
+                top: 0;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                padding-top: 0;
+                height: 100%;
+                z-index: 10;
+                background: #327ddc;
             }
         }
     }
@@ -246,12 +323,6 @@ html {
             height: 100%;
             width: 290px;
 
-            .switch-theme-con {
-                display: inline-block;
-                width: 40px;
-                height: 100%;
-            }
-
             .message-con {
                 display: inline-block;
                 width: 70px;
@@ -273,10 +344,6 @@ html {
                 padding-right: 5px;
             }
 
-            .switch-theme {
-                height: 100%;
-            }
-
             .user-avatar {
                 position: absolute;
                 right: 21px;
@@ -296,9 +363,9 @@ html {
             .ivu-menu-primary {
                 background: #327ddc;
 
-                .header-user{
+                .header-user {
                     width: 160px;
-                    overflow:hidden;
+                    overflow: hidden;
                     height: 60px;
 
                     .header-username {

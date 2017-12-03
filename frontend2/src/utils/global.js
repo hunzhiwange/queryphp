@@ -161,7 +161,11 @@ util.setCurrentPath = function(vm, name) {
 };
 
 util.openNewPage = function(vm, name, argu, query) {
-    let pageOpenedList = vm.$store.state.app.pageOpenedList;
+    if(vm.$store === undefined){
+        return
+    }
+
+    let pageOpenedList = vm.$store.state != undefined ? vm.$store.state.app.pageOpenedList : [];
     let openedPageLen = pageOpenedList.length;
     let i = 0;
     let tagHasOpened = false;

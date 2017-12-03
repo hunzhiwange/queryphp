@@ -94,18 +94,18 @@ export const appRouter = [
             }
         ]
     }, {
-        path: '/component',
+        path: '/option',
         icon: 'social-buffer',
-        name: 'component',
-        title: '组件',
+        name: 'option',
+        title: '设置',
         component: layout,
         children: [
             {
-                path: 'text-editor',
+                path: 'menu',
                 icon: 'compose',
-                name: 'text-editor',
-                title: '富文本编辑器3',
-                component: importRouter('error-page/error-page')
+                name: 'menu_index',
+                title: '菜单管理',
+                component: importRouter('menu/index')
             }, {
                 path: 'md-editor',
                 icon: 'pound',

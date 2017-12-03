@@ -4,7 +4,7 @@ import breadcrumbNav from '@/views/layout/breadcrumb-nav.vue'
 import fullScreen from '@/views/layout/fullscreen.vue'
 import lockScreen from '@/views/layout/lockscreen/lockscreen.vue'
 import messageTip from '@/views/layout/message-tip.vue';
-//import themeSwitch from '@/views/layout/theme-switch/theme-switch.vue';
+import themeSwitch from '@/views/layout/theme-switch/theme-switch.vue';
 import Cookies from 'js-cookie';
 import global from '@/utils/global';
 
@@ -24,7 +24,7 @@ export default {
         fullScreen,
         lockScreen,
         messageTip,
-        //themeSwitch,
+        themeSwitch,
         changePassword,
         information
     },
@@ -62,7 +62,6 @@ export default {
             return this.$store.state.app.pageOpenedList;  // 打开的页面的页面对象
         },
         currentPath () {
-            console.log(this.$store.state.app.currentPath)
             return this.$store.state.app.currentPath  // 当前面包屑数组
         },
         avatorPath () {

@@ -22,46 +22,45 @@
             </div>
             <div class="header-avator-con">
                 <Menu mode="horizontal" theme="primary" class="pull-right">
-
-                    <MenuItem name="2">
+                    <MenuItem name="2" style="padding: 0;">
                     <Dropdown transfer class="header-menuitem">
                         <span class="main-option">
                             <Icon type="ios-gear" :size="22"></Icon>
                         </span>
                         <DropdownMenu slot="list">
                             <DropdownItem>
+                                <theme-switch></theme-switch>
+                            </DropdownItem>
+                            <DropdownItem>
                                 <lock-screen></lock-screen>
                             </DropdownItem>
                             <DropdownItem>
                                 <full-screen v-model="isFullScreen" @on-change="fullscreenChange"></full-screen>
                             </DropdownItem>
-                            <!-- <DropdownItem>
-                                <theme-switch></theme-switch>
-                            </DropdownItem> -->
                         </DropdownMenu>
                     </Dropdown>
 
                     </MenuItem>
-                    <MenuItem name="3">
-                        <message-tip v-model="mesCount"></message-tip>
+                    <MenuItem name="3" style="padding: 0;">
+                    <message-tip v-model="mesCount"></message-tip>
                     </MenuItem>
-                    <MenuItem name="1" class="header-user">
-                        <Dropdown transfer @on-click="handleClickUserDropdown" class="header-menuitem">
-                            <span class="header-username">
+                    <MenuItem name="1" class="header-user" style="padding: 0;">
+                    <Dropdown transfer @on-click="handleClickUserDropdown" class="header-menuitem">
+                        <span class="header-username">
                                 <Tooltip :content="username" placement="left">
                                     {{username}}
                                 </Tooltip>
                             </span>
-                            <DropdownMenu slot="list">
-                                <DropdownItem name="information">
-                                    <Icon type="person"></Icon> 账号设置</DropdownItem>
-                                <DropdownItem name="changePassword">
-                                    <Icon type="key"></Icon> 修改密码</DropdownItem>
-                                <DropdownItem name="logout">
-                                    <Icon type="log-out"></Icon> 退出</DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                        <Avatar :src="avatorPath" class="user-avatar"></Avatar>
+                        <DropdownMenu slot="list">
+                            <DropdownItem name="information">
+                                <Icon type="person"></Icon> 账号设置</DropdownItem>
+                            <DropdownItem name="changePassword">
+                                <Icon type="key"></Icon> 修改密码</DropdownItem>
+                            <DropdownItem name="logout">
+                                <Icon type="log-out"></Icon> 退出</DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
+                    <Avatar :src="avatorPath" class="user-avatar"></Avatar>
                     </MenuItem>
 
                 </Menu>
@@ -72,10 +71,10 @@
         <div class="single-page">
 
             <Row>
-                    <div class="main-breadcrumb">
-                        <breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>
-                    </div>
-                </Row>
+                <div class="main-breadcrumb">
+                    <breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>
+                </div>
+            </Row>
 
             <keep-alive :include="cachePage">
                 <router-view></router-view>
