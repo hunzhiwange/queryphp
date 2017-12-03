@@ -5,7 +5,7 @@ import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import App from './app'
 import router from './router'
-import {appRouter} from './router'
+import {appRouter} from './router/router'
 import store from './store'
 import * as filters from './filters' // 全局filter
 import Lockr from 'lockr'

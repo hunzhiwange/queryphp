@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-import {otherRouter, appRouter} from '@/router'
+import {otherRouter, appRouter} from '@/router/router'
 import global from '@/utils/global';
 
 const app = {

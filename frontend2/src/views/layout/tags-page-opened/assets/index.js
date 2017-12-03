@@ -184,7 +184,7 @@ export default {
         }
     },
     mounted() {
-        this.refsTag = this.$refs.tagsPageOpened;
+        this.refsTag = this.$refs.tagsPageOpened || []
 
         // 这里不设定时器就会有偏移bug
         setTimeout(() => {
