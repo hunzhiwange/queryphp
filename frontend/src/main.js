@@ -1,6 +1,4 @@
 import Vue from 'vue'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import App from './app'
@@ -30,7 +28,6 @@ axios.defaults.timeout = 1000 * 15
 axios.defaults.headers.authKey = Lockr.get('authKey')
 axios.defaults.headers['Content-Type'] = 'application/json'
 
-Vue.use(ElementUI)
 Vue.use(iView)
 Vue.use(VueI18n)
 Vue.use(extend)
