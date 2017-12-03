@@ -1,6 +1,5 @@
 <template>
 <div class="refresh-page">
-
     <Row>
         <Card>
             <div class="refresh-box">
@@ -14,42 +13,6 @@
     </Row>
 </div>
 </template>
-<style>
-.refresh-box {
-    text-align: center;
-    height: 270px;
-}
 
-.refresh-spin-icon-load {
-    animation: ani-refresh-spin 1s linear infinite;
-}
-
-@keyframes ani-refresh-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    50% {
-        transform: rotate(180deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-</style>
-<script>
-export default {
-    created() {},
-    activated() {
-        if (this.$route.query.name) {
-            router.replace({
-                name: this.$route.query.name,
-                query: {
-                    refresh: 'page'
-                }
-            })
-        } else {
-            console.log('refresh fail')
-        }
-    },
-}
-</script>
+<style lang="less" src="./assets/refresh.less"></style>
+<script src="./assets/refresh.js"></script>

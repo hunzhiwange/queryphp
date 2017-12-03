@@ -1,13 +1,5 @@
-<template>
-    <div @click="lockScreen">
-        <Tooltip content="锁屏" placement="left">
-            <Icon type="locked"></Icon> 锁屏
-        </Tooltip>
-    </div>
-</template>
-
-<script>
 import Cookies from 'js-cookie';
+
 export default {
     name: 'lockScreen',
     props: {
@@ -56,4 +48,3 @@ export default {
         lockScreenBack.style.width = lockScreenBack.style.height = size + 'px';
     }
 };
-</script>

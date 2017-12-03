@@ -1,75 +1,32 @@
 <template>
-<div id="app">
-    <transition name="bounce">
+    <div id="main" class="app-main">
         <router-view></router-view>
-    </transition>
-</div>
+    </div>
 </template>
 
 <script>
-export default {
-    name: 'app',
-    components: {}
-}
+    export default {
+        data () {
+            return {
+                theme: this.$store.state.app.themeColor
+            };
+        },
+        mounted () {
+
+        },
+        beforeDestroy () {
+
+        },
+        methods: {
+
+        }
+    };
 </script>
 
 <style>
 @import "./assets/css/font-awesome.css";
-.bounce-enter-active {
-    animation: bounce-in .5s;
-}
-
-.bounce-leave-active {
-    animation: bounce-out .2s;
-}
-
-@keyframes bounce-in {
-    0% {
-        transform: scale(0);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes bounce-out {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(0.95);
-    }
-    100% {
-        transform: scale(0);
-    }
-}
-
-body {
-    margin: 0px;
-    padding: 0px;
-    background: #e9ecf3;
-    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
-    font-weight: 400;
-    -webkit-font-smoothing: antialiased;
-}
-
-#app {
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
+.app-main{
     width: 100%;
-}
-
-.el-submenu [class^=fa] {
-    vertical-align: baseline;
-    margin-right: 10px;
-}
-
-.el-menu-item [class^=fa] {
-    vertical-align: baseline;
-    margin-right: 10px;
+    height: 100%;
 }
 </style>

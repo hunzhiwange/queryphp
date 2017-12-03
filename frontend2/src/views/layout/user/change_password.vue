@@ -20,5 +20,4 @@
     </Modal>
 </template>
 
-<script src="./../js/change_password.js"></script>
-<style src="./../css/change_password.css"></style>
+<script src="./assets/change_password.js"></script>

@@ -39,7 +39,6 @@
                             </DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
-
                     </MenuItem>
                     <MenuItem name="3" style="padding: 0;">
                     <message-tip v-model="mesCount"></message-tip>
@@ -69,13 +68,11 @@
     </div>
     <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
         <div class="single-page">
-
             <Row>
                 <div class="main-breadcrumb">
                     <breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>
                 </div>
             </Row>
-
             <keep-alive :include="cachePage">
                 <router-view></router-view>
             </keep-alive>

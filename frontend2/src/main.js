@@ -3,7 +3,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
-import App from './App'
+import App from './app'
 import router from './router'
 import {appRouter} from './router'
 import store from './store'
@@ -65,8 +65,7 @@ new Vue({
   el: '#app',
   router,
   store,
-  template: '<App/>',
-  components: { App },
+  render: h => h(App),
   data: {
       currentPageName: ''
   },

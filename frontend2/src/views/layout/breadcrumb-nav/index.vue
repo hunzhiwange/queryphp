@@ -8,19 +8,4 @@
     </Breadcrumb>
 </template>
 
-<script>
-export default {
-    name: 'breadcrumbNav',
-    props: {
-        currentPath: Array
-    },
-    methods: {
-        itemTitle (item) {
-            return item.title
-        },
-        itemIcon (item) {
-            return item.icon
-        }
-    }
-};
-</script>
+<script src="./assets/index.js"></script>

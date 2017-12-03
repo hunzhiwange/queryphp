@@ -1,20 +1,21 @@
-import shrinkableMenu from '@/views/layout/shrinkable-menu/shrinkable-menu.vue'
-import tagsPageOpened from '@/views/layout/tags-page-opened.vue';
-import breadcrumbNav from '@/views/layout/breadcrumb-nav.vue'
-import fullScreen from '@/views/layout/fullscreen.vue'
-import lockScreen from '@/views/layout/lockscreen/lockscreen.vue'
-import messageTip from '@/views/layout/message-tip.vue';
-import themeSwitch from '@/views/layout/theme-switch/theme-switch.vue';
-import Cookies from 'js-cookie';
-import global from '@/utils/global';
+import Cookies from 'js-cookie'
+import global from '@/utils/global'
+import http from '@/utils/http'
 
+// 组件
+import shrinkableMenu from '@/views/layout/shrinkable-menu/index'
+import tagsPageOpened from '@/views/layout/tags-page-opened/index';
+import breadcrumbNav from '@/views/layout/breadcrumb-nav/index'
+import fullScreen from '@/views/layout/fullscreen/index'
+import lockScreen from '@/views/layout/lockscreen/index'
+import messageTip from '@/views/layout/message-tip/index';
+import themeSwitch from '@/views/layout/theme-switch/index';
+import changePassword from '@/views/layout/user/change_password'
+import information from '@/views/layout/user/information'
+
+// 图片
 import img_logo from '@/assets/images/logo_admin_light.png'
 import img_mini_logo from '@/assets/images/logo_96x96_light.png'
-
-import changePassword from '@/views/layout/block/change_password.vue'
-import information from '@/views/layout/block/information.vue'
-
-import http from '@/utils/http'
 
 export default {
     components: {

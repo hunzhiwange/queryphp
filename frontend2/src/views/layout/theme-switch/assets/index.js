@@ -1,27 +1,4 @@
-<template>
-<div @click="handleSelect" class="switch-theme-con">
-    <Icon :style="{verticalAlign: 'middle'}" type="tshirt" :size="22"></Icon>
-    <Modal v-model="themeSelect" width="360" class="switch-theme-select">
-        <p>
-            <Row type="flex" justify="center" align="middle">
-                <Col v-for="(item, index) in themeList" :key="index" :name="item.name" span="6" class="tx-c">
-                    <div @click="setTheme(item.name)">
-                        <Tooltip :content="item.title" :placement="item.placement">
-                            <Avatar :style="{'background-color': item.element, color:item.menu }" :icon="item.name.substr(0, 1) !== 'b' ? 'happy-outline' : 'happy'" class="pointer" @on-click="setTheme(item.name)"></Avatar>
-                        </Tooltip>
-                    </div>
-                </Col>
-            </Row>
-        </p>
-        <div slot="footer">
-            <Button type="primary" size="large" long :loading="modalLoading">确定</Button>
-        </div>
-    </Modal>
-</div>
-</template>
-
-<script>
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'
 
 export default {
     name: 'themeSwitch',
@@ -93,34 +70,34 @@ export default {
             this.themeSelect = true
         },
         setTheme(themeFile) {
-            let menuTheme = themeFile.substr(0, 1);
-            let mainTheme = themeFile.substr(-1, 1);
+            let menuTheme = themeFile.substr(0, 1)
+            let mainTheme = themeFile.substr(-1, 1)
             if (menuTheme === 'b') {
-                this.$store.commit('changeMenuTheme', 'dark');
-                menuTheme = 'dark';
+                this.$store.commit('changeMenuTheme', 'dark')
+                menuTheme = 'dark'
             } else {
-                this.$store.commit('changeMenuTheme', 'light');
-                menuTheme = 'light';
+                this.$store.commit('changeMenuTheme', 'light')
+                menuTheme = 'light'
             }
 
-            let path = '';
-            let themeLink = document.querySelector('link[name="theme"]');
+            let path = ''
+            let themeLink = document.querySelector('link[name="theme"]')
             let userName = Lockr.get('userInfo').name
 
             if (localStorage.theme) {
-                let themeList = JSON.parse(localStorage.theme);
-                let index = 0;
+                let themeList = JSON.parse(localStorage.theme)
+                let index = 0
                 let hasThisUser = themeList.some((item, i) => {
                     if (item.userName === userName) {
-                        index = i;
-                        return true;
+                        index = i
+                        return true
                     } else {
-                        return false;
+                        return false
                     }
                 });
                 if (hasThisUser) {
-                    themeList[index].mainTheme = mainTheme;
-                    themeList[index].menuTheme = menuTheme;
+                    themeList[index].mainTheme = mainTheme
+                    themeList[index].menuTheme = menuTheme
                 } else {
                     themeList.push({
                         userName: userName,
@@ -128,25 +105,24 @@ export default {
                         menuTheme: menuTheme
                     });
                 }
-                localStorage.theme = JSON.stringify(themeList);
+                localStorage.theme = JSON.stringify(themeList)
             } else {
                 localStorage.theme = JSON.stringify([{
                     userName: userName,
                     mainTheme: mainTheme,
                     menuTheme: menuTheme
-                }]);
+                }])
             }
-            let stylePath = '';
+            let stylePath = ''
             if (ENV === 'development') {
-                // stylePath = './src/views/layout/theme-switch/theme/'
-                stylePath = '/';
+                stylePath = '/'
             } else {
-                stylePath = 'dist/';
+                stylePath = 'dist/'
             }
             if (mainTheme !== 'b') {
-                path = stylePath + mainTheme + '.css';
+                path = stylePath + mainTheme + '.css'
             } else {
-                path = '';
+                path = ''
             }
             themeLink.setAttribute('href', path)
 
@@ -156,38 +132,36 @@ export default {
         }
     },
     created() {
-        let path = '';
+        let stylePath = '';
         if (ENV === 'development') {
-            // path = './src/views/layout/theme-switch/theme/'
-            path = '/';
+            stylePath = '/'
         } else {
-            path = 'dist/';
+            stylePath = 'dist/'
         }
         let name = Lockr.get('userInfo').name
         if (localStorage.theme) {
             let hasThisUser = JSON.parse(localStorage.theme).some(item => {
                 if (item.userName === name) {
-                    this.$store.commit('changeMenuTheme', item.menuTheme);
-                    this.$store.commit('changeMainTheme', item.mainTheme);
-                    return true;
+                    this.$store.commit('changeMenuTheme', item.menuTheme)
+                    this.$store.commit('changeMainTheme', item.mainTheme)
+                    return true
                 } else {
-                    return false;
+                    return false
                 }
             });
             if (!hasThisUser) {
-                this.$store.commit('changeMenuTheme', 'light');
-                this.$store.commit('changeMainTheme', 'b');
+                this.$store.commit('changeMenuTheme', 'light')
+                this.$store.commit('changeMainTheme', 'b')
             }
         } else {
-            this.$store.commit('changeMenuTheme', 'light');
-            this.$store.commit('changeMainTheme', 'b');
+            this.$store.commit('changeMenuTheme', 'light')
+            this.$store.commit('changeMainTheme', 'b')
         }
         // 根据用户设置主题
         if (this.$store.state.app.themeColor !== 'b') {
-            let stylesheetPath = path + this.$store.state.app.themeColor + '.css';
-            let themeLink = document.querySelector('link[name="theme"]');
-            themeLink.setAttribute('href', stylesheetPath);
+            let stylesheetPath = stylePath + this.$store.state.app.themeColor + '.css'
+            let themeLink = document.querySelector('link[name="theme"]')
+            themeLink.setAttribute('href', stylesheetPath)
         }
     }
-};
-</script>
+}

@@ -20,5 +20,4 @@
 </Modal>
 </template>
 
-<script src="./../js/information.js"></script>
-<style src="./../css/information.css"></style>
+<script src="./assets/information.js"></script>
