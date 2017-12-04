@@ -22,7 +22,7 @@ use UI\Controls\ColorButton;
 class index extends Window
 {
     /**
-     * 构造哈叔
+     * 构造函数
      *
      * @param string $sTitle
      * @return void
