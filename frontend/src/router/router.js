@@ -13,10 +13,18 @@ export const commonRouter = [
         path: '/locking',
         name: 'locking',
         component: importRouter('layout/lockscreen/components/locking-page')
-    },{
+    }, {
         path: '/403',
-        title: __('权限不足'),
+        title: '403 ' + __('权限不足'),
         component: importRouter('error-page/403')
+    }, {
+        path: '/404',
+        title: '404 ' + __('页面不存在'),
+        component: importRouter('error-page/404')
+    }, {
+        path: '/500',
+        title: '500 ' + __('服务端错误'),
+        component: importRouter('error-page/500')
     }
 ]
 
@@ -33,7 +41,7 @@ export const otherRouter = {
             name: 'dashboard',
             icon: 'ios-home-outline',
             component: importRouter('dashboard/index')
-        },{
+        }, {
             title: __('刷新页面'),
             path: 'refresh',
             component: importRouter('layout/refresh'),
@@ -48,7 +56,8 @@ export const otherRouter = {
 }
 
 // 作为 layout 组件的子页面展示并且在左侧菜单显示的路由写在 appRouter 里
-export const appRouter = [ {
+export const appRouter = [
+    {
         path: '/option',
         icon: 'ios-gear',
         name: 'option',
@@ -61,12 +70,6 @@ export const appRouter = [ {
                 name: 'menu_index',
                 title: __('菜单管理'),
                 component: importRouter('menu/index')
-            }, {
-                path: 'md-editor',
-                icon: 'pound',
-                name: 'md-editor',
-                title: 'Markdown编辑器',
-                component: importRouter('error-page/error-page')
             }
         ]
     }
@@ -74,5 +77,7 @@ export const appRouter = [ {
 
 // 所有上面定义的路由都要写在下面的 routers 里
 export const routers = [
-    ...commonRouter, otherRouter, ...appRouter
+    ...commonRouter,
+    otherRouter,
+    ...appRouter
 ]

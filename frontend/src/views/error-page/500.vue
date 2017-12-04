@@ -1,7 +1,3 @@
-<style lang="less">
-    @import './500.less';
-</style>
-
 <template>
     <div class="error500">
         <div class="error500-body-con">
@@ -11,26 +7,13 @@
                 </div>
                 <p class="error500-body-con-message">Oops! the server is wrong</p>
                 <div class="error500-btn-con">
-                    <Button @click="goHome" size="large" style="width: 200px;" type="text">返回首页</Button>
-                    <Button @click="backPage" size="large" style="width: 200px;margin-left: 40px;" type="primary">返回上一页</Button>
+                    <Button @click="goHome" size="large" style="width: 200px;" type="text">{{__('返回首页')}}</Button>
+                    <Button @click="backPage" size="large" style="width: 200px;margin-left: 40px;" type="primary">{{__('返回上一页')}}</Button>
                 </div>
             </Card>
         </div>
     </div>
 </template>
 
-<script>
-export default {
-    name: 'Error500',
-    methods: {
-        backPage () {
-            this.$router.go(-1);
-        },
-        goHome () {
-            this.$router.push({
-                name: 'dashboard'
-            });
-        }
-    }
-};
-</script>
+<style lang="less" src="./assets/500.less"></style>
+<script src="./assets/500.js"></script>
