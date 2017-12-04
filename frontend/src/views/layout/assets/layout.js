@@ -102,8 +102,8 @@ export default {
         },
         logout() {
             this.$Modal.confirm({
-                title: '提示',
-                content: '确认退出吗?',
+                title:　__('提示'),
+                content: __('确认退出吗?'),
                 onOk: () => {
                     this.changePasswordLogout()
                 },
@@ -148,19 +148,6 @@ export default {
                     this.information()
                     break
             }
-            // if (name === 'ownSpace') {
-            //     global.openNewPage(this, 'ownspace_index');
-            //     this.$router.push({
-            //         name: 'ownspace_index'
-            //     });
-            // } else if (name === 'loginout') {
-            //     // // 退出登录
-            //     // this.$store.commit('logout', this);
-            //     // this.$store.commit('clearOpenedSubmenu');
-            //     // this.$router.push({
-            //     //     name: 'login'
-            //     // });
-            // }
         },
         checkTag (name) {
             let openpageHasTag = this.pageTagsList.some(item => {
@@ -173,18 +160,11 @@ export default {
             }
         },
         handleSubmenuChange (val) {
-            // console.log(val)
         },
         beforePush (name) {
-            // if (name === 'accesstest_index') {
-            //     return false;
-            // } else {
-            //     return true;
-            // }
             return true;
         },
         fullscreenChange (isFullScreen) {
-            // console.log(isFullScreen);
         },
         getUsername() {
             this.username = Lockr.get('userInfo').name
@@ -213,7 +193,7 @@ export default {
 
         let authKey = Lockr.get('authKey')
         if (!authKey) {
-            _g.warning('您尚未登录')
+            _g.warning(__('未登录'))
             setTimeout(() => {
                 router.replace('/login')
             }, 1500)

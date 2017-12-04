@@ -9,11 +9,11 @@
                 <DropdownItem name="refreshTag">
                     <Icon type="refresh" :size="22"></Icon>
                 </DropdownItem>
-                <DropdownItem name="clearTag">关闭标签</DropdownItem>
-                <DropdownItem name="clearOthers">关闭其他</DropdownItem>
-                <DropdownItem name="clearRights">关闭右侧</DropdownItem>
-                <DropdownItem name="clearLefts">关闭左侧</DropdownItem>
-                <DropdownItem name="clearAll">关闭所有</DropdownItem>
+                <DropdownItem name="clearTag">{{__('关闭标签')}}</DropdownItem>
+                <DropdownItem name="clearOthers">{{__('关闭其他')}}</DropdownItem>
+                <DropdownItem name="clearRights">{{__('关闭右侧')}}</DropdownItem>
+                <DropdownItem name="clearLefts">{{__('关闭左侧')}}</DropdownItem>
+                <DropdownItem name="clearAll">{{__('关闭所有')}}</DropdownItem>
             </DropdownMenu>
         </Dropdown>
     </div>
@@ -26,11 +26,11 @@
                 <DropdownItem name="refreshTag">
                     <Icon type="refresh" :size="22"></Icon>
                 </DropdownItem>
-                <DropdownItem name="clearTag">关闭标签</DropdownItem>
-                <DropdownItem name="clearOthers">关闭其他</DropdownItem>
-                <DropdownItem name="clearRights">关闭右侧</DropdownItem>
-                <DropdownItem name="clearLefts">关闭左侧</DropdownItem>
-                <DropdownItem name="clearAll">关闭所有</DropdownItem>
+                <DropdownItem name="clearTag">{{__('关闭标签')}}</DropdownItem>
+                <DropdownItem name="clearOthers">{{__('关闭其他')}}</DropdownItem>
+                <DropdownItem name="clearRights">{{__('关闭右侧')}}</DropdownItem>
+                <DropdownItem name="clearLefts">{{__('关闭左侧')}}</DropdownItem>
+                <DropdownItem name="clearAll">{{__('关闭所有')}}</DropdownItem>
             </DropdownMenu>
         </Dropdown>
     </div>

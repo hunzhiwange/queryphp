@@ -1,26 +1,26 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: QueryPHP-Vue default\n"
-"POT-Creation-Date: 2017-12-04 00:10+0800\n"
-"PO-Revision-Date: 2017-12-04 00:10+0800\n"
+"POT-Creation-Date: 2017-12-04 12:32+0800\n"
+"PO-Revision-Date: 2017-12-04 12:41+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: router/router.js:10 views/login/index.vue:42
+#: router/router.js:10
 msgid "登录"
 msgstr "Login"
 
-#: router/router.js:29
+#: router/router.js:29 store/modules/app.js:24 store/modules/app.js:32
 msgid "首页"
 msgstr "Home"
 
@@ -40,57 +40,347 @@ msgstr "Option"
 msgid "菜单管理"
 msgstr "Menu"
 
+#: views/dashboard/assets/index.i18n.js:1
+#: views/dashboard/assets/index.i18n.js:3
+msgid "官方网站"
+msgstr "Official website"
+
+#: views/dashboard/assets/index.i18n.js:2
+msgid ""
+"欢迎使用 QueryPHP Vue 单页面通用极速后台开发框架，本框架包含了基本认证、权限"
+"和账号管理功能，开发者可以在此基础上快速构建自己的应用。"
+msgstr ""
+"Welcome to QueryPHP Vue single page universal extreme speed background "
+"development framework. This framework includes basic authentication, "
+"permissions and account management functions. Developers can quickly build "
+"their applications on this basis."
+
+#: views/dashboard/assets/index.i18n.js:4
+msgid "捐赠"
+msgstr "Donation"
+
+#: views/dashboard/assets/index.i18n.js:5
+msgid "二次开发说明"
+msgstr "Development instructions"
+
+#: views/dashboard/assets/index.i18n.js:6
+msgid "已完成"
+msgstr "Done"
+
+#: views/dashboard/assets/index.i18n.js:7
+msgid "搭建开发环境"
+msgstr "Setting development environment"
+
+#: views/dashboard/assets/index.i18n.js:8
+msgid "创新"
+msgstr "Innovate"
+
+#: views/dashboard/assets/index.i18n.js:9
+msgid "阅读 Vue & QueryPHP 开发文档"
+msgstr "Reading Vue & QueryPHP development documents"
+
+#: views/dashboard/assets/index.i18n.js:10
+msgid "专注"
+msgstr "Absorbed"
+
+#: views/dashboard/assets/index.i18n.js:11
+msgid "学习基础功能示例"
+msgstr "Examples of learning basic functions"
+
+#: views/dashboard/assets/index.i18n.js:12
+msgid "分享"
+msgstr "Share"
+
+#: views/dashboard/assets/index.i18n.js:13
+msgid "根据业务改造基础框架"
+msgstr "Based on the basic framework of business transformation"
+
+#: views/dashboard/assets/index.i18n.js:14
+msgid "综合说明"
+msgstr "Comprehensive description"
+
+#: views/dashboard/assets/index.i18n.js:15
+msgid ""
+"QueryPHP-Vue　希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框"
+"架，以满足用户快速地理解并使用我们的产品。"
+msgstr ""
+"QueryPHP-Vue hopes to provide you with a super backstage development "
+"infrastructure based on integration of Vue and QueryPHP to meet users' quick "
+"understanding and use of our products."
+
+#: views/dashboard/assets/index.i18n.js:16
+msgid "感谢信"
+msgstr "Letter of thanks"
+
+#: views/dashboard/assets/index.i18n.js:17
+#, javascript-format
+msgid ""
+"在这里特别鸣谢 %s、%s 和 %s 等开源的基础框架，使得我们才能够站在巨人的肩膀上"
+"腾飞。"
+msgstr ""
+"The basic framework here special thanks to %s,%s and %s open source, so that "
+"we can stand on the shoulders of giants off."
+
+#: views/layout/assets/layout.i18n.js:1
+#: views/layout/user/assets/information.i18n.js:1
+msgid "账号设置"
+msgstr "Account Settings"
+
+#: views/layout/assets/layout.i18n.js:2
+#: views/layout/user/assets/change_password.i18n.js:1
+msgid "修改密码"
+msgstr "Change password"
+
+#: views/layout/assets/layout.i18n.js:3
+msgid "退出"
+msgstr "Sign out"
+
+#: views/layout/assets/layout.js:105
+msgid "提示"
+msgstr "Prompt"
+
+#: views/layout/assets/layout.js:106
+msgid "确认退出吗?"
+msgstr "Do you make sure to quit?"
+
+#: views/layout/assets/layout.js:196
+msgid "未登录"
+msgstr "Not logged in"
+
+#: views/layout/fullscreen/assets/index.i18n.js:1
+msgid "退出全屏"
+msgstr "Exit full screen"
+
+#: views/layout/fullscreen/assets/index.i18n.js:2
+msgid "全屏"
+msgstr "Full screen"
+
+#: views/layout/i18n-switch/assets/index.i18n.js:1
+msgid "国际化"
+msgstr "Internationalization"
+
+#: views/layout/i18n-switch/assets/index.i18n.js:2
+#: views/layout/theme-switch/assets/index.i18n.js:1
+msgid "确定"
+msgstr "Ok"
+
 #: views/layout/i18n-switch/assets/index.js:33
 msgid "切换语言成功"
 msgstr "Switch lang successfully"
 
-#: views/login/assets/index.i18n.js:1
-msgid "账号登录"
-msgstr "Account"
+#: views/layout/lockscreen/assets/index.i18n.js:1
+msgid "锁屏"
+msgstr "Lock screen"
 
-#: views/login/assets/index.i18n.js:2
-msgid "账号"
-msgstr "Account"
+#: views/layout/lockscreen/components/assets/unlock.i18n.js:1
+msgid "解锁"
+msgstr "Unlock"
 
-#: views/login/assets/index.i18n.js:3
-msgid "密码"
-msgstr "Password"
+#: views/layout/lockscreen/components/assets/unlock.i18n.js:2
+msgid "密码同登录密码"
+msgstr "Password and login password"
 
-#: views/login/assets/index.i18n.js:4
-msgid "验证码"
-msgstr "Code"
+#: views/layout/lockscreen/components/assets/unlock.i18n.js:3
+msgid "已锁定"
+msgstr "Already locked"
 
-#: views/login/assets/index.i18n.js:5
-msgid "微信扫一扫"
-msgstr "WeChat"
+#: views/layout/lockscreen/components/assets/unlock.js:40
+msgid "密码错误,请重新输入。如果忘了密码，清除浏览器缓存重新登录即可。"
+msgstr ""
+"The password is wrong, please reenter it. If you forget the password, remove "
+"the browser cache and log in again."
 
-#: views/login/assets/index.i18n.js:6
-msgid "手机登录"
+#: views/layout/message-tip/assets/index.i18n.js:1
+msgid "条新消息"
+msgstr "new message"
+
+#: views/layout/message-tip/assets/index.i18n.js:2
+msgid "无新消息"
+msgstr "No new news"
+
+#: views/layout/tags-page-opened/assets/index.i18n.js:1
+msgid "关闭标签"
+msgstr "Close Tag"
+
+#: views/layout/tags-page-opened/assets/index.i18n.js:2
+msgid "关闭其他"
+msgstr "Close other"
+
+#: views/layout/tags-page-opened/assets/index.i18n.js:3
+msgid "关闭右侧"
+msgstr "Close right"
+
+#: views/layout/tags-page-opened/assets/index.i18n.js:4
+msgid "关闭左侧"
+msgstr "Close left"
+
+#: views/layout/tags-page-opened/assets/index.i18n.js:5
+msgid "关闭所有"
+msgstr "Close all"
+
+#: views/layout/theme-switch/assets/index.js:12
+#: views/layout/theme-switch/assets/index.js:36
+msgid "青蓝冰水"
+msgstr "Blue"
+
+#: views/layout/theme-switch/assets/index.js:12
+#: views/layout/theme-switch/assets/index.js:18
+#: views/layout/theme-switch/assets/index.js:24
+#: views/layout/theme-switch/assets/index.js:30
+msgid "暗夜"
+msgstr "Dark night"
+
+#: views/layout/theme-switch/assets/index.js:18
+#: views/layout/theme-switch/assets/index.js:42
+msgid "千山一碧"
+msgstr "Green"
+
+#: views/layout/theme-switch/assets/index.js:24
+#: views/layout/theme-switch/assets/index.js:48
+msgid "灿若云霞"
+msgstr "Orange"
+
+#: views/layout/theme-switch/assets/index.js:30
+#: views/layout/theme-switch/assets/index.js:54
+msgid "红尘有你"
+msgstr "Red"
+
+#: views/layout/theme-switch/assets/index.js:36
+#: views/layout/theme-switch/assets/index.js:42
+#: views/layout/theme-switch/assets/index.js:48
+#: views/layout/theme-switch/assets/index.js:54
+msgid "光天"
+msgstr "Light day"
+
+#: views/layout/theme-switch/assets/index.js:123
+msgid "主题切换成功"
+msgstr "Switch theme successfully"
+
+#: views/layout/user/assets/change_password.i18n.js:2
+msgid "旧密码"
+msgstr "Old password"
+
+#: views/layout/user/assets/change_password.i18n.js:3
+msgid "新密码"
+msgstr "New password"
+
+#: views/layout/user/assets/change_password.i18n.js:4
+msgid "确认密码"
+msgstr "Confirm password"
+
+#: views/layout/user/assets/change_password.i18n.js:5
+#: views/layout/user/assets/information.i18n.js:5
+msgid "取消"
+msgstr "Cancel"
+
+#: views/layout/user/assets/change_password.i18n.js:6
+#: views/layout/user/assets/information.i18n.js:6
+msgid "确认"
+msgstr "Ok"
+
+#: views/layout/user/assets/change_password.js:7
+msgid "请再次输入密码"
+msgstr "Please enter the password again"
+
+#: views/layout/user/assets/change_password.js:9
+msgid "两次输入密码不一致!"
+msgstr "The two input password is not consistent!"
+
+#: views/layout/user/assets/change_password.js:28
+msgid "请输入旧密码"
+msgstr "Please enter the old password"
+
+#: views/layout/user/assets/change_password.js:33
+#: views/layout/user/assets/change_password.js:45
+#: views/layout/user/assets/change_password.js:56
+#: views/login/assets/index.js:35
+#, javascript-format
+msgid "长度在 %d 到 %d 个字符"
+msgstr "Length from %d to %d characters"
+
+#: views/layout/user/assets/change_password.js:40
+msgid "请输入新密码"
+msgstr "Please enter a new password"
+
+#: views/layout/user/assets/information.i18n.js:2
+msgid "用户昵称"
+msgstr "Nickname"
+
+#: views/layout/user/assets/information.i18n.js:3
+msgid "邮箱"
+msgstr "Mailbox"
+
+#: views/layout/user/assets/information.i18n.js:4
+msgid "手机号"
 msgstr "Mobile"
 
-#: views/login/assets/index.js:22
-msgid "请输入账号"
-msgstr "Please enter account"
+#: views/layout/user/assets/information.js:28
+msgid "请输入有效的邮箱"
+msgstr "Please enter a valid mailbox"
 
-#: views/error-page/error-page.vue:70
-msgid "前往"
-msgstr "Go to"
+#: views/layout/user/assets/information.js:36
+msgid "请输入有效的手机号"
+msgstr "Please enter a valid cell phone number"
 
-#: views/login/index.vue:6
+#: views/login/assets/index.i18n.js:4
 msgid "用户登录"
 msgstr "Login"
 
-#: views/login/index.vue:39
+#: views/login/assets/index.i18n.js:5
+msgid "账号登录"
+msgstr "Account"
+
+#: views/login/assets/index.i18n.js:6
+msgid "账号"
+msgstr "Account"
+
+#: views/login/assets/index.i18n.js:7
+msgid "密码"
+msgstr "Password"
+
+#: views/login/assets/index.i18n.js:8
+msgid "验证码"
+msgstr "Code"
+
+#: views/login/assets/index.i18n.js:9
 msgid "保持登录"
 msgstr "Keep login"
 
-#: views/login/index.vue:47
+#: views/login/assets/index.i18n.js:10
 msgid "找回密码"
 msgstr "Forgot password"
 
-#: views/login/index.vue:50
+#: views/login/assets/index.i18n.js:11
 msgid "新用户注册"
 msgstr "New user register"
+
+#: views/login/assets/index.i18n.js:12
+msgid "微信扫一扫"
+msgstr "WeChat"
+
+#: views/login/assets/index.i18n.js:13
+msgid "手机登录"
+msgstr "Mobile"
+
+#: views/login/assets/index.js:23
+msgid "请输入账号"
+msgstr "Please enter account"
+
+#: views/login/assets/index.js:30
+msgid "请输入密码"
+msgstr "Please input a password"
+
+#: views/login/assets/index.js:42
+msgid "请输入验证码"
+msgstr "Please enter the verification code"
+
+#: views/login/assets/index.js:47
+#, javascript-format
+msgid "长度为 %d 个字符"
+msgstr "The length is %d characters"
+
+#~ msgid "前往"
+#~ msgstr "Go to"
 
 #~ msgid "上一页"
 #~ msgstr "Previous"

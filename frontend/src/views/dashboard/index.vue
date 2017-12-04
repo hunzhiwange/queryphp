@@ -7,15 +7,15 @@
                 <Icon type="flag"></Icon>
                 The QueryPHP Vue SPA Application
             </p>
-            <Button slot="extra" type="text" @click="officeSite()">官方网站</Button>
+            <Button slot="extra" type="text" @click="officeSite()">{{__('官方网站')}}</Button>
             <div>
                 <Row :gutter="16">
                     <Col span="15">
-                    <p>欢迎使用 QueryPHP Vue 单页面通用极速后台开发框架，本框架包含了基本认证、权限和账号管理功能，开发者可以在此基础上快速构建自己的应用。</p>
+                    <p>{{__('欢迎使用 QueryPHP Vue 单页面通用极速后台开发框架，本框架包含了基本认证、权限和账号管理功能，开发者可以在此基础上快速构建自己的应用。')}}</p>
                     <div>
                         <div style="margin-top: 20px">
-                            <Button @click="officeSite()" round>官方网站</Button>
-                            <Button @click="supportSite()" round>捐 赠</Button>
+                            <Button @click="officeSite()" round>{{__('官方网站')}}</Button>
+                            <Button @click="supportSite()" round>{{__('捐赠')}}</Button>
                             <Button @click="githubSite()" round>Github</Button>
                         </div>
                     </div>
@@ -37,22 +37,22 @@
         <Card>
             <p slot="title">
                 <Icon type="ios-heart"></Icon>
-                二次开发说明
+                {{__('二次开发说明')}}
             </p>
             <div>
                 <Row>
                     <Col span="6">
                     <Steps :current="0" direction="vertical">
-                        <Step title="已完成" content="搭建开发环境"></Step>
-                        <Step title="创新" content="阅读 Vue & QueryPHP 开发文档"></Step>
-                        <Step title="专注" content="学习基础功能示例"></Step>
-                        <Step title="分享" content="根据业务改造基础框架"></Step>
+                        <Step :title="__('已完成')" :content="__('搭建开发环境')"></Step>
+                        <Step :title="__('创新')" :content="__('阅读 Vue & QueryPHP 开发文档')"></Step>
+                        <Step :title="__('专注')" :content="__('学习基础功能示例')"></Step>
+                        <Step :title="__('分享')" :content="__('根据业务改造基础框架')"></Step>
                     </Steps>
                     </Col>
                     <Col span="18">
                     <Tabs>
-                        <TabPane label="综合说明" icon="social-github">
-                            QueryPHP-Vue　希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框架，以满足用户快速地理解并使用我们的产品。
+                        <TabPane :label="__('综合说明')" icon="social-github">
+                            {{__('QueryPHP-Vue　希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框架，以满足用户快速地理解并使用我们的产品。')}}
                         </TabPane>
                         <TabPane label="IView" icon="social-javascript">
                             IView
@@ -72,12 +72,15 @@
 
     <Row class="m-t-10">
         <Alert type="success" show-icon>
-            感谢信
-            <p slot="desc">在这里特别鸣谢 <a href="https://github.com/honraytech/VueThink" target="_blank">VueThink</a>、<a href="https://github.com/PanJiaChen/vue-element-admin" target="_blank">VueElementAdmin</a> 和 <a href="https://github.com/iview/iview-admin" target="_blank">IViewAdmin</a>                等开源的基础框架，使得我们才能够站在巨人的肩膀上腾飞。</p>
+            {{__('感谢信')}}
+            <p slot="desc">
+                {{__('在这里特别鸣谢 %s、%s 和 %s 等开源的基础框架，使得我们才能够站在巨人的肩膀上腾飞。','VueThink', 'VueElementAdmin', 'IViewAdmin' )}}
+                <a href="https://github.com/honraytech/VueThink" target="_blank">VueThink</a>、<a href="https://github.com/PanJiaChen/vue-element-admin" target="_blank">VueElementAdmin</a>、<a href="https://github.com/iview/iview-admin" target="_blank">IViewAdmin</a>
+            </p>
         </Alert>
     </Row>
 </div>
 </template>
 
-<script src="./js/index.js"></script>
-<style src="./css/index.css"></style>
+<script src="./assets/index.js"></script>
+<style src="./assets/index.css"></style>

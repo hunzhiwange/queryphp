@@ -39,13 +39,6 @@ export default {
         }
     },
     methods: {
-        // routerChange(item) {
-        //     if (item.url != this.$route.path) {
-        //         router.push(item.url)
-        //     } else {
-        //         _g.shallowRefresh(this.$route.name)
-        //     }
-        // },
         handleChange (name) {
             let willpush = true;
             if (this.beforePush !== undefined) {

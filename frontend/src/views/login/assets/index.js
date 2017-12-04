@@ -17,35 +17,36 @@ export default {
             seccodeUrl: '',
             seccodeImg: window.BASE_API + '/admin/login/seccode',
             rules: {
-                name: [{
-                    required: true,
-                    message: __('请输入账号'),
-                    trigger: 'blur'
-                }],
-                password: [{
-                        required: true,
-                        message: '请输入密码',
-                        trigger: 'blur'
-                    },
+                name: [
                     {
-                        min: 6,
-                        max: 12,
-                        message: '长度在 6 到 12 个字符',
+                        required: true,
+                        message: __('请输入账号'),
                         trigger: 'blur'
                     }
                 ],
-                seccode: [{
-                        required: true,
-                        message: '请输入验证码',
-                        trigger: 'blur'
-                    },
+                password: [
                     {
+                        required: true,
+                        message: __('请输入密码'),
+                        trigger: 'blur'
+                    }, {
+                        min: 6,
+                        max: 12,
+                        message: __('长度在 %d 到 %d 个字符', 6, 12),
+                        trigger: 'blur'
+                    }
+                ],
+                seccode: [
+                    {
+                        required: true,
+                        message: __('请输入验证码'),
+                        trigger: 'blur'
+                    }, {
                         min: 4,
                         max: 4,
-                        message: '长度为 4 个字符',
+                        message: __('长度为 %d 个字符', 4),
                         trigger: 'blur'
-                    },
-                    {
+                    }, {
                         validator: validate.alpha,
                         trigger: 'blur'
                     }
@@ -63,7 +64,8 @@ export default {
             }, 300)
         },
         handleSubmit(form) {
-            if (this.loading) return
+            if (this.loading)
+                return
             this.$refs.form.validate((valid) => {
                 if (valid) {
                     this.loading = !this.loading
@@ -101,18 +103,21 @@ export default {
                 }
             })
         },
-        keepLogin(event){
-            if(event.target.tagName == 'SPAN'){
-    		    return;
+        keepLogin(event) {
+            if (event.target.tagName == 'SPAN') {
+                return;
             }
 
-            Cookies.set('keep_login', !this.checked ? 'T' : 'F', {
-                expires: 1
-            })
+            Cookies.set(
+                'keep_login', !this.checked
+                ? 'T'
+                : 'F', {expires: 1})
         },
         checkKeepLogin() {
             let keepLogin = Cookies.get('keep_login')
-            this.checked = keepLogin == 'T' ? true : false
+            this.checked = keepLogin == 'T'
+                ? true
+                : false
         }
     },
     created() {

@@ -14,7 +14,7 @@
             </Row>
         </p>
         <div slot="footer">
-            <Button type="primary" size="large" long :loading="modalLoading">确定</Button>
+            <Button type="primary" size="large" long :loading="modalLoading">{{__('确定')}}</Button>
         </div>
     </Modal>
 </div>

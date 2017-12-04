@@ -55,11 +55,11 @@
                             </span>
                         <DropdownMenu slot="list">
                             <DropdownItem name="information">
-                                <Icon type="person"></Icon> 账号设置</DropdownItem>
+                                <Icon type="person"></Icon> {{__('账号设置')}}</DropdownItem>
                             <DropdownItem name="changePassword">
-                                <Icon type="key"></Icon> 修改密码</DropdownItem>
+                                <Icon type="key"></Icon> {{__('修改密码')}}</DropdownItem>
                             <DropdownItem name="logout">
-                                <Icon type="log-out"></Icon> 退出</DropdownItem>
+                                <Icon type="log-out"></Icon> {{__('退出')}}</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                     <Avatar :src="avatorPath" class="user-avatar"></Avatar>

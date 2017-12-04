@@ -21,7 +21,7 @@ const app = {
         menuTheme: 'light', // 主题
         themeColor: '',
         pageOpenedDashboard: {
-            title: '首页',
+            title: __('首页'),
             path: '/dashboard',
             name: 'dashboard'
         },
@@ -29,7 +29,7 @@ const app = {
         currentPageName: '',
         currentPath: [
             {
-                title: '首页',
+                title: __('首页'),
                 icon: 'ios-home-outline',
                 path: '/dashboard',
                 name: 'dashboard'

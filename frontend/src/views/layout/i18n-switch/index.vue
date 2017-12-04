@@ -1,7 +1,7 @@
 <template>
 <div @click="handleSelect" class="i18n-theme-con">
-    <Tooltip content="国际化" placement="left">
-        <Icon type="earth"></Icon> 国际化
+    <Tooltip :content="__('国际化')" placement="left">
+        <Icon type="earth"></Icon> {{__('国际化')}}
     </Tooltip>
     <Modal v-model="i18nSelect" width="360" class="i18n-theme-select">
         <p>
@@ -14,7 +14,7 @@
             </Row>
         </p>
         <div slot="footer">
-            <Button type="primary" size="large" long :loading="modalLoading">确定</Button>
+            <Button type="primary" size="large" long :loading="modalLoading">{{__('确定')}}</Button>
         </div>
     </Modal>
 </div>

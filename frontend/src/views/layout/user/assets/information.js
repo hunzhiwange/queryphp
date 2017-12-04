@@ -25,7 +25,7 @@ export default {
                     {
                         type: 'email',
                         required: true,
-                        message: '请输入有效的邮箱'
+                        message: __('请输入有效的邮箱')
                     }
                 ],
                 mobile: [
@@ -33,7 +33,7 @@ export default {
                         type: 'number',
                         validator: validate.mobile,
                         required: true,
-                        message: '请输入有效的手机号'
+                        message: __('请输入有效的手机号')
                     }
                 ]
             }
