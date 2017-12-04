@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie'
 import {otherRouter, appRouter} from '@/router/router'
-import global from '@/utils/global';
+import global from '@/utils/global'
+import Vue from 'vue'
 
 const app = {
     state: {
@@ -14,7 +15,7 @@ const app = {
         visitedViews: [],
 
         cachePage: [],
-        lang: '',
+        lang: 'zh-CN',
         isFullScreen: false,
         openedSubmenuArr: [], // 要展开的菜单数组
         menuTheme: 'light', // 主题

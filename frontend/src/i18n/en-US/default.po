@@ -1,0 +1,105 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: QueryPHP-Vue default\n"
+"POT-Creation-Date: 2017-12-04 00:10+0800\n"
+"PO-Revision-Date: 2017-12-04 00:10+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: router/router.js:10 views/login/index.vue:42
+msgid "登录"
+msgstr "Login"
+
+#: router/router.js:29
+msgid "首页"
+msgstr "Home"
+
+#: router/router.js:34
+msgid "刷新页面"
+msgstr "Refresh"
+
+#: router/router.js:40
+msgid "消息中心"
+msgstr "Message center"
+
+#: router/router.js:52
+msgid "设置"
+msgstr "Option"
+
+#: router/router.js:59
+msgid "菜单管理"
+msgstr "Menu"
+
+#: views/layout/i18n-switch/assets/index.js:33
+msgid "切换语言成功"
+msgstr "Switch lang successfully"
+
+#: views/login/assets/index.i18n.js:1
+msgid "账号登录"
+msgstr "Account"
+
+#: views/login/assets/index.i18n.js:2
+msgid "账号"
+msgstr "Account"
+
+#: views/login/assets/index.i18n.js:3
+msgid "密码"
+msgstr "Password"
+
+#: views/login/assets/index.i18n.js:4
+msgid "验证码"
+msgstr "Code"
+
+#: views/login/assets/index.i18n.js:5
+msgid "微信扫一扫"
+msgstr "WeChat"
+
+#: views/login/assets/index.i18n.js:6
+msgid "手机登录"
+msgstr "Mobile"
+
+#: views/login/assets/index.js:22
+msgid "请输入账号"
+msgstr "Please enter account"
+
+#: views/error-page/error-page.vue:70
+msgid "前往"
+msgstr "Go to"
+
+#: views/login/index.vue:6
+msgid "用户登录"
+msgstr "Login"
+
+#: views/login/index.vue:39
+msgid "保持登录"
+msgstr "Keep login"
+
+#: views/login/index.vue:47
+msgid "找回密码"
+msgstr "Forgot password"
+
+#: views/login/index.vue:50
+msgid "新用户注册"
+msgstr "New user register"
+
+#~ msgid "上一页"
+#~ msgstr "Previous"
+
+#~ msgid "下一页"
+#~ msgstr "Next"
+
+#~ msgid "共 %d 条"
+#~ msgstr "Total %d"
+
+#~ msgid "页"
+#~ msgstr "Page"

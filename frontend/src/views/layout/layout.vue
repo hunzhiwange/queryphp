@@ -32,6 +32,9 @@
                                 <theme-switch></theme-switch>
                             </DropdownItem>
                             <DropdownItem>
+                                <i18n-switch></i18n-switch>
+                            </DropdownItem>
+                            <DropdownItem>
                                 <lock-screen></lock-screen>
                             </DropdownItem>
                             <DropdownItem>

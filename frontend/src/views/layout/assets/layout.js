@@ -4,12 +4,13 @@ import http from '@/utils/http'
 
 // 组件
 import shrinkableMenu from '@/views/layout/shrinkable-menu/index'
-import tagsPageOpened from '@/views/layout/tags-page-opened/index';
+import tagsPageOpened from '@/views/layout/tags-page-opened/index'
 import breadcrumbNav from '@/views/layout/breadcrumb-nav/index'
 import fullScreen from '@/views/layout/fullscreen/index'
 import lockScreen from '@/views/layout/lockscreen/index'
-import messageTip from '@/views/layout/message-tip/index';
-import themeSwitch from '@/views/layout/theme-switch/index';
+import messageTip from '@/views/layout/message-tip/index'
+import themeSwitch from '@/views/layout/theme-switch/index'
+import i18nSwitch from '@/views/layout/i18n-switch/index'
 import changePassword from '@/views/layout/user/change_password'
 import information from '@/views/layout/user/information'
 
@@ -26,6 +27,7 @@ export default {
         lockScreen,
         messageTip,
         themeSwitch,
+        i18nSwitch,
         changePassword,
         information
     },
