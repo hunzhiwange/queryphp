@@ -8,12 +8,15 @@ export const commonRouter = [
     {
         path: '/login',
         title: __('登录'),
-        component: importRouter('login/index'),
-        hidden: true
+        component: importRouter('login/index')
     }, {
         path: '/locking',
         name: 'locking',
         component: importRouter('layout/lockscreen/components/locking-page')
+    },{
+        path: '/403',
+        title: __('权限不足'),
+        component: importRouter('error-page/403')
     }
 ]
 
@@ -47,14 +50,14 @@ export const otherRouter = {
 // 作为 layout 组件的子页面展示并且在左侧菜单显示的路由写在 appRouter 里
 export const appRouter = [ {
         path: '/option',
-        icon: 'social-buffer',
+        icon: 'ios-gear',
         name: 'option',
         title: __('设置'),
         component: layout,
         children: [
             {
                 path: 'menu',
-                icon: 'compose',
+                icon: '',
                 name: 'menu_index',
                 title: __('菜单管理'),
                 component: importRouter('menu/index')
