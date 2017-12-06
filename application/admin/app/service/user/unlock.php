@@ -10,7 +10,7 @@ use queryyetsimple\bootstrap\auth\login;
  *
  * @author Name Your <your@mail.com>
  * @package $$
- * @since 2017.11.21
+ * @since 2017.12.06
  * @version 1.0
  */
 class unlock
@@ -45,7 +45,7 @@ class unlock
     public function run($strName, $strPassword)
     {
         $this->request($strName, $strPassword);
-        return $this->onlyValidate($this->oRequest);
+        return $this->unlock($this->oRequest);
     }
 
     /**

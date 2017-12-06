@@ -41,7 +41,15 @@ abstract class acontroller extends acontrollers
         if (empty($strApiToken) || (auth::setTokenName($strApiToken) && ! ($this->arrLogin = auth::getLogin()))) {
             exit(json_encode([
                 'code' => 101,
-                'error' => '登录已失效'
+                'error' => __('登录已失效')
+            ], JSON_UNESCAPED_UNICODE));
+        }
+
+        // 验证是否锁屏
+        if(auth::isLock() && !in_array($this->requestNode(), $this->ignoreLock())) {
+            exit(json_encode([
+                'code' => 102,
+                'error' => __('屏幕已锁定')
             ], JSON_UNESCAPED_UNICODE));
         }
     }
@@ -49,10 +57,31 @@ abstract class acontroller extends acontrollers
     /**
      * 获取登录信息
      *
-     * @return  array
+     * @return array
      */
     public function login()
     {
         return $this->arrLogin;
+    }
+
+    /**
+     * 访问节点
+     *
+     * @return string
+     */
+    protected function requestNode(){
+        return request::controller() . '/' . request::action();
+    }
+
+    /**
+     * 锁定忽略操作
+     *
+     * @return array
+     */
+    protected function ignoreLock(){
+        return [
+            'user/unlock',
+            'user/logout'
+        ];
     }
 }

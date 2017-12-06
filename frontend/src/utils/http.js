@@ -63,6 +63,14 @@ const apiMethods = {
                             router.replace('/login')
                         }, 1500)
                         break
+                    case 102:
+                        _g.error(res.error)
+                        setTimeout(() => {
+                            router.push({
+                                name: 'locking'
+                            });
+                        }, 1500)
+                        break
                     case 103:
                         _g.error(res.error)
                         setTimeout(() => {
@@ -70,7 +78,7 @@ const apiMethods = {
                         }, 1500)
                         break
                     default:
-                        _g.error(res.message)
+                        _g.error(res.error)
                 }
             } else {
                 console.log('default error')
@@ -89,7 +97,7 @@ const apiMethods = {
             Lockr.set('authList', data.authList) // 权限节点列表
             Lockr.set('userInfo', data.userInfo) // 用户信息
             window.axios.defaults.headers.authKey = Lockr.get('authKey')
-            
+
             let routerUrl = '/'
             setTimeout(() => {
                 let path = this.$route.path
