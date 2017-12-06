@@ -3,9 +3,9 @@
     <Row>
         <div class="min-form" v-show="minForm">
             <div class="min-form-inner">
-                <legend>{{__('新增菜单')}}</legend>
+                <legend>{{formItem.id ? __('编辑菜单') : __('新增菜单')}}</legend>
                 <div class="min-form-body">
-                    <Form ref="form" :rules="rules" :model="formItem" :label-width="110">
+                    <Form ref="form" :rules="rules" :model="formItem" :label-width="110" class="w-600">
                         <FormItem :label="__('标题')" prop="title">
                             <Input v-model.trim="formItem.title" placeholder=""></Input>
                         </FormItem>
