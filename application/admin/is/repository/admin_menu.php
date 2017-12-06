@@ -72,18 +72,4 @@ class admin_menu extends repository implements admin_menu_repository
 
         getOne();
     }
-
-    /**
-     * 后台菜单
-     *
-     * @return array
-     */
-    public function topNode()
-    {
-        return [
-                'id' => - 1,
-                'pid' => 0,
-                'lable' => '选择上级菜单'
-        ];
-    }
 }
