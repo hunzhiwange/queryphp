@@ -70,6 +70,13 @@ export const appRouter = [
                 name: 'menu_index',
                 title: __('菜单管理'),
                 component: importRouter('menu/index')
+            },
+            {
+                path: 'menu2',
+                icon: '',
+                name: 'menu2_index',
+                title: __('菜单管理2'),
+                component: importRouter('menu/index')
             }
         ]
     }

@@ -56,6 +56,24 @@ class admin_menu extends repository implements admin_menu_repository
     }
 
     /**
+     * 最早(后)一个兄弟节点
+     *
+     * @param int $nId
+     * @param string $strSort
+     * @return mixed
+     */
+    public function siblingNodeBySort($nPid, $strSort = 'ASC')
+    {
+        return $this->objAggregate->
+
+        where('pid', $nPid)->
+
+        orderBy('sort', $strSort)->
+
+        getOne();
+    }
+
+    /**
      * 后台菜单
      *
      * @return array

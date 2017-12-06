@@ -39,7 +39,7 @@ class store
      * 响应方法
      *
      * @param array $aMenu
-     * @return array
+     * @return mixed
      */
     public function run($aMenu)
     {
@@ -55,6 +55,8 @@ class store
      */
     protected function entity(array $aMenu)
     {
+        $mixSibling = $this->oRepository->siblingNodeBySort(intval($aMenu['pid']));
+        $aMenu['sort'] = $mixSibling ? $mixSibling->sort-1 : 500;
         return new entity($this->data($aMenu));
     }
 
@@ -70,9 +72,10 @@ class store
             'menu' => $aMenu['menu'],
             'module' => $aMenu['module'],
             'pid' => intval($aMenu['pid']),
-            'sort' => 500,
+            'sort' => intval($aMenu['sort']),
             'title' => $aMenu['title'],
             'url' => $aMenu['url'],
+            'status' => $aMenu['status'] === true ? 'enable' : 'disable',
             'menu_type' => intval($aMenu['menu_type']),
             'menu_icon' => $aMenu['menu_icon']
         ];

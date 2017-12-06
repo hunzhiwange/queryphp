@@ -27,9 +27,10 @@ class enable extends aaction
     public function run(service $oService)
     {
         try {
-            $mixResult = $oService->run($this->id(), $this->status());
+            $strStatus = $this->status();
+            $mixResult = $oService->run($this->id(), $strStatus);
             return [
-                'message' => '菜单状态更新成功'
+                'message' => __('菜单状态%s成功', $this->messageType($strStatus))
             ];
         } catch (update_failed $oE) {
             return [
@@ -57,5 +58,16 @@ class enable extends aaction
     protected function id()
     {
         return request::all('args\0');
+    }
+
+    /**
+     * 成功消息类型
+     *
+     * @param string $strType
+     * @return string
+     */
+    protected function messageType($strType)
+    {
+        return ['disable' => __('禁用'), 'enable' => __('启用')][$strType];
     }
 }

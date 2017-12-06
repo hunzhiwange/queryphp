@@ -27,9 +27,10 @@ class order extends aaction
     public function run(service $oService)
     {
         try {
-            $mixResult = $oService->run($this->id(), $this->type());
+            $strType = $this->type();
+            $mixResult = $oService->run($this->id(), $strType);
             return [
-                'message' => '菜单排序成功'
+                'message' => __('菜单%s成功', $this->messageType($strType))
             ];
         } catch (order_failed $oE) {
             return [
@@ -57,5 +58,16 @@ class order extends aaction
     protected function id()
     {
         return intval(request::all('args\0'));
+    }
+
+    /**
+     * 成功消息类型
+     *
+     * @param string $strType
+     * @return string
+     */
+    protected function messageType($strType)
+    {
+        return ['top' => __('置顶'), 'up' => __('上移'), 'down' => __('下移')][$strType];
     }
 }

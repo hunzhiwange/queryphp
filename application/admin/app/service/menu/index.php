@@ -97,7 +97,10 @@ class index
             $arrNode[] = [
                 $oMenu->id,
                 $oMenu->pid,
-                $oMenu->title
+                [
+                    $oMenu->title,
+                    $oMenu->status
+                ]
             ];
         }
         return $arrNode;

@@ -1,14 +1,71 @@
 <template>
 <div class="dashboard-page">
     <Row>
+        <div class="min-form" v-show="minForm" style="    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;    z-index: 300;
+    display: block;">
+            <div class="min-form-inner" style="background: #fff;
+    min-height: 100px;
+    padding: 20px 30px;">
+                <legend style="font-size: 16px;
+    border: 0;
+    color: #415161;">新增菜单</legend>
+                <div class="min-form-body" style="max-height: 678px;    margin: 20px 0;
+    min-height: 100px;
+    max-height: calc(100% - 100px);
+    overflow: auto;">
+                    <Form ref="form" :rules="rules" :model="formItem" :label-width="110">
+                        <FormItem label="标题" prop="title">
+                            <Input v-model.trim="formItem.title" placeholder=""></Input>
+                        </FormItem>
+                        <FormItem label="上级菜单" prop="pid">
+                            <Cascader v-model="formItem.pid" :data="pid_options" :disabled="pidDisabled" filterable change-on-select trigger="hover"></Cascader>
+                        </FormItem>
+                        <FormItem label="菜单类型" prop="menu_type">
+                            <RadioGroup v-model="formItem.menu_type">
+                                <Radio label="1">普通三级菜单</Radio>
+                                <Radio label="2">单页菜单</Radio>
+                                <Radio label="3">外链</Radio>
+                            </RadioGroup>
+                        </FormItem>
+                        <FormItem label="路径" prop="url">
+                            <Input v-model.trim="formItem.url" placeholder=""></Input>
+                        </FormItem>
+                        <FormItem label="模块" prop="module">
+                            <Input v-model.trim="formItem.module" placeholder=""></Input>
+                        </FormItem>
+                        <FormItem label="所属菜单" prop="menu">
+                            <Input v-model.trim="formItem.menu" placeholder=""></Input>
+                        </FormItem>
+                        <FormItem label="图标" prop="menu_icon">
+                            <Input v-model.trim="formItem.menu_icon" placeholder=""></Input>
+                        </FormItem>
+                        <FormItem label="状态">
+                            <i-switch v-model="formItem.status" size="large">
+                                <span slot="open">启用</span>
+                                <span slot="close">禁用</span>
+                            </i-switch>
+                        </FormItem>
+                    </Form>
+                </div>
+                <div class="min-form-footer" style="padding-top: 10px;">
+                    <Button type="primary" :loading="loading" @click.native.prevent="handleSubmit('form')">确定</Button>
+                    <Button type="ghost" style="margin-left: 8px" @click="cancelMinForm">取消</Button>
+                </div>
+            </div>
+        </div>
+
         <Card>
             <p slot="title">
                 菜单管理
             </p>
+            <Button slot="extra" type="primary" @click="addMenu()"><Icon type="android-add-circle"></Icon> 新增</Button>
             <div>
                 <Row>
                     <Col span="24">
-                        <Tree :data="dataTree" show-checkbox multiple></Tree>
+                    <Tree :data="dataTree" ref="tree" show-checkbox multiple :render="renderContent"></Tree>
                     </Col>
                 </Row>
             </div>
@@ -16,10 +73,10 @@
     </Row>
 
     <Row class="m-t-10">
-        <Alert type="success" show-icon>
-            感谢信
-            <p slot="desc">在这里特别鸣谢 <a href="https://github.com/honraytech/VueThink" target="_blank">VueThink</a>、<a href="https://github.com/PanJiaChen/vue-element-admin" target="_blank">VueElementAdmin</a> 和 <a href="https://github.com/iview/iview-admin" target="_blank">IViewAdmin</a>                等开源的基础框架，使得我们才能够站在巨人的肩膀上腾飞。</p>
-        </Alert>
+        <ButtonGroup shape="circle">
+            <Button type="primary" icon="eye" @click="statusMany('enable')">启用</Button>
+            <Button type="primary" icon="eye-disabled" @click="statusMany('disable')">禁用</Button>
+        </ButtonGroup>
     </Row>
 </div>
 </template>

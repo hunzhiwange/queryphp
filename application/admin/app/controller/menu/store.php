@@ -26,9 +26,9 @@ class store extends aaction
     public function run(service $oService)
     {
         $mixResult = $oService->run($this->data());
-        return [
-            'message' => '菜单保存成功'
-        ];
+        $mixResult = $mixResult->toArray();
+        $mixResult['message'] = '菜单保存成功';
+        return $mixResult;
     }
 
     /**
@@ -44,6 +44,7 @@ class store extends aaction
             'pid',
             'title|trim',
             'url|trim',
+            'status',
             'menu_type|intval',
             'menu_icon|trim'
         ]);

@@ -53,6 +53,7 @@ class update extends aaction
             'pid',
             'title|trim',
             'url|trim',
+            'status',
             'menu_type|intval',
             'menu_icon|trim'
         ]);

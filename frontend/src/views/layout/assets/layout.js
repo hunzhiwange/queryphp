@@ -36,10 +36,8 @@ export default {
             img_logo: img_logo,
             img_mini_logo: img_mini_logo,
             shrink: false,
-
             isFullScreen: false,
             openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
-
             username: '',
             topMenu: [],
             childMenu: [],
@@ -91,7 +89,6 @@ export default {
             if (pathArr.length >= 2) {
                 this.$store.commit('addOpenSubmenu', pathArr[1].name);
             }
-            //this.userName = Cookies.get('user');
             let messageCount = 3;
             this.messageCount = messageCount.toString();
             this.checkTag(this.$route.name);

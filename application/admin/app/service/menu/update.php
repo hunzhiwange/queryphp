@@ -130,6 +130,7 @@ class update
             'pid' => intval($aMenu['pid']),
             'title' => $aMenu['title'],
             'url' => $aMenu['url'],
+            'status' => $aMenu['status'] === true ? 'enable' : 'disable',
             'menu_type' => intval($aMenu['menu_type']),
             'menu_icon' => $aMenu['menu_icon']
         ];
