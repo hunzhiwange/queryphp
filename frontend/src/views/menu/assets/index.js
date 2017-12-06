@@ -41,9 +41,9 @@ export default {
     methods: {
         renderContent(h, {root, node, data}) {
             const status = data.status == 'enable'
-            return (<span style='display: inline-block; width: 100%;'>
-                <span>{data.title}</span>
-                <span style='display: inline-block;float: right;margin-right: 32px;'>
+            return (<span class='tree-item' style='display: inline-block; width: 100%;'>
+                <span class='tree-item-title'>{data.title}</span>
+                <span class='tree-item-operate' style='display: inline-block;float: right;margin-right: 32px;'>
                     <i-button icon='plus-circled' type='default' shape="circle" size='small' style='margin-right: 8px;' on-click={() => this.append(root, node, data)}>{__('子菜单')}</i-button>
                     <i-button icon='edit' type='default' shape="circle" size='small' style='margin-right: 8px;' on-click={() => this.edit(root, node, data)}>{__('修改')}</i-button>
                     <i-button icon={status
@@ -61,8 +61,8 @@ export default {
                                 ? __('禁用')
                                 : __('启用')
                         }</i-button>
-                    <dropdown on-on-click={(name) => this[name](root, node, data)}>
-                        <i-button icon='more' type='text' size='small'></i-button>
+                    <dropdown on-on-click={(name) => this[name](root, node, data)} placement="bottom-end">
+                        <i-button icon='more' type='default' shape="circle" size='small'></i-button>
                         <dropdownMenu slot="list">
                             <dropdownItem name="top">
                                 <icon type='android-arrow-dropup-circle'></icon> {__('置顶')}</dropdownItem>
@@ -147,7 +147,7 @@ export default {
             })
         },
         remove(root, node, nodeData) {
-            if (node.children) {
+            if (node.children && node.children.length > 0) {
                 return
             }
 

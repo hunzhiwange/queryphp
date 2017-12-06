@@ -1,5 +1,5 @@
 <template>
-<div class="dashboard-page">
+<div class="menu-page">
     <Row>
         <div class="min-form" v-show="minForm">
             <div class="min-form-inner">
@@ -70,4 +70,5 @@
 </div>
 </template>
 
+<style lang="less" src="./assets/index.less"></style>
 <script src="./assets/index.js"></script>
