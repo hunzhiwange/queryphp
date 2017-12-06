@@ -29,7 +29,7 @@ class destroy extends aaction
         try {
             $mixResult = $oService->run($this->id());
             return [
-                'message' => '菜单删除成功'
+                'message' => __('菜单删除成功')
             ];
         } catch (destroy_failed $oE) {
             return [

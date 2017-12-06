@@ -41,10 +41,7 @@ class index
      */
     public function run()
     {
-        $arrResult = [];
-        $arrResult['menu'] = $this->parseMenuList($objMenu = $this->oRepository->all());
-        $arrResult['status'] = $this->parseStatus($objMenu);
-        return $arrResult;
+        return $this->parseMenuList($objMenu = $this->oRepository->all());
     }
 
     /**
@@ -56,21 +53,6 @@ class index
     protected function parseMenuList($objMenu)
     {
         return $this->createTree($objMenu)->forList();
-    }
-
-    /**
-     * 获取状态对比
-     *
-     * @param \queryyetsimple\support\collection $objMenu
-     * @return array
-     */
-    protected function parseStatus($objMenu)
-    {
-        $arrStatus = [];
-        foreach ($objMenu as $objValue) {
-            $arrStatus[$objValue['id']] = $objValue['status'];
-        }
-        return $arrStatus;
     }
 
     /**

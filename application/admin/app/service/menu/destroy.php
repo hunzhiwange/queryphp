@@ -88,7 +88,7 @@ class destroy
     protected function checkChildren($intId)
     {
         if ($this->oRepository->hasChildren($intId)) {
-            throw new destroy_failed('菜单包含子菜单，无法删除');
+            throw new destroy_failed(__('菜单包含子菜单，无法删除'));
         }
     }
 }

@@ -27,7 +27,7 @@ class store extends aaction
     {
         $mixResult = $oService->run($this->data());
         $mixResult = $mixResult->toArray();
-        $mixResult['message'] = '菜单保存成功';
+        $mixResult['message'] = __('菜单保存成功');
         return $mixResult;
     }
 

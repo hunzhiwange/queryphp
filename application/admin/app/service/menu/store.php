@@ -55,8 +55,7 @@ class store
      */
     protected function entity(array $aMenu)
     {
-        $mixSibling = $this->oRepository->siblingNodeBySort(intval($aMenu['pid']));
-        $aMenu['sort'] = $mixSibling ? $mixSibling->sort-1 : 500;
+        $aMenu['sort'] = $this->parseSiblingSort($aMenu['pid']);
         return new entity($this->data($aMenu));
     }
 
@@ -95,5 +94,17 @@ class store
         }
 
         return $intPid;
+    }
+
+    /**
+     * 分析兄弟节点最靠下面的排序值
+     *
+     * @param int $nPid
+     * @return int
+     */
+    protected function parseSiblingSort($nPid)
+    {
+        $mixSibling = $this->oRepository->siblingNodeBySort($nPid);
+        return $mixSibling ? $mixSibling->sort-1 : 500;
     }
 }

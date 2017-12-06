@@ -1,27 +1,16 @@
 <template>
 <div class="dashboard-page">
     <Row>
-        <div class="min-form" v-show="minForm" style="    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;    z-index: 300;
-    display: block;">
-            <div class="min-form-inner" style="background: #fff;
-    min-height: 100px;
-    padding: 20px 30px;">
-                <legend style="font-size: 16px;
-    border: 0;
-    color: #415161;">新增菜单</legend>
-                <div class="min-form-body" style="max-height: 678px;    margin: 20px 0;
-    min-height: 100px;
-    max-height: calc(100% - 100px);
-    overflow: auto;">
+        <div class="min-form" v-show="minForm">
+            <div class="min-form-inner">
+                <legend>新增菜单</legend>
+                <div class="min-form-body">
                     <Form ref="form" :rules="rules" :model="formItem" :label-width="110">
                         <FormItem label="标题" prop="title">
                             <Input v-model.trim="formItem.title" placeholder=""></Input>
                         </FormItem>
                         <FormItem label="上级菜单" prop="pid">
-                            <Cascader v-model="formItem.pid" :data="pid_options" :disabled="pidDisabled" filterable change-on-select trigger="hover"></Cascader>
+                            <Cascader v-model="formItem.pid" :data="pidOptions" :disabled="pidDisabled" filterable change-on-select></Cascader>
                         </FormItem>
                         <FormItem label="菜单类型" prop="menu_type">
                             <RadioGroup v-model="formItem.menu_type">
@@ -50,9 +39,9 @@
                         </FormItem>
                     </Form>
                 </div>
-                <div class="min-form-footer" style="padding-top: 10px;">
+                <div class="min-form-footer">
                     <Button type="primary" :loading="loading" @click.native.prevent="handleSubmit('form')">确定</Button>
-                    <Button type="ghost" style="margin-left: 8px" @click="cancelMinForm">取消</Button>
+                    <Button type="ghost" style="margin-left: 8px;" @click="cancelMinForm">取消</Button>
                 </div>
             </div>
         </div>
@@ -81,5 +70,5 @@
 </div>
 </template>
 
-<script src="./index.js"></script>
-<style src="./index.css"></style>
+<script src="./assets/index.js"></script>
+<style src="./assets/index.css"></style>

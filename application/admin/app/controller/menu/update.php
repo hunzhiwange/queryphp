@@ -29,7 +29,7 @@ class update extends aaction
         try {
             $mixResult = $oService->run($this->data());
             return [
-                'message' => '菜单更新成功'
+                'message' => __('菜单更新成功')
             ];
         } catch (update_failed $oE) {
             return [

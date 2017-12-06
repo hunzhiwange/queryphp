@@ -58,15 +58,16 @@ class update
 
         $aMenu['pid'] = $this->parseParentId($aMenu['pid']);
         if ($aMenu['id'] == $aMenu['pid']) {
-            throw new update_failed('菜单父级不能为自己');
+            throw new update_failed(__('菜单父级不能为自己'));
         }
 
         if ($this->createTree()->hasChildren($aMenu['id'], [
             $aMenu['pid']
         ])) {
-            throw new update_failed('菜单父级不能为自己的子菜单');
+            throw new update_failed(__('菜单父级不能为自己的子菜单'));
         }
 
+        $aMenu['sort'] = $this->parseSiblingSort($aMenu['pid']);
         $objMenu->forceProps($this->data($aMenu));
 
         return $objMenu;
@@ -128,6 +129,7 @@ class update
             'menu' => $aMenu['menu'],
             'module' => $aMenu['module'],
             'pid' => intval($aMenu['pid']),
+            'sort' => intval($aMenu['sort']),
             'title' => $aMenu['title'],
             'url' => $aMenu['url'],
             'status' => $aMenu['status'] === true ? 'enable' : 'disable',
@@ -139,8 +141,7 @@ class update
     /**
      * 分析父级数据
      *
-     * @param
-     *            array $aPid
+     * @param array $aPid
      * @return int
      */
     protected function parseParentId(array $aPid)
@@ -151,5 +152,17 @@ class update
         }
 
         return $intPid;
+    }
+
+    /**
+     * 分析兄弟节点最靠下面的排序值
+     *
+     * @param int $nPid
+     * @return int
+     */
+    protected function parseSiblingSort($nPid)
+    {
+        $mixSibling = $this->oRepository->siblingNodeBySort($nPid);
+        return $mixSibling ? $mixSibling->sort-1 : 500;
     }
 }
