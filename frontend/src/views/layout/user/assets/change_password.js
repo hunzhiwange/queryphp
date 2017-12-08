@@ -69,14 +69,12 @@ export default {
                 if (pass) {
                     this.loading = true
                     this.apiPost('user/change_password', this.form).then((res) => {
-                        this.handelResponse(res, (data) => {
-                            _g.success(res.message)
-                            setTimeout(() => {
-                                this.$emit('logout')
-                            }, 1000)
-                        }, () => {
-                            this.loading = !this.loading
-                        })
+                        _g.success(res.message)
+                        setTimeout(() => {
+                            this.$emit('logout')
+                        }, 1000)
+                    }, (res) => {
+                        this.loading = !this.loading
                     })
                 }
             })
@@ -86,7 +84,7 @@ export default {
         }
     },
     created() {
-        this.form.auth_key = Lockr.get('authKey')
+        this.form.auth_key = localStorage.getItem('authKey')
     },
     mixins: [http]
 }

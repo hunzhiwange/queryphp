@@ -76,7 +76,7 @@ export default {
 
             let path = ''
             let themeLink = document.querySelector('link[name="theme"]')
-            let userName = Lockr.get('userInfo').name
+            let userName = JSON.parse(localStorage.getItem('userInfo')).name
 
             if (localStorage.theme) {
                 let themeList = JSON.parse(localStorage.theme)
@@ -130,7 +130,7 @@ export default {
         } else {
             stylePath = 'dist/'
         }
-        let name = Lockr.get('userInfo').name
+        let name = JSON.parse(localStorage.getItem('userInfo')).name
         if (localStorage.theme) {
             let hasThisUser = JSON.parse(localStorage.theme).some(item => {
                 if (item.userName === name) {

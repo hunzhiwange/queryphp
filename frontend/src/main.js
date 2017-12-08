@@ -7,7 +7,6 @@ import router from './router'
 import {appRouter} from './router/router'
 import store from './store'
 import * as filters from './filters' // 全局filter
-import Lockr from 'lockr'
 import _ from 'lodash'
 import axios from 'axios'
 import Cookies from 'js-cookie'
@@ -19,10 +18,10 @@ import './permission' // 权限
 import 'assets/css/global.css'
 import 'assets/css/base.css'
 
-axios.defaults.baseURL = BASE_API + '/admin/'
-axios.defaults.timeout = 1000 * 15
-axios.defaults.headers.authKey = Lockr.get('authKey')
-axios.defaults.headers['Content-Type'] = 'application/json'
+//axios.defaults.baseURL = BASE_API + '/admin/'
+//axios.defaults.timeout = 1000 * 15
+//axios.defaults.headers.authKey = localStorage.getItem('authKey')
+///axios.defaults.headers['Content-Type'] = 'application/json'
 
 Vue.use(iView)
 Vue.use(VueI18n)
@@ -50,8 +49,8 @@ String.prototype.i18n = function() {
     return ''
 }
 
-const bus = new Vue()
-window.bus = bus
+//const bus = new Vue()
+//window.bus = bus
 window._g = _g
 window.store = store
 window.BASE_API = BASE_API
@@ -61,12 +60,11 @@ window._ = _
 // 语言包
 //window.__ = window.gettext = gettext
 
-window.Lockr = Lockr
 window.router = router
 window.Cookies = Cookies
 window.moment = moment
 
-new Vue({
+window.bus = new Vue({
     el: '#app',
     router,
     store,

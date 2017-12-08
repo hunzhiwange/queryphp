@@ -13,16 +13,6 @@ const commonFn = {
     needRefresh(vm) {
         return vm.$route.query.refresh == 'page'
     },
-    closeGlobalLoading() {
-        setTimeout(() => {
-            store.dispatch('showLoading', false)
-        }, 0)
-    },
-    openGlobalLoading() {
-        setTimeout(() => {
-            store.dispatch('showLoading', true)
-        }, 0)
-    },
     cloneJson(obj) {
         return JSON.parse(JSON.stringify(obj))
     },
@@ -58,11 +48,11 @@ const commonFn = {
     },
     getHasRule(val) {
         const moduleRule = 'admin'
-        let userInfo = Lockr.get('userInfo')
+        let userInfo = JSON.parse(localStorage.getItem('userInfo'))
         if (userInfo.id == 1) {
             return true
         } else {
-            let authList = moduleRule + Lockr.get('authList')
+            let authList = moduleRule + JSON.parse(localStorage.getItem('authList'))
             return _.includes(authList, val)
         }
     }

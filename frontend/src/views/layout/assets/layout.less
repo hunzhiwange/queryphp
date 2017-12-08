@@ -6,6 +6,16 @@ html {
     overflow: hidden;
 }
 
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .3s
+}
+
+.fade-enter,
+.fade-leave-active {
+    opacity: 0
+}
+
 .lock-screen-back {
     border-radius: 50%;
     z-index: -1;

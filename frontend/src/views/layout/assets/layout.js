@@ -38,15 +38,6 @@ export default {
             shrink: false,
             isFullScreen: false,
             openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
-            username: '',
-            topMenu: [],
-            childMenu: [],
-            menuData: [],
-            hasChildMenu: false,
-            menu: null,
-            module: null,
-            activeIndex: '1',
-            activeIndex2: '1',
             dialogVisible: false,
             informationData: {
                 nikename: '',
@@ -80,6 +71,9 @@ export default {
         },
         mesCount () {
             return this.$store.state.app.messageCount;
+        },
+        username() {
+            return this.$store.state.user.users.name
         }
     },
     methods: {
@@ -109,22 +103,18 @@ export default {
             })
         },
         changePasswordLogout(){
-            _g.openGlobalLoading()
             let data = {
-                authkey: Lockr.get('authKey')
+                authkey: localStorage.getItem('authKey')
             }
             this.apiPost('user/logout', data).then((res) => {
-                _g.closeGlobalLoading()
-                this.handelResponse(res, (data) => {
-                    Lockr.rm('menus')
-                    Lockr.rm('authKey')
-                    Lockr.rm('authList')
-                    Lockr.rm('userInfo')
-                    _g.success(res.message)
-                    setTimeout(() => {
-                        router.replace('/login')
-                    }, 1500)
-                })
+                localStorage.removeItem('menus')
+                localStorage.removeItem('authKey')
+                localStorage.removeItem('authList')
+                localStorage.removeItem('userInfo')
+                _g.success(res.message)
+                setTimeout(() => {
+                    router.replace('/login')
+                }, 1500)
             })
         },
         changePassword() {
@@ -162,9 +152,6 @@ export default {
             return true;
         },
         fullscreenChange (isFullScreen) {
-        },
-        getUsername() {
-            this.username = Lockr.get('userInfo').name
         }
     },
     watch: {
@@ -186,22 +173,24 @@ export default {
     },
     created () {
         // 显示打开的页面的列表
-        this.$store.commit('setOpenedList');
+       // this.$store.commit('setOpenedList');
+        this.$store.dispatch('loginStorage')
 
-        let authKey = Lockr.get('authKey')
+        return
+
+        let authKey = localStorage.getItem('authKey')
         if (!authKey) {
-            _g.warning(__('未登录'))
             setTimeout(() => {
                 router.replace('/login')
             }, 1500)
             return
         }
         this.getUsername()
-        let menus = Lockr.get('menus')
+        let menus = JSON.parse(localStorage.getItem('menus'))
         this.menu = this.$route.meta.menu
         this.module = this.$route.meta.module
         this.topMenu = menus
-        let userInfo = Lockr.get('userInfo')
+        let userInfo = JSON.parse(localStorage.getItem('userInfo'))
         this.informationData.nikename = userInfo.nikename
         this.informationData.email = userInfo.email
         this.informationData.mobile = userInfo.mobile

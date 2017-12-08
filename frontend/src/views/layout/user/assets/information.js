@@ -48,16 +48,14 @@ export default {
                 if (pass) {
                     this.loading = true
                     this.apiPost('user/update_info', this.form).then((res) => {
-                        this.handelResponse(res, (data) => {
-                            _g.success(res.message)
-                            setTimeout(() => {
-                                this.loading = !this.loading
-                                this.cancel()
-                            }, 1000)
-                        }, () => {
+                        _g.success(res.message)
+                        setTimeout(() => {
+                            this.loading = !this.loading
+                            this.cancel()
+                        }, 1000)
+                    }, (res) => {
                             this.loading = !this.loading
                         })
-                    })
                 }
             })
         },

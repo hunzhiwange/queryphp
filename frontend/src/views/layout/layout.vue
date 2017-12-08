@@ -77,7 +77,9 @@
                 </div>
             </Row>
             <keep-alive :include="cachePage">
-                <router-view></router-view>
+                <transition name="fade" mode="out-in" appear>
+                    <router-view></router-view>
+                </transition>
             </keep-alive>
         </div>
     </div>

@@ -79,14 +79,14 @@ export default {
                         data.remember_me = 0
                     }
                     this.apiPost('login/check', data).then((res) => {
-                        if (res.code != 200) {
-                            this.loading = !this.loading
-                            this.handleError(res)
-                        } else {
-                            this.refreshSeccode()
-                            this.resetCommonData(res.data)
-                            _g.success(res.message)
-                        }
+                        _g.success(res.message)
+                        this.refreshSeccode()
+                        this.$store.dispatch('login', res.data)
+                        setTimeout(() => {
+                            router.replace('/')
+                        }, 1000)
+                    },(res) => {
+                        this.loading = !this.loading
                     })
                 } else {
                     return false

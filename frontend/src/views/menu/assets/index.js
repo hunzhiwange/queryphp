@@ -86,30 +86,29 @@ export default {
             this.nodeRoot = root
 
             this.apiGet('menu/' + nodeData.id + '/edit').then((res) => {
-                this.handelResponse(res, (data) => {
-                    if (!data.menu_type) {
-                        data.menu_type = 1
-                    }
-                    data.menu_type = data.menu_type.toString()
-                    data.status = data.status == 'enable'
-                        ? true
-                        : false
-                    this.formItem = data
+                let data = res.data
+                if (!data.menu_type) {
+                    data.menu_type = 1
+                }
+                data.menu_type = data.menu_type.toString()
+                data.status = data.status == 'enable'
+                    ? true
+                    : false
+                this.formItem = data
 
-                    let pidOptions = this.getArraySelect(this.dataTree)
-                    pidOptions.unshift({value: -1, label: __('根菜单')})
-                    this.pidOptions = pidOptions
-                    let parentID = this.getParentID(root, nodeData).reverse()
-                    parentID.pop()
-                    if (parentID.length == 0) {
-                        parentID = [-1]
-                    }
+                let pidOptions = this.getArraySelect(this.dataTree)
+                pidOptions.unshift({value: -1, label: __('根菜单')})
+                this.pidOptions = pidOptions
+                let parentID = this.getParentID(root, nodeData).reverse()
+                parentID.pop()
+                if (parentID.length == 0) {
+                    parentID = [-1]
+                }
 
-                    setTimeout(() => {
-                        this.pidDisabled = false
-                        this.oldEditPid = this.formItem.pid = parentID
-                    }, 0)
-                })
+                setTimeout(() => {
+                    this.pidDisabled = false
+                    this.oldEditPid = this.formItem.pid = parentID
+                }, 0)
             })
         },
         append(root, node, nodeData) {
@@ -156,20 +155,18 @@ export default {
                 content: __('确认删除该菜单?'),
                 onOk: () => {
                     this.apiDelete('menu/', nodeData.id).then((res) => {
-                        this.handelResponse(res, (data) => {
-                            _g.success(res.message)
+                        _g.success(res.message)
 
-                            const parentKey = root.find(el => el === node).parent
-                            if (parentKey !== undefined) {
-                                const parent = root.find(el => el.nodeKey === parentKey).node
-                                const index = parent.children.indexOf(nodeData)
-                                parent.children.splice(index, 1)
-                            } else {
-                                const nowNode = this.dataTree.find(el => el.nodeKey === node.nodeKey)
-                                const index = this.dataTree.indexOf(nowNode)
-                                this.dataTree.splice(index, 1)
-                            }
-                        })
+                        const parentKey = root.find(el => el === node).parent
+                        if (parentKey !== undefined) {
+                            const parent = root.find(el => el.nodeKey === parentKey).node
+                            const index = parent.children.indexOf(nodeData)
+                            parent.children.splice(index, 1)
+                        } else {
+                            const nowNode = this.dataTree.find(el => el.nodeKey === node.nodeKey)
+                            const index = this.dataTree.indexOf(nowNode)
+                            this.dataTree.splice(index, 1)
+                        }
                     })
                 },
                 onCancel: () => {}
@@ -177,10 +174,8 @@ export default {
         },
         status(nodeData, status) {
             this.apiPut('menu/enable/', nodeData.id, {status: status}).then((res) => {
-                this.handelResponse(res, (data) => {
-                    this.$set(nodeData, 'status', status)
-                    _g.success(res.message)
-                })
+                this.$set(nodeData, 'status', status)
+                _g.success(res.message)
             })
         },
         statusMany(type) {
@@ -199,12 +194,10 @@ export default {
             }
 
             this.apiPost('menu/enables', data).then((res) => {
-                this.handelResponse(res, (data) => {
-                    selected.forEach((item, key) => {
-                        this.$set(item, 'status', type)
-                    })
-                    _g.success(res.message)
+                selected.forEach((item, key) => {
+                    this.$set(item, 'status', type)
                 })
+                _g.success(res.message)
             })
         },
         top(root, node, nodeData) {
@@ -245,35 +238,33 @@ export default {
             }
 
             this.apiPut('menu/order/', nodeData.id, {type: type}).then((res) => {
-                this.handelResponse(res, (data) => {
-                    _g.success(res.message)
+                _g.success(res.message)
 
-                    if (parentKey !== undefined) {
-                        switch (type) {
-                            case 'up':
-                                parent.children = this.swapItems(parent.children, index, index - 1)
-                                break;
-                            case 'down':
-                                parent.children = this.swapItems(parent.children, index, index + 1)
-                                break;
-                            case 'top':
-                                parent.children = this.swapItems(parent.children, index, 0)
-                                break
-                        }
-                    } else {
-                        switch (type) {
-                            case 'up':
-                                this.dataTree = this.swapItems(this.dataTree, index, index - 1)
-                                break;
-                            case 'down':
-                                this.dataTree = this.swapItems(this.dataTree, index, index + 1)
-                                break;
-                            case 'top':
-                                this.dataTree = this.swapItems(this.dataTree, index, 0)
-                                break
-                        }
+                if (parentKey !== undefined) {
+                    switch (type) {
+                        case 'up':
+                            parent.children = this.swapItems(parent.children, index, index - 1)
+                            break;
+                        case 'down':
+                            parent.children = this.swapItems(parent.children, index, index + 1)
+                            break;
+                        case 'top':
+                            parent.children = this.swapItems(parent.children, index, 0)
+                            break
                     }
-                })
+                } else {
+                    switch (type) {
+                        case 'up':
+                            this.dataTree = this.swapItems(this.dataTree, index, index - 1)
+                            break;
+                        case 'down':
+                            this.dataTree = this.swapItems(this.dataTree, index, index + 1)
+                            break;
+                        case 'top':
+                            this.dataTree = this.swapItems(this.dataTree, index, 0)
+                            break
+                    }
+                }
             })
         },
         swapItems: function(arr, index1, index2) {
@@ -282,9 +273,7 @@ export default {
         },
         init: function() {
             this.apiGet('menu').then((res) => {
-                this.handelResponse(res, (data) => {
-                    this.dataTree = data
-                })
+                this.dataTree = res.data
             })
         },
         getArraySelect(data) {
@@ -315,78 +304,74 @@ export default {
         },
         saveMenu(form) {
             this.apiPost('menu', this.formItem).then((res) => {
-                this.handelResponse(res, (data) => {
-                    const addNode = {
-                        title: res.data.title,
-                        id: res.data.id,
-                        status: res.data.status
-                    }
-                    if (this.currentParentData) {
-                        let children = this.currentParentData.children || []
-                        children.push(addNode)
-                        this.$set(this.currentParentData, 'children', children)
-                        this.$set(this.currentParentData, 'expand', true)
-                    } else {
-                        this.dataTree.push(addNode)
-                    }
+                const addNode = {
+                    title: res.data.title,
+                    id: res.data.id,
+                    status: res.data.status
+                }
+                if (this.currentParentData) {
+                    let children = this.currentParentData.children || []
+                    children.push(addNode)
+                    this.$set(this.currentParentData, 'children', children)
+                    this.$set(this.currentParentData, 'expand', true)
+                } else {
+                    this.dataTree.push(addNode)
+                }
 
-                    this.loading = !this.loading
-                    this.cancelMinForm()
-                    this.handleReset(form)
+                this.loading = !this.loading
+                this.cancelMinForm()
+                this.handleReset(form)
 
-                    _g.success(res.message)
-                }, () => {
-                    this.loading = !this.loading
-                })
+                _g.success(res.message)
+            },(res) => {
+                this.loading = !this.loading
             })
         },
         updateMenu(form) {
             this.apiPut('menu/', this.formItem.id, this.formItem).then((res) => {
-                this.handelResponse(res, (data) => {
-                    const parentKey = this.formItem.pid[this.formItem.pid.length - 1]
-                    const oldParentKey = this.oldEditPid[this.oldEditPid.length - 1]
+                const parentKey = this.formItem.pid[this.formItem.pid.length - 1]
+                const oldParentKey = this.oldEditPid[this.oldEditPid.length - 1]
 
-                    if (parentKey === oldParentKey) {
-                        this.$set(this.currentParentData, 'title', this.formItem.title)
-                        this.$set(
-                            this.currentParentData, 'status', this.formItem.status
-                            ? 'enable'
-                            : 'disable')
+                if (parentKey === oldParentKey) {
+                    this.$set(this.currentParentData, 'title', this.formItem.title)
+                    this.$set(
+                        this.currentParentData, 'status', this.formItem.status
+                        ? 'enable'
+                        : 'disable')
+                } else {
+                    // new parent
+                    if (parentKey != -1) {
+                        let parent = this.nodeRoot.find(el => el.node.id === parentKey).node
+                        let children = parent.children || []
+                        children.push(this.currentParentData)
+                        this.$set(parent, 'children', children)
+                        this.$set(parent, 'expand', true)
                     } else {
-                        // new parent
-                        if (parentKey != -1) {
-                            let parent = this.nodeRoot.find(el => el.node.id === parentKey).node
-                            let children = parent.children || []
-                            children.push(this.currentParentData)
-                            this.$set(parent, 'children', children)
-                            this.$set(parent, 'expand', true)
-                        } else {
-                            this.dataTree.push(this.currentParentData)
-                        }
-
-                        // old parent
-                        if (oldParentKey != -1) {
-                            let oldParent = this.nodeRoot.find(el => el.node.id === oldParentKey).node
-                            const index = oldParent.children.indexOf(this.currentParentData)
-                            oldParent.children.splice(index, 1)
-                            this.$set(oldParent, 'children', oldParent.children)
-                            this.$set(oldParent, 'expand', false)
-                        } else {
-                            const index = this.dataTree.indexOf(this.currentParentData)
-                            this.dataTree.splice(index, 1)
-                        }
+                        this.dataTree.push(this.currentParentData)
                     }
 
-                    // 清空临时根节点数据，已无用
-                    this.nodeRoot = []
-                    this.loading = !this.loading
-                    this.cancelMinForm()
-                    this.handleReset(form)
+                    // old parent
+                    if (oldParentKey != -1) {
+                        let oldParent = this.nodeRoot.find(el => el.node.id === oldParentKey).node
+                        const index = oldParent.children.indexOf(this.currentParentData)
+                        oldParent.children.splice(index, 1)
+                        this.$set(oldParent, 'children', oldParent.children)
+                        this.$set(oldParent, 'expand', false)
+                    } else {
+                        const index = this.dataTree.indexOf(this.currentParentData)
+                        this.dataTree.splice(index, 1)
+                    }
+                }
 
-                    _g.success(res.message)
-                }, () => {
-                    this.loading = !this.loading
-                })
+                // 清空临时根节点数据，已无用
+                this.nodeRoot = []
+                this.loading = !this.loading
+                this.cancelMinForm()
+                this.handleReset(form)
+
+                _g.success(res.message)
+            },(res) => {
+                this.loading = !this.loading
             })
         },
         handleReset(form) {

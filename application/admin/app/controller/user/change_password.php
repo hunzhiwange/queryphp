@@ -2,7 +2,6 @@
 // (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\controller\user;
 
-use Exception;
 use queryyetsimple\request;
 use admin\app\controller\aaction;
 use admin\app\service\user\change_password as service;

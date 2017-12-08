@@ -5,15 +5,6 @@ import Vue from 'vue'
 
 const app = {
     state: {
-        showLeftMenu: true,
-        globalLoading: true,
-        menus: [],
-        rules: [],
-        users: {},
-        userGroups: [],
-        organizes: [],
-        visitedViews: [],
-
         cachePage: [],
         lang: 'zh-CN',
         isFullScreen: false,
@@ -44,27 +35,6 @@ const app = {
         dontCache: ['text-editor', 'artical-publish'] // 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
     },
     mutations: {
-        showLeftMenu(state, status) {
-            state.showLeftMenu = status
-        },
-        showLoading(state, status) {
-            state.globalLoading = status
-        },
-        setMenus(state, menus) {
-            state.menus = menus
-        },
-        setRules(state, rules) {
-            state.rules = rules
-        },
-        setUsers(state, users) {
-            state.users = users
-        },
-        setUserGroups(state, userGroups) {
-            state.userGroups = userGroups
-        },
-        setOrganizes(state, organizes) {
-            state.organizes = organizes
-        },
         setTagsList(state, list) {
             state.tagsList.push(...list);
         },
