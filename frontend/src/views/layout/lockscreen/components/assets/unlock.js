@@ -1,5 +1,5 @@
-import Cookies from 'js-cookie'
 import http from '@/utils/http'
+import { unlock } from '@/utils/auth'
 
 export default {
     name: 'Unlock',
@@ -42,7 +42,7 @@ export default {
                     this.avatorLeft = '0px'
                     this.inputLeft = '400px'
                     this.password = ''
-                    Cookies.set('locking', '0')
+                    unlock()
                     this.$emit('on-unlock')
                 }else {
                     _g.warning(res.message);

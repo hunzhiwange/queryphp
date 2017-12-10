@@ -48,6 +48,7 @@ export default {
                 ],
                 confirm_pwd: [
                     {
+                        required: true,
                         validator: validateConfirmPassword,
                         trigger: 'blur'
                     }, {
@@ -84,7 +85,7 @@ export default {
         }
     },
     created() {
-        this.form.auth_key = localStorage.getItem('authKey')
+        this.form.auth_key = this.$store.state.user.token
     },
     mixins: [http]
 }

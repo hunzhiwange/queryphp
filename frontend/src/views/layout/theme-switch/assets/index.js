@@ -1,5 +1,3 @@
-import Cookies from 'js-cookie'
-
 export default {
     name: 'themeSwitch',
     data() {
@@ -130,7 +128,7 @@ export default {
         } else {
             stylePath = 'dist/'
         }
-        let name = JSON.parse(localStorage.getItem('userInfo')).name
+        let name = this.$store.state.user.users.name
         if (localStorage.theme) {
             let hasThisUser = JSON.parse(localStorage.theme).some(item => {
                 if (item.userName === name) {

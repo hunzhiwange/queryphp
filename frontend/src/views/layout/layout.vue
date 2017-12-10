@@ -84,7 +84,7 @@
         </div>
     </div>
     <changePassword ref="changePassword" @logout="changePasswordLogout"></changePassword>
-    <information ref="information" :nikename="informationData.nikename" :email="informationData.email" :mobile="informationData.mobile"></information>
+    <information ref="information"></information>
 </div>
 </template>
 

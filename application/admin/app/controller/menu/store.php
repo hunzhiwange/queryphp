@@ -13,6 +13,13 @@ use admin\app\service\menu\store as service;
  * @package $$
  * @since 2017.10.12
  * @version 1.0
+ * @menu
+ * @title 保存
+ * @name
+ * @path
+ * @component
+ * @icon
+ * @button
  */
 class store extends aaction
 {
@@ -39,14 +46,17 @@ class store extends aaction
     protected function data()
     {
         return request::alls([
-            'menu|trim',
-            'module|trim',
             'pid',
             'title|trim',
-            'url|trim',
+            'name|trim',
+            'path|trim',
             'status',
-            'menu_type|intval',
-            'menu_icon|trim'
+            'component|trim',
+            'icon|trim',
+            'app|trim',
+            'controller|trim',
+            'action|trim',
+            'button'
         ]);
     }
 }

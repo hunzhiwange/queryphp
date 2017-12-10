@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import global from '../utils/global'
 import iView from 'iview'
 import {routers, otherRouter, appRouter} from './router'
+import {getToken, isLock} from '../utils/auth'
 
 Vue.use(Router)
 
@@ -22,7 +23,33 @@ iView.LoadingBar.config({
 
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start()
-    next()
+
+    if(!getToken() && to.name !== 'login') {
+        next({
+            name: 'login'
+        })
+    }
+
+    else if(getToken() && to.name === 'login') {
+        next({
+            name: 'dashboard'
+        })
+    }
+
+    // 判断当前是否是锁定状态
+    else if (isLock() && to.name !== 'locking') {
+        next({
+            replace: true,
+            name: 'locking'
+        })
+    }else if(!isLock() && to.name === 'locking'){
+        next({
+            replace: true,
+            name: 'dashboard'
+        })
+    }else{
+       next()
+    }
 })
 
 //router.beforeEach((to, from, next) => {

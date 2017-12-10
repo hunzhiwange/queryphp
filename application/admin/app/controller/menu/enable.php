@@ -14,6 +14,13 @@ use admin\app\service\menu\enable as service;
  * @package $$
  * @since 2017.10.12
  * @version 1.0
+ * @menu
+ * @title 启用禁用
+ * @name
+ * @path
+ * @component
+ * @icon
+ * @button
  */
 class enable extends aaction
 {

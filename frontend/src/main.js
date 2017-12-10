@@ -5,11 +5,11 @@ import App from './app'
 import VueI18n from 'vue-i18n'
 import router from './router'
 import {appRouter} from './router/router'
+//import routerMenu from './router/menu'
 import store from './store'
 import * as filters from './filters' // 全局filter
 import _ from 'lodash'
 import axios from 'axios'
-import Cookies from 'js-cookie'
 import moment from 'moment'
 import _g from './assets/js/global'
 import extend from './assets/js/extend'
@@ -18,14 +18,43 @@ import './permission' // 权限
 import 'assets/css/global.css'
 import 'assets/css/base.css'
 
-//axios.defaults.baseURL = BASE_API + '/admin/'
-//axios.defaults.timeout = 1000 * 15
-//axios.defaults.headers.authKey = localStorage.getItem('authKey')
-///axios.defaults.headers['Content-Type'] = 'application/json'
-
 Vue.use(iView)
 Vue.use(VueI18n)
 Vue.use(extend)
+
+// let data =  [{
+//         path: '/option2222',
+//         icon: 'ios-gear',
+//         name: 'option222',
+//         title: __('设置'),
+//         component: 'layout',
+//         children: [
+//             {
+//                 path: 'menu222',
+//                 icon: '',
+//                 name: 'menu2222_index',
+//                 title: __('菜单管理'),
+//                 component: 'menu/index'
+//                 //component: importRouter('menu/index')
+//             },
+//             {
+//                 path: 'menu23333',
+//                 icon: '',
+//                 name: '324324222222222222222222222222',
+//                 title: __('菜单管理2'),
+//                 component: 'menu/index'
+//             }
+//         ]
+//     }];
+
+// if (data){
+//   //这里是防止用户手动刷新页面，整个app要重新加载,动态新增的路由，会消失，所以我们重新add一次
+//   let routes = []
+//   routerMenu(routes,data)
+//   router.addRoutes(routes)
+//   //window.sessionStorage.removeItem('isLoadNodes')
+// }
+
 
 window.axios = axios
 
@@ -56,12 +85,7 @@ window.store = store
 window.BASE_API = BASE_API
 window.ENV = ENV
 window._ = _
-
-// 语言包
-//window.__ = window.gettext = gettext
-
 window.router = router
-window.Cookies = Cookies
 window.moment = moment
 
 window.bus = new Vue({

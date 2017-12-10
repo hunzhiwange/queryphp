@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie'
 import global from '@/utils/global'
 import http from '@/utils/http'
 
@@ -38,12 +37,7 @@ export default {
             shrink: false,
             isFullScreen: false,
             openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
-            dialogVisible: false,
-            informationData: {
-                nikename: '',
-                email: '',
-                mobile: ''
-            }
+            dialogVisible: false
         };
     },
     computed: {
@@ -104,17 +98,14 @@ export default {
         },
         changePasswordLogout(){
             let data = {
-                authkey: localStorage.getItem('authKey')
+                authkey: this.$store.state.user.token
             }
             this.apiPost('user/logout', data).then((res) => {
-                localStorage.removeItem('menus')
-                localStorage.removeItem('authKey')
-                localStorage.removeItem('authList')
-                localStorage.removeItem('userInfo')
+                this.$store.dispatch('logout')
                 _g.success(res.message)
                 setTimeout(() => {
                     router.replace('/login')
-                }, 1500)
+                }, 1000)
             })
         },
         changePassword() {
@@ -172,36 +163,7 @@ export default {
         this.init();
     },
     created () {
-        // 显示打开的页面的列表
-       // this.$store.commit('setOpenedList');
         this.$store.dispatch('loginStorage')
-
-        return
-
-        let authKey = localStorage.getItem('authKey')
-        if (!authKey) {
-            setTimeout(() => {
-                router.replace('/login')
-            }, 1500)
-            return
-        }
-        this.getUsername()
-        let menus = JSON.parse(localStorage.getItem('menus'))
-        this.menu = this.$route.meta.menu
-        this.module = this.$route.meta.module
-        this.topMenu = menus
-        let userInfo = JSON.parse(localStorage.getItem('userInfo'))
-        this.informationData.nikename = userInfo.nikename
-        this.informationData.email = userInfo.email
-        this.informationData.mobile = userInfo.mobile
-        _(menus).forEach((res) => {
-            if (res.module == this.module) {
-                this.menuData = res.child
-                res.selected = true
-            } else {
-                res.selected = false
-            }
-        })
     },
     mixins: [http]
 };

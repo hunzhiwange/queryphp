@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie'
 import http from '@/utils/http'
 import validate from '@/utils/validate'
 import img_logo from '@/assets/images/logo.png'
@@ -81,6 +82,7 @@ export default {
                     this.apiPost('login/check', data).then((res) => {
                         _g.success(res.message)
                         this.refreshSeccode()
+                        res.data.keepLogin = this.isKeepLogin()
                         this.$store.dispatch('login', res.data)
                         setTimeout(() => {
                             router.replace('/')
@@ -103,21 +105,17 @@ export default {
                 }
             })
         },
-        keepLogin(event) {
-            if (event.target.tagName == 'SPAN') {
-                return;
-            }
-
+        keepLogin() {
             Cookies.set(
-                'keep_login', !this.checked
+                'keep_login', this.checked
                 ? 'T'
-                : 'F', {expires: 1})
+                : 'F', {expires: 30})
         },
         checkKeepLogin() {
-            let keepLogin = Cookies.get('keep_login')
-            this.checked = keepLogin == 'T'
-                ? true
-                : false
+            this.checked = this.isKeepLogin()
+        },
+        isKeepLogin() {
+            return Cookies.get('keep_login') === 'T'
         }
     },
     created() {

@@ -1,5 +1,5 @@
-import Cookies from 'js-cookie'
 import http from '@/utils/http'
+import { lock } from '@/utils/auth'
 
 export default {
     name: 'lockScreen',
@@ -18,14 +18,15 @@ export default {
                     lockScreenBack.style.zIndex = 10000;
                     lockScreenBack.style.boxShadow = '0 0 0 ' + this.lockScreenSize + 'px #667aa6 inset';
                     this.showUnlock = true;
-                    Cookies.set('last_page_name', this.$route.name); // 本地存储锁屏之前打开的页面以便解锁后打开
+                    // 本地存储锁屏之前打开的页面以便解锁后打开
+                    lock(this.$route.name)
                     setTimeout(() => {
                         lockScreenBack.style.transition = 'all 0s';
                         this.$router.push({
                             name: 'locking'
                         });
                     }, 800);
-                    Cookies.set('locking', '1');
+
                 }else {
                     _g.warning(res.message);
                 }

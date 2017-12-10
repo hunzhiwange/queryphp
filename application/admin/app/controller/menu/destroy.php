@@ -14,6 +14,13 @@ use admin\app\service\menu\destroy as service;
  * @package $$
  * @since 2017.10.12
  * @version 1.0
+ * @menu
+ * @title 删除
+ * @name
+ * @path
+ * @component
+ * @icon
+ * @button
  */
 class destroy extends aaction
 {

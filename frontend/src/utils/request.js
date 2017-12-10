@@ -8,7 +8,7 @@ const service = axios.create({
 
 // request 拦截器
 service.interceptors.request.use(config => {
-    let apiToken = localStorage.getItem('authKey')
+    let apiToken = bus.$store.state.user.token
     if (apiToken) {
         config.headers['authKey'] = apiToken
     }
@@ -48,7 +48,6 @@ service.interceptors.response.use(response => {
                 break
             case 103:
                 _g.warning(res.message, res.code)
-
                 setTimeout(() => {
                     router.replace('/login')
                 }, 1500)

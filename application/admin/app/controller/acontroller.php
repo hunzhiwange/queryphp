@@ -39,10 +39,10 @@ abstract class acontroller extends acontrollers
         // 验证登录状态
         $strApiToken = request::header('authKey');
         if (empty($strApiToken) || (auth::setTokenName($strApiToken) && ! ($this->arrLogin = auth::getLogin()))) {
-            //exit(json_encode([
-            //    'code' => 101,
-            //    'error' => __('登录已失效')
-            //], JSON_UNESCAPED_UNICODE));
+            exit(json_encode([
+               'code' => 101,
+               'error' => __('登录已失效')
+            ], JSON_UNESCAPED_UNICODE));
         }
 
         // 验证是否锁屏

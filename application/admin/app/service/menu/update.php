@@ -126,15 +126,18 @@ class update
     protected function data(array $aMenu)
     {
         return [
-            'menu' => $aMenu['menu'],
-            'module' => $aMenu['module'],
             'pid' => intval($aMenu['pid']),
+            'title' => trim($aMenu['title']),
+            'name' => trim($aMenu['name']),
+            'path' => trim($aMenu['path']),
             'sort' => intval($aMenu['sort']),
-            'title' => $aMenu['title'],
-            'url' => $aMenu['url'],
             'status' => $aMenu['status'] === true ? 'enable' : 'disable',
-            'menu_type' => intval($aMenu['menu_type']),
-            'menu_icon' => $aMenu['menu_icon']
+            'component' => trim($aMenu['component']),
+            'icon' => trim($aMenu['icon']),
+            'app' => trim($aMenu['app']),
+            'controller' => trim($aMenu['controller']),
+            'action' => trim($aMenu['action']),
+            'button' => $aMenu['button'] === true ? 'T' : 'F',
         ];
     }
 

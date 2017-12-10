@@ -4,15 +4,18 @@ export default {
     data() {
         return {
             formItem: {
-                id: '',
-                title: '',
+                id: null,
                 pid: [-1],
-                menu_type: '1',
-                url: '',
-                module: '',
-                menu: '',
-                menu_icon: '',
-                status: true
+                title: '',
+                name: '',
+                path: '',
+                status: true,
+                component: '',
+                icon: '',
+                app: '',
+                controller: '',
+                action: '',
+                button: false
             },
             pidOptions: [],
             oldEditPid: [],
@@ -24,18 +27,16 @@ export default {
                     required: true,
                     message: __('请输入菜单标题')
                 }],
-                menu_type: [{
-                    required: true,
-                    message: __('请选择菜单类型')
-                }],
-                module: [{
+                component: [{
                     required: true,
                     message: __('请填写菜单模块')
                 }]
             },
             dataTree: [],
             loading: false,
-            nodeRoot: []
+            nodeRoot: [],
+            loadingSynchrodata: false,
+            synchrodataReplace: false
         }
     },
     methods: {
@@ -92,6 +93,9 @@ export default {
                 }
                 data.menu_type = data.menu_type.toString()
                 data.status = data.status == 'enable'
+                    ? true
+                    : false
+                data.button = data.button == 'T'
                     ? true
                     : false
                 this.formItem = data
@@ -379,6 +383,18 @@ export default {
         },
         cancelMinForm: function() {
             this.minForm = false
+        },
+        synchrodataMenu: function(){
+            this.loadingSynchrodata = true
+            let data = {
+                replace: this.synchrodataReplace
+            }
+            this.apiPost('menu/synchrodata', data).then((res) => {
+                _g.success(res.message)
+                this.loadingSynchrodata = false
+            },(res) => {
+                this.loadingSynchrodata = false
+            })
         }
     },
     created: function() {

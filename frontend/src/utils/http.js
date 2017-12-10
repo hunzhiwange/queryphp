@@ -2,26 +2,28 @@ import service from './request'
 
 const apiMethods = {
     methods: {
-        apiGet(url, data) {
-            return this.api(url,data,'get')
+        apiGet(url, data, params) {
+            return this.api(url,data,'get', params)
         },
-        apiPost(url, data) {
-            return this.api(url,data,'post')
+        apiPost(url, data, params) {
+            return this.api(url,data,'post', params)
         },
-        apiDelete(url, id, data) {
-            return this.api(url + (id ? '/'+id : ''),data,'delete')
+        apiDelete(url, id, data, params) {
+            return this.api(url + (id ? '/'+id : ''),data,'delete', params)
         },
-        apiPut(url, id, data) {
-            return this.api(url + (id ? '/'+id : ''),data,'put')
+        apiPut(url, id, data, params) {
+            return this.api(url + (id ? '/'+id : ''),data,'put', params)
         },
-        api(url, data, type) {
+        api(url, data, type, params) {
             data = data || {}
             type = type || 'get'
+            params = params || {}
             return new Promise((resolve, reject) => {
                 service({
                     url: url,
                     method: type,
-                    params: data
+                    data: data,
+                    params: params
                 }).then((response) => {
                     resolve(response)
                 }, (response) => {

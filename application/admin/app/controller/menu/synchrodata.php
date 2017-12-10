@@ -4,44 +4,45 @@ namespace admin\app\controller\menu;
 
 use queryyetsimple\request;
 use admin\app\controller\aaction;
-use admin\app\service\menu\edit as service;
+use admin\app\service\menu\synchrodata as service;
 
 /**
- * 后台菜单编辑
+ * 后台菜单数据同步
  *
  * @author Name Your <your@mail.com>
  * @package $$
- * @since 2017.10.12
+ * @since 2017.12.09
  * @version 1.0
  * @menu
- * @title 编辑
+ * @title 数据同步
  * @name
  * @path
  * @component
  * @icon
  * @button
  */
-class edit extends aaction
+class synchrodata extends aaction
 {
 
     /**
      * 响应方法
      *
-     * @param \admin\app\service\menu\edit $oService
+     * @param \admin\app\service\menu\synchrodata $oService
      * @return mixed
      */
     public function run(service $oService)
     {
-        return $oService->run($this->id());
+        $oService->run($this->replace());
+        return ['message' => __('菜单数据同步成功')];
     }
 
     /**
-     * 编辑 ID
+     * POST 数据
      *
-     * @return int
+     * @return bollean
      */
-    protected function id()
+    protected function replace()
     {
-        return intval(request::all('args\0'));
+        return request::all('replace');
     }
 }

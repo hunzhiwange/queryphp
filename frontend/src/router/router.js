@@ -2,11 +2,13 @@
 const importRouter = require('./import_' + process.env.NODE_ENV)
 import '@/i18n'
 import layout from '../views/layout/layout'
+import routerMenu from './menu'
 
 // 不作为 layout 组件的子页面展示的页面单
 export const commonRouter = [
     {
         path: '/login',
+        name: 'login',
         title: __('登录'),
         component: importRouter('login/index')
     }, {
@@ -15,14 +17,17 @@ export const commonRouter = [
         component: importRouter('layout/lockscreen/components/locking-page')
     }, {
         path: '/403',
+        name: '403',
         title: '403 ' + __('权限不足'),
         component: importRouter('error-page/403')
     }, {
         path: '/404',
+        name: '404',
         title: '404 ' + __('页面不存在'),
         component: importRouter('error-page/404')
     }, {
         path: '/500',
+        name: '500',
         title: '500 ' + __('服务端错误'),
         component: importRouter('error-page/500')
     }
@@ -55,8 +60,7 @@ export const otherRouter = {
     ]
 }
 
-// 作为 layout 组件的子页面展示并且在左侧菜单显示的路由写在 appRouter 里
-export const appRouter = [
+let appRouterData = [
     {
         path: '/option',
         icon: 'ios-gear',
@@ -81,6 +85,21 @@ export const appRouter = [
         ]
     }
 ]
+
+
+let dataMenu = localStorage.getItem('menus')
+dataMenu = dataMenu ? JSON.parse(dataMenu) : []
+
+if (dataMenu){
+  let routes = []
+  //routerMenu(routes,dataMenu)
+  //appRouterData = appRouterData.concat(routes)
+}
+
+export const appRouter = appRouterData
+
+// 作为 layout 组件的子页面展示并且在左侧菜单显示的路由写在 appRouter 里
+//export appRouter appRouter
 
 // 所有上面定义的路由都要写在下面的 routers 里
 export const routers = [

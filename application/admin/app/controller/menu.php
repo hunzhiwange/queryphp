@@ -9,6 +9,14 @@ namespace admin\app\controller;
  * @package $$
  * @since 2017.10.12
  * @version 1.0
+ * @menu
+ * @category base-option
+ * @title 菜单管理
+ * @name
+ * @path
+ * @component
+ * @icon android-menu
+ * @button
  */
 class menu extends acontroller
 {

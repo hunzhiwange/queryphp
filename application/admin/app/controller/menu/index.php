@@ -12,6 +12,13 @@ use admin\app\service\menu\index as service;
  * @package $$
  * @since 2017.10.12
  * @version 1.0
+ * @menu
+ * @title 列表
+ * @name
+ * @path
+ * @component
+ * @icon
+ * @button
  */
 class index extends aaction
 {

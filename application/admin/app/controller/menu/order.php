@@ -14,6 +14,13 @@ use admin\domain\service\admin_menu\order as service;
  * @package $$
  * @since 2017.10.12
  * @version 1.0
+ * @menu
+ * @title 排序
+ * @name
+ * @path
+ * @component
+ * @icon
+ * @button
  */
 class order extends aaction
 {

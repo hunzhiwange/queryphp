@@ -36,7 +36,7 @@
                                     </Row>
                                 </FormItem>
                                 <FormItem>
-                                    <Checkbox v-model="checked">{{__('保持登录')}}</Checkbox>
+                                    <Checkbox v-model="checked" @on-change="keepLogin">{{__('保持登录')}}</Checkbox>
                                 </FormItem>
                                 <FormItem>
                                     <Button type="primary" :loading="loading" @click.native.prevent="handleSubmit('form')" size="large" long>{{__('登录')}}</Button>

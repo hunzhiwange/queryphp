@@ -2,9 +2,6 @@ import http from '@/utils/http'
 import validate from '@/utils/validate'
 
 export default {
-    props: [
-        'nikename', 'mobile', 'email'
-    ],
     data() {
         return {
             dialogVisible: false,
@@ -49,13 +46,21 @@ export default {
                     this.loading = true
                     this.apiPost('user/update_info', this.form).then((res) => {
                         _g.success(res.message)
+
+                        let users = this.$store.state.user.users
+                        users.nikename = this.form.nikename
+                        users.email = this.form.email
+                        users.mobile = this.form.mobile
+
+                        this.$store.dispatch('setUsers', users)
+
                         setTimeout(() => {
                             this.loading = !this.loading
                             this.cancel()
                         }, 1000)
                     }, (res) => {
-                            this.loading = !this.loading
-                        })
+                        this.loading = !this.loading
+                    })
                 }
             })
         },
@@ -64,9 +69,10 @@ export default {
         }
     },
     created() {
-        this.form.nikename = this.nikename
-        this.form.email = this.email
-        this.form.mobile = this.mobile
+        let users = this.$store.state.user.users
+        this.form.nikename = users.nikename
+        this.form.email = users.email
+        this.form.mobile = users.mobile
     },
     mixins: [http]
 }
