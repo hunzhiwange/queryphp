@@ -3,20 +3,21 @@
 namespace admin\app\controller;
 
 /**
- * 后台菜单控制器
+ * 权限控制器
  *
  * @author Name Your <your@mail.com>
  * @package $$
- * @since 2017.10.12
+ * @since 2017.12.11
  * @version 1.0
  * @menu
  * @category base-option
- * @title 菜单管理
+ * @title 权限管理
  * @name
  * @path
  * @component
- * @icon android-menu
+ * @icon ios-locked
+ * @button
  */
-class menu extends acontroller
+class rule extends acontroller
 {
 }

@@ -19,7 +19,6 @@ use admin\app\service\menu\store as service;
  * @path
  * @component
  * @icon
- * @button
  */
 class store extends aaction
 {
@@ -56,7 +55,7 @@ class store extends aaction
             'app|trim',
             'controller|trim',
             'action|trim',
-            'button'
+            'type|trim'
         ]);
     }
 }

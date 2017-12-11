@@ -52,7 +52,9 @@ class index
      */
     protected function parseMenuList($objMenu)
     {
-        return $this->createTree($objMenu)->forList();
+        return $this->createTree($objMenu)->forList(function ($arrItem) {
+            return array_merge(['id' => $arrItem['value']], $arrItem['data']);
+        });
     }
 
     /**
@@ -80,8 +82,12 @@ class index
                 $oMenu->id,
                 $oMenu->pid,
                 [
-                    $oMenu->title,
-                    $oMenu->status
+                    'title' => $oMenu->title,
+                    'status' => $oMenu->status,
+                    'app' => $oMenu->app,
+                    'controller' => $oMenu->controller,
+                    'action' => $oMenu->action,
+                    'type' => $oMenu->type
                 ]
             ];
         }

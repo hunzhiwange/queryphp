@@ -19,7 +19,6 @@ use admin\app\service\menu\synchrodata as service;
  * @path
  * @component
  * @icon
- * @button
  */
 class synchrodata extends aaction
 {

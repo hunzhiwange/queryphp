@@ -141,7 +141,7 @@ class synchrodata
      * @return void
      */
     protected function updateMenu(array $arrMenu, $booReplace) {
-        if(!$booReplace) {
+        if(!$booReplace || $arrMenu['level'] == 2) {
             return;
         }
 
@@ -158,7 +158,7 @@ class synchrodata
     {
         $objMenu = $this->mixCurrentMenu;
 
-        $objMenu->forceProps($this->data($arrMenu));
+        $objMenu->forceProps($this->dataUpdate($arrMenu));
 
         return $objMenu;
     }
@@ -178,8 +178,6 @@ class synchrodata
 
         where('action', $arrMenu['action'])->
 
-        where('level', $arrMenu['level'])->
-
         setColumns('id')->
 
         getOne();
@@ -197,11 +195,9 @@ class synchrodata
         }else{
             $arrParent = $this->oRepository->
 
-            where('level', $arrMenu['level'] -1)->
-
             where('app', $arrMenu['app'])->
 
-            where('controller', $arrMenu['level'] == 2 ? '' : $arrMenu['controller'])->
+            where('controller', $arrMenu['level'] == 2 ? '' : ($arrMenu['level'] == 3 ? $arrMenu['category'] : $arrMenu['controller']))->
 
             where('action', '')->
 
@@ -236,9 +232,9 @@ class synchrodata
                 'app' => $sApp,
                 'controller' => '',
                 'action' =>  '',
-                'button' => 'T',
                 'level' => 1,
-                'status' => 'disable'
+                'status' => 'enable',
+                'type' => 'app'
             ];
 
             $strNamespacePath = psr4::namespaces($sNamespace);
@@ -276,8 +272,8 @@ class synchrodata
                 $arrDocComment['controller'] = $sController;
                 $arrDocComment['action'] = $sAction;
                 $arrDocComment['level'] = 4;
-                $arrDocComment['button'] = 'T';
                 $arrDocComment['status'] = 'enable';
+                $arrDocComment['type'] = 'action';
                 $arrResult[] = $arrDocComment;
            } 
 
@@ -309,10 +305,12 @@ class synchrodata
             $arrDocComment = $this->formatComment ($arrDocComment);
             $arrDocComment['app'] = $sApp;
             $arrDocComment['controller'] = $sController;
+            $arrDocComment['name'] = $sController;
+            $arrDocComment['path'] = $sController;
             $arrDocComment['action'] = '';
             $arrDocComment['level'] = 3;
-            $arrDocComment['button'] = 'F';
             $arrDocComment['status'] = 'disable';
+            $arrDocComment['type'] = 'controller';
             $arrResult[] = $arrDocComment;
        } 
 
@@ -325,8 +323,8 @@ class synchrodata
                 $arrDocComment['controller'] = $sController;
                 $arrDocComment['action'] = $oMethod->getName();
                 $arrDocComment['level'] = 4;
-                $arrDocComment['button'] = 'T';
                 $arrDocComment['status'] = 'enable';
+                $arrDocComment['type'] = 'action';
                 $arrResult[] = $arrDocComment;
            } 
         }  
@@ -343,11 +341,11 @@ class synchrodata
     protected function formatComment(array $arrDocComment) {
         $arrResult = [];
 
-        $arrResult['title'] = !empty($arrDocComment ['title']) ? $arrDocComment ['title'] : (!empty($arrDocComment ['description']) ? $arrDocComment ['description'] : 'title' );
-        $arrResult['name'] = !empty($arrDocComment ['name']) ? $arrDocComment ['name'] : 'name';
-        $arrResult['path'] = !empty($arrDocComment ['path']) ? $arrDocComment ['path'] : 'path';
-        $arrResult['component'] = !empty($arrDocComment ['component']) ? $arrDocComment ['component'] : 'component';
-        $arrResult['icon'] = !empty($arrDocComment ['icon']) ? $arrDocComment ['icon'] : 'icon';
+        $arrResult['title'] = !empty($arrDocComment ['title']) ? $arrDocComment ['title'] : (!empty($arrDocComment ['description']) ? $arrDocComment ['description'] : '' );
+        $arrResult['name'] = !empty($arrDocComment ['name']) ? $arrDocComment ['name'] : '';
+        $arrResult['path'] = !empty($arrDocComment ['path']) ? $arrDocComment ['path'] : '';
+        $arrResult['component'] = !empty($arrDocComment ['component']) ? $arrDocComment ['component'] : 'layout';
+        $arrResult['icon'] = !empty($arrDocComment ['icon']) ? $arrDocComment ['icon'] : '';
         $arrResult['app'] = !empty($arrDocComment ['app']) ? $arrDocComment ['app'] : '';
         $arrResult['controller'] = !empty($arrDocComment ['controller']) ? $arrDocComment ['controller'] : '';
         $arrResult['action'] = !empty($arrDocComment ['action']) ? $arrDocComment ['action'] : '';
@@ -365,15 +363,18 @@ class synchrodata
     protected function mergeCommentResult(array $arrNewDocComment) {
         foreach($arrNewDocComment as $arrItem){
             if($arrItem['level'] == 3){
-                $strCategory = $arrItem['category'];
-                unset($arrItem['category']);
                 $this->arrResultLevel3[] = $arrItem;
 
-                if($strCategory){
-                    $arrItem['title'] = $strCategory;
-                    $arrItem['name'] = $strCategory;
+                if($arrItem['category']){
+                    $arrItem['title'] = $arrItem['category'];
+                    $arrItem['name'] = $arrItem['category'];
+                    $arrItem['path'] = $arrItem['category'];
+                    $arrItem['controller'] = $arrItem['category'];
+                    $arrItem['category'] = '';
                     $arrItem['level'] = 2;
-                    $this->arrResultLevel2[$strCategory] = $arrItem;
+                    $arrItem['icon'] = '';
+                    $arrItem['type'] = 'category';
+                    $this->arrResultLevel2[$arrItem['category']] = $arrItem;
                 }
             }elseif($arrItem['level'] == 4){
                 $this->arrResultLevel4[] = $arrItem;
@@ -391,18 +392,37 @@ class synchrodata
     {
         return [
             'pid' => intval($aMenu['pid']),
-            'title' => trim($aMenu['title']),
+            'title' => !empty($aMenu['title']) ? trim($aMenu['title']) : '',
             'name' => trim($aMenu['name']),
             'path' => trim($aMenu['path']),
             'sort' => 500,
-            'status' => 'T',
+            'status' => isset($aMenu['status']) && $aMenu['status'] === 'enable' ? 'enable' : 'disable',
             'component' => trim($aMenu['component']),
             'icon' => trim($aMenu['icon']),
             'app' => trim($aMenu['app']),
             'controller' => trim($aMenu['controller']),
             'action' => trim($aMenu['action']),
-            'button' => $aMenu['button'] === 'T' ? 'T' : 'F',
-            'level' => $aMenu['level'],
+            'category' => !empty($aMenu['category']) ? $aMenu['category'] : '',
+            'type' => $aMenu['type']
+        ];
+    }
+
+    /**
+     * 组装 POST 更新数据
+     *
+     * @param array $aMenu
+     * @return array
+     */
+    protected function dataUpdate(array $aMenu)
+    {
+        return [
+            'pid' => intval($aMenu['pid']),
+            'title' => trim($aMenu['title']),
+            'name' => trim($aMenu['name']),
+            'path' => trim($aMenu['path']),
+            'component' => trim($aMenu['component']),
+            'icon' => trim($aMenu['icon']),
+            'category' => !empty($aMenu['category']) ? $aMenu['category'] : ''
         ];
     }
 

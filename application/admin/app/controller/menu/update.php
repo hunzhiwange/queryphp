@@ -20,7 +20,6 @@ use admin\app\service\menu\update as service;
  * @path
  * @component
  * @icon
- * @button
  */
 class update extends aaction
 {
@@ -65,7 +64,7 @@ class update extends aaction
             'app|trim',
             'controller|trim',
             'action|trim',
-            'button'
+            'type|trim'
         ]);
     }
 }

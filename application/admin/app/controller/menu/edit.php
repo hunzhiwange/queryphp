@@ -19,7 +19,6 @@ use admin\app\service\menu\edit as service;
  * @path
  * @component
  * @icon
- * @button
  */
 class edit extends aaction
 {

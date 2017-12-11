@@ -20,7 +20,6 @@ use admin\domain\service\admin_menu\order as service;
  * @path
  * @component
  * @icon
- * @button
  */
 class order extends aaction
 {

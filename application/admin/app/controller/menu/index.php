@@ -18,7 +18,6 @@ use admin\app\service\menu\index as service;
  * @path
  * @component
  * @icon
- * @button
  */
 class index extends aaction
 {

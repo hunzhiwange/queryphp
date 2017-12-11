@@ -137,7 +137,7 @@ class update
             'app' => trim($aMenu['app']),
             'controller' => trim($aMenu['controller']),
             'action' => trim($aMenu['action']),
-            'button' => $aMenu['button'] === true ? 'T' : 'F',
+            'type' => trim($aMenu['type'])
         ];
     }
 

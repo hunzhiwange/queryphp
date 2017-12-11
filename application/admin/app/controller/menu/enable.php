@@ -20,7 +20,6 @@ use admin\app\service\menu\enable as service;
  * @path
  * @component
  * @icon
- * @button
  */
 class enable extends aaction
 {

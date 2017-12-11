@@ -20,7 +20,6 @@ use admin\app\service\menu\destroy as service;
  * @path
  * @component
  * @icon
- * @button
  */
 class destroy extends aaction
 {

@@ -36,17 +36,20 @@ class tree
     /**
      * 树结构节点列表
      *
+     * @param callable $cal
      * @return array
      */
-    public function forList()
+    public function forList($cal = null)
     {
-        return $this->oTree->toArray(function ($arrItem) {
-            return [
-                'id' => $arrItem['value'],
-                'title' => $arrItem['data'][0],
-                'status' => $arrItem['data'][1]
-            ];
-        });
+        if($cal === null) {
+            $cal = function ($arrItem) {
+                return [
+                    'id' => $arrItem['value'],
+                    'title' => $arrItem['data']
+                ];
+            };
+        }
+        return $this->oTree->toArray($cal);
     }
 
     /**
