@@ -21,8 +21,8 @@
 </template>
 <script>
     import Cell from './expand';
-    import Icon from '../icon/icon.vue';
-    import Checkbox from '../checkbox/checkbox.vue';
+    import Icon from 'iview/src/components/icon/icon.vue';
+    import Checkbox from 'iview/src/components/checkbox/checkbox.vue';
 
     export default {
         name: 'TableCell',

@@ -58,13 +58,13 @@
     </table>
 </template>
 <script>
-    import CheckboxGroup from '../checkbox/checkbox-group.vue';
-    import Checkbox from '../checkbox/checkbox.vue';
-    import Poptip from '../poptip/poptip.vue';
-    import iButton from '../button/button.vue';
+    import CheckboxGroup from 'iview/src/components/checkbox/checkbox-group.vue';
+    import Checkbox from 'iview/src/components/checkbox/checkbox.vue';
+    import Poptip from 'iview/src/components/poptip/poptip.vue';
+    import iButton from 'iview/src/components/button/button.vue';
     import renderHeader from './header';
     import Mixin from './mixin';
-    import Locale from '../../mixins/locale';
+    import Locale from 'iview/src/mixins/locale';
 
     export default {
         name: 'TableHead',

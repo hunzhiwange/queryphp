@@ -95,15 +95,16 @@
         </Spin>
     </div>
 </template>
+<style lang="less" src="./table.less"></style>
 <script>
     import tableHead from './table-head.vue';
     import tableBody from './table-body.vue';
-    import Spin from '../spin/spin.vue';
-    import { oneOf, getStyle, deepCopy, getScrollBarSize } from '../../utils/assist';
-    import { on, off } from '../../utils/dom';
-    import Csv from '../../utils/csv';
+    import Spin from 'iview/src/components/spin/spin.vue';
+    import { oneOf, getStyle, deepCopy, getScrollBarSize } from 'iview/src/utils/assist';
+    import { on, off } from 'iview/src/utils/dom';
+    import Csv from 'iview/src/utils/csv';
     import ExportCsv from './export-csv';
-    import Locale from '../../mixins/locale';
+    import Locale from 'iview/src/mixins/locale';
     import elementResizeDetectorMaker from 'element-resize-detector';
 
     const prefixCls = 'ivu-table';
