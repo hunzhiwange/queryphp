@@ -49,34 +49,28 @@ class tree
                 ];
             };
         }
+
         return $this->oTree->toArray($cal);
     }
 
     /**
      * 树结构节点 select
      *
-     * @param  int $iParentId
+     * @param callable $cal
      * @return array
      */
-    public function forSelect($iParentId = null)
+    public function forSelect($cal = null)
     {
-        $arrTree = $this->oTree->toArray(function ($arrItem) {
-            return [
-                'value' => $arrItem['value'],
-                'label' => $arrItem['data']
-            ];
-        });
-
-        if ($iParentId) {
-            $arrSelected = $this->oTree->getParents($iParentId);
-        } else {
-            $arrSelected = [];
+        if($cal === null) {
+            $cal = function ($arrItem) {
+                return [
+                    'value' => $arrItem['value'],
+                    'label' => $arrItem['data']
+                ];
+            };
         }
 
-        return [
-            'list' => $arrTree,
-            'selected' => $arrSelected
-        ];
+        return $this->oTree->toArray($cal);
     }
 
     /**

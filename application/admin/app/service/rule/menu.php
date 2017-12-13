@@ -1,23 +1,23 @@
 <?php
 // (c) 2018 http://your.domain.com All rights reserved.
-namespace admin\app\service\menu;
+namespace admin\app\service\rule;
 
 use common\is\tree\tree;
 use admin\is\repository\admin_menu as repository;
 
 /**
- * 后台菜单列表
+ * 菜单树结构
  *
  * @author Name Your <your@mail.com>
  * @package $$
- * @since 2017.10.12
+ * @since 2017.12.12
  * @version 1.0
  */
-class index
+class menu
 {
 
     /**
-     * 后台菜单仓储
+     * 权限仓储
      *
      * @var \admin\is\repository\admin_menu
      */

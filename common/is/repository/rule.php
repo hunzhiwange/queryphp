@@ -34,4 +34,48 @@ class rule extends repository implements rule_repository
     {
         parent::__construct($objAggregate);
     }
+
+    /**
+     * 取得所有记录
+     *
+     * @param null|callback $mixCallback
+     * @return \queryyetsimple\support\collection
+     */
+    public function all($mixSpecification = null)
+    {
+        return parent::all($this->specification(function ($objSelect) {
+            $objSelect->orderBy('sort DESC');
+        }, $mixSpecification));
+    }
+
+    /**
+     * 是否存在子权限
+     *
+     * @param int $nId
+     * @return boolean
+     */
+    public function hasChildren($nId)
+    {
+        return $this->count(function ($objSelect) use ($nId) {
+            $objSelect->where('pid', $nId);
+        }) ? true : false;
+    }
+
+    /**
+     * 最早(后)一个兄弟节点
+     *
+     * @param int $nId
+     * @param string $strSort
+     * @return mixed
+     */
+    public function siblingNodeBySort($nPid, $strSort = 'ASC')
+    {
+        return $this->objAggregate->
+
+        where('pid', $nPid)->
+
+        orderBy('sort', $strSort)->
+
+        getOne();
+    }
 }

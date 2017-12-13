@@ -65,7 +65,7 @@ let appRouterData = [
         path: '/option',
         icon: 'ios-gear',
         name: 'option',
-        title: __('设置'),
+        title: __('基础设置'),
         component: layout,
         children: [
             {
@@ -76,11 +76,18 @@ let appRouterData = [
                 component: importRouter('menu/index')
             },
             {
-                path: 'menu2',
+                path: 'rule',
                 icon: '',
-                name: 'menu2_index',
-                title: __('菜单管理2'),
-                component: importRouter('menu/index')
+                name: 'rule_index',
+                title: __('权限管理'),
+                component: importRouter('rule/index')
+            },
+            {
+                path: 'test',
+                icon: '',
+                name: 'test_index',
+                title: __('测试'),
+                component: importRouter('test/test')
             }
         ]
     }

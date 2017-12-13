@@ -100,11 +100,7 @@ class check
 
             where('status', 'enable')->
 
-            where('app', 'admin')->
-
-            where('level', '2')->
-
-            where('button', 'F');
+            where('app', 'admin');
         });
 
         $arrNode = [];

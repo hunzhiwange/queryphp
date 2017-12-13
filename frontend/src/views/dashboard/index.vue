@@ -1,6 +1,5 @@
 <template>
-<div class="dashboard-page">
-
+<div class="dashboard-page body">
     <Row>
         <Card>
             <p slot="title">

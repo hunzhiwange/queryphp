@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
+// 支持拖动的表格，直接修改 iview table 组件
+// https://github.com/iview/iview/pull/1241
+import draggableTable from '@/components/iview/table'
 import App from './app'
 import VueI18n from 'vue-i18n'
 import router from './router'
@@ -16,11 +19,11 @@ import extend from './assets/js/extend'
 import './errorLog' // error log
 import './permission' // 权限
 import 'assets/css/global.css'
-import 'assets/css/base.css'
 
 Vue.use(iView)
 Vue.use(VueI18n)
 Vue.use(extend)
+Vue.component('Table', draggableTable)
 
 // let data =  [{
 //         path: '/option2222',
