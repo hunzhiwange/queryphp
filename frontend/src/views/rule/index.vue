@@ -35,10 +35,10 @@
                                 </FormItem>
                             </Col>
                             <Col span="12">
-                                <FormItem :label="__('权限')" prop="value">
+                                <FormItem :label="__('权限')" prop="value" v-show="showMenuTree">
                                     <Card>
                                         <div class="rule-box">
-                                            <Tree :data="dataMenuTree" show-checkbox></Tree>
+                                            <Tree ref="menuTree" :data="dataMenuTree" show-checkbox></Tree>
                                        </div>
                                     </Card>
                                 </FormItem>

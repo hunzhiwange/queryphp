@@ -50,7 +50,8 @@ class store extends aaction
             'name|trim',
             'status',
             'app|trim',
-            'type|trim'
+            'type|trim',
+            'value'
         ]);
     }
 }

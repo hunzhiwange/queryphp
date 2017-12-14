@@ -74,7 +74,8 @@ class store
             'sort' => intval($aRule['sort']),
             'status' => $aRule['status'] === true ? 'enable' : 'disable',
             'app' => trim($aRule['app']),
-            'type' => trim($aRule['type'])
+            'type' => trim($aRule['type']),
+            'value' => implode(',', $aRule['value'])
         ];
     }
 

@@ -80,13 +80,15 @@ export default {
                 name: '',
                 status: true,
                 app: 'admin',
-                type: 'app'
+                type: 'app',
+                value: []
             },
             pidOptions: [],
             oldEditPid: [],
             pidDisabled: true,
             typeDisabled: true,
             currentParentData: null,
+            showMenuTree: false,
             minForm: false,
             rules: {
                 title: [{
@@ -180,39 +182,48 @@ export default {
         edit(root, node, nodeData) {
             this.minForm = true
             this.currentParentData = nodeData
-            this.formItem.id = nodeData.id
             this.nodeRoot = root
 
-            this.apiGet('menu/' + nodeData.id + '/edit').then((res) => {
-                let data = res.data
-                if (!data.menu_type) {
-                    data.menu_type = 1
-                }
-                data.menu_type = data.menu_type.toString()
-                data.status = data.status == 'enable'
-                    ? true
-                    : false
-                this.formItem = data
-
-                let pidOptions = this.getArraySelect(this.dataTree)
-                pidOptions.unshift({value: -1, label: __('根菜单')})
-                this.pidOptions = pidOptions
-                let parentID = this.getParentID(root, nodeData).reverse()
-                parentID.pop()
-                if (parentID.length == 0) {
-                    parentID = [-1]
-                }
-
-                setTimeout(() => {
-                    this.pidDisabled = false
-                    this.oldEditPid = this.formItem.pid = parentID
-                }, 0)
+            let data = {}
+            Object.keys(this.formItem).forEach((item) => {
+                data[item] = nodeData[item]
             })
+
+            data.value = data.value ? data.value.split(',') : []
+
+            console.log(data)
+
+            return
+
+            //let data = res.data
+            if (!data.menu_type) {
+                data.menu_type = 1
+            }
+            data.menu_type = data.menu_type.toString()
+            data.status = data.status == 'enable'
+                ? true
+                : false
+            this.formItem = data
+
+            let pidOptions = this.getArraySelect(this.dataTree)
+            pidOptions.unshift({value: -1, label: __('根菜单')})
+            this.pidOptions = pidOptions
+            let parentID = this.getParentID(root, nodeData).reverse()
+            parentID.pop()
+            if (parentID.length == 0) {
+                parentID = [-1]
+            }
+
+            setTimeout(() => {
+                this.pidDisabled = false
+                this.oldEditPid = this.formItem.pid = parentID
+            }, 0)
         },
         append(root, node, nodeData) {
             this.minForm = true
             this.currentParentData = nodeData
             this.formItem.id = ''
+            this.showMenuTree = false
 
             let pidOptions = this.getArraySelect(this.dataTree)
             pidOptions.unshift({value: -1, label: __('根权限')})
@@ -226,6 +237,7 @@ export default {
                     this.formItem.type = 'category'
                 }else if(nodeData.type == 'category') {
                     this.formItem.type = 'rule'
+                    this.showMenuTree = true
                 }
             })
         },
@@ -408,6 +420,10 @@ export default {
             return result
         },
         handleSubmit(form) {
+            this.formItem.value = []
+            let selected = this.$refs.menuTree.getCheckedNodes()
+            selected.forEach(({id}) => this.formItem.value.push(id))
+
             if(this.formItem.controller && ['category', 'controller'].includes(this.formItem.type)) {
                 if(!this.formItem.name) {
                    this.formItem.name = this.formItem.controller

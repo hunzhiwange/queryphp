@@ -10,3 +10,5 @@ node_modules/
 ~@~/
 vendor/
 frontend/node_modules/
+frontmulti/node_modules/
+electron/node_modules/
