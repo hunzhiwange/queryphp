@@ -2,11 +2,11 @@
 // (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\login;
 
+use common\domain\entity\menu;
 use queryyetsimple\http\request;
 use queryyetsimple\support\tree;
-use admin\domain\entity\admin_menu;
 use queryyetsimple\bootstrap\auth\login;
-use admin\is\repository\admin_menu as repository;
+use common\is\repository\menu as repository;
 
 /**
  * 验证登录
@@ -30,7 +30,7 @@ class check
     /**
      * 后台菜单仓储
      *
-     * @var \admin\is\repository\admin_menu
+     * @var \common\is\repository\menu
      */
     protected $oRepository;
 
@@ -38,7 +38,7 @@ class check
      * 构造函数
      *
      * @param \queryyetsimple\http\request $oRequest
-     * @param \admin\is\repository\admin_menu $oRepository
+     * @param \common\is\repository\menu $oRepository
      * @return void
      */
     public function __construct(request $oRequest, repository $oRepository)

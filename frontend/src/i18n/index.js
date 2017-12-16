@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from 'vue'
 import zhApp from './zh-CN'
 import enApp from './en-US'
 import twApp from './zh-TW'
@@ -14,6 +14,7 @@ const lang = window.localStorage.lang || localLang || 'zh-CN';
 
 Vue.config.lang = lang;
 
+// queryphp 语言包需要刷新
 queryphpI18n.locale('zh-CN',zhApp)
 queryphpI18n.locale('en-US',enApp)
 queryphpI18n.locale('zh-TW',twApp)
@@ -21,9 +22,6 @@ queryphpI18n.locale('zh-TW',twApp)
 queryphpI18n.lang(lang)
 
 // 多语言配置
-// const mergeZH = Object.assign(zhLocale, zhApp);
-// const mergeEN = Object.assign(enLocale, enApp);
-// const mergeTW = Object.assign(zhTLocale, twApp);
-//Vue.locale('zh-CN', zhLocale)
-//Vue.locale('en-US', enLocale)
-//Vue.locale('zh-TW', zhTLocale)
+Vue.locale('zh-CN', zhLocale)
+Vue.locale('en-US', enLocale)
+Vue.locale('zh-TW', zhTLocale)

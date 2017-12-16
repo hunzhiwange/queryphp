@@ -1,4 +1,4 @@
-import {sprintf} from 'sprintf-js';
+import {sprintf} from 'sprintf-js'
 
 let queryphp = function(objOpt) {
 
@@ -17,7 +17,7 @@ let queryphp = function(objOpt) {
         default_i18n: 'zh-CN'
     },
 
-    this.objOptions = Object.assign({}, this.objDefaults, objOpt);
+    this.objOptions = Object.assign({}, this.objDefaults, objOpt ? objOpt : {});
 }
 
 queryphp.prototype = {
@@ -79,9 +79,19 @@ queryphp.prototype = {
     }
 }
 
-let instance = new queryphp();
-export default instance;
+const getInstance = function(){
+    let instance;
+    return function(){
+        if(!instance){
+            instance=new queryphp();
+        }
+        return instance;
+    }
+}();
+
+export default getInstance()
 
 window.__ = window.gettext = function() {
+    let instance = getInstance()
     return instance.gettext.apply(instance, arguments)
 }

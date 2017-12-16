@@ -271,8 +271,8 @@ const app = {
             localStorage.avatorImgPath = path;
         },
         switchLang(state, lang) {
-            state.lang = lang;
-            Vue.config.lang = lang;
+            state.lang = lang
+            Vue.config.lang = lang
         },
         clearOpenedSubmenu(state) {
             state.openedSubmenuArr.length = 0;
