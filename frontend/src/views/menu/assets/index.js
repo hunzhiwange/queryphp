@@ -1,4 +1,5 @@
 import http from '@/utils/http'
+import {validateAlphaDash} from '@/utils/validate'
 
 export default {
     data() {
@@ -85,8 +86,12 @@ export default {
                 app: 'admin',
                 controller: '',
                 action: '',
-                type: 'app'
+                type: 'app',
+                siblings: '',
+                rule: 'T'
             },
+            siblings: [],
+            siblingsList: [],
             pidOptions: [],
             oldEditPid: [],
             pidDisabled: true,
@@ -101,21 +106,31 @@ export default {
                 app: [{
                     required: true,
                     message: __('请输入菜单应用名称')
+                }, {
+                    validator: validateAlphaDash
                 }],
                 action: [{
                     validator: validateAciton
+                }, {
+                    validator: validateAlphaDash
                 }],
                 controller: [{
                     validator: validateController
+                }, {
+                    validator: validateAlphaDash
                 }],
                 name: [{
                     validator: validateName
+                }, {
+                    validator: validateAlphaDash
                 }],
                 path: [{
                     validator: validatePath
                 }],
                 component: [{
                     validator: validateComponent
+                }, {
+                    validator: validateAlphaDash
                 }]
             },
             dataTree: [],
@@ -207,6 +222,30 @@ export default {
                     parentID = [-1]
                 }
 
+                if(data.type == 'action') {
+                    const parentKey = node.parent
+                    if (parentKey !== undefined) {
+                        const parent = root.find(el => el.nodeKey === parentKey).node
+                        let siblingsList = []
+                        if(parent.children) {
+                            parent.children.forEach((item) => {
+                                if(item.id != nodeData.id) {
+                                    siblingsList.push({
+                                        id: item.id,
+                                        title: item.title
+                                    })
+                                }
+                            })
+                        }
+                        this.$set(this,'siblingsList', siblingsList)
+                    }
+
+                    this.siblings = this.formItem.siblings ? this.formItem.siblings.split(',').map(item => parseInt(item)) : []
+                }else {
+                    this.$set(this,'siblingsList', [])
+                    this.siblings = []
+                }
+
                 setTimeout(() => {
                     this.pidDisabled = false
                     this.oldEditPid = this.formItem.pid = parentID
@@ -218,10 +257,12 @@ export default {
             this.currentParentData = nodeData
             this.formItem.id = ''
 
+            // 父级菜单
             let pidOptions = this.getArraySelect(this.dataTree)
             pidOptions.unshift({value: -1, label: __('根菜单')})
             this.pidOptions = pidOptions
             let parentID = this.getParentID(root, nodeData).reverse()
+
             setTimeout(() => {
                 this.formItem.pid = parentID
                 this.formItem.app = nodeData.app
@@ -236,6 +277,24 @@ export default {
                     this.formItem.type = 'action'
                     this.formItem.controller = nodeData.controller
                 }
+
+                // 兄弟菜单
+                if(this.formItem.type == 'action') {
+                    let siblingsList = []
+                    if(nodeData.children) {
+                        nodeData.children.forEach((item) => {
+                            siblingsList.push({
+                                id: item.id,
+                                title: item.title
+                            })
+                        })
+                    }
+                    this.$set(this,'siblingsList', siblingsList)
+                }else {
+                    this.$set(this,'siblingsList', [])
+                }
+
+                 this.siblings = []
             })
         },
         getParentID(root, nodeData) {
@@ -423,6 +482,12 @@ export default {
                 }
             }
 
+            if(this.formItem.type == 'action') {
+                this.formItem.siblings = this.siblings ? this.siblings.join(',') : ''
+            }else{
+                this.formItem.siblings = ''
+            }
+
             this.$refs[form].validate((pass) => {
                 if (pass) {
                     this.loading = !this.loading
@@ -481,7 +546,19 @@ export default {
                         children.push(this.currentParentData)
                         this.$set(parent, 'children', children)
                         this.$set(parent, 'expand', true)
+
+                        if(parent.type == 'app') {
+                            this.formItem.type = 'category'
+                            this.formItem.component = 'layout'
+                        }else if(parent.type == 'category') {
+                            this.formItem.type = 'controller'
+                            this.formItem.component = 'layout'
+                        }else if(parent.type == 'controller') {
+                            this.formItem.type = 'action'
+                            this.formItem.controller = parent.controller
+                        }
                     } else {
+                        this.$set(this.currentParentData, 'type', 'app')
                         this.dataTree.push(this.currentParentData)
                     }
 
@@ -534,6 +611,12 @@ export default {
         },
         showController: function () {
             return this.formItem.type !== 'app'
+        },
+        showSiblings: function() {
+            return this.formItem.type === 'action'
+        },
+        showRule: function() {
+            return this.formItem.type === 'action'
         }
     },
     created: function() {

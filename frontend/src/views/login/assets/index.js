@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 import http from '@/utils/http'
-import validate from '@/utils/validate'
+import {validateAlpha} from '@/utils/validate'
 import img_logo from '@/assets/images/logo.png'
 import img_login_banner from '@/assets/images/login_banner.png'
 
@@ -48,7 +48,7 @@ export default {
                         message: __('长度为 %d 个字符', 4),
                         trigger: 'blur'
                     }, {
-                        validator: validate.alpha,
+                        validator: validateAlpha,
                         trigger: 'blur'
                     }
                 ]

@@ -117,6 +117,7 @@ export default {
             },
             dataTree: [],
             dataMenuTree: [],
+            initMenuTree: [],
             loading: false,
             nodeRoot: [],
             loadingSynchrodata: false,
@@ -186,28 +187,22 @@ export default {
 
             let data = {}
             Object.keys(this.formItem).forEach((item) => {
+                if(item == 'pid') {
+                    return
+                }
                 data[item] = nodeData[item]
             })
 
-            data.value = data.value ? data.value.split(',') : []
+            data.value = data.value ? data.value.split(',').map(item => parseInt(item)) : []
 
-            console.log(data)
-
-            return
-
-            //let data = res.data
-            if (!data.menu_type) {
-                data.menu_type = 1
-            }
-            data.menu_type = data.menu_type.toString()
             data.status = data.status == 'enable'
                 ? true
                 : false
-            this.formItem = data
 
             let pidOptions = this.getArraySelect(this.dataTree)
-            pidOptions.unshift({value: -1, label: __('根菜单')})
+            pidOptions.unshift({value: -1, label: __('根权限')})
             this.pidOptions = pidOptions
+
             let parentID = this.getParentID(root, nodeData).reverse()
             parentID.pop()
             if (parentID.length == 0) {
@@ -216,8 +211,42 @@ export default {
 
             setTimeout(() => {
                 this.pidDisabled = false
-                this.oldEditPid = this.formItem.pid = parentID
+                this.oldEditPid = data.pid = parentID
+                this.formItem = data
+
+                if(data.type == 'rule') {
+                    this.showMenuTree = true
+                }else {
+                    this.showMenuTree = false
+                }
+                this.dataMenuTree = this.setMenuCheckedNodes(this.initMenuTree, data.value)
             }, 0)
+        },
+        setMenuCheckedNodes(menuTree, value) {
+            if(!value) {
+                return []
+            }
+
+            let result = []
+
+            menuTree.forEach((el,index) => {
+                let item = {
+                    title: el.title,
+                    id: el.id
+                }
+                if(value.includes(el.id)) {
+                    item.checked = true
+                }
+
+                if(el.children) {
+                    item.children = this.setMenuCheckedNodes(el.children, value)
+                }else{
+                    item.children = []
+                }
+                result[index] = item
+            })
+
+            return result
         },
         append(root, node, nodeData) {
             this.minForm = true
@@ -239,6 +268,7 @@ export default {
                     this.formItem.type = 'rule'
                     this.showMenuTree = true
                 }
+                this.dataMenuTree = this.initMenuTree
             })
         },
         getParentID(root, nodeData) {
@@ -391,19 +421,34 @@ export default {
             return arr
         },
         init: function() {
-            this.apiGet('rule').then((res) => {
-                this.dataTree = res.data
-            })
+            // this.apiGet('rule').then((res) => {
+            //     this.dataTree = res.data
+            // })
 
-            this.apiGet('rule/menu').then((res) => {
-                this.dataMenuTree = res.data
+            // this.apiGet('rule/menu').then((res) => {
+            //     this.dataMenuTree = res.data
+            // })
+
+            this.apiMulti('get','rule')
+            .then((res) => {
+                this.dataTree = res.data
+             })
+            .apiMulti('get','rule/menu')
+            .then((res) => {
+                this.initMenuTree = res.data
+             })
+            .apiMulti('rule/index_menu')
+            .then((res) => {
+                this.thenCalback(res)
+            },(res) => {
+               // error
             })
         },
         getArraySelect(data) {
             let result = []
 
             data.forEach(({id, title, type, children}) => {
-                if(type == 'action'){
+                if(type == 'rule'){
                     return
                 }
 

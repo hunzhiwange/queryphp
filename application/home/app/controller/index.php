@@ -2,6 +2,8 @@
 // (c) 2018 http://your.domain.com All rights reserved.
 namespace home\app\controller;
 
+use queryyetsimple\mvc\controller;
+
 /**
  * index 控制器
  *

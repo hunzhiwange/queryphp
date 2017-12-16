@@ -79,7 +79,9 @@ class store
             'app' => trim($aMenu['app']),
             'controller' => trim($aMenu['controller']),
             'action' => trim($aMenu['action']),
-            'type' => trim($aMenu['type'])
+            'type' => trim($aMenu['type']),
+            'siblings' => trim($aMenu['siblings']),
+            'rule' => trim($aMenu['rule'])
         ];
     }
 

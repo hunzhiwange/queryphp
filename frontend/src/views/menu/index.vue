@@ -28,6 +28,17 @@
                                 <FormItem :label="__('方法')" prop="action" v-show="showAction">
                                     <Input v-model.trim="formItem.action" placeholder=""></Input>
                                 </FormItem>
+                                <FormItem :label="__('兄弟方法')" prop="siblings" v-show="showSiblings">
+                                    <Select v-model="siblings" multiple placement="top">
+                                        <Option v-for="item in siblingsList" :value="item.id" :key="item.id">{{ item.title }}</Option>
+                                    </Select>
+                                </FormItem>
+                                <FormItem :label="__('方法权限')" v-show="showRule">
+                                    <RadioGroup v-model="formItem.rule">
+                                        <Radio label="T">{{__('是')}}</Radio>
+                                        <Radio label="F">{{__('否')}}</Radio>
+                                    </RadioGroup>
+                                </FormItem>
                                 <FormItem :label="__('状态')">
                                     <i-switch v-model="formItem.status" size="large">
                                         <span slot="open">{{__('启用')}}</span>

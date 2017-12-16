@@ -1,5 +1,5 @@
 import http from '@/utils/http'
-import validate from '@/utils/validate'
+import {validateChineseAlphaDash, validateMobile} from '@/utils/validate'
 
 export default {
     data() {
@@ -15,7 +15,7 @@ export default {
                 nikename: [
                     {
                         required: true,
-                        validator: validate.chineseAlphaDash
+                        validator: validateChineseAlphaDash
                     }
                 ],
                 email: [
@@ -28,7 +28,7 @@ export default {
                 mobile: [
                     {
                         type: 'number',
-                        validator: validate.mobile,
+                        validator: validateMobile,
                         required: true,
                         message: __('请输入有效的手机号')
                     }

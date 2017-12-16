@@ -82,12 +82,7 @@ class menu
                 $oMenu->id,
                 $oMenu->pid,
                 [
-                    'title' => $oMenu->title,
-                    'status' => $oMenu->status,
-                    'app' => $oMenu->app,
-                    'controller' => $oMenu->controller,
-                    'action' => $oMenu->action,
-                    'type' => $oMenu->type
+                    'title' => $oMenu->title
                 ]
             ];
         }

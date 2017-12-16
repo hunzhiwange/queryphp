@@ -55,7 +55,9 @@ class store extends aaction
             'app|trim',
             'controller|trim',
             'action|trim',
-            'type|trim'
+            'type|trim',
+            'siblings|trim',
+            'rule|trim'
         ]);
     }
 }
