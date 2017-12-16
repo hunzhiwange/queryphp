@@ -5,7 +5,7 @@ namespace admin\app\service\menu;
 use RuntimeException;
 
 /**
- * 后台菜单编辑更新异常
+ * 菜单编辑更新异常
  *
  * @author Name Your <your@mail.com>
  * @package $$

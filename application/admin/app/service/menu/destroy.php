@@ -2,11 +2,11 @@
 // (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\menu;
 
-use admin\app\service\menu\destroy_failed;
-use admin\is\repository\admin_menu as repository;
+use queryyetsimple\mvc\model_not_found;
+use common\is\repository\menu as repository;
 
 /**
- * 后台菜单删除
+ * 菜单删除
  *
  * @author Name Your <your@mail.com>
  * @package $$
@@ -19,7 +19,7 @@ class destroy
     /**
      * 后台菜单仓储
      *
-     * @var \admin\is\repository\admin_menu
+     * @var \common\is\repository\menu
      */
     protected $oRepository;
 
@@ -33,7 +33,7 @@ class destroy
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_menu $oRepository
+     * @param \common\is\repository\menu $oRepository
      * @return void
      */
     public function __construct(repository $oRepository)
@@ -56,7 +56,7 @@ class destroy
      * 查找实体
      *
      * @param int $intId
-     * @return \admin\domain\entity\admin_menu|void
+     * @return \common\domain\entity\menu|void
      */
     protected function find($intId)
     {
@@ -70,7 +70,7 @@ class destroy
     /**
      * 删除实体
      *
-     * @param \admin\domain\entity\admin_menu $objMenu
+     * @param \common\domain\entity\menu $objMenu
      * @return int
      */
     protected function delete($objMenu)

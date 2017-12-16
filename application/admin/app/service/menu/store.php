@@ -3,11 +3,11 @@
 namespace admin\app\service\menu;
 
 use common\is\tree\tree;
-use admin\domain\entity\admin_menu as entity;
-use admin\is\repository\admin_menu as repository;
+use common\domain\entity\menu as entity;
+use common\is\repository\menu as repository;
 
 /**
- * 后台菜单新增保存
+ * 菜单新增保存
  *
  * @author Name Your <your@mail.com>
  * @package $$
@@ -18,16 +18,16 @@ class store
 {
 
     /**
-     * 后台菜单仓储
+     * 菜单仓储
      *
-     * @var \admin\is\repository\admin_menu
+     * @var \common\is\repository\menu
      */
     protected $oRepository;
 
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_menu $oRepository
+     * @param \common\is\repository\menu $oRepository
      * @return void
      */
     public function __construct(repository $oRepository)
@@ -51,7 +51,7 @@ class store
      * 创建实体
      *
      * @param array $aMenu
-     * @return \admin\domain\entity\admin_menu
+     * @return \common\domain\entity\menu
      */
     protected function entity(array $aMenu)
     {

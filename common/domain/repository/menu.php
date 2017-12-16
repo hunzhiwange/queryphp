@@ -1,18 +1,18 @@
 <?php
 // (c) 2018 http://your.domain.com All rights reserved.
-namespace admin\domain\repository;
+namespace common\domain\repository;
 
 use queryyetsimple\mvc\irepository;
 
 /**
- * 后台菜单实体（聚合根）接口
+ * 菜单实体（聚合根）接口
  *
  * @author Name Your <your@mail.com>
  * @package $$
  * @since 2017.10.12
  * @version 1.0
  */
-interface admin_menu extends irepository
+interface menu extends irepository
 {
 
     /**

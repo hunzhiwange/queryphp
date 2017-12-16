@@ -4,10 +4,10 @@ namespace admin\app\service\menu;
 
 use common\is\tree\tree;
 use queryyetsimple\mvc\model_not_found;
-use admin\is\repository\admin_menu as repository;
+use common\is\repository\menu as repository;
 
 /**
- * 后台菜单编辑更新
+ * 菜单编辑更新
  *
  * @author Name Your <your@mail.com>
  * @package $$
@@ -18,16 +18,16 @@ class update
 {
 
     /**
-     * 后台菜单仓储
+     * 菜单仓储
      *
-     * @var \admin\is\repository\admin_menu
+     * @var \common\is\repository\menu
      */
     protected $oRepository;
 
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_menu $oRepository
+     * @param \common\is\repository\menu $oRepository
      * @return void
      */
     public function __construct(repository $oRepository)
@@ -50,7 +50,7 @@ class update
      * 验证参数
      *
      * @param array $aMenu
-     * @return \admin\domain\entity\admin_menu
+     * @return \common\domain\entity\menu
      */
     protected function entify(array $aMenu)
     {
@@ -77,7 +77,7 @@ class update
      * 查找实体
      *
      * @param int $intId
-     * @return \admin\domain\entity\admin_menu|void
+     * @return \common\domain\entity\menu|void
      */
     protected function find($intId)
     {

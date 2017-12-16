@@ -11,4 +11,4 @@ export default {
             return item.icon
         }
     }
-};
+}

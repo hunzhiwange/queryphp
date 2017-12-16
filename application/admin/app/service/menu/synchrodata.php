@@ -8,11 +8,11 @@ use ReflectionMethod;
 use queryyetsimple\psr4;
 use queryyetsimple\filesystem\fso;
 use common\is\doc\parse as doc_parse;
-use admin\domain\entity\admin_menu as entity;
-use admin\is\repository\admin_menu as repository;
+use common\domain\entity\menu as entity;
+use common\is\repository\menu as repository;
 
 /**
- * 后台菜单数据同步
+ * 菜单数据同步
  *
  * @author Name Your <your@mail.com>
  * @package $$
@@ -23,9 +23,9 @@ class synchrodata
 {
 
     /**
-     * 后台菜单仓储
+     * 菜单仓储
      *
-     * @var \admin\is\repository\admin_menu
+     * @var \common\is\repository\menu
      */
     protected $oRepository;
 
@@ -39,7 +39,7 @@ class synchrodata
     /**
      * 当前菜单
      * 
-     * @var \admin\domain\entity\admin_menu|false
+     * @var \common\domain\entity\menu|false
      */
     protected $mixCurrentMenu;
 
@@ -75,7 +75,7 @@ class synchrodata
      * 构造函数
      * 
      * @param \common\is\doc\parse $objDocParse
-    * @param \admin\is\repository\admin_menu $oRepository
+     * @param \common\is\repository\menu $oRepository
      * @return void
      */
     public function __construct(doc_parse $objDocParse,repository $oRepository ) {
@@ -152,7 +152,7 @@ class synchrodata
      * 更新实体
      *
      * @param array $arrMenu
-     * @return \admin\domain\entity\admin_menu
+     * @return \common\domain\entity\menu
      */
     protected function entifyUpdate(array $arrMenu)
     {
@@ -430,7 +430,7 @@ class synchrodata
      * 创建实体
      *
      * @param array $aMenu
-     * @return \admin\domain\entity\admin_menu
+     * @return \common\domain\entity\menu
      */
     protected function entity(array $aMenu)
     {

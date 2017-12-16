@@ -1,27 +1,27 @@
 <?php
 // (c) 2018 http://your.domain.com All rights reserved.
-namespace admin\is\repository;
+namespace common\is\repository;
 
 use queryyetsimple\mvc\repository;
 use queryyetsimple\mvc\iaggregate_root;
-use admin\domain\entity\admin_menu as aggregate;
-use admin\domain\repository\admin_menu as admin_menu_repository;
+use common\domain\entity\menu as aggregate;
+use common\domain\repository\menu as menu_repository;
 
 /**
- * 后台菜单实体（聚合根）实现
+ * 菜单实体（聚合根）实现
  *
  * @author Name Your <your@mail.com>
  * @package $$
  * @since 2017.10.12
  * @version 1.0
  */
-class admin_menu extends repository implements admin_menu_repository
+class menu extends repository implements menu_repository
 {
 
     /**
      * 构造函数
      *
-     * @param \admin\domain\entity\admin_menu $oAggregate
+     * @param \common\domain\entity\menu $oAggregate
      * @return void
      */
     public function __construct(aggregate $objAggregate)

@@ -3,10 +3,10 @@
 namespace admin\app\service\menu;
 
 use common\is\tree\tree;
-use admin\is\repository\admin_menu as repository;
+use common\is\repository\menu as repository;
 
 /**
- * 后台菜单列表
+ * 菜单列表
  *
  * @author Name Your <your@mail.com>
  * @package $$
@@ -17,16 +17,16 @@ class index
 {
 
     /**
-     * 后台菜单仓储
+     * 菜单仓储
      *
-     * @var \admin\is\repository\admin_menu
+     * @var \common\is\repository\menu
      */
     protected $oRepository;
 
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_menu $oRepository
+     * @param \common\is\repository\menu $oRepository
      * @return void
      */
     public function __construct(repository $oRepository)
@@ -81,14 +81,7 @@ class index
             $arrNode[] = [
                 $oMenu->id,
                 $oMenu->pid,
-                [
-                    'title' => $oMenu->title,
-                    'status' => $oMenu->status,
-                    'app' => $oMenu->app,
-                    'controller' => $oMenu->controller,
-                    'action' => $oMenu->action,
-                    'type' => $oMenu->type
-                ]
+                $oMenu->toArray()
             ];
         }
         return $arrNode;

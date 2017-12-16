@@ -144,7 +144,11 @@ export default {
         renderContent(h, {root, node, data}) {
             const status = data.status == 'enable'
             return (<span class='tree-item' style='display: inline-block; width: 100%;'>
-                <span class='tree-item-title'>{data.title}</span>
+                <span class='tree-item-title' style={{
+                            textDecoration: data.rule == 'T'
+                                ? 'none'
+                                : 'line-through'
+                        }}>{data.title}</span>
                 <span class='tree-item-operate' style='display: inline-block;float: right;margin-right: 32px;'>
                     <i-button icon='plus-circled' type='default' shape="circle" size='small' style='margin-right: 8px;' on-click={() => this.append(root, node, data)} disabled={data.type == 'action'
                                     ? true
@@ -202,55 +206,55 @@ export default {
             this.formItem.id = nodeData.id
             this.nodeRoot = root
 
-            this.apiGet('menu/' + nodeData.id + '/edit').then((res) => {
-                let data = res.data
-                if (!data.menu_type) {
-                    data.menu_type = 1
+            let data = {}
+            Object.keys(this.formItem).forEach((item) => {
+                if(item == 'pid') {
+                    return
                 }
-                data.menu_type = data.menu_type.toString()
-                data.status = data.status == 'enable'
-                    ? true
-                    : false
-                this.formItem = data
-
-                let pidOptions = this.getArraySelect(this.dataTree)
-                pidOptions.unshift({value: -1, label: __('根菜单')})
-                this.pidOptions = pidOptions
-                let parentID = this.getParentID(root, nodeData).reverse()
-                parentID.pop()
-                if (parentID.length == 0) {
-                    parentID = [-1]
-                }
-
-                if(data.type == 'action') {
-                    const parentKey = node.parent
-                    if (parentKey !== undefined) {
-                        const parent = root.find(el => el.nodeKey === parentKey).node
-                        let siblingsList = []
-                        if(parent.children) {
-                            parent.children.forEach((item) => {
-                                if(item.id != nodeData.id) {
-                                    siblingsList.push({
-                                        id: item.id,
-                                        title: item.title
-                                    })
-                                }
-                            })
-                        }
-                        this.$set(this,'siblingsList', siblingsList)
-                    }
-
-                    this.siblings = this.formItem.siblings ? this.formItem.siblings.split(',').map(item => parseInt(item)) : []
-                }else {
-                    this.$set(this,'siblingsList', [])
-                    this.siblings = []
-                }
-
-                setTimeout(() => {
-                    this.pidDisabled = false
-                    this.oldEditPid = this.formItem.pid = parentID
-                }, 0)
+                data[item] = nodeData[item]
             })
+            data.status = data.status == 'enable'
+                ? true
+                : false
+            this.formItem = data
+
+            let pidOptions = this.getArraySelect(this.dataTree)
+            pidOptions.unshift({value: -1, label: __('根菜单')})
+            this.pidOptions = pidOptions
+            let parentID = this.getParentID(root, nodeData).reverse()
+            parentID.pop()
+            if (parentID.length == 0) {
+                parentID = [-1]
+            }
+
+            if(data.type == 'action') {
+                const parentKey = node.parent
+                if (parentKey !== undefined) {
+                    const parent = root.find(el => el.nodeKey === parentKey).node
+                    let siblingsList = []
+                    if(parent.children) {
+                        parent.children.forEach((item) => {
+                            if(item.id != nodeData.id) {
+                                siblingsList.push({
+                                    id: item.id,
+                                    title: item.title
+                                })
+                            }
+                        })
+                    }
+                    this.$set(this,'siblingsList', siblingsList)
+                }
+
+                this.siblings = this.formItem.siblings ? this.formItem.siblings.split(',').map(item => parseInt(item)) : []
+            }else {
+                this.$set(this,'siblingsList', [])
+                this.siblings = []
+            }
+
+            setTimeout(() => {
+                this.pidDisabled = false
+                this.oldEditPid = this.formItem.pid = parentID
+            }, 0)
         },
         append(root, node, nodeData) {
             this.minForm = true
@@ -312,6 +316,7 @@ export default {
             this.minForm = true
             this.currentParentData = null
             this.formItem.id = ''
+            this.pidDisabled = true
 
             let pidOptions = this.getArraySelect(this.dataTree)
             pidOptions.unshift({value: -1, label: __('根菜单')})
