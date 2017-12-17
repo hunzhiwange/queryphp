@@ -4,8 +4,8 @@ namespace admin\app\controller\menu;
 
 use queryyetsimple\request;
 use admin\app\controller\aaction;
-use admin\domain\service\admin_menu\enables_failed;
-use admin\domain\service\admin_menu\enables as service;
+use admin\domain\service\menu\enables_failed;
+use admin\domain\service\menu\enables as service;
 
 /**
  * 后台菜单批量禁用启用
@@ -27,7 +27,7 @@ class enables extends aaction
     /**
      * 响应方法
      *
-     * @param \admin\domain\service\admin_menu\enables $oService
+     * @param \admin\domain\service\menu\enables $oService
      * @return mixed
      */
     public function run(service $oService)

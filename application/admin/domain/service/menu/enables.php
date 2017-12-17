@@ -1,8 +1,8 @@
 <?php
 // (c) 2018 http://your.domain.com All rights reserved.
-namespace admin\domain\service\admin_menu;
+namespace admin\domain\service\menu;
 
-use admin\is\repository\admin_menu as repository;
+use common\is\repository\menu as repository;
 
 /**
  * 后台菜单启用禁用服务
@@ -18,14 +18,14 @@ class enables
     /**
      * 后台菜单仓储
      *
-     * @var \admin\is\repository\admin_menu
+     * @var \common\is\repository\menu
      */
     protected $oRepository;
 
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_menu $oRepository
+     * @param \common\is\repository\menu $oRepository
      * @return void
      */
     public function __construct(repository $oRepository)
@@ -59,7 +59,7 @@ class enables
             'disable',
             'enable'
         ])) {
-            throw new enables_failed('启用禁用状态不受支持');
+            throw new enables_failed(__('启用禁用状态不受支持'));
         }
     }
 

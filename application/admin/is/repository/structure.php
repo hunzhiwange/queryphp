@@ -3,9 +3,8 @@
 namespace admin\is\repository;
 
 use queryyetsimple\mvc\repository;
-use queryyetsimple\mvc\iaggregate_root;
-use admin\domain\entity\admin_structure as aggregate;
-use admin\domain\repository\admin_structure as admin_structure_repository;
+use admin\domain\entity\structure as aggregate;
+use admin\domain\repository\structure as structure_repository;
 
 /**
  * 后台部门实体（聚合根）实现
@@ -15,13 +14,13 @@ use admin\domain\repository\admin_structure as admin_structure_repository;
  * @since 2017.10.23
  * @version 1.0
  */
-class admin_structure extends repository implements admin_structure_repository
+class structure extends repository implements structure_repository
 {
 
     /**
      * 构造函数
      *
-     * @param \admin\domain\entity\admin_structure $oAggregate
+     * @param \admin\domain\entity\structure $oAggregate
      * @return void
      */
     public function __construct(aggregate $objAggregate)
@@ -43,7 +42,7 @@ class admin_structure extends repository implements admin_structure_repository
     }
 
     /**
-     * 是否存在子部门
+     * 是否存在子菜单
      *
      * @param int $nId
      * @return boolean
@@ -56,16 +55,20 @@ class admin_structure extends repository implements admin_structure_repository
     }
 
     /**
-     * 后台部门
+     * 最早(后)一个兄弟节点
      *
-     * @return array
+     * @param int $nId
+     * @param string $strSort
+     * @return mixed
      */
-    public function topNode()
+    public function siblingNodeBySort($nPid, $strSort = 'ASC')
     {
-        return [
-                'id' => - 1,
-                'pid' => 0,
-                'lable' => '选择上级部门'
-        ];
+        return $this->objAggregate->
+
+        where('pid', $nPid)->
+
+        orderBy('sort', $strSort)->
+
+        getOne();
     }
 }

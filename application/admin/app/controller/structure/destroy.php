@@ -14,6 +14,12 @@ use admin\app\service\structure\destroy as service;
  * @package $$
  * @since 2017.10.23
  * @version 1.0
+ * @menu
+ * @title 删除
+ * @name
+ * @path
+ * @component
+ * @icon
  */
 class destroy extends aaction
 {
@@ -29,7 +35,7 @@ class destroy extends aaction
         try {
             $mixResult = $oService->run($this->id());
             return [
-                'message' => '部门删除成功'
+                'message' => __('部门删除成功')
             ];
         } catch (destroy_failed $oE) {
             return [

@@ -4,8 +4,8 @@ namespace admin\app\controller\menu;
 
 use queryyetsimple\request;
 use admin\app\controller\aaction;
-use admin\domain\service\admin_menu\order_failed;
-use admin\domain\service\admin_menu\order as service;
+use admin\domain\service\menu\order_failed;
+use admin\domain\service\menu\order as service;
 
 /**
  * 后台菜单排序更新

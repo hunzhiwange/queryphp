@@ -3,7 +3,6 @@
 namespace common\is\repository;
 
 use queryyetsimple\mvc\repository;
-use queryyetsimple\mvc\iaggregate_root;
 use common\domain\entity\menu as aggregate;
 use common\domain\repository\menu as menu_repository;
 

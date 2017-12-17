@@ -3,8 +3,8 @@
 namespace admin\app\service\structure;
 
 use common\is\tree\tree;
-use admin\domain\entity\admin_structure as entity;
-use admin\is\repository\admin_structure as repository;
+use admin\domain\entity\structure as entity;
+use admin\is\repository\structure as repository;
 
 /**
  * 后台部门新增保存
@@ -20,14 +20,14 @@ class store
     /**
      * 后台部门仓储
      *
-     * @var \admin\is\repository\admin_structure
+     * @var \admin\is\repository\structure
      */
     protected $oRepository;
 
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_structure $oRepository
+     * @param \admin\is\repository\structure $oRepository
      * @return void
      */
     public function __construct(repository $oRepository)
@@ -51,10 +51,11 @@ class store
      * 创建实体
      *
      * @param array $aStructure
-     * @return \admin\domain\entity\admin_structure
+     * @return \admin\domain\entity\structure
      */
     protected function entity(array $aStructure)
     {
+        $aStructure['sort'] = $this->parseSiblingSort($aStructure['pid']);
         return new entity($this->data($aStructure));
     }
 
@@ -87,5 +88,17 @@ class store
         }
 
         return $intPid;
+    }
+
+    /**
+     * 分析兄弟节点最靠下面的排序值
+     *
+     * @param int $nPid
+     * @return int
+     */
+    protected function parseSiblingSort($nPid)
+    {
+        $mixSibling = $this->oRepository->siblingNodeBySort($nPid);
+        return $mixSibling ? $mixSibling->sort-1 : 500;
     }
 }

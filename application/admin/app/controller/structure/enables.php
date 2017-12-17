@@ -4,8 +4,8 @@ namespace admin\app\controller\structure;
 
 use queryyetsimple\request;
 use admin\app\controller\aaction;
-use admin\domain\service\admin_structure\enables_failed;
-use admin\domain\service\admin_structure\enables as service;
+use admin\domain\service\structure\enables_failed;
+use admin\domain\service\structure\enables as service;
 
 /**
  * 后台部门批量禁用启用
@@ -14,6 +14,12 @@ use admin\domain\service\admin_structure\enables as service;
  * @package $$
  * @since 2017.10.23
  * @version 1.0
+ * @menu
+ * @title 批量启用禁用
+ * @name
+ * @path
+ * @component
+ * @icon
  */
 class enables extends aaction
 {
@@ -21,7 +27,7 @@ class enables extends aaction
     /**
      * 响应方法
      *
-     * @param \admin\domain\service\admin_structure\enables $oService
+     * @param \admin\domain\service\structure\enables $oService
      * @return mixed
      */
     public function run(service $oService)

@@ -75,22 +75,25 @@
 
         <Card>
             <div slot="title">
-                <Poptip
+               <Poptip
                     confirm
                     :title="__('你确认同步菜单数据吗？')"
                     @on-ok="synchrodataMenu"
                     placement="bottom-start">
-                    <Button type="default" :loading="loadingSynchrodata" icon="loop">
+                    <Button type="primary" :loading="loadingSynchrodata" icon="loop">
                         <span v-if="!loadingSynchrodata">{{__('菜单数据同步')}}</span>
                         <span v-else>{{__('菜单数据同步中，请稍后')}}...</span>
                     </Button>
                 </Poptip>
-                <Checkbox v-model="synchrodataReplace">{{__('覆盖')}}</Checkbox>
+                <Checkbox v-model="synchrodataReplace" class="synchrodata-replace">{{__('覆盖')}}</Checkbox>
                 <Poptip trigger="hover" :title="__('帮助说明')" :content="__('系统将会自动从控制器注释中读取菜单信息并同步')" placement="right">
                     <Icon type="help-circled" class="pointer"></Icon>
                 </Poptip>
             </div>
-            <Button slot="extra" type="primary" @click="addMenu()"><Icon type="android-add-circle"></Icon> {{__('新增')}}</Button>
+            <a href="javascript:void(0);" slot="extra" @click="add()" class="add-extra">
+                <Icon type="android-add-circle"></Icon>
+                {{__('新增')}}
+            </a>
             <div>
                 <Row>
                     <Col span="24">

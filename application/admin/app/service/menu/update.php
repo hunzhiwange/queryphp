@@ -55,6 +55,7 @@ class update
     protected function entify(array $aMenu)
     {
         $objMenu = $this->find($aMenu['id']);
+        $intOldPid = $objMenu->pid;
 
         $aMenu['pid'] = $this->parseParentId($aMenu['pid']);
         if ($aMenu['id'] == $aMenu['pid']) {
@@ -67,7 +68,9 @@ class update
             throw new update_failed(__('菜单父级不能为自己的子菜单'));
         }
 
-        $aMenu['sort'] = $this->parseSiblingSort($aMenu['pid']);
+        if($intOldPid != $aStructure['pid']) {
+            $aMenu['sort'] = $this->parseSiblingSort($aMenu['pid']);
+        }
         $objMenu->forceProps($this->data($aMenu));
 
         return $objMenu;

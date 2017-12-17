@@ -3,156 +3,38 @@ import {validateAlphaDash} from '@/utils/validate'
 
 export default {
     data() {
-        var validateAciton = (rule, value, callback) => {
-            if (this.formItem.type != 'action') {
-                return callback()
-            }
-
-            setTimeout(() => {
-                if (!value) {
-                    callback(new Error(__('请输入菜单方法名称')))
-                } else {
-                    return callback()
-                }
-            }, 50)
-        }
-
-        var validateController = (rule, value, callback) => {
-            if (this.formItem.type == 'app') {
-                return callback()
-            }
-
-            setTimeout(() => {
-                if (!value) {
-                    callback(new Error(__('请输入菜单控制器名称')))
-                } else {
-                    return callback()
-                }
-            }, 50)
-        }
-
-        var validateName = (rule, value, callback) => {
-            if (!['category', 'controller'].includes(this.formItem.type)) {
-                return callback()
-            }
-
-            setTimeout(() => {
-                if (!value) {
-                    callback(new Error(__('请输入菜单路由名称')))
-                } else {
-                    return callback()
-                }
-            }, 50)
-        }
-
-        var validatePath = (rule, value, callback) => {
-            if (!['category', 'controller'].includes(this.formItem.type)) {
-                return callback()
-            }
-
-            setTimeout(() => {
-                if (!value) {
-                    callback(new Error(__('请输入菜单路由路径')))
-                } else {
-                    return callback()
-                }
-            }, 50)
-        }
-
-        var validateComponent = (rule, value, callback) => {
-            if (!['category', 'controller'].includes(this.formItem.type)) {
-                return callback()
-            }
-
-            setTimeout(() => {
-                if (!value) {
-                    callback(new Error(__('请输入菜单路由组件')))
-                } else {
-                    return callback()
-                }
-            }, 50)
-        }
-
         return {
             formItem: {
                 id: null,
                 pid: [-1],
-                title: '',
                 name: '',
-                path: '',
-                status: true,
-                component: '',
-                icon: '',
-                app: 'admin',
-                controller: '',
-                action: '',
-                type: 'app',
-                siblings: '',
-                rule: 'T'
+                status: true
             },
-            siblings: [],
-            siblingsList: [],
             pidOptions: [],
             oldEditPid: [],
             pidDisabled: true,
-            typeDisabled: true,
             currentParentData: null,
             minForm: false,
             rules: {
-                title: [{
-                    required: true,
-                    message: __('请输入菜单标题')
-                }],
-                app: [{
-                    required: true,
-                    message: __('请输入菜单应用名称')
-                }, {
-                    validator: validateAlphaDash
-                }],
-                action: [{
-                    validator: validateAciton
-                }, {
-                    validator: validateAlphaDash
-                }],
-                controller: [{
-                    validator: validateController
-                }, {
-                    validator: validateAlphaDash
-                }],
                 name: [{
-                    validator: validateName
-                }, {
-                    validator: validateAlphaDash
-                }],
-                path: [{
-                    validator: validatePath
-                }],
-                component: [{
-                    validator: validateComponent
-                }, {
-                    validator: validateAlphaDash
+                    required: true,
+                    message: __('请输入组织名字')
                 }]
             },
             dataTree: [],
             loading: false,
-            nodeRoot: [],
-            loadingSynchrodata: false,
-            synchrodataReplace: false
+            nodeRoot: []
         }
     },
     methods: {
         renderContent(h, {root, node, data}) {
             const status = data.status == 'enable'
             return (<span class='tree-item' style='display: inline-block; width: 100%;'>
-                <span class='tree-item-title' style={{
-                            textDecoration: data.rule == 'T'
-                                ? 'none'
-                                : 'line-through'
-                        }}>{data.title}</span>
+                <span class='tree-item-title'>{data.name}</span>
                 <span class='tree-item-operate' style='display: inline-block;float: right;margin-right: 32px;'>
                     <i-button icon='plus-circled' type='default' shape="circle" size='small' style='margin-right: 8px;' on-click={() => this.append(root, node, data)} disabled={data.type == 'action'
                                     ? true
-                                    : false}>{__('子菜单')}</i-button>
+                                    : false}>{__('子部门')}</i-button>
                     <i-button icon='edit' type='default' shape="circle" size='small' style='margin-right: 8px;' on-click={() => this.edit(root, node, data)}>{__('修改')}</i-button>
                     <i-button icon={status
                             ? 'eye-disabled'
@@ -187,19 +69,6 @@ export default {
                 </span>
             </span>)
         },
-        changeParentId(value, selectedData) {
-            let par = selectedData.pop()
-
-            if(!par.type) {
-                this.formItem.type = 'app'
-            }else if(par.type == 'app') {
-                this.formItem.type = 'category'
-            }else if(par.type == 'category') {
-                this.formItem.type = 'controller'
-            }else if(par.type == 'controller') {
-                this.formItem.type = 'action'
-            }
-        },
         edit(root, node, nodeData) {
             this.minForm = true
             this.currentParentData = nodeData
@@ -219,36 +88,12 @@ export default {
             this.formItem = data
 
             let pidOptions = this.getArraySelect(this.dataTree)
-            pidOptions.unshift({value: -1, label: __('根菜单')})
+            pidOptions.unshift({value: -1, label: __('根组织')})
             this.pidOptions = pidOptions
             let parentID = this.getParentID(root, nodeData).reverse()
             parentID.pop()
             if (parentID.length == 0) {
                 parentID = [-1]
-            }
-
-            if(data.type == 'action') {
-                const parentKey = node.parent
-                if (parentKey !== undefined) {
-                    const parent = root.find(el => el.nodeKey === parentKey).node
-                    let siblingsList = []
-                    if(parent.children) {
-                        parent.children.forEach((item) => {
-                            if(item.id != nodeData.id) {
-                                siblingsList.push({
-                                    id: item.id,
-                                    title: item.title
-                                })
-                            }
-                        })
-                    }
-                    this.$set(this,'siblingsList', siblingsList)
-                }
-
-                this.siblings = this.formItem.siblings ? this.formItem.siblings.split(',').map(item => parseInt(item)) : []
-            }else {
-                this.$set(this,'siblingsList', [])
-                this.siblings = []
             }
 
             setTimeout(() => {
@@ -261,44 +106,14 @@ export default {
             this.currentParentData = nodeData
             this.formItem.id = ''
 
-            // 父级菜单
+            // 父级组织
             let pidOptions = this.getArraySelect(this.dataTree)
-            pidOptions.unshift({value: -1, label: __('根菜单')})
+            pidOptions.unshift({value: -1, label: __('根组织')})
             this.pidOptions = pidOptions
             let parentID = this.getParentID(root, nodeData).reverse()
 
             setTimeout(() => {
                 this.formItem.pid = parentID
-                this.formItem.app = nodeData.app
-
-                if(nodeData.type == 'app') {
-                    this.formItem.type = 'category'
-                    this.formItem.component = 'layout'
-                }else if(nodeData.type == 'category') {
-                    this.formItem.type = 'controller'
-                    this.formItem.component = 'layout'
-                }else if(nodeData.type == 'controller') {
-                    this.formItem.type = 'action'
-                    this.formItem.controller = nodeData.controller
-                }
-
-                // 兄弟菜单
-                if(this.formItem.type == 'action') {
-                    let siblingsList = []
-                    if(nodeData.children) {
-                        nodeData.children.forEach((item) => {
-                            siblingsList.push({
-                                id: item.id,
-                                title: item.title
-                            })
-                        })
-                    }
-                    this.$set(this,'siblingsList', siblingsList)
-                }else {
-                    this.$set(this,'siblingsList', [])
-                }
-
-                this.siblings = []
             })
         },
         getParentID(root, nodeData) {
@@ -319,7 +134,7 @@ export default {
             this.pidDisabled = true
 
             let pidOptions = this.getArraySelect(this.dataTree)
-            pidOptions.unshift({value: -1, label: __('根菜单')})
+            pidOptions.unshift({value: -1, label: __('根组织')})
             this.pidOptions = pidOptions
             setTimeout(() => {
                 this.formItem.pid = [-1]
@@ -332,9 +147,9 @@ export default {
 
             this.$Modal.confirm({
                 title: __('提示'),
-                content: __('确认删除该菜单?'),
+                content: __('确认删除该组织?'),
                 onOk: () => {
-                    this.apiDelete('menu', nodeData.id).then((res) => {
+                    this.apiDelete('structure', nodeData.id).then((res) => {
                         _g.success(res.message)
 
                         const parentKey = root.find(el => el === node).parent
@@ -353,7 +168,7 @@ export default {
             })
         },
         status(nodeData, status) {
-            this.apiPut('menu/enable/', nodeData.id, {status: status}).then((res) => {
+            this.apiPut('structure/enable', nodeData.id, {status: status}).then((res) => {
                 this.$set(nodeData, 'status', status)
                 _g.success(res.message)
             })
@@ -373,7 +188,7 @@ export default {
                 status: type
             }
 
-            this.apiPost('menu/enables', data).then((res) => {
+            this.apiPost('structure/enables', data).then((res) => {
                 selected.forEach((item, key) => {
                     this.$set(item, 'status', type)
                 })
@@ -417,7 +232,7 @@ export default {
                     break
             }
 
-            this.apiPut('menu/order/', nodeData.id, {type: type}).then((res) => {
+            this.apiPut('structure/order', nodeData.id, {type: type}).then((res) => {
                 _g.success(res.message)
 
                 if (parentKey !== undefined) {
@@ -452,22 +267,17 @@ export default {
             return arr
         },
         init: function() {
-            this.apiGet('menu').then((res) => {
+            this.apiGet('structure').then((res) => {
                 this.dataTree = res.data
             })
         },
         getArraySelect(data) {
             let result = []
 
-            data.forEach(({id, title, type, children}) => {
-                if(type == 'action'){
-                    return
-                }
-
+            data.forEach(({id, name, children}) => {
                 let item = {
                     value: id,
-                    label: title,
-                    type: type
+                    label: name
                 }
                 if (children) {
                     item.children = this.getArraySelect(children)
@@ -477,43 +287,23 @@ export default {
             return result
         },
         handleSubmit(form) {
-            if(this.formItem.controller && ['category', 'controller'].includes(this.formItem.type)) {
-                if(!this.formItem.name) {
-                   this.formItem.name = this.formItem.controller
-                }
-
-                if(!this.formItem.path) {
-                   this.formItem.path = this.formItem.controller
-                }
-            }
-
-            if(this.formItem.type == 'action') {
-                this.formItem.siblings = this.siblings ? this.siblings.join(',') : ''
-            }else{
-                this.formItem.siblings = ''
-            }
-
             this.$refs[form].validate((pass) => {
                 if (pass) {
                     this.loading = !this.loading
                     if (!this.formItem.id) {
-                        this.saveMenu(form)
+                        this.saveStructure(form)
                     } else {
-                        this.updateMenu(form)
+                        this.updateStructure(form)
                     }
                 }
             })
         },
-        saveMenu(form) {
-            this.apiPost('menu', this.formItem).then((res) => {
+        saveStructure(form) {
+            this.apiPost('structure', this.formItem).then((res) => {
                 const addNode = {
-                    title: res.data.title,
+                    name: res.data.name,
                     id: res.data.id,
-                    status: res.data.status,
-                    app: res.data.app,
-                    controller: res.data.controller,
-                    action: res.data.action,
-                    type: res.data.type
+                    status: res.data.status
                 }
                 if (this.currentParentData) {
                     let children = this.currentParentData.children || []
@@ -532,13 +322,13 @@ export default {
                 this.loading = !this.loading
             })
         },
-        updateMenu(form) {
-            this.apiPut('menu', this.formItem.id, this.formItem).then((res) => {
+        updateStructure(form) {
+            this.apiPut('structure', this.formItem.id, this.formItem).then((res) => {
                 const parentKey = this.formItem.pid[this.formItem.pid.length - 1]
                 const oldParentKey = this.oldEditPid[this.oldEditPid.length - 1]
 
                 if (parentKey === oldParentKey) {
-                    this.$set(this.currentParentData, 'title', this.formItem.title)
+                    this.$set(this.currentParentData, 'name', this.formItem.name)
                     this.$set(
                         this.currentParentData, 'status', this.formItem.status
                         ? 'enable'
@@ -551,19 +341,7 @@ export default {
                         children.push(this.currentParentData)
                         this.$set(parent, 'children', children)
                         this.$set(parent, 'expand', true)
-
-                        if(parent.type == 'app') {
-                            this.formItem.type = 'category'
-                            this.formItem.component = 'layout'
-                        }else if(parent.type == 'category') {
-                            this.formItem.type = 'controller'
-                            this.formItem.component = 'layout'
-                        }else if(parent.type == 'controller') {
-                            this.formItem.type = 'action'
-                            this.formItem.controller = parent.controller
-                        }
                     } else {
-                        this.$set(this.currentParentData, 'type', 'app')
                         this.dataTree.push(this.currentParentData)
                     }
 
@@ -596,33 +374,9 @@ export default {
         cancelMinForm: function(form) {
             this.minForm = false
             this.handleReset(form)
-        },
-        synchrodataMenu: function(){
-            this.loadingSynchrodata = true
-            let data = {
-                replace: this.synchrodataReplace
-            }
-            this.apiPost('menu/synchrodata', data).then((res) => {
-                _g.success(res.message)
-                this.loadingSynchrodata = false
-            },(res) => {
-                this.loadingSynchrodata = false
-            })
         }
     },
     computed: {
-        showAction: function () {
-            return this.formItem.type === 'action'
-        },
-        showController: function () {
-            return this.formItem.type !== 'app'
-        },
-        showSiblings: function() {
-            return this.formItem.type === 'action'
-        },
-        showRule: function() {
-            return this.formItem.type === 'action'
-        }
     },
     created: function() {
         this.init()

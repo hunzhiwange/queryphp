@@ -3,7 +3,7 @@
 namespace admin\app\service\structure;
 
 use queryyetsimple\mvc\model_not_found;
-use admin\is\repository\admin_structure as repository;
+use admin\is\repository\structure as repository;
 
 /**
  * 后台部门状态更新
@@ -19,14 +19,14 @@ class enable
     /**
      * 后台部门仓储
      *
-     * @var \admin\is\repository\admin_structure
+     * @var \admin\is\repository\structure
      */
     protected $oRepository;
 
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_structure $oRepository
+     * @param \admin\is\repository\structure $oRepository
      * @return void
      */
     public function __construct(repository $oRepository)
@@ -51,7 +51,7 @@ class enable
      *
      * @param int $intId
      * @param string $strStatus
-     * @return \admin\domain\entity\admin_structure
+     * @return \admin\domain\entity\structure
      */
     protected function entify($intId, $strStatus)
     {

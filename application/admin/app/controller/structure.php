@@ -9,6 +9,13 @@ namespace admin\app\controller;
  * @package $$
  * @since 2017.10.23
  * @version 1.0
+ * @menu
+ * @category base-option
+ * @title 部门管理
+ * @name
+ * @path
+ * @component
+ * @icon ios-people
  */
 class structure extends acontroller
 {

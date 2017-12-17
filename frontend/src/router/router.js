@@ -75,19 +75,26 @@ let appRouterData = [
                 title: __('菜单管理'),
                 component: importRouter('menu/index')
             },
+            // {
+            //     path: 'rule',
+            //     icon: '',
+            //     name: 'rule_index',
+            //     title: __('权限管理'),
+            //     component: importRouter('rule/index')
+            // },
+            // {
+            //     path: 'test',
+            //     icon: '',
+            //     name: 'test_index',
+            //     title: __('测试'),
+            //     component: importRouter('test/test')
+            // },
             {
-                path: 'rule',
+                path: 'structure',
                 icon: '',
-                name: 'rule_index',
-                title: __('权限管理'),
-                component: importRouter('rule/index')
-            },
-            {
-                path: 'test',
-                icon: '',
-                name: 'test_index',
-                title: __('测试'),
-                component: importRouter('test/test')
+                name: 'structure_index',
+                title: __('组织管理'),
+                component: importRouter('structure/index')
             }
         ]
     }

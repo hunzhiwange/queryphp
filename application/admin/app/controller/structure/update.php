@@ -14,6 +14,12 @@ use admin\app\service\structure\update as service;
  * @package $$
  * @since 2017.10.23
  * @version 1.0
+ * @menu
+ * @title 更新
+ * @name
+ * @path
+ * @component
+ * @icon
  */
 class update extends aaction
 {
@@ -29,7 +35,7 @@ class update extends aaction
         try {
             $mixResult = $oService->run($this->data());
             return [
-                'message' => '部门更新成功'
+                'message' => __('部门更新成功')
             ];
         } catch (update_failed $oE) {
             return [

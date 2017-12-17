@@ -1,6 +1,6 @@
 <?php
 // (c) 2018 http://your.domain.com All rights reserved.
-namespace admin\domain\service\admin_structure;
+namespace admin\domain\service\structure;
 
 use RuntimeException;
 

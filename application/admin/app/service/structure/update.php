@@ -4,7 +4,7 @@ namespace admin\app\service\structure;
 
 use common\is\tree\tree;
 use queryyetsimple\mvc\model_not_found;
-use admin\is\repository\admin_structure as repository;
+use admin\is\repository\structure as repository;
 
 /**
  * 后台部门编辑更新
@@ -20,14 +20,14 @@ class update
     /**
      * 后台部门仓储
      *
-     * @var \admin\is\repository\admin_structure
+     * @var \admin\is\repository\structure
      */
     protected $oRepository;
 
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_structure $oRepository
+     * @param \admin\is\repository\structure $oRepository
      * @return void
      */
     public function __construct(repository $oRepository)
@@ -50,23 +50,27 @@ class update
      * 验证参数
      *
      * @param array $aStructure
-     * @return \admin\domain\entity\admin_structure
+     * @return \admin\domain\entity\structure
      */
     protected function entify(array $aStructure)
     {
         $objStructure = $this->find($aStructure['id']);
+        $intOldPid = $objStructure->pid;
 
         $aStructure['pid'] = $this->parseParentId($aStructure['pid']);
         if ($aStructure['id'] == $aStructure['pid']) {
-            throw new update_failed('部门父级不能为自己');
+            throw new update_failed(__('部门父级不能为自己'));
         }
 
         if ($this->createTree()->hasChildren($aStructure['id'], [
             $aStructure['pid']
         ])) {
-            throw new update_failed('部门父级不能为自己的子部门');
+            throw new update_failed(__('部门父级不能为自己的子部门'));
         }
 
+        if($intOldPid != $aStructure['pid']) {
+            $aStructure['sort'] = $this->parseSiblingSort($aStructure['pid']);
+        }
         $objStructure->forceProps($this->data($aStructure));
 
         return $objStructure;
@@ -76,7 +80,7 @@ class update
      * 查找实体
      *
      * @param int $intId
-     * @return \admin\domain\entity\admin_structure|void
+     * @return \admin\domain\entity\structure|void
      */
     protected function find($intId)
     {
@@ -145,5 +149,17 @@ class update
         }
 
         return $intPid;
+    }
+
+    /**
+     * 分析兄弟节点最靠下面的排序值
+     *
+     * @param int $nPid
+     * @return int
+     */
+    protected function parseSiblingSort($nPid)
+    {
+        $mixSibling = $this->oRepository->siblingNodeBySort($nPid);
+        return $mixSibling ? $mixSibling->sort-1 : 500;
     }
 }

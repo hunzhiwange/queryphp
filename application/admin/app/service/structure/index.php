@@ -3,7 +3,7 @@
 namespace admin\app\service\structure;
 
 use common\is\tree\tree;
-use admin\is\repository\admin_structure as repository;
+use admin\is\repository\structure as repository;
 
 /**
  * 后台部门列表
@@ -19,14 +19,14 @@ class index
     /**
      * 后台部门仓储
      *
-     * @var \admin\is\repository\admin_menu
+     * @var \admin\is\repository\structure
      */
     protected $oRepository;
 
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_menu $oRepository
+     * @param \admin\is\repository\structure $oRepository
      * @return void
      */
     public function __construct(repository $oRepository)
@@ -41,10 +41,7 @@ class index
      */
     public function run()
     {
-        $arrResult = [];
-        $arrResult['structure'] = $this->parseStructureList($objStructure = $this->oRepository->all());
-        $arrResult['status'] = $this->parseStatus($objStructure);
-        return $arrResult;
+        return $this->parseStructureList($this->oRepository->all());
     }
 
     /**
@@ -55,22 +52,9 @@ class index
      */
     protected function parseStructureList($objMenu)
     {
-        return $this->createTree($objMenu)->forList();
-    }
-
-    /**
-     * 获取状态对比
-     *
-     * @param \queryyetsimple\support\collection $objStructure
-     * @return array
-     */
-    protected function parseStatus($objStructure)
-    {
-        $arrStatus = [];
-        foreach ($objStructure as $objValue) {
-            $arrStatus[$objValue['id']] = $objValue['status'];
-        }
-        return $arrStatus;
+        return $this->createTree($objMenu)->forList(function ($arrItem) {
+            return array_merge(['id' => $arrItem['value']], $arrItem['data']);
+        });
     }
 
     /**
@@ -97,7 +81,7 @@ class index
             $arrNode[] = [
                 $oStructure->id,
                 $oStructure->pid,
-                $oStructure->name
+                $oStructure->toArray()
             ];
         }
         return $arrNode;

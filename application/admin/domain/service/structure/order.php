@@ -1,32 +1,32 @@
 <?php
 // (c) 2018 http://your.domain.com All rights reserved.
-namespace admin\domain\service\admin_menu;
+namespace admin\domain\service\structure;
 
 use queryyetsimple\mvc\model_not_found;
-use admin\is\repository\admin_menu as repository;
+use admin\is\repository\structure as repository;
 
 /**
- * 后台菜单排序更新服务
+ * 后台部门排序更新服务
  *
  * @author Name Your <your@mail.com>
  * @package $$
- * @since 2017.10.12
+ * @since 2017.10.23
  * @version 1.0
  */
 class order
 {
 
     /**
-     * 后台菜单仓储
+     * 后台部门仓储
      *
-     * @var \admin\is\repository\admin_menu
+     * @var \admin\is\repository\structure
      */
     protected $oRepository;
 
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_menu $oRepository
+     * @param \admin\is\repository\structure $oRepository
      * @return void
      */
     public function __construct(repository $oRepository)
@@ -43,9 +43,9 @@ class order
      */
     public function run($intId, $strType)
     {
-        $objMenu = $this->find($intId);
+        $objStructure = $this->find($intId);
 
-        $objCollection = $this->siblings($objMenu['pid']);
+        $objCollection = $this->siblings($objStructure['pid']);
         $intIndex = $this->validAndReturnIndex($intId, $objCollection, $strType);
 
         $this->registerUnitOfWork($objCollection, $intIndex, $strType);
@@ -68,7 +68,7 @@ class order
                 $this->validBottomIndex($intIndex = $this->currentIndex($objCollection, $intId), count($objCollection));
                 break;
             default:
-                throw new order_failed('不受支持的排序操作方式');
+                throw new order_failed(('不受支持的排序操作方式'));
         }
 
         return $intIndex;
@@ -129,7 +129,7 @@ class order
     protected function validTopIndex($intIndex)
     {
         if ($intIndex == 0) {
-            throw new order_failed('已经是顶层节点');
+            throw new order_failed(__('已经是顶层节点'));
         }
     }
 
@@ -143,7 +143,7 @@ class order
     protected function validBottomIndex($intIndex, $intTotal)
     {
         if ($intIndex == $intTotal - 1) {
-            throw new order_failed('已经是最底层节点');
+            throw new order_failed(__('已经是最底层节点'));
         }
     }
 

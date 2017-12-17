@@ -1,32 +1,32 @@
 <?php
 // (c) 2018 http://your.domain.com All rights reserved.
-namespace admin\domain\service\admin_structure;
+namespace admin\domain\service\menu;
 
 use queryyetsimple\mvc\model_not_found;
-use admin\is\repository\admin_structure as repository;
+use common\is\repository\menu as repository;
 
 /**
- * 后台部门排序更新服务
+ * 后台菜单排序更新服务
  *
  * @author Name Your <your@mail.com>
  * @package $$
- * @since 2017.10.23
+ * @since 2017.10.12
  * @version 1.0
  */
 class order
 {
 
     /**
-     * 后台部门仓储
+     * 菜单仓储
      *
-     * @var \admin\is\repository\admin_structure
+     * @var \common\is\repository\menu
      */
     protected $oRepository;
 
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_structure $oRepository
+     * @param \common\is\repository\menu $oRepository
      * @return void
      */
     public function __construct(repository $oRepository)
@@ -43,9 +43,9 @@ class order
      */
     public function run($intId, $strType)
     {
-        $objStructure = $this->find($intId);
+        $objMenu = $this->find($intId);
 
-        $objCollection = $this->siblings($objStructure['pid']);
+        $objCollection = $this->siblings($objMenu['pid']);
         $intIndex = $this->validAndReturnIndex($intId, $objCollection, $strType);
 
         $this->registerUnitOfWork($objCollection, $intIndex, $strType);
@@ -68,7 +68,7 @@ class order
                 $this->validBottomIndex($intIndex = $this->currentIndex($objCollection, $intId), count($objCollection));
                 break;
             default:
-                throw new order_failed('不受支持的排序操作方式');
+                throw new order_failed(__('不受支持的排序操作方式'));
         }
 
         return $intIndex;

@@ -2,8 +2,7 @@
 // (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\structure;
 
-use admin\app\service\structure\destroy_failed;
-use admin\is\repository\admin_structure as repository;
+use admin\is\repository\structure as repository;
 
 /**
  * 后台部门删除
@@ -19,7 +18,7 @@ class destroy
     /**
      * 后台部门仓储
      *
-     * @var \admin\is\repository\admin_structure
+     * @var \admin\is\repository\structure
      */
     protected $oRepository;
 
@@ -33,7 +32,7 @@ class destroy
     /**
      * 构造函数
      *
-     * @param \admin\is\repository\admin_structure $oRepository
+     * @param \admin\is\repository\structure $oRepository
      * @return void
      */
     public function __construct(repository $oRepository)
@@ -56,7 +55,7 @@ class destroy
      * 查找实体
      *
      * @param int $intId
-     * @return \admin\domain\entity\admin_structure|void
+     * @return \admin\domain\entity\structure|void
      */
     protected function find($intId)
     {
@@ -70,7 +69,7 @@ class destroy
     /**
      * 删除实体
      *
-     * @param \admin\domain\entity\admin_structure $objStructure
+     * @param \admin\domain\entity\structure $objStructure
      * @return int
      */
     protected function delete($objStructure)
@@ -88,7 +87,7 @@ class destroy
     protected function checkChildren($intId)
     {
         if ($this->oRepository->hasChildren($intId)) {
-            throw new destroy_failed('部门包含子部门，无法删除');
+            throw new destroy_failed(__('部门包含子部门，无法删除'));
         }
     }
 }
