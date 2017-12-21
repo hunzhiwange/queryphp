@@ -5,7 +5,7 @@ export default {
     },
     methods: {
         itemTitle (item) {
-            return item.title
+            return item.meta ? item.meta.title : ''
         },
         itemIcon (item) {
             return item.icon

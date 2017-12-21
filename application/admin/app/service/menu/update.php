@@ -68,7 +68,7 @@ class update
             throw new update_failed(__('菜单父级不能为自己的子菜单'));
         }
 
-        if($intOldPid != $aStructure['pid']) {
+        if($intOldPid != $objMenu['pid']) {
             $aMenu['sort'] = $this->parseSiblingSort($aMenu['pid']);
         }
         $objMenu->forceProps($this->data($aMenu));
@@ -128,12 +128,11 @@ class update
      */
     protected function data(array $aMenu)
     {
-        return [
+        $aData = [
             'pid' => intval($aMenu['pid']),
             'title' => trim($aMenu['title']),
             'name' => trim($aMenu['name']),
             'path' => trim($aMenu['path']),
-            'sort' => intval($aMenu['sort']),
             'status' => $aMenu['status'] === true ? 'enable' : 'disable',
             'component' => trim($aMenu['component']),
             'icon' => trim($aMenu['icon']),
@@ -144,6 +143,12 @@ class update
             'siblings' => trim($aMenu['siblings']),
             'rule' => trim($aMenu['rule'])
         ];
+
+        if(isset($aMenu['sort'])) {
+            $aData['sort'] = intval($aMenu['sort']);
+        }
+
+        return $aData;
     }
 
     /**

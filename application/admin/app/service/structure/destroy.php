@@ -2,6 +2,7 @@
 // (c) 2018 http://your.domain.com All rights reserved.
 namespace admin\app\service\structure;
 
+use queryyetsimple\mvc\model_not_found;
 use admin\is\repository\structure as repository;
 
 /**

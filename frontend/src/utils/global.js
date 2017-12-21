@@ -3,7 +3,7 @@ import packjson from '../../package.json';
 
 let util = {};
 util.title = function(title) {
-    title = title || 'iView admin';
+    title = title || 'QueryPHP-Vue';
     window.document.title = title;
 };
 
@@ -57,9 +57,11 @@ util.handleItem = function(vm, item) {
     }
 
     return {
-        title: typeof item.title === 'undefined'
-            ? ''
-            : item.title,
+        meta: {
+            title: item.meta && item.meta.title
+                ? item.meta.title
+                : ''
+        },
         icon: typeof item.icon === 'undefined'
             ? ''
             : item.icon,

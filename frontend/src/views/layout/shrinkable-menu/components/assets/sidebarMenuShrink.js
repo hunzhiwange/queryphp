@@ -15,14 +15,13 @@ export default {
     },
     methods: {
         changeMenu (active) {
-            this.$emit('on-change', active);
+            this.$emit('on-change', active)
         },
         itemTitle (item) {
-            if (typeof item.title === 'object') {
-                return this.$t(item.title.i18n);
-            } else {
-                return item.title;
+            if(item.meta) {
+                return item.meta.title
             }
+            return ''
         }
     }
 };

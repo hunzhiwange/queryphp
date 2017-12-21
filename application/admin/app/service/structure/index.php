@@ -50,9 +50,9 @@ class index
      * @param \queryyetsimple\support\collection $objStructure
      * @return array
      */
-    protected function parseStructureList($objMenu)
+    protected function parseStructureList($objStructure)
     {
-        return $this->createTree($objMenu)->forList(function ($arrItem) {
+        return $this->createTree($objStructure)->forList(function ($arrItem) {
             return array_merge(['id' => $arrItem['value']], $arrItem['data']);
         });
     }

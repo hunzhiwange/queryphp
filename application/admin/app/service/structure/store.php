@@ -70,7 +70,7 @@ class store
         return [
             'name' => $aStructure['name'],
             'pid' => intval($aStructure['pid']),
-            'sort' => 500
+            'sort' => intval($aStructure['sort'])
         ];
     }
 

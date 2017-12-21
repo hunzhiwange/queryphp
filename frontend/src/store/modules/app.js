@@ -12,7 +12,9 @@ const app = {
         menuTheme: 'light', // 主题
         themeColor: '',
         pageOpenedDashboard: {
-            title: __('首页'),
+            meta: {
+                title: __('首页')
+            },
             path: '/dashboard',
             name: 'dashboard'
         },
@@ -20,7 +22,9 @@ const app = {
         currentPageName: '',
         currentPath: [
             {
-                title: __('首页'),
+                meta: {
+                    title: __('首页')
+                },
                 icon: 'ios-home-outline',
                 path: '/dashboard',
                 name: 'dashboard'
@@ -39,8 +43,8 @@ const app = {
             state.tagsList.push(...list);
         },
         updateMenulist(state) {
-            let accessCode = parseInt(Cookies.get('access'));
-            let menuList = [];
+            let accessCode = parseInt(Cookies.get('access'))
+            let menuList = []
 
             if (!appRouter) {
                 //return
@@ -68,26 +72,26 @@ const app = {
                 //     }
                 // } else {
                 if (item.children.length === 1) {
-                    menuList.push(item);
+                    menuList.push(item)
                 } else {
-                    let len = menuList.push(item);
-                    let childrenArr = [];
+                    let len = menuList.push(item)
+                    let childrenArr = []
                     childrenArr = item.children.filter(child => {
                         if (child.access !== undefined) {
                             if (global.showThisRoute(child.access, accessCode)) {
-                                return child;
+                                return child
                             }
                         } else {
-                            return child;
+                            return child
                         }
                     });
-                    let handledItem = JSON.parse(JSON.stringify(menuList[len - 1]));
-                    handledItem.children = childrenArr;
-                    menuList.splice(len - 1, 1, handledItem);
+                    let handledItem = JSON.parse(JSON.stringify(menuList[len - 1]))
+                    handledItem.children = childrenArr
+                    menuList.splice(len - 1, 1, handledItem)
                 }
                 //}
             });
-            state.menuList = menuList;
+            state.menuList = menuList
         },
         changeMenuTheme(state, theme) {
             state.menuTheme = theme;

@@ -23,6 +23,7 @@ iView.LoadingBar.config({
 
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start()
+    global.title(to.meta.title)
 
     if(!getToken() && to.name !== 'login') {
         next({

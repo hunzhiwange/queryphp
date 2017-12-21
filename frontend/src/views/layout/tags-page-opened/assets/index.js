@@ -50,7 +50,7 @@ export default {
     },
     methods: {
         itemTitle(item) {
-            return item.title
+            return item.meta ? item.meta.title : ''
         },
         closePage(event, name) {
             let pageOpenedList = this.$store.state.app.pageOpenedList

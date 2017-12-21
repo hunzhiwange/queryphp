@@ -87,7 +87,7 @@ export default {
                 : false
             this.formItem = data
 
-            let pidOptions = this.getArraySelect(this.dataTree)
+            let pidOptions = this.getArraySelect(this.dataTree, true)
             pidOptions.unshift({value: -1, label: __('根组织')})
             this.pidOptions = pidOptions
             let parentID = this.getParentID(root, nodeData).reverse()
@@ -113,6 +113,7 @@ export default {
             let parentID = this.getParentID(root, nodeData).reverse()
 
             setTimeout(() => {
+                this.pidDisabled = true
                 this.formItem.pid = parentID
             })
         },
@@ -271,16 +272,20 @@ export default {
                 this.dataTree = res.data
             })
         },
-        getArraySelect(data) {
+        getArraySelect(data, isEdit) {
             let result = []
 
             data.forEach(({id, name, children}) => {
+                if(isEdit && id == this.formItem.id) {
+                    return
+                }
+
                 let item = {
                     value: id,
                     label: name
                 }
                 if (children) {
-                    item.children = this.getArraySelect(children)
+                    item.children = this.getArraySelect(children, isEdit)
                 }
                 result.push(item)
             })

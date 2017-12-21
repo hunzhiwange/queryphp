@@ -481,6 +481,14 @@ a {
     text-align: center;
 }
 
+.tx-l {
+    text-align: left;
+}
+
+.tx-r {
+    text-align: right;
+}
+
 .bg-wh {
     background: #fff;
 }

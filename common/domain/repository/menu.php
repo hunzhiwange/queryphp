@@ -34,7 +34,7 @@ interface menu extends irepository
     /**
      * 最早(后)一个兄弟节点
      *
-     * @param int $nId
+     * @param int $nPid
      * @param string $strSort
      * @return mixed
      */

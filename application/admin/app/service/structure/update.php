@@ -128,10 +128,16 @@ class update
      */
     protected function data(array $aStructure)
     {
-        return [
+        $aData = [
             'name' => $aStructure['name'],
             'pid' => intval($aStructure['pid'])
         ];
+
+        if(isset($aStructure['sort'])) {
+            $aData['sort'] = intval($aStructure['sort']);
+        }
+
+        return $aData;
     }
 
     /**

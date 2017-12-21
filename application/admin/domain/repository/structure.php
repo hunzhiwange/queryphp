@@ -24,7 +24,7 @@ interface structure extends irepository
     public function all($mixSpecification = null);
 
     /**
-     * 是否存在子菜单
+     * 是否存在子部门
      *
      * @param int $nId
      * @return boolean
@@ -34,7 +34,7 @@ interface structure extends irepository
     /**
      * 最早(后)一个兄弟节点
      *
-     * @param int $nId
+     * @param int $nPid
      * @param string $strSort
      * @return mixed
      */

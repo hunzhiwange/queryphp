@@ -218,7 +218,7 @@ export default {
                 : false
             this.formItem = data
 
-            let pidOptions = this.getArraySelect(this.dataTree)
+            let pidOptions = this.getArraySelect(this.dataTree, true)
             pidOptions.unshift({value: -1, label: __('根菜单')})
             this.pidOptions = pidOptions
             let parentID = this.getParentID(root, nodeData).reverse()
@@ -260,6 +260,7 @@ export default {
             this.minForm = true
             this.currentParentData = nodeData
             this.formItem.id = ''
+            this.pidDisabled = true
 
             // 父级菜单
             let pidOptions = this.getArraySelect(this.dataTree)
@@ -456,11 +457,15 @@ export default {
                 this.dataTree = res.data
             })
         },
-        getArraySelect(data) {
+        getArraySelect(data, isEdit) {
             let result = []
 
             data.forEach(({id, title, type, children}) => {
                 if(type == 'action'){
+                    return
+                }
+
+                if(isEdit && id == this.formItem.id) {
                     return
                 }
 
@@ -470,7 +475,7 @@ export default {
                     type: type
                 }
                 if (children) {
-                    item.children = this.getArraySelect(children)
+                    item.children = this.getArraySelect(children, isEdit)
                 }
                 result.push(item)
             })
@@ -513,7 +518,8 @@ export default {
                     app: res.data.app,
                     controller: res.data.controller,
                     action: res.data.action,
-                    type: res.data.type
+                    type: res.data.type,
+                    rule: res.data.rule
                 }
                 if (this.currentParentData) {
                     let children = this.currentParentData.children || []
@@ -543,6 +549,7 @@ export default {
                         this.currentParentData, 'status', this.formItem.status
                         ? 'enable'
                         : 'disable')
+                    this.$set(this.currentParentData, 'rule', this.formItem.rule)
                 } else {
                     // new parent
                     if (parentKey != -1) {

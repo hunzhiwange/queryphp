@@ -9,26 +9,37 @@ export const commonRouter = [
     {
         path: '/login',
         name: 'login',
-        title: __('登录'),
+        meta: {
+            title: __('登录')
+        },
         component: importRouter('login/index')
     }, {
         path: '/locking',
         name: 'locking',
+        meta: {
+            title: __('系统已锁定')
+        },
         component: importRouter('layout/lockscreen/components/locking-page')
     }, {
         path: '/403',
         name: '403',
-        title: '403 ' + __('权限不足'),
+        meta: {
+            title: '403 ' + __('权限不足')
+        },
         component: importRouter('error-page/403')
     }, {
         path: '/404',
         name: '404',
-        title: '404 ' + __('页面不存在'),
+        meta: {
+            title: '404 ' + __('页面不存在')
+        },
         component: importRouter('error-page/404')
     }, {
         path: '/500',
         name: '500',
-        title: '500 ' + __('服务端错误'),
+        meta: {
+            title: '500 ' + __('服务端错误')
+        },
         component: importRouter('error-page/500')
     }
 ]
@@ -42,18 +53,24 @@ export const otherRouter = {
     children: [
         {
             path: 'dashboard',
-            title: __('首页'),
+            meta: {
+                title: __('首页')
+            },
             name: 'dashboard',
             icon: 'ios-home-outline',
             component: importRouter('dashboard/index')
         }, {
-            title: __('刷新页面'),
+            meta: {
+                title: __('刷新页面')
+            },
             path: 'refresh',
             component: importRouter('layout/refresh'),
             name: 'refresh'
         }, {
             path: 'message',
-            title: __('消息中心'),
+            meta: {
+                title: __('消息中心')
+            },
             name: 'message_index',
             component: importRouter('message/message')
         }
@@ -65,35 +82,36 @@ let appRouterData = [
         path: '/option',
         icon: 'ios-gear',
         name: 'option',
-        title: __('基础设置'),
+        meta: {
+            title: __('基础设置')
+        },
         component: layout,
         children: [
             {
                 path: 'menu',
                 icon: '',
                 name: 'menu_index',
-                title: __('菜单管理'),
+                meta: {
+                    title: __('菜单管理')
+                },
                 component: importRouter('menu/index')
             },
-            // {
-            //     path: 'rule',
-            //     icon: '',
-            //     name: 'rule_index',
-            //     title: __('权限管理'),
-            //     component: importRouter('rule/index')
-            // },
-            // {
-            //     path: 'test',
-            //     icon: '',
-            //     name: 'test_index',
-            //     title: __('测试'),
-            //     component: importRouter('test/test')
-            // },
+            {
+                path: 'position_category',
+                icon: '',
+                name: 'position_category_index',
+                meta: {
+                    title: __('职位分类')
+                },
+                component: importRouter('position_category/index')
+            },
             {
                 path: 'structure',
                 icon: '',
                 name: 'structure_index',
-                title: __('组织管理'),
+                meta: {
+                    title: __('组织管理')
+                },
                 component: importRouter('structure/index')
             }
         ]
