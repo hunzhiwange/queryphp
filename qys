@@ -27,5 +27,5 @@
  * @since 2017.04.28
  * @version 1.0
  */
-require __DIR__ . '/vendor/hunzhiwange/framework/src/queryyetsimple/bootstrap/console/env.php';
-require __DIR__ . '/www/index.php';
+require_once __DIR__ . '/vendor/hunzhiwange/framework/src/queryyetsimple/bootstrap/console/env.php';
+require_once __DIR__ . '/www/index.php';

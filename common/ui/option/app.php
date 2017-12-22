@@ -88,6 +88,7 @@ return [
         'queryyetsimple\queue',
         'queryyetsimple\router',
         'queryyetsimple\session',
+        'queryyetsimple\swoole',
         'queryyetsimple\throttler',
         'queryyetsimple\validate',
         'queryyetsimple\view'

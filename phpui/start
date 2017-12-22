@@ -27,5 +27,5 @@
  * @since 2017.11.21
  * @version 1.0
  */
-require dirname(__DIR__) . '/vendor/hunzhiwange/framework/src/queryyetsimple/bootstrap/phpui/env.php';
-require dirname(__DIR__) . '/www/index.php';
+require_once dirname(__DIR__) . '/vendor/hunzhiwange/framework/src/queryyetsimple/bootstrap/phpui/env.php';
+require_once dirname(__DIR__) . '/www/index.php';

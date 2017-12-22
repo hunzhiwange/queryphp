@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 /*
  * This file is part of the ************************ package.
@@ -19,12 +20,18 @@
  */
 
 /**
- * 单元测试入口文件
+ * swoole_http_server 服务启动入口文件
  *
  * @author Xiangmin Liu<635750556@qq.com>
  * @package $$
- * @since 2017.05.08
+ * @since 2017.12.21
  * @version 1.0
  */
-require_once __DIR__ . '/vendor/hunzhiwange/framework/src/queryyetsimple/bootstrap/testing/env.php';
-require_once __DIR__ . '/www/index.php';
+$_SERVER['argv'] = [
+    'server',
+    'swoole:server',
+    'start'
+];
+
+require_once dirname(__DIR__) . '/vendor/hunzhiwange/framework/src/queryyetsimple/bootstrap/console/env.php';
+require_once dirname(__DIR__) . '/www/index.php';
