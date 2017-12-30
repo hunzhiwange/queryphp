@@ -2,8 +2,10 @@
 // (c) 2018 http://your.domain.com All rights reserved.
 namespace home\app\controller;
 
-use queryyetsimple\mvc\controller;
+//use queryyetsimple\mvc\controller;
 use queryyetsimple\db;
+use qys\mvc\controller;
+use qys\option;
 
 /**
  * index 控制器
@@ -23,12 +25,21 @@ class index extends controller
      */
     public function index()
     {
-       // print_r(db::table('menu')->getAll());
-        
-        //echo 'swoole version:'.SWOOLE_VERSION;
-        //funct();
-        echo 'hello world';
+function gen() {
+    $ret = (yield 'yield1');
+    var_dump($ret);
+    $ret = (yield 'yield2');
+    var_dump($ret);
+}
+
+$gen = gen();
+var_dump($gen->current()); 
+ 
+var_dump($gen->send('ret1'));var_dump($gen->current()); var_dump($gen->current()); var_dump($gen->current()); 
         exit();
-        return $this->display();
+    }
+
+    public function test2(){
+        return 'lm';
     }
 }

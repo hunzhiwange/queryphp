@@ -36,7 +36,7 @@ return [
      * 根据不同的阶段设置不同的开发环境
      * 可以为 production : 生产环境 testing : 测试环境 development : 开发环境
      */
-    'app_environment' => env('app_environment', 'development'),
+    'environment' => env('environment', 'development'),
 
     /**
      * ---------------------------------------------------------------
@@ -45,7 +45,7 @@ return [
      *
      * 打开调试模式可以显示更多精确的错误信息
      */
-    'app_debug' => env('app_debug', false),
+    'debug' => env('debug', false),
 
     /**
      * ---------------------------------------------------------------
@@ -232,7 +232,7 @@ return [
      * 请妥善保管此安全 key,防止密码被人破解
      * queryyetsimple\encryption\encryption 安全 key
      */
-    'app_auth_key' => env('app_auth_key', '7becb888f518b20224a988906df51e05'),
+    'auth_key' => env('app_auth_key', '7becb888f518b20224a988906df51e05'),
 
     /**
      * ---------------------------------------------------------------
@@ -242,7 +242,7 @@ return [
      * 0 表示永不过期
      * queryyetsimple\encryption\encryption 安全过期时间
      */
-    'app_auth_expiry' => 0,
+    'auth_expiry' => 0,
 
     /**
      * ---------------------------------------------------------------

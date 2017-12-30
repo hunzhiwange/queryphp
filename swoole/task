@@ -20,7 +20,7 @@
  */
 
 /**
- * swoole_http_server 服务启动
+ * swoole_http_server 服务任务
  *
  * @author Xiangmin Liu<635750556@qq.com>
  * @package $$
@@ -29,7 +29,7 @@
  */
 $_SERVER['argv'] = [
     'server',
-    'swoole:server'
+    'swoole:task'
 ];
 
 require_once dirname(__DIR__) . '/vendor/hunzhiwange/framework/src/queryyetsimple/bootstrap/console/env.php';
