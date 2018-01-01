@@ -20,17 +20,18 @@
  */
 
 /**
- * swoole_http_server 服务重启
+ * swoole server 服务重启
  *
  * @author Xiangmin Liu<635750556@qq.com>
  * @package $$
  * @since 2017.12.21
  * @version 1.0
  */
-$_SERVER['argv'] = [
-    'server',
-    'swoole:restart'
-];
+$arrArgs = $_SERVER['argv'];
+array_shift($arrArgs);
+array_unshift($arrArgs, 'swoole:restart');
+array_unshift($arrArgs, 'qys');
+$_SERVER['argv'] = $arrArgs;
 
 require_once dirname(__DIR__) . '/vendor/hunzhiwange/framework/src/queryyetsimple/bootstrap/console/env.php';
 require_once dirname(__DIR__) . '/www/index.php';
