@@ -2,10 +2,7 @@
 // (c) 2018 http://your.domain.com All rights reserved.
 namespace home\app\controller;
 
-//use queryyetsimple\mvc\controller;
-use queryyetsimple\db;
-use qys\mvc\controller;
-use qys\option;
+use queryyetsimple\mvc\controller;
 
 /**
  * index 控制器
@@ -25,18 +22,7 @@ class index extends controller
      */
     public function index()
     {
-function gen() {
-    $ret = (yield 'yield1');
-    var_dump($ret);
-    $ret = (yield 'yield2');
-    var_dump($ret);
-}
-
-$gen = gen();
-var_dump($gen->current()); 
- 
-var_dump($gen->send('ret1'));var_dump($gen->current()); var_dump($gen->current()); var_dump($gen->current()); 
-        exit();
+        echo 'hello world';
     }
 
     public function test2(){
