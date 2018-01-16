@@ -22,7 +22,11 @@ class index extends controller
      */
     public function index()
     {
-        echo 'hello world';
+        //echo 'hello world';
+        return $this->display('test2+hello',['navigation' => [
+            ['item'=>'33','caption'=>'333'],
+            ['item'=>'33','caption'=>'5']
+        ]]);
     }
 
     public function test2(){

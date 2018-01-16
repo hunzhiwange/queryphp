@@ -10,7 +10,7 @@ QueryPHP was founded in 2010 and released the first version on 2010.10.03.
 
 ```
 <?php
-$oComposer = require dirname ( __DIR__ ) . '/vendor/autoload.php';
+$oComposer = require_once dirname ( __DIR__ ) . '/vendor/autoload.php';
 queryyetsimple\bootstrap\project::singletons ( $oComposer );
 ```
 

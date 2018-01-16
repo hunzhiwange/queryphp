@@ -1,0 +1,31 @@
+{{ value }}
+
+{{ value['test'] }}
+
+<li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+
+{{ var|escape }}
+{{ var|e }}
+
+{{ list|join=',' }}
+
+{{ data|convert_encoding='iso-2022-jp','UTF-8') }}
+
+{% for item in navigation %}
+    <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+{% endfor %}
+
+{{if users|length > 0}}
+
+{{/if}}
+
+ 
+{% set foo = 'foo' %}
+
+{{each item in navigation }}
+    <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+{{/each}}
+
+{{each for="list" index="i" value="vo"}} 
+    <li><h1>{{title}}</h1>索引 {{i + 1}} ：{{vo}}</li>
+{{/each}}
