@@ -11,5 +11,5 @@
  * see http://www.queryphp.com/v4/execution-flow/single-entry-index.php.html
  */
 version_compare(PHP_VERSION, '7.1.0', '<') && die('PHP 7.1.0 OR Higher');
-$oComposer = require_once dirname(__DIR__) . '/vendor/autoload.php';
-queryyetsimple\bootstrap\project::singletons($oComposer);
+$composer = require_once dirname(__DIR__) . '/vendor/autoload.php';
+queryyetsimple\bootstrap\project::singletons($composer);
