@@ -1,22 +1,5 @@
 <?php
-/*
- * This file is part of the ************************ package.
- * ##########################################################
- * #   ____                          ______  _   _ ______   #
- * #  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
- * # |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
- * #  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
- * #       \__   | \___ |_|    \__  || |    | | | || |      #
- * #     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
- * #                          |___ /  Since 2010.10.03      #
- * ##########################################################
- *
- * The PHP Framework For Code Poem As Free As Wind. <Query Yet Simple>
- * (c) 2010-2017 http://queryphp.com All rights reserved.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+// (c) 2018 http://your.domain.com All rights reserved.
 
 /**
  * 应用全局配置文件
@@ -54,13 +37,14 @@ return [
      *
      * 你可以在这里设置你应用程序的自定义命名空间
      * 相关文档请访问 [执行流程.MVC\命名空间与自动载入.Namespace.Autoload]
+     * 如果在 composer.json 注册过，则不会被重复注册，用于未在 composer 注册临时接管
      * see https://github.com/hunzhiwange/document/blob/master/execution-flow/namespace-and-autoload.md
      */
     'namespace' => [],
 
     /**
      * ---------------------------------------------------------------
-     * 应用提供者
+     * 服务提供者
      * ---------------------------------------------------------------
      *
      * 这里的服务提供者为类的名字，例如 home\is\provider\test
@@ -70,28 +54,28 @@ return [
      * see https://github.com/hunzhiwange/document/blob/master/system-architecture/service-provider.md
      */
     'provider' => [
-        'queryyetsimple\auth',
-        'queryyetsimple\cache',
-        'queryyetsimple\cookie',
-        'queryyetsimple\database',
-        'queryyetsimple\encryption',
-        'queryyetsimple\event',
-        'queryyetsimple\filesystem',
-        'queryyetsimple\http',
-        'queryyetsimple\i18n',
-        'queryyetsimple\log',
-        'queryyetsimple\mail',
-        'queryyetsimple\mvc',
-        'queryyetsimple\option',
-        'queryyetsimple\page',
-        'queryyetsimple\pipeline',
-        'queryyetsimple\queue',
-        'queryyetsimple\router',
-        'queryyetsimple\session',
-        'queryyetsimple\swoole',
-        'queryyetsimple\throttler',
-        'queryyetsimple\validate',
-        'queryyetsimple\view'
+        'Queryyetsimple\Auth',
+        'Queryyetsimple\Cache',
+        'Queryyetsimple\Cookie',
+        'Queryyetsimple\Database',
+        'Queryyetsimple\Encryption',
+        'Queryyetsimple\Event',
+        'Queryyetsimple\Filesystem',
+        'Queryyetsimple\Http',
+        'Queryyetsimple\I18n',
+        'Queryyetsimple\Log',
+        'Queryyetsimple\Mail',
+        'Queryyetsimple\Mvc',
+        'Queryyetsimple\Option',
+        'Queryyetsimple\Page',
+        'Queryyetsimple\Pipeline',
+        'Queryyetsimple\Queue',
+        'Queryyetsimple\Router',
+        'Queryyetsimple\Session',
+        'Queryyetsimple\Swoole',
+        'Queryyetsimple\Throttler',
+        'Queryyetsimple\Validate',
+        'Queryyetsimple\View'
     ],
 
     /**
@@ -117,6 +101,29 @@ return [
 
     /**
      * ---------------------------------------------------------------
+     * 系统运行模板基础路径
+     * ---------------------------------------------------------------
+     *
+     * 系统模板的基础路径，相对于项目而言的路径
+     */
+    'system_path' => 'common/ui/system',    
+
+    /**
+     * ---------------------------------------------------------------
+     * 系统运行模板
+     * ---------------------------------------------------------------
+     *
+     * 系统运行过程中的相关模板，异常，调试等等
+     */
+    'system_template' => [
+        'error' => 'error.php',
+        'exception' => 'exception.php',
+        'trace' => 'trace.php',
+        'url' => 'url.php'
+    ],
+
+    /**
+     * ---------------------------------------------------------------
      * 中间件别名
      * ---------------------------------------------------------------
      *
@@ -124,9 +131,9 @@ return [
      * 例外在应用执行结束后响应环节也会调用 HTTP 中间件
      */
     'middleware_alias' => [
-        'session' => 'queryyetsimple\session\middleware\session',
-        'throttler' => 'queryyetsimple\throttler\middleware\throttler',
-        'log' => 'queryyetsimple\log\middleware\log'
+        'session' => 'Queryyetsimple\Session\Middleware\Session',
+        'throttler' => 'Queryyetsimple\Throttler\Middleware\Throttler',
+        'log' => 'Queryyetsimple\Log\Middleware\Log'
     ],
 
     /**
@@ -230,7 +237,7 @@ return [
      * ---------------------------------------------------------------
      *
      * 请妥善保管此安全 key,防止密码被人破解
-     * queryyetsimple\encryption\encryption 安全 key
+     * Queryyetsimple\Encryption\Encryption 安全 key
      */
     'auth_key' => env('app_auth_key', '7becb888f518b20224a988906df51e05'),
 
@@ -240,7 +247,7 @@ return [
      * ---------------------------------------------------------------
      *
      * 0 表示永不过期
-     * queryyetsimple\encryption\encryption 安全过期时间
+     * Queryyetsimple\Encryption\Encryption 安全过期时间
      */
     'auth_expiry' => 0,
 
