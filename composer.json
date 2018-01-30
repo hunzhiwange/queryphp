@@ -30,10 +30,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Admin\\" : "application/admin",
-            "Home\\" : "application/home",
-            "Phpui\\" : "application/phpui",
-            "Common\\" : "common"
+            "admin\\" : "application/admin",
+            "home\\" : "application/home",
+            "phpui\\" : "application/phpui",
+            "common\\" : "common"
         }
     },
     "extra": {

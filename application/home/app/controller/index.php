@@ -2,7 +2,9 @@
 // (c) 2018 http://your.domain.com All rights reserved.
 namespace home\app\controller;
 
-use Queryyetsimple\Mvc\Controller;
+//use Queryyetsimple\Mvc\Controller;
+
+use Qys\Mvc\Controller;
 
 /**
  * index 控制器
@@ -22,9 +24,26 @@ class index extends Controller
      */
     public function index()
     {
-        //echo $b;
 
-       // session::set('hello', 'world');
+        echo "xxx";
+
+        $event = app('event');
+
+        $event->run('common\domain\event\WildcardsTest', 1, 2, 3, 4);
+
+
+
+        //\Qys\Log::error('1111');
+        // $app = app();
+
+        // $ello = $app->share(function($a){
+        //     echo $a;
+        //     return $a;
+        // });
+
+        // print_r($ello(5));$ello(5);$ello(5);$ello(5);$ello(5);$ello(5);
+
+        /// app()->share();
 
         // aop_before('home\app\controller\hello2->beforetest',function($b)  {
         //     echo 'hello before';

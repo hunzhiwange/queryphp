@@ -27,5 +27,8 @@
  * @since 2017.11.21
  * @version 1.0
  */
-require_once dirname(__DIR__) . '/vendor/hunzhiwange/framework/src/queryyetsimple/bootstrap/phpui/env.php';
+putenv('app_mode=phpui');
+putenv('app_name=phpui');
+putenv('controller_name=start');
+putenv('action_name=index');
 require_once dirname(__DIR__) . '/www/index.php';
