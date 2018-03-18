@@ -2,7 +2,7 @@
 // (c) 2018 http://your.domain.com All rights reserved.
 namespace common\is\provider;
 
-use Queryyetsimple\Bootstrap\Provider\Event as Events;
+use Queryyetsimple\Event\EventProvider;
 
 /**
  * 事件服务提供者
@@ -12,7 +12,7 @@ use Queryyetsimple\Bootstrap\Provider\Event as Events;
  * @since 2018.01.29
  * @version 1.0
  */
-class event extends Events
+class event extends EventProvider
 {
     protected $listeners = [
         'common\domain\event\test' => [

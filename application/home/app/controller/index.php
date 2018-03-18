@@ -4,7 +4,9 @@ namespace home\app\controller;
 
 //use Queryyetsimple\Mvc\Controller;
 
+use Queryyetsimple\Support\Type;
 use Qys\Mvc\Controller;
+use Queryyetsimple\Url;
 
 /**
  * index 控制器
@@ -25,14 +27,18 @@ class index extends Controller
     public function index()
     {
 
-        echo "xxx";
+        print_r($_GET);
 
-        $event = app('event');
+        //Cache::set('ss','222');
 
-        $event->run('common\domain\event\WildcardsTest', 1, 2, 3, 4);
+       // $url = app('url');
+
+        //echo url('test/hello?arg1=1&arg2=3');
 
 
-
+        //$event = app('event');
+        //$event->run('common\domain\event\WildcardsTest', 1, 2, 3, 4);
+        
         //\Qys\Log::error('1111');
         // $app = app();
 
@@ -70,7 +76,7 @@ class index extends Controller
         //     ['item'=>'33','caption'=>'5']
         // ]]);
         
-        echo 'hello';
+        //echo 'hello';
     }
 
     public function test2(){

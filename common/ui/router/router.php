@@ -1,6 +1,6 @@
 <?php
 // (c) 2018 http://your.domain.com All rights reserved.
-use queryyetsimple\router;
+use Queryyetsimple\Router;
 
 /**
  * ---------------------------------------------------------------
@@ -11,17 +11,21 @@ use queryyetsimple\router;
  * 基于当前开发模式读取对应的分组组件
  */
 if (api()) {
-    router::middleware('*', [
+    Router::middleware('*', [
         'common',
         'api'
     ]);
 } elseif (console()) {
-    router::middleware('*', [
+    Router::middleware('*', [
         'common'
     ]);
 } else {
-    router::middleware('*', [
+    Router::middleware('*', [
         'common',
         'web'
     ]);
 }
+
+Router::import('hello-{what}', 'home://topic/index');
+
+//Router::domain('{domain}', 'home://index/index');

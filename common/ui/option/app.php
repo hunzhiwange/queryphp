@@ -63,14 +63,12 @@ return [
         'Queryyetsimple\Encryption\Provider\Register',
         'Queryyetsimple\Event\Provider\Register',
         'Queryyetsimple\Filesystem\Provider\Register',
-        'Queryyetsimple\Http\Provider\Register',
         'Queryyetsimple\I18n\Provider\Register',
         'Queryyetsimple\Log\Provider\Register',
         'Queryyetsimple\Mail\Provider\Register',
         'Queryyetsimple\Mvc\Provider\Register',
         'Queryyetsimple\Option\Provider\Register',
         'Queryyetsimple\Page\Provider\Register',
-        'Queryyetsimple\Pipeline\Provider\Register',
         'Queryyetsimple\Queue\Provider\Register',
         'Queryyetsimple\Router\Provider\Register',
         'Queryyetsimple\Session\Provider\Register',
@@ -286,15 +284,6 @@ return [
 
     /**
      * ---------------------------------------------------------------
-     * url 分割符
-     * ---------------------------------------------------------------
-     *
-     * 你也可以设置为 “-”等，不能设置特殊字符如“=&”等
-     */
-    'pathinfo_depr' => '/',
-
-    /**
-     * ---------------------------------------------------------------
      * 伪静态后缀
      * ---------------------------------------------------------------
      *
@@ -336,7 +325,7 @@ return [
      *
      * 例如 queryphp.com，用于路由解析以及 \Queryyetsimple\Router\Router::url 生成
      */
-    'router_domain_top' => '',
+    'router_domain_top' => env('router_domain_top', ''),
 
     /**
      * ---------------------------------------------------------------
@@ -389,7 +378,7 @@ return [
      * 例如:['[0-9]+', '[a-z]+']
      * see \Queryyetsimple\Router\Router::parsePathInfo
      */
-    'args_regex' => [],
+    'args_regex' => ['[0-9]+', 'v([0-9])+'],
 
     /**
      * ---------------------------------------------------------------
