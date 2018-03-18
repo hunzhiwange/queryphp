@@ -17,7 +17,7 @@
         "hunzhiwange/framework": "dev-master",
         "league/pipeline": "^0.3.0",
         "nesbot/carbon": "^1.22",
-        "swiftmailer/swiftmailer": "^5.0",
+        "swiftmailer/swiftmailer": "6.0.2",
         "league/flysystem": "^1.0",
         "league/flysystem-ziparchive": "^1.0",
         "monolog/monolog": "^1.23",
