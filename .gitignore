@@ -7,7 +7,7 @@
 composer.lock
 node_modules/
 .settings/
-~@~/
+runtime/*.php
 vendor/
 frontend/node_modules/
 frontmulti/node_modules/
