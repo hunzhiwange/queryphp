@@ -27,6 +27,8 @@ class index extends Controller
     public function index()
     {
 
+        echo 'test';
+
         print_r($_GET);
 
         //Cache::set('ss','222');
