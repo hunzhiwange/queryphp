@@ -1,19 +1,6 @@
 <?php
-// [$QueryPHP] A PHP Framework Since 2010.10.03. <Query Yet Simple>
-// ©2010-2017 http://queryphp.com All rights reserved.
+// (c) 2018 http://your.domain.com All rights reserved.
 namespace common\console;
-
-<<<queryphp
-##########################################################
-#   ____                          ______  _   _ ______   #
-#  /     \       ___  _ __  _   _ | ___ \| | | || ___ \  #
-# |   (  ||(_)| / _ \| '__|| | | || |_/ /| |_| || |_/ /  #
-#  \____/ |___||  __/| |   | |_| ||  __/ |  _  ||  __/   #
-#       \__   | \___ |_|    \__  || |    | | | || |      #
-#     Query Yet Simple      __/  |\_|    |_| |_|\_|      #
-#                          |___ /  Since 2010.10.03      #
-##########################################################
-queryphp;
 
 use Q\console\command;
 

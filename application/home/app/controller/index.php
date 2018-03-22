@@ -29,6 +29,8 @@ class index extends Controller
 
         echo 'test';
 
+        echo PHP_VERSION;
+
         print_r($_GET);
 
         //Cache::set('ss','222');
