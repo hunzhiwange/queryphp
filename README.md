@@ -26,6 +26,8 @@ QueryPHP was founded in 2010 and released the first version on 2010.10.03.
  * file that was distributed with this source code.
  */
 
+version_compare(PHP_VERSION, '7.1.0', '<') && die('PHP 7.1.0 OR Higher');
+
 $composer = require_once dirname(__DIR__) . '/vendor/autoload.php';
 Queryyetsimple\Bootstrap\Project::singletons($composer);
 ```
