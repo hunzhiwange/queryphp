@@ -10,8 +10,7 @@ QueryPHP was founded in 2010 and released the first version on 2010.10.03.
 
 ```
 <?php
-/*
- * This file is part of the ************************ package.
+/**
  * _____________                           _______________
  *  ______/     \__  _____  ____  ______  / /_  _________
  *   ____/ __   / / / / _ \/ __`\/ / __ \/ __ \/ __ \___
@@ -19,11 +18,6 @@ QueryPHP was founded in 2010 and released the first version on 2010.10.03.
  *      \_\ \_/\____/\___/_/   / / .___/_/ /_/ .___/
  *         \_\                /_/_/         /_/
  * 
- * The PHP Framework For Code Poem As Free As Wind. <Query Yet Simple>
- * (c) 2010-2018 http://queryphp.com All rights reserved.
- * 
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  */
 
 version_compare(PHP_VERSION, '7.1.0', '<') && die('PHP 7.1.0 OR Higher');
