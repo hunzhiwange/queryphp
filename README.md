@@ -17,7 +17,8 @@ QueryPHP was founded in 2010 and released the first version on 2010.10.03.
  *    __/ / /  / /_/ /  __/ /  \  / /_/ / / / / /_/ /__
  *      \_\ \_/\____/\___/_/   / / .___/_/ /_/ .___/
  *         \_\                /_/_/         /_/
- * 
+ *
+ * (c) 2010-2018 http://queryphp.com All rights reserved.
  */
 
 version_compare(PHP_VERSION, '7.1.0', '<') && die('PHP 7.1.0 OR Higher');
