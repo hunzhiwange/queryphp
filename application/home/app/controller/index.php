@@ -8,6 +8,10 @@ use Queryyetsimple\Support\Type;
 use Qys\Mvc\Controller;
 use Queryyetsimple\Url;
 
+function test() {
+
+}
+
 /**
  * index 控制器
  *
@@ -26,64 +30,43 @@ class index extends Controller
      */
     public function index()
     {
-
-        echo 'test';
-
-        echo PHP_VERSION;
-
-        print_r($_GET);
-
-        //Cache::set('ss','222');
-
-       // $url = app('url');
-
-        //echo url('test/hello?arg1=1&arg2=3');
-
-
-        //$event = app('event');
-        //$event->run('common\domain\event\WildcardsTest', 1, 2, 3, 4);
-        
-        //\Qys\Log::error('1111');
-        // $app = app();
-
-        // $ello = $app->share(function($a){
-        //     echo $a;
-        //     return $a;
-        // });
-
-        // print_r($ello(5));$ello(5);$ello(5);$ello(5);$ello(5);$ello(5);
-
-        /// app()->share();
-
-        // aop_before('home\app\controller\hello2->beforetest',function($b)  {
-        //     echo 'hello before';
-        //     $this->checkAccess();
-        // });
-
-        // aop_before('home\app\controller\hello2->beforetest',function($b)  {
-        //     echo 'hello before2';
-        // });
-
-        // aop_before('home\app\controller\hello2->beforetest',function($b)  {
-        //     echo 'hello before3';
-        // });
-
-        // exit();
-
-        // $hello = new hello();
-        // //echo 'hello_world';
-        // $hello->testBeforAdd1();
-        // exit();
-        //echo 'hello world';
-        // return $this->display('test2+hello',['navigation' => [
-        //     ['item'=>'33','caption'=>'333'],
-        //     ['item'=>'33','caption'=>'5']
-        // ]]);
-        
-        //echo 'hello';
+        print_r([
+            'php_version' => PHP_VERSION,
+            'swoole_version' => extension_loaded('swoole') ? phpversion('swoole') : 'Not installed Or It installed but not running.',
+            'queryyetsimple_version' => extension_loaded('queryyetsimple') ? phpversion('queryyetsimple') : 'Not Installed.',
+        ]);
     }
 
-    public function test2(){
-        return 'lm';
+    public function tests(){
+        return 'I am test!';
+    }
+
+    public function coroutineMysql() {
+        go(function () {
+            \co::sleep(0.5);
+            echo "hello";
+        });
+
+        go('home\app\controller\test');
+        go([$this, 'testMysql']);
+    }
+
+    protected function testMysql() {
+        $mysql = new \Swoole\Coroutine\MySQL();
+        
+        $res = $mysql->connect([
+            'host' => '127.0.0.1', 
+            'user' => 'root', 
+            'password' => '123456', 
+            'database' => 'dhb_data_2'
+        ]);
+
+        if ($res == false) {
+            return 'MySQL connect fail!';
+        }
+
+        $ret = $mysql->query('select sleep(1)');
+
+        echo 'swoole response is ok, result=' . var_export($ret, true);
     }
 }

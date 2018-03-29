@@ -1,0 +1,6 @@
+[2018-03-28 23:34][8192]: Directive 'track_errors' is deprecated <br> File: Unknown <br> Line: 0 []
+[2018-03-28 23:34][8192]: Directive 'track_errors' is deprecated <br> File: Unknown <br> Line: 0 []
+[2018-03-28 23:34][8192]: Directive 'track_errors' is deprecated <br> File: Unknown <br> Line: 0 []
+[2018-03-28 23:37][8]: Use of undefined constant SWOOLE_VERSION - assumed 'SWOOLE_VERSION'<br> File: /data/codes/queryphp/application/home/app/controller/index.php<br> Line: 31 []
+[2018-03-28 23:37][8]: Use of undefined constant SWOOLE_VERSION - assumed 'SWOOLE_VERSION'<br> File: /data/codes/queryphp/application/home/app/controller/index.php<br> Line: 31 []
+[2018-03-28 23:41][8192]: Directive 'track_errors' is deprecated <br> File: Unknown <br> Line: 0 []

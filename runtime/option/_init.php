@@ -1,4 +1,4 @@
-<?php /* 2018-03-25 21:55:00 */ ?>
+<?php /* 2018-03-29 13:07:53 */ ?>
 <?php return array (
   'auth' => 
   array (
@@ -174,7 +174,7 @@
       'filesystem_sftp_port' => '22',
       'filesystem_sftp_username' => 'your-username',
       'filesystem_sftp_password' => 'your-password',
-      'swoole_server' => 'default',
+      'swoole_server' => 'http',
       'view_driver' => 'html',
     ),
     '~routers~' => 
@@ -435,7 +435,7 @@
       'product_description' => 'This project can help people to do things very funny.',
       'product_slogan' => 'To make the world better',
       'file_name' => '',
-      'file_since' => '2018.03.25',
+      'file_since' => '2018.03.29',
       'file_version' => '1.0',
       'file_package' => '$$',
       'file_author' => 'Name Your <your@mail.com>',
@@ -529,7 +529,7 @@
   ),
   'swoole' => 
   array (
-    'default' => 'default',
+    'default' => 'http',
     'server' => 
     array (
       'host' => '127.0.0.1',
@@ -537,19 +537,19 @@
       'worker_num' => 8,
       'daemonize' => 0,
       'task_worker_num' => 4,
-      'process_name' => 'queryswoole',
+      'process_name' => 'queryphp.swoole.default',
       'pid_path' => '/data/codes/queryphp/runtime/swoole/pid/default.pid',
     ),
     'http_server' => 
     array (
-      'process_name' => 'queryswoolehttp',
+      'process_name' => 'queryphp.swoole.http',
       'pid_path' => '/data/codes/queryphp/runtime/swoole/pid/http.pid',
     ),
     'websocket_server' => 
     array (
       'host' => '0.0.0.0',
       'task_worker_num' => 4,
-      'process_name' => 'queryswoolewebsocket',
+      'process_name' => 'queryphp.swoole.websocket',
       'pid_path' => '/data/codes/queryphp/runtime/swoole/pid/websocket.pid',
     ),
   ),
