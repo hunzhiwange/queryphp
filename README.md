@@ -11,11 +11,18 @@
     <img alt="QueryPHP License" src="https://img.shields.io/packagist/l/hunzhiwange/queryphp.svg?style=for-the-badge" /></a>
 </p>
 
+
+# The QueryPHP Application
+
+QueryPHP is a powerful PHP framework for code poem as free as wind. [Query Yet Simple]
+
+QueryPHP was founded in 2010 and released the first version on 2010.10.03.
+
 ## Optional C Extension
 
-<p align="center">
+<p>
   <a href="https://github.com/hunzhiwange/queryyetsimple">
-    <img alt="Queryyetsimple Version" src="https://img.shields.io/badge/queryyyet-%3E=1.0.0-brightgreen.svg" /></a>
+    <img alt="Queryyetsimple Version" src="https://img.shields.io/badge/queryyyetsimple-%3E=1.0.0-brightgreen.svg" /></a>
   <a href="https://github.com/swoole/swoole-src">
     <img alt="Swoole Version" src="https://img.shields.io/badge/swoole-%3E=2.1.1-brightgreen.svg" /></a>
   <a href="https://github.com/apache/thrift/tree/master/lib/php">
@@ -23,12 +30,6 @@
   <a href="http://pecl.php.net/package/inotify">
     <img alt="Inotify Version" src="https://img.shields.io/badge/inotify-%3E=2.0.0-brightgreen.svg" /></a>
 </p>
-
-# The QueryPHP Application
-
-QueryPHP is a powerful PHP framework for code poem as free as wind. [Query Yet Simple]
-
-QueryPHP was founded in 2010 and released the first version on 2010.10.03.
 
 ## Query Yet Simple
 
