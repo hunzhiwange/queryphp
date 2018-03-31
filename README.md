@@ -23,12 +23,14 @@ QueryPHP was founded in 2010 and released the first version on 2010.10.03.
 <p>
   <a href="https://github.com/hunzhiwange/queryyetsimple">
     <img alt="Queryyetsimple Version" src="https://img.shields.io/badge/queryyyetsimple-%3E=1.0.0-brightgreen.svg" /></a>
-  <a href="https://github.com/swoole/swoole-src">
+  <a href="http://pecl.php.net/package/swoole">
     <img alt="Swoole Version" src="https://img.shields.io/badge/swoole-%3E=2.1.1-brightgreen.svg" /></a>
   <a href="https://github.com/apache/thrift/tree/master/lib/php">
     <img alt="Thrift Version" src="https://img.shields.io/badge/thrift-%3E=0.10.0-brightgreen.svg" /></a>
   <a href="http://pecl.php.net/package/inotify">
     <img alt="Inotify Version" src="https://img.shields.io/badge/inotify-%3E=2.0.0-brightgreen.svg" /></a>
+  <a href="http://pecl.php.net/package/v8js">
+    <img alt="V8js Version" src="https://img.shields.io/badge/v8js-%3E=2.1.0-brightgreen.svg" /></a>
 </p>
 
 ## Query Yet Simple
