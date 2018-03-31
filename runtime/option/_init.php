@@ -1,4 +1,4 @@
-<?php /* 2018-03-29 13:07:53 */ ?>
+<?php /* 2018-03-31 14:00:14 */ ?>
 <?php return array (
   'auth' => 
   array (
@@ -435,7 +435,7 @@
       'product_description' => 'This project can help people to do things very funny.',
       'product_slogan' => 'To make the world better',
       'file_name' => '',
-      'file_since' => '2018.03.29',
+      'file_since' => '2018.03.31',
       'file_version' => '1.0',
       'file_package' => '$$',
       'file_author' => 'Name Your <your@mail.com>',

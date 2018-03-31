@@ -1,4 +1,4 @@
-<?php /* 2018-03-29 13:07:53 */ ?>
+<?php /* 2018-03-31 14:00:14 */ ?>
 <?php return array (
   0 => 'Queryyetsimple\\Database\\Console\\Init',
   1 => 'Queryyetsimple\\Database\\Console\\Seedrun',
@@ -17,10 +17,11 @@
   14 => 'Queryyetsimple\\Queue\\Console\\Restart',
   15 => 'Queryyetsimple\\Queue\\Console\\Job',
   16 => 'Queryyetsimple\\Swoole\\Console\\Stop',
-  17 => 'Queryyetsimple\\Swoole\\Console\\Server',
-  18 => 'Queryyetsimple\\Swoole\\Console\\Restart',
-  19 => 'Queryyetsimple\\Swoole\\Console\\Task',
-  20 => 'Queryyetsimple\\Swoole\\Console\\Status',
-  21 => 'Queryyetsimple\\Swoole\\Console\\Lists',
-  22 => 'Queryyetsimple\\Swoole\\Console\\Close',
+  17 => 'Queryyetsimple\\Swoole\\Console\\AutoReload',
+  18 => 'Queryyetsimple\\Swoole\\Console\\Server',
+  19 => 'Queryyetsimple\\Swoole\\Console\\Restart',
+  20 => 'Queryyetsimple\\Swoole\\Console\\Task',
+  21 => 'Queryyetsimple\\Swoole\\Console\\Status',
+  22 => 'Queryyetsimple\\Swoole\\Console\\Lists',
+  23 => 'Queryyetsimple\\Swoole\\Console\\Close',
 ); ?>

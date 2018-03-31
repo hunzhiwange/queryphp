@@ -38,7 +38,7 @@ class index extends Controller
     }
 
     public function tests(){
-        return 'I am test!';
+        return 'I am test33吞吞吐吐拖拖不hhhhhhhhh!';
     }
 
     public function coroutineMysql() {

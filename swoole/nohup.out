@@ -1,0 +1,11 @@
+PHP Fatal error:  Uncaught NotFound: Process#1030 not found. in /data/codes/queryphp/swoole/AutoReload.php:47
+Stack trace:
+#0 /data/codes/queryphp/swoole/daemon.php(7): AutoReload->__construct(1030)
+#1 {main}
+  thrown in /data/codes/queryphp/swoole/AutoReload.php on line 47
+
+Fatal error: Uncaught NotFound: Process#1030 not found. in /data/codes/queryphp/swoole/AutoReload.php:47
+Stack trace:
+#0 /data/codes/queryphp/swoole/daemon.php(7): AutoReload->__construct(1030)
+#1 {main}
+  thrown in /data/codes/queryphp/swoole/AutoReload.php on line 47
