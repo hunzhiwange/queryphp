@@ -53,7 +53,7 @@ QueryPHP was based on the DoYouHaoBaby framework.
 composer create-project hunzhiwange/queryphp myapp
 ```
 
-## Query Yet Simple TO Do Right Things
+## Query Yet Simple To Do Right Things
 
 It is index.php.
 
