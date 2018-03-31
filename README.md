@@ -7,6 +7,8 @@
     <img alt="Build Status" src="https://img.shields.io/travis/hunzhiwange/queryphp.svg?style=for-the-badge" /></a>
   <a href="https://secure.php.net/">
     <img alt="Php Version" src="https://img.shields.io/packagist/php-v/hunzhiwange/queryphp.svg?style=for-the-badge" /></a>
+  <a href="https://github.com/hunzhiwange/queryyetsimple">
+    <img alt="Queryyetsimple Version" src="https://img.shields.io/badge/queryyetsimple-%3E=1.0.0-brightgreen.svg?style=for-the-badge" /></a>
   <a href="https://github.com/swoole/swoole-src">
     <img alt="Swoole Version" src="https://img.shields.io/badge/swoole-%3E=2.1.1-brightgreen.svg?style=for-the-badge" /></a>
   <a href="https://github.com/hunzhiwange/queryphp/blob/master/LICENSE">
@@ -34,7 +36,7 @@ QueryPHP was founded in 2010 and released the first version on 2010.10.03.
  * (c) 2010-2018 http://queryphp.com All rights reserved.
  */
 
-version_compare(PHP_VERSION, '7.1.0', '<') && die('PHP 7.1.0 OR Higher');
+version_compare(PHP_VERSION, '7.1.3', '<') && die('PHP 7.1.0 OR Higher');
 
 $composer = require_once dirname(__DIR__) . '/vendor/autoload.php';
 Queryyetsimple\Bootstrap\Project::singletons($composer);
