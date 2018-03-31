@@ -4,7 +4,7 @@
   <a href="https://github.com/hunzhiwange/queryphp/releases">
     <img alt="Latest Version" src="https://img.shields.io/badge/dev-master-brightgreen.svg?style=for-the-badge" /></a>
   <a href="https://travis-ci.org/hunzhiwange/queryphp">
-    <img alt="Build Status" src="https://travis-ci.org/hunzhiwange/queryphp.svg?branch=master" /></a>
+    <img alt="Build Status" src="https://travis-ci.org/hunzhiwange/queryphp.svg?branch=master&style=for-the-badge" /></a>
   <a href="https://secure.php.net/">
     <img alt="Php Version" src="https://img.shields.io/packagist/php-v/hunzhiwange/queryphp.svg?style=for-the-badge" /></a>
   <a href="https://github.com/swoole/swoole-src">
