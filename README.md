@@ -18,6 +18,8 @@ QueryPHP is a powerful PHP framework for code poem as free as wind. [Query Yet S
 
 QueryPHP was founded in 2010 and released the first version on 2010.10.03.
 
+QueryPHP was based on the DoYouHaoBaby framework.
+
 ## Optional C Extension
 
 <p>
