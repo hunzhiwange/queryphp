@@ -8,7 +8,7 @@
   <a href="https://secure.php.net/">
     <img alt="Php Version" src="https://img.shields.io/packagist/php-v/hunzhiwange/queryphp.svg?style=for-the-badge" /></a>
   <a href="https://github.com/hunzhiwange/queryyetsimple">
-    <img alt="Queryyetsimple Version" src="https://img.shields.io/badge/queryyetsimple-%3E=1.0.0-brightgreen.svg?style=for-the-badge" /></a>
+    <img alt="Queryyetsimple Version" src="https://img.shields.io/badge/queryyyet-%3E=1.0.0-brightgreen.svg?style=for-the-badge" /></a>
   <a href="https://github.com/swoole/swoole-src">
     <img alt="Swoole Version" src="https://img.shields.io/badge/swoole-%3E=2.1.1-brightgreen.svg?style=for-the-badge" /></a>
   <a href="https://github.com/hunzhiwange/queryphp/blob/master/LICENSE">
