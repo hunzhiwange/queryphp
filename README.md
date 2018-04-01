@@ -1,4 +1,4 @@
-![](queryphp.png?t=20180401)
+![](queryphp_logo.png)
 
 <p align="center">
   <a href="https://github.com/hunzhiwange/queryphp/releases">
