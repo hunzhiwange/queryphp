@@ -20,6 +20,12 @@ QueryPHP was founded in 2010 and released the first version on 2010.10.03.
 
 QueryPHP was based on the DoYouHaoBaby framework，we have a large code refactoring.
 
+![](doyouhaobaby.png)
+
+<p>DoYouHaoBaby has a lot of features: MVC, ActiveRecord, i18n, cache, databases, template engine, RBAC, and so on.</p>
+
+<p>DoYouHaoBaby released 0.0.1 version at 2010/10/03, the last version was released in 2014/10 version 3, and now it has stopped maintenance.</p>
+
 ## Optional C Extension
 
 <p>
@@ -34,14 +40,6 @@ QueryPHP was based on the DoYouHaoBaby framework，we have a large code refactor
   <a href="http://pecl.php.net/package/v8js">
     <img alt="V8js Version" src="https://img.shields.io/badge/v8js-%3E=2.1.0-brightgreen.svg" /></a>
 </p>
-
-## About DoYouHaoBaby Framework
-
-![](doyouhaobaby.png)
-
-<p>DoYouHaoBaby has a lot of features: MVC, ActiveRecord, i18n, cache, databases, template engine, RBAC, and so on.</p>
-
-<p>DoYouHaoBaby released 0.0.1 version at 2010/10/03, the last version was released in 2014/10 version 3, and now it has stopped maintenance.</p>
 
 ## How to install
 
