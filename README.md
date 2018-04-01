@@ -18,7 +18,7 @@ QueryPHP is a powerful PHP framework for code poem as free as wind. [Query Yet S
 
 QueryPHP was founded in 2010 and released the first version on 2010.10.03.
 
-QueryPHP was based on the DoYouHaoBaby framework.
+QueryPHP was based on the DoYouHaoBaby framework，we have a large code refactoring.
 
 ## Optional C Extension
 
@@ -35,17 +35,13 @@ QueryPHP was based on the DoYouHaoBaby framework.
     <img alt="V8js Version" src="https://img.shields.io/badge/v8js-%3E=2.1.0-brightgreen.svg" /></a>
 </p>
 
-## About The Old DoYouHaoBaby Framework
+## About DoYouHaoBaby Framework
 
 ![](doyouhaobaby.png)
 
-<p>DoYouHaoBaby 具备了大量丰富的特性: 包括 MVC、ActiveRecord、国际化语言包、缓存组件、主从数据库、模式扩展、模板引擎、RBAC 权限扩展等等。</p>
+<p>DoYouHaoBaby has a lot of features: MVC, ActiveRecord, i18n, cache, databases, template engine, RBAC, and so on.</p>
 
-<p>DoYouHaoBaby 主要用于 WindsForce 社区（停止维护）、Dyhb-blog-x（停止维护）、114.MS 家居装修网（已挂停止维护）等自主产品的开发。</p>
-
-<p>DoYouHaoBaby 于 2010/10/03 发布 0.0.1 版本，最后版本于 2014/10 发布 3.0 版本，感觉功能已经够自己用了并进入停止开发阶段。</p>
-
-<p align="right">小牛哥 2014.10 @ HTTP://DoYouHaoBaby.NET</p>
+<p>DoYouHaoBaby released 0.0.1 version at 2010/10/03, the last version was released in 2014/10 version 3, and now it has stopped maintenance.</p>
 
 ## How to install
 
@@ -70,7 +66,7 @@ It is index.php.
  * (c) 2010-2018 http://queryphp.com All rights reserved.
  */
 
-version_compare(PHP_VERSION, '7.1.3', '<') && die('PHP 7.1.0 OR Higher');
+version_compare(PHP_VERSION, '7.1.3', '<') && die('PHP 7.1.3 OR Higher');
 
 $composer = require_once dirname(__DIR__) . '/vendor/autoload.php';
 Queryyetsimple\Bootstrap\Project::singletons($composer);
