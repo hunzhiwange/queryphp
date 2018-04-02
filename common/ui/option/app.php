@@ -36,6 +36,7 @@ return [
      * ---------------------------------------------------------------
      *
      * 支持系统默认的调试和 whoops 来调试错误信息
+     * 支持的可选值为 default 和 whppos
      */
     'debug_driver' => env('debug_driver', 'default'),
 
