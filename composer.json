@@ -16,7 +16,7 @@
         "php": "^7.1.3",
         "hunzhiwange/framework": "dev-master",
         "zircote/swagger-php": "^2.0",
-        "apache/thrift": "0.10.0"
+        "nunomaduro/collision": "2.0.2"
     },
     "require-dev": {
         "phpunit/phpunit": "~7.0"
