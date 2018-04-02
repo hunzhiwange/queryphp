@@ -1,4 +1,4 @@
-<?php /* 2018-04-02 20:16:48 */ ?>
+<?php /* 2018-04-02 15:14:43 */ ?>
 <?php return array (
   'auth' => 
   array (
@@ -29,6 +29,9 @@
   array (
     'environment' => 'development',
     'debug' => true,
+    'debug_driver' => 'whoops',
+    'custom_exception_template' => '',
+    'custom_exception_message' => '',
     'namespace' => 
     array (
     ),
@@ -132,6 +135,7 @@
     array (
       'environment' => 'development',
       'debug' => 'true',
+      'debug_driver' => 'whoops',
       'app_auth_key' => '7becb888f518b20224a988906df51e05',
       'url_public' => 'http://public.foo.bar',
       'router_domain_top' => '',
@@ -383,13 +387,6 @@
     'path' => '/',
     'expire' => 86400,
     'httponly' => false,
-  ),
-  'debug' => 
-  array (
-    'exception_redirect' => '',
-    'exception_template' => '',
-    'exception_default_message' => 'error',
-    'exception_show_message' => true,
   ),
   'throttler' => 
   array (

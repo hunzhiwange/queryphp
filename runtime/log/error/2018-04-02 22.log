@@ -1,0 +1,77 @@
+[2018-04-02 22:06][1]: Uncaught Error: Class 'Whoops\Run' not found in /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php:76
+Stack trace:
+#0 /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php(47): Queryyetsimple\Bootstrap\Runtime\Runtime::renderExceptionWithWhoops(Object(Exception))
+#1 [internal function]: Queryyetsimple\Bootstrap\Runtime\Runtime::exceptionHandle(Object(Exception))
+#2 {main}
+  thrown <br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php <br> Line: 76 []
+[2018-04-02 22:07][1]: Uncaught Error: Class 'Whoops\Run' not found in /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php:76
+Stack trace:
+#0 /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php(47): Queryyetsimple\Bootstrap\Runtime\Runtime::renderExceptionWithWhoops(Object(Exception))
+#1 [internal function]: Queryyetsimple\Bootstrap\Runtime\Runtime::exceptionHandle(Object(Exception))
+#2 {main}
+  thrown <br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php <br> Line: 76 []
+[2018-04-02 22:11][8192]: Directive 'track_errors' is deprecated <br> File: Unknown <br> Line: 0 []
+[2018-04-02 22:48][1]: Uncaught Error: Wrong parameters for Exception([string $message [, long $code [, Throwable $previous = NULL]]]) in /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php:51
+Stack trace:
+#0 /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php(51): Exception->__construct(Object(Queryyetsimple\Bootstrap\Project), Object(Exception))
+#1 [internal function]: Queryyetsimple\Bootstrap\Runtime\Runtime::exceptionHandle(Object(Exception))
+#2 {main}
+  thrown <br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php <br> Line: 51 []
+[2018-04-02 22:48][1]: Uncaught Error: Wrong parameters for Exception([string $message [, long $code [, Throwable $previous = NULL]]]) in /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php:51
+Stack trace:
+#0 /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php(51): Exception->__construct(Object(Queryyetsimple\Bootstrap\Project), Object(Exception))
+#1 [internal function]: Queryyetsimple\Bootstrap\Runtime\Runtime::exceptionHandle(Object(Exception))
+#2 {main}
+  thrown <br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php <br> Line: 51 []
+[2018-04-02 22:49][1]: Uncaught Error: Wrong parameters for Exception([string $message [, long $code [, Throwable $previous = NULL]]]) in /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php:51
+Stack trace:
+#0 /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php(51): Exception->__construct(Object(Queryyetsimple\Bootstrap\Project), Object(Exception))
+#1 [internal function]: Queryyetsimple\Bootstrap\Runtime\Runtime::exceptionHandle(Object(Exception))
+#2 {main}
+  thrown <br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php <br> Line: 51 []
+[2018-04-02 22:49][1]: Uncaught Error: Wrong parameters for Exception([string $message [, long $code [, Throwable $previous = NULL]]]) in /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php:51
+Stack trace:
+#0 /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php(51): Exception->__construct(Object(Queryyetsimple\Bootstrap\Project), Object(Exception))
+#1 [internal function]: Queryyetsimple\Bootstrap\Runtime\Runtime::exceptionHandle(Object(Exception))
+#2 {main}
+  thrown <br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php <br> Line: 51 []
+[2018-04-02 22:50][1]: Uncaught Error: Wrong parameters for Exception([string $message [, long $code [, Throwable $previous = NULL]]]) in /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php:51
+Stack trace:
+#0 /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php(51): Exception->__construct(Object(Queryyetsimple\Bootstrap\Project), Object(Exception))
+#1 [internal function]: Queryyetsimple\Bootstrap\Runtime\Runtime::exceptionHandle(Object(Exception))
+#2 {main}
+  thrown <br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php <br> Line: 51 []
+[2018-04-02 22:50][1]: Uncaught Error: Wrong parameters for Exception([string $message [, long $code [, Throwable $previous = NULL]]]) in /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php:51
+Stack trace:
+#0 /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php(51): Exception->__construct(Object(Queryyetsimple\Bootstrap\Project), Object(Exception))
+#1 [internal function]: Queryyetsimple\Bootstrap\Runtime\Runtime::exceptionHandle(Object(Exception))
+#2 {main}
+  thrown <br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php <br> Line: 51 []
+[2018-04-02 22:51][1]: Uncaught Error: Call to a member function get() on null in /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Message.php:67
+Stack trace:
+#0 /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Exception.php(74): Queryyetsimple\Bootstrap\Runtime\Message->log('[0] i am is! in...')
+#1 /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php(50): Queryyetsimple\Bootstrap\Runtime\Exception->run()
+#2 [internal function]: Queryyetsimple\Bootstrap\Runtime\Runtime::exceptionHandle(Object(Exception))
+#3 {main}
+  thrown <br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Message.php <br> Line: 67 []
+[2018-04-02 22:52][0] i am is! index.php line 33 []
+[2018-04-02 22:53][0] i am is! index.php line 33 []
+[2018-04-02 22:53][0] i am is! index.php line 33 []
+[2018-04-02 22:54][0] i am is! index.php line 33 []
+[2018-04-02 22:54][0] i am is! index.php line 33 []
+[2018-04-02 22:54][8192]: Directive 'track_errors' is deprecated <br> File: Unknown <br> Line: 0 []
+[2018-04-02 22:54][0] i am is! index.php line 33 []
+[2018-04-02 22:54][0] i am is! index.php line 33 []
+[2018-04-02 22:55][0] i am is! index.php line 33 []
+[2018-04-02 22:56][0] i am is! index.php line 33 []
+[2018-04-02 22:56][1]: Uncaught Error: Call to undefined method Whoops\Run::setPageTitle() in /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Exception.php:363
+Stack trace:
+#0 /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Exception.php(77): Queryyetsimple\Bootstrap\Runtime\Exception->renderExceptionWithWhoops(Object(Exception))
+#1 /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php(50): Queryyetsimple\Bootstrap\Runtime\Exception->run()
+#2 [internal function]: Queryyetsimple\Bootstrap\Runtime\Runtime::exceptionHandle(Object(Exception))
+#3 {main}
+  thrown <br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Exception.php <br> Line: 363 []
+[2018-04-02 22:58][0] i am is! index.php line 33 []
+[2018-04-02 22:58][8192]: Directive 'track_errors' is deprecated <br> File: Unknown <br> Line: 0 []
+[2018-04-02 22:58][0] i am is! index.php line 33 []
+[2018-04-02 22:59][0] i am is! index.php line 33 []

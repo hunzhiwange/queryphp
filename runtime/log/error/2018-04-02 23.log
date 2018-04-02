@@ -1,0 +1,19 @@
+[2018-04-02 23:01][0] i am is! index.php line 33 []
+[2018-04-02 23:01][0] i am is! index.php line 33 []
+[2018-04-02 23:01][0] i am is! index.php line 33 []
+[2018-04-02 23:01][8192]: Directive 'track_errors' is deprecated <br> File: Unknown <br> Line: 0 []
+[2018-04-02 23:01][0] i am is! index.php line 33 []
+[2018-04-02 23:03][0] i am is! index.php line 33 []
+[2018-04-02 23:03][1]: Uncaught Error: Class 'Queryyetsimple\Bootstrap\Runtime\JsonResponseHandler' not found in /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Exception.php:365
+Stack trace:
+#0 /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Exception.php(77): Queryyetsimple\Bootstrap\Runtime\Exception->renderExceptionWithWhoops(Object(Exception))
+#1 /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php(50): Queryyetsimple\Bootstrap\Runtime\Exception->run()
+#2 [internal function]: Queryyetsimple\Bootstrap\Runtime\Runtime::exceptionHandle(Object(Exception))
+#3 {main}
+  thrown <br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Exception.php <br> Line: 365 []
+[2018-04-02 23:03][0] i am is! index.php line 33 []
+[2018-04-02 23:03][0] i am is! index.php line 33 []
+[2018-04-02 23:04][0] i am is! index.php line 33 []
+[2018-04-02 23:04][8192]: Directive 'track_errors' is deprecated <br> File: Unknown <br> Line: 0 []
+[2018-04-02 23:05][0] i am is! index.php line 33 []
+[2018-04-02 23:05][0] i am is! index.php line 33 []
