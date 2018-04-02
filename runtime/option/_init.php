@@ -1,4 +1,4 @@
-<?php /* 2018-03-31 20:02:29 */ ?>
+<?php /* 2018-04-02 20:16:48 */ ?>
 <?php return array (
   'auth' => 
   array (
@@ -435,7 +435,7 @@
       'product_description' => 'This project can help people to do things very funny.',
       'product_slogan' => 'To make the world better',
       'file_name' => '',
-      'file_since' => '2018.03.31',
+      'file_since' => '2018.04.02',
       'file_version' => '1.0',
       'file_package' => '$$',
       'file_author' => 'Name Your <your@mail.com>',
@@ -530,6 +530,12 @@
   'swoole' => 
   array (
     'default' => 'http',
+    'autoreload_after_seconds' => 10,
+    'autoreload_watch_dir' => 
+    array (
+      0 => '/data/codes/queryphp/application',
+      1 => '/data/codes/queryphp/common',
+    ),
     'server' => 
     array (
       'host' => '127.0.0.1',

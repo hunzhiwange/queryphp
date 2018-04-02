@@ -1,4 +1,4 @@
-<?php /* 2018-03-30 21:51:11 */ ?>
+<?php /* 2018-04-02 20:16:48 */ ?>
 <?php return array (
   'domains' => 
   array (
@@ -32,6 +32,7 @@
     '*' => 
     array (
       0 => 'Queryyetsimple\\Log\\Middleware\\Log',
+      1 => 'Queryyetsimple\\Session\\Middleware\\Session',
     ),
   ),
   'methods' => 

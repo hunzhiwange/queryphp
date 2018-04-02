@@ -1,0 +1,3 @@
+[2018-04-02 19:08][2]: fsockopen(): unable to connect to 127.0.0.1:8099 (Connection refused)<br> File: /data/codes/queryphp/vendor/apache/thrift/lib/php/lib/Thrift/Transport/TSocket.php<br> Line: 233 []
+[2018-04-02 19:08][0] TSocket: Could not connect to 127.0.0.1:8099 (Connection refused [111]) TSocket.php line 242 []
+[2018-04-02 19:08][8192]: Directive 'track_errors' is deprecated <br> File: Unknown <br> Line: 0 []

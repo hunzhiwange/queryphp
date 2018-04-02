@@ -15,15 +15,8 @@
     "require": {
         "php": "^7.1.3",
         "hunzhiwange/framework": "dev-master",
-        "league/pipeline": "^0.3.0",
-        "nesbot/carbon": "^1.22",
-        "swiftmailer/swiftmailer": "6.0.2",
-        "league/flysystem": "^1.0",
-        "league/flysystem-ziparchive": "^1.0",
-        "monolog/monolog": "^1.23",
         "zircote/swagger-php": "^2.0",
-        "twig/twig": "~2.0",
-        "nikic/php-parser": "v4.0.0alpha3"
+        "apache/thrift": "0.10.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~7.0"

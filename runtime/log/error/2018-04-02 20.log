@@ -1,0 +1,12 @@
+[2018-04-02 20:15][0] i am is! index.php line 33 []
+[2018-04-02 20:16][1]: Uncaught Error: Using $this when not in object context in /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php:47
+Stack trace:
+#0 [internal function]: Queryyetsimple\Bootstrap\Runtime\Runtime::exceptionHandle(Object(Exception))
+#1 {main}
+  thrown <br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php <br> Line: 47 []
+[2018-04-02 20:16][1]: Uncaught Error: Class 'Whoops\Run' not found in /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php:76
+Stack trace:
+#0 /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php(47): Queryyetsimple\Bootstrap\Runtime\Runtime::renderExceptionWithWhoops(Object(Exception))
+#1 [internal function]: Queryyetsimple\Bootstrap\Runtime\Runtime::exceptionHandle(Object(Exception))
+#2 {main}
+  thrown <br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Runtime/Runtime.php <br> Line: 76 []

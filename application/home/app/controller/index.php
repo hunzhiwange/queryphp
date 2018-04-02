@@ -30,6 +30,46 @@ class index extends Controller
      */
     public function index()
     {
+        throw new \Exception('i am is!');
+
+        return;
+
+        //$client = new \Queryyetsimple\Client\Rpc;
+
+        //dd($client);
+        //
+        
+        // 引入客户端文件
+        //require_once __DIR__ . "/Thrift/ClassLoader/ThriftClassLoader.php";
+        // use Thrift\ClassLoader\ThriftClassLoader;
+        // use Thrift\Protocol\TBinaryProtocol;
+        // use Thrift\Transport\TSocket;
+        // use Thrift\Transport\TFramedTransport;
+
+        // $loader = new ThriftClassLoader();
+        // $loader->registerNamespace('Thrift', __DIR__);
+        // $loader->registerNamespace('Swoole', __DIR__);
+        // $loader->registerNamespace('Services', __DIR__);
+        // $loader->registerDefinition('Services',  __DIR__);
+        // $loader->register();
+
+        $socket = new \Thrift\Transport\TSocket("127.0.0.1", 8099);
+        $transport = new \Thrift\Transport\TFramedTransport($socket);
+        $protocol = new \Thrift\Protocol\TBinaryProtocol($transport);
+        $transport->open();
+
+    
+        $client = new \Queryyetsimple\Protocol\Thrift\ThriftClient($protocol);
+        $message = new \Queryyetsimple\Protocol\Thrift\RequestStruct(array('send_uid' => 350749960, 'name' => 'rango'));
+        $ret = $client->call($message);
+        dd($ret);
+
+        $transport->close();
+
+        exit();
+
+        dump(class_exists('Thrift\Server\TServerSocket'));
+
         print_r([
             'php_version' => PHP_VERSION,
             'swoole_version' => extension_loaded('swoole') ? phpversion('swoole') : 'Not installed Or It installed but not running.',
