@@ -1,4 +1,4 @@
-<?php /* 2018-04-02 23:14:43 */ ?>
+<?php /* 2018-04-04 19:06:02 */ ?>
 <?php return array (
   0 => 'Queryyetsimple\\Database\\Console\\Init',
   1 => 'Queryyetsimple\\Database\\Console\\Seedrun',
@@ -24,5 +24,6 @@
   21 => 'Queryyetsimple\\Swoole\\Console\\Status',
   22 => 'Queryyetsimple\\Swoole\\Console\\Lists',
   23 => 'Queryyetsimple\\Swoole\\Console\\ThriftRpc',
-  24 => 'Queryyetsimple\\Swoole\\Console\\Close',
+  24 => 'Queryyetsimple\\Swoole\\Console\\Rpc',
+  25 => 'Queryyetsimple\\Swoole\\Console\\Close',
 ); ?>

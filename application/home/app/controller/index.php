@@ -30,9 +30,11 @@ class index extends Controller
      */
     public function index()
     {
-        throw new \Exception('i am is!');
 
-        return;
+        echo \Leevel\Hello::say();
+        //throw new \Exception('i am is!');
+
+        //return;
 
         //$client = new \Queryyetsimple\Client\Rpc;
 
@@ -57,10 +59,10 @@ class index extends Controller
         $transport = new \Thrift\Transport\TFramedTransport($socket);
         $protocol = new \Thrift\Protocol\TBinaryProtocol($transport);
         $transport->open();
-
+echo PHP_VERSION;
     
-        $client = new \Queryyetsimple\Protocol\Thrift\ThriftClient($protocol);
-        $message = new \Queryyetsimple\Protocol\Thrift\RequestStruct(array('send_uid' => 350749960, 'name' => 'rango'));
+        $client = new \Queryyetsimple\Protocol\Thrift\Service\ThriftClient($protocol);
+        $message = new \Queryyetsimple\Protocol\Thrift\Service\Request(array('send_uid' => 350749960, 'name' => 'rango'));
         $ret = $client->call($message);
         dd($ret);
 

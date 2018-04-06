@@ -1,4 +1,4 @@
-<?php /* 2018-04-02 23:16:17 */ ?>
+<?php /* 2018-04-05 00:02:32 */ ?>
 <?php return array (
   'auth' => 
   array (
@@ -432,7 +432,7 @@
       'product_description' => 'This project can help people to do things very funny.',
       'product_slogan' => 'To make the world better',
       'file_name' => '',
-      'file_since' => '2018.04.02',
+      'file_since' => '2018.04.05',
       'file_version' => '1.0',
       'file_package' => '$$',
       'file_author' => 'Name Your <your@mail.com>',
@@ -536,7 +536,7 @@
     'server' => 
     array (
       'host' => '127.0.0.1',
-      'port' => '9501',
+      'port' => '9500',
       'worker_num' => 8,
       'daemonize' => 0,
       'task_worker_num' => 4,
@@ -545,15 +545,31 @@
     ),
     'http_server' => 
     array (
+      'port' => '9501',
       'process_name' => 'queryphp.swoole.http',
       'pid_path' => '/data/codes/queryphp/runtime/swoole/pid/http.pid',
     ),
     'websocket_server' => 
     array (
       'host' => '0.0.0.0',
+      'port' => '9502',
       'task_worker_num' => 4,
       'process_name' => 'queryphp.swoole.websocket',
       'pid_path' => '/data/codes/queryphp/runtime/swoole/pid/websocket.pid',
+    ),
+    'rpc_server' => 
+    array (
+      'host' => '127.0.0.1',
+      'port' => '1355',
+      'task_worker_num' => 4,
+      'dispatch_mode' => 1,
+      'open_length_check' => true,
+      'package_max_length' => 8192000,
+      'package_length_type' => 'N',
+      'package_length_offset' => 0,
+      'package_body_offset' => 4,
+      'process_name' => 'queryphp.swoole.rpc',
+      'pid_path' => '/data/codes/queryphp/runtime/swoole/pidrpc.pid',
     ),
   ),
 ); ?>
