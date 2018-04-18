@@ -1,0 +1,4 @@
+[2018-04-07 16:01][0] The node home\app\controller\hello->index() is not registered. Router.php line 1305 []
+[2018-04-07 16:01][0] The node home\app\controller\hello->index() is not registered. Router.php line 1305 []
+[2018-04-07 16:03][0] The node home\app\controller\hello->index() is not registered. Router.php line 1305 []
+[2018-04-07 16:14][0] The node home\app\controller\index->index() is not registered. Router.php line 1312 []

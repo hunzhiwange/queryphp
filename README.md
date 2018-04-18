@@ -80,8 +80,8 @@ It is index.php.
 
 version_compare(PHP_VERSION, '7.1.3', '<') && die('PHP 7.1.3 OR Higher');
 
-$composer = require_once dirname(__DIR__) . '/vendor/autoload.php';
-Queryyetsimple\Bootstrap\Project::singletons($composer);
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+Leevel\Bootstrap\Project::singletons();
 ```
 
 ## Official Documentation

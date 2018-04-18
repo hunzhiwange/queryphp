@@ -1,0 +1,7 @@
+[2018-04-16 21:46][8]: Uninitialized string offset: 1<br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Router/Match/Url.php<br> Line: 106 []
+[2018-04-16 21:46][8]: Undefined index: _<br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Router/Match/Url.php<br> Line: 136 []
+[2018-04-16 21:46][2]: Invalid argument supplied for foreach()<br> File: /data/codes/queryphp/vendor/hunzhiwange/framework/src/Queryyetsimple/Router/Match/Url.php<br> Line: 152 []
+[2018-04-16 21:46][0] The node App\App\Controller\->() is not registered. Router.php line 1109 []
+[2018-04-16 21:46][0] The node Group\App\Controller\Blog->list() is not registered. Router.php line 1109 []
+[2018-04-16 21:50][0] The node Group\App\Controller\Blog->list() is not registered. Router.php line 1109 []
+[2018-04-16 21:51][0] The node Group\App\Controller\Blog->list() is not registered. Router.php line 1109 []

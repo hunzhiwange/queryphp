@@ -145,7 +145,7 @@ return [
      * swoole rpc 服务器配置参数
      * 底层基于 thrift 跨语言编程框架
      * http://thrift.apache.org/    
-     * 定义的 thrift 结构见 src/Queryyetsimple/Protocol/Thrift/Struct/queryphp.thrift
+     * 定义的 thrift 结构见 src/Leevel/Protocol/Thrift/Struct/queryphp.thrift
      */
     'rpc_server' => [
         // 监听 IP 地址

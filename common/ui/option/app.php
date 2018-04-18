@@ -87,29 +87,30 @@ return [
     'provider' => [
 
         // 框架服务提供者
-        'Queryyetsimple\Auth\Provider\Register',
-        'Queryyetsimple\Cache\Provider\Register',
-        'Queryyetsimple\Cookie\Provider\Register',
-        'Queryyetsimple\Database\Provider\Register',
-        'Queryyetsimple\Encryption\Provider\Register',
-        'Queryyetsimple\Event\Provider\Register',
-        'Queryyetsimple\Filesystem\Provider\Register',
-        'Queryyetsimple\I18n\Provider\Register',
-        'Queryyetsimple\Log\Provider\Register',
-        'Queryyetsimple\Mail\Provider\Register',
-        'Queryyetsimple\Mvc\Provider\Register',
-        'Queryyetsimple\Option\Provider\Register',
-        'Queryyetsimple\Page\Provider\Register',
-        'Queryyetsimple\Queue\Provider\Register',
-        'Queryyetsimple\Router\Provider\Register',
-        'Queryyetsimple\Session\Provider\Register',
-        'Queryyetsimple\Swoole\Provider\Register',
-        'Queryyetsimple\Throttler\Provider\Register',
-        'Queryyetsimple\Validate\Provider\Register',
-        'Queryyetsimple\View\Provider\Register',
+        'Leevel\Auth\Provider\Register',
+        'Leevel\Cache\Provider\Register',
+        'Leevel\Cookie\Provider\Register',
+        'Leevel\Database\Provider\Register',
+        'Leevel\Encryption\Provider\Register',
+        'Leevel\Event\Provider\Register',
+        'Leevel\Filesystem\Provider\Register',
+        'Leevel\I18n\Provider\Register',
+        'Leevel\Log\Provider\Register',
+        'Leevel\Mail\Provider\Register',
+        'Leevel\Mvc\Provider\Register',
+        'Leevel\Option\Provider\Register',
+        'Leevel\Page\Provider\Register',
+        'Leevel\Queue\Provider\Register',
+        'Leevel\Router\Provider\Register',
+        'Leevel\Session\Provider\Register',
+        'Leevel\Swoole\Provider\Register',
+        'Leevel\Throttler\Provider\Register',
+        'Leevel\Validate\Provider\Register',
+        'Leevel\View\Provider\Register',
 
         // 应用服务提供者
-        'common\is\provider\event'
+        'Common\Infra\Provider\Event',
+        'Common\Infra\Provider\Router'
     ],
 
     /**
@@ -141,7 +142,7 @@ return [
      * ---------------------------------------------------------------
      *
      * 是否启用严格事件通配符匹配模式,使用启用严格匹配，参数匹配正则结尾会加入 $ 标志
-     * see \Queryyetsimple\Event\Dispatch::prepareRegexForWildcard
+     * see \Leevel\Event\Dispatch::prepareRegexForWildcard
      */
     'event_strict' => false,
 
@@ -175,9 +176,9 @@ return [
      * 例外在应用执行结束后响应环节也会调用 HTTP 中间件
      */
     'middleware_alias' => [
-        'session' => 'Queryyetsimple\Session\Middleware\Session',
-        'throttler' => 'Queryyetsimple\Throttler\Middleware\Throttler',
-        'log' => 'Queryyetsimple\Log\Middleware\Log'
+        'session' => 'Leevel\Session\Middleware\Session',
+        'throttler' => 'Leevel\Throttler\Middleware\Throttler',
+        'log' => 'Leevel\Log\Middleware\Log'
     ],
 
     /**
@@ -281,7 +282,7 @@ return [
      * ---------------------------------------------------------------
      *
      * 请妥善保管此安全 key,防止密码被人破解
-     * \Queryyetsimple\Encryption\Encryption 安全 key
+     * \Leevel\Encryption\Encryption 安全 key
      */
     'auth_key' => env('app_auth_key', '7becb888f518b20224a988906df51e05'),
 
@@ -291,7 +292,7 @@ return [
      * ---------------------------------------------------------------
      *
      * 0 表示永不过期
-     * \Queryyetsimple\Encryption\Encryption 安全过期时间
+     * \Leevel\Encryption\Encryption 安全过期时间
      */
     'auth_expiry' => 0,
 
@@ -342,28 +343,19 @@ return [
 
     /**
      * ---------------------------------------------------------------
-     * 是否开启域名路由解析
-     * ---------------------------------------------------------------
-     *
-     * 开启域名解析路由会首先去尝试匹配域名中是否存在路由
-     */
-    'router_domain_on' => true,
-
-    /**
-     * ---------------------------------------------------------------
      * 顶级域名
      * ---------------------------------------------------------------
      *
-     * 例如 queryphp.com，用于路由解析以及 \Queryyetsimple\Router\Router::url 生成
+     * 例如 queryphp.com，用于路由解析以及 \Leevel\Router\Router::url 生成
      */
-    'router_domain_top' => env('router_domain_top', ''),
+    'top_domain' => env('top_domain', ''),
 
     /**
      * ---------------------------------------------------------------
      * url 生成是否开启子域名
      * ---------------------------------------------------------------
      *
-     * 开启 url 子域名功能，用于 \Queryyetsimple\Router\Router::url 生成
+     * 开启 url 子域名功能，用于 \Leevel\Router\Router::url 生成
      */
     'make_subdomain_on' => false,
 
@@ -384,7 +376,7 @@ return [
      * 当系统路由匹配失败后将会进行 pathinfo 解析
      * 系统可以为 restful 提供智能解析
      *
-     * @see \Queryyetsimple\Router\Router::pathinfoRestful
+     * @see \Leevel\Router\Router::pathinfoRestful
      */
     'pathinfo_restful' => true,
 
@@ -395,7 +387,7 @@ return [
      *
      * 系统进行 pathinfo 解析时将存在这个数组中的值放入参数
      * 其中如果是数字系统默认也会放进去
-     * see \Queryyetsimple\Router\Router:parsePathInfo
+     * see \Leevel\Router\Router:parsePathInfo
      */
     'args_protected' => [],
 
@@ -407,7 +399,7 @@ return [
      * 系统进行 pathinfo 解析时将匹配数据放入参数
      * regex 是对 args_protected 的一种补充
      * 例如:['[0-9]+', '[a-z]+']
-     * see \Queryyetsimple\Router\Router::parsePathInfo
+     * see \Leevel\Router\Router::parsePathInfo
      */
     'args_regex' => ['[0-9]+', 'v([0-9])+'],
 
@@ -417,7 +409,7 @@ return [
      * ---------------------------------------------------------------
      *
      * 是否启用严格 args 匹配模式,使用启用严格匹配，参数匹配正则结尾会加入 $ 标志
-     * see \Queryyetsimple\Router\Router::parsePathInfo
+     * see \Leevel\Router\Router::parsePathInfo
      */
     'args_strict' => false,
 
@@ -427,7 +419,7 @@ return [
      * ---------------------------------------------------------------
      *
      * 是否启用严格中间件匹配模式,使用启用严格匹配，参数匹配正则结尾会加入 $ 标志
-     * see \Queryyetsimple\Router\Router::getMiddleware
+     * see \Leevel\Router\Router::getMiddleware
      */
     'middleware_strict' => false,
 
@@ -437,7 +429,7 @@ return [
      * ---------------------------------------------------------------
      *
      * 是否启用严格 HTTP 方法匹配模式,使用启用严格匹配，参数匹配正则结尾会加入 $ 标志
-     * see \Queryyetsimple\Router\Router::getMethod
+     * see \Leevel\Router\Router::getMethod
      */
     'method_strict' => false,
 
@@ -447,7 +439,7 @@ return [
      * ---------------------------------------------------------------
      *
      * 系统指定的模板控制器目录，建议不用更改
-     * see \Queryyetsimple\Router\Router::parseDefaultBind
+     * see \Leevel\Router\Router::parseDefaultBind
      */
-    'controller_dir' => 'app\controller'
+    'controller_dir' => 'App\Controller'
 ];

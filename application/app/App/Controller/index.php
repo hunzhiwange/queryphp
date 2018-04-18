@@ -31,7 +31,11 @@ class index extends Controller
     public function index()
     {
 
-        echo \Leevel\Hello::say();
+        dd(class_exists('Leevel\Http\Response'));
+
+        exit();
+
+        //echo \Leevel\Hello::say();
         //throw new \Exception('i am is!');
 
         //return;
