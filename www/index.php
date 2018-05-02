@@ -23,11 +23,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 /**
  * ---------------------------------------------------------------
- * 导入项目
+ * 创建项目
  * ---------------------------------------------------------------
  *
- * 用于管理 PHP 依赖包
- * 注册异常
+ * 注册项目基础服务
  */
 $project = Project::singletons(realpath(__DIR__ . '/..'));
 
@@ -40,9 +39,8 @@ $project->singleton(IRuntime::class, Runtime::class);
  * 执行项目
  * ---------------------------------------------------------------
  *
- * 用于管理 PHP 依赖包
+ * 根据内核调度请求返回响应
  */
-
 $kernel = $project->make(IKernel::class);
 
 $response = $kernel->handle(

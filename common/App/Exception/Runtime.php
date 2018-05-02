@@ -3,9 +3,7 @@
 namespace Common\App\Exception;
 
 use Exception;
-use Throwable;
 use Leevel\Http\Request;
-use Leevel\Http\Response;
 use Leevel\Bootstrap\Runtime\Runtime as Runtimes;
 
 /**
