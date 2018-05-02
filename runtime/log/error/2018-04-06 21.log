@@ -1,5 +1,0 @@
-[2018-04-06 21:12][0] Class 'Leevel\Hello' not found index.php line 34 []
-[2018-04-06 21:12][0] Class 'Leevel\Hello' not found index.php line 34 []
-[2018-04-06 21:13][0] Class 'Leevel\Hello' not found index.php line 34 []
-[2018-04-06 21:14][2]: fsockopen(): unable to connect to 127.0.0.1:8099 (Connection refused)<br> File: /data/codes/queryphp/vendor/leric/php-thrift/lib/Thrift/Transport/TSocket.php<br> Line: 233 []
-[2018-04-06 21:14][0] TSocket: Could not connect to 127.0.0.1:8099 (Connection refused [111]) TSocket.php line 242 []

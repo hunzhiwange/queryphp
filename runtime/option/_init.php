@@ -1,4 +1,4 @@
-<?php /* 2018-04-18 01:10:33 */ ?>
+<?php /* 2018-04-24 16:44:06 */ ?>
 <?php return array (
   'auth' => 
   array (
@@ -125,12 +125,6 @@
     'middleware_strict' => false,
     'method_strict' => false,
     'controller_dir' => 'App\\Controller',
-    '~apps~' => 
-    array (
-      0 => 'app',
-      1 => 'admin',
-      2 => 'phpui',
-    ),
     '~envs~' => 
     array (
       'environment' => 'development',
@@ -180,10 +174,6 @@
       'filesystem_sftp_password' => 'your-password',
       'swoole_server' => 'http',
       'view_driver' => 'html',
-    ),
-    '~routers~' => 
-    array (
-      0 => '/data/codes/queryphp/common/ui/router/router.php',
     ),
   ),
   'mail' => 
@@ -432,7 +422,7 @@
       'product_description' => 'This project can help people to do things very funny.',
       'product_slogan' => 'To make the world better',
       'file_name' => '',
-      'file_since' => '2018.04.18',
+      'file_since' => '2018.04.24',
       'file_version' => '1.0',
       'file_package' => '$$',
       'file_author' => 'Name Your <your@mail.com>',

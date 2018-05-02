@@ -1,22 +1,54 @@
 <?php
 // (c) 2018 http://your.domain.com All rights reserved.
 
-/**
- * ---------------------------------------------------------------
- * 版本支持最低 PHP 7.1.3
- * ---------------------------------------------------------------
- *
- * see http://php.net/manual/zh/migration71.php
- * see http://php.net/manual/zh/migration70.php
- */
-version_compare(PHP_VERSION, '7.1.3', '<') && die('PHP 7.1.3 OR Higher');
+use Leevel\Http\Request;
+use Leevel\Bootstrap\{
+    Project,
+    IKernel,
+    Runtime\IRuntime
+};
+use Common\App\{
+    Kernel,
+    Exception\Runtime
+};
 
 /**
  * ---------------------------------------------------------------
- * 项目入口文件
+ * Composer
  * ---------------------------------------------------------------
  *
- * 项目入口可以传递一些配置信息，具体信息请查阅文档
+ * 用于管理 PHP 依赖包
  */
-require_once dirname(__DIR__) . '/vendor/autoload.php';
-Leevel\Bootstrap\Project::singletons();
+require_once __DIR__ . '/../vendor/autoload.php';
+
+/**
+ * ---------------------------------------------------------------
+ * 导入项目
+ * ---------------------------------------------------------------
+ *
+ * 用于管理 PHP 依赖包
+ * 注册异常
+ */
+$project = Project::singletons(realpath(__DIR__ . '/..'));
+
+$project->singleton(IKernel::class, Kernel::class);
+
+$project->singleton(IRuntime::class, Runtime::class);
+
+/**
+ * ---------------------------------------------------------------
+ * 执行项目
+ * ---------------------------------------------------------------
+ *
+ * 用于管理 PHP 依赖包
+ */
+
+$kernel = $project->make(IKernel::class);
+
+$response = $kernel->handle(
+    $request = Request::createFromGlobals()
+);
+
+$response->send();
+
+$kernel->terminate($request, $response);

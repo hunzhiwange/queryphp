@@ -30,17 +30,22 @@ class Router extends RouterProvider
      * @var array
      */
     protected $middlewareGroups = [
+        // web 请求中间件
         'web' => [
-            'session'
-        ],
-
-        'api' => [
-            'throttler:60,1'
-        ],
-
-        'common' => [
+            'session',
             'log'
-        ]
+        ],
+
+        // api 请求中间件
+        'api' => [
+            'throttler:60,1',
+            'log'
+        ],
+
+        // console 请求中间件
+        'console' => [
+            'log'
+        ],
     ];
 
     /**
@@ -70,10 +75,24 @@ class Router extends RouterProvider
     /**
      * 返回路由
      *
-     * @param bool $cacheRouters
      * @return array
      */
-    public function getRouters($cacheRouters = false) {
-        return (new ScanSwaggerRouter)->handle($cacheRouters);
+    public function getRouters() {
+        return (new ScanSwaggerRouter($this->makeMiddlewareParser()))->handle();
+    }
+
+    /**
+     * 全局中间件
+     *
+     * @return array
+     */
+    public function getMiddlewares() {
+        if (api()) {
+            return ['api'];
+        } elseif (console()) {
+            return ['console'];
+        } else {
+            return ['web'];
+        }
     }
 }

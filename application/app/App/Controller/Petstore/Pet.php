@@ -82,12 +82,13 @@ class Pet
      *     security={
      *       {"petstore_auth": {"write:pets", "read:pets"}}
      *     },
-     *     __domain="{suddomain}.{domain}",
-     *     __prefix="",
-     *     __params={"args1": "hello", "args2": "world"},
-     *     __where={"hello": "[0-9]+", "world": "[A-Za-z]+"},
-     *     __strict=true,
-     *     __bind=":group/blog/list?arg1=1&arg2=2"
+     *     _domain="{suddomain}.{domain}",
+     *     _prefix="",
+     *     _params={"args1": "hello", "args2": "world"},
+     *     _where={"hello": "[0-9]+", "world": "[A-Za-z]+"},
+     *     _strict=true,
+     *     _bind="/blog/list?arg1=1&arg2=2",
+     *     _middlewares="api"
      * )
      */
     public function findByStatus()
@@ -127,7 +128,8 @@ class Pet
      *     security={
      *       {"api_key": {}}
      *     },
-     *     __domain="www.queryphp.cn"
+     *     _domain="www.queryphp.cn",
+     *     _ignore="true"
      * )
      */
     public function getPetById()
