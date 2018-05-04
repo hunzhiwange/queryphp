@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+// (c) 2018 http://your.domain.com All rights reserved.
+
+/**
+ * phpui 入口文件
+ *
+ * @author Xiangmin Liu<635750556@qq.com>
+ * @package $$
+ * @since 2017.11.21
+ * @version 1.0
+ */
+putenv('app_mode=phpui');
+putenv('app_name=phpui');
+putenv('controller_name=start');
+putenv('action_name=index');
+require_once dirname(__DIR__) . '/www/index.php';
