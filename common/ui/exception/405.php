@@ -9,7 +9,7 @@
  * @since 2018.05.01
  * @version 1.0
  */
-$title = '方法禁用';
-$message = '禁用请求中指定的方法';
+$title = __('方法禁用');
+$message = __('禁用请求中指定的方法');
 
 require dirname(__FILE__) . '/layout.php';

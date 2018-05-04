@@ -9,7 +9,7 @@
  * @since 2018.05.01
  * @version 1.0
  */
-$title = '未授权';
-$message = '对于需要登录的网页，服务器可能返回此响应';
+$title = __('未授权');
+$message = __('对于需要登录的网页，服务器可能返回此响应');
 
 require dirname(__FILE__) . '/layout.php';

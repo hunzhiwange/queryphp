@@ -61,7 +61,6 @@ return [
         'Leevel\Database\Provider\Register',
         'Leevel\Encryption\Provider\Register',
         'Leevel\Filesystem\Provider\Register',
-        'Leevel\I18n\Provider\Register',
         'Leevel\Mail\Provider\Register',
         'Leevel\Mvc\Provider\Register',
         'Leevel\Page\Provider\Register',

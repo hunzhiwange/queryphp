@@ -9,7 +9,7 @@
  * @since 2018.05.01
  * @version 1.0
  */
-$title = '错误请求';
-$message = '服务器不理解请求的语法';
+$title = __('错误请求');
+$message = __('服务器不理解请求的语法');
 
 require dirname(__FILE__) . '/layout.php';

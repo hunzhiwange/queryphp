@@ -9,7 +9,7 @@
  * @since 2018.05.01
  * @version 1.0
  */
-$title = '禁止';
-$message = '服务器拒绝请求';
+$title = __('禁止');
+$message = __('服务器拒绝请求');
 
 require dirname(__FILE__) . '/layout.php';
