@@ -1,28 +1,30 @@
 #!/usr/bin/env php
 <?php
-/*
- * This file is part of the ************************ package.
- * _____________                           _______________
- *  ______/     \__  _____  ____  ______  / /_  _________
- *   ____/ __   / / / / _ \/ __`\/ / __ \/ __ \/ __ \___
- *    __/ / /  / /_/ /  __/ /  \  / /_/ / / / / /_/ /__
- *      \_\ \_/\____/\___/_/   / / .___/_/ /_/ .___/
- *         \_\                /_/_/         /_/
- * 
- * The PHP Framework For Code Poem As Free As Wind. <Query Yet Simple>
- * (c) 2010-2018 http://queryphp.com All rights reserved.
- * 
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+// (c) 2018 http://your.domain.com All rights reserved.
+
+use Leevel\Http\Request;
+use Leevel\Bootstrap\IKernelConsole;
 
 /**
- * 命名行入口文件
+ * ---------------------------------------------------------------
+ * 创建项目
+ * ---------------------------------------------------------------
  *
- * @author Xiangmin Liu<635750556@qq.com>
- * @package $$
- * @since 2017.04.28
- * @version 1.0
+ * 注册项目基础服务
  */
-require_once __DIR__ . '/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/Console/env.php';
-require_once __DIR__ . '/www/index.php';
+$project = require_once __DIR__ . '/common/project.php';
+
+/**
+ * ---------------------------------------------------------------
+ * 执行项目
+ * ---------------------------------------------------------------
+ *
+ * 根据内核调度请求返回响应
+ */
+$kernel = $project->make(IKernelConsole::class);
+
+$status = $kernel->handle();
+
+$kernel->terminate($status);
+
+exit($status);

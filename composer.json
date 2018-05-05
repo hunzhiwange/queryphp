@@ -33,6 +33,12 @@
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
+        },
+        "leevel": {
+            "providers": [
+                "Common\\Infra\\Provider\\Event",
+                "Common\\Infra\\Provider\\Router"
+            ]
         }
     },
     "minimum-stability": "dev",
