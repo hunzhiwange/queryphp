@@ -19,13 +19,13 @@
 <body>
 
     <div class="container">
-        <?php if(flash('errors')):?>
-        <?php foreach(flash('errors') as $strType=>$mixError) :?>
+        <?php declare(strict_types=1); if(flash('errors')):?>
+        <?php declare(strict_types=1); foreach(flash('errors') as $strType=>$mixError) :?>
         <div class="alert alert-danger" role="alert">
-            <?php echo is_array($mixError) ? implode('<br />',$mixError) : $mixError;?>
+            <?php declare(strict_types=1); echo is_array($mixError) ? implode('<br />',$mixError) : $mixError;?>
         </div>
-        <?php endforeach;?>
-        <?php endif;?>
+        <?php declare(strict_types=1); endforeach;?>
+        <?php declare(strict_types=1); endif;?>
 
         <form class="form-signin" method='post' action="{:url('auth/checkLogin')}">
             <h2 class="form-signin-heading">登录</h2>

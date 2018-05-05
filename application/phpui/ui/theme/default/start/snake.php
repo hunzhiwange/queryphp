@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 if(!defined('PHP_UI_SECOND'))
     define ("PHP_UI_SECOND",    1000000);
 

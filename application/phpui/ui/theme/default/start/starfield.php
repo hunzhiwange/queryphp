@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 use UI\Window;
 use UI\Point;
 use UI\Size;

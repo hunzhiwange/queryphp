@@ -44,11 +44,11 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <?php if(flash('login_succeeded')):?>
+                <?php declare(strict_types=1); if(flash('login_succeeded')):?>
                 <div class="alert alert-success" role="alert">
-                    <?php echo flash('login_succeeded');?>
+                    <?php declare(strict_types=1); echo flash('login_succeeded');?>
                 </div>
-                <?php endif;?>
+                <?php declare(strict_types=1); endif;?>
             </div>
 
             <div class="col-sm-8 blog-main">

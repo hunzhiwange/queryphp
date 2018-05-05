@@ -38,7 +38,12 @@
             "providers": [
                 "Common\\Infra\\Provider\\Event",
                 "Common\\Infra\\Provider\\Router"
-            ]
+            ],
+            "ignores": [],
+            "commands": [],
+            "options": [],
+            "i18ns": [],
+            "metas": []
         }
     },
     "minimum-stability": "dev",
