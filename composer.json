@@ -39,9 +39,15 @@
                 "Common\\Infra\\Provider\\Event",
                 "Common\\Infra\\Provider\\Router"
             ],
-            "ignores": [],
-            "commands": [],
-            "options": [],
+            "ignores": [
+                "Leevel\\Notexits\\Provider\\Register"
+            ],
+            "commands": [
+                "Common\\App\\Console"
+            ],
+            "options": {
+                "demo": "option/extend/test.php"
+            },
             "i18ns": [],
             "metas": []
         }

@@ -1,2 +1,2 @@
-/** 2017-11-28 01:00:30 */
-export default {"Query Yet Simple":"Query Yet Simple"};
+/** 2018-05-07 07:25:06 */
+export default {"Query Yet Simple":"左右代码 右手年华 不忘初心 简单快乐"};
