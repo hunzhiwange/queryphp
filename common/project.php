@@ -1,13 +1,11 @@
 <?php declare(strict_types=1);
 // (c) 2018 http://your.domain.com All rights reserved.
 
-use Leevel\Bootstrap\{
-    Project,
-    Runtime\IRuntime
-};
+use Leevel\Bootstrap\Project;
 use Leevel\Kernel\{
     IKernel,
-    IKernelConsole
+    IKernelConsole,
+    Runtime\IRuntime
 };
 use Common\App\{
     Kernel,
