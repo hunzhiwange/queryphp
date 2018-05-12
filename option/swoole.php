@@ -57,7 +57,7 @@ return [
         // 监听 IP 地址
         // see https://wiki.swoole.com/wiki/page/p-server.html
         // see https://wiki.swoole.com/wiki/page/327.html
-        'host' => '127.0.0.1', 
+        'host' => '0.0.0.0', 
         
         // 监听端口
         // see https://wiki.swoole.com/wiki/page/p-server.html
@@ -151,7 +151,7 @@ return [
         // 监听 IP 地址
         // see https://wiki.swoole.com/wiki/page/p-server.html
         // see https://wiki.swoole.com/wiki/page/327.html
-        'host' => '127.0.0.1', 
+        'host' => '0.0.0.0', 
 
         // 监听端口
         // see https://wiki.swoole.com/wiki/page/p-server.html

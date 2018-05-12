@@ -3,9 +3,11 @@
 
 use Leevel\Bootstrap\{
     Project,
-    IKernel,
-    IKernelConsole,
     Runtime\IRuntime
+};
+use Leevel\Kernel\{
+    IKernel,
+    IKernelConsole
 };
 use Common\App\{
     Kernel,

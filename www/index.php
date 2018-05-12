@@ -2,7 +2,7 @@
 // (c) 2018 http://your.domain.com All rights reserved.
 
 use Leevel\Http\Request;
-use Leevel\Bootstrap\IKernel;
+use Leevel\Kernel\IKernel;
 
 /**
  * ---------------------------------------------------------------

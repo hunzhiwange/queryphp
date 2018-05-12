@@ -39,7 +39,8 @@ class Runtime extends Runtimes
      * @param Exception $e
      * @return string
      */
-    public function getHttpExceptionView(Exception $e) {
+    public function getHttpExceptionView(Exception $e)
+    {
         return path_common('ui/exception/' . $e->getStatusCode() . '.php');
     }
 
@@ -48,7 +49,8 @@ class Runtime extends Runtimes
      * 
      * @return string
      */
-    public function getDefaultHttpExceptionView() {
+    public function getDefaultHttpExceptionView()
+    {
         return path_common('ui/exception/default.php');
     }
 }
