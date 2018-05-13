@@ -30,7 +30,7 @@ class Test extends Command
      *
      * @var string
      */
-    protected $strDescription = 'This is a test command.';
+    protected $strDescription = 'This is a test command';
 
     /**
      * 命令帮助

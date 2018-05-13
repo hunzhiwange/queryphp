@@ -48,8 +48,12 @@
             "options": {
                 "demo": "option/extend/test.php"
             },
-            "i18ns": [],
-            "metas": []
+            "i18ns": [
+                "i18n/extend"   
+            ],
+            "metas": {
+                "foo": "bar"
+            }
         }
     },
     "minimum-stability": "dev",
