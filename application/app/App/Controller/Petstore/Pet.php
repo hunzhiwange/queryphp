@@ -82,10 +82,9 @@ class Pet
      *     security={
      *       {"petstore_auth": {"write:pets", "read:pets"}}
      *     },
-     *     _domain="{suddomain}.{domain}",
+     *     _domain="{suddomain:[A-Za-z]+}-vip.{domain}",
      *     _prefix="",
      *     _params={"args1": "hello", "args2": "world"},
-     *     _where={"hello": "[0-9]+", "world": "[A-Za-z]+"},
      *     _strict=true,
      *     _bind="/blog/list?arg1=1&arg2=2",
      *     _middlewares="api"
@@ -98,7 +97,7 @@ class Pet
 
     /**
      * @SWG\Get(
-     *     path="/pet/{petId}",
+     *     path="/pet/{petId:[A-Za-z]+}",
      *     summary="Find pet by ID",
      *     description="Returns a single pet",
      *     operationId="getPetById",
@@ -129,7 +128,246 @@ class Pet
      *       {"api_key": {}}
      *     },
      *     _domain="www.queryphp.cn",
-     *     _ignore="true"
+     *     _bind="test/handle2"
+     * )
+     */
+    public function getPetById()
+    {
+    }
+
+    /**
+     * @SWG\Get(
+     *     path="/pet/hello/{petId:[A-Za-z]+}",
+     *     summary="Find pet by ID",
+     *     description="Returns a single pet",
+     *     operationId="getPetById",
+     *     tags={"pet"},
+     *     produces={"application/xml", "application/json"},
+     *     @SWG\Parameter(
+     *         description="ID of pet to return",
+     *         in="path",
+     *         name="petId",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(ref="#/definitions/Pet")
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Pet not found"
+     *     ),
+     *     security={
+     *       {"api_key": {}}
+     *     },
+     *     _domain="www.queryphp.cn",
+     *     _bind="test/handle2"
+     * )
+     */
+    public function getPetById()
+    {
+    }
+
+    /**
+     * @SWG\Get(
+     *     path="/pet/hello1/{petId:[A-Za-z]+}",
+     *     summary="Find pet by ID",
+     *     description="Returns a single pet",
+     *     operationId="getPetById",
+     *     tags={"pet"},
+     *     produces={"application/xml", "application/json"},
+     *     @SWG\Parameter(
+     *         description="ID of pet to return",
+     *         in="path",
+     *         name="petId",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(ref="#/definitions/Pet")
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Pet not found"
+     *     ),
+     *     security={
+     *       {"api_key": {}}
+     *     },
+     *     _domain="www.queryphp.cn",
+     *     _bind="test/handle2"
+     * )
+     */
+    public function getPetById()
+    {
+    }
+
+    /**
+     * @SWG\Get(
+     *     path="/pet/hello2/{petId:[A-Za-z]+}",
+     *     summary="Find pet by ID",
+     *     description="Returns a single pet",
+     *     operationId="getPetById",
+     *     tags={"pet"},
+     *     produces={"application/xml", "application/json"},
+     *     @SWG\Parameter(
+     *         description="ID of pet to return",
+     *         in="path",
+     *         name="petId",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(ref="#/definitions/Pet")
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Pet not found"
+     *     ),
+     *     security={
+     *       {"api_key": {}}
+     *     },
+     *     _domain="www.queryphp.cn",
+     *     _bind="test/handle2"
+     * )
+     */
+    public function getPetById()
+    {
+    }
+
+    /**
+     * @SWG\Get(
+     *     path="/pet/hello3/{petId:[A-Za-z]+}",
+     *     summary="Find pet by ID",
+     *     description="Returns a single pet",
+     *     operationId="getPetById",
+     *     tags={"pet"},
+     *     produces={"application/xml", "application/json"},
+     *     @SWG\Parameter(
+     *         description="ID of pet to return",
+     *         in="path",
+     *         name="petId",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(ref="#/definitions/Pet")
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Pet not found"
+     *     ),
+     *     security={
+     *       {"api_key": {}}
+     *     },
+     *     _domain="www.queryphp.cn",
+     *     _bind="test/handle2"
+     * )
+     */
+    public function getPetById()
+    {
+
+    /**
+     * @SWG\Get(
+     *     path="/pet/hello4/{petId:[A-Za-z]+}",
+     *     summary="Find pet by ID",
+     *     description="Returns a single pet",
+     *     operationId="getPetById",
+     *     tags={"pet"},
+     *     produces={"application/xml", "application/json"},
+     *     @SWG\Parameter(
+     *         description="ID of pet to return",
+     *         in="path",
+     *         name="petId",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(ref="#/definitions/Pet")
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Pet not found"
+     *     ),
+     *     security={
+     *       {"api_key": {}}
+     *     },
+     *     _domain="www.queryphp.cn",
+     *     _bind="test/handle2"
+     * )
+     */
+    public function getPetById()
+    {
+    }
+
+    /**
+     * @SWG\Get(
+     *     path="/pet/hello/{petId:[A-Za-z]+}",
+     *     summary="Find pet by ID",
+     *     description="Returns a single pet",
+     *     operationId="getPetById",
+     *     tags={"pet"},
+     *     produces={"application/xml", "application/json"},
+     *     @SWG\Parameter(
+     *         description="ID of pet to return",
+     *         in="path",
+     *         name="petId",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(ref="#/definitions/Pet")
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Pet not found"
+     *     ),
+     *     security={
+     *       {"api_key": {}}
+     *     },
+     *     _domain="www.queryphp.cn",
+     *     _bind="test/handle2"
      * )
      */
     public function getPetById()
@@ -235,6 +473,325 @@ class Pet
     {
     }
 
+        /**
+     * @SWG\Get(
+     *     path="/pet/hello5/{petId:[A-Za-z]+}",
+     *     summary="Find pet by ID",
+     *     description="Returns a single pet",
+     *     operationId="getPetById",
+     *     tags={"pet"},
+     *     produces={"application/xml", "application/json"},
+     *     @SWG\Parameter(
+     *         description="ID of pet to return",
+     *         in="path",
+     *         name="petId",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(ref="#/definitions/Pet")
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Pet not found"
+     *     ),
+     *     security={
+     *       {"api_key": {}}
+     *     },
+     *     _domain="www.queryphp.cn",
+     *     _bind="test/handle2"
+     * )
+     */
+    public function getPetById()
+    {
+    }
+
+        /**
+     * @SWG\Get(
+     *     path="/pet/hello6/{petId:[A-Za-z]+}",
+     *     summary="Find pet by ID",
+     *     description="Returns a single pet",
+     *     operationId="getPetById",
+     *     tags={"pet"},
+     *     produces={"application/xml", "application/json"},
+     *     @SWG\Parameter(
+     *         description="ID of pet to return",
+     *         in="path",
+     *         name="petId",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(ref="#/definitions/Pet")
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Pet not found"
+     *     ),
+     *     security={
+     *       {"api_key": {}}
+     *     },
+     *     _domain="www.queryphp.cn",
+     *     _bind="test/handle2"
+     * )
+     */
+    public function getPetById()
+    {
+    }
+
+        /**
+     * @SWG\Get(
+     *     path="/pet/hello7/{petId:[A-Za-z]+}",
+     *     summary="Find pet by ID",
+     *     description="Returns a single pet",
+     *     operationId="getPetById",
+     *     tags={"pet"},
+     *     produces={"application/xml", "application/json"},
+     *     @SWG\Parameter(
+     *         description="ID of pet to return",
+     *         in="path",
+     *         name="petId",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(ref="#/definitions/Pet")
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Pet not found"
+     *     ),
+     *     security={
+     *       {"api_key": {}}
+     *     },
+     *     _domain="www.queryphp.cn",
+     *     _bind="test/handle2"
+     * )
+     */
+    public function getPetById()
+    {
+    }
+
+
+        /**
+     * @SWG\Get(
+     *     path="/pet/hello8/{petId:[A-Za-z]+}",
+     *     summary="Find pet by ID",
+     *     description="Returns a single pet",
+     *     operationId="getPetById",
+     *     tags={"pet"},
+     *     produces={"application/xml", "application/json"},
+     *     @SWG\Parameter(
+     *         description="ID of pet to return",
+     *         in="path",
+     *         name="petId",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(ref="#/definitions/Pet")
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Pet not found"
+     *     ),
+     *     security={
+     *       {"api_key": {}}
+     *     },
+     *     _domain="www.queryphp.cn",
+     *     _bind="test/handle2"
+     * )
+     */
+    public function getPetById()
+    {
+    }
+
+        /**
+     * @SWG\Get(
+     *     path="/pet/hello9/{petId:[A-Za-z]+}",
+     *     summary="Find pet by ID",
+     *     description="Returns a single pet",
+     *     operationId="getPetById",
+     *     tags={"pet"},
+     *     produces={"application/xml", "application/json"},
+     *     @SWG\Parameter(
+     *         description="ID of pet to return",
+     *         in="path",
+     *         name="petId",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(ref="#/definitions/Pet")
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Pet not found"
+     *     ),
+     *     security={
+     *       {"api_key": {}}
+     *     },
+     *     _domain="www.queryphp.cn",
+     *     _bind="test/handle2"
+     * )
+     */
+    public function getPetById()
+    {
+    }
+    /**
+     * @SWG\Get(
+     *     path="/pet/hello10/{petId:[A-Za-z]+}",
+     *     summary="Find pet by ID",
+     *     description="Returns a single pet",
+     *     operationId="getPetById",
+     *     tags={"pet"},
+     *     produces={"application/xml", "application/json"},
+     *     @SWG\Parameter(
+     *         description="ID of pet to return",
+     *         in="path",
+     *         name="petId",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(ref="#/definitions/Pet")
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Pet not found"
+     *     ),
+     *     security={
+     *       {"api_key": {}}
+     *     },
+     *     _domain="www.queryphp.cn",
+     *     _bind="test/handle2"
+     * )
+     */
+    public function getPetById()
+    {
+    }
+
+        /**
+     * @SWG\Get(
+     *     path="/pet/hello11/{petId:[A-Za-z]+}",
+     *     summary="Find pet by ID",
+     *     description="Returns a single pet",
+     *     operationId="getPetById",
+     *     tags={"pet"},
+     *     produces={"application/xml", "application/json"},
+     *     @SWG\Parameter(
+     *         description="ID of pet to return",
+     *         in="path",
+     *         name="petId",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(ref="#/definitions/Pet")
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Pet not found"
+     *     ),
+     *     security={
+     *       {"api_key": {}}
+     *     },
+     *     _domain="www.queryphp.cn",
+     *     _bind="test/handle2"
+     * )
+     */
+    public function getPetById()
+    {
+    }
+
+        /**
+     * @SWG\Get(
+     *     path="/pet/hello12/{petId:[A-Za-z]+}",
+     *     summary="Find pet by ID",
+     *     description="Returns a single pet",
+     *     operationId="getPetById",
+     *     tags={"pet"},
+     *     produces={"application/xml", "application/json"},
+     *     @SWG\Parameter(
+     *         description="ID of pet to return",
+     *         in="path",
+     *         name="petId",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(ref="#/definitions/Pet")
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Pet not found"
+     *     ),
+     *     security={
+     *       {"api_key": {}}
+     *     },
+     *     _domain="www.queryphp.cn",
+     *     _bind="test/handle2"
+     * )
+     */
+    public function getPetById()
+    {
+    }
     /**
      * @SWG\Post(
      *   path="/pet/{petId}",

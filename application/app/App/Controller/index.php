@@ -30,6 +30,8 @@ class Index extends Controller
      */
     public function index()
     {
+        phpinfo();
+        exit();
 
         $rpc = \Leevel\Client\Rpc::instance();
 

@@ -2,7 +2,7 @@
 /**
  * @SWG\Tag(
  *   name="pet",
- *   __group="pet",
+ *   _group="pet",
  *   description="Everything about your Pets",
  *   @SWG\ExternalDocumentation(
  *     description="Find out more",
