@@ -83,7 +83,7 @@ return [
      * 顶级域名
      * ---------------------------------------------------------------
      *
-     * 例如 queryphp.com，用于路由解析以及 \Leevel\Router\Router::url 生成
+     * 例如 queryphp.com，用于路由解析以及 \Leevel\Router\Url::make 生成
      */
     'top_domain' => env('top_domain', 'foo.bar'),
 
@@ -92,9 +92,9 @@ return [
      * url 生成是否开启子域名
      * ---------------------------------------------------------------
      *
-     * 开启 url 子域名功能，用于 \Leevel\Router\Router::url 生成
+     * 开启 url 子域名功能，用于 \Leevel\Router\Url::make 生成
      */
-    'make_subdomain_on' => false,
+    'subdomain_on' => false,
 
     /**
      * ---------------------------------------------------------------

@@ -4,6 +4,18 @@ namespace App\App\Controller;
 
 use Leevel\Mvc\Controller;
 
+class Hello {
+
+    public function __construct(){
+        echo 'start';
+    }
+
+    public function des(){
+        echo 'end';
+    }
+
+}
+
 /**
  * 首页
  *
@@ -37,6 +49,8 @@ class Test
     }
 
     public function handle2(){
+       // app()->make();
+        //
         return ['222','333'];
     }
 }

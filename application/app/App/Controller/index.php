@@ -30,8 +30,19 @@ class Index extends Controller
      */
     public function index()
     {
-        phpinfo();
-        exit();
+        app()->bind('11', app()->share(function(){
+            return 1;
+        }));
+
+        var_dump(app()->make('11'));
+var_dump(app()->make('11'));var_dump(app()->make('11'));
+
+        //dump(app('auths'));
+        //throw new \2Exception('111');
+        // echo 'hello world';
+        // echo \Leevel\Client\Rpc::class;
+       // phpinfo();
+       exit();
 
         $rpc = \Leevel\Client\Rpc::instance();
 
