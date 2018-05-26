@@ -35,13 +35,13 @@
 
          // 文件头部注释
          'file_comment' => '/**
-  * {{file_name}}
-  *
-  * @author {{file_author}}
-  * @package {{file_package}}
-  * @since {{file_since}}
-  * @version {{file_version}}
-  */',
+ * {{file_name}}
+ *
+ * @author {{file_author}}
+ * @package {{file_package}}
+ * @since {{file_since}}
+ * @version {{file_version}}
+ */',
 
          // 产品信息
          'product_homepage' => 'http://your.domain.com',

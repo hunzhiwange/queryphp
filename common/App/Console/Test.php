@@ -23,21 +23,21 @@ class Test extends Command
      *
      * @var string
      */
-    protected $strName = 'common:test';
+    protected $name = 'common:test';
 
     /**
      * 命令行描述
      *
      * @var string
      */
-    protected $strDescription = 'This is a test command';
+    protected $description = 'This is a test command';
 
     /**
      * 命令帮助
      *
      * @var string
      */
-    protected $strHelp = <<<EOF
+    protected $help = <<<EOF
 The <info>%command.name%</info> command to show how to make a command:
 
   <info>php %command.full_name%</info>

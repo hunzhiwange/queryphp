@@ -49,6 +49,9 @@ class Test
     }
 
     public function handle2(){
+    //   print_r(app('cache'));
+     //  print_r(app('cache'));
+      // print_r(app());
        // app()->make();
         //
         return ['222','333'];
