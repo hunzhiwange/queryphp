@@ -24,11 +24,10 @@
  * @since 2017.12.21
  * @version 1.0
  */
-$arrArgs = $_SERVER['argv'];
-array_shift($arrArgs);
-array_unshift($arrArgs, 'swoole:restart');
-array_unshift($arrArgs, 'qys');
-$_SERVER['argv'] = $arrArgs;
+$andrgs = $_SERVER['argv'];
+array_shift($andrgs);
+array_unshift($andrgs, 'swoole:restart');
+array_unshift($andrgs, 'leevel');
+$_SERVER['argv'] = $andrgs;
 
-require_once dirname(__DIR__) . '/vendor/hunzhiwange/framework/src/queryyetsimple/bootstrap/console/env.php';
-require_once dirname(__DIR__) . '/www/index.php';
+require_once dirname(__DIR__) . '/leevel';

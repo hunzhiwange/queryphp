@@ -1,5 +1,5 @@
 #!/usr/bin/env php
-<?php declare(strict_types=1);
+<?php
 // (c) 2018 http://your.domain.com All rights reserved.
 
 use Leevel\Bootstrap\Project;
