@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 // (c) 2018 http://your.domain.com All rights reserved.
-namespace common\domain\listener;
+namespace Common\Domain\Event;
 
 /**
- * test2 监听器
+ * WildcardsTest 事件
  *
  * @author Name Your <your@mail.com>
  * @package $$
  * @since 2018.01.29
  * @version 1.0
  */
-class test2 extends abstracts
+class WildcardsTest extends Event
 {
 
     /**
@@ -19,16 +19,7 @@ class test2 extends abstracts
      * 
      * @return void
      */
-    public function __construct () {
-    }
-
-    /**
-     * 监听器响应
-     * 
-     * @return void
-     */
-    public function run()
+    public function __construct()
     {
-        echo 'test2';
     }
 }

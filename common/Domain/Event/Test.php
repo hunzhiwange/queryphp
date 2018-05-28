@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 // (c) 2018 http://your.domain.com All rights reserved.
-namespace common\domain\event;
+namespace Common\Domain\Event;
 
 /**
  * test 事件
@@ -10,7 +10,7 @@ namespace common\domain\event;
  * @since 2018.01.29
  * @version 1.0
  */
-class test extends abstracts
+class Test extends Event
 {
 
     /**
@@ -27,7 +27,8 @@ class test extends abstracts
      * @param string $blog
      * @return void
      */
-    public function __construct ($blog) {
+    public function __construct($blog)
+    {
         $this->blog = $blog;
     }
 
@@ -36,7 +37,8 @@ class test extends abstracts
      * 
      * @return string
      */
-    public function blog () {
+    public function blog()
+    {
         return $this->blog;
     }
 }

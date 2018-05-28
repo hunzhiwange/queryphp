@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 // (c) 2018 http://your.domain.com All rights reserved.
-namespace common\domain\listener;
+namespace Common\Domain\Listener;
 
 /**
  * test 监听器
@@ -10,7 +10,7 @@ namespace common\domain\listener;
  * @since 2018.01.29
  * @version 1.0
  */
-class test extends abstracts
+class Test extends Listener
 {
 
     /**
@@ -19,7 +19,8 @@ class test extends abstracts
      * 
      * @return void
      */
-    public function __construct () {
+    public function __construct()
+    {
     }
 
     /**

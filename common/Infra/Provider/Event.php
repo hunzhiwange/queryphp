@@ -15,20 +15,20 @@ use Leevel\Event\EventProvider;
 class Event extends EventProvider
 {
     protected $listeners = [
-        // 'common\domain\event\test' => [
-        //     // 优先级支持写法，数字越小越早执行，默认为 500
-        //     // 'common\domain\listener\test' => 6
-        //     'common\domain\listener\test',
-        //     'common\domain\listener\test2' => 5,
-        //     'common\domain\listener\test3' => 2
-        // ],
+        'Common\Domain\Event\Test' => [
+            // 优先级支持写法，数字越小越早执行，默认为 500
+            // 'Common\Domain\Listener\Test' => 6
+            'Common\Domain\Listener\Test',
+            'Common\Domain\Listener\Test2' => 5,
+            'Common\Domain\Listener\Test3' => 2
+        ],
         
-        // 'common\domain\event\Wildcards*' => [
-        //     'common\domain\listener\test'
-        // ],
+        'Common\Domain\Event\Wildcards*' => [
+            'Common\Domain\Listener\Test'
+        ],
 
-        // 'common\domain\event\WildcardsTest' => [
-        //     'common\domain\listener\test2'
-        // ]
+        'Common\Domain\Event\WildcardsTest' => [
+            'Common\Domain\Listener\Test2'
+        ]
     ];
 }

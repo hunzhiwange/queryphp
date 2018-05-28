@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 // (c) 2018 http://your.domain.com All rights reserved.
-namespace common\domain\event;
+namespace Common\Domain\Event;
 
 /**
  * 事件抽象
@@ -10,6 +10,6 @@ namespace common\domain\event;
  * @since 2018.01.29
  * @version 1.0
  */
-abstract class abstracts
+abstract class Event
 {
 }

@@ -2,14 +2,16 @@
 
 ## Define event and listen
 
-you can define yous at common\is\provider\event.
+you can define yous at Common\Infra\Provider\Event.
 
 ``` php
-class event extends Events
+Leevel\Event\EventProvider;
+
+class Event extends EventProvider
 {
     protected $listeners = [
-        'common\domain\event\test' => [
-            'common\domain\listener\test'
+        'Common\Domain\Event\Test' => [
+            'Common\Domain\Listener\Test'
         ]
     ];
 }
@@ -17,10 +19,10 @@ class event extends Events
 
 ## Define the listen
 
-you can define yous at common\domain\listener.
+you can define yous at Common\Domain\Listener.
 
 ``` php
-class test extends abstracts
+class Test extends Listener
 {
 
     /**
@@ -29,7 +31,8 @@ class test extends abstracts
      * 
      * @return void
      */
-    public function __construct () {
+    public function __construct()
+    {
     }
 
     /**
@@ -56,17 +59,11 @@ This is a easy way to trigger the event.
 
 ``` php
 $event = app('event');
-$event->run(new \common\domain\event\test('hello blog'), 1, 2, 3, 4);
+$event->run(new \Common\Domain\Event\Test('hello blog'), 1, 2, 3, 4);
 ```
 
 or 
 
 ``` php
-\Queryyetsimple\Event::run(new \common\domain\event\test('hello blog'), 1, 2, 3, 4);
-```
-
-or
-
-``` php
-\Qys\Event::run(new \common\domain\event\test('hello blog'), 1, 2, 3, 4);
+\Leevel\Event::run(new \Common\Domain\Event\Test('hello blog'), 1, 2, 3, 4);
 ```

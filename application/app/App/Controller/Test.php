@@ -49,11 +49,19 @@ class Test
     }
 
     public function handle2(){
+        $event = app('event');
+        //$event->run(new \Common\Domain\Event\Test('hello blog'), 1, 2, 3, 4);
+        
+        $event->run(new \Common\Domain\Event\WildcardsTest(), 2, 3);
+
+
+        //return app('response')->json(['hello', 'world']);
+
     //   print_r(app('cache'));
      //  print_r(app('cache'));
       // print_r(app());
        // app()->make();
         //
-        return ['222','333'];
+        //return ['222','333'];
     }
 }

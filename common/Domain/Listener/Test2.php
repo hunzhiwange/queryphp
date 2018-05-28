@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 // (c) 2018 http://your.domain.com All rights reserved.
-namespace common\domain\listener;
+namespace Common\Domain\Listener;
 
 /**
- * test3 监听器
+ * test2 监听器
  *
  * @author Name Your <your@mail.com>
  * @package $$
  * @since 2018.01.29
  * @version 1.0
  */
-class test3 extends abstracts
+class Test2 extends Listener
 {
 
     /**
@@ -19,7 +19,8 @@ class test3 extends abstracts
      * 
      * @return void
      */
-    public function __construct () {
+    public function __construct()
+    {
     }
 
     /**
@@ -29,6 +30,6 @@ class test3 extends abstracts
      */
     public function run()
     {
-        echo 'test3';
+        echo 'test2';
     }
 }
