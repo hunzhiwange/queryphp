@@ -14,16 +14,7 @@ declare(strict_types=1);
 
 namespace App\App\Controller;
 
-//use Queryyetsimple\Mvc\Controller;
-
-//use Queryyetsimple\Support\Type;
 use Leevel\Mvc\Controller;
-
-//use Queryyetsimple\Url;
-
-function test()
-{
-}
 
 /**
  * index 控制器.
@@ -41,25 +32,10 @@ class Index // extends Controller
      */
     public function index()
     {
-//         app()->bind('11', app()->share(function(){
-//             return 1;
-//         }));
-
-//         var_dump(app()->make('11'));
-        // var_dump(app()->make('11'));var_dump(app()->make('11'));
-
-        //dump(app('auths'));
-        //throw new \2Exception('111');
-        // echo 'hello world';
-        // echo \Leevel\Client\Rpc::class;
-        // phpinfo();
-        //exit();
-        return ['www'];
         $rpc = \Leevel\Client\Rpc::instance();
 
-        //、、 dump($rpc);
-
         return $rpc->call('test/handle2', ['foo', 'bar'], ['send_uid' => 350749960, 'name' => 'rango']);
+
         print_r([
             'php_version'    => PHP_VERSION,
             'swoole_version' => extension_loaded('swoole') ? phpversion('swoole') : 'Not installed Or It installed but not running.',
