@@ -35,7 +35,6 @@ class Index // extends Controller
         $rpc = \Leevel\Client\Rpc::instance();
 
         return $rpc->call('test/handle2', ['foo', 'bar'], ['send_uid' => 350749960, 'name' => 'rango']);
-
         print_r([
             'php_version'    => PHP_VERSION,
             'swoole_version' => extension_loaded('swoole') ? phpversion('swoole') : 'Not installed Or It installed but not running.',
