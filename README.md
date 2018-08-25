@@ -37,10 +37,6 @@ QueryPHP was based on the DoYouHaoBaby framework，we have a large code refactor
 composer create-project hunzhiwange/queryphp myapp
 ```
 
-## Official Documentation
-
-Documentation for the framework can be found on the [QueryPHP website](http://www.queryphp.com).
-
 ## Unified Code Style
 
 ```
