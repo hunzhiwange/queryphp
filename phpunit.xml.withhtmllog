@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false" 
-    backupStaticAttributes="false" 
-    bootstrap="phpunits" 
-    colors="true" 
-    convertErrorsToExceptions="true" 
-    convertNoticesToExceptions="true" 
-    convertWarningsToExceptions="true" 
-    processIsolation="false" 
+<phpunit
+    backupGlobals="false"
+    backupStaticAttributes="false"
+    bootstrap="tests/bootstrap.php"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    processIsolation="false"
     stopOnFailure="false">
     <listeners>
         <listener class="NunoMaduro\Collision\Adapters\Phpunit\Listener" />
@@ -18,8 +19,11 @@
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">application/</directory>
-            <directory suffix=".php">common/</directory>
+            <directory suffix=".php">./</directory>
+            <exclude>
+                <directory suffix=".php">tests</directory>
+                <directory suffix=".php">vendor</directory>
+            </exclude>
         </whitelist>
     </filter>
     <php>
@@ -28,4 +32,7 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
     </php>
+    <logging>
+        <log type="coverage-html" target="logs/report"/>
+    </logging>
 </phpunit>
