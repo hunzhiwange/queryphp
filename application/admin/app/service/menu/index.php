@@ -1,33 +1,44 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace admin\app\service\menu;
 
-use common\is\tree\tree;
 use common\is\repository\menu as repository;
+use common\is\tree\tree;
 
 /**
- * 菜单列表
+ * 菜单列表.
  *
  * @author Name Your <your@mail.com>
- * @package $$
+ *
  * @since 2017.10.12
+ *
  * @version 1.0
  */
 class index
 {
-
     /**
-     * 菜单仓储
+     * 菜单仓储.
      *
      * @var \common\is\repository\menu
      */
     protected $oRepository;
 
     /**
-     * 构造函数
+     * 构造函数.
      *
      * @param \common\is\repository\menu $oRepository
-     * @return void
      */
     public function __construct(repository $oRepository)
     {
@@ -35,7 +46,7 @@ class index
     }
 
     /**
-     * 响应方法
+     * 响应方法.
      *
      * @return array
      */
@@ -45,9 +56,10 @@ class index
     }
 
     /**
-     * 将节点载入节点树并返回树结构
+     * 将节点载入节点树并返回树结构.
      *
      * @param \queryyetsimple\support\collection $objMenu
+     *
      * @return array
      */
     protected function parseMenuList($objMenu)
@@ -58,9 +70,10 @@ class index
     }
 
     /**
-     * 生成节点树
+     * 生成节点树.
      *
      * @param \queryyetsimple\support\collection $objMenu
+     *
      * @return \common\is\tree\tree
      */
     protected function createTree($objMenu)
@@ -69,9 +82,10 @@ class index
     }
 
     /**
-     * 转换为节点数组
+     * 转换为节点数组.
      *
      * @param \queryyetsimple\support\collection $objMenu
+     *
      * @return array
      */
     protected function parseToNode($objMenu)
@@ -81,9 +95,10 @@ class index
             $arrNode[] = [
                 $oMenu->id,
                 $oMenu->pid,
-                $oMenu->toArray()
+                $oMenu->toArray(),
             ];
         }
+
         return $arrNode;
     }
 }

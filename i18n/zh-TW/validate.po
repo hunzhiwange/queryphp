@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: QueryPHP Validate\n"
 "POT-Creation-Date: 2017-11-18 14:12+0800\n"
-"PO-Revision-Date: 2018-05-04 08:00+0800\n"
+"PO-Revision-Date: 2018-08-11 10:24+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh_TW\n"
@@ -267,10 +267,6 @@ msgstr "{field} 不允許的 IP 訪問 {rule}"
 #: validate.php:2346
 msgid "{field} 禁止的 IP 访问 {rule}"
 msgstr "{field} 禁止的IP訪問 {rule}"
-
-#: validate.php:2347
-msgid "无效的请求类型 {rule}"
-msgstr "無效的請求類型 {rule}"
 
 #: validate.php:2348
 msgid "{field} 不是有效的 JSON"

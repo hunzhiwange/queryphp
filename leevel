@@ -1,6 +1,6 @@
 #!/usr/bin/env php
 <?php
-// (c) 2018 http://your.domain.com All rights reserved.
+
 
 use Leevel\Bootstrap\Project;
 use Leevel\Kernel\{
@@ -24,7 +24,7 @@ use Common\App\{
  * 如果 Psr4 不存在，才会去初始化 composer 加载，使得大部分请求不走 composer 的自动载入
  * 如果你使用的包是比较新的，基本都遵循 Psr4 规则，这个时候会提升 30~40 ms 上下性能
  */
-$psr4s = include_once __DIR__ . '/vendor/composer/autoload_psr4.php';
+/*$psr4s = include_once __DIR__ . '/vendor/composer/autoload_psr4.php';
 
 require_once  __DIR__ . '/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/function.php';
 
@@ -53,11 +53,11 @@ spl_autoload_register(function ($className) use($psr4s) {
     
     // 第三层 todo
 
-    if (! $loadedComposer) {
+    if (! $loadedComposer) {*/
        require_once __DIR__ . '/vendor/autoload.php';
-       $loadedComposer = true;
+       /*$loadedComposer = true;
     }
-});
+});*/
 
 /**
  * ---------------------------------------------------------------

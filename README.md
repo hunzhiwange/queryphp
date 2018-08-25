@@ -88,6 +88,13 @@ Leevel\Bootstrap\Project::singletons();
 
 Documentation for the framework can be found on the [QueryPHP website](http://www.queryphp.com).
 
+## Unified Code Style
+
+```
+$cd /data/codes/queryphp/vendor/hunzhiwange/framework
+$php-cs-fixer fix --config=.php_cs.dist
+```
+
 ## License
 
 The QueryPHP framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).

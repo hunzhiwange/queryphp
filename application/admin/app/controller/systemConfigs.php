@@ -1,13 +1,26 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace admin\app\controller;
 
 /**
- * 后台配置控制器
+ * 后台配置控制器.
  *
  * @author Name Your <your@mail.com>
- * @package $$
+ *
  * @since 2017.10.23
+ *
  * @version 1.0
  */
 class systemConfigs extends acontroller

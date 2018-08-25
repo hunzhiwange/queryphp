@@ -1,30 +1,40 @@
-<?php declare(strict_types=1);
-use UI\Size;
-use UI\Menu;
-use UI\MenuItem;
-use UI\Window;
+<?php
 
-use UI\Controls\Tab;
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 use UI\Controls\Box;
-use UI\Controls\Group;
-use UI\Controls\Form;
 use UI\Controls\Button;
-use UI\Controls\Entry;
-use UI\Controls\MultilineEntry;
-use UI\Controls\Spin;
-use UI\Controls\Slider;
-use UI\Controls\Progress;
+use UI\Controls\Check;
+use UI\Controls\ColorButton;
 use UI\Controls\Combo;
 use UI\Controls\EditableCombo;
-use UI\Controls\Radio;
+use UI\Controls\Entry;
+use UI\Controls\Form;
 use UI\Controls\Grid;
-use UI\Controls\Picker;
-use UI\Controls\Check;
+use UI\Controls\Group;
 use UI\Controls\Label;
+use UI\Controls\MultilineEntry;
+use UI\Controls\Picker;
+use UI\Controls\Progress;
+use UI\Controls\Radio;
 use UI\Controls\Separator;
-use UI\Controls\ColorButton;
+use UI\Controls\Slider;
+use UI\Controls\Spin;
+use UI\Controls\Tab;
+use UI\Size;
+use UI\Window;
 
-$window = new Window("libui Control Gallery", new Size(640, 480), true);
+$window = new Window('libui Control Gallery', new Size(640, 480), true);
 $window->setMargin(true);
 
 $tab = new Tab();
@@ -39,13 +49,13 @@ $basicControlsHbox->setPadded(true);
 
 $basicControlsVbox->append($basicControlsHbox);
 
-$basicControlsHbox->append(new Button("Button"));
-$basicControlsHbox->append(new Check("Checkbox"));
+$basicControlsHbox->append(new Button('Button'));
+$basicControlsHbox->append(new Check('Checkbox'));
 $basicControlsVbox->append(
-	new Label("This is a label. Right now, labels can only span one line."));
+    new Label('This is a label. Right now, labels can only span one line.'));
 $basicControlsVbox->append(new Separator(Separator::Horizontal));
 
-$entriesGroup = new Group("Entries");
+$entriesGroup = new Group('Entries');
 $entriesGroup->setMargin(true);
 
 $basicControlsVbox->append($entriesGroup, true);
@@ -53,21 +63,21 @@ $basicControlsVbox->append($entriesGroup, true);
 $entryForm = new Form();
 $entryForm->setPadded(true);
 
-$entryForm->append("Entry", new Entry(Entry::Normal), false);
-$entryForm->append("Password Entry", new Entry(Entry::Password), false);
-$entryForm->append("Search Entry", new Entry(Entry::Search), false);
-$entryForm->append("Multiline Entry", new MultilineEntry(MultilineEntry::Wrap), true);
-$entryForm->append("Multiline Entry Without Wrapping", new MultilineEntry(MultilineEntry::NoWrap), true);
+$entryForm->append('Entry', new Entry(Entry::Normal), false);
+$entryForm->append('Password Entry', new Entry(Entry::Password), false);
+$entryForm->append('Search Entry', new Entry(Entry::Search), false);
+$entryForm->append('Multiline Entry', new MultilineEntry(MultilineEntry::Wrap), true);
+$entryForm->append('Multiline Entry Without Wrapping', new MultilineEntry(MultilineEntry::NoWrap), true);
 
 $entriesGroup->append($entryForm);
 
-$tab->append("Basic Controls", $basicControlsVbox);
+$tab->append('Basic Controls', $basicControlsVbox);
 $tab->setMargin(0, true);
 
 $numbersHbox = new Box(Box::Horizontal);
 $numbersHbox->setPadded(true);
 
-$numbersGroup = new Group("Numbers");
+$numbersGroup = new Group('Numbers');
 $numbersGroup->setMargin(true);
 
 $numbersHbox->append($numbersGroup, true);
@@ -80,41 +90,46 @@ $numbersGroup->append($numbersVbox);
 $progress = new Progress();
 
 $spin = new class(0, 100) extends Spin {
+    private $slider;
+    private $progress;
 
-	public function setSlider(Slider $slider) {
-		$this->slider = $slider;
-	}
+    public function setSlider(Slider $slider)
+    {
+        $this->slider = $slider;
+    }
 
-	public function setProgress(Progress $progress) {
-		$this->progress = $progress;	
-	}
+    public function setProgress(Progress $progress)
+    {
+        $this->progress = $progress;
+    }
 
-	protected function onChange() {
-		$this->slider->setValue($this->getValue());
-		$this->progress->setValue($this->getValue());
-	}
-
-	private $slider;
-	private $progress;
+    protected function onChange()
+    {
+        $this->slider->setValue($this->getValue());
+        $this->progress->setValue($this->getValue());
+    }
 };
 $spin->setProgress($progress);
 
 $slider = new class(0, 100) extends Slider {
-	public function setSpin(Spin $spin) {
-		$this->spin = $spin;
-	}
+    private $spin;
+    private $progress;
 
-	public function setProgress(Progress $progress) {
-		$this->progress = $progress;
-	}
+    public function setSpin(Spin $spin)
+    {
+        $this->spin = $spin;
+    }
 
-	protected function onChange() {
-		$this->spin->setValue($this->getValue());
-		$this->progress->setValue($this->getValue());
-	}
+    public function setProgress(Progress $progress)
+    {
+        $this->progress = $progress;
+    }
 
-	private $spin;
-	private $progress;
+    protected function onChange()
+    {
+        $this->spin->setValue($this->getValue());
+        $this->progress->setValue($this->getValue());
+    }
 };
 
 $slider->setProgress($progress);
@@ -131,7 +146,7 @@ $ip = new Progress();
 $ip->setValue(-1);
 $numbersVbox->append($ip);
 
-$listsGroup = new Group("Lists");
+$listsGroup = new Group('Lists');
 $listsGroup->setMargin(true);
 $numbersHbox->append($listsGroup);
 
@@ -140,24 +155,24 @@ $otherBox->setPadded(true);
 $listsGroup->append($otherBox);
 
 $combo = new Combo();
-$combo->append("Item 1");
-$combo->append("Item 2");
-$combo->append("Item 3");
+$combo->append('Item 1');
+$combo->append('Item 2');
+$combo->append('Item 3');
 $otherBox->append($combo);
 
 $ecombo = new EditableCombo();
-$ecombo->append("Editable Item 1");
-$ecombo->append("Editable Item 2");
-$ecombo->append("Editable Item 3");
+$ecombo->append('Editable Item 1');
+$ecombo->append('Editable Item 2');
+$ecombo->append('Editable Item 3');
 $otherBox->append($ecombo);
 
 $radio = new Radio();
-$radio->append("Radio Button 1");
-$radio->append("Radio Button 2");
-$radio->append("Radio Button 3");
+$radio->append('Radio Button 1');
+$radio->append('Radio Button 2');
+$radio->append('Radio Button 3');
 $otherBox->append($radio);
 
-$tab->append("Numbers and Lists", $numbersHbox);
+$tab->append('Numbers and Lists', $numbersHbox);
 $tab->setMargin(1, true);
 
 $dataHbox = new Box(Box::Horizontal);
@@ -173,7 +188,7 @@ $dataVbox->append(new Picker(Picker::Time));
 $dataVbox->append(new Picker(Picker::DateTime));
 $dataVbox->append(new ColorButton());
 
-$dataHbox->append(new Separator(Separator::Vertical));	
+$dataHbox->append(new Separator(Separator::Vertical));
 
 $filesVbox = new Box(Box::Vertical);
 $filesVbox->setPadded(true);
@@ -183,108 +198,116 @@ $filesGrid = new Grid();
 $filesGrid->setPadded(true);
 $filesVbox->append($filesGrid);
 
-$openEntry  = new Entry();
+$openEntry = new Entry();
 $openEntry->setReadOnly(true);
 
-$openButton = new class("Open File", $openEntry, $window) extends Button {
-	public function __construct(string $text, Entry $entry, Window $window) {
-		$this->entry = $entry;
-		$this->window = $window;
+$openButton = new class('Open File', $openEntry, $window) extends Button {
+    private $entry;
+    private $window;
 
-		parent::__construct($text);
-	}
-	
-	protected function onClick() {
-		$openFile = $this->window->open();
+    public function __construct(string $text, Entry $entry, Window $window)
+    {
+        $this->entry = $entry;
+        $this->window = $window;
 
-		if (!$openFile) {
-			return;
-		}
+        parent::__construct($text);
+    }
 
-		$this->entry->setText($openFile);
-	}
+    protected function onClick()
+    {
+        $openFile = $this->window->open();
 
-	private $entry;
-	private $window;
+        if (!$openFile) {
+            return;
+        }
+
+        $this->entry->setText($openFile);
+    }
 };
 
-$filesGrid->append($openButton, 0, 0, 1, 1, 
-	false, Grid::Fill, false, Grid::Fill);
-$filesGrid->append($openEntry, 1, 0, 1, 1, 
-	true, Grid::Fill, false, Grid::Fill);
+$filesGrid->append($openButton, 0, 0, 1, 1,
+    false, Grid::Fill, false, Grid::Fill);
+$filesGrid->append($openEntry, 1, 0, 1, 1,
+    true, Grid::Fill, false, Grid::Fill);
 
 $saveEntry = new Entry();
 $saveEntry->setReadOnly(true);
-$saveButton = new class("Save File", $saveEntry, $window) extends Button {
-	public function __construct(string $text, Entry $entry, Window $window) {
-		$this->entry = $entry;
-		$this->window = $window;
+$saveButton = new class('Save File', $saveEntry, $window) extends Button {
+    private $entry;
+    private $window;
 
-		parent::__construct($text);
-	}
-	
-	protected function onClick() {
-		$saveFile = $this->window->save();
+    public function __construct(string $text, Entry $entry, Window $window)
+    {
+        $this->entry = $entry;
+        $this->window = $window;
 
-		if (!$saveFile) {
-			return;
-		}
+        parent::__construct($text);
+    }
 
-		$this->entry->setText($saveFile);
-	}
+    protected function onClick()
+    {
+        $saveFile = $this->window->save();
 
-	private $entry;
-	private $window;
+        if (!$saveFile) {
+            return;
+        }
+
+        $this->entry->setText($saveFile);
+    }
 };
 
 $filesGrid->append($saveButton, 0, 1, 1, 1,
-	false, Grid::Fill, false, Grid::Fill);
+    false, Grid::Fill, false, Grid::Fill);
 $filesGrid->append($saveEntry, 1, 1, 1, 1,
-	true, Grid::Fill, false, Grid::Fill);
+    true, Grid::Fill, false, Grid::Fill);
 
 $messageGrid = new Grid();
 $messageGrid->setPadded(true);
 $filesGrid->append($messageGrid, 0, 2, 2, 1,
-	false, Grid::Center, false, Grid::Start);
+    false, Grid::Center, false, Grid::Start);
 
-$messageButton = new class("Msg Box", $window) extends Button {
-	public function __construct(string $text, Window $window) {
-		$this->window = $window;
+$messageButton = new class('Msg Box', $window) extends Button {
+    private $window;
 
-		parent::__construct($text);
-	}
-	
-	public function onClick() {
-		$this->window->msg(
-			"This is a normal message box", 
-			"More detailed information can be shown here.");
-	}
+    public function __construct(string $text, Window $window)
+    {
+        $this->window = $window;
 
-	private $window;
+        parent::__construct($text);
+    }
+
+    public function onClick()
+    {
+        $this->window->msg(
+            'This is a normal message box',
+            'More detailed information can be shown here.');
+    }
 };
 $messageGrid->append($messageButton, 0, 0, 1, 1,
-	false, Grid::Fill, false, Grid::Fill);
+    false, Grid::Fill, false, Grid::Fill);
 
-$errorButton = new class("Error Box", $window) extends Button {
-	public function __construct(string $text, Window $window) {
-		$this->window = $window;
+$errorButton = new class('Error Box', $window) extends Button {
+    private $window;
 
-		parent::__construct($text);
-	}
-	
-	public function onClick() {
-		$this->window->error(
-			"This message box describes an error",
-			"More detailed information can be shown here.");
-	}
+    public function __construct(string $text, Window $window)
+    {
+        $this->window = $window;
 
-	private $window;
+        parent::__construct($text);
+    }
+
+    public function onClick()
+    {
+        $this->window->error(
+            'This message box describes an error',
+            'More detailed information can be shown here.');
+    }
 };
 
 $messageGrid->append($errorButton, 1, 0, 1, 1,
-	false, Grid::Fill, false, Grid::Fill);
+    false, Grid::Fill, false, Grid::Fill);
 
-$tab->append("Data Choosers", $dataHbox);
+$tab->append('Data Choosers', $dataHbox);
 $tab->setMargin(2, true);
 
 $window->show();

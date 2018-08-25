@@ -1,52 +1,35 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
 
-/**
- * 日志默认配置文件
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
  *
- * @author Name Your <your@mail.com>
- * @package $$
- * @since 2016.11.19
- * @version 1.0
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
-return [
 
-    /**
+return [
+    /*
      * ---------------------------------------------------------------
      * 默认日志驱动
      * ---------------------------------------------------------------
      *
      * 系统为所有日志提供了统一的接口，在使用上拥有一致性
      */
-    'default' => env('log_driver', 'file'),
+    'default' => Leevel::env('log_driver', 'file'),
 
-    /**
-     * ---------------------------------------------------------------
-     * 是否启用日志
-     * ---------------------------------------------------------------
-     *
-     * 默认记录日志，记录日志会消耗服务器资源
-     */
-    'enabled' => true,
-
-    /**
-     * ---------------------------------------------------------------
-     * 记录系统运行异常
-     * ---------------------------------------------------------------
-     *
-     * 系统异常错误等日志是否记录
-     * 系统运行过程 queryyetsimple\bootstrap\runtime
-     */
-    'runtime_enabled' => true,
-
-    /**
+    /*
      * ---------------------------------------------------------------
      * 允许记录的日志级别
      * ---------------------------------------------------------------
      *
      * 随意自定义,其中 debug、info、notice、warning、error、critical、alert、emergency 和 sql 为系统内部使用
      */
-    'level' => [
+    'levels' => [
         'debug',
         'info',
         'notice',
@@ -55,19 +38,18 @@ return [
         'critical',
         'alert',
         'emergency',
-        'sql'
     ],
 
-    /**
+    /*
      * ---------------------------------------------------------------
-     * 日志时间格式化
+     * 频道
      * ---------------------------------------------------------------
      *
-     * 每条日志信息开头的时间信息
+     * 隔离不同环境的日志
      */
-    'time_format' => '[Y-m-d H:i]',
+    'channel' => Leevel::environment(),
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * 日志连接参数
      * ---------------------------------------------------------------
@@ -80,6 +62,9 @@ return [
             // driver
             'driver' => 'file',
 
+            // 频道
+            'channel' => null,
+
             // 日志文件名时间格式化
             'name' => 'Y-m-d H',
 
@@ -87,30 +72,21 @@ return [
             'size' => 2097152,
 
             // 默认的日志路径
-            'path' => path_log_cache()
+            'path' => Leevel::runtimePath('log'),
         ],
 
-        'monolog' => [
+        'syslog' => [
             // driver
-            'driver' => 'monolog',
-
-            // 日志类型
-            // support file、daily_file、syslog、error_log
-            'type' => [
-                'file'
-            ],
+            'driver' => 'syslog',
 
             // 频道
-            'channel' => 'Q',
+            'channel' => null,
 
-            // 日志文件名时间格式化
-            'name' => 'Y-m-d H',
+            // 存储 @see \Monolog\Handler\AbstractSyslogHandler
+            'facility' => LOG_USER,
 
-            // 日志文件大小限制,单位为字节 byte
-            'size' => 2097152,
-
-            // 默认的日志路径
-            'path' => path_log_cache('monolog')
-        ]
-    ]
+            // 等级
+            'level' => ILog::DEBUG,
+        ],
+    ],
 ];

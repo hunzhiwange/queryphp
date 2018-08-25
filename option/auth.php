@@ -1,17 +1,19 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
 
-/**
- * auth 默认配置文件
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
  *
- * @author Name Your <your@mail.com>
- * @package $$
- * @since 2017.09.07
- * @version 1.0
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
-return [
 
-    /**
+return [
+    /*
      * ---------------------------------------------------------------
      * 默认认证类型
      * ---------------------------------------------------------------
@@ -20,7 +22,7 @@ return [
      */
     'default' => 'web',
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * 默认 WEB 驱动
      * ---------------------------------------------------------------
@@ -29,7 +31,7 @@ return [
      */
     'web_default' => 'session',
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * 默认 API 驱动
      * ---------------------------------------------------------------
@@ -38,7 +40,7 @@ return [
      */
     'api_default' => 'token',
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * auth 连接参数
      * ---------------------------------------------------------------
@@ -51,8 +53,8 @@ return [
             // driver
             'driver' => 'session',
 
-            // 模型
-            'model' => common\domain\entity\user::class,
+            // 模型实体
+            'entity' => common\domain\entity\user::class,
 
             // 用户信息持久化名字
             'user_persistence' => 'user_persistence',
@@ -61,15 +63,15 @@ return [
             'token_persistence' => 'token_persistence',
 
             // 查询字段
-            'field' => 'id,name,nikename,email,mobile'
+            'field' => 'id,name,nikename,email,mobile',
         ],
 
         'token' => [
             // driver
             'driver' => 'token',
 
-            // 模型
-            'model' => common\domain\entity\user::class,
+            // 模型实体
+            'entity' => common\domain\entity\user::class,
 
             // 用户信息持久化名字
             'user_persistence' => 'user_persistence',
@@ -78,7 +80,7 @@ return [
             'token_persistence' => 'token_persistence',
 
             // 查询字段
-            'field' => 'id,name,nikename,email,mobile'
-        ]
-    ]
+            'field' => 'id,name,nikename,email,mobile',
+        ],
+    ],
 ];

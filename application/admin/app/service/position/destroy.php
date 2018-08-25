@@ -1,40 +1,50 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace admin\app\service\position;
 
-use admin\app\service\position\destroy_failed;
 use admin\is\repository\admin_position as repository;
 
 /**
- * 后台职位删除
+ * 后台职位删除.
  *
  * @author Name Your <your@mail.com>
- * @package $$
+ *
  * @since 2017.10.23
+ *
  * @version 1.0
  */
 class destroy
 {
-
     /**
-     * 后台职位仓储
+     * 后台职位仓储.
      *
      * @var \admin\is\repository\admin_position
      */
     protected $oRepository;
 
     /**
-     * 父级职位
+     * 父级职位.
      *
      * @var int
      */
     protected $intParentId;
 
     /**
-     * 构造函数
+     * 构造函数.
      *
      * @param \admin\is\repository\admin_position $oRepository
-     * @return void
      */
     public function __construct(repository $oRepository)
     {
@@ -42,9 +52,10 @@ class destroy
     }
 
     /**
-     * 响应方法
+     * 响应方法.
      *
      * @param int $intId
+     *
      * @return array
      */
     public function run($intId)
@@ -53,9 +64,10 @@ class destroy
     }
 
     /**
-     * 查找实体
+     * 查找实体.
      *
      * @param int $intId
+     *
      * @return \admin\domain\entity\admin_position|void
      */
     protected function find($intId)
@@ -68,22 +80,23 @@ class destroy
     }
 
     /**
-     * 删除实体
+     * 删除实体.
      *
      * @param \admin\domain\entity\admin_position $objStructure
+     *
      * @return int
      */
     protected function delete($objStructure)
     {
         $this->checkChildren($objStructure->id);
+
         return $this->oRepository->delete($objStructure);
     }
 
     /**
-     * 判断是否存在子职位
+     * 判断是否存在子职位.
      *
      * @param int $intId
-     * @return void
      */
     protected function checkChildren($intId)
     {

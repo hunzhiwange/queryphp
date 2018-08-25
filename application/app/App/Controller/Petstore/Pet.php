@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+
 namespace App\App\Controller\Petstore;
 
 class Pet
@@ -92,7 +92,6 @@ class Pet
      */
     public function findByStatus()
     {
-        echo 'test ';
     }
 
     /**
@@ -171,7 +170,7 @@ class Pet
      *     _bind="test/handle2"
      * )
      */
-    public function getPetById()
+    public function getPetById2()
     {
     }
 
@@ -211,7 +210,7 @@ class Pet
      *     _bind="test/handle2"
      * )
      */
-    public function getPetById()
+    public function getPetById3()
     {
     }
 
@@ -251,7 +250,7 @@ class Pet
      *     _bind="test/handle2"
      * )
      */
-    public function getPetById()
+    public function getPetById4()
     {
     }
 
@@ -291,7 +290,7 @@ class Pet
      *     _bind="test/handle2"
      * )
      */
-    public function getPetById()
+    public function getPetById5()
     {
 
     /**
@@ -330,7 +329,7 @@ class Pet
      *     _bind="test/handle2"
      * )
      */
-    public function getPetById()
+    public function getPetById6()
     {
     }
 
@@ -370,7 +369,7 @@ class Pet
      *     _bind="test/handle2"
      * )
      */
-    public function getPetById()
+    public function getPetById7()
     {
     }
 

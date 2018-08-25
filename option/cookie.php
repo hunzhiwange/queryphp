@@ -1,26 +1,19 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
 
-/**
- * cookie 默认配置文件
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
  *
- * @author Name Your <your@mail.com>
- * @package $$
- * @since 2016.11.19
- * @version 1.0
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 return [
-
-    /**
-     * ---------------------------------------------------------------
-     * cookie 前缀
-     * ---------------------------------------------------------------
-     *
-     * 设置 cookie 前缀可以用来解决冲突
-     */
-    'prefix' => 'q_',
-
-    /**
+    /*
      * ---------------------------------------------------------------
      * cookie 域名
      * ---------------------------------------------------------------
@@ -32,7 +25,7 @@ return [
      */
     'domain' => '',
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * cookie 路径
      * ---------------------------------------------------------------
@@ -43,7 +36,7 @@ return [
      */
     'path' => '/',
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * cookie 默认过期时间
      * ---------------------------------------------------------------
@@ -56,7 +49,17 @@ return [
      */
     'expire' => 86400,
 
-    /**
+    /*
+     * ---------------------------------------------------------------
+     * cookie 安全 HTTPS 连接
+     * ---------------------------------------------------------------
+     *
+     * 设置成 TRUE，表示只应通过客户端的安全HTTPS连接传输 cookie
+     * 相关技术文档：http://php.net/manual/zh/function.setcookie.php
+     */
+    'secure' => false,
+
+    /*
      * ---------------------------------------------------------------
      * cookie 仅 HTTP 协议访问
      * ---------------------------------------------------------------
@@ -66,5 +69,5 @@ return [
      * TRUE 或 FALSE
      * 相关技术文档：http://php.net/manual/zh/function.setcookie.php
      */
-    'httponly' => false
+    'httponly' => false,
 ];

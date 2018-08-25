@@ -1,32 +1,43 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace common\is\tree;
 
 use queryyetsimple\support\tree as support_tree;
 
 /**
- * 通用树结构
+ * 通用树结构.
  *
  * @author Name Your <your@mail.com>
- * @package $$
+ *
  * @since 2017.10.12
+ *
  * @version 1.0
  */
 class tree
 {
-
     /**
-     * 树结构
+     * 树结构.
      *
      * @var \queryyetsimple\support\tree
      */
     protected $oTree;
 
     /**
-     * 构造函数
+     * 构造函数.
      *
      * @param array $arrNode
-     * @return  void
      */
     public function __construct(array $arrNode)
     {
@@ -34,18 +45,35 @@ class tree
     }
 
     /**
-     * 树结构节点列表
+     * 缺省方法.
+     *
+     * @param 方法名 $sMethod
+     * @param 参数    $arrArgs
+     *
+     * @return mixed
+     */
+    public function __call($sMethod, $arrArgs)
+    {
+        return call_user_func_array([
+            $this->oTree,
+            $sMethod,
+        ], $arrArgs);
+    }
+
+    /**
+     * 树结构节点列表.
      *
      * @param callable $cal
+     *
      * @return array
      */
     public function forList($cal = null)
     {
-        if($cal === null) {
+        if (null === $cal) {
             $cal = function ($arrItem) {
                 return [
-                    'id' => $arrItem['value'],
-                    'title' => $arrItem['data']
+                    'id'    => $arrItem['value'],
+                    'title' => $arrItem['data'],
                 ];
             };
         }
@@ -54,18 +82,19 @@ class tree
     }
 
     /**
-     * 树结构节点 select
+     * 树结构节点 select.
      *
      * @param callable $cal
+     *
      * @return array
      */
     public function forSelect($cal = null)
     {
-        if($cal === null) {
+        if (null === $cal) {
             $cal = function ($arrItem) {
                 return [
                     'value' => $arrItem['value'],
-                    'label' => $arrItem['data']
+                    'label' => $arrItem['data'],
                 ];
             };
         }
@@ -74,9 +103,10 @@ class tree
     }
 
     /**
-     * 取得子节点
+     * 取得子节点.
      *
-     * @param  int $intId
+     * @param int $intId
+     *
      * @return array
      */
     public function getChildren($intId)
@@ -85,12 +115,13 @@ class tree
     }
 
     /**
-     * 是否存在子节点
+     * 是否存在子节点.
      *
-     * @param  int  $intId
-     * @param  array   $arrCheckChildren
-     * @param  boolean $booStrict
-     * @return boolean
+     * @param int   $intId
+     * @param array $arrCheckChildren
+     * @param bool  $booStrict
+     *
+     * @return bool
      */
     public function hasChildren($intId, array $arrCheckChildren = [], $booStrict = true)
     {
@@ -98,28 +129,14 @@ class tree
     }
 
     /**
-     * 基于节点创建树
+     * 基于节点创建树.
      *
-     * @param  array  $arrNode
+     * @param array $arrNode
+     *
      * @return \queryyetsimple\support\tree
      */
     protected function createTree(array $arrNode)
     {
         return new support_tree($arrNode);
-    }
-
-    /**
-     * 缺省方法
-     *
-     * @param 方法名 $sMethod
-     * @param 参数 $arrArgs
-     * @return mixed
-     */
-    public function __call($sMethod, $arrArgs)
-    {
-        return call_user_func_array([
-            $this->oTree,
-            $sMethod
-        ], $arrArgs);
     }
 }

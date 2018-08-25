@@ -1,40 +1,51 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace admin\app\service\position;
 
-use common\is\tree\tree;
 use admin\is\repository\admin_position as repository;
+use common\is\tree\tree;
 
 /**
- * 后台职位编辑
+ * 后台职位编辑.
  *
  * @author Name Your <your@mail.com>
- * @package $$
+ *
  * @since 2017.10.23
+ *
  * @version 1.0
  */
 class edit
 {
-
     /**
-     * 后台职位仓储
+     * 后台职位仓储.
      *
      * @var \admin\is\repository\admin_position
      */
     protected $oRepository;
 
     /**
-     * 父级职位
+     * 父级职位.
      *
      * @var int
      */
     protected $intParentId;
 
     /**
-     * 构造函数
+     * 构造函数.
      *
      * @param \admin\is\repository\admin_position $oRepository
-     * @return void
      */
     public function __construct(repository $oRepository)
     {
@@ -42,41 +53,45 @@ class edit
     }
 
     /**
-     * 响应方法
+     * 响应方法.
      *
      * @param int $intId
+     *
      * @return array
      */
     public function run($intId)
     {
         $arrStructure = $this->oRepository->find($intId)->toArray();
         $arrSelect = $this->getSelectTree($arrStructure['pid']);
-        $arrStructure['pid'] = $arrSelect['selected'] ?  : [
-            - 1
+        $arrStructure['pid'] = $arrSelect['selected'] ?: [
+            -1,
         ];
 
         return [
-            'one' => $arrStructure,
-            'list' => $arrSelect['list']
+            'one'  => $arrStructure,
+            'list' => $arrSelect['list'],
         ];
     }
 
     /**
-     * 分析树结构数据
+     * 分析树结构数据.
      *
      * @param int $intParentId
+     *
      * @return array
      */
     protected function getSelectTree($intParentId)
     {
         $this->intParentId = $intParentId;
+
         return $this->parseStructureList($this->oRepository->all());
     }
 
     /**
-     * 将节点载入节点树并返回树结构
+     * 将节点载入节点树并返回树结构.
      *
      * @param \queryyetsimple\support\collection $objStructure
+     *
      * @return array
      */
     protected function parseStructureList($objStructure)
@@ -85,9 +100,10 @@ class edit
     }
 
     /**
-     * 生成节点树
+     * 生成节点树.
      *
      * @param \queryyetsimple\support\collection $objStructure
+     *
      * @return \common\is\tree\tree
      */
     protected function createTree($objStructure)
@@ -95,13 +111,15 @@ class edit
         $oTree = new tree($this->parseToNode($objStructure));
         $arrTopStructure = $this->oRepository->topNode();
         $oTree->setNode($arrTopStructure['id'], $arrTopStructure['pid'], $arrTopStructure['lable'], true);
+
         return $oTree;
     }
 
     /**
-     * 转换为节点数组
+     * 转换为节点数组.
      *
      * @param \queryyetsimple\support\collection $objStructure
+     *
      * @return array
      */
     protected function parseToNode($objStructure)
@@ -111,9 +129,10 @@ class edit
             $arrNode[] = [
                 $oStructure->id,
                 $oStructure->pid,
-                $oStructure->name
+                $oStructure->name,
             ];
         }
+
         return $arrNode;
     }
 }

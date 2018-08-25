@@ -1,22 +1,24 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
 
-/**
- * 国际化默认配置文件
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
  *
- * @author Name Your <your@mail.com>
- * @package $$
- * @since 2016.11.19
- * @version 1.0
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
-return [
 
-    /**
+return [
+    /*
      * ---------------------------------------------------------------
      * 当前语言环境
      * ---------------------------------------------------------------
      *
      * 根据面向的客户设置当前的软件的语言
      */
-    'default' => env('i18n', 'zh-CN')
+    'default' => Leevel::env('i18n', 'zh-CN'),
 ];

@@ -1,19 +1,31 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace admin\app\service\login;
 
-use common\domain\entity\menu;
+use common\is\repository\menu as repository;
+use queryyetsimple\bootstrap\auth\login;
 use queryyetsimple\http\request;
 use queryyetsimple\support\tree;
-use queryyetsimple\bootstrap\auth\login;
-use common\is\repository\menu as repository;
 
 /**
- * 验证登录
+ * 验证登录.
  *
  * @author Name Your <your@mail.com>
- * @package $$
+ *
  * @since 2017.11.23
+ *
  * @version 1.0
  */
 class check
@@ -28,18 +40,17 @@ class check
     protected $oRequest;
 
     /**
-     * 后台菜单仓储
+     * 后台菜单仓储.
      *
      * @var \common\is\repository\menu
      */
     protected $oRepository;
 
     /**
-     * 构造函数
+     * 构造函数.
      *
      * @param \queryyetsimple\http\request $oRequest
-     * @param \common\is\repository\menu $oRepository
-     * @return void
+     * @param \common\is\repository\menu   $oRepository
      */
     public function __construct(request $oRequest, repository $oRepository)
     {
@@ -48,10 +59,11 @@ class check
     }
 
     /**
-     * 响应方法
+     * 响应方法.
      *
-     * @param array $arrData
+     * @param array  $arrData
      * @param string $strCode
+     *
      * @return array
      */
     public function run(array $arrData, $strCode)
@@ -68,9 +80,9 @@ class check
 
         // 登录成功
         $arrData = [
-            'message' => '登录成功',
-            'authKey' => $arrLogin['api_token'],
-            'userInfo' => $arrLogin['user']
+            'message'  => '登录成功',
+            'authKey'  => $arrLogin['api_token'],
+            'userInfo' => $arrLogin['user'],
         ];
         $arrData['menusList'] = $this->getMenu();
         $arrData['authList'] = $this->getAuth();
@@ -79,7 +91,7 @@ class check
     }
 
     /**
-     * 获取权限
+     * 获取权限.
      *
      * @return array
      */
@@ -89,13 +101,13 @@ class check
     }
 
     /**
-     * 取得菜单
+     * 取得菜单.
      *
      * @return array
      */
     protected function getMenu()
     {
-        $arrList = $this->oRepository->all(function($objSelect){
+        $arrList = $this->oRepository->all(function ($objSelect) {
             $objSelect->
 
             where('status', 'enable')->
@@ -108,11 +120,12 @@ class check
             $arrNode[] = [
                 $arr['id'],
                 $arr['pid'],
-                $this->formatData($arr->toArray())
+                $this->formatData($arr->toArray()),
             ];
         }
 
         $oTree = new tree($arrNode);
+
         return $oTree->toArray(function ($arrItem, $oTree) {
             return $arrItem['data'];
         });
@@ -123,27 +136,29 @@ class check
      *
      * @param string $strInputCode
      * @param string $strCode
-     * @return boolean
+     *
+     * @return bool
      */
     protected function checkCode($strInputCode, $strCode)
     {
-        return strtoupper($strInputCode) == strtoupper($strCode);
+        return strtoupper($strInputCode) === strtoupper($strCode);
     }
 
     /**
-     * 格式化菜单
+     * 格式化菜单.
      *
      * @param array $arrData
+     *
      * @return array
      */
     protected function formatData(array $arrData)
     {
         return [
-            'title' => $arrData['title'],
-            'name' => $arrData['name'],
-            'path' => $arrData['path'],
+            'title'     => $arrData['title'],
+            'name'      => $arrData['name'],
+            'path'      => $arrData['path'],
             'component' => $arrData['component'],
-            'icon' => $arrData['icon']
+            'icon'      => $arrData['icon'],
         ];
     }
 }

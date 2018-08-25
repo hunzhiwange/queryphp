@@ -1,34 +1,43 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\App\Controller;
 
 use Leevel\Mvc\Controller;
 
 /**
- * Yyyyxxx
+ * Yyyyxxx.
  *
  * @author Name Your <your@mail.com>
- * @package $$
+ *
  * @since 2018.05.26
+ *
  * @version 1.0
  */
-class Yyyyxxx extends Controller 
+class Yyyyxxx extends Controller
 {
     /**
-     * 构造函数
-     *
-     * @return void
+     * 构造函数.
      */
-    public function __construct() 
+    public function __construct()
     {
     }
 
     /**
-     * 默认方法
-     *
-     * @return void
+     * 默认方法.
      */
-    public function index() 
+    public function index()
     {
     }
 }

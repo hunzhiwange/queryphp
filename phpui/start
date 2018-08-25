@@ -1,6 +1,6 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+
 
 /**
  * phpui 入口文件

@@ -1,18 +1,31 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace admin\app\controller\menu;
 
-use queryyetsimple\request;
 use admin\app\controller\aaction;
-use admin\domain\service\menu\order_failed;
 use admin\domain\service\menu\order as service;
+use admin\domain\service\menu\order_failed;
+use queryyetsimple\request;
 
 /**
- * 后台菜单排序更新
+ * 后台菜单排序更新.
  *
  * @author Name Your <your@mail.com>
- * @package $$
+ *
  * @since 2017.10.12
+ *
  * @version 1.0
  * @menu
  * @title 排序
@@ -23,11 +36,11 @@ use admin\domain\service\menu\order as service;
  */
 class order extends aaction
 {
-
     /**
-     * 响应方法
+     * 响应方法.
      *
      * @param \admin\domain\service\admin_menu\order $oService
+     *
      * @return mixed
      */
     public function run(service $oService)
@@ -35,19 +48,20 @@ class order extends aaction
         try {
             $strType = $this->type();
             $mixResult = $oService->run($this->id(), $strType);
+
             return [
-                'message' => __('菜单%s成功', $this->messageType($strType))
+                'message' => __('菜单%s成功', $this->messageType($strType)),
             ];
         } catch (order_failed $oE) {
             return [
-                'code' => 400,
-                'message' => $oE->getMessage()
+                'code'    => 400,
+                'message' => $oE->getMessage(),
             ];
         }
     }
 
     /**
-     * 排序类型
+     * 排序类型.
      *
      * @return string
      */
@@ -57,19 +71,20 @@ class order extends aaction
     }
 
     /**
-     * 排序作用 ID
+     * 排序作用 ID.
      *
      * @return int
      */
     protected function id()
     {
-        return intval(request::all('args\0'));
+        return (int) (request::all('args\0'));
     }
 
     /**
-     * 成功消息类型
+     * 成功消息类型.
      *
      * @param string $strType
+     *
      * @return string
      */
     protected function messageType($strType)

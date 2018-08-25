@@ -1,22 +1,25 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
 
-/**
- * 系统异常模版
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
  *
- * @author Xiangmin Liu <635750556@qq.com>
- * @package $$
- * @since 2016.11.19
- * @version 1.0
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 $title = isset($type) ? $type : 'Whoops!';
 
-if (! isset($message)) {
+if (!isset($message)) {
     $message = 'Unknown error.';
 }
 
-if (isset($file) && isset($line)) {
+if (isset($file, $line)) {
     $title .= sprintf('<div class="file">#FILE %s #LINE %s</div>', $file, $line);
 }
 
-require dirname(__FILE__) . '/layout.php';
+require __DIR__.'/layout.php';

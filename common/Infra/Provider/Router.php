@@ -1,31 +1,43 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Common\Infra\Provider;
 
 use Leevel\Router\RouterProvider;
 use Leevel\Router\ScanSwaggerRouter;
 
 /**
- * 路由服务提供者
+ * 路由服务提供者.
  *
  * @author Name Your <your@mail.com>
- * @package $$
+ *
  * @since 2018.04.17
+ *
  * @version 1.0
  */
 class Router extends RouterProvider
 {
-
     /**
-     * 控制器相对目录
-     * 
+     * 控制器相对目录.
+     *
      * @var string
      */
     protected $controllerDir = 'App\Controller';
 
     /**
      * 中间件分组
-     * 分组可以很方便地批量调用组件
+     * 分组可以很方便地批量调用组件.
      *
      * @var array
      */
@@ -33,39 +45,36 @@ class Router extends RouterProvider
         // web 请求中间件
         'web' => [
             'session',
-            'log'
+            'log',
         ],
 
         // api 请求中间件
         'api' => [
             'throttler:60,1',
-            'log'
+            'log',
         ],
 
         // console 请求中间件
         'console' => [
-            'log'
+            'log',
         ],
     ];
 
     /**
      * 中间件别名
      * HTTP 中间件提供一个方便的机制来过滤进入应用程序的 HTTP 请求
-     * 例外在应用执行结束后响应环节也会调用 HTTP 中间件
+     * 例外在应用执行结束后响应环节也会调用 HTTP 中间件.
      *
      * @var array
      */
     protected $middlewareAlias = [
-        'session' => 'Leevel\Session\Middleware\Session',
+        'session'   => 'Leevel\Session\Middleware\Session',
         'throttler' => 'Leevel\Throttler\Middleware\Throttler',
-        'log' => 'Leevel\Log\Middleware\Log'
+        'log'       => 'Leevel\Log\Middleware\Log',
     ];
 
-
     /**
-     * bootstrap
-     *
-     * @return void
+     * bootstrap.
      */
     public function bootstrap()
     {
@@ -73,26 +82,29 @@ class Router extends RouterProvider
     }
 
     /**
-     * 返回路由
+     * 返回路由.
      *
      * @return array
      */
-    public function getRouters() {
+    public function getRouters()
+    {
         return (new ScanSwaggerRouter($this->makeMiddlewareParser()))->handle();
     }
 
     /**
-     * 全局中间件
+     * 全局中间件.
      *
      * @return array
      */
-    public function getMiddlewares() {
-        if (api()) {
-            return ['api'];
-        } elseif (console()) {
-            return ['console'];
-        } else {
-            return ['web'];
-        }
+    public function getMiddlewares()
+    {
+        return ['web'];
+        // if (api()) {
+        //     return ['api'];
+        // } elseif (console()) {
+        //     return ['console'];
+        // } else {
+        //     return ['web'];
+        // }
     }
 }

@@ -1,34 +1,45 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace admin\app\service\structure;
 
+use admin\is\repository\structure as repository;
 use common\is\tree\tree;
 use queryyetsimple\mvc\model_not_found;
-use admin\is\repository\structure as repository;
 
 /**
- * 后台部门编辑更新
+ * 后台部门编辑更新.
  *
  * @author Name Your <your@mail.com>
- * @package $$
+ *
  * @since 2017.10.23
+ *
  * @version 1.0
  */
 class update
 {
-
     /**
-     * 后台部门仓储
+     * 后台部门仓储.
      *
      * @var \admin\is\repository\structure
      */
     protected $oRepository;
 
     /**
-     * 构造函数
+     * 构造函数.
      *
      * @param \admin\is\repository\structure $oRepository
-     * @return void
      */
     public function __construct(repository $oRepository)
     {
@@ -36,9 +47,10 @@ class update
     }
 
     /**
-     * 响应方法
+     * 响应方法.
      *
      * @param array $aStructure
+     *
      * @return array
      */
     public function run($aStructure)
@@ -47,9 +59,10 @@ class update
     }
 
     /**
-     * 验证参数
+     * 验证参数.
      *
      * @param array $aStructure
+     *
      * @return \admin\domain\entity\structure
      */
     protected function entify(array $aStructure)
@@ -58,17 +71,17 @@ class update
         $intOldPid = $objStructure->pid;
 
         $aStructure['pid'] = $this->parseParentId($aStructure['pid']);
-        if ($aStructure['id'] == $aStructure['pid']) {
+        if ($aStructure['id'] === $aStructure['pid']) {
             throw new update_failed(__('部门父级不能为自己'));
         }
 
         if ($this->createTree()->hasChildren($aStructure['id'], [
-            $aStructure['pid']
+            $aStructure['pid'],
         ])) {
             throw new update_failed(__('部门父级不能为自己的子部门'));
         }
 
-        if($intOldPid != $aStructure['pid']) {
+        if ($intOldPid !== $aStructure['pid']) {
             $aStructure['sort'] = $this->parseSiblingSort($aStructure['pid']);
         }
         $objStructure->forceProps($this->data($aStructure));
@@ -77,9 +90,10 @@ class update
     }
 
     /**
-     * 查找实体
+     * 查找实体.
      *
      * @param int $intId
+     *
      * @return \admin\domain\entity\structure|void
      */
     protected function find($intId)
@@ -92,7 +106,7 @@ class update
     }
 
     /**
-     * 生成节点树
+     * 生成节点树.
      *
      * @return \common\is\tree\tree
      */
@@ -102,9 +116,10 @@ class update
     }
 
     /**
-     * 转换为节点数组
+     * 转换为节点数组.
      *
      * @param \queryyetsimple\support\collection $objStructure
+     *
      * @return array
      */
     protected function parseToNode($objStructure)
@@ -114,42 +129,45 @@ class update
             $arrNode[] = [
                 $oStructure->id,
                 $oStructure->pid,
-                $oStructure->name
+                $oStructure->name,
             ];
         }
+
         return $arrNode;
     }
 
     /**
-     * 组装 POST 数据
+     * 组装 POST 数据.
      *
      * @param array $aStructure
+     *
      * @return array
      */
     protected function data(array $aStructure)
     {
         $aData = [
             'name' => $aStructure['name'],
-            'pid' => intval($aStructure['pid'])
+            'pid'  => (int) ($aStructure['pid']),
         ];
 
-        if(isset($aStructure['sort'])) {
-            $aData['sort'] = intval($aStructure['sort']);
+        if (isset($aStructure['sort'])) {
+            $aData['sort'] = (int) ($aStructure['sort']);
         }
 
         return $aData;
     }
 
     /**
-     * 分析父级数据
+     * 分析父级数据.
      *
      * @param
      *            array $aPid
+     *
      * @return int
      */
     protected function parseParentId(array $aPid)
     {
-        $intPid = intval(array_pop($aPid));
+        $intPid = (int) (array_pop($aPid));
         if ($intPid < 0) {
             $intPid = 0;
         }
@@ -161,11 +179,13 @@ class update
      * 分析兄弟节点最靠下面的排序值
      *
      * @param int $nPid
+     *
      * @return int
      */
     protected function parseSiblingSort($nPid)
     {
         $mixSibling = $this->oRepository->siblingNodeBySort($nPid);
-        return $mixSibling ? $mixSibling->sort-1 : 500;
+
+        return $mixSibling ? $mixSibling->sort - 1 : 500;
     }
 }

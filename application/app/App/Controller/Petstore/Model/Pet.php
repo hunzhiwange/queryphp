@@ -1,5 +1,17 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\App\Controller\Petstore\Model;
 
 /**
@@ -7,15 +19,16 @@ namespace App\App\Controller\Petstore\Model;
  */
 class Pet
 {
-
     /**
      * @SWG\Property(format="int64")
+     *
      * @var int
      */
     public $id;
 
     /**
      * @SWG\Property(example="doggie")
+     *
      * @var string
      */
     public $name;
@@ -39,7 +52,8 @@ class Pet
     public $tags;
 
     /**
-     * pet status in the store
+     * pet status in the store.
+     *
      * @var string
      * @SWG\Property(enum={"available", "pending", "sold"})
      */

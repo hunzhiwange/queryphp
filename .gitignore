@@ -10,6 +10,6 @@ node_modules/
 .DS_Store
 vendor/
 frontend/node_modules/
-frontmulti/node_modules/
-electron/node_modules/
 *.log
+package-lock.json
+.php_cs.cache

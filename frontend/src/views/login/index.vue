@@ -44,21 +44,21 @@
                                 <FormItem>
                                     <Row>
                                         <Col span="12">
-                                        <Button type="text" size="large">{{__('找回密码')}}</Button>
+                                            <Button type="text" size="large">{{__('找回密码')}}</Button>
                                         </Col>
                                         <Col span="12" style="text-align:right;">
-                                        <Button type="text" size="large">{{__('新用户注册')}}</Button>
+                                            <Button type="text" size="large">{{__('新用户注册')}}</Button>
                                         </Col>
                                     </Row>
                                 </FormItem>
                             </Form>
                         </TabPane>
-                        <TabPane :label="__('微信扫一扫')" icon=". fa fa-weixin">
+                        <!--<TabPane :label="__('微信扫一扫')" icon=". fa fa-weixin">
                             todo
                         </TabPane>
                         <TabPane :label="__('手机登录')" icon="android-phone-portrait">
                             todo
-                        </TabPane>
+                        </TabPane>-->
                     </Tabs>
                 </div>
                 </Col>
@@ -67,7 +67,7 @@
     </div>
     <div class="login-footer">
         <div class="login-inner">
-            <div>© 2017 <a href="http://www.queryphp.com">QueryPHP.COM</a> All rights reserved.</div>
+            <div>© 2018 <a href="http://www.queryphp.com">QueryPHP.COM</a> All rights reserved.</div>
         </div>
     </div>
 </div>

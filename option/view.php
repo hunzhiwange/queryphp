@@ -1,26 +1,28 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
 
-/**
- * 视图默认配置文件
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
  *
- * @author Name Your <your@mail.com>
- * @package $$
- * @since 2016.11.19
- * @version 1.0
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
-return [
 
-    /**
+return [
+    /*
      * ---------------------------------------------------------------
      * 默认视图驱动
      * ---------------------------------------------------------------
      *
      * 系统为所有视图提供了统一的接口，在使用上拥有一致性
      */
-    'default' => env('view_driver', 'html'),
+    'default' => Leevel::env('view_driver', 'html'),
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * 模板主题
      * ---------------------------------------------------------------
@@ -29,17 +31,17 @@ return [
      */
     'theme_name' => 'default',
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * 默认主题扩展
      * ---------------------------------------------------------------
      *
      * 当前模板路径不存在的情况下默认路径的分析
-     * see view\theme::parseDefaultFile
+     * see \Leevel\View\Html::parseDefaultFile
      */
     'theme_path_default' => '',
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * 错误模板
      * ---------------------------------------------------------------
@@ -48,7 +50,7 @@ return [
      */
     'action_fail' => 'public+fail',
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * 成功模板
      * ---------------------------------------------------------------
@@ -57,7 +59,7 @@ return [
      */
     'action_success' => 'public+success',
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * 控制器和方法分割符
      * ---------------------------------------------------------------
@@ -66,7 +68,7 @@ return [
      */
     'controlleraction_depr' => '/',
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * 视图连接参数
      * ---------------------------------------------------------------
@@ -83,7 +85,7 @@ return [
             'suffix' => '.html',
 
             // 模板缓存时间，模板编译缓存时间,单位秒,0 表示永不过期
-            'cache_lifetime' => 2592000
+            'cache_lifetime' => 2592000,
         ],
 
         'twig' => [
@@ -91,7 +93,7 @@ return [
             'driver' => 'twig',
 
             // 后缀
-            'suffix' => '.twig'
+            'suffix' => '.twig',
         ],
 
         'v8' => [
@@ -102,13 +104,13 @@ return [
             'suffix' => '.js',
 
             // vue path
-            'vue_path' => path('node_modules/vue/dist/vue.js'),
-            
+            'vue_path' => Leevel::path('node_modules/vue/dist/vue.js'),
+
             // vue renderer
-            'vue_renderer' => path('node_modules/vue-server-renderer/basic.js'),
+            'vue_renderer' => Leevel::path('node_modules/vue-server-renderer/basic.js'),
 
             // art path
-            'art_path' => path('node_modules/art-template/lib/template-web.js')
+            'art_path' => Leevel::path('node_modules/art-template/lib/template-web.js'),
         ],
 
         'phpui' => [
@@ -116,7 +118,7 @@ return [
             'driver' => 'phpui',
 
             // 后缀
-            'suffix' => '.php'
-        ]
-    ]
+            'suffix' => '.php',
+        ],
+    ],
 ];

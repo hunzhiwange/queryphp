@@ -1,5 +1,17 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace admin\domain\service\structure;
 
 use admin\is\repository\structure as repository;
@@ -8,25 +20,24 @@ use admin\is\repository\structure as repository;
  * 后台部门启用禁用服务
  *
  * @author Name Your <your@mail.com>
- * @package $$
+ *
  * @since 2017.10.23
+ *
  * @version 1.0
  */
 class enables
 {
-
     /**
-     * 后台部门仓储
+     * 后台部门仓储.
      *
      * @var \admin\is\repository\structure
      */
     protected $oRepository;
 
     /**
-     * 构造函数
+     * 构造函数.
      *
      * @param \admin\is\repository\structure $oRepository
-     * @return void
      */
     public function __construct(repository $oRepository)
     {
@@ -34,11 +45,12 @@ class enables
     }
 
     /**
-     * 响应方法
+     * 响应方法.
      *
-     * @param int $intId
+     * @param int    $intId
      * @param string $strType
-     * @return void
+     * @param mixed  $arrId
+     * @param mixed  $strStatus
      */
     public function run($arrId, $strStatus)
     {
@@ -51,24 +63,23 @@ class enables
      * 验证启用禁用状态
      *
      * @param string $strStatus
-     * @return void
      */
     protected function checkStatus($strStatus)
     {
-        if (! in_array($strStatus, [
+        if (!in_array($strStatus, [
             'disable',
-            'enable'
-        ])) {
+            'enable',
+        ], true)) {
             throw new enables_failed(__('启用禁用状态不受支持'));
         }
     }
 
     /**
-     * 注册工作单元
+     * 注册工作单元.
      *
      * @param \queryyetsimple\support\collection $objCollection
-     * @param string $strStatu
-     * @return void
+     * @param string                             $strStatu
+     * @param mixed                              $strStatus
      */
     protected function registerUnitOfWork($objCollection, $strStatus)
     {
@@ -79,9 +90,7 @@ class enables
     }
 
     /**
-     * 提交工作单元
-     *
-     * @return void
+     * 提交工作单元.
      */
     protected function commit()
     {
@@ -89,9 +98,10 @@ class enables
     }
 
     /**
-     * 查找指定 ID 的部门
+     * 查找指定 ID 的部门.
      *
      * @param array $arrIds
+     *
      * @return \queryyetsimple\support\collection
      */
     protected function queryStructures(array $arrIds)

@@ -1,27 +1,39 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+use UI\Area;
+use UI\Controls\Box;
+use UI\Controls\Button;
+use UI\Controls\ColorButton;
+use UI\Controls\Combo;
+use UI\Controls\Entry;
+use UI\Controls\Label;
+use UI\Controls\Spin;
+use UI\Draw\Brush;
+use UI\Draw\Color;
+use UI\Draw\Matrix;
+use UI\Draw\Path;
+use UI\Draw\Pen;
+use UI\Draw\Stroke;
+use UI\Draw\Text\Font;
+use UI\Draw\Text\Font\Descriptor;
+use UI\Draw\Text\Layout;
 use UI\Point;
 use UI\Size;
 use UI\Window;
-use UI\Controls\Box;
-use UI\Controls\Spin;
-use UI\Controls\ColorButton;
-use UI\Controls\Button;
-use UI\Controls\Entry;
-use UI\Controls\Label;
-use UI\Controls\Combo;
-use UI\Area;
-use UI\Draw\Pen;
-use UI\Draw\Path;
-use UI\Draw\Color;
-use UI\Draw\Brush;
-use UI\Draw\Stroke;
-use UI\Draw\Matrix;
 
-use UI\Draw\Text\Font\Descriptor;
-use UI\Draw\Text\Font;
-use UI\Draw\Text\Layout;
-
-$window = new Window("libui Histogram Example", new Size(640, 480), true);
+$window = new Window('libui Histogram Example', new Size(640, 480), true);
 
 $window->setMargin(true);
 
@@ -38,247 +50,259 @@ $hBox->append($vBox);
 $dataSources = [];
 
 $histogram = new class($dataSources) extends Area {
+    private $sources;
+    private $color;
+    private $font;
 
-	private function getGraphPoints(Size $size) : array {
-		$xincr = $size->width / 9;
-		$yincr = $size->height / 100;
+    public function __construct(array &$sources, ColorButton $color = null, Font $font = null)
+    {
+        $this->sources = &$sources;
+        $this->color = $color;
+        $this->font = $font;
+    }
 
-		$points = [];
+    public function setColorSource(ColorButton $source)
+    {
+        $this->color = $source;
+    }
 
-		foreach ($this->sources as $i => $source) {
-			$points[$i] = new Point($xincr * $i, $yincr * (100 - $source->getValue()));
-		}
+    public function getColorSource()
+    {
+        return $this->color;
+    }
 
-		return $points;
-	}
+    public function setFontSource(Combo $font)
+    {
+        $this->font = $font;
+    }
 
-	private function getGraphPath(array $locations, Size $size, bool $extend = false) : Path {
-		$path = new Path();
+    public function getFontSource()
+    {
+        return $this->font;
+    }
 
-		$path->newFigure(array_shift($locations));
+    protected function onDraw(Pen $pen, Size $areaSize, Point $clipPoint, Size $clipSize)
+    {
+        $start = microtime(true);
 
-		foreach ($locations as $location) {
-			$path->lineTo($location);
-		}
+        $path = new Path();
+        $path->addRectangle($clipPoint, $areaSize);
+        $path->end();
 
-		if ($extend) {
-			$path->lineTo(Point::at($size));
-			$path->lineTo(new Point(0, $size->height));
-			$path->closeFigure();
-		}
+        $pen->fill($path, 0xFFFFFFFF);
 
-		$path->end();
+        $graphSize = $areaSize - 40;
 
-		return $path;
-	}
+        $zero = Point::at(20);
 
-	protected function onDraw(Pen $pen, Size $areaSize, Point $clipPoint, Size $clipSize) {
-		$start = microtime(true);
+        $path = new Path();
+        $path->newFigure($zero);
+        $path->lineTo(new Point(20, 20 + $graphSize->height));
+        $path->lineTo(Point::at($graphSize + 20));
+        $path->end();
 
-		$path = new Path();
-		$path->addRectangle($clipPoint, $areaSize);
-		$path->end();
+        $stroke = new Stroke();
+        $stroke->setThickness(2);
+        $pen->stroke($path, 0x000000FF, $stroke);
 
-		$pen->fill($path, 0xFFFFFFFF);
-	
-		$graphSize = $areaSize - 40;
+        $matrix = new Matrix();
+        $matrix->translate($zero);
 
-		$zero = Point::at(20);
+        $pen->transform($matrix);
 
-		$path = new Path();
-		$path->newFigure($zero);
-		$path->lineTo(new Point(20, 20 + $graphSize->height));
-		$path->lineTo(Point::at($graphSize + 20));	
-		$path->end();
+        $points = $this->getGraphPoints($graphSize);
 
-		$stroke = new Stroke();
-		$stroke->setThickness(2);
-		$pen->stroke($path, 0x000000FF, $stroke);
+        $path = $this->getGraphPath($points, $graphSize, true);
 
-		$matrix = new Matrix();
-		$matrix->translate($zero);
+        $brush = new Brush($this->color->getColor());
 
-		$pen->transform($matrix);
+        $pen->fill($path, $brush);
 
-		$points = $this->getGraphPoints($graphSize);
+        $path = $this->getGraphPath($points, $graphSize, false);
 
-		$path = $this->getGraphPath($points, $graphSize, true);
+        $strokeColor = $brush->getColor();
+        $strokeColor->a /= 2;
+        $brush->setColor($strokeColor);
 
-		$brush = new Brush($this->color->getColor());
+        $pen->stroke($path, $brush, $stroke);
 
-		$pen->fill($path, $brush);
+        $layout = new Layout(sprintf(
+            'Drawn in %.5f seconds',
+                microtime(true) - $start),
+            $this->font->getFont(),
+            $clipSize->width
+        );
+        $layout->setColor(0x000000FF);
 
-		$path = $this->getGraphPath($points, $graphSize, false);
+        $pen->write(new Point(10, $graphSize->height - 30), $layout);
+    }
 
-		$strokeColor = $brush->getColor();
-		$strokeColor->a /= 2;
-		$brush->setColor($strokeColor);
+    private function getGraphPoints(Size $size): array
+    {
+        $xincr = $size->width / 9;
+        $yincr = $size->height / 100;
 
-		$pen->stroke($path, $brush, $stroke);
+        $points = [];
 
-		$layout = new Layout(sprintf(
-			"Drawn in %.5f seconds", 
-				microtime(true) - $start),
-			$this->font->getFont(),
-			$clipSize->width
-		);
-		$layout->setColor(0x000000FF);
+        foreach ($this->sources as $i => $source) {
+            $points[$i] = new Point($xincr * $i, $yincr * (100 - $source->getValue()));
+        }
 
-		$pen->write(new Point(10, $graphSize->height - 30), $layout);
-	}
+        return $points;
+    }
 
-	public function setColorSource(ColorButton $source) {
-		$this->color = $source;
-	}
+    private function getGraphPath(array $locations, Size $size, bool $extend = false): Path
+    {
+        $path = new Path();
 
-	public function getColorSource() {
-		return $this->color;
-	}
+        $path->newFigure(array_shift($locations));
 
-	public function setFontSource(Combo $font) {
-		$this->font = $font;
-	}
+        foreach ($locations as $location) {
+            $path->lineTo($location);
+        }
 
-	public function getFontSource() {
-		return $this->font;
-	}
+        if ($extend) {
+            $path->lineTo(Point::at($size));
+            $path->lineTo(new Point(0, $size->height));
+            $path->closeFigure();
+        }
 
-	public function __construct(array &$sources, ColorButton $color = null, Font $font = null) {
-		$this->sources =& $sources;
-		$this->color  = $color;
-		$this->font = $font;
-	}
+        $path->end();
 
-	private $sources;
-	private $color;
-	private $font;
+        return $path;
+    }
 };
 
 $colorBox = new Entry();
-$colorBox->setText("0x8892BFFF");
+$colorBox->setText('0x8892BFFF');
 
 $colorButton = new class($histogram, $colorBox, new Color(0x8892BFFF)) extends ColorButton {
+    private $histogram;
 
-	protected function onChange() {
-		$redrawColor = $this->getColor();
-		
-		$this->entry->setText(sprintf(
-			"0x%02X%02X%02X%02X",
-				$redrawColor->r * 255,
-				$redrawColor->g * 255,
-				$redrawColor->b * 255,
-				$redrawColor->a * 255));
+    public function __construct(Area $histogram, Entry $entry, Color $color)
+    {
+        $this->histogram = $histogram;
+        $this->entry = $entry;
 
-		$this->histogram->redraw();
-	}
+        $this->setColor($color);
 
-	public function __construct(Area $histogram, Entry $entry, Color $color) {
-		$this->histogram = $histogram;
-		$this->entry = $entry;
+        $this->histogram->setColorSource($this);
+    }
 
-		$this->setColor($color);
+    protected function onChange()
+    {
+        $redrawColor = $this->getColor();
 
-		$this->histogram->setColorSource($this);
-	}
+        $this->entry->setText(sprintf(
+            '0x%02X%02X%02X%02X',
+                $redrawColor->r * 255,
+                $redrawColor->g * 255,
+                $redrawColor->b * 255,
+                $redrawColor->a * 255));
 
-	private $histogram;
+        $this->histogram->redraw();
+    }
 };
 
-$redrawHistogram = function() use($histogram, $colorBox, $colorButton) {
-	$redrawColor = $colorButton->getColor();
+$redrawHistogram = function () use ($histogram, $colorBox, $colorButton) {
+    $redrawColor = $colorButton->getColor();
 
-	$colorBox->setText(sprintf(
-		"0x%02X%02X%02X%02X",
-			$redrawColor->r * 255,
-			$redrawColor->g * 255,
-			$redrawColor->b * 255,
-			$redrawColor->a * 255));
+    $colorBox->setText(sprintf(
+        '0x%02X%02X%02X%02X',
+            $redrawColor->r * 255,
+            $redrawColor->g * 255,
+            $redrawColor->b * 255,
+            $redrawColor->a * 255));
 
-	$histogram->redraw();
+    $histogram->redraw();
 };
 
-$vBox->append(new Label("Change Data:"));
+$vBox->append(new Label('Change Data:'));
 for ($i = 0; $i < 10; $i++) {
+    $dataSources[$i] = new class(0, 100, $redrawHistogram) extends Spin {
+        private $redraw;
 
-	$dataSources[$i] = new class(0, 100, $redrawHistogram) extends Spin {
-		protected function onChange() {
-			($this->redraw)();
-		}
+        public function __construct($min, $max, Closure $redraw)
+        {
+            parent::__construct($min, $max);
 
-		public function __construct($min, $max, Closure $redraw) {
-			parent::__construct($min, $max);
+            $this->redraw = $redraw;
+        }
 
-			$this->redraw = $redraw;
-		}
+        protected function onChange()
+        {
+            ($this->redraw)();
+        }
+    };
 
-		private $redraw;
-	};
+    $dataSources[$i]->setValue(mt_rand(0, 100));
 
-	$dataSources[$i]->setValue(mt_rand(0, 100));
-
-	$vBox->append($dataSources[$i]);
+    $vBox->append($dataSources[$i]);
 }
 
-$vBox->append(new Label("Choose Color:"));
+$vBox->append(new Label('Choose Color:'));
 $vBox->append($colorButton);
 
-$colorBoxButton = new class("Set Color", $colorButton, $colorBox, $redrawHistogram) extends Button {
+$colorBoxButton = new class('Set Color', $colorButton, $colorBox, $redrawHistogram) extends Button {
+    private $button;
+    private $entry;
+    private $redraw;
 
-	protected function onClick() {
-		$this->button->setColor(
-			new Color(
-				hexdec($this->entry->getText())));
+    public function __construct(string $text, ColorButton $button, Entry $entry, Closure $redraw)
+    {
+        $this->button = $button;
+        $this->entry = $entry;
+        $this->redraw = $redraw;
 
-		($this->redraw)();
-	}
+        parent::__construct($text);
+    }
 
-	public function __construct(string $text, ColorButton $button, Entry $entry, Closure $redraw) {
-		$this->button = $button;
-		$this->entry = $entry;
-		$this->redraw = $redraw;
+    protected function onClick()
+    {
+        $this->button->setColor(
+            new Color(
+                hexdec($this->entry->getText())));
 
-		parent::__construct($text);
-	}
-
-	private $button;
-	private $entry;
-	private $redraw;
+        ($this->redraw)();
+    }
 };
 
 $vBox->append($colorBox);
 $vBox->append($colorBoxButton);
 
-$vBox->append(new Label("Choose Font:"));
+$vBox->append(new Label('Choose Font:'));
 $fontCombo = new class($histogram) extends Combo {
-	
-	public function onSelected() {
-		$this->histogram->redraw();
-	}
+    private $items;
+    private $families;
 
-	public function __construct(Area $histogram) {
-		$this->families  = UI\Draw\Text\Font\fontFamilies();
-		$this->histogram = $histogram;
+    public function __construct(Area $histogram)
+    {
+        $this->families = UI\Draw\Text\Font\fontFamilies();
+        $this->histogram = $histogram;
 
-		sort($this->families);
+        sort($this->families);
 
-		foreach ($this->families as $family) {
-			$this->append($family);
-		}
+        foreach ($this->families as $family) {
+            $this->append($family);
+        }
 
-		$this->setSelected(0);
+        $this->setSelected(0);
 
-		$this->histogram->setFontSource($this);
-	}
+        $this->histogram->setFontSource($this);
+    }
 
-	public function getFont(int $selected = -1, int $size = 12) {
-		return new Font(
-			new Descriptor($this->families[
-				$selected > -1 ? $families : $this->getSelected()
-			], $size));
-	}
+    public function onSelected()
+    {
+        $this->histogram->redraw();
+    }
 
-	private $items;
-	private $families;
+    public function getFont(int $selected = -1, int $size = 12)
+    {
+        return new Font(
+            new Descriptor($this->families[
+                $selected > -1 ? $families : $this->getSelected()
+            ], $size));
+    }
 };
 
 $vBox->append($fontCombo);

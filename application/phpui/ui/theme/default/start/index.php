@@ -1,43 +1,50 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+use UI\Controls\Box;
+use UI\Controls\Button;
+use UI\Controls\Group;
+use UI\Controls\Label;
+use UI\Controls\Tab;
 use UI\Size;
 use UI\Window;
-use UI\Controls\Tab;
-use UI\Controls\Box;
-use UI\Controls\Label;
-use UI\Controls\Group;
-use UI\Controls\Button;
-use UI\Controls\Separator;
-use UI\Controls\ColorButton;
 
 /**
- * phpui 启动界面
+ * phpui 启动界面.
  *
  * @author Name Your <your@mail.com>
- * @package $$
+ *
  * @since 2017.11.21
+ *
  * @version 1.0
  */
 class index extends Window
 {
     /**
-     * 构造函数
+     * 构造函数.
      *
      * @param string $sTitle
-     * @return void
      */
     public function __construct(string $sTitle)
     {
-        parent::__construct("QueryPHP For PHPUI 启动界面 - ".$sTitle, new Size(640, 480), true);
+        parent::__construct('QueryPHP For PHPUI 启动界面 - '.$sTitle, new Size(640, 480), true);
         // $this->setMargin(true);
         $this->init();
     }
 
     /**
-     * 初始化
-     *
-     * @return void
+     * 初始化.
      */
     protected function init()
     {
@@ -45,9 +52,7 @@ class index extends Window
     }
 
     /**
-     * 创建主标签
-     *
-     * @return void
+     * 创建主标签.
      */
     protected function mainTab()
     {
@@ -55,7 +60,7 @@ class index extends Window
 
         $arrTab = [
             'about' => '关于 QueryPHP',
-            'demo' => '官方示例'
+            'demo'  => '官方示例',
         ];
 
         foreach ($arrTab as $sKey=>$sTab) {
@@ -67,7 +72,7 @@ class index extends Window
     }
 
     /**
-     * 关于我们标签
+     * 关于我们标签.
      *
      * @return \UI\Controls\Box
      */
@@ -79,15 +84,15 @@ class index extends Window
         $arrGroups = [
             'The QueryPHP Framework' => [
                 'QueryPHP is a powerful PHP framework for code poem as free as wind. [Query Yet Simple]',
-                'QueryPHP was founded in 2010 and released the first version on 2010.10.03.'
+                'QueryPHP was founded in 2010 and released the first version on 2010.10.03.',
             ],
             'Official Documentation' => [
                 'Documentation for the framework can be found on the QueryPHP website.',
-                'For detail please visite http://www.queryphp.com.'
+                'For detail please visite http://www.queryphp.com.',
             ],
             'License' => [
-                'The QueryPHP framework is open-sourced software licensed under the MIT license.'
-            ]
+                'The QueryPHP framework is open-sourced software licensed under the MIT license.',
+            ],
         ];
 
         foreach ($arrGroups as $sKey=>$arrItem) {
@@ -110,7 +115,7 @@ class index extends Window
     }
 
     /**
-     * 官方示例标签
+     * 官方示例标签.
      *
      * @return \UI\Controls\Box
      */
@@ -121,21 +126,23 @@ class index extends Window
 
         $arrDemo = [
             '基础功能' => 'gallery',
-            '贪吃蛇' => 'snake',
-            '柱状图' => 'histogram',
-            '星空' => 'starfield'
+            '贪吃蛇'  => 'snake',
+            '柱状图'  => 'histogram',
+            '星空'   => 'starfield',
         ];
 
-        foreach($arrDemo as $sKey=>$strDemo){
+        foreach ($arrDemo as $sKey=>$strDemo) {
             $oDemoButton = new class($sKey, $strDemo) extends Button {
                 private $strDemo;
 
-                public function __construct(string $sText, string $strDemo) {
+                public function __construct(string $sText, string $strDemo)
+                {
                     $this->strDemo = $strDemo;
                     parent::__construct($sText);
                 }
 
-                protected function onClick() {
+                protected function onClick()
+                {
                     include $this->strDemo.'.php';
                 }
             };

@@ -1,18 +1,30 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\App\Controller\Petstore;
 
 /**
- * api 文档入口
+ * api 文档入口.
  *
  * @author Name Your <your@mail.com>
- * @package $$
+ *
  * @since 2017.10.12
+ *
  * @version 1.0
  */
 class SwaggerV2
 {
-
     /**
      * @SWG\Swagger(
      *     schemes={"http"},
@@ -40,9 +52,9 @@ class SwaggerV2
     public function run()
     {
         error_reporting(E_ERROR | E_PARSE | E_STRICT);
-        
+
         $path = [
-            path_application('App/App/Controller/Petstore')
+            path_application('App/App/Controller/Petstore'),
         ];
 
         $swagger = \Swagger\scan($path);
@@ -50,7 +62,7 @@ class SwaggerV2
         $json = $swagger->__toString();
         $cachePath = path('www/api/swagger.json');
 
-        if(! file_put_contents($cachePath, $json)) {
+        if (!file_put_contents($cachePath, $json)) {
             throw new Exception(sprintf('Dir %s is not writeable', dirname($cachePath)));
         }
 

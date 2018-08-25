@@ -1,26 +1,28 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
 
-/**
- * filesystem 默认配置文件
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
  *
- * @author Name Your <your@mail.com>
- * @package $$
- * @since 2017.08.29
- * @version 1.0
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
-return [
 
-    /**
+return [
+    /*
      * ---------------------------------------------------------------
      * filesystem 驱动
      * ---------------------------------------------------------------
      *
      * 采用什么方式发送邮件数据
      */
-    'default' => env('filesystem_driver', 'local'),
+    'default' => Leevel::env('filesystem_driver', 'local'),
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * filesystem 驱动连接参数
      * ---------------------------------------------------------------
@@ -34,7 +36,7 @@ return [
             'driver' => 'local',
 
             // path
-            'path' => path_storage()
+            'path' => Leevel::storagePath(),
         ],
 
         'zip' => [
@@ -42,7 +44,7 @@ return [
             'driver' => 'zip',
 
             // path
-            'path' => path_storage('filesystem.zip')
+            'path' => Leevel::storagePath('filesystem.zip'),
         ],
 
         'ftp' => [
@@ -50,16 +52,16 @@ return [
             'driver' => 'ftp',
 
             // 主机
-            'host' => env('filesystem_ftp_host', 'ftp.example.com'),
+            'host' => Leevel::env('filesystem_ftp_host', 'ftp.example.com'),
 
             // 端口
-            'port' => env('filesystem_ftp_port', 21),
+            'port' => Leevel::env('filesystem_ftp_port', 21),
 
             // 用户名
-            'username' => env('filesystem_ftp_username', 'your-username'),
+            'username' => Leevel::env('filesystem_ftp_username', 'your-username'),
 
             // 密码
-            'password' => env('filesystem_ftp_password', 'your-password'),
+            'password' => Leevel::env('filesystem_ftp_password', 'your-password'),
 
             // 根目录
             'root' => '',
@@ -71,7 +73,7 @@ return [
             'ssl' => false,
 
             // 超时设置
-            'timeout' => 20
+            'timeout' => 20,
         ],
 
         'sftp' => [
@@ -79,16 +81,16 @@ return [
             'driver' => 'sftp',
 
             // 主机
-            'host' => env('filesystem_sftp_host', 'sftp.example.com'),
+            'host' => Leevel::env('filesystem_sftp_host', 'sftp.example.com'),
 
             // 端口
-            'port' => env('filesystem_sftp_port', 22),
+            'port' => Leevel::env('filesystem_sftp_port', 22),
 
             // 用户名
-            'username' => env('filesystem_sftp_username', 'your-username'),
+            'username' => Leevel::env('filesystem_sftp_username', 'your-username'),
 
             // 密码
-            'password' => env('filesystem_sftp_password', 'your-password'),
+            'password' => Leevel::env('filesystem_sftp_password', 'your-password'),
 
             // 根目录
             'root' => '',
@@ -97,7 +99,7 @@ return [
             'privateKey' => '',
 
             // 超时设置
-            'timeout' => 20
-        ]
-    ]
+            'timeout' => 20,
+        ],
+    ],
 ];

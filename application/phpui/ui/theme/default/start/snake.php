@@ -1,265 +1,301 @@
-<?php declare(strict_types=1);
-if(!defined('PHP_UI_SECOND'))
-    define ("PHP_UI_SECOND",    1000000);
+<?php
 
-if(!defined('PHP_UI_SNAKE_FPS'))
-    define ("PHP_UI_SNAKE_FPS", 30);
+declare(strict_types=1);
 
-use UI\Window;
-use UI\Point;
-use UI\Size;
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+if (!defined('PHP_UI_SECOND')) {
+    define('PHP_UI_SECOND', 1000000);
+}
+
+if (!defined('PHP_UI_SNAKE_FPS')) {
+    define('PHP_UI_SNAKE_FPS', 30);
+}
+
 use UI\Area;
-use UI\Key;
-
 use UI\Controls\Box;
-
-use UI\Draw\Pen;
-use UI\Draw\Brush;
-use UI\Draw\Path;
-use UI\Draw\Color;
-use UI\Draw\Stroke;
 use UI\Draw\Matrix;
-
+use UI\Draw\Path;
+use UI\Draw\Pen;
+use UI\Draw\Stroke;
 use UI\Draw\Text\Font;
 use UI\Draw\Text\Font\Descriptor;
-
 use UI\Executor;
+use UI\Key;
+use UI\Point;
+use UI\Size;
+use UI\Window;
 
-$win = new class("Snake", new Size(640, 480), false) extends Window {
-	public function addExecutor(Executor $executor) {
-		$this->executors[] = $executor;
-	}
+$win = new class('Snake', new Size(640, 480), false) extends Window {
+    public function addExecutor(Executor $executor)
+    {
+        $this->executors[] = $executor;
+    }
 
-	protected function onClosing() {
-		foreach ($this->executors as $executor) {
-			$executor->kill();
-		}
+    protected function onClosing()
+    {
+        foreach ($this->executors as $executor) {
+            $executor->kill();
+        }
 
-		$this->destroy();
+        $this->destroy();
 
-		UI\quit();
-	}
+        UI\quit();
+    }
 };
 
 $box = new Box(Box::Vertical);
 $win->add($box);
 
-$snake = new class($box) extends Area{
+$snake = new class($box) extends Area {
+    private $snake;
+    private $food;
+    private $direction = Key::Right;
+    private $level = 1;
+    private $score = 0;
+    private $pause = true;
+    private $run = 0;
 
-	public function __construct(Box $box) {
-		$this->newSnake();
+    public function __construct(Box $box)
+    {
+        $this->newSnake();
 
-		$box->append($this, true);
-	}
+        $box->append($this, true);
+    }
 
-	public function setExecutor(Executor $executor) {
-		$this->executor = $executor;
-	}
+    public function setExecutor(Executor $executor)
+    {
+        $this->executor = $executor;
+    }
 
-	protected function onKey(string $char, int $key, int $flags) {
-		if ($flags & Area::Down) {
-			switch ($key) {
-				case Key::Up:
-					if ($this->direction == Key::Down)
-						return;
-					$this->direction = $key;
-				break;
+    protected function onKey(string $char, int $key, int $flags)
+    {
+        if ($flags & Area::Down) {
+            switch ($key) {
+                case Key::Up:
+                    if (Key::Down === $this->direction) {
+                        return;
+                    }
+                    $this->direction = $key;
 
-				case Key::Down:
-					if ($this->direction == Key::Up)
-						return;
-					$this->direction = $key;
-				break;
+                break;
+                case Key::Down:
+                    if (Key::Up === $this->direction) {
+                        return;
+                    }
+                    $this->direction = $key;
 
-				case Key::Right:
-					if ($this->direction == Key::Left)
-						return;
-					$this->direction = $key;
-				break;
+                break;
+                case Key::Right:
+                    if (Key::Left === $this->direction) {
+                        return;
+                    }
+                    $this->direction = $key;
 
-				case Key::Left:
-					if ($this->direction == Key::Right)
-						return;
+                break;
+                case Key::Left:
+                    if (Key::Right === $this->direction) {
+                        return;
+                    }
+                    $this->direction = $key;
 
-					$this->direction = $key;
-				break;
+                break;
+                default:
+                    if (' ' === $char) {
+                        $this->pause = !$this->pause;
 
-				default:
-					if ($char == " ") {
-						$this->pause = !$this->pause;
+                        if ($this->pause) {
+                            // this allows the CPU to idle while paused
+                            $this->executor->setInterval(0);
+                        } else {
+                            // this will (re)start the game
+                            $this->executor->setInterval(PHP_UI_SECOND / PHP_UI_SNAKE_FPS);
+                        }
+                    }
 
-						if ($this->pause) {
-							/* this allows the CPU to idle while paused */
-							$this->executor->setInterval(0);
-						} else {
-							/* this will (re)start the game */
-							$this->executor->setInterval(PHP_UI_SECOND/PHP_UI_SNAKE_FPS);
-						}
-					}
-				break;
-			}
-		}
-	}
+                break;
+            }
+        }
+    }
 
-	protected function onDraw(Pen $pen, Size $size, Point $clip, Size $clipSize) {
-		$zero = new Point(0, 0);
-		$frame = $zero + 40;
-		$frameSize = $size - 80;
+    protected function onDraw(Pen $pen, Size $size, Point $clip, Size $clipSize)
+    {
+        $zero = new Point(0, 0);
+        $frame = $zero + 40;
+        $frameSize = $size - 80;
 
-		$path = new Path();
-		$path->addRectangle($zero, $size);
-		$path->end();
+        $path = new Path();
+        $path->addRectangle($zero, $size);
+        $path->end();
 
-		$pen->fill($path, 0xf5f5f5ff);
+        $pen->fill($path, 0xf5f5f5ff);
 
-		$stroke = new Stroke();	
+        $stroke = new Stroke();
 
-		$pen->stroke($path, 0x000000FF, $stroke);
+        $pen->stroke($path, 0x000000FF, $stroke);
 
-		$path = new Path();
-		$path->addRectangle($frame, $frameSize);
-		$path->end();
+        $path = new Path();
+        $path->addRectangle($frame, $frameSize);
+        $path->end();
 
-		$pen->stroke($path, 0x000000FF, $stroke);
+        $pen->stroke($path, 0x000000FF, $stroke);
 
-		$matrix = new Matrix();
-		$matrix->translate($frame);
+        $matrix = new Matrix();
+        $matrix->translate($frame);
 
-		$pen->transform($matrix);
+        $pen->transform($matrix);
 
-		if (!$this->food) {
-			$this->newFood($frameSize);
-		}
+        if (!$this->food) {
+            $this->newFood($frameSize);
+        }
 
-		if (!$this->pause && ($run = microtime(true)) - $this->run > 0.1 / $this->level * 2) {
-			$this->run = $run;
+        if (!$this->pause && ($run = microtime(true)) - $this->run > 0.1 / $this->level * 2) {
+            $this->run = $run;
 
-			$next = clone $this->snake[0];
+            $next = clone $this->snake[0];
 
-			switch ($this->direction) {
-				case Key::Right: $next->x++; break;
-				case Key::Left:  $next->x--; break;
-				case Key::Up: $next->y--; break;
-				case Key::Down: $next->y++; break;
-			}
+            switch ($this->direction) {
+                case Key::Right: $next->x++;
 
-			if ($next->x < 0 || $next->x >= ($frameSize->width)/10 || 
-				$next->y < 0 || $next->y >= ($frameSize->height)/10) {
-				$this->newSnake();
-				$this->newFood($frameSize);
+break;
+                case Key::Left:  $next->x--;
 
-				foreach ($this->snake as $body) {
-					$this->newCell($pen, $body);
-				}
+break;
+                case Key::Up: $next->y--;
 
-				$this->newCell($pen, $this->food);
+break;
+                case Key::Down: $next->y++;
 
-				$this->pause = true;
-				$this->direction = Key::Right;
-				$this->score = 0;
-				$this->level = 1;
-				return;
-			}
+break;
+            }
 
-			if ($this->food == $next) {
-				$tail = $next;
-				$this->newFood($frameSize);
-				$this->score += 10;
-				$this->level = ceil($this->score / 100);
-			} else {
-				$tail = array_pop($this->snake);
-				$tail->x = $next->x;
-				$tail->y = $next->y;
-			}
+            if ($next->x < 0 || $next->x >= ($frameSize->width) / 10 ||
+                $next->y < 0 || $next->y >= ($frameSize->height) / 10) {
+                $this->newSnake();
+                $this->newFood($frameSize);
 
-			array_unshift($this->snake, $tail);
-		}
+                foreach ($this->snake as $body) {
+                    $this->newCell($pen, $body);
+                }
 
-		foreach ($this->snake as $body) {
-			$this->newCell($pen, $body);
-		}
-		
-		$this->newCell($pen, $this->food);
+                $this->newCell($pen, $this->food);
 
-		$matrix = new Matrix();
-		$matrix->translate($zero - 40);
-		$pen->transform($matrix);
+                $this->pause = true;
+                $this->direction = Key::Right;
+                $this->score = 0;
+                $this->level = 1;
 
-		if ($this->pause) {
-			$this->drawPause($pen, $size);
-		} else $this->drawScore($pen, $size);
-	}
+                return;
+            }
 
-	private function newSnake() {
-		$this->snake = [];
-		for ($i = 0; $i < 5; $i++)
-			$this->snake[$i] = new Point($i, 0);
-	}
+            if ($this->food === $next) {
+                $tail = $next;
+                $this->newFood($frameSize);
+                $this->score += 10;
+                $this->level = ceil($this->score / 100);
+            } else {
+                $tail = array_pop($this->snake);
+                $tail->x = $next->x;
+                $tail->y = $next->y;
+            }
 
-	private function newFood(Size $size) {
-		$this->food = new Point(
-			floor(mt_rand(40, ($size->width ) - 10) / 10), 
-			floor(mt_rand(40, ($size->height) - 10) / 10));
-	}
+            array_unshift($this->snake, $tail);
+        }
 
-	private function newCell(Pen $pen, Point $point) {
-		$path = new Path();
-		$path->addRectangle($point * 10, new Size(10, 10));
-		$path->end();
+        foreach ($this->snake as $body) {
+            $this->newCell($pen, $body);
+        }
 
-		$pen->fill($path, 0x0000FFFF);
-		
-		$stroke = new Stroke();
-		$stroke->setThickness(2);
+        $this->newCell($pen, $this->food);
 
-		$pen->stroke($path, 0x000000FF, $stroke);
-	}
+        $matrix = new Matrix();
+        $matrix->translate($zero - 40);
+        $pen->transform($matrix);
 
-	private function drawPause(Pen $pen, Size $size) {
-		$layout = new UI\Draw\Text\Layout(sprintf(
-			"Press space bar to play ...",
-			$this->level,
-			$this->score
-		), new Font(new Descriptor("arial", 12)), $size->width);
+        if ($this->pause) {
+            $this->drawPause($pen, $size);
+        } else {
+            $this->drawScore($pen, $size);
+        }
+    }
 
-		$layout->setColor(0x000000FF);
+    private function newSnake()
+    {
+        $this->snake = [];
+        for ($i = 0; $i < 5; $i++) {
+            $this->snake[$i] = new Point($i, 0);
+        }
+    }
 
-		$pen->write(new Point(20, 10), $layout);
-	}
+    private function newFood(Size $size)
+    {
+        $this->food = new Point(
+            floor(mt_rand(40, ($size->width) - 10) / 10),
+            floor(mt_rand(40, ($size->height) - 10) / 10));
+    }
 
-	private function drawScore(Pen $pen, Size $size) {
-		$layout = new UI\Draw\Text\Layout(sprintf(
-			"Level: %d Score: %d",
-			$this->level,
-			$this->score
-		), new Font(new Descriptor("arial", 12)), $size->width);
+    private function newCell(Pen $pen, Point $point)
+    {
+        $path = new Path();
+        $path->addRectangle($point * 10, new Size(10, 10));
+        $path->end();
 
-		$layout->setColor(0x000000FF);
-	
-		$pen->write(new Point(20, 10), $layout);
-	}
-	
-	private $snake;
-	private $food;
-	private $direction = Key::Right;
-	private $level = 1;
-	private $score = 0;
-	private $pause = true;
-	private $run = 0;
+        $pen->fill($path, 0x0000FFFF);
+
+        $stroke = new Stroke();
+        $stroke->setThickness(2);
+
+        $pen->stroke($path, 0x000000FF, $stroke);
+    }
+
+    private function drawPause(Pen $pen, Size $size)
+    {
+        $layout = new UI\Draw\Text\Layout(sprintf(
+            'Press space bar to play ...',
+            $this->level,
+            $this->score
+        ), new Font(new Descriptor('arial', 12)), $size->width);
+
+        $layout->setColor(0x000000FF);
+
+        $pen->write(new Point(20, 10), $layout);
+    }
+
+    private function drawScore(Pen $pen, Size $size)
+    {
+        $layout = new UI\Draw\Text\Layout(sprintf(
+            'Level: %d Score: %d',
+            $this->level,
+            $this->score
+        ), new Font(new Descriptor('arial', 12)), $size->width);
+
+        $layout->setColor(0x000000FF);
+
+        $pen->write(new Point(20, 10), $layout);
+    }
 };
 
-$animator = new class ($snake) extends Executor {
+$animator = new class($snake) extends Executor {
+    public function __construct(Area $area)
+    {
+        $this->area = $area;
 
-	public function __construct(Area $area) {
-		$this->area = $area;
+        // construct executor with infinite timeout
+        parent::__construct();
+    }
 
-		/* construct executor with infinite timeout */
-		parent::__construct();
-	}
-
-	protected function onExecute() {
-		$this->area->redraw();
-	}
+    protected function onExecute()
+    {
+        $this->area->redraw();
+    }
 };
 
 $win->addExecutor($animator);

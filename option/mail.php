@@ -1,26 +1,28 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
 
-/**
- * mail 默认配置文件
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
  *
- * @author Name Your <your@mail.com>
- * @package $$
- * @since 2017.08.25
- * @version 1.0
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
-return [
 
-    /**
+return [
+    /*
      * ---------------------------------------------------------------
      * mail 驱动
      * ---------------------------------------------------------------
      *
      * 采用什么方式发送邮件数据
      */
-    'default' => env('mail_driver', 'smtp'),
+    'default' => Leevel::env('mail_driver', 'smtp'),
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * mail 发送地址
      * ---------------------------------------------------------------
@@ -29,10 +31,10 @@ return [
      */
     'global_from' => [
         'address' => null,
-        'name' => null
+        'name'    => null,
     ],
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * mail 全局接收地址
      * ---------------------------------------------------------------
@@ -41,10 +43,10 @@ return [
      */
     'global_to' => [
         'address' => null,
-        'name' => null
+        'name'    => null,
     ],
 
-    /**
+    /*
      * ---------------------------------------------------------------
      * mail 驱动连接参数
      * ---------------------------------------------------------------
@@ -58,19 +60,19 @@ return [
             'driver' => 'smtp',
 
             // smtp 主机
-            'host' => env('mail_host', 'smtp.qq.com'),
+            'host' => Leevel::env('mail_host', 'smtp.qq.com'),
 
             // 端口
-            'port' => env('mail_port', 587),
+            'port' => Leevel::env('mail_port', 587),
 
             // 用户名
-            'username' => env('mail_username'),
+            'username' => Leevel::env('mail_username'),
 
             // 登录密码
-            'password' => env('mail_password'),
+            'password' => Leevel::env('mail_password'),
 
             // 加密方式
-            'encryption' => env('mail_encryption', 'ssl')
+            'encryption' => Leevel::env('mail_encryption', 'ssl'),
         ],
 
         'sendmail' => [
@@ -78,7 +80,12 @@ return [
             'driver' => 'sendmail',
 
             // 命令路径
-            'path' => '/usr/sbin/sendmail -bs'
-        ]
-    ]
+            'path' => '/usr/sbin/sendmail -bs',
+        ],
+
+        'nulls' => [
+            // driver
+            'driver' => 'nulls',
+        ],
+    ],
 ];

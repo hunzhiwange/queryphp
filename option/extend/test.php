@@ -1,24 +1,24 @@
-<?php declare(strict_types=1);
-// (c) 2018 http://your.domain.com All rights reserved.
+<?php
 
-/**
- * 测试配置文件
- * 通过根目录 composer.json 中 extra.leevel.options 载入
- * 其它扩展包也可以通过这种方式载入进来
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
  *
- * @author Xiangmin Liu <635750556@qq.com>
- * @package $$
- * @since 2018.05.08
- * @version 1.0
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
-return [
 
-    /**
+return [
+    /*
      * ---------------------------------------------------------------
      * 测试配置项
      * ---------------------------------------------------------------
      *
      * 仅仅用于测试一下使用方法
      */
-    'foo' => 'bar'
+    'foo' => 'bar',
 ];
