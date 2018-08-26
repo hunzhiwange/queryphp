@@ -93,7 +93,7 @@ a.button:hover {
                 <p id="sub-title"><?php echo $message; ?></p>
                 <div class="button">
                     <a class="button" href="/"><?php echo __('首页'); ?></a> 
-                    <a class="button" href="javascript:;" onclick="window.location.reload();"><?php echo __('重试');?></a>
+                    <a class="button" href="javascript:;" onclick="window.location.reload();"><?php echo __('重试'); ?></a>
                 </div>
             </div>     
             <div class="clear"></div>
