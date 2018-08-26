@@ -59,7 +59,7 @@ return [
      * 请妥善保管此安全 key,防止密码被人破解
      * \Leevel\Encryption\Encryption 安全 key
      */
-    'auth_key' => Leevel::env('APP_AUTH_KEY', '7becb888f518b20224a988906df51e05'),
+    'auth_key' => Leevel::env('AUTH_KEY', '7becb888f518b20224a988906df51e05'),
 
     /*
      * ---------------------------------------------------------------
