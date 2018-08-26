@@ -15,10 +15,10 @@ declare(strict_types=1);
 namespace Common\App\Exception;
 
 use Exception;
+use Leevel;
 use Leevel\Bootstrap\Runtime\Runtime as Runtimes;
 use Leevel\Http\IRequest;
 use Leevel\Http\IResponse;
-use Leevel;
 
 /**
  * 异常处理.
