@@ -1,7 +1,5 @@
 language: php
 
-preset: symfony
-
 env:
   global:
     - MIN_PHP=7.1.3

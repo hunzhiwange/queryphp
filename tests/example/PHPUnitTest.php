@@ -12,6 +12,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Tests\Example;
+
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -25,11 +27,8 @@ use PHPUnit\Framework\TestCase;
  */
 class PHPUnitTest extends TestCase
 {
-    /**
-     * 基本测试.
-     */
-    public function testBase()
+    public function testBaseUse()
     {
-        $this->assertEquals('QueryPHP', 'QueryPHP');
+        $this->assertSame('QueryPHP', 'QueryPHP');
     }
 }

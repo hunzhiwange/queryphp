@@ -12,7 +12,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use queryyetsimple\bootstrap\testing\testcase;
+namespace Tests\Example;
+
+use Tests\TestCase;
 
 /**
  * 继承框架基础示例.
@@ -23,13 +25,10 @@ use queryyetsimple\bootstrap\testing\testcase;
  *
  * @version 1.0
  */
-class ExampleTest extends testcase
+class ExampleTest extends TestCase
 {
-    /**
-     * 基本测试.
-     */
-    public function testBase()
+    public function testBaseUse()
     {
-        $this->assertEquals('QueryPHP', 'QueryPHP');
+        $this->assertSame('QueryPHP', 'QueryPHP');
     }
 }
