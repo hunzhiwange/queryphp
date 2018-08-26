@@ -20,7 +20,7 @@ return [
      *
      * 采用什么方式发送邮件数据
      */
-    'default' => Leevel::env('filesystem_driver', 'local'),
+    'default' => Leevel::env('FILESYSTEM_DRIVER', 'local'),
 
     /*
      * ---------------------------------------------------------------
@@ -52,16 +52,16 @@ return [
             'driver' => 'ftp',
 
             // 主机
-            'host' => Leevel::env('filesystem_ftp_host', 'ftp.example.com'),
+            'host' => Leevel::env('FILESYSTEM_FTP_HOST', 'ftp.example.com'),
 
             // 端口
-            'port' => Leevel::env('filesystem_ftp_port', 21),
+            'port' => Leevel::env('FILESYSTEM_FTP_PORT', 21),
 
             // 用户名
-            'username' => Leevel::env('filesystem_ftp_username', 'your-username'),
+            'username' => Leevel::env('FILESYSTEM_FTP_USERNAME', 'your-username'),
 
             // 密码
-            'password' => Leevel::env('filesystem_ftp_password', 'your-password'),
+            'password' => Leevel::env('FILESYSTEM_FTP_PASSWORD', 'your-password'),
 
             // 根目录
             'root' => '',
@@ -81,16 +81,16 @@ return [
             'driver' => 'sftp',
 
             // 主机
-            'host' => Leevel::env('filesystem_sftp_host', 'sftp.example.com'),
+            'host' => Leevel::env('FILESYSTEM_SFTP_HOST', 'sftp.example.com'),
 
             // 端口
-            'port' => Leevel::env('filesystem_sftp_port', 22),
+            'port' => Leevel::env('FILESYSTEM_SFTP_PORT', 22),
 
             // 用户名
-            'username' => Leevel::env('filesystem_sftp_username', 'your-username'),
+            'username' => Leevel::env('FILESYSTEM_SFTP_USERNAME', 'your-username'),
 
             // 密码
-            'password' => Leevel::env('filesystem_sftp_password', 'your-password'),
+            'password' => Leevel::env('FILESYSTEM_SFTP_PASSWORD', 'your-password'),
 
             // 根目录
             'root' => '',

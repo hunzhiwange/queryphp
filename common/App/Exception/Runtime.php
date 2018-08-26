@@ -17,6 +17,8 @@ namespace Common\App\Exception;
 use Exception;
 use Leevel\Bootstrap\Runtime\Runtime as Runtimes;
 use Leevel\Http\IRequest;
+use Leevel\Http\IResponse;
+use Leevel;
 
 /**
  * 异常处理.
@@ -40,7 +42,7 @@ class Runtime extends Runtimes
     /**
      * {@inheritdoc}
      */
-    public function render(IRequest $request, Exception $e)
+    public function render(IRequest $request, Exception $e): IResponse
     {
         return parent::render($request, $e);
     }
@@ -54,7 +56,7 @@ class Runtime extends Runtimes
      */
     public function getHttpExceptionView(Exception $e)
     {
-        return path_common('ui/exception/'.$e->getStatusCode().'.php');
+        return Leevel::commonPath('ui/exception/'.$e->getStatusCode().'.php');
     }
 
     /**
@@ -64,6 +66,6 @@ class Runtime extends Runtimes
      */
     public function getDefaultHttpExceptionView()
     {
-        return path_common('ui/exception/default.php');
+        return Leevel::commonPath('ui/exception/default.php');
     }
 }

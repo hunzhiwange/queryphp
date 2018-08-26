@@ -20,7 +20,7 @@ return [
      *
      * 系统为所有数据库驱动提供了统一的接口，在使用上拥有一致性
      */
-    'default' => Leevel::env('database_driver', 'mysql'),
+    'default' => Leevel::env('DATABASE_DRIVER', 'mysql'),
 
     /*
      * ---------------------------------------------------------------
@@ -54,19 +54,19 @@ return [
             'driver' => 'mysql',
 
             // 数据库 host，默认为 localhost
-            'host' => Leevel::env('database_host', 'localhost'),
+            'host' => Leevel::env('DATABASE_HOST', 'localhost'),
 
             // 端口
-            'port' => Leevel::env('database_port', 3306),
+            'port' => Leevel::env('DATABASE_PORT', 3306),
 
             // 数据库名字
-            'name' => Leevel::env('database_name', ''),
+            'name' => Leevel::env('DATABASE_NAME', ''),
 
             // 数据库用户名
-            'user' => Leevel::env('database_user', 'root'),
+            'user' => Leevel::env('DATABASE_USER', 'root'),
 
             // 数据库密码
-            'password' => Leevel::env('database_password', ''),
+            'password' => Leevel::env('DATABASE_PASSWORD', ''),
 
             // 数据库编码
             'charset' => 'utf8',

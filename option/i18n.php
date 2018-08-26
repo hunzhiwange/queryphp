@@ -20,5 +20,5 @@ return [
      *
      * 根据面向的客户设置当前的软件的语言
      */
-    'default' => Leevel::env('i18n', 'zh-CN'),
+    'default' => Leevel::env('I18N', 'zh-CN'),
 ];

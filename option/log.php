@@ -20,7 +20,7 @@ return [
      *
      * 系统为所有日志提供了统一的接口，在使用上拥有一致性
      */
-    'default' => Leevel::env('log_driver', 'file'),
+    'default' => Leevel::env('LOG_DRIVER', 'file'),
 
     /*
      * ---------------------------------------------------------------
@@ -47,7 +47,7 @@ return [
      *
      * 隔离不同环境的日志
      */
-    'channel' => Leevel::environment(),
+    'channel' => Leevel::env('ENVIRONMENT', 'development'),
 
     /*
      * ---------------------------------------------------------------
@@ -86,7 +86,7 @@ return [
             'facility' => LOG_USER,
 
             // 等级
-            'level' => ILog::DEBUG,
+            'level' => 'debug',
         ],
     ],
 ];

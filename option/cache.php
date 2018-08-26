@@ -21,7 +21,7 @@ return [
      * 这里可以可以设置为 file、memcache 等
      * 系统为所有缓存提供了统一的接口，在使用上拥有一致性
      */
-    'default' => Leevel::env('cache_driver', 'file'),
+    'default' => Leevel::env('CACHE_DRIVER', 'file'),
 
     /*
      * ---------------------------------------------------------------
@@ -72,13 +72,13 @@ return [
             'driver' => 'redis',
 
             // 默认缓存服务器
-            'host' => Leevel::env('cache_redis_host', '127.0.0.1'),
+            'host' => Leevel::env('CACHE_REDIS_HOST', '127.0.0.1'),
 
             // 默认缓存服务器端口
-            'port' => Leevel::env('cache_redis_port', 6379),
+            'port' => Leevel::env('CACHE_REDIS_PORT', 6379),
 
             // 认证密码
-            'password' => Leevel::env('cache_redis_password', ''),
+            'password' => Leevel::env('CACHE_REDIS_PASSWORD', ''),
 
             // redis 数据库索引
             'select' => 0,

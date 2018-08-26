@@ -21,7 +21,7 @@ return [
      * 根据不同的阶段设置不同的开发环境
      * 可以为 production : 生产环境 testing : 测试环境 development : 开发环境
      */
-    'environment' => Leevel::env('environment', 'development'),
+    'environment' => Leevel::env('ENVIRONMENT', 'development'),
 
     /*
      * ---------------------------------------------------------------
@@ -30,7 +30,7 @@ return [
      *
      * 打开调试模式可以显示更多精确的错误信息
      */
-    'debug' => Leevel::env('debug', false),
+    'debug' => Leevel::env('DEBUG', false),
 
     /*
      * ---------------------------------------------------------------
@@ -59,7 +59,7 @@ return [
      * 请妥善保管此安全 key,防止密码被人破解
      * \Leevel\Encryption\Encryption 安全 key
      */
-    'auth_key' => Leevel::env('app_auth_key', '7becb888f518b20224a988906df51e05'),
+    'auth_key' => Leevel::env('APP_AUTH_KEY', '7becb888f518b20224a988906df51e05'),
 
     /*
      * ---------------------------------------------------------------
@@ -96,7 +96,7 @@ return [
      *
      * 例如 queryphp.com，用于路由解析以及 \Leevel\Router\Url::make 生成
      */
-    'top_domain' => Leevel::env('top_domain', 'foo.bar'),
+    'top_domain' => Leevel::env('TOP_DOMAIN', 'foo.bar'),
 
     /*
      * ---------------------------------------------------------------
@@ -114,5 +114,5 @@ return [
      *
      * 设置公共资源 url 地址
      */
-    'public' => Leevel::env('url_public', 'http://public.foo.bar'),
+    'public' => Leevel::env('URL_PUBLIC', 'http://public.foo.bar'),
 ];

@@ -20,7 +20,7 @@ return [
      *
      * 系统为所有视图提供了统一的接口，在使用上拥有一致性
      */
-    'default' => Leevel::env('view_driver', 'html'),
+    'default' => Leevel::env('VIEW_DRIVER', 'html'),
 
     /*
      * ---------------------------------------------------------------

@@ -20,7 +20,7 @@ return [
      *
      * 采用什么方式发送邮件数据
      */
-    'default' => Leevel::env('mail_driver', 'smtp'),
+    'default' => Leevel::env('MAIL_DRIVER', 'smtp'),
 
     /*
      * ---------------------------------------------------------------
@@ -60,19 +60,19 @@ return [
             'driver' => 'smtp',
 
             // smtp 主机
-            'host' => Leevel::env('mail_host', 'smtp.qq.com'),
+            'host' => Leevel::env('MAIL_HOST', 'smtp.qq.com'),
 
             // 端口
-            'port' => Leevel::env('mail_port', 587),
+            'port' => Leevel::env('MAIL_PORT', 587),
 
             // 用户名
-            'username' => Leevel::env('mail_username'),
+            'username' => Leevel::env('MAIL_USERNAME'),
 
             // 登录密码
-            'password' => Leevel::env('mail_password'),
+            'password' => Leevel::env('MAIL_PASSWORD'),
 
             // 加密方式
-            'encryption' => Leevel::env('mail_encryption', 'ssl'),
+            'encryption' => Leevel::env('MAIL_ENCRYPTION', 'ssl'),
         ],
 
         'sendmail' => [

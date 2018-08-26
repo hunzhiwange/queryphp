@@ -27,7 +27,6 @@
         "psr-4": {
             "App\\" : "application/app",
             "Admin\\" : "application/admin",
-            "Phpui\\" : "application/phpui",
             "Common\\" : "common"
         }
     },

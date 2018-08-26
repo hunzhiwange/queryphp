@@ -20,7 +20,7 @@ return [
      *
      * 采用什么源保存 session 数据，默认采用文件
      */
-    'default' => Leevel::env('session_driver', 'file'),
+    'default' => Leevel::env('SESSION_DRIVER', 'file'),
 
     /*
      * ---------------------------------------------------------------
@@ -78,13 +78,13 @@ return [
             'driver' => 'redis',
 
             // 默认缓存服务器
-            'host' => Leevel::env('session_redis_host', '127.0.0.1'),
+            'host' => Leevel::env('SESSION_REDIS_HOST', '127.0.0.1'),
 
             // 默认缓存服务器端口
-            'port' => Leevel::env('session_redis_port', 6379),
+            'port' => Leevel::env('SESSION_REDIS_PORT', 6379),
 
             // 认证密码
-            'password' => Leevel::env('session_redis_password', ''),
+            'password' => Leevel::env('SESSION_REDIS_PASSWORD', ''),
 
             // redis 数据库索引
             'select' => 0,

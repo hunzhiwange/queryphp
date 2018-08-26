@@ -22,5 +22,5 @@ return [
      * 这里使用的缓存组件的中的配置
      * 系统为所有缓存提供了统一的接口，在使用上拥有一致性
      */
-    'driver' => Leevel::env('throttler_driver', 'file'),
+    'driver' => Leevel::env('THROTTLER_DRIVER', 'file'),
 ];
