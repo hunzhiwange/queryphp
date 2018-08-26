@@ -14,18 +14,24 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Leevel\Bootstrap\Testing\TestCase as TestCases;
-
 /**
- * phpunit 基础测试类.
+ * 助手方法.
  *
  * @author Xiangmin Liu <635750556@qq.com>
  *
- * @since 2017.05.09
+ * @since 2018.08.26
  *
  * @version 1.0
  */
-abstract class TestCase extends TestCases
+trait Helper
 {
-    use Helper;
+    protected function varExport(array $data)
+    {
+        file_put_contents(
+            dirname(__DIR__).'/logs/trace.log',
+            var_export($data, true)
+        );
+
+        return var_export($data, true);
+    }
 }
