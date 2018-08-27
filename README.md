@@ -55,7 +55,7 @@ DEBUG = false
 The commands below can make queryphp faster.
 
 ```
-php leevel route:cache
+php leevel router:cache
 php leevel option:cache
 php leevel i18n:cache
 composer dump-autoload --optimize
