@@ -45,8 +45,7 @@ return [
      * expire
      * ---------------------------------------------------------------
      *
-     * 为了与下面的配置 expire 对应，这里没有设置为 cache_expire
-     * session_cache_expire ( expire )
+     * 默认过期时间
      */
     'expire' => 86400,
 

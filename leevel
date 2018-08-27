@@ -34,33 +34,27 @@ $psr4s = include_once __DIR__.'/vendor/composer/autoload_psr4.php';
 
 require_once __DIR__.'/vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/function.php';
 
-spl_autoload_register(function ($className) use ($psr4s) {
+spl_autoload_register(function (string $className) use ($psr4s) {
     static $loadedComposer;
 
     $name = explode('\\', $className);
+    $topLevel = '';
 
-    // 顶层命名空间
-    $topLevel = $name[0].'\\';
+    for ($i = 0; $i <= 2; $i++) {
+        $topLevel .= $name[$i].'\\';
 
-    if (isset($psr4s[$topLevel])) {
-        foreach ($psr4s[$topLevel] as $dir) {
-            $file = $dir.'/'.str_replace('\\', '/', substr($className, strlen($topLevel))).'.php';
+        if (isset($psr4s[$topLevel])) {
+            foreach ($psr4s[$topLevel] as $dir) {
+                $file = $dir.'/'.str_replace('\\', '/', substr($className, strlen($topLevel))).'.php';
 
-            if (is_file($file)) {
-                require_once $file;
-
-                break;
+                if (is_file($file)) {
+                    return require_once $file;
+                }
             }
         }
-
-        return;
     }
 
-    // 第二层 todo
-
-    // 第三层 todo
-
-    if (!$loadedComposer) {
+    if (null === $loadedComposer) {
         $composer = require_once __DIR__.'/vendor/autoload.php';
         $composer->loadClass($className);
         $loadedComposer = true;
