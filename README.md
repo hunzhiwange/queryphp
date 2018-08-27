@@ -36,6 +36,31 @@ QueryPHP was based on the DoYouHaoBaby framework，we have a large code refactor
 composer create-project hunzhiwange/queryphp myapp
 ```
 
+## Base optimization
+
+### Debug
+
+Modify .env or runtime/bootstrap/option.php.
+
+```
+// Environment production、testing and development
+ENVIRONMENT = production
+
+// Debug
+DEBUG = false
+```
+
+### Commands
+
+The below commands can make queryphp faster.
+
+```
+php leevel route:cache
+php leevel option:cache
+php leevel i18n:cache
+composer dump-autoload --optimize
+```
+
 ## Unified Code Style
 
 ```
