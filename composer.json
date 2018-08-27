@@ -17,6 +17,7 @@
         "hunzhiwange/framework": "dev-master"
     },
     "require-dev": {
+        "php-coveralls/php-coveralls":"^2.1",
         "phpunit/phpunit": "~7.0"
     },
     "autoload": {
