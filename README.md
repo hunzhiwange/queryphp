@@ -23,7 +23,7 @@ QueryPHP was based on the DoYouHaoBaby framework，we have a large code refactor
 * API: <http://api.queryphp.com>
 * Document: <https://www.leevel.vip/>
 
-## The core
+## The core packages
 
  * Framework: <https://github.com/hunzhiwange/framework/>
  * Leevel: <https://github.com/hunzhiwange/leevel/>
@@ -52,7 +52,7 @@ DEBUG = false
 
 ### Commands
 
-The below commands can make queryphp faster.
+The commands below can make queryphp faster.
 
 ```
 php leevel route:cache
