@@ -14,8 +14,7 @@
     }],
     "require": {
         "php": "^7.1.3",
-        "hunzhiwange/framework": "dev-master",
-        "nunomaduro/collision": "2.0.2"
+        "hunzhiwange/framework": "1.0.x-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "~7.0"

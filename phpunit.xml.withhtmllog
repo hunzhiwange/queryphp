@@ -19,11 +19,8 @@
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">./</directory>
-            <exclude>
-                <directory suffix=".php">tests</directory>
-                <directory suffix=".php">vendor</directory>
-            </exclude>
+            <directory suffix=".php">application</directory>
+            <directory suffix=".php">common</directory>
         </whitelist>
     </filter>
     <php>
