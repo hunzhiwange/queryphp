@@ -25,9 +25,12 @@ QueryPHP was based on the DoYouHaoBaby framework，we have a large code refactor
 
 ## The core packages
 
- * QueryPHP: <https://github.com/hunzhiwange/queryphp/> & <https://gitee.com/dyhb/queryphp/>
- * Framework: <https://github.com/hunzhiwange/framework/> & <https://gitee.com/dyhb/framework/>
- * Leevel: <https://github.com/hunzhiwange/leevel/> & <https://gitee.com/dyhb/queryyetsimple>
+ * QueryPHP On Github: <https://github.com/hunzhiwange/queryphp/>
+ * QueryPHP On Gitee: <https://gitee.com/dyhb/queryphp/>
+ * Framework On Github: <https://github.com/hunzhiwange/framework/>
+ * Framework On Gitee: <https://gitee.com/dyhb/framework/>
+ * Leevel On Github: <https://github.com/hunzhiwange/leevel/>
+ * Leevel On Gitee: <https://gitee.com/dyhb/queryyetsimple>
  * Test: <https://github.com/queryyetsimple/tests/>
  * Package: <https://github.com/queryyetsimple/>
 
