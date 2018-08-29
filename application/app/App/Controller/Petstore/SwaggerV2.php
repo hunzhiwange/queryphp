@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Petstore;
 
+use Leevel;
+
 /**
  * api 文档入口.
  *
@@ -54,16 +56,16 @@ class SwaggerV2
         error_reporting(E_ERROR | E_PARSE | E_STRICT);
 
         $path = [
-            path_application('App/App/Controller/Petstore'),
+            Leevel::appPath(),
         ];
 
         $swagger = \Swagger\scan($path);
 
         $json = $swagger->__toString();
-        $cachePath = path('www/api/swagger.json');
+        $cachePath = Leevel::path('www/api/swagger.json');
 
         if (!file_put_contents($cachePath, $json)) {
-            throw new Exception(sprintf('Dir %s is not writeable', dirname($cachePath)));
+            throw new Exception(sprintf('Dir %s is not writeable.', dirname($cachePath)));
         }
 
         echo $json;

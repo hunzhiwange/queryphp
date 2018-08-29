@@ -123,21 +123,18 @@
                         ]
                     }
                 ],
-                "__domain": "",
-                "__prefix": "",
-                "__params": {
+                "_domain": "{suddomain:[A-Za-z]+}-vip.{domain}",
+                "_prefix": "",
+                "_params": {
                     "args1": "hello",
                     "args2": "world"
                 },
-                "__where": {
-                    "hello": "[0-9]+",
-                    "world": "[A-Za-z]+"
-                },
-                "__strict": true,
-                "__bind": ":group/blog/list?arg1=1&arg2=2"
+                "_strict": true,
+                "_bind": "/blog/list?arg1=1&arg2=2",
+                "_middlewares": "api"
             }
         },
-        "/pet/{petId}": {
+        "/pet/{petId:[A-Za-z]+}": {
             "get": {
                 "tags": [
                     "pet"
@@ -177,8 +174,100 @@
                     {
                         "api_key": []
                     }
+                ],
+                "_domain": "www.queryphp.cn",
+                "_bind": "test/handle2"
+            }
+        },
+        "/pet": {
+            "put": {
+                "tags": [
+                    "pet"
+                ],
+                "summary": "Update an existing pet",
+                "description": "",
+                "operationId": "updatePet",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Pet object that needs to be added to the store",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Pet"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Pet not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:pets",
+                            "read:pets"
+                        ]
+                    }
                 ]
             },
+            "post": {
+                "tags": [
+                    "pet"
+                ],
+                "summary": "Add a new pet to the store",
+                "description": "",
+                "operationId": "addPet",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Pet object that needs to be added to the store",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Pet"
+                        }
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:pets",
+                            "read:pets"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/pet/{petId}": {
             "post": {
                 "tags": [
                     "pet"
@@ -276,92 +365,49 @@
                 ]
             }
         },
-        "/pet": {
-            "put": {
+        "/pet/hello12/{petId:[A-Za-z]+}": {
+            "get": {
                 "tags": [
                     "pet"
                 ],
-                "summary": "Update an existing pet",
-                "description": "",
-                "operationId": "updatePet",
-                "consumes": [
-                    "application/json",
-                    "application/xml"
-                ],
+                "summary": "Find pet by ID",
+                "description": "Returns a single pet",
+                "operationId": "getPetById",
                 "produces": [
                     "application/xml",
                     "application/json"
                 ],
                 "parameters": [
                     {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Pet object that needs to be added to the store",
+                        "name": "petId",
+                        "in": "path",
+                        "description": "ID of pet to return",
                         "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/Pet"
-                        }
+                        "type": "integer",
+                        "format": "int64"
                     }
                 ],
                 "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Pet"
+                        }
+                    },
                     "400": {
                         "description": "Invalid ID supplied"
                     },
                     "404": {
                         "description": "Pet not found"
-                    },
-                    "405": {
-                        "description": "Validation exception"
                     }
                 },
                 "security": [
                     {
-                        "petstore_auth": [
-                            "write:pets",
-                            "read:pets"
-                        ]
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "pet"
-                ],
-                "summary": "Add a new pet to the store",
-                "description": "",
-                "operationId": "addPet",
-                "consumes": [
-                    "application/json",
-                    "application/xml"
-                ],
-                "produces": [
-                    "application/xml",
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Pet object that needs to be added to the store",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/Pet"
-                        }
+                        "api_key": []
                     }
                 ],
-                "responses": {
-                    "405": {
-                        "description": "Invalid input"
-                    }
-                },
-                "security": [
-                    {
-                        "petstore_auth": [
-                            "write:pets",
-                            "read:pets"
-                        ]
-                    }
-                ]
+                "_domain": "www.queryphp.cn",
+                "_bind": "test/handle2"
             }
         },
         "/pet/{petId}/uploadImage": {
@@ -471,7 +517,7 @@
                     }
                 },
                 "status": {
-                    "description": "pet status in the store",
+                    "description": "pet status in the store.",
                     "type": "string",
                     "enum": [
                         "available",
@@ -486,28 +532,6 @@
             }
         }
     },
-    "tags": [
-        {
-            "name": "pet",
-            "description": "Everything about your Pets",
-            "externalDocs": {
-                "description": "Find out more",
-                "url": "http://swagger.io"
-            }
-        },
-        {
-            "name": "store",
-            "description": "Access to Petstore orders"
-        },
-        {
-            "name": "user",
-            "description": "Operations about user",
-            "externalDocs": {
-                "description": "Find out more about our store",
-                "url": "http://swagger.io"
-            }
-        }
-    ],
     "externalDocs": {
         "description": "Find out more about Swagger",
         "url": "http://swagger.io"

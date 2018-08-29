@@ -58,7 +58,7 @@ class Test extends Listener
 This is a easy way to trigger the event.
 
 ``` php
-$event = app('event');
+$event = \Leevel::app('event');
 $event->run(new \Common\Domain\Event\Test('hello blog'), 1, 2, 3, 4);
 ```
 
