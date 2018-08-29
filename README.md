@@ -37,7 +37,7 @@ QueryPHP was based on the DoYouHaoBaby framework，we have a large code refactor
 ## How to install
 
 ```
-composer create-project hunzhiwange/queryphp myapp
+composer create-project hunzhiwange/queryphp myapp dev-master
 ```
 
 ## Base optimization
