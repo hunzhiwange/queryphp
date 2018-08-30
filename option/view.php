@@ -96,9 +96,9 @@ return [
             'suffix' => '.twig',
         ],
 
-        'v8' => [
+        'v8js' => [
             // driver
-            'driver' => 'v8',
+            'driver' => 'v8js',
 
             // 后缀
             'suffix' => '.js',
