@@ -51,6 +51,8 @@ spl_autoload_register(function (string $className) use ($psr4s) {
                     return require_once $file;
                 }
             }
+
+            return;
         }
     }
 

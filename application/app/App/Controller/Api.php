@@ -14,26 +14,24 @@ declare(strict_types=1);
 
 namespace App\App\Controller;
 
-use Leevel\Mvc\Controller;
-
 /**
- * 首页.
+ * api.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2017.10.12
+ * @since 2018.08.31
  *
  * @version 1.0
  */
-class Home extends Controller
+class Api
 {
     /**
      * 默认方法.
      *
-     * @return string
+     * @return array
      */
-    public function show(): string
+    public function show(): array
     {
-        return $this->display('home');
+        return ['hello' => 'world'];
     }
 }
