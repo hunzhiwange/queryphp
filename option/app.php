@@ -96,7 +96,7 @@ return [
      *
      * 例如 queryphp.com，用于路由解析以及 \Leevel\Router\Url::make 生成
      */
-    'top_domain' => Leevel::env('TOP_DOMAIN', 'foo.bar'),
+    'top_domain' => Leevel::env('TOP_DOMAIN', 'queryphp.cn'),
 
     /*
      * ---------------------------------------------------------------
@@ -113,6 +113,17 @@ return [
      * ---------------------------------------------------------------
      *
      * 设置公共资源 url 地址
+     * php leevel link:public
      */
-    'public' => Leevel::env('URL_PUBLIC', 'http://public.foo.bar'),
+    'public' => Leevel::env('URL_PUBLIC', 'http://queryphp.cn/public'),
+
+    /*
+     * ---------------------------------------------------------------
+     * 附件地址
+     * ---------------------------------------------------------------
+     *
+     * 设置公共附件 url 地址
+     * php leevel link:storage
+     */
+    'storage' => Leevel::env('URL_STORAGE', 'http://queryphp.cn/storage'),
 ];

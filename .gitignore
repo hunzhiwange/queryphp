@@ -13,3 +13,6 @@ frontend/node_modules/
 *.log
 package-lock.json
 .php_cs.cache
+logs/
+www/public
+www/storage
