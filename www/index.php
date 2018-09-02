@@ -25,43 +25,56 @@ use Leevel\Kernel\Runtime\IRuntime;
  * ---------------------------------------------------------------.
  *
  * 用于管理 PHP 依赖包
- * 优化 composer 性能，优先载入 composer 注册的 Psr4
- * 如果 Psr4 不存在，才会去初始化 composer 加载，使得大部分请求不走 composer 的自动载入
- * 如果你使用的包是比较新的，基本都遵循 Psr4 规则，这个时候会提升一部分性能
+ * 优化 composer 性能，提炼 composer 中的 autoload_static 中的我们关注的 psr4 命名空间映射
+ * 我们 classmap 需要通过 `php leevel autoload` 生成，包含命令 `composer dump-autoload -o`
  * 对于助手函数需要自己引入
  */
-$psr4s = include_once __DIR__.'/../vendor/composer/autoload_psr4.php';
+$classMap = __DIR__.'/../runtime/bootstrap/classmap.php';
 
-require_once __DIR__.'/../vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/function.php';
+if (is_file($classMap)) {
+    $classMap = include $classMap;
 
-spl_autoload_register(function (string $className) use ($psr4s) {
-    static $loadedComposer;
+    spl_autoload_register(function (string $className) use ($classMap) {
+        static $loadedComposer;
 
-    $name = explode('\\', $className);
-    $topLevel = '';
+        if (isset($classMap[$className])) {
+            return include __DIR__.'/../vendor/composer/../'.$classMap[$className];
+        }
+        if (isset($classMap['@length'][$first])) {
+            $subPath = $className;
+            $className = str_replace('\\', '/', $className);
+            $basePath = __DIR__.'/../vendor/composer/../';
 
-    for ($i = 0; $i <= 2; $i++) {
-        $topLevel .= $name[$i].'\\';
+            while (false !== $lastPos = strrpos($subPath, '\\')) {
+                $subPath = substr($subPath, 0, $lastPos);
+                $search = $subPath.'\\';
 
-        if (isset($psr4s[$topLevel])) {
-            foreach ($psr4s[$topLevel] as $dir) {
-                $file = $dir.'/'.str_replace('\\', '/', substr($className, strlen($topLevel))).'.php';
+                if (isset($classMap['@prefix'][$search])) {
+                    $pathEnd = DIRECTORY_SEPARATOR.substr($className, $lastPos + 1);
 
-                if (is_file($file)) {
-                    return require_once $file;
+                    foreach ($classMap['@prefix'][$search] as $dir) {
+                        if (file_exists($file = $dir.$pathEnd)) {
+                            return include $file;
+                        }
+                    }
                 }
             }
 
             return;
         }
-    }
 
-    if (null === $loadedComposer) {
-        $composer = require_once __DIR__.'/../vendor/autoload.php';
-        $composer->loadClass($className);
-        $loadedComposer = true;
-    }
-});
+        if (null === $loadedComposer) {
+            $composer = require_once __DIR__.'/../vendor/autoload.php';
+            $composer->loadClass($className);
+            $loadedComposer = true;
+        }
+    });
+} else {
+    require_once __DIR__.'/../vendor/autoload.php';
+}
+
+// Do not use composer.autoload.files.
+require_once __DIR__.'/../vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/function.php';
 
 /**
  * ---------------------------------------------------------------
