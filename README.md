@@ -45,11 +45,13 @@ composer create-project hunzhiwange/queryphp myapp dev-master
 ## Visite it
 
 ```
-php leevel server <http://127.0.0.1:9527/>
-php leevel link:public <http://127.0.0.1:9527/public/css/page.css>
-php leevel link:storage <http://127.0.0.1:9527/storage/logo.png>
-php leevel link:apis <http://127.0.0.1:9527/apis/>
+php leevel server
 ```
+
+ * php leevel server <http://127.0.0.1:9527/>
+ * php leevel link:public <http://127.0.0.1:9527/public/css/page.css>
+ * php leevel link:storage <http://127.0.0.1:9527/storage/logo.png>
+ * php leevel link:apis <http://127.0.0.1:9527/apis/>
 
 ## Base optimization
 
