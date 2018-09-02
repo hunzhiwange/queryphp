@@ -62,7 +62,7 @@ The commands below can make queryphp faster.
 php leevel router:cache
 php leevel option:cache
 php leevel i18n:cache
-php leevel autoload (container `composer dump-autoload --optimize`)
+php leevel autoload (contains `composer dump-autoload --optimize`)
 ```
 
 ## Unified Code Style
