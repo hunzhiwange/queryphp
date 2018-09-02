@@ -12,10 +12,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace App\App\Controller;
+namespace App\App\Controller\Api;
 
 /**
- * api.
+ * api show.
  *
  * @author Name Your <your@mail.com>
  *
@@ -23,14 +23,14 @@ namespace App\App\Controller;
  *
  * @version 1.0
  */
-class Api
+class Show
 {
     /**
      * 默认方法.
      *
      * @return array
      */
-    public function show(): array
+    public function handle()
     {
         return ['hello' => 'world'];
     }

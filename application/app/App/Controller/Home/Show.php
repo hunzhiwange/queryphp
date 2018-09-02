@@ -12,12 +12,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace App\App\Controller;
+namespace App\App\Controller\Home;
 
 use Leevel\Mvc\Controller;
 
 /**
- * 首页.
+ * 首页 show.
  *
  * @author Name Your <your@mail.com>
  *
@@ -25,15 +25,16 @@ use Leevel\Mvc\Controller;
  *
  * @version 1.0
  */
-class Home extends Controller
+class Show // extends Controller
 {
     /**
      * 默认方法.
      *
      * @return string
      */
-    public function show(): string
+    public function handle(): string
     {
-        return $this->display('home');
+        return '1';
+        //return $this->display('home');
     }
 }
