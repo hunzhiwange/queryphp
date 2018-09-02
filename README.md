@@ -36,8 +36,19 @@ QueryPHP was based on the DoYouHaoBaby framework，we have a large code refactor
 
 ## How to install
 
+## Base use
+
 ```
 composer create-project hunzhiwange/queryphp myapp dev-master
+```
+
+## Visite it
+
+```
+php leevel server <http://127.0.0.1:9527/>
+php leevel link:public <http://127.0.0.1:9527/public/css/page.css>
+php leevel link:storage <http://127.0.0.1:9527/storage/logo.png>
+php leevel link:apis <http://127.0.0.1:9527/apis/>
 ```
 
 ## Base optimization
@@ -63,6 +74,12 @@ php leevel router:cache
 php leevel option:cache
 php leevel i18n:cache
 php leevel autoload (contains `composer dump-autoload --optimize`)
+```
+
+Or
+
+```
+php leevel production
 ```
 
 ## Unified Code Style
