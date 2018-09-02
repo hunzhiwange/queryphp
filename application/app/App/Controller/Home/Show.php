@@ -25,7 +25,7 @@ use Leevel\Mvc\Controller;
  *
  * @version 1.0
  */
-class Show // extends Controller
+class Show extends Controller
 {
     /**
      * 默认方法.
@@ -34,7 +34,6 @@ class Show // extends Controller
      */
     public function handle(): string
     {
-        return '1';
-        //return $this->display('home');
+        return $this->display('home');
     }
 }
