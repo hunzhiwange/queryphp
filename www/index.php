@@ -57,7 +57,7 @@ if (is_file($classMap)) {
                     $pathEnd = DIRECTORY_SEPARATOR.substr($classPath, $lastPos + 1);
 
                     foreach ($classMap['@prefix'][$search] as $dir) {
-                        if (file_exists($file = $dir.$pathEnd)) {
+                        if (is_file($file = $dir.$pathEnd)) {
                             return include $file;
                         }
                     }
