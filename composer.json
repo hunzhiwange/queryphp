@@ -52,6 +52,18 @@
             "metas": {
                 "foo": "bar"
             }
+        },
+        "leevel-console" : {
+            "autoload": {
+                "namespaces": [
+                    "Leevel",
+                    "Dotenv",
+                    "Carbon",
+                    "Monolog",
+                    "Whoops",
+                    "Swagger"
+                ]
+            }
         }
     },
     "minimum-stability": "dev",
