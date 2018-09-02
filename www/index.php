@@ -40,6 +40,7 @@ if (is_file($classMap)) {
         if (isset($classMap[$className])) {
             return include __DIR__.'/../vendor/composer/../'.$classMap[$className];
         }
+
         if (isset($classMap['@length'][$first])) {
             $subPath = $className;
             $className = str_replace('\\', '/', $className);
