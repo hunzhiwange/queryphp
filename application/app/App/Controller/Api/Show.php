@@ -14,24 +14,51 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Api;
 
+use Leevel;
+
 /**
- * api show.
+ * api 文档入口.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2018.08.31
+ * @since 2017.10.12
  *
  * @version 1.0
  */
 class Show
 {
     /**
-     * 默认方法.
-     *
-     * @return array
+     * @SWG\Swagger(
+     *     schemes={"http"},
+     *     host="/",
+     *     basePath="/v2",
+     *     @SWG\Info(
+     *         version="1.0.0",
+     *         title="QueryPHP APIS",
+     *         description="Welcome to use QueryPHP."
+     *     ),
+     *     @SWG\ExternalDocumentation(
+     *         description="The QueryPHP Site",
+     *         url="https://www.queryphp.com"
+     *     )
+     * )
      */
     public function handle()
     {
-        return ['hello' => 'world'];
+        error_reporting(E_ERROR | E_PARSE | E_STRICT);
+
+        $path = [
+            Leevel::appPath(),
+        ];
+
+        if (!function_exists('\\Swagger\\scan')) {
+            require_once Leevel::path('vendor').'/zircote/swagger-php/src/functions.php';
+        }
+
+        $swagger = \Swagger\scan($path);
+
+        echo $swagger->__toString();
+
+        exit();
     }
 }

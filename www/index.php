@@ -37,13 +37,16 @@ if (is_file($classMap)) {
     spl_autoload_register(function (string $className) use ($classMap) {
         static $loadedComposer;
 
-        if (isset($classMap[$className])) {
-            return include __DIR__.'/../vendor/composer/../'.$classMap[$className];
+        if (isset($classMap[$className]) &&
+            is_file($file = __DIR__.'/../vendor/composer/../'.$classMap[$className])) {
+            return include $file;
         }
+
+        $first = $className[0];
 
         if (isset($classMap['@length'][$first])) {
             $subPath = $className;
-            $className = str_replace('\\', '/', $className);
+            $classPath = str_replace('\\', '/', $className);
             $basePath = __DIR__.'/../vendor/composer/../';
 
             while (false !== $lastPos = strrpos($subPath, '\\')) {
@@ -51,7 +54,7 @@ if (is_file($classMap)) {
                 $search = $subPath.'\\';
 
                 if (isset($classMap['@prefix'][$search])) {
-                    $pathEnd = DIRECTORY_SEPARATOR.substr($className, $lastPos + 1);
+                    $pathEnd = DIRECTORY_SEPARATOR.substr($classPath, $lastPos + 1);
 
                     foreach ($classMap['@prefix'][$search] as $dir) {
                         if (file_exists($file = $dir.$pathEnd)) {
@@ -61,7 +64,14 @@ if (is_file($classMap)) {
                 }
             }
 
-            return;
+            list($firstWord) = explode('\\', $className);
+            $firstWord .= '\\';
+
+            foreach ($classMap['@length'][$first] as $dir => $lenght) {
+                if ($dir === $firstWord) {
+                    return;
+                }
+            }
         }
 
         if (null === $loadedComposer) {
