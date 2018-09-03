@@ -16,3 +16,4 @@ package-lock.json
 logs/
 www/public
 www/storage
+www/apis
