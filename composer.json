@@ -63,6 +63,12 @@
                     "Whoops",
                     "Swagger"
                 ]
+            },
+            "view-cache": {
+                "paths": [
+                    "common",
+                    "application"
+                ]
             }
         }
     },
