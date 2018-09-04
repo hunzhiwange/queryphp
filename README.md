@@ -88,7 +88,7 @@ php leevel production
 ## Unified Code Style
 
 ```
-$cd /data/codes/queryphp/vendor/hunzhiwange/framework
+$cd /data/codes/queryphp
 $php-cs-fixer fix --config=.php_cs.dist
 ```
 
