@@ -39,7 +39,7 @@ QueryPHP was based on the DoYouHaoBaby framework，we have a large code refactor
 ## Base use
 
 ```
-composer create-project hunzhiwange/queryphp myapp dev-master
+composer create-project hunzhiwange/queryphp myapp dev-master --repository=https://packagist.org/
 ```
 
 ## Visite it

@@ -82,6 +82,12 @@
         "sort-packages": true,
         "optimize-autoloader": true
     },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.org"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
