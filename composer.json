@@ -74,7 +74,8 @@
     },
     "scripts": {
         "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php leevel links"
         ],
         "post-autoload-dump": [
             "@php leevel autoload --ignore=1"
