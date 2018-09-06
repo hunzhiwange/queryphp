@@ -14,158 +14,93 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Petstore;
 
+/**
+ * Class Pet.
+ *
+ *
+ * @author  Donii Sergii <doniysa@gmail.com>
+ */
 class Pet
 {
     /**
-     * @SWG\Get(
-     *     path="/pet/findByTags",
-     *     summary="Finds Pets by tags",
-     *     tags={"pet","ttt"},
-     *     description="Muliple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
-     *     operationId="findPetsByTags",
-     *     produces={"application/xml", "application/json"},
-     *     @SWG\Parameter(
-     *         name="tags",
-     *         in="query",
-     *         description="Tags to filter by",
-     *         required=true,
-     *         type="array",
-     *         @SWG\Items(type="string"),
-     *         collectionFormat="multi"
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="successful operation",
-     *         @SWG\Schema(
-     *             type="array",
-     *             @SWG\Items(ref="#/definitions/Pet")
-     *         ),
-     *     ),
-     *     @SWG\Response(
-     *         response="400",
-     *         description="Invalid tag value",
-     *     ),
-     *     security={
-     *         {
-     *             "petstore_auth": {"write:pets", "read:pets"}
-     *         }
-     *     },
-     *     deprecated=true
-     * )
-     */
-    public function findByTags()
-    {
-    }
-
-    /**
-     * @SWG\Get(
-     *     path="/pet/findByStatus",
-     *     summary="Finds Pets by status",
-     *     description="Multiple status values can be provided with comma separated strings",
-     *     operationId="findPetsByStatus",
-     *     produces={"application/xml", "application/json"},
+     * @OAS\Get(
+     *     path="/api/v2/petLeevel/{petId:[A-Za-z]+}/",
      *     tags={"pet"},
-     *     @SWG\Parameter(
-     *         name="status",
-     *         in="query",
-     *         description="Status values that need to be considered for filter",
-     *         required=true,
-     *         type="array",
-     *         @SWG\Items(
-     *             type="string",
-     *             enum={"available", "pending", "sold"},
-     *             default="available"
-     *         ),
-     *         collectionFormat="multi"
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="successful operation",
-     *         @SWG\Schema(
-     *             type="array",
-     *             @SWG\Items(ref="#/definitions/Pet")
-     *         ),
-     *     ),
-     *     @SWG\Response(
-     *         response="400",
-     *         description="Invalid status value",
-     *     ),
-     *     security={
-     *       {"petstore_auth": {"write:pets", "read:pets"}}
-     *     },
-     *     _domain="{suddomain:[A-Za-z]+}-vip.{domain}",
-     *     _prefix="",
-     *     _params={"args1": "hello", "args2": "world"},
-     *     _strict=true,
-     *     _bind="/blog/list?arg1=1&arg2=2",
-     *     _middlewares="api"
-     * )
-     */
-    public function findByStatus()
-    {
-    }
-
-    /**
-     * @SWG\Get(
-     *     path="/pet/{petId:[A-Za-z]+}",
-     *     summary="Find pet by ID",
-     *     description="Returns a single pet",
-     *     operationId="getPetById",
-     *     tags={"pet"},
-     *     produces={"application/xml", "application/json"},
-     *     @SWG\Parameter(
-     *         description="ID of pet to return",
-     *         in="path",
+     *     summary="Just test the router",
+     *     operationId="petLeevel",
+     *     @OAS\Parameter(
      *         name="petId",
+     *         in="path",
+     *         description="ID of pet to return",
      *         required=true,
-     *         type="integer",
-     *         format="int64"
+     *         @OAS\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
      *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="successful operation",
-     *         @SWG\Schema(ref="#/definitions/Pet")
-     *     ),
-     *     @SWG\Response(
-     *         response="400",
-     *         description="Invalid ID supplied"
-     *     ),
-     *     @SWG\Response(
-     *         response="404",
-     *         description="Pet not found"
+     *     @OAS\Response(
+     *         response=405,
+     *         description="Invalid input"
      *     ),
      *     security={
-     *       {"api_key": {}}
+     *         {"petstore_auth": {"write:pets", "read:pets"}}
      *     },
-     *     _domain="www.queryphp.cn",
-     *     _bind="test/handle2"
+     *     requestBody={"$ref": "#/components/requestBodies/Pet"},
+     *     leevelScheme="https",
+     *     leevelDomain="{subdomain:[A-Za-z]+}-vip.{domain}",
+     *     leevelParams={"args1": "hello", "args2": "world"},
+     *     leevelBind="/PetLeevel/show/?query1=foo&query2=bar",
+     *     leevelMiddlewares="api"
      * )
      */
-    public function getPetById()
+    public function petLeevel()
     {
     }
 
     /**
-     * @SWG\Post(
+     * @OAS\Get(
+     *     path="/api/v2/petLeevelIgnore/",
+     *     tags={"pet"},
+     *     summary="Just test ignore the router",
+     *     operationId="petLeevelIgnore",
+     *     @OAS\Parameter(
+     *         name="petId",
+     *         in="path",
+     *         description="ID of pet to return",
+     *         required=true,
+     *         @OAS\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OAS\Response(
+     *         response=405,
+     *         description="Invalid input"
+     *     ),
+     *     security={
+     *         {"petstore_auth": {"write:pets", "read:pets"}}
+     *     },
+     *     leevelIgnore=true
+     * )
+     */
+    public function petLeevelIgnore()
+    {
+    }
+
+    /**
+     * @OAS\Post(
      *     path="/pet",
      *     tags={"pet"},
-     *     operationId="addPet",
      *     summary="Add a new pet to the store",
-     *     description="",
-     *     consumes={"application/json", "application/xml"},
-     *     produces={"application/xml", "application/json"},
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Pet object that needs to be added to the store",
-     *         required=true,
-     *         @SWG\Schema(ref="#/definitions/Pet"),
-     *     ),
-     *     @SWG\Response(
+     *     operationId="addPet",
+     *     @OAS\Response(
      *         response=405,
-     *         description="Invalid input",
+     *         description="Invalid input"
      *     ),
-     *     security={{"petstore_auth":{"write:pets", "read:pets"}}}
+     *     security={
+     *         {"petstore_auth": {"write:pets", "read:pets"}}
+     *     },
+     *     requestBody={"$ref": "#/components/requestBodies/Pet"}
      * )
      */
     public function addPet()
@@ -173,34 +108,27 @@ class Pet
     }
 
     /**
-     * @SWG\Put(
+     * @OAS\Put(
      *     path="/pet",
      *     tags={"pet"},
-     *     operationId="updatePet",
      *     summary="Update an existing pet",
-     *     description="",
-     *     consumes={"application/json", "application/xml"},
-     *     produces={"application/xml", "application/json"},
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Pet object that needs to be added to the store",
-     *         required=true,
-     *         @SWG\Schema(ref="#/definitions/Pet"),
-     *     ),
-     *     @SWG\Response(
+     *     operationId="updatePet",
+     *     @OAS\Response(
      *         response=400,
-     *         description="Invalid ID supplied",
+     *         description="Invalid ID supplied"
      *     ),
-     *     @SWG\Response(
+     *     @OAS\Response(
      *         response=404,
-     *         description="Pet not found",
+     *         description="Pet not found"
      *     ),
-     *     @SWG\Response(
+     *     @OAS\Response(
      *         response=405,
-     *         description="Validation exception",
+     *         description="Validation exception"
      *     ),
-     *     security={{"petstore_auth":{"write:pets", "read:pets"}}}
+     *     security={
+     *         {"petstore_auth": {"write:pets", "read:pets"}}
+     *     },
+     *     requestBody={"$ref": "#/components/requestBodies/Pet"}
      * )
      */
     public function updatePet()
@@ -208,117 +136,214 @@ class Pet
     }
 
     /**
-     * @SWG\Delete(
-     *     path="/pet/{petId}",
-     *     summary="Deletes a pet",
-     *     description="",
-     *     operationId="deletePet",
-     *     produces={"application/xml", "application/json"},
+     * @OAS\Get(
+     *     path="/pet/findByStatus",
      *     tags={"pet"},
-     *     @SWG\Parameter(
-     *         description="Pet id to delete",
-     *         in="path",
-     *         name="petId",
+     *     summary="Finds Pets by status",
+     *     description="Multiple status values can be provided with comma separated string",
+     *     operationId="findPetsByStatus",
+     *     deprecated=true,
+     *     @OAS\Parameter(
+     *         name="status",
+     *         in="query",
+     *         description="Status values that needed to be considered for filter",
      *         required=true,
-     *         type="integer",
-     *         format="int64"
+     *         explode=true,
+     *         @OAS\Schema(
+     *             type="array",
+     *             default="available",
+     *             @OAS\Items(
+     *                 type="string",
+     *                 enum = {"available", "pending", "sold"},
+     *             )
+     *         )
      *     ),
-     *     @SWG\Parameter(
-     *         name="api_key",
-     *         in="header",
-     *         required=false,
-     *         type="string"
+     *     @OAS\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OAS\MediaType(
+     *             mediaType="application/json",
+     *             @OAS\Schema(
+     *                 type="array",
+     *                 @OAS\Items(
+     *                    ref="#/components/schemas/Pet"
+     *                 )
+     *             )
+     *         ),
+     *         @OAS\MediaType(
+     *             mediaType="application/xml",
+     *             @OAS\Schema(
+     *                 type="array",
+     *                 @OAS\Items(
+     *                    ref="#/components/schemas/Pet"
+     *                 )
+     *             )
+     *         )
      *     ),
-     *     @SWG\Response(
+     *     @OAS\Response(
      *         response=400,
-     *         description="Invalid ID supplied"
+     *         description="Invalid status value"
      *     ),
-     *     @SWG\Response(
-     *         response=404,
-     *         description="Pet not found"
-     *     ),
-     *     security={{"petstore_auth":{"write:pets", "read:pets"}}}
+     *     security={
+     *         {"petstore_auth": {"write:pets", "read:pets"}}
+     *     }
      * )
      */
-    public function deletePet()
+    public function findPetsByStatus()
     {
     }
 
     /**
-     * @SWG\Get(
-     *     path="/pet/hello12/{petId:[A-Za-z]+}",
+     * @OAS\Get(
+     *     path="/pet/findByTags",
+     *     tags={"pet"},
+     *     summary="Finds Pets by tags",
+     *     description=">-
+     * Muliple tags can be provided with comma separated strings. Use\ \ tag1,
+     * tag2, tag3 for testing.",
+     *     operationId="findByTags",
+     *     @OAS\Parameter(
+     *         name="tags",
+     *         in="query",
+     *         description="Tags to filter by",
+     *         required=true,
+     *         explode=true,
+     *         @OAS\Schema(
+     *             type="array",
+     *             @OAS\Items(
+     *                 type="string",
+     *             )
+     *         )
+     *     ),
+     *     @OAS\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OAS\MediaType(
+     *             mediaType="application/json",
+     *             @OAS\Schema(
+     *                 type="array",
+     *                 @OAS\Items(
+     *                    ref="#/components/schemas/Pet"
+     *                 )
+     *             )
+     *         ),
+     *         @OAS\MediaType(
+     *             mediaType="application/xml",
+     *             @OAS\Schema(
+     *                 type="array",
+     *                 @OAS\Items(
+     *                    ref="#/components/schemas/Pet"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OAS\Response(
+     *         response=400,
+     *         description="Invalid status value"
+     *     ),
+     *     security={
+     *         {"petstore_auth": {"write:pets", "read:pets"}}
+     *     }
+     * )
+     */
+    public function findByTags()
+    {
+    }
+
+    /**
+     * @OAS\Get(
+     *     path="/pet/{petId}",
+     *     tags={"pet"},
      *     summary="Find pet by ID",
      *     description="Returns a single pet",
      *     operationId="getPetById",
-     *     tags={"pet"},
-     *     produces={"application/xml", "application/json"},
-     *     @SWG\Parameter(
-     *         description="ID of pet to return",
-     *         in="path",
+     *     @OAS\Parameter(
      *         name="petId",
+     *         in="path",
+     *         description="ID of pet to return",
      *         required=true,
-     *         type="integer",
-     *         format="int64"
+     *         @OAS\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
      *     ),
-     *     @SWG\Response(
+     *     @OAS\Response(
      *         response=200,
      *         description="successful operation",
-     *         @SWG\Schema(ref="#/definitions/Pet")
+     *         @OAS\MediaType(
+     *             mediaType="application/json",
+     *             @OAS\Schema(
+     *                 ref="#/components/schemas/Pet"
+     *             ),
+     *         ),
+     *         @OAS\MediaType(
+     *             mediaType="application/xml",
+     *             @OAS\Schema(
+     *                 ref="#/components/schemas/Pet"
+     *             ),
+     *         )
      *     ),
-     *     @SWG\Response(
-     *         response="400",
-     *         description="Invalid ID supplied"
+     *     @OAS\Response(
+     *         response=400,
+     *         description="Invalid ID supplier"
      *     ),
-     *     @SWG\Response(
-     *         response="404",
+     *     @OAS\Response(
+     *         response=404,
      *         description="Pet not found"
      *     ),
      *     security={
-     *       {"api_key": {}}
-     *     },
-     *     _domain="www.queryphp.cn",
-     *     _bind="test/handle2"
+     *         {"api_key": {}}
+     *     }
      * )
+     *
+     * @param int $id
      */
-    public function getPetById()
+    public function getPetById($id)
     {
     }
 
     /**
-     * @SWG\Post(
-     *   path="/pet/{petId}",
-     *   tags={"pet"},
-     *   summary="Updates a pet in the store with form data",
-     *   description="",
-     *   operationId="updatePetWithForm",
-     *   consumes={"application/x-www-form-urlencoded"},
-     *   produces={"application/xml", "application/json"},
-     *   @SWG\Parameter(
-     *     name="petId",
-     *     in="path",
-     *     description="ID of pet that needs to be updated",
-     *     required=true,
-     *     type="integer",
-     *     format="int64"
-     *   ),
-     *   @SWG\Parameter(
-     *     name="name",
-     *     in="formData",
-     *     description="Updated name of the pet",
-     *     required=false,
-     *     type="string"
-     *   ),
-     *   @SWG\Parameter(
-     *     name="status",
-     *     in="formData",
-     *     description="Updated status of the pet",
-     *     required=false,
-     *     type="string"
-     *   ),
-     *   @SWG\Response(response="405",description="Invalid input"),
-     *   security={{
-     *     "petstore_auth": {"write:pets", "read:pets"}
-     *   }}
+     * @OAS\Post(
+     *     path="/pet/{petId}",
+     *     tags={"pet"},
+     *     summary="Updates a pet in the store with form data",
+     *     operationId="updatePetWithForm",
+     *     @OAS\Parameter(
+     *         name="petId",
+     *         in="path",
+     *         description="ID of pet that needs to be updated",
+     *         required=true,
+     *         @OAS\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OAS\Response(
+     *         response=405,
+     *         description="Invalid input"
+     *     ),
+     *     security={
+     *         {"petstore_auth": {"write:pets", "read:pets"}}
+     *     },
+     *     @OAS\RequestBody(
+     *         description="Input data format",
+     *         @OAS\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OAS\Schema(
+     *                 type="object",
+     *                 @OAS\Property(
+     *                     property="name",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *                 @OAS\Property(
+     *                     property="status",
+     *                     description="Updated status of the pet",
+     *                     type="string"
+     *                 )
+     *             )
+     *         )
+     *     )
      * )
      */
     public function updatePetWithForm()
@@ -326,53 +351,88 @@ class Pet
     }
 
     /**
-     * @SWG\Post(
-     *     path="/pet/{petId}/uploadImage",
-     *     consumes={"multipart/form-data"},
-     *     description="",
-     *     operationId="uploadFile",
-     *     @SWG\Parameter(
-     *         description="Additional data to pass to server",
-     *         in="formData",
-     *         name="additionalMetadata",
+     * @OAS\Delete(
+     *     path="/pet/{petId}",
+     *     tags={"pet"},
+     *     summary="Deletes a pet",
+     *     operationId="deletePet",
+     *     @OAS\Parameter(
+     *         name="api_key",
+     *         in="header",
      *         required=false,
-     *         type="string"
+     *         @OAS\Schema(
+     *             type="string"
+     *         )
      *     ),
-     *     @SWG\Parameter(
-     *         description="file to upload",
-     *         in="formData",
-     *         name="file",
-     *         required=false,
-     *         type="file"
-     *     ),
-     *     @SWG\Parameter(
-     *         description="ID of pet to update",
-     *         format="int64",
-     *         in="path",
+     *     @OAS\Parameter(
      *         name="petId",
+     *         in="path",
+     *         description="Pet id to delete",
      *         required=true,
-     *         type="integer"
+     *         @OAS\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         ),
      *     ),
-     *     produces={"application/json"},
-     *     @SWG\Response(
-     *         response="200",
-     *         description="successful operation",
-     *         @SWG\Schema(ref="#/definitions/ApiResponse")
+     *     @OAS\Response(
+     *         response=400,
+     *         description="Invalid ID supplied",
+     *     ),
+     *     @OAS\Response(
+     *         response=404,
+     *         description="Pet not found",
      *     ),
      *     security={
-     *         {
-     *             "petstore_auth": {
-     *                  "read:pets",
-     *                  "write:pets"
-     *             }
-     *         }
+     *         {"petstore_auth": {"write:pets", "read:pets"}}
      *     },
-     *     summary="uploads an image",
-     *     tags={
-     *         "pet"
-     *     }
      * )
-     * */
+     */
+    public function deletePet()
+    {
+    }
+
+    /**
+     * @OAS\Post(
+     *     path="/pet/{petId}/uploadImage",
+     *     tags={"pet"},
+     *     summary="uploads an image",
+     *     operationId="uploadFile",
+     *     @OAS\Parameter(
+     *         name="petId",
+     *         in="path",
+     *         description="ID of pet to update",
+     *         required=true,
+     *         @OAS\Schema(
+     *             type="integer",
+     *             format="int64",
+     *             example=1
+     *         )
+     *     ),
+     *     @OAS\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OAS\MediaType(
+     *             mediaType="application/json",
+     *             @OAS\Schema(
+     *                 ref="#/components/schemas/ApiResponse"
+     *             )
+     *         )
+     *     ),
+     *     security={
+     *         {"petstore_auth": {"write:pets", "read:pets"}}
+     *     },
+     *     @OAS\RequestBody(
+     *         description="Upload images request body",
+     *         @OAS\MediaType(
+     *             mediaType="application/octet-stream",
+     *             @OAS\Schema(
+     *                 type="string",
+     *                 format="binary"
+     *             )
+     *         )
+     *     )
+     * )
+     */
     public function uploadFile()
     {
     }

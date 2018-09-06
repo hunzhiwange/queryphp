@@ -28,22 +28,11 @@ use Leevel;
 class Show
 {
     /**
-     * @SWG\Swagger(
-     *     schemes={"http"},
-     *     host="/",
-     *     basePath="/v2",
-     *     @SWG\Info(
-     *         version="1.0.0",
-     *         title="QueryPHP APIS",
-     *         description="Welcome to use QueryPHP."
-     *     ),
-     *     @SWG\ExternalDocumentation(
-     *         description="The QueryPHP Site",
-     *         url="https://www.queryphp.com"
-     *     )
-     * )
+     * 响应.
+     *
+     * @return string
      */
-    public function handle()
+    public function handle(): string
     {
         error_reporting(E_ERROR | E_PARSE | E_STRICT);
 
@@ -57,8 +46,7 @@ class Show
 
         $swagger = \Swagger\scan($path);
 
-        echo $swagger->__toString();
-
-        exit();
+        echo $swagger;
+        die;
     }
 }
