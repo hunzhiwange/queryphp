@@ -40,13 +40,13 @@ class Show
             Leevel::appPath(),
         ];
 
-        if (!function_exists('\\Swagger\\scan')) {
+        if (!function_exists('\\OpenApi\\scan')) {
             require_once Leevel::path('vendor').'/zircote/swagger-php/src/functions.php';
         }
 
-        $swagger = \Swagger\scan($path);
+        $openApi = \OpenApi\scan($path);
 
-        echo $swagger;
+        echo json_encode($openApi);
         die;
     }
 }
