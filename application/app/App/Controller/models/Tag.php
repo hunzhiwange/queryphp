@@ -20,11 +20,11 @@ namespace Petstore30;
  *
  * @author  Donii Sergii <doniysa@gmail.com>
  *
- * @OAS\Schema(
+ * @OA\Schema(
  *     type="object",
  *     description="Tag",
  *     title="Tag",
- *     @OAS\Xml(
+ *     @OA\Xml(
  *         name="Tag"
  *     )
  * )
@@ -32,7 +32,7 @@ namespace Petstore30;
 class Tag
 {
     /**
-     * @OAS\Property(
+     * @OA\Property(
      *     format="int64",
      *     description="ID",
      *     title="ID"
@@ -43,7 +43,7 @@ class Tag
     private $id;
 
     /**
-     * @OAS\Property(
+     * @OA\Property(
      *     description="Name",
      *     title="Name"
      * )

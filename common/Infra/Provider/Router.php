@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Common\Infra\Provider;
 
 use Leevel\Router\RouterProvider;
-use Leevel\Router\ScanSwaggerRouter;
+use Leevel\Router\ScanRouter;
 
 /**
  * 路由服务提供者.
@@ -45,17 +45,15 @@ class Router extends RouterProvider
         // web 请求中间件
         'web' => [
             'session',
-            'log',
         ],
 
         // api 请求中间件
         'api' => [
             'throttler:60,1',
-            'log',
         ],
 
-        // console 请求中间件
-        'console' => [
+        // 公共请求中间件
+        'common' => [
             'log',
         ],
     ];
@@ -88,7 +86,7 @@ class Router extends RouterProvider
      */
     public function getRouters()
     {
-        return (new ScanSwaggerRouter($this->makeMiddlewareParser()))->handle();
+        return (new ScanRouter($this->makeMiddlewareParser()))->handle();
     }
 
     /**
@@ -98,13 +96,6 @@ class Router extends RouterProvider
      */
     public function getMiddlewares()
     {
-        return ['web'];
-        // if (api()) {
-        //     return ['api'];
-        // } elseif (console()) {
-        //     return ['console'];
-        // } else {
-        //     return ['web'];
-        // }
+        return ['common'];
     }
 }

@@ -20,12 +20,12 @@ namespace Petstore30;
  *
  * @author  Donii Sergii <doniysa@gmail.com>
  *
- * @OAS\Schema(
+ * @OA\Schema(
  *     description="Pet model",
  *     title="Pet model",
  *     type="object",
  *     required={"name", "photoUrls"},
- *     @OAS\Xml(
+ *     @OA\Xml(
  *         name="Pet"
  *     )
  * )
@@ -33,7 +33,7 @@ namespace Petstore30;
 class Pet
 {
     /**
-     * @OAS\Property(
+     * @OA\Property(
      *     format="int64",
      *     description="ID",
      *     title="ID",
@@ -44,7 +44,7 @@ class Pet
     private $id;
 
     /**
-     * @OAS\Property(
+     * @OA\Property(
      *     description="Category relation",
      *     title="Category",
      * )
@@ -54,7 +54,7 @@ class Pet
     private $category;
 
     /**
-     * @OAS\Property(
+     * @OA\Property(
      *     format="int64",
      *     description="Pet name",
      *     title="Pet name",
@@ -65,14 +65,14 @@ class Pet
     private $name;
 
     /**
-     * @OAS\Property(
+     * @OA\Property(
      *     description="Photo urls",
      *     title="Photo urls",
-     *     @OAS\Xml(
+     *     @OA\Xml(
      *         name="photoUrl",
      *         wrapped=true
      *     ),
-     *     @OAS\Items(
+     *     @OA\Items(
      *         type="string",
      *         default="images/image-1.png"
      *     )
@@ -83,10 +83,10 @@ class Pet
     private $photoUrls;
 
     /**
-     * @OAS\Property(
+     * @OA\Property(
      *     description="Pet tags",
      *     title="Pet tags",
-     *     @OAS\Xml(
+     *     @OA\Xml(
      *         name="tag",
      *         wrapped=true
      *     ),

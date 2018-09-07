@@ -13,7 +13,7 @@ declare(strict_types=1);
  */
 
 /**
- * @OAS\Info(
+ * @OA\Info(
  *     description="This is a sample Petstore server.  You can find
  * out more about Swagger at
  * [http://swagger.io](http://swagger.io) or on
@@ -21,10 +21,10 @@ declare(strict_types=1);
  *     version="1.0.0",
  *     title="Swagger Petstore",
  *     termsOfService="http://swagger.io/terms/",
- *     @OAS\Contact(
+ *     @OA\Contact(
  *         email="apiteam@swagger.io"
  *     ),
- *     @OAS\License(
+ *     @OA\License(
  *         name="Apache 2.0",
  *         url="http://www.apache.org/licenses/LICENSE-2.0.html"
  *     )
@@ -35,34 +35,34 @@ class Foobar
 }
 
 /**
- * @OAS\Tag(
+ * @OA\Tag(
  *     name="pet",
  *     leevelGroup="pet",
  *     description="Everything about your Pets",
- *     @OAS\ExternalDocumentation(
+ *     @OA\ExternalDocumentation(
  *         description="Find out more",
  *         url="http://swagger.io"
  *     )
  * )
- * @OAS\Tag(
+ * @OA\Tag(
  *     name="store",
  *     leevelGroup="store",
  *     description="Access to Petstore orders",
  * )
- * @OAS\Tag(
+ * @OA\Tag(
  *     name="user",
  *     leevelGroup="user",
  *     description="Operations about user",
- *     @OAS\ExternalDocumentation(
+ *     @OA\ExternalDocumentation(
  *         description="Find out more about store",
  *         url="http://swagger.io"
  *     )
  * )
- * @OAS\Server(
+ * @OA\Server(
  *     description="SwaggerHUB API Mocking 1.0.0",
  *     url="https://virtserver.swaggerhub.com/swagger/Petstore"
  * )
- * @OAS\ExternalDocumentation(
+ * @OA\ExternalDocumentation(
  *     description="Find out more about Swagger",
  *     url="http://swagger.io",
  *     leevelBasepaths={"/api/v1", "api/v2", "/web/v1", "web/v2"}

@@ -23,22 +23,22 @@ namespace App\App\Controller\Petstore;
 class Web
 {
     /**
-     * @OAS\Get(
+     * @OA\Get(
      *     path="/web/v1/petLeevelForWeb/{petId:[A-Za-z]+}/",
      *     tags={"pet"},
      *     summary="Just test the router",
      *     operationId="petLeevelForWeb",
-     *     @OAS\Parameter(
+     *     @OA\Parameter(
      *         name="petId",
      *         in="path",
      *         description="ID of pet to return",
      *         required=true,
-     *         @OAS\Schema(
+     *         @OA\Schema(
      *             type="integer",
      *             format="int64"
      *         )
      *     ),
-     *     @OAS\Response(
+     *     @OA\Response(
      *         response=405,
      *         description="Invalid input"
      *     ),
@@ -52,22 +52,22 @@ class Web
     }
 
     /**
-     * @OAS\Get(
+     * @OA\Get(
      *     path="/web/v2/petLeevelV2Web/",
      *     tags={"pet"},
      *     summary="Just test ignore the router",
      *     operationId="petLeevelV2Web",
-     *     @OAS\Parameter(
+     *     @OA\Parameter(
      *         name="petId",
      *         in="path",
      *         description="ID of pet to return",
      *         required=true,
-     *         @OAS\Schema(
+     *         @OA\Schema(
      *             type="integer",
      *             format="int64"
      *         )
      *     ),
-     *     @OAS\Response(
+     *     @OA\Response(
      *         response=405,
      *         description="Invalid input"
      *     ),
@@ -82,22 +82,22 @@ class Web
     }
 
     /**
-     * @OAS\Get(
+     * @OA\Get(
      *     path="/web/v1/petLeevelIgnoreForWeb/",
      *     tags={"pet"},
      *     summary="Just test ignore the router",
      *     operationId="petLeevelIgnoreForWeb",
-     *     @OAS\Parameter(
+     *     @OA\Parameter(
      *         name="petId",
      *         in="path",
      *         description="ID of pet to return",
      *         required=true,
-     *         @OAS\Schema(
+     *         @OA\Schema(
      *             type="integer",
      *             format="int64"
      *         )
      *     ),
-     *     @OAS\Response(
+     *     @OA\Response(
      *         response=405,
      *         description="Invalid input"
      *     ),

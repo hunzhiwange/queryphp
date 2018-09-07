@@ -15,19 +15,19 @@ declare(strict_types=1);
 namespace Petstore30;
 
 /**
- * @OAS\RequestBody(
+ * @OA\RequestBody(
  *     request="Pet",
  *     description="Pet object that needs to be added to the store",
  *     required=true,
- *     @OAS\MediaType(
+ *     @OA\MediaType(
  *         mediaType="application/json",
- *         @OAS\Schema(
+ *         @OA\Schema(
  *             ref="#/components/schemas/Pet"
  *         )
  *     ),
- *     @OAS\MediaType(
+ *     @OA\MediaType(
  *         mediaType="application/xml",
- *         @OAS\Schema(
+ *         @OA\Schema(
  *             ref="#/components/schemas/Pet"
  *         )
  *     )
@@ -38,15 +38,15 @@ class Foobar
 }
 
 /**
- * @OAS\RequestBody(
+ * @OA\RequestBody(
  *     request="UserArray",
  *     description="List of user object",
  *     required=true,
- *     @OAS\MediaType(
+ *     @OA\MediaType(
  *         mediaType="application/json",
- *         @OAS\Schema(
+ *         @OA\Schema(
  *             type="array",
- *             @OAS\Items(
+ *             @OA\Items(
  *                 ref="#/components/schemas/User"
  *             )
  *         )
