@@ -44,11 +44,15 @@ class Api
      *     ),
      *     security={
      *         {"petstore_auth": {"write:pets", "read:pets"}}
-     *     }
+     *     },
+     *     leevelParams={"args1": "hello", "args2": "world"}
      * )
+     *
+     * @param mixed $petId
      */
-    public function petLeevelForApi()
+    public function petLeevelForApi($petId)
     {
+        return $petId;
     }
 
     /**
