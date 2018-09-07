@@ -73,8 +73,7 @@ class Web
      *     ),
      *     security={
      *         {"petstore_auth": {"write:pets", "read:pets"}}
-     *     },
-     *     leevelIgnore=true
+     *     }
      * )
      */
     public function petLeevelV2ForWeb()
