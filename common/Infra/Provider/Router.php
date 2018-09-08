@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace Common\Infra\Provider;
 
 use Leevel\Router\RouterProvider;
-use Leevel\Router\ScanRouter;
 
 /**
  * 路由服务提供者.
@@ -81,8 +80,8 @@ class Router extends RouterProvider
      *
      * @return array
      */
-    public function getRouters()
+    public function getRouters(): array
     {
-        return (new ScanRouter($this->makeMiddlewareParser()))->handle();
+        return parent::getRouters();
     }
 }
