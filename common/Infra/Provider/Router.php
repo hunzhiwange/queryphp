@@ -44,17 +44,14 @@ class Router extends RouterProvider
     protected $middlewareGroups = [
         // web 请求中间件
         'web' => [
+            'log',
             'session',
         ],
 
         // api 请求中间件
         'api' => [
-            'throttler:60,1',
-        ],
-
-        // 公共请求中间件
-        'common' => [
             'log',
+            'throttler:60,1',
         ],
     ];
 
@@ -66,9 +63,9 @@ class Router extends RouterProvider
      * @var array
      */
     protected $middlewareAlias = [
-        'session'   => 'Leevel\Session\Middleware\Session',
-        'throttler' => 'Leevel\Throttler\Middleware\Throttler',
-        'log'       => 'Leevel\Log\Middleware\Log',
+        'session'   => 'Leevel\\Session\\Middleware\\Session',
+        'throttler' => 'Leevel\\Throttler\\Middleware\\Throttler',
+        'log'       => 'Leevel\\Log\\Middleware\\Log',
     ];
 
     /**
@@ -87,15 +84,5 @@ class Router extends RouterProvider
     public function getRouters()
     {
         return (new ScanRouter($this->makeMiddlewareParser()))->handle();
-    }
-
-    /**
-     * 全局中间件.
-     *
-     * @return array
-     */
-    public function getMiddlewares()
-    {
-        return ['common'];
     }
 }

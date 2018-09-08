@@ -65,7 +65,12 @@ class Foobar
  * @OA\ExternalDocumentation(
  *     description="Find out more about Swagger",
  *     url="http://swagger.io",
- *     leevelBasepaths={"/api/v1", "api/v2", "/web/v1", "web/v2"}
+ *     leevelBasepaths={
+ *         "/api/v1": {"middlewares": "api"},
+ *         "api/v2": {"middlewares": "api"},
+ *         "/web/v1": {"middlewares": "web"},
+ *         "web/v2": {"middlewares": "web"}
+ *     }
  * )
  */
 class Foobar
