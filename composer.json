@@ -77,7 +77,8 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "@php leevel links"
+            "@php leevel links",
+            "@php leevel autoload:clear"
         ],
         "post-autoload-dump": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
