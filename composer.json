@@ -44,10 +44,10 @@
                 "Common\\App\\Console"
             ],
             "options": {
-                "demo": "option/extend/test.php"
+                "test": "common/ui/option/test.php"
             },
             "i18ns": [
-                "i18n/extend"   
+                "common/ui/i18n"
             ],
             "metas": {
                 "foo": "bar"
