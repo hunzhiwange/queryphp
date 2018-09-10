@@ -1,0 +1,47 @@
+language: php
+
+env:
+  global:
+    - MIN_PHP=7.1.3
+    - setup=stable
+
+matrix:
+  include:
+    - php: 7.1.3
+      env: deps=high
+    - php: 7.2
+      env: deps=low
+
+  fast_finish: true
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+services:
+  - redis-server
+  - mysql
+
+before_install:
+  - mysql -e "create database IF NOT EXISTS test;" -uroot
+  - phpenv config-add build/redis.ini
+  - travis_retry composer self-update
+
+install:
+  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
+  - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable --no-suggest; fi
+  # Some debug info is located here
+  - ls -al `$(phpenv which php-config) --extension-dir`
+  - $(phpenv which php) -v
+  - $(phpenv which php) -m
+
+script:
+  - mkdir -p logs
+  - mkdir -p build/logs
+  - php vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
+
+after_success:
+  - travis_retry php vendor/bin/php-coveralls
+  - travis_retry php vendor/bin/php-coveralls -v
