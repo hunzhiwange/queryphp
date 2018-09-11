@@ -30,9 +30,9 @@ QueryPHP was based on the DoYouHaoBaby framework，we have a large code refactor
  * Framework On Github: <https://github.com/hunzhiwange/framework/>
  * Framework On Gitee: <https://gitee.com/dyhb/framework/>
  * Leevel On Github: <https://github.com/hunzhiwange/leevel/>
- * Leevel On Gitee: <https://gitee.com/dyhb/queryyetsimple>
- * Test: <https://github.com/queryyetsimple/tests/>
- * Package: <https://github.com/queryyetsimple/>
+ * Leevel On Gitee: <https://gitee.com/dyhb/leevel>
+ * Test: <https://github.com/leeves/tests/>
+ * Package: <https://github.com/leevels/>
 
 ## How to install
 
