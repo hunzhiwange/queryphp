@@ -85,7 +85,7 @@ if (is_file($classMap)) {
 }
 
 // Do not use composer.autoload.files.
-require_once __DIR__.'/../vendor/hunzhiwange/framework/src/Queryyetsimple/Bootstrap/function.php';
+require_once __DIR__.'/../vendor/hunzhiwange/framework/src/Leevel/Bootstrap/function.php';
 
 /**
  * ---------------------------------------------------------------
