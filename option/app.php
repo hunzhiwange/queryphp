@@ -87,7 +87,7 @@ return [
      *
      * 系统进行路由解析时将会去掉后缀后然后继续执行 url 解析
      */
-    'html_suffix' => '.html',
+    'suffix' => '.html',
 
     /*
      * ---------------------------------------------------------------
@@ -96,16 +96,7 @@ return [
      *
      * 例如 queryphp.com，用于路由解析以及 \Leevel\Router\Url::make 生成
      */
-    'top_domain' => Leevel::env('TOP_DOMAIN', 'queryphp.cn'),
-
-    /*
-     * ---------------------------------------------------------------
-     * url 生成是否开启子域名
-     * ---------------------------------------------------------------
-     *
-     * 开启 url 子域名功能，用于 \Leevel\Router\Url::make 生成
-     */
-    'subdomain_on' => false,
+    'domain' => Leevel::env('DOMAIN', ''),
 
     /*
      * ---------------------------------------------------------------
@@ -115,7 +106,7 @@ return [
      * 设置公共资源 url 地址
      * php leevel link:public
      */
-    'public' => Leevel::env('URL_PUBLIC', 'http://queryphp.cn/public'),
+    'public' => Leevel::env('PUBLIC', 'http://127.0.0.1:9527/public'),
 
     /*
      * ---------------------------------------------------------------
@@ -125,5 +116,5 @@ return [
      * 设置公共附件 url 地址
      * php leevel link:storage
      */
-    'storage' => Leevel::env('URL_STORAGE', 'http://queryphp.cn/storage'),
+    'storage' => Leevel::env('STORAGE', 'http://127.0.0.1:9527/storage'),
 ];

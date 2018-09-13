@@ -25,13 +25,35 @@ namespace Tests;
  */
 trait Helper
 {
-    protected function varExport(array $data)
+    protected function varExport(array $data, ?string $method = null)
     {
+        $traceDir = dirname(__DIR__).'/runtime/tests';
+
+        if (!is_dir($traceDir)) {
+            mkdir($traceDir, 0777, true);
+        }
+
         file_put_contents(
-            dirname(__DIR__).'/logs/trace.log',
-            var_export($data, true)
+            $trace.'/'.sprintf('%s:%s.export.log', $method, str_replace('\\', '_', static::class)),
+            $result = var_export($data, true)
         );
 
-        return var_export($data, true);
+        return $result;
+    }
+
+    protected function varJsonEncode(array $data, ?string $method = null)
+    {
+        $traceDir = dirname(__DIR__).'/runtime/tests';
+
+        if (!is_dir($traceDir)) {
+            mkdir($traceDir, 0777, true);
+        }
+
+        file_put_contents(
+            $traceDir.'/'.sprintf('%s:%s.jsonencode.log', $method, str_replace('\\', '_', static::class)),
+            $result = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)
+        );
+
+        return $result;
     }
 }
