@@ -43,14 +43,17 @@ class Router extends RouterProvider
     protected $middlewareGroups = [
         // web 请求中间件
         'web' => [
-            'log',
             'session',
         ],
 
         // api 请求中间件
         'api' => [
-            'log',
             'throttler:60,1',
+        ],
+
+        // 公共请求中间件
+        'common' => [
+            'log',
         ],
     ];
 

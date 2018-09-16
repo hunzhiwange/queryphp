@@ -65,11 +65,32 @@ class Foobar
  * @OA\ExternalDocumentation(
  *     description="Find out more about Swagger",
  *     url="http://swagger.io",
- *     leevelBasepaths={
- *         "/api/v1": {"middlewares": "api"},
- *         "api/v2": {"middlewares": "api"},
- *         "/web/v1": {"middlewares": "web"},
- *         "web/v2": {"middlewares": "web"}
+ *     leevels={
+ *         "*": {
+ *             "middlewares": "common"
+ *         },
+ *         "foo/*world": {
+ *             "middlewares": "custom"
+ *         },
+ *         "api/test": {
+ *             "middlewares": "api"
+ *         },
+ *         "/api/v1": {
+ *             "middlewares": "api",
+ *             "group": true
+ *         },
+ *         "api/v2": {
+ *             "middlewares": "api",
+ *             "group": true
+ *         },
+ *         "/web/v1": {
+ *             "middlewares": "web",
+ *             "group": true
+ *         },
+ *         "web/v2": {
+ *             "middlewares": "web",
+ *             "group": true
+ *         }
  *     }
  * )
  */
