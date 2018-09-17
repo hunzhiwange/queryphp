@@ -32,7 +32,7 @@ class Router extends RouterProvider
      *
      * @var string
      */
-    protected $controllerDir = 'App\Controller';
+    protected $controllerDir = 'App\\Controller';
 
     /**
      * 中间件分组
