@@ -54,6 +54,7 @@ class Router extends RouterProvider
         // 公共请求中间件
         'common' => [
             'log',
+            'debug',
         ],
     ];
 
@@ -65,9 +66,10 @@ class Router extends RouterProvider
      * @var array
      */
     protected $middlewareAlias = [
-        'session'   => 'Leevel\\Session\\Middleware\\Session',
-        'throttler' => 'Leevel\\Throttler\\Middleware\\Throttler',
-        'log'       => 'Leevel\\Log\\Middleware\\Log',
+        'debug'       => 'Leevel\\Debug\\Middleware\\Debug',
+        'log'         => 'Leevel\\Log\\Middleware\\Log',
+        'session'     => 'Leevel\\Session\\Middleware\\Session',
+        'throttler'   => 'Leevel\\Throttler\\Middleware\\Throttler',
     ];
 
     /**

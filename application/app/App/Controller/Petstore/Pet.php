@@ -49,7 +49,7 @@ class Pet
      *     leevelScheme="https",
      *     leevelDomain="{subdomain:[A-Za-z]+}-vip.{domain}",
      *     leevelParams={"args1": "hello", "args2": "world"},
-     *     leevelBind="/PetLeevel/show/?query1=foo&query2=bar",
+     *     leevelBind="PetLeevel@Show",
      *     leevelMiddlewares="api"
      * )
      */
