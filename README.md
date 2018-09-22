@@ -44,7 +44,7 @@ composer create-project hunzhiwange/queryphp myapp dev-master --repository=https
 
 ## Visite it
 
-![](preview.jpg)
+![](home.jpg)
 
 ```
 php leevel server <Visite http://127.0.0.1:9527/>
