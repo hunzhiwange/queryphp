@@ -92,7 +92,7 @@ Or
 php leevel production
 ```
 
-## USE <span style="color: #F80378;">LEEVEL</span> DO BETTER
+## USE LEEVEL DO BETTER
 
 ### Windows
 
@@ -120,6 +120,14 @@ Then add extension to your php.ini,you can see if installation is successful by 
 
 ```
 extension = leevel.so
+```
+
+## Use Swoole with ultra High Performance
+
+This will coming back later.
+
+```
+php leevel swoole:http
 ```
 
 ## Unified Code Style
