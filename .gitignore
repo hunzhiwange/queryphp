@@ -17,3 +17,4 @@ logs/
 www/public
 www/storage
 www/apis
+www/debugbar
