@@ -50,7 +50,11 @@ composer create-project hunzhiwange/queryphp myapp dev-master --repository=https
 php leevel server <Visite http://127.0.0.1:9527/>
 ```
 
- * Api Test <http://127.0.0.1:9527/api/test>
+ * Mvc router <http://127.0.0.1:9527/api/test>
+ * Mvc restful router http://127.0.0.1:9527/restful/123
+ * Mvc restful router with method http://127.0.0.1:9527/restful/123/show
+ * Annotation router http://127.0.0.1:9527/api/v1/petLeevelForApi/helloworld
+ * Annotation router with bind http://127.0.0.1:9527/api/v2/withBind/foobar
  * php leevel link:public <http://127.0.0.1:9527/public/css/page.css>
  * php leevel link:storage <http://127.0.0.1:9527/storage/logo.png>
  * php leevel link:apis <http://127.0.0.1:9527/apis/>

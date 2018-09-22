@@ -45,15 +45,14 @@ class Api
      *     security={
      *         {"petstore_auth": {"write:pets", "read:pets"}}
      *     },
-     *     leevelParams={"args1": "hello", "args2": "world"},
-     *     leevelBind="/PetLeevel/ShowHello"
+     *     leevelParams={"args1": "hello", "args2": "world"}
      * )
      *
      * @param mixed $petId
      */
     public function petLeevelForApi($petId)
     {
-        return $petId;
+        return sprintf('Hi you,i am petLeevelForApi and it petId is %s', $petId);
     }
 
     /**
