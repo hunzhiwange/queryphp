@@ -92,6 +92,36 @@ Or
 php leevel production
 ```
 
+## USE <span style="color: #F80378;">LEEVEL</span> DO BETTER
+
+### Windows
+
+Need to tests.
+
+### Linux 
+
+You can download the source code.
+
+```
+git clone git@github.com:hunzhiwange/leevel.git
+cd ext
+```
+
+
+Then compile it.
+
+```
+$/path/to/phpize
+$./configure --with-php-config=/path/to/php-config
+$make && make install
+```
+
+Then add extension to your php.ini,you can see if installation is successful by command php -m.
+
+```
+extension = leevel.so
+```
+
 ## Unified Code Style
 
 ```
