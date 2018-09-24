@@ -50,6 +50,7 @@ composer create-project hunzhiwange/queryphp myapp dev-master --repository=https
 php leevel server <Visite http://127.0.0.1:9527/>
 ```
 
+ * Home <http://127.0.0.1:9527/>
  * Mvc router <http://127.0.0.1:9527/api/test>
  * Mvc restful router http://127.0.0.1:9527/restful/123
  * Mvc restful router with method http://127.0.0.1:9527/restful/123/show
