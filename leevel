@@ -28,9 +28,6 @@ use Leevel\Kernel\Runtime\IRuntime;
  */
 require_once __DIR__.'/vendor/autoload.php';
 
-// Do not use composer.autoload.files.
-require_once __DIR__.'/vendor/hunzhiwange/framework/src/Leevel/Bootstrap/function.php';
-
 /**
  * ---------------------------------------------------------------
  * 创建项目

@@ -29,63 +29,11 @@ use Leevel\Kernel\Runtime\IRuntime;
  * 我们 classmap 需要通过 `php leevel autoload` 生成，包含命令 `composer dump-autoload -o`
  * 对于助手函数需要自己引入
  */
-$classMap = __DIR__.'/../runtime/bootstrap/classmap.php';
-
-if (is_file($classMap)) {
-    $classMap = include $classMap;
-
-    spl_autoload_register(function (string $className) use ($classMap) {
-        static $loadedComposer;
-
-        if (isset($classMap[$className]) &&
-            is_file($file = __DIR__.'/../vendor/composer/../'.$classMap[$className])) {
-            return include $file;
-        }
-
-        $first = $className[0];
-
-        if (isset($classMap['@length'][$first])) {
-            $subPath = $className;
-            $classPath = str_replace('\\', '/', $className);
-            $basePath = __DIR__.'/../vendor/composer/../';
-
-            while (false !== $lastPos = strrpos($subPath, '\\')) {
-                $subPath = substr($subPath, 0, $lastPos);
-                $search = $subPath.'\\';
-
-                if (isset($classMap['@prefix'][$search])) {
-                    $pathEnd = DIRECTORY_SEPARATOR.substr($classPath, $lastPos + 1);
-
-                    foreach ($classMap['@prefix'][$search] as $dir) {
-                        if (is_file($file = $dir.$pathEnd)) {
-                            return include $file;
-                        }
-                    }
-                }
-            }
-
-            list($firstWord) = explode('\\', $className);
-            $firstWord .= '\\';
-
-            foreach ($classMap['@length'][$first] as $dir => $lenght) {
-                if ($dir === $firstWord) {
-                    return;
-                }
-            }
-        }
-
-        if (null === $loadedComposer) {
-            $composer = require_once __DIR__.'/../vendor/autoload.php';
-            $composer->loadClass($className);
-            $loadedComposer = true;
-        }
-    });
+if (is_file($leevelAutoload = __DIR__.'/../runtime/autoload.php')) {
+    require_once $leevelAutoload;
 } else {
     require_once __DIR__.'/../vendor/autoload.php';
 }
-
-// Do not use composer.autoload.files.
-require_once __DIR__.'/../vendor/hunzhiwange/framework/src/Leevel/Bootstrap/function.php';
 
 /**
  * ---------------------------------------------------------------
