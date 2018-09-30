@@ -36,7 +36,7 @@ class Test extends Listener
     /**
      * 监听器响应.
      */
-    public function run()
+    public function handle()
     {
         $args = func_get_args();
 
