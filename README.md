@@ -40,7 +40,7 @@ now or in the future step by step. Our vision is **<span style="color:#e82e7d;">
 ## Base use
 
 ```
-composer create-project hunzhiwange/queryphp myapp dev-master --repository=https://packagist.laravel-china.org/
+composer create-project hunzhiwange/queryphp myapp dev-master
 ```
 
 ## Visite it
