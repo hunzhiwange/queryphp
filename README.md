@@ -13,11 +13,10 @@
 
 # The QueryPHP Application
 
-QueryPHP is a powerful PHP framework for code poem as free as wind. [Query Yet Simple]
+QueryPHP is a modern, high performance PHP 7 resident framework, with engineer user experience as its historical mission, let every PHP application have a good framework. 100% coverage of the unit tests to facing the bug,based on Zephir implemented framework resident,with Swoole ecology to achieve business resident,
+now or in the future step by step. Our vision is **<span style="color:#e82e7d;">USE LEEVEL WITH SWOOLE DO BETTER</span>**, let your business to support more user services.
 
-QueryPHP was founded in 2010 and released the first version on 2010.10.03.
-
-QueryPHP was based on the DoYouHaoBaby framework，we have a large code refactoring.
+**The PHP Framework For Code Poem As Free As Wind.**
 
 * Site: <https://www.queryphp.com/>
 * API: <http://api.queryphp.com>
@@ -99,7 +98,7 @@ php leevel production
 
 Need to tests.
 
-### Linux 
+### Linux
 
 You can download the source code.
 
