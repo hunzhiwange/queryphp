@@ -30,8 +30,8 @@ now or in the future step by step. Our vision is **<span style="color:#e82e7d;">
  * Framework On Gitee: <https://gitee.com/dyhb/framework/>
  * Leevel On Github: <https://github.com/hunzhiwange/leevel/>
  * Leevel On Gitee: <https://gitee.com/dyhb/leevel>
- * Test: <https://github.com/leevels/tests/>
- * Package: <https://github.com/leevels/>
+ * Tests: <https://github.com/leevels/tests/>
+ * Packages: <https://github.com/leevels/>
 
 ## How to install
 
