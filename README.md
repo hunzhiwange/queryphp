@@ -13,10 +13,12 @@
 
 # The QueryPHP Application
 
-QueryPHP is a modern, high performance PHP 7 resident framework, with engineer user experience as its historical mission, let every PHP application have a good framework. 100% coverage of the unit tests to facing the bug,based on Zephir implemented framework resident,with Swoole ecology to achieve business resident,
+QueryPHP is a modern, high performance PHP 7 resident framework, with engineer user experience as its historical mission, let every PHP application have a good framework.
+
+A hundred percent coverage of the unit tests to facing the bug,based on Zephir implemented framework resident,with Swoole ecology to achieve business resident,
 now or in the future step by step. Our vision is **<span style="color:#e82e7d;">USE LEEVEL WITH SWOOLE DO BETTER</span>**, let your business to support more user services.
 
-**The PHP Framework For Code Poem As Free As Wind.**
+*The PHP Framework For Code Poem As Free As Wind, starts from this moment with QueryPHP.*
 
 * Site: <https://www.queryphp.com/>
 * API: <http://api.queryphp.com>
