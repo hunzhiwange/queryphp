@@ -17,7 +17,7 @@ use Common\App\Kernel;
 use Leevel\Bootstrap\Project;
 use Leevel\Http\Request;
 use Leevel\Kernel\IKernel;
-use Leevel\Kernel\Runtime\IRuntime;
+use Leevel\Kernel\IRuntime;
 
 /**
  * ---------------------------------------------------------------

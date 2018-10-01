@@ -17,7 +17,7 @@ use Common\App\KernelConsole;
 use Leevel\Bootstrap\Project;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
-use Leevel\Kernel\Runtime\IRuntime;
+use Leevel\Kernel\IRuntime;
 
 /**
  * ---------------------------------------------------------------
