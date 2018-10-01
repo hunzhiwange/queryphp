@@ -21,7 +21,7 @@ now or in the future step by step. Our vision is **<span style="color:#e82e7d;">
 *The PHP Framework For Code Poem As Free As Wind, Starts From This Moment With QueryPHP.*
 
 * Site: <https://www.queryphp.com/>
-* API: <http://api.queryphp.com>
+* API: <https://api.queryphp.com>
 * Document: <https://www.leevel.vip/>
 
 ## The core packages
