@@ -34,6 +34,8 @@ now or in the future step by step. Our vision is **<span style="color:#e82e7d;">
  * Leevel On Gitee: <https://gitee.com/dyhb/leevel>
  * Tests: <https://github.com/leevels/tests/>
  * Packages: <https://github.com/leevels/>
+ * Packages From Hunzhiwange: <https://packagist.org/packages/hunzhiwange/>
+ * Packages From Leevel: <https://packagist.org/packages/leevel/>
 
 ## How to install
 
