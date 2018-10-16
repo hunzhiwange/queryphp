@@ -141,6 +141,10 @@ $cd /data/codes/queryphp
 $php-cs-fixer fix --config=.php_cs.dist
 ```
 
+## Thanks
+
+Thanks my colleague [John.mao](https://github.com/maosea0125) for your selfless help in the development of this project and and let me have a new understanding, it makes QueryPHP more beautiful.
+
 ## License
 
 The QueryPHP framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
