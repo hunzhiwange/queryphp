@@ -1,6 +1,10 @@
 The MIT License (MIT)
 
 Copyright (c) <forcodepoem>
+Copyright (c) <Xiangmin Liu> [https://github.com/hunzhiwange/queryphp]
+Copyright (c) 2017 iView [https://github.com/iview/iview-admin]
+Copyright (c) 2017-present PanJiaChen [https://github.com/PanJiaChen/vue-element-admin/blob/master/LICENSE]
+Copyright (c) VueThink [https://github.com/honraytech/VueThink]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
