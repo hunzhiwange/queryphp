@@ -75,6 +75,9 @@ class Foobar
  *         "api/test": {
  *             "middlewares": "api"
  *         },
+ *         "admin/show": {
+ *             "middlewares": "auth"
+ *         },
  *         "/api/v1": {
  *             "middlewares": "api",
  *             "group": true

@@ -20,7 +20,7 @@ return [
      *
      * 这里可以是 web 或者 api
      */
-    'default' => 'web',
+    'default' => 'api',
 
     /*
      * ---------------------------------------------------------------
@@ -46,41 +46,26 @@ return [
      * ---------------------------------------------------------------
      *
      * 这里为所有的 auth 的连接参数，每一种不同的驱动拥有不同的配置
-     * 虽然有不同的驱动，但是在日志使用上却有着一致性
+     * 虽然有不同的驱动，但是在验证使用上却有着一致性
      */
     'connect' => [
         'session' => [
             // driver
             'driver' => 'session',
 
-            // 模型实体
-            'entity' => common\domain\entity\user::class,
-
-            // 用户信息持久化名字
-            'user_persistence' => 'user_persistence',
-
-            // Token 持久化名字
-            'token_persistence' => 'token_persistence',
-
-            // 查询字段
-            'field' => 'id,name,nikename,email,mobile',
+            // token
+            'token' => 'token',
         ],
 
         'token' => [
             // driver
             'driver' => 'token',
 
-            // 模型实体
-            'entity' => common\domain\entity\user::class,
+            // token
+            'token' => null,
 
-            // 用户信息持久化名字
-            'user_persistence' => 'user_persistence',
-
-            // Token 持久化名字
-            'token_persistence' => 'token_persistence',
-
-            // 查询字段
-            'field' => 'id,name,nikename,email,mobile',
+            // input token
+            'input_token' => 'token',
         ],
     ],
 ];
