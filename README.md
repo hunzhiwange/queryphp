@@ -148,6 +148,7 @@ Thanks my colleague [John.mao](https://github.com/maosea0125) for your selfless 
 Thanks for these excellent projects, we have absorbed a lot of excellent design and ideas, standing on the shoulders of giants for innovation.
 
  * QeePHP: <https://github.com/dualface/qeephp2_x/>
+ * Swoole: <https://github.com/swoole/>
  * JeCat: <https://github.com/JeCat/>
  * ThinkPHP: <https://github.com/top-think/>
  * Laravel: <https://github.com/laravel/>
