@@ -25,7 +25,7 @@ use Leevel\Db;
  *
  * @version 1.0
  */
-class Database extends Controller
+class Database
 {
     /**
      * 默认方法.
