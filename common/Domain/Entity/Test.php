@@ -18,7 +18,7 @@ use Leevel\Database\Ddd\Entity;
 
 /**
  * 测试实体.
- * 
+ *
  * @author Name Your <your@mail.com>
  *
  * @since 2018.01.29
@@ -27,30 +27,29 @@ use Leevel\Database\Ddd\Entity;
  */
 class Test extends Entity
 {
-   
     /**
-     * table
-     * 
+     * table.
+     *
      * @var string
      */
     const TABLE = 'test';
 
     /**
-     * id
-     * 
+     * id.
+     *
      * @var string
      */
     const ID = 'id';
 
     /**
-     * auto
-     * 
+     * auto.
+     *
      * @var string
      */
     const AUTO = 'id';
 
     /**
-     * struct 
+     * struct.
      *
      * @var array
      */
@@ -62,24 +61,25 @@ class Test extends Entity
     ];
 
     /**
-     * id
-     * 
+     * id.
+     *
      * @var int
      */
     private $id;
 
     /**
-     * name
-     * 
+     * name.
+     *
      * @var string
      */
     private $name;
 
     /**
-     * setter
-     * 
-     * @param  string $prop
-     * @param  mixed $value
+     * setter.
+     *
+     * @param string $prop
+     * @param mixed  $value
+     *
      * @return $this
      */
     public function setter(string $prop, $value)
@@ -90,9 +90,10 @@ class Test extends Entity
     }
 
     /**
-     * getter
-     * 
-     * @param  string $prop
+     * getter.
+     *
+     * @param string $prop
+     *
      * @return mixed
      */
     public function getter(string $prop)
