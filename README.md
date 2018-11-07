@@ -93,7 +93,7 @@ php leevel autoload (contains `composer dump-autoload --optimize`)
 Or
 
 ```
-php leevel production
+php leevel production # `php leevel development` will back.
 ```
 
 ## USE LEEVEL DO BETTER

@@ -12,21 +12,28 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Listener;
+namespace App\App\Controller\Api;
 
-use Leevel\Event\Observer;
+use Leevel\Db;
 
 /**
- * 监听器抽象
- * 可以继承至 \Leevel\Event\Observer，因为系统基于 Spl 观察者模式实现的事件.
- * 也可以是闭包，也可以不继承，但是最终都转化为 \Leevel\Event\Observer.
+ * 查询数据库.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2018.01.29
+ * @since 2018.11.08
  *
  * @version 1.0
  */
-abstract class Listener extends Observer
+class Database extends Controller
 {
+    /**
+     * 默认方法.
+     *
+     * @return array
+     */
+    public function handle(): array
+    {
+        return ['count' => Db::table('test')->findCount()];
+    }
 }
