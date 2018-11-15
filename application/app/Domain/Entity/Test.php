@@ -14,9 +14,90 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
-class Test
-{
-    public $id;
+use Leevel\Database\Ddd\Entity;
 
-    public $name;
+/**
+ * Test.
+ *
+ * @author Name Your <your@mail.com>
+ *
+ * @since 2018.11.08
+ *
+ * @version 1.0
+ */
+class Test extends Entity
+{
+    /**
+     * database table.
+     *
+     * @string
+     */
+    const TABLE = 'test';
+
+    /**
+     * primary key.
+     *
+     * @string|null
+     */
+    const ID = 'id';
+
+    /**
+     * auto increment.
+     *
+     * @string|null
+     */
+    const AUTO = 'id';
+
+    /**
+     * entity struct.
+     *
+     * @array
+     */
+    const STRUCT = [
+        'id' => [
+            'readonly' => true,
+        ],
+        'name' => [],
+    ];
+
+    /**
+     * id.
+     *
+     * @var int
+     */
+    private $id;
+
+    /**
+     * name.
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
+     * setter.
+     *
+     * @param string $prop
+     * @param mixed  $value
+     *
+     * @return $this
+     */
+    public function setter(string $prop, $value): Entity
+    {
+        $this->{$this->prop($prop)} = $value;
+
+        return $this;
+    }
+
+    /**
+     * getter.
+     *
+     * @param string $prop
+     *
+     * @return mixed
+     */
+    public function getter(string $prop)
+    {
+        return $this->{$this->prop($prop)};
+    }
 }
