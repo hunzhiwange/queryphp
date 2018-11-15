@@ -34,13 +34,14 @@ class Index extends Controller
      * @return string
      */
     public function handle(): string
-    { (new Finder())->
+    {
+        (new Finder())->
             in(__DIR__.'/../')->
             exclude(['vendor', 'node_modules'])->
             name('*.php')->
             files();
-print_r(get_included_files());
-    //exit();
+        print_r(get_included_files());
+        //exit();
         return $this->display('home');
     }
 }
