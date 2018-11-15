@@ -1,0 +1,35 @@
+.switch-theme-con .ivu-icon {
+    color: rgba(230, 155, 3, 1);
+}
+
+.main-header {
+    background: rgba(230, 155, 3, 1);
+}
+
+.main-header .header-avator-con .ivu-menu-primary {
+    background: rgba(230, 155, 3, 1);
+}
+
+.logo-con {
+    background: rgba(209, 73, 78, 1);
+}
+
+.main .tags-con .ivu-tag:hover {
+    background: rgba(219, 208, 167, 1) !important;
+}
+
+.main .tags-con .ivu-tag-blue {
+    background: rgba(219, 208, 167, 1) !important;
+}
+
+.main .tags-con .tags-outer-scroll-con .close-all-tag-con, .main .tags-con .tags-outer-scroll-con .leftmove-tag-con, .main .tags-con .tags-outer-scroll-con .tag-dashboard {
+    background: rgba(230, 155, 3, 1);
+}
+
+.main .tags-con .ivu-tag-blue.ivu-tag-dot .ivu-tag-dot-inner {
+    background: rgba(255, 238, 210, 1);
+}
+
+.main .header-avator-con .ivu-menu-primary.ivu-menu-horizontal .ivu-menu-item:hover,.main .header-avator-con .ivu-menu-primary.ivu-menu-horizontal .ivu-menu-item-active {
+    background: rgba(219, 208, 167, 1) !important;
+}
