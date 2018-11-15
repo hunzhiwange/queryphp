@@ -18,3 +18,4 @@ www/public
 www/storage
 www/apis
 www/debugbar
+/phinx.yml
