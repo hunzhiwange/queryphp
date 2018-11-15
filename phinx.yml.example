@@ -3,7 +3,7 @@ paths:
     seeds:                    database/seeds
 
 environments:
-    #default_migration_table:  __queryphp_log
+    default_migration_table:  phinxlog
     default_database:         development
     production:
         adapter:              mysql
