@@ -75,7 +75,8 @@
     },
     "scripts": {
         "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php -r \"file_exists('.phinx.yml') || copy('.phinx.yml.example', '.phinx.yml');\""
         ],
         "post-create-project-cmd": [
             "@php leevel links",
@@ -83,6 +84,7 @@
         ],
         "post-autoload-dump": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php -r \"file_exists('.phinx.yml') || copy('.phinx.yml.example', '.phinx.yml');\"",
             "@php leevel autoload --ignore=1"
         ]
     },
