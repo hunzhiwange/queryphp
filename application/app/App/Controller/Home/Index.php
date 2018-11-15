@@ -15,9 +15,10 @@ declare(strict_types=1);
 namespace App\App\Controller\Home;
 
 use Leevel\Mvc\Controller;
+use Symfony\Component\Finder\Finder;
 
 /**
- * 首页 show.
+ * 首页.
  *
  * @author Name Your <your@mail.com>
  *
@@ -25,7 +26,7 @@ use Leevel\Mvc\Controller;
  *
  * @version 1.0
  */
-class Show extends Controller
+class Index extends Controller
 {
     /**
      * 默认方法.
@@ -33,7 +34,13 @@ class Show extends Controller
      * @return string
      */
     public function handle(): string
-    {
+    { (new Finder())->
+            in(__DIR__.'/../')->
+            exclude(['vendor', 'node_modules'])->
+            name('*.php')->
+            files();
+print_r(get_included_files());
+    //exit();
         return $this->display('home');
     }
 }
