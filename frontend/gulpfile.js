@@ -28,6 +28,11 @@ gulp.task("po", function() {
     });
 });
 
+// 修复 iview
+gulp.task("vue", function() {
+    readDirVue("./src");
+});
+
 Array.prototype.contains = function(obj) {
     var i = this.length;
     while (i--) {
@@ -103,6 +108,58 @@ function readDir(filePath) {
 
                         if (isFile) {
                             var ext = filedir.split(".").pop();
+                            if (supportExt.contains(ext)) {
+
+                                fs.readFile(filedir,'utf8',function(err,files){
+                                    var result = files.replace(/\<Input/g, '<i-input');
+                                    result = result.replace(/\<\/Input\>/g, '</i-input>');
+
+                                    // result = result.replace(/\<Col/g, '<i-col');
+                                    // result = result.replace(/\<\/Col\>/g, '</i-col>');
+                                    
+                                    // result = result.replace(/\<Button/g, '<i-button');
+                                    // result = result.replace(/\<\/Button\>/g, '</i-button>');
+
+                                    // result = result.replace(/\<Form/g, '<i-form');
+                                    // result = result.replace(/\<\/Form\>/g, '</i-form>');
+
+                                    // result = result.replace(/\<Select/g, '<i-Select');
+                                    // result = result.replace(/\<\/Select\>/g, '</i-Select>');
+                        
+                                    fs.writeFile(filedir, result, 'utf8', function (err) {
+                                         if (err) return console.log(err);
+                                    });
+                                })
+                            }
+                        }
+
+                        if (isDir) {
+                            readDir(filedir);
+                        }
+                    }
+                });
+            });
+        }
+    });
+}
+
+function readDirVue(filePath) {
+    fs.readdir(filePath, function(err, files) {
+        if (err) {
+            console.warn(err);
+        } else {
+            files.forEach(function(filename) {
+                var filedir = path.join(filePath, filename);
+
+                fs.stat(filedir, function(eror, stats) {
+                    if (eror) {
+                        console.warn(err);
+                    } else {
+                        var isFile = stats.isFile();
+                        var isDir = stats.isDirectory();
+
+                        if (isFile) {
+                            var ext = filedir.split(".").pop();
                             if (
                                 supportExt.contains(ext) &&
                                 -1 === filedir.indexOf(".tmp.i18n.js")
@@ -120,6 +177,7 @@ function readDir(filePath) {
         }
     });
 }
+
 
 function readLang(file) {
     fs.readFile(file, "utf-8", function(error, data) {
