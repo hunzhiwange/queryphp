@@ -1,13 +1,13 @@
 const errLog = {
     state: {
-        errLog: []
+        errLog: [],
     },
     pushLog(log) {
-        this.state.errLog.unshift(log);
+        this.state.errLog.unshift(log)
     },
     clearLog() {
-        this.state.errLog = [];
-    }
-};
+        this.state.errLog = []
+    },
+}
 
-export default errLog;
+export default errLog

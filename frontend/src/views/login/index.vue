@@ -64,7 +64,7 @@
                                                     <img
                                                         :src="codeUrl"
                                                         @click="
-                                                            refreshSeccode();
+                                                            refreshSeccode()
                                                         "
                                                         class="code"
                                                     />
@@ -83,7 +83,7 @@
                                                 type="primary"
                                                 :loading="loading"
                                                 @click.native.prevent="
-                                                    handleSubmit('form');
+                                                    handleSubmit('form')
                                                 "
                                                 size="large"
                                                 long

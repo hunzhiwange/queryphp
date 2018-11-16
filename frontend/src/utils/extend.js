@@ -1,17 +1,17 @@
-import { sprintf } from "sprintf-js";
+import {sprintf} from 'sprintf-js'
 
 exports.install = function(Vue, options) {
     Vue.prototype.gettext = function() {
-        return this.__.apply(this, arguments);
-    };
+        return this.__.apply(this, arguments)
+    }
 
     Vue.prototype.__ = function() {
-        arguments[0] = this.$t(arguments[0]);
+        arguments[0] = this.$t(arguments[0])
 
         if (arguments.length > 1) {
-            return sprintf.apply(null, arguments);
+            return sprintf.apply(null, arguments)
         } else {
-            return arguments[0];
+            return arguments[0]
         }
-    };
-};
+    }
+}

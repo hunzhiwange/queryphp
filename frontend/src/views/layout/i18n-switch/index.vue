@@ -4,7 +4,7 @@
         <Modal v-model="i18nSelect" width="360" class="i18n-theme-select">
             <p>
                 <Row type="flex" justify="center" align="middle">
-                    <RadioGroup v-model="i18n" @on-change="setIi8n();">
+                    <RadioGroup v-model="i18n" @on-change="setIi8n()">
                         <Radio
                             v-for="(item, index) in i18nList"
                             :key="index"

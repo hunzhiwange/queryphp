@@ -6,7 +6,7 @@
                     <Icon type="flag"></Icon>
                     The QueryPHP Vue SPA Application
                 </p>
-                <i-button slot="extra" type="text" @click="officeSite();">{{
+                <i-button slot="extra" type="text" @click="officeSite()">{{
                     __('官方网站')
                 }}</i-button>
                 <div>
@@ -21,13 +21,13 @@
                             </p>
                             <div>
                                 <div style="margin-top: 20px">
-                                    <i-button @click="officeSite();" round>{{
+                                    <i-button @click="officeSite()" round>{{
                                         __('官方网站')
                                     }}</i-button>
-                                    <i-button @click="supportSite();" round>{{
+                                    <i-button @click="supportSite()" round>{{
                                         __('捐赠')
                                     }}</i-button>
-                                    <i-button @click="githubSite();" round
+                                    <i-button @click="githubSite()" round
                                         >Github</i-button
                                     >
                                 </div>

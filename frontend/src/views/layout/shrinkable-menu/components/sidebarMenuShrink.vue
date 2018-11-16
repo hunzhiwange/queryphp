@@ -38,7 +38,7 @@
                     @on-click="changeMenu"
                 >
                     <i-button
-                        @click="changeMenu(item.children[0].name);"
+                        @click="changeMenu(item.children[0].name)"
                         style="width: 70px;margin-left: -5px;padding:10px 0;"
                         type="text"
                     >

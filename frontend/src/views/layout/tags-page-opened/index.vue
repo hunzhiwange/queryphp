@@ -7,7 +7,7 @@
     >
         <div ref="leftmoveTagCon" class="leftmove-tag-con">
             <Dropdown transfer @on-click="handleTagsOption">
-                <i-button size="small" type="primary" @click="seeLeftTag();">
+                <i-button size="small" type="primary" @click="seeLeftTag()">
                     <Icon type="android-more-vertical" :size="22"></Icon>
                 </i-button>
                 <DropdownMenu slot="list">
@@ -34,7 +34,7 @@
         </div>
         <div ref="closeAllTagCon" class="close-all-tag-con">
             <Dropdown transfer @on-click="handleTagsOption">
-                <i-button size="small" type="primary" @click="seeRightTag();">
+                <i-button size="small" type="primary" @click="seeRightTag()">
                     <Icon type="android-more-vertical" :size="22"></Icon>
                 </i-button>
                 <DropdownMenu slot="list">
@@ -62,7 +62,7 @@
         <div ref="tagDashboardCon" class="tag-dashboard">
             <Tag
                 type="dot"
-                @click.native="linkTo(pageOpenedDashboard);"
+                @click.native="linkTo(pageOpenedDashboard)"
                 :color="
                     pageOpenedDashboard.name === currentPageName
                         ? 'blue'
@@ -91,7 +91,7 @@
                         :key="item.name"
                         :name="item.name"
                         @on-close="closePage"
-                        @click.native="linkTo(item);"
+                        @click.native="linkTo(item)"
                         :closable="true"
                         :color="
                             item.children

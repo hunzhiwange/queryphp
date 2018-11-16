@@ -181,13 +181,13 @@
                         <i-button
                             type="primary"
                             :loading="loading"
-                            @click.native.prevent="handleSubmit('form');"
+                            @click.native.prevent="handleSubmit('form')"
                             >{{ __('确定') }}</i-button
                         >
                         <i-button
                             type="ghost"
                             style="margin-left: 8px;"
-                            @click="cancelMinForm('form');"
+                            @click="cancelMinForm('form')"
                             >{{ __('取消') }}</i-button
                         >
                     </div>
@@ -234,7 +234,7 @@
                 <a
                     href="javascript:void(0);"
                     slot="extra"
-                    @click="add();"
+                    @click="add()"
                     class="add-extra"
                 >
                     <Icon type="android-add-circle"></Icon>
@@ -261,13 +261,13 @@
                 <i-button
                     type="primary"
                     icon="eye"
-                    @click="statusMany('enable');"
+                    @click="statusMany('enable')"
                     >{{ __('启用') }}</i-button
                 >
                 <i-button
                     type="primary"
                     icon="eye-disabled"
-                    @click="statusMany('disable');"
+                    @click="statusMany('disable')"
                     >{{ __('禁用') }}</i-button
                 >
             </ButtonGroup>

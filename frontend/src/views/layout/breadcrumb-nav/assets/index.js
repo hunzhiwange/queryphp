@@ -1,14 +1,14 @@
 export default {
-    name: "breadcrumbNav",
+    name: 'breadcrumbNav',
     props: {
-        currentPath: Array
+        currentPath: Array,
     },
     methods: {
         itemTitle(item) {
-            return item.meta ? item.meta.title : "";
+            return item.meta ? item.meta.title : ''
         },
         itemIcon(item) {
-            return item.icon;
-        }
-    }
-};
+            return item.icon
+        },
+    },
+}

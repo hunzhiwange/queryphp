@@ -15,7 +15,7 @@
                         span="6"
                         class="tx-c"
                     >
-                        <div @click="setTheme(item.name);">
+                        <div @click="setTheme(item.name)">
                             <Tooltip
                                 :content="item.title"
                                 :placement="item.placement"
@@ -31,7 +31,7 @@
                                             : 'happy'
                                     "
                                     class="pointer"
-                                    @on-click="setTheme(item.name);"
+                                    @on-click="setTheme(item.name)"
                                 ></Avatar>
                             </Tooltip>
                         </div>

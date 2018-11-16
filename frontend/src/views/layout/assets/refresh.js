@@ -5,11 +5,11 @@ export default {
             router.replace({
                 name: this.$route.query.name,
                 query: {
-                    refresh: "page"
-                }
-            });
+                    refresh: 'page',
+                },
+            })
         } else {
-            console.log("refresh fail");
+            console.log('refresh fail')
         }
-    }
-};
+    },
+}

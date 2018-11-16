@@ -52,13 +52,13 @@
                         <i-button
                             vtype="primary"
                             :loading="loading"
-                            @click.native.prevent="handleSubmit('form');"
+                            @click.native.prevent="handleSubmit('form')"
                             >{{ __('确定') }}</i-button
                         >
                         <i-button
                             type="ghost"
                             style="margin-left: 8px;"
-                            @click="cancelMinForm('form');"
+                            @click="cancelMinForm('form')"
                             >{{ __('取消') }}</i-button
                         >
                     </div>
@@ -97,13 +97,13 @@
                     <i-button
                         type="primary"
                         icon="eye"
-                        @click="statusMany('1');"
+                        @click="statusMany('1')"
                         >{{ __('启用') }}</i-button
                     >
                     <i-button
                         type="primary"
                         icon="eye-disabled"
-                        @click="statusMany('0');"
+                        @click="statusMany('0')"
                         >{{ __('禁用') }}</i-button
                     >
                 </ButtonGroup>

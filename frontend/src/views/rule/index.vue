@@ -107,13 +107,13 @@
                         <i-button
                             type="primary"
                             :loading="loading"
-                            @click.native.prevent="handleSubmit('form');"
+                            @click.native.prevent="handleSubmit('form')"
                             >{{ __('确定') }}</i-button
                         >
                         <i-button
                             type="ghost"
                             style="margin-left: 8px;"
-                            @click="cancelMinForm('form');"
+                            @click="cancelMinForm('form')"
                             >{{ __('取消') }}</i-button
                         >
                     </div>
@@ -155,7 +155,7 @@
                         <Icon type="help-circled" class="pointer"></Icon>
                     </Poptip>
                 </div>
-                <i-button slot="extra" type="primary" @click="addMenu();"
+                <i-button slot="extra" type="primary" @click="addMenu()"
                     ><Icon type="android-add-circle"></Icon>
                     {{ __('新增') }}</i-button
                 >
@@ -181,13 +181,13 @@
                 <i-button
                     type="primary"
                     icon="eye"
-                    @click="statusMany('enable');"
+                    @click="statusMany('enable')"
                     >{{ __('启用') }}</i-button
                 >
                 <i-button
                     type="primary"
                     icon="eye-disabled"
-                    @click="statusMany('disable');"
+                    @click="statusMany('disable')"
                     >{{ __('禁用') }}</i-button
                 >
             </ButtonGroup>

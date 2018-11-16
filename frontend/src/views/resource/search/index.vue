@@ -15,7 +15,7 @@
                             style="width:120px"
                             :placeholder="__('选择状态')"
                             clearable
-                            @on-change="search();"
+                            @on-change="search()"
                         >
                             <i-option value="">{{ __('选择状态') }}</i-option>
                             <i-option
@@ -35,7 +35,7 @@
                             <i-button
                                 slot="append"
                                 icon="android-search"
-                                @click.native.prevent="search();"
+                                @click.native.prevent="search()"
                             ></i-button>
                         </i-input>
                     </FormItem>
@@ -45,7 +45,7 @@
                 <i-button
                     size="small"
                     type="text"
-                    @click="add();"
+                    @click="add()"
                     class="add-extra"
                     ><Icon type="android-add-circle"></Icon>
                     {{ __('新增') }}</i-button

@@ -1,20 +1,20 @@
-import http from "@/utils/http";
+import http from '@/utils/http'
 
 // 组件
-import shrinkableMenu from "@/views/layout/shrinkable-menu/index";
-import tagsPageOpened from "@/views/layout/tags-page-opened/index";
-import breadcrumbNav from "@/views/layout/breadcrumb-nav/index";
-import fullScreen from "@/views/layout/fullscreen/index";
-import lockScreen from "@/views/layout/lockscreen/index";
-import messageTip from "@/views/layout/message-tip/index";
-import themeSwitch from "@/views/layout/theme-switch/index";
-import i18nSwitch from "@/views/layout/i18n-switch/index";
-import changePassword from "@/views/layout/user/change_password";
-import information from "@/views/layout/user/information";
+import shrinkableMenu from '@/views/layout/shrinkable-menu/index'
+import tagsPageOpened from '@/views/layout/tags-page-opened/index'
+import breadcrumbNav from '@/views/layout/breadcrumb-nav/index'
+import fullScreen from '@/views/layout/fullscreen/index'
+import lockScreen from '@/views/layout/lockscreen/index'
+import messageTip from '@/views/layout/message-tip/index'
+import themeSwitch from '@/views/layout/theme-switch/index'
+import i18nSwitch from '@/views/layout/i18n-switch/index'
+import changePassword from '@/views/layout/user/change_password'
+import information from '@/views/layout/user/information'
 
 // 图片
-import img_logo from "@/assets/images/logo_admin_light.png";
-import img_mini_logo from "@/assets/images/logo_96x96_light.png";
+import img_logo from '@/assets/images/logo_admin_light.png'
+import img_mini_logo from '@/assets/images/logo_96x96_light.png'
 
 export default {
     components: {
@@ -27,7 +27,7 @@ export default {
         themeSwitch,
         i18nSwitch,
         changePassword,
-        information
+        information,
     },
     data() {
         return {
@@ -36,101 +36,101 @@ export default {
             shrink: false,
             isFullScreen: false,
             openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
-            dialogVisible: false
-        };
+            dialogVisible: false,
+        }
     },
     computed: {
         menuList() {
-            return this.$store.state.app.menuList;
+            return this.$store.state.app.menuList
         },
         pageTagsList() {
-            return this.$store.state.app.pageOpenedList; // 打开的页面的页面对象
+            return this.$store.state.app.pageOpenedList // 打开的页面的页面对象
         },
         currentPath() {
-            return this.$store.state.app.currentPath; // 当前面包屑数组
+            return this.$store.state.app.currentPath // 当前面包屑数组
         },
         avatorPath() {
-            return localStorage.avatorImgPath;
+            return localStorage.avatorImgPath
         },
         cachePage() {
-            return [];
-            return this.$store.state.app.cachePage;
+            return []
+            return this.$store.state.app.cachePage
         },
         lang() {
-            return this.$store.state.app.lang;
+            return this.$store.state.app.lang
         },
         menuTheme() {
-            return this.$store.state.app.menuTheme;
+            return this.$store.state.app.menuTheme
         },
         mesCount() {
-            return this.$store.state.app.messageCount;
+            return this.$store.state.app.messageCount
         },
         username() {
-            return this.$store.state.user.users.name;
-        }
+            return this.$store.state.user.users.name
+        },
     },
     methods: {
         init() {
-            let pathArr = utils.setCurrentPath(this, this.$route.name);
-            this.$store.commit("updateMenulist");
+            let pathArr = utils.setCurrentPath(this, this.$route.name)
+            this.$store.commit('updateMenulist')
             if (pathArr.length >= 2) {
-                this.$store.commit("addOpenSubmenu", pathArr[1].name);
+                this.$store.commit('addOpenSubmenu', pathArr[1].name)
             }
-            let messageCount = 3;
-            this.messageCount = messageCount.toString();
-            this.checkTag(this.$route.name);
-            this.$store.commit("setMessageCount", 3);
+            let messageCount = 3
+            this.messageCount = messageCount.toString()
+            this.checkTag(this.$route.name)
+            this.$store.commit('setMessageCount', 3)
         },
         toggleClick() {
-            this.shrink = !this.shrink;
+            this.shrink = !this.shrink
         },
         logout() {
             this.$Modal.confirm({
-                title: __("提示"),
-                content: __("确认退出吗?"),
+                title: __('提示'),
+                content: __('确认退出吗?'),
                 onOk: () => {
-                    this.changePasswordLogout();
+                    this.changePasswordLogout()
                 },
-                onCancel: () => {}
-            });
+                onCancel: () => {},
+            })
         },
         changePasswordLogout() {
             let data = {
-                authkey: this.$store.state.user.token
-            };
-            this.apiPost("login/logout", data).then(res => {
-                this.$store.dispatch("logout");
-                utils.success(res.message);
+                authkey: this.$store.state.user.token,
+            }
+            this.apiPost('login/logout', data).then(res => {
+                this.$store.dispatch('logout')
+                utils.success(res.message)
                 setTimeout(() => {
-                    router.replace("/login");
-                }, 1000);
-            });
+                    router.replace('/login')
+                }, 1000)
+            })
         },
         changePassword() {
-            this.$refs.changePassword.open();
+            this.$refs.changePassword.open()
         },
         information() {
-            this.$refs.information.open();
+            this.$refs.information.open()
         },
         handleClickUserDropdown(name) {
             switch (name) {
-                case "logout":
-                    this.logout();
-                    break;
-                case "changePassword":
-                    this.changePassword();
-                    break;
-                case "information":
-                    this.information();
-                    break;
+                case 'logout':
+                    this.logout()
+                    break
+                case 'changePassword':
+                    this.changePassword()
+                    break
+                case 'information':
+                    this.information()
+                    break
             }
         },
         checkTag(name) {
             let openpageHasTag = this.pageTagsList.some(item => {
                 if (item.name === name) {
-                    return true;
+                    return true
                 }
-            });
+            })
             if (!openpageHasTag) {
                 //  解决关闭当前标签后再点击回退按钮会退到当前页时没有标签的问题
                 utils.openNewPage(
@@ -138,34 +138,34 @@ export default {
                     name,
                     this.$route.params || {},
                     this.$route.query || {}
-                );
+                )
             }
         },
         handleSubmenuChange(val) {},
         beforePush(name) {
-            return true;
+            return true
         },
-        fullscreenChange(isFullScreen) {}
+        fullscreenChange(isFullScreen) {},
     },
     watch: {
         $route(to) {
-            this.$store.commit("setCurrentPageName", to.name);
-            let pathArr = utils.setCurrentPath(this, to.name);
+            this.$store.commit('setCurrentPageName', to.name)
+            let pathArr = utils.setCurrentPath(this, to.name)
             if (pathArr.length > 2) {
-                this.$store.commit("addOpenSubmenu", pathArr[1].name);
+                this.$store.commit('addOpenSubmenu', pathArr[1].name)
             }
-            this.checkTag(to.name);
-            localStorage.currentPageName = to.name;
+            this.checkTag(to.name)
+            localStorage.currentPageName = to.name
         },
         lang() {
-            utils.setCurrentPath(this, this.$route.name); // 在切换语言时用于刷新面包屑
-        }
+            utils.setCurrentPath(this, this.$route.name) // 在切换语言时用于刷新面包屑
+        },
     },
     mounted() {
-        this.init();
+        this.init()
     },
     created() {
-        this.$store.dispatch("loginStorage");
+        this.$store.dispatch('loginStorage')
     },
-    mixins: [http]
-};
+    mixins: [http],
+}

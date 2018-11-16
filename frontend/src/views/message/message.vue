@@ -7,7 +7,7 @@
         <div class="message-mainlist-con">
             <div>
                 <i-button
-                    @click="setCurrentMesType('unread');"
+                    @click="setCurrentMesType('unread')"
                     size="large"
                     long
                     type="text"
@@ -26,7 +26,7 @@
             </div>
             <div>
                 <i-button
-                    @click="setCurrentMesType('hasread');"
+                    @click="setCurrentMesType('hasread')"
                     size="large"
                     long
                     type="text"
@@ -45,7 +45,7 @@
             </div>
             <div>
                 <i-button
-                    @click="setCurrentMesType('recyclebin');"
+                    @click="setCurrentMesType('recyclebin')"
                     size="large"
                     long
                     type="text"
@@ -114,17 +114,17 @@ export default {
                         click: () => {
                             this.hasreadMesList.unshift(
                                 this.currentMesList.splice(params.index, 1)[0]
-                            );
+                            )
                             this.$store.commit(
                                 'setMessageCount',
                                 this.unreadMesList.length
-                            );
+                            )
                         },
                     },
                 },
                 '标为已读'
-            );
-        };
+            )
+        }
         const deleteMesBtn = (h, params) => {
             return h(
                 'Button',
@@ -137,13 +137,13 @@ export default {
                         click: () => {
                             this.recyclebinList.unshift(
                                 this.hasreadMesList.splice(params.index, 1)[0]
-                            );
+                            )
                         },
                     },
                 },
                 '删除'
-            );
-        };
+            )
+        }
         const restoreBtn = (h, params) => {
             return h(
                 'Button',
@@ -155,13 +155,13 @@ export default {
                         click: () => {
                             this.hasreadMesList.unshift(
                                 this.recyclebinList.splice(params.index, 1)[0]
-                            );
+                            )
                         },
                     },
                 },
                 '还原'
-            );
-        };
+            )
+        }
         return {
             currentMesList: [],
             unreadMesList: [],
@@ -195,17 +195,17 @@ export default {
                             {
                                 on: {
                                     click: () => {
-                                        this.showMesTitleList = false;
-                                        this.mes.title = params.row.title;
+                                        this.showMesTitleList = false
+                                        this.mes.title = params.row.title
                                         this.mes.time = this.formatDate(
                                             params.row.time
-                                        );
-                                        this.getContent(params.index);
+                                        )
+                                        this.getContent(params.index)
                                     },
                                 },
                             },
                             params.row.title
-                        );
+                        )
                     },
                 },
                 {
@@ -234,7 +234,7 @@ export default {
                                 },
                                 this.formatDate(params.row.time)
                             ),
-                        ]);
+                        ])
                     },
                 },
                 {
@@ -244,26 +244,26 @@ export default {
                     width: 100,
                     render: (h, params) => {
                         if (this.currentMessageType === 'unread') {
-                            return h('div', [markAsreadBtn(h, params)]);
+                            return h('div', [markAsreadBtn(h, params)])
                         } else if (this.currentMessageType === 'hasread') {
-                            return h('div', [deleteMesBtn(h, params)]);
+                            return h('div', [deleteMesBtn(h, params)])
                         } else {
-                            return h('div', [restoreBtn(h, params)]);
+                            return h('div', [restoreBtn(h, params)])
                         }
                     },
                 },
             ],
-        };
+        }
     },
     methods: {
         formatDate(time) {
-            let date = new Date(time);
-            let year = date.getFullYear();
-            let month = date.getMonth() + 1;
-            let day = date.getDate();
-            let hour = date.getHours();
-            let minute = date.getMinutes();
-            let second = date.getSeconds();
+            let date = new Date(time)
+            let year = date.getFullYear()
+            let month = date.getMonth() + 1
+            let day = date.getDate()
+            let hour = date.getHours()
+            let minute = date.getMinutes()
+            let second = date.getSeconds()
             return (
                 year +
                 '/' +
@@ -276,53 +276,53 @@ export default {
                 minute +
                 ':' +
                 second
-            );
+            )
         },
         backMesTitleList() {
-            this.showMesTitleList = true;
+            this.showMesTitleList = true
         },
         setCurrentMesType(type) {
             if (this.currentMessageType !== type) {
-                this.showMesTitleList = true;
+                this.showMesTitleList = true
             }
-            this.currentMessageType = type;
+            this.currentMessageType = type
             if (type === 'unread') {
-                this.noDataText = '暂无未读消息';
-                this.currentMesList = this.unreadMesList;
+                this.noDataText = '暂无未读消息'
+                this.currentMesList = this.unreadMesList
             } else if (type === 'hasread') {
-                this.noDataText = '暂无已读消息';
-                this.currentMesList = this.hasreadMesList;
+                this.noDataText = '暂无已读消息'
+                this.currentMesList = this.hasreadMesList
             } else {
-                this.noDataText = '回收站无消息';
-                this.currentMesList = this.recyclebinList;
+                this.noDataText = '回收站无消息'
+                this.currentMesList = this.recyclebinList
             }
         },
         getContent(index) {
             // you can write ajax request here to get message content
-            let mesContent = '';
+            let mesContent = ''
             switch (this.currentMessageType + index) {
                 case 'unread0':
                     mesContent =
-                        '这是您点击的《欢迎登录iView-admin后台管理系统，来了解他的用途吧》的相关内容。';
-                    break;
+                        '这是您点击的《欢迎登录iView-admin后台管理系统，来了解他的用途吧》的相关内容。'
+                    break
                 case 'unread1':
                     mesContent =
-                        '这是您点击的《使用iView-admin和iView-ui组件库快速搭建你的后台系统吧》的相关内容。';
-                    break;
+                        '这是您点击的《使用iView-admin和iView-ui组件库快速搭建你的后台系统吧》的相关内容。'
+                    break
                 case 'unread2':
                     mesContent =
-                        '这是您点击的《喜欢iView-admin的话，欢迎到github主页给个star吧》的相关内容。';
-                    break;
+                        '这是您点击的《喜欢iView-admin的话，欢迎到github主页给个star吧》的相关内容。'
+                    break
                 case 'hasread0':
                     mesContent =
-                        '这是您点击的《这是一条您已经读过的消息》的相关内容。';
-                    break;
+                        '这是您点击的《这是一条您已经读过的消息》的相关内容。'
+                    break
                 default:
                     mesContent =
-                        '这是您点击的《这是一条被删除的消息》的相关内容。';
-                    break;
+                        '这是您点击的《这是一条被删除的消息》的相关内容。'
+                    break
             }
-            this.mes.content = mesContent;
+            this.mes.content = mesContent
         },
     },
     mounted() {
@@ -339,33 +339,33 @@ export default {
                 title: '喜欢iView-admin的话，欢迎到github主页给个star吧',
                 time: 1507390106000,
             },
-        ];
+        ]
         this.hasreadMesList = [
             {
                 title: '这是一条您已经读过的消息',
                 time: 1507330106000,
             },
-        ];
+        ]
         this.recyclebinList = [
             {
                 title: '这是一条被删除的消息',
                 time: 1506390106000,
             },
-        ];
-        this.unreadCount = this.unreadMesList.length;
-        this.hasreadCount = this.hasreadMesList.length;
-        this.recyclebinCount = this.recyclebinList.length;
+        ]
+        this.unreadCount = this.unreadMesList.length
+        this.hasreadCount = this.hasreadMesList.length
+        this.recyclebinCount = this.recyclebinList.length
     },
     watch: {
         unreadMesList(arr) {
-            this.unreadCount = arr.length;
+            this.unreadCount = arr.length
         },
         hasreadMesList(arr) {
-            this.hasreadCount = arr.length;
+            this.hasreadCount = arr.length
         },
         recyclebinList(arr) {
-            this.recyclebinCount = arr.length;
+            this.recyclebinCount = arr.length
         },
     },
-};
+}
 </script>

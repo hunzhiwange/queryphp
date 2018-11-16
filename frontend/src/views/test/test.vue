@@ -43,7 +43,7 @@ export default {
                                     <span>{params.column.title}</span>
                                 </span>
                             </span>
-                        );
+                        )
                     },
                 },
                 {
@@ -56,7 +56,7 @@ export default {
                                     <span>{params.column.title}</span>
                                 </span>
                             </span>
-                        );
+                        )
                     },
                 },
                 {
@@ -91,11 +91,11 @@ export default {
                     date: '2016-10-04',
                 },
             ],
-        };
+        }
     },
     methods: {},
     mounted() {},
-};
+}
 </script>
 
 <style></style>

@@ -1,42 +1,42 @@
-import axios from "axios";
+import axios from 'axios'
 
 // 创建 axios 实例
 const service = axios.create({
-    baseURL: ENV.BASE_API + "/:admin/", // api 的 base_url
-    timeout: 15000 // 请求超时时间
-});
+    baseURL: ENV.BASE_API + '/:admin/', // api 的 base_url
+    timeout: 15000, // 请求超时时间
+})
 
 // request 拦截器
 service.interceptors.request.use(
     config => {
-        let apiToken = bus.$store.state.user.token;
+        let apiToken = bus.$store.state.user.token
 
         if (apiToken) {
-            config.headers["token"] = apiToken;
+            config.headers['token'] = apiToken
         }
 
-        config.headers["Content-Type"] = "application/json";
-        return config;
+        config.headers['Content-Type'] = 'application/json'
+        return config
     },
     error => {
-        return Promise.reject(error);
+        return Promise.reject(error)
     }
-);
+)
 
 // respone 拦截器
 service.interceptors.response.use(
     response => {
-        if (typeof response.data == "object") {
+        if (typeof response.data == 'object') {
             if (!response.data.message) {
-                response.data.message = __("操作成功");
+                response.data.message = __('操作成功')
             }
 
-            if (response.data["@trace"]) {
-                delete response.data["@trace"];
+            if (response.data['@trace']) {
+                delete response.data['@trace']
             }
         }
 
-        return response.data;
+        return response.data
 
         // const res = response.data
         // if (res.code) {
@@ -81,67 +81,67 @@ service.interceptors.response.use(
         if (err && err.response) {
             switch (err.response.status) {
                 case 400:
-                    err.message = "请求错误";
-                    break;
+                    err.message = '请求错误'
+                    break
 
                 case 401:
-                    err.message = "未授权，请登录";
-                    break;
+                    err.message = '未授权，请登录'
+                    break
 
                 case 403:
-                    err.message = "拒绝访问";
-                    break;
+                    err.message = '拒绝访问'
+                    break
 
                 case 404:
-                    err.message = "请求地址出错";
-                    break;
+                    err.message = '请求地址出错'
+                    break
 
                 case 408:
-                    err.message = "请求超时";
-                    break;
+                    err.message = '请求超时'
+                    break
 
                 case 500:
-                    err.message = "服务器内部错误";
-                    break;
+                    err.message = '服务器内部错误'
+                    break
 
                 case 501:
-                    err.message = "服务未实现";
-                    break;
+                    err.message = '服务未实现'
+                    break
 
                 case 502:
-                    err.message = "网关错误";
-                    break;
+                    err.message = '网关错误'
+                    break
 
                 case 503:
-                    err.message = "服务不可用";
-                    break;
+                    err.message = '服务不可用'
+                    break
 
                 case 504:
-                    err.message = "网关超时";
-                    break;
+                    err.message = '网关超时'
+                    break
 
                 case 505:
-                    err.message = "HTTP版本不受支持";
-                    break;
+                    err.message = 'HTTP版本不受支持'
+                    break
 
                 default:
             }
 
-            err.message += " " + err.response.data.error.message;
+            err.message += ' ' + err.response.data.error.message
 
-            utils.error(err.message);
+            utils.error(err.message)
 
             if (401 === err.response.status) {
                 setTimeout(() => {
-                    bus.$store.dispatch("logout");
-                    router.replace("/login");
-                }, 1000);
+                    bus.$store.dispatch('logout')
+                    router.replace('/login')
+                }, 1000)
             }
         }
 
-        return Promise.reject("Return data is not a json");
-        return Promise.reject(error);
+        return Promise.reject('Return data is not a json')
+        return Promise.reject(error)
     }
-);
+)
 
-export default service;
+export default service
