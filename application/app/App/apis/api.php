@@ -70,10 +70,12 @@ class Foobar
  *             "middlewares": "common"
  *         },
  *         "foo/*world": {
- *             "middlewares": "custom"
  *         },
  *         "api/test": {
  *             "middlewares": "api"
+ *         },
+ *         ":admin/*": {
+ *             "middlewares": "auth"
  *         },
  *         "admin/show": {
  *             "middlewares": "auth"

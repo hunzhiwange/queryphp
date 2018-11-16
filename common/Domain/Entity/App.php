@@ -106,7 +106,7 @@ class App extends Entity
      *
      * @return $this
      */
-    public function setter(string $prop, $value)
+    public function setter(string $prop, $value): Entity
     {
         $this->{$this->prop($prop)} = $value;
 
