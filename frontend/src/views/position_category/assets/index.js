@@ -131,7 +131,6 @@ export default {
             }
 
             this.data = searchData;
-            this.vueDomUpdate();
         },
         renderContent(h, { root, node, data }) {
             const status = data.status == "enable";
@@ -247,7 +246,6 @@ export default {
                             utils.success(res.message);
 
                             this.data.splice(params.index, 1);
-                            this.vueDomUpdate();
                         }
                     );
                 },
@@ -387,7 +385,6 @@ export default {
             this.apiGet("position_category").then(res => {
                 this.data = res.data;
                 this.loadingTable = false;
-                this.vueDomUpdate();
             });
         },
         handleSubmit(form) {
@@ -414,7 +411,6 @@ export default {
                     };
 
                     this.data.unshift(addNode);
-                    this.vueDomUpdate();
 
                     this.loading = !this.loading;
                     this.cancelMinForm(form);
@@ -502,38 +498,6 @@ export default {
         cancelMinForm: function(form) {
             this.minForm = false;
             this.handleReset(form);
-        },
-        vueDomUpdate: function() {
-            this.$nextTick(() => {
-                this.setTableHeight();
-            });
-        },
-        getViewPortWidth: function() {
-            let table = this.$(".ivu-table-body > table", "table");
-            let tableHeight = table.height();
-            let viewHeight = document.body.scrollHeight - 180;
-            let width = tableHeight <= viewHeight ? "auto" : viewHeight;
-            if (width == "auto") {
-                table.css("width", "100%");
-            }
-            return width;
-        },
-        setTableHeight: function() {
-            this.tableHeight = this.getViewPortWidth();
-        },
-        resizeTable: function() {
-            let setTime;
-            window.onresize = () => {
-                return (() => {
-                    if (setTime) {
-                        clearTimeout(setTime);
-                    }
-
-                    setTime = setTimeout(() => {
-                        this.setTableHeight();
-                    }, 150);
-                })();
-            };
         }
     },
     computed: {},
@@ -541,7 +505,6 @@ export default {
         this.init();
     },
     mounted: function() {
-        this.resizeTable();
     },
     activated: function() {
         if (utils.needRefresh(this)) {

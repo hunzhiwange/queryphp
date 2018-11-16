@@ -1,28 +1,64 @@
 <template>
-<div class="main" :class="{'main-hide-text': shrink}">
-    <div slot="top" class="logo-con" :style="{width: shrink?'60px':'200px'}">
-        <img v-show="!shrink" :src="img_logo" key="max-logo" />
-        <img v-show="shrink" :src="img_mini_logo" key="min-logo" />
-    </div>
-    <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
-        <shrinkable-menu :shrink="shrink" @on-change="handleSubmenuChange" :theme="menuTheme" :before-push="beforePush" :open-names="openedSubmenuArr" :menu-list="menuList">
-        </shrinkable-menu>
-    </div>
-    <div class="main-header-con" :style="{paddingLeft: shrink?'60px':'200px'}">
-        <div class="main-header">
-            <div class="navicon-con">
-                <Button :style="{transform: 'rotateZ(' + (this.shrink ? '180' : '0') + 'deg)'}" type="text" @click="toggleClick">
+    <div class="main" :class="{'main-hide-text': shrink}">
+        <div
+            slot="top"
+            class="logo-con"
+            :style="{width: shrink ? '60px' : '200px'}"
+        >
+            <img v-show="!shrink" :src="img_logo" key="max-logo" />
+            <img v-show="shrink" :src="img_mini_logo" key="min-logo" />
+        </div>
+        <div
+            class="sidebar-menu-con"
+            :style="{
+                width: shrink ? '60px' : '200px',
+                overflow: shrink ? 'visible' : 'auto',
+            }"
+        >
+            <shrinkable-menu
+                :shrink="shrink"
+                @on-change="handleSubmenuChange"
+                :theme="menuTheme"
+                :before-push="beforePush"
+                :open-names="openedSubmenuArr"
+                :menu-list="menuList"
+            >
+            </shrinkable-menu>
+        </div>
+        <div
+            class="main-header-con"
+            :style="{paddingLeft: shrink ? '60px' : '200px'}"
+        >
+            <div class="main-header">
+                <div class="navicon-con">
+                    <i-button
+                        :style="{
+                            transform:
+                                'rotateZ(' +
+                                (this.shrink ? '180' : '0') +
+                                'deg)',
+                        }"
+                        type="text"
+                        @click="toggleClick"
+                    >
                         <Icon type="arrow-return-left" size="22"></Icon>
-                    </Button>
-            </div>
-            <div class="header-middle-con">
-                <div class="tags-con">
-                    <tags-page-opened :pageTagsList="pageTagsList"></tags-page-opened>
+                    </i-button>
                 </div>
-            </div>
-            <div class="header-avator-con">
-                <Menu mode="horizontal" theme="primary" class="pull-right">
-                    <MenuItem name="2" style="padding: 0;">
+                <div class="header-middle-con">
+                    <div class="tags-con">
+                        <tags-page-opened
+                            :pageTagsList="pageTagsList"
+                        ></tags-page-opened>
+                    </div>
+                </div>
+                <div class="header-avator-con">
+                    <i-menu
+                        mode="horizontal"
+                        theme="primary"
+                        class="pull-right"
+                    >
+                        <!-- prettier-ignore -->
+                        <MenuItem name="2" style="padding: 0;">
                     <Dropdown transfer class="header-menuitem">
                         <span class="main-option">
                             <Icon type="ios-gear" :size="22"></Icon>
@@ -42,11 +78,15 @@
                             </DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
+                    <!-- prettier-ignore -->
                     </MenuItem>
-                    <MenuItem name="3" style="padding: 0;">
+                        <!-- prettier-ignore -->
+                        <MenuItem name="3" style="padding: 0;">
                     <message-tip v-model="mesCount"></message-tip>
+                    <!-- prettier-ignore -->
                     </MenuItem>
-                    <MenuItem name="1" class="header-user" style="padding: 0;">
+                        <!-- prettier-ignore -->
+                        <MenuItem name="1" class="header-user" style="padding: 0;">
                     <Dropdown transfer @on-click="handleClickUserDropdown" class="header-menuitem">
                         <span class="header-username">
                             {{username}}
@@ -61,27 +101,32 @@
                         </DropdownMenu>
                     </Dropdown>
                     <Avatar :src="avatorPath" class="user-avatar"></Avatar>
+                    <!-- prettier-ignore -->
                     </MenuItem>
-
-                </Menu>
+                    </i-menu>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
-        <div class="single-page">
-            <Row>
-                <div class="main-breadcrumb">
-                    <breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>
-                </div>
-            </Row>
-            <keep-alive :include="cachePage">
-                <router-view></router-view>
-            </keep-alive>
+        <div class="single-page-con" :style="{left: shrink ? '60px' : '200px'}">
+            <div class="single-page">
+                <Row>
+                    <div class="main-breadcrumb">
+                        <breadcrumb-nav
+                            :currentPath="currentPath"
+                        ></breadcrumb-nav>
+                    </div>
+                </Row>
+                <keep-alive :include="cachePage">
+                    <router-view></router-view>
+                </keep-alive>
+            </div>
         </div>
+        <changePassword
+            ref="changePassword"
+            @logout="changePasswordLogout"
+        ></changePassword>
+        <information ref="information"></information>
     </div>
-    <changePassword ref="changePassword" @logout="changePasswordLogout"></changePassword>
-    <information ref="information"></information>
-</div>
 </template>
 
 <style lang="less" src="./assets/layout.less"></style>

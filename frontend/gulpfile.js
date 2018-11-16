@@ -136,6 +136,9 @@ function readDirIView(filePath) {
 
                                     result = result.replace(/\<Menu(\s){1}/g, '<i-menu ');
                                     result = result.replace(/\<\/Menu\>/g, '</i-menu>');
+
+                                    result = result.replace(/\<Table(\s){1}/g, '<i-table ');
+                                    result = result.replace(/\<\/Table\>/g, '</i-table>');
                         
                                     fs.writeFile(filedir, result, 'utf8', function (err) {
                                          if (err) return console.log(err);
