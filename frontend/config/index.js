@@ -2,7 +2,7 @@
 var path = require('path')
 
 module.exports = {
-    build2: {
+    build: {
         sitEnv: require('./sit.env'),
         prodEnv: require('./prod.env'),
         index: path.resolve(__dirname, '../dist/index.html'),
