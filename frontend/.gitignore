@@ -11,3 +11,6 @@ selenium-debug.log
 package-lock.json
 npm-debug.log
 *.tmp.i18n.js
+/config/dev.env.js
+/config/prod.env.js
+/config/sit.env.js
