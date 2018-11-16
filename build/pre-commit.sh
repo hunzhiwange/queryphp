@@ -47,14 +47,26 @@ then
         then
             echo $result
             isCheck=$result
+            git add $FILE
         fi
     done 
     
     if [ "$isCheck" != "" ] 
     then 
-        echo "The file has been automatically formatted. Please add it again and commit it." 
-        exit 1 
+        echo "The file has been automatically formatted." 
     fi 
 fi 
+
+# for js
+jsfiles=$(git diff --cached --name-only --diff-filter=ACM "*.js" "*.jsx" "*.vue" "*.css" "*.less" | tr '\n' ' ')
+[ -z "$jsfiles" ] && exit 0
+
+# Prettify all staged .js files
+echo "$jsfiles" | xargs ./frontend/node_modules/.bin/prettier --config frontend/.prettierrc.js --ignore-path frontend/.prettierignore --write
+
+# Add back the modified/prettified files to staging
+echo "$jsfiles" | xargs git add
+
+git update-index -g
  
 exit $?

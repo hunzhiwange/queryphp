@@ -23,6 +23,39 @@ npm run dev
 ```
 View http://localhost:9528
 
+## Style format
+
+```
+npm install --save-dev --save-exact prettier
+# and global
+npm install --global prettier
+```
+
+Then
+
+```
+sh ./style.sh
+```
+
+With git
+
+See `./../build/pre-commit.sh`
+
+```
+# for js
+jsfiles=$(git diff --cached --name-only --diff-filter=ACM "*.js" "*.jsx" "*.css" "*.vue" "*.css" "*.less" | tr '\n' ' ')
+[ -z "$jsfiles" ] && exit 0
+
+# Prettify all staged .js files
+echo "$jsfiles" | xargs ./frontend/node_modules/.bin/prettier --config frontend/.prettierrc.js --ignore-path frontend/.prettierignore --write
+
+# Add back the modified/prettified files to staging
+echo "$jsfiles" | xargs git add
+
+git update-index -g
+
+```
+
 ## I18n workflow
 
 First use gulp to extract i18n.
