@@ -9,19 +9,19 @@ var webpack = require('webpack')
 var config = require('../config')
 var webpackConfig = require('./webpack.prod.conf')
 
-var spinner = ora(
+var spinner2 = ora(
     'building for ' +
         process.env.NODE_ENV +
         ' of ' +
         process.env.env_config +
         ' mode...'
 )
-spinner.start()
+spinner2.start()
 
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
     if (err) throw err
     webpack(webpackConfig, function(err, stats) {
-        spinner.stop()
+        spinner2.stop()
         if (err) throw err
         process.stdout.write(
             stats.toString({
