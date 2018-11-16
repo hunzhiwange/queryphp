@@ -145,7 +145,7 @@ function readDirIView(filePath) {
                         }
 
                         if (isDir) {
-                            readDir(filedir);
+                            readDirIView(filedir);
                         }
                     }
                 });
