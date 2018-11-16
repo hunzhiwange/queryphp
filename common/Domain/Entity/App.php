@@ -57,10 +57,10 @@ class App extends Entity
         'id' => [
             'readonly'             => true,
         ],
-        'identity'                   => [],
-        'key'                        => [],
-        'secret'                     => [],
-        'create_at'                  => [],
+        'identity'  => [],
+        'key'       => [],
+        'secret'    => [],
+        'create_at' => [],
     ];
 
     /**
