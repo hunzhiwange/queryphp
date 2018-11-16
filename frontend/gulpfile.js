@@ -111,20 +111,29 @@ function readDir(filePath) {
                             if (supportExt.contains(ext)) {
 
                                 fs.readFile(filedir,'utf8',function(err,files){
-                                    var result = files.replace(/\<Input/g, '<i-input');
+                                    var result = files.replace(/\<Input(\s){1}/g, '<i-input ');
                                     result = result.replace(/\<\/Input\>/g, '</i-input>');
 
-                                    // result = result.replace(/\<Col/g, '<i-col');
-                                    // result = result.replace(/\<\/Col\>/g, '</i-col>');
+                                    result = result.replace(/\<Col(\s){1}/g, '<i-col ');
+                                    result = result.replace(/\<\/Col\>/g, '</i-col>');
                                     
-                                    // result = result.replace(/\<Button/g, '<i-button');
-                                    // result = result.replace(/\<\/Button\>/g, '</i-button>');
+                                    result = result.replace(/\<Button(\s){1}/g, '<i-button ');
+                                    result = result.replace(/\<\/Button\>/g, '</i-button>');
 
-                                    // result = result.replace(/\<Form/g, '<i-form');
-                                    // result = result.replace(/\<\/Form\>/g, '</i-form>');
+                                    result = result.replace(/\<Form(\s){1}/g, '<i-form ');
+                                    result = result.replace(/\<\/Form\>/g, '</i-form>');
 
-                                    // result = result.replace(/\<Select/g, '<i-Select');
-                                    // result = result.replace(/\<\/Select\>/g, '</i-Select>');
+                                    result = result.replace(/\<Select(\s){1}/g, '<i-select ');
+                                    result = result.replace(/\<\/Select\>/g, '</i-select>');
+
+                                    result = result.replace(/\<Option(\s){1}/g, '<i-option ');
+                                    result = result.replace(/\<\/Option\>/g, '</i-option>');
+
+                                    result = result.replace(/\<Progress(\s){1}/g, '<i-progress ');
+                                    result = result.replace(/\<\/Progress\>/g, '</i-progress>');
+
+                                    result = result.replace(/\<Menu(\s){1}/g, '<i-menu ');
+                                    result = result.replace(/\<\/Menu\>/g, '</i-menu>');
                         
                                     fs.writeFile(filedir, result, 'utf8', function (err) {
                                          if (err) return console.log(err);
