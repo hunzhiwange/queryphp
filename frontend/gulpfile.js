@@ -28,9 +28,11 @@ gulp.task("po", function() {
     });
 });
 
-// 修复 iview
-gulp.task("vue", function() {
-    readDirVue("./src");
+// 修复 iview for prettier
+// iview 的 <Button> <Input> 属于 HTML 语言会被格式化为 <button>
+// 我们替换 <Button> 为 <i-button> 来避免被破坏
+gulp.task("iview", function() {
+    readDirIView("./src");
 });
 
 Array.prototype.contains = function(obj) {
@@ -91,7 +93,7 @@ function fsExistsSync(path) {
     return true;
 }
 
-function readDir(filePath) {
+function readDirIView(filePath) {
     fs.readdir(filePath, function(err, files) {
         if (err) {
             console.warn(err);
@@ -152,7 +154,7 @@ function readDir(filePath) {
     });
 }
 
-function readDirVue(filePath) {
+function readDir(filePath) {
     fs.readdir(filePath, function(err, files) {
         if (err) {
             console.warn(err);
