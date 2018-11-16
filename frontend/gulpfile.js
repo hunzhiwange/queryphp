@@ -60,8 +60,6 @@ function poToJson(i18n) {
                 moment().format("YYYY-MM-DD HH:mm:ss") +
                 " */" +
                 "\n" +
-                "// prettier-ignore"+
-                "\n" +
                 "export default " +
                 JSON.stringify(items) +
                 ";";

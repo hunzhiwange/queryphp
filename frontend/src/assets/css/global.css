@@ -1,5 +1,5 @@
 ul li {
-    list-style: none
+    list-style: none;
 }
 
 a {
@@ -12,31 +12,31 @@ a {
 }
 
 .ovf-hd {
-    overflow: hidden
+    overflow: hidden;
 }
 
 .ovf-auto {
-    overflow: auto
+    overflow: auto;
 }
 
 .ovf-y-auto {
-    overflow-y: auto
+    overflow-y: auto;
 }
 
 .fl {
-    float: left
+    float: left;
 }
 
 .fr {
-    float: right
+    float: right;
 }
 
 .pull-right {
-    float: right
+    float: right;
 }
 
 .pull-left {
-    float: left
+    float: left;
 }
 
 .m-w-1280 {
@@ -198,11 +198,11 @@ a {
 }
 
 .mh-270 {
-    max-height: 270px
+    max-height: 270px;
 }
 
 .mh-400 {
-    max-height: 400px
+    max-height: 400px;
 }
 
 .m-t-5 {
@@ -446,7 +446,7 @@ a {
 }
 
 .bor-gra {
-    border: 1px solid #C0CCDA;
+    border: 1px solid #c0ccda;
 }
 
 .bor-b-gray {
@@ -498,7 +498,7 @@ a {
 }
 
 .bg-gra {
-    background: #F9F9F9;
+    background: #f9f9f9;
 }
 
 .bg-transparency {
@@ -518,15 +518,15 @@ a {
 }
 
 .c-gra {
-    color: #C0CCDA;
+    color: #c0ccda;
 }
 
 .c-deep-blue {
-    color: #1F2D3D;
+    color: #1f2d3d;
 }
 
 .c-blue {
-    color: #44B5DF;
+    color: #44b5df;
 }
 
 .c-black {
@@ -534,31 +534,31 @@ a {
 }
 
 .fz-12 {
-    font-size: 12px
+    font-size: 12px;
 }
 
 .fz-14 {
-    font-size: 14px
+    font-size: 14px;
 }
 
 .fz-18 {
-    font-size: 18px
+    font-size: 18px;
 }
 
 .fz-20 {
-    font-size: 20px
+    font-size: 20px;
 }
 
 .fz-22 {
-    font-size: 22px
+    font-size: 22px;
 }
 
 .fz-24 {
-    font-size: 24px
+    font-size: 24px;
 }
 
 .pointer {
-    cursor: pointer
+    cursor: pointer;
 }
 
 .ivu-select-dropdown {
