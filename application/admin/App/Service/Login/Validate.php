@@ -14,14 +14,10 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Login;
 
-// use common\is\repository\menu as repository;
-// use queryyetsimple\bootstrap\auth\login;
-// use queryyetsimple\http\request;
-// use queryyetsimple\support\tree;
 use Common\Domain\Entity\App;
-use Leevel\Kernel\HandleException;
 use Leevel\Auth;
 use Leevel\Cache;
+use Leevel\Kernel\HandleException;
 
 /**
  * 验证登录.
@@ -35,33 +31,6 @@ use Leevel\Cache;
 class Validate
 {
     protected $input;
-   // // use login;
-
-   //  /**
-   //   * HTTP 请求
-   //   *
-   //   * @var \queryyetsimple\http\request
-   //   */
-   //  protected $oRequest;
-
-   //  /**
-   //   * 后台菜单仓储.
-   //   *
-   //   * @var \common\is\repository\menu
-   //   */
-   //  protected $oRepository;
-
-    /**
-     * 构造函数.
-     *
-     * @param \queryyetsimple\http\request $oRequest
-     * @param \common\is\repository\menu   $oRepository
-     */
-    public function __construct(/*request $oRequest, repository $oRepository*/)
-    {
-        // $this->oRequest = $oRequest;
-        // $this->oRepository = $oRepository;
-    }
 
     /**
      * 响应方法.
@@ -73,9 +42,7 @@ class Validate
      */
     public function handle(array $input/*, $strCode*/)
     {
-
         $this->input = $input;
-
 
         if (!$this->validateCode($input['code'])) {
             throw new HandleException('验证码错误');
@@ -95,22 +62,17 @@ class Validate
 
         $token = hash_hmac('sha256', $input['app_id'].$input['app_key']/*.$input['name'].$input['password']*/, $app->secret);
 
-       // print_r($token);
-
-        $request  = \Leevel::app('request');
+        $request = \Leevel::app('request');
 
         $request->query->set('token', $token);
 
-        //Auth::setTokenName($token);
-
         Auth::login(['foo' => 'bar']);
 
-
         return [
-            'token' => $token,
-            'userInfo' => ['name' => 'xiaoniiuge'],
+            'token'     => $token,
+            'userInfo'  => ['name' => 'xiaoniiuge'],
             'menusList' => [],
-            'authList' => [],
+            'authList'  => [],
         ];
     }
 
@@ -119,6 +81,7 @@ class Validate
      *
      * @param string $strInputCode
      * @param string $strCode
+     * @param mixed  $code
      *
      * @return bool
      */

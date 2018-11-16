@@ -50,14 +50,14 @@ class Store
      */
     public function handle(array $input)
     {
-       $this->w->persist($resource = $this->entity($input));
+        $this->w->persist($resource = $this->entity($input));
 
-       $this->w->flush();
+        $this->w->flush();
 
-       $result =  $resource->toArray();
+        $result = $resource->toArray();
 
         $result['status_name'] = $this->statusName($result['status']);
-        
+
         return $result;
     }
 
@@ -83,12 +83,12 @@ class Store
     protected function data(array $input)
     {
         return [
-            'name'   => trim($input['name']),
+            'name'       => trim($input['name']),
             'identity'   => trim($input['identity']),
-            //'remark' => trim($input['remark']),
-            'status' => $input['status'],
+            'status'     => $input['status'],
         ];
     }
+
     /**
      * 状态名字.
      *
@@ -99,17 +99,5 @@ class Store
     protected function statusName($strStatus)
     {
         return Resource::STRUCT['status']['enum'][$strStatus];
-        //return $this->oStatus->{$strStatus};
     }
-    // /**
-    //  * 分析兄弟节点最靠上面的排序值
-    //  *
-    //  * @return int
-    //  */
-    // protected function parseSiblingSort()
-    // {
-    //     $mixSibling = $this->oRepository->siblingNodeBySort('DESC');
-
-    //     return $mixSibling ? $mixSibling->sort + 1 : 500;
-    // }
 }
