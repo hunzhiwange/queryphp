@@ -32,7 +32,7 @@ class App extends Entity
      *
      * @var string
      */
-    const          TABLE = 'app';
+    const TABLE = 'app';
 
     /**
      * id.
