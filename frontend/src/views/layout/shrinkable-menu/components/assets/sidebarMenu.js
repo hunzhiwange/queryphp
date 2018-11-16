@@ -1,33 +1,32 @@
 export default {
-    name: 'sidebarMenu',
+    name: "sidebarMenu",
     props: {
         menuList: Array,
         iconSize: Number,
         menuTheme: {
             type: String,
-            default: 'dark'
+            default: "dark"
         },
         openNames: {
             type: Array
         }
     },
     methods: {
-        changeMenu (active) {
-            this.$emit('on-change', active);
+        changeMenu(active) {
+            this.$emit("on-change", active);
         },
-        itemTitle (item) {
-            if(item.meta) {
-                return this.__(item.meta.title)
+        itemTitle(item) {
+            if (item.meta) {
+                return this.__(item.meta.title);
             }
-            return ''
+            return "";
         }
     },
-    updated () {
+    updated() {
         this.$nextTick(() => {
             if (this.$refs.sideMenu) {
                 this.$refs.sideMenu.updateOpened();
             }
         });
     }
-
 };

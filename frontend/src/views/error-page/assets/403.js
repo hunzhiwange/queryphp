@@ -1,13 +1,13 @@
 export default {
-    name: 'Error403',
+    name: "Error403",
     methods: {
-        backPage () {
+        backPage() {
             this.$router.go(-1);
         },
-        goHome () {
+        goHome() {
             this.$router.push({
-                name: 'dashboard'
+                name: "dashboard"
             });
         }
     }
-}
+};

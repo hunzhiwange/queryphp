@@ -1,8 +1,8 @@
-import sidebarMenu from './../components/sidebarMenu.vue';
-import sidebarMenuShrink from './../components/sidebarMenuShrink.vue';
+import sidebarMenu from "./../components/sidebarMenu.vue";
+import sidebarMenuShrink from "./../components/sidebarMenuShrink.vue";
 
 export default {
-    name: 'shrinkableMenu',
+    name: "shrinkableMenu",
     components: {
         sidebarMenu,
         sidebarMenuShrink
@@ -18,9 +18,9 @@ export default {
         },
         theme: {
             type: String,
-            default: 'dark',
-            validator (val) {
-                return utils.oneOf(val, ['dark', 'light']);
+            default: "dark",
+            validator(val) {
+                return utils.oneOf(val, ["dark", "light"]);
             }
         },
         beforePush: {
@@ -31,15 +31,15 @@ export default {
         }
     },
     computed: {
-        bgColor () {
-            return this.theme === 'dark' ? '#495060' : '#fff';
+        bgColor() {
+            return this.theme === "dark" ? "#495060" : "#fff";
         },
-        shrinkIconColor () {
-            return this.theme === 'dark' ? '#fff' : '#495060';
+        shrinkIconColor() {
+            return this.theme === "dark" ? "#fff" : "#495060";
         }
     },
     methods: {
-        handleChange (name) {
+        handleChange(name) {
             let willpush = true;
             if (this.beforePush !== undefined) {
                 if (!this.beforePush(name)) {
@@ -51,7 +51,7 @@ export default {
                     name: name
                 });
             }
-            this.$emit('on-change', name);
+            this.$emit("on-change", name);
         }
     }
-}
+};

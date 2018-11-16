@@ -1,12 +1,12 @@
 export default {
-    name: 'Error404',
+    name: "Error404",
     methods: {
-        backPage () {
+        backPage() {
             this.$router.go(-1);
         },
-        goHome () {
+        goHome() {
             this.$router.push({
-                name: 'dashboard'
+                name: "dashboard"
             });
         }
     }

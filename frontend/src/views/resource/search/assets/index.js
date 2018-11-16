@@ -1,24 +1,24 @@
-import http from '@/utils/http'
+import http from "@/utils/http";
 
 export default {
     data() {
         return {
             searchForm: {
-                key: '',
-                status: ''
+                key: "",
+                status: ""
             },
             searchRule: {},
             searchItem: {
                 status: [
-                    { status: '1', title: __('启用')},
-                    { status: '0', title: __('禁用')}
+                    { status: "1", title: __("启用") },
+                    { status: "0", title: __("禁用") }
                 ]
             }
-        }
+        };
     },
     methods: {
         search(page, pageSize) {
-            let data = this.searchForm
+            let data = this.searchForm;
 
             if (!page) {
                 page = 1;
@@ -28,16 +28,16 @@ export default {
                 pageSize = 10;
             }
 
-            data['page'] = page;
-            data['size'] = pageSize;
+            data["page"] = page;
+            data["size"] = pageSize;
 
-            this.apiGet('resource', {}, data).then((res) => {
-                this.$emit("getDataFromSearch", res)
-            })
+            this.apiGet("resource", {}, data).then(res => {
+                this.$emit("getDataFromSearch", res);
+            });
         },
         add() {
-            this.$emit("add")
+            this.$emit("add");
         }
     },
     mixins: [http]
-}
+};

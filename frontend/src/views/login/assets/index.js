@@ -1,8 +1,8 @@
-import Cookies from 'js-cookie'
-import http from '@/utils/http'
-import {validateAlpha} from '@/utils/validate'
-import img_logo from '@/assets/images/logo.png'
-import img_login_banner from '@/assets/images/login_banner.png'
+import Cookies from "js-cookie";
+import http from "@/utils/http";
+import { validateAlpha } from "@/utils/validate";
+import img_logo from "@/assets/images/logo.png";
+import img_login_banner from "@/assets/images/login_banner.png";
 
 export default {
     data() {
@@ -11,118 +11,127 @@ export default {
             img_login_banner: img_login_banner,
             loading: false,
             form: {
-                name: 'admin',
-                password: '123456',
-                code: 'eeee'
+                name: "admin",
+                password: "123456",
+                code: "eeee"
             },
-            codeUrl: '',
-            codeImg: ENV.BASE_API + '/:admin/login/code',
+            codeUrl: "",
+            codeImg: ENV.BASE_API + "/:admin/login/code",
             rules: {
                 name: [
                     {
                         required: true,
-                        message: __('请输入账号'),
-                        trigger: 'blur'
+                        message: __("请输入账号"),
+                        trigger: "blur"
                     }
                 ],
                 password: [
                     {
                         required: true,
-                        message: __('请输入密码'),
-                        trigger: 'blur'
-                    }, {
+                        message: __("请输入密码"),
+                        trigger: "blur"
+                    },
+                    {
                         min: 6,
                         max: 12,
-                        message: __('长度在 %d 到 %d 个字符', 6, 12),
-                        trigger: 'blur'
+                        message: __("长度在 %d 到 %d 个字符", 6, 12),
+                        trigger: "blur"
                     }
                 ],
                 code: [
                     {
                         required: true,
-                        message: __('请输入验证码'),
-                        trigger: 'blur'
-                    }, {
+                        message: __("请输入验证码"),
+                        trigger: "blur"
+                    },
+                    {
                         min: 4,
                         max: 4,
-                        message: __('长度为 %d 个字符', 4),
-                        trigger: 'blur'
-                    }, {
+                        message: __("长度为 %d 个字符", 4),
+                        trigger: "blur"
+                    },
+                    {
                         validator: validateAlpha,
-                        trigger: 'blur'
+                        trigger: "blur"
                     }
                 ]
             },
             checked: false,
             remember: 0
-        }
+        };
     },
     methods: {
         refreshSeccode() {
-            this.codeUrl = ''
+            this.codeUrl = "";
             setTimeout(() => {
-                this.codeUrl = this.codeImg+ '?id=' + this.form.name + '&time=' + moment().unix()
-            }, 300)
+                this.codeUrl =
+                    this.codeImg +
+                    "?id=" +
+                    this.form.name +
+                    "&time=" +
+                    moment().unix();
+            }, 300);
         },
         handleSubmit(form) {
-            if (this.loading)
-                return
-            this.$refs.form.validate((valid) => {
+            if (this.loading) return;
+            this.$refs.form.validate(valid => {
                 if (valid) {
-                    this.loading = !this.loading
+                    this.loading = !this.loading;
 
-                    let data = {}
-                    data.name = this.form.name
-                    data.password = this.form.password
-                    data.code = this.form.code
-                    data.app_id = ENV.APP_ID
-                    data.app_key = ENV.APP_KEY
+                    let data = {};
+                    data.name = this.form.name;
+                    data.password = this.form.password;
+                    data.code = this.form.code;
+                    data.app_id = ENV.APP_ID;
+                    data.app_key = ENV.APP_KEY;
 
                     if (this.checked) {
-                        data.remember = 1
+                        data.remember = 1;
                     } else {
-                        data.remember = 0
+                        data.remember = 0;
                     }
 
-                    this.apiPost('login/validate', data).then((res) => {
-                        utils.success(res.message)
+                    this.apiPost("login/validate", data).then(
+                        res => {
+                            utils.success(res.message);
 
-                        this.$store.dispatch('login', res)
+                            this.$store.dispatch("login", res);
 
-                        setTimeout(() => {
-                            router.replace('/')
-                        }, 1000)
-                    },(res) => {
-                        this.loading = !this.loading
-                    })
+                            setTimeout(() => {
+                                router.replace("/");
+                            }, 1000);
+                        },
+                        res => {
+                            this.loading = !this.loading;
+                        }
+                    );
                 } else {
-                    return false
+                    return false;
                 }
-            })
+            });
         },
         keepLogin() {
-            Cookies.set(
-                'keep_login', this.checked
-                ? 'T'
-                : 'F', {expires: 30})
+            Cookies.set("keep_login", this.checked ? "T" : "F", {
+                expires: 30
+            });
         },
         checkKeepLogin() {
-            this.checked = this.isKeepLogin()
+            this.checked = this.isKeepLogin();
         },
         isKeepLogin() {
-            return Cookies.get('keep_login') === 'T'
+            return Cookies.get("keep_login") === "T";
         }
     },
     created() {
-        this.codeUrl = this.codeImg
-        this.checkKeepLogin()
+        this.codeUrl = this.codeImg;
+        this.checkKeepLogin();
     },
     mounted() {
-        window.addEventListener('keyup', (e) => {
+        window.addEventListener("keyup", e => {
             if (e.keyCode === 13) {
-                this.handleSubmit('form')
+                this.handleSubmit("form");
             }
-        })
+        });
     },
     mixins: [http]
-}
+};

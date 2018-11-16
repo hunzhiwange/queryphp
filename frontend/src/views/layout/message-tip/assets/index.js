@@ -1,5 +1,5 @@
 export default {
-    name: 'messageTip',
+    name: "messageTip",
     props: {
         value: {
             type: Number,
@@ -7,11 +7,11 @@ export default {
         }
     },
     methods: {
-        showMessage () {
-            utils.openNewPage(this, 'message_index')
+        showMessage() {
+            utils.openNewPage(this, "message_index");
             this.$router.push({
-                name: 'message_index'
+                name: "message_index"
             });
         }
     }
-}
+};

@@ -1,8 +1,8 @@
-import http from '@/utils/http'
-import {validateAlphaDash} from '@/utils/validate'
-import Vue from 'vue'
+import http from "@/utils/http";
+import { validateAlphaDash } from "@/utils/validate";
+import Vue from "vue";
 
-import search from './../search/index'
+import search from "./../search/index";
 
 export default {
     components: {
@@ -12,51 +12,66 @@ export default {
         return {
             columns: [
                 {
-                    type: 'selection',
+                    type: "selection",
                     width: 40,
-                    align: 'center',
-                    className: 'table-selection'
+                    align: "center",
+                    className: "table-selection"
                 },
                 {
-                    type: 'index',
+                    type: "index",
                     width: 20,
-                    align: 'center',
-                    className: 'table-index'
+                    align: "center",
+                    className: "table-index"
                 },
                 {
-                    title: '名字',
-                    key: 'name'
+                    title: "名字",
+                    key: "name"
                 },
                 {
-                    title: '标识符',
-                    key: 'identity'
+                    title: "标识符",
+                    key: "identity"
                 },
                 {
-                    title: '状态',
-                    key: 'status_name',
+                    title: "状态",
+                    key: "status_name",
                     width: 120,
                     render: (h, params) => {
-                        const row = params.row
-                        return (<tag type="dot" color={row.status === '1' ? 'green' : 'default'}>{row.status_name}</tag>)
+                        const row = params.row;
+                        return (
+                            <tag
+                                type="dot"
+                                color={row.status === "1" ? "green" : "default"}
+                            >
+                                {row.status_name}
+                            </tag>
+                        );
                     }
                 },
                 {
-                    title: '操作',
-                    key: 'action',
+                    title: "操作",
+                    key: "action",
                     width: 120,
-                    align: 'right',
+                    align: "right",
                     render: (h, params) => {
-                        return (<dropdown placement="bottom-end" style="textAlign: left;" on-on-click={(name) => this[name](params)}>
-                            <a href="javascript:void(0)">
-                                <icon type="more"></icon>
-                            </a>
-                            <dropdownMenu slot="list">
-                                <dropdownItem name="edit">
-                                    <icon type='edit'></icon> {__('编辑')}</dropdownItem>
-                                <dropdownItem name="remove">
-                                    <icon type='trash-b'></icon> {__('删除')}</dropdownItem>
-                            </dropdownMenu>
-                        </dropdown>)
+                        return (
+                            <dropdown
+                                placement="bottom-end"
+                                style="textAlign: left;"
+                                on-on-click={name => this[name](params)}
+                            >
+                                <a href="javascript:void(0)">
+                                    <icon type="more" />
+                                </a>
+                                <dropdownMenu slot="list">
+                                    <dropdownItem name="edit">
+                                        <icon type="edit" /> {__("编辑")}
+                                    </dropdownItem>
+                                    <dropdownItem name="remove">
+                                        <icon type="trash-b" /> {__("删除")}
+                                    </dropdownItem>
+                                </dropdownMenu>
+                            </dropdown>
+                        );
                     }
                 }
             ],
@@ -64,191 +79,205 @@ export default {
             page: 1,
             pageSize: 10,
             data: [],
-            tableHeight: 'auto',
+            tableHeight: "auto",
             loadingTable: true,
             dataBackup: null,
             formItem: {
                 id: null,
-                name: '',
-                identity: '',
+                name: "",
+                identity: "",
                 status: true
             },
             minForm: false,
             rules: {
-                name: [{
-                    required: true,
-                    message: __('请输入资源名字')
-                }],
-                identity: [{
-                    required: true,
-                    message: __('请输入资源标识符')
-                }]
+                name: [
+                    {
+                        required: true,
+                        message: __("请输入资源名字")
+                    }
+                ],
+                identity: [
+                    {
+                        required: true,
+                        message: __("请输入资源标识符")
+                    }
+                ]
             },
             loading: false,
             selectedData: []
-        }
+        };
     },
     methods: {
         getDataFromSearch(data) {
-            this.data = data.data
-            this.total = data.page.total_record
-            this.loadingTable = false
+            this.data = data.data;
+            this.total = data.page.total_record;
+            this.loadingTable = false;
         },
         edit(params) {
-            let row = params.row
-            this.minForm = true
-            this.formItem.id = row.id
+            let row = params.row;
+            this.minForm = true;
+            this.formItem.id = row.id;
 
-            let data = {}
-            Object.keys(this.formItem).forEach((item) => data[item] = row[item])
-            data.status = data.status == '1'
-                ? true
-                : false
-            this.formItem = data
+            let data = {};
+            Object.keys(this.formItem).forEach(
+                item => (data[item] = row[item])
+            );
+            data.status = data.status == "1" ? true : false;
+            this.formItem = data;
         },
         add: function() {
-            this.minForm = true
-            this.formItem.id = ''
+            this.minForm = true;
+            this.formItem.id = "";
         },
         remove(params) {
             this.$Modal.confirm({
-                title: __('提示'),
-                content: __('确认删除该资源?'),
+                title: __("提示"),
+                content: __("确认删除该资源?"),
                 onOk: () => {
-                    this.apiDelete('resource', params.row.id).then((res) => {
-                        utils.success(res.message)
+                    this.apiDelete("resource", params.row.id).then(res => {
+                        utils.success(res.message);
 
-                        this.data.splice(params.index, 1)
-                    })
+                        this.data.splice(params.index, 1);
+                    });
                 },
                 onCancel: () => {}
-            })
+            });
         },
         status(nodeData, status) {
-            this.apiPut('structure/enable', nodeData.id, {status: status}).then((res) => {
-                this.$set(nodeData, 'status', status)
-                utils.success(res.message)
-            })
+            this.apiPut("structure/enable", nodeData.id, {
+                status: status
+            }).then(res => {
+                this.$set(nodeData, "status", status);
+                utils.success(res.message);
+            });
         },
         statusMany(type) {
-            let selected = this.selectedData
+            let selected = this.selectedData;
 
             if (!selected.length) {
-                utils.warning(__('请勾选数据'))
-                return
+                utils.warning(__("请勾选数据"));
+                return;
             }
 
             let data = {
                 ids: selected,
                 status: type
-            }
+            };
 
-            this.apiPost('resource/statuses', data).then((res) => {
+            this.apiPost("resource/statuses", data).then(res => {
                 this.data.forEach((item, index) => {
                     if (selected.includes(item.id)) {
-                        this.$set(this.data[index], 'status', type)
-                        this.$set(this.data[index], 'status_name', type === '1' ? __('启用') : __('禁用'))
+                        this.$set(this.data[index], "status", type);
+                        this.$set(
+                            this.data[index],
+                            "status_name",
+                            type === "1" ? __("启用") : __("禁用")
+                        );
                     }
-                })
+                });
 
-                utils.success(res.message)
-            })
+                utils.success(res.message);
+            });
         },
         onSelectionChange(data) {
-            let ids = []
+            let ids = [];
 
-            data.forEach((item) => ids.push(item.id))
+            data.forEach(item => ids.push(item.id));
 
-            this.selectedData = ids
+            this.selectedData = ids;
         },
         init: function() {
-            this.apiGet('resource').then((res) => {
-                this.data = res.data
-                this.total = res.page.total_record
-                this.loadingTable = false
-            })
+            this.apiGet("resource").then(res => {
+                this.data = res.data;
+                this.total = res.page.total_record;
+                this.loadingTable = false;
+            });
         },
         handleSubmit(form) {
-            this.$refs[form].validate((pass) => {
+            this.$refs[form].validate(pass => {
                 if (pass) {
-                    this.loading = !this.loading
+                    this.loading = !this.loading;
                     if (!this.formItem.id) {
-                        this.saveResource(form)
+                        this.saveResource(form);
                     } else {
-                        this.updateResource(form)
+                        this.updateResource(form);
                     }
                 }
-            })
+            });
         },
         saveResource(form) {
-            var formData = this.formItem
-            formData.status = formData.status ? '1' : '0'
-            
-            this.apiPost('resource', formData).then((res) => {
-                const addNode = {
-                    name: res.name,
-                    identity: res.identity,
-                    id: res.id,
-                    status: res.status,
-                    status_name: res.status_name
+            var formData = this.formItem;
+            formData.status = formData.status ? "1" : "0";
+
+            this.apiPost("resource", formData).then(
+                res => {
+                    const addNode = {
+                        name: res.name,
+                        identity: res.identity,
+                        id: res.id,
+                        status: res.status,
+                        status_name: res.status_name
+                    };
+
+                    this.data.unshift(addNode);
+
+                    this.loading = !this.loading;
+                    this.cancelMinForm(form);
+
+                    utils.success(res.message);
+                },
+                res => {
+                    this.loading = !this.loading;
                 }
-
-                this.data.unshift(addNode)
-
-                this.loading = !this.loading
-                this.cancelMinForm(form)
-
-                utils.success(res.message)
-            },(res) => {
-                this.loading = !this.loading
-            })
+            );
         },
         updateResource(form) {
-            var formData = this.formItem
-            formData.status = formData.status ? '1' : '0'
+            var formData = this.formItem;
+            formData.status = formData.status ? "1" : "0";
 
-            this.apiPut('resource', this.formItem.id, formData).then((res) => {
-                this.data.forEach((item, index) => {
-                    if (item.id === this.formItem.id) {
-                        this.$set(this.data, index, res)
-                    }
-                })
+            this.apiPut("resource", this.formItem.id, formData).then(
+                res => {
+                    this.data.forEach((item, index) => {
+                        if (item.id === this.formItem.id) {
+                            this.$set(this.data, index, res);
+                        }
+                    });
 
-                this.loading = !this.loading
-                this.cancelMinForm(form)
+                    this.loading = !this.loading;
+                    this.cancelMinForm(form);
 
-                utils.success(res.message)
-            },(res) => {
-                this.loading = !this.loading
-            })
+                    utils.success(res.message);
+                },
+                res => {
+                    this.loading = !this.loading;
+                }
+            );
         },
         handleReset(form) {
-            this.$refs[form].resetFields()
+            this.$refs[form].resetFields();
         },
         changePage(page) {
-            this.page = page
+            this.page = page;
             this.$refs.search.search(page, this.pageSize);
         },
         changePageSize(pageSize) {
-            this.pageSize = pageSize
+            this.pageSize = pageSize;
             this.$refs.search.search(this.page, pageSize);
         },
         cancelMinForm: function(form) {
-            this.minForm = false
-            this.handleReset(form)
+            this.minForm = false;
+            this.handleReset(form);
         }
     },
-    computed: {
-    },
+    computed: {},
     created: function() {
-        this.init()
+        this.init();
     },
-    mounted: function(){
-    },
+    mounted: function() {},
     activated: function() {
         if (utils.needRefresh(this)) {
-            this.init()
+            this.init();
         }
     },
     mixins: [http]
-}
+};
