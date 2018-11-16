@@ -5,6 +5,17 @@ This will help php developer to use QueryPHP.
 This project is base on [VueThink](https://github.com/honraytech/VueThink)、[VueElementAdmin](https://github.com/PanJiaChen/vue-element-admin)、[IViewAdmin](https://github.com/iview/iview-admin)，thanks
 
 ## Development
+
+First to create config file.
+
+```
+cp config/dev.env.js.example config/dev.env.js
+cp config/prod.env.js.example config/prod.env.js
+cp config/sit.env.js.example config/sit.env.js
+```
+
+Then
+
 ```bas
 npm install
 npm install --registry=https://registry.npm.taobao.org
