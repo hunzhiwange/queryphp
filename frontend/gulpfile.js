@@ -6,7 +6,7 @@ const tmpDir = "./tmp-i18n/"
 const po = require('node-po') 
 const moment = require("moment")
 const i18nSupport = ['en-US', 'zh-CN', 'zh-TW']
-const i18sFile = ['default']
+const i18nFile = ['default']
 
 // 提取语言包
 gulp.task('default', function() {
@@ -41,7 +41,7 @@ Array.prototype.contains = function (obj) {
 function poToJson(i18n) {
     let items = {};
 
-    i18sFile.forEach(function(poFile) {
+    i18nFile.forEach(function(poFile) {
         let sourcePoFile = 'src/i18n/'+i18n+'/'+poFile+'.po'
 
         if (!fsExistsSync(sourcePoFile)){

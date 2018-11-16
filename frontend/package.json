@@ -87,6 +87,7 @@
     "optimize-css-assets-webpack-plugin": "1.3.0",
     "ora": "1.1.0",
     "path": "^0.12.7",
+    "prettier": "1.15.2",
     "pushstate-server": "2.1.0",
     "rimraf": "2.6.0",
     "sass-loader": "6.0.5",
