@@ -15,7 +15,7 @@
     <a href="./README.md">English</a> | <a href="./README-zh-CN.md">中文</a>
 </p>
 
-# 渐进式 PHP 常驻框架引擎
+# QueryPHP 渐进式 PHP 常驻框架引擎
 
 QueryPHP 是一款现代化的高性能 PHP 7 常驻框架，以工程师用户体验为历史使命，让每一个 PHP 应用都有一个好框架。
 
