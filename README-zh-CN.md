@@ -15,20 +15,19 @@
     <img alt="QueryPHP License" src="https://poser.pugx.org/hunzhiwange/queryphp/license.svg" /></a>
 </p>
 
-# The QueryPHP Application
+# 渐进式 PHP 常驻框架引擎
 
-QueryPHP is a modern, high performance PHP 7 resident framework, with engineer user experience as its historical mission, let every PHP application have a good framework.
+QueryPHP 是一款现代化的高性能 PHP 7 常驻框架，以工程师用户体验为历史使命，让每一个 PHP 应用都有一个好框架。
 
-A hundred percent coverage of the unit tests to facing the bug,based on Zephir implemented framework resident,with Swoole ecology to achieve business resident,
-now or in the future step by step. Our vision is **<span style="color:#e82e7d;">USE LEEVEL WITH SWOOLE DO BETTER</span>**, let your business to support more user services.
+百分之百单元测试覆盖直面 Bug 一剑封喉，基于 Zephir 实现框架常驻，依托 Swoole 生态实现业务常驻，此刻未来逐步渐进。 我们的愿景是 **<span style="color:#e82e7d;">USE LEEVEL WITH SWOOLE DO BETTER</span>**, 让您的业务撑起更多的用户服务。
 
 *The PHP Framework For Code Poem As Free As Wind, Starts From This Moment With QueryPHP.*
 
 * Site: <https://www.queryphp.com/>
 * API: <https://api.queryphp.com>
-* Document: <https://www.leevel.vip/>
+* Document: <https://www.queryphp.com/docs/>
 
-## The core packages
+## 核心包
 
  * QueryPHP On Github: <https://github.com/hunzhiwange/queryphp/>
  * QueryPHP On Gitee: <https://gitee.com/dyhb/queryphp/>
@@ -41,15 +40,15 @@ now or in the future step by step. Our vision is **<span style="color:#e82e7d;">
  * Packages From Hunzhiwange: <https://packagist.org/packages/hunzhiwange/>
  * Packages From Leevel: <https://packagist.org/packages/leevel/>
 
-## How to install
+## 如何安装
 
-## Base use
+## 基本使用
 
 ```
 composer create-project hunzhiwange/queryphp myapp dev-master
 ```
 
-## Visite it
+## 大开浏览器访问
 
 ![](home.jpg)
 
@@ -68,9 +67,9 @@ php leevel server <Visite http://127.0.0.1:9527/>
  * php leevel link:apis <http://127.0.0.1:9527/apis/>
  * php leevel link:debugbar <http://127.0.0.1:9527/debugbar/debugbar.css>
 
-## Base optimization
+## 基本优化
 
-### Debug
+### 关闭调试
 
 Modify .env or runtime/bootstrap/option.php.
 
@@ -82,7 +81,7 @@ ENVIRONMENT = production
 DEBUG = false
 ```
 
-### Commands
+### 执行优化指令
 
 The commands below can make queryphp faster.
 
@@ -100,15 +99,15 @@ Or
 php leevel production # `php leevel development` will back.
 ```
 
-## USE LEEVEL DO BETTER
+## 安装 Leevel 扩展让性能更好
 
 ### Windows
 
-Need to tests.
+后续会提供 dll 扩展.
 
 ### Linux
 
-You can download the source code.
+从下面的仓库下载源代码.
 
 ```
 git clone git@github.com:hunzhiwange/leevel.git
@@ -116,7 +115,7 @@ cd ext
 ```
 
 
-Then compile it.
+GCC 编译源码.
 
 ```
 $/path/to/phpize
@@ -124,32 +123,32 @@ $./configure --with-php-config=/path/to/php-config
 $make && make install
 ```
 
-Then add extension to your php.ini,you can see if installation is successful by command php -m.
+将扩展添加到你的 php.ini, 使用 php -m 查看扩展是否被安装.
 
 ```
 extension = leevel.so
 ```
 
-## Use Swoole With Ultra High Performance
+## 使用 swoole 提升性能
 
-This will coming back later.
+Swoole 后续会逐步提供支持.
 
 ```
 php leevel swoole:http
 ```
 
-## Unified Code Style
+## 统一团队代码风格
 
 ```
 $cd /data/codes/queryphp
 $php-cs-fixer fix --config=.php_cs.dist
 ```
 
-## Thanks
+## 致谢
 
-Thanks my colleague [John.mao](https://github.com/maosea0125) for your selfless help in the development of this project and and let me have a new understanding, it makes QueryPHP more beautiful.
+感谢同事 [毛飞](https://github.com/maosea0125) 在开发这个项目过程中的无私帮助，让我有了很多新的认识, 这让 QueryPHP 变得更加的美好.
 
-Thanks for these excellent projects, we have absorbed a lot of excellent design and ideas, standing on the shoulders of giants for innovation.
+也非常感谢下面的这些优秀的开源软件, 我们也参考了很多的设计与思想, 让我们可以站在巨人的肩膀上保持创新.
 
  * QeePHP: <https://github.com/dualface/qeephp2_x/>
  * Swoole: <https://github.com/swoole/>
@@ -160,6 +159,6 @@ Thanks for these excellent projects, we have absorbed a lot of excellent design 
  * Doctrine: <https://github.com/doctrine/>
  * Phalcon: <https://github.com/phalcon/>
 
-## License
+## 版权协议
 
-The QueryPHP framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+QueryPHP 是一个基于 [MIT license](http://opensource.org/licenses/MIT) 授权许可协议的开源软件.
