@@ -26,7 +26,7 @@ now or in the future step by step. Our vision is **<span style="color:#e82e7d;">
 
 * Site: <https://www.queryphp.com/>
 * API: <https://api.queryphp.com>
-* Document: <https://www.leevel.vip/>
+* Document: <https://www.queryphp.com/docs/>
 
 ## The core packages
 

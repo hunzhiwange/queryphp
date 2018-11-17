@@ -23,9 +23,9 @@ QueryPHP 是一款现代化的高性能 PHP 7 常驻框架，以工程师用户�
 
 *代码如诗，自由如风, 此刻携手 QueryPHP 共创美好.*
 
-* Site: <https://www.queryphp.com/>
-* API: <https://api.queryphp.com>
-* Document: <https://www.queryphp.com/docs/>
+* 官方网站: <https://www.queryphp.com/>
+* API 文档: <https://api.queryphp.com>
+* 开发文档: <https://www.queryphp.com/docs/>
 
 ## 核心包
 
