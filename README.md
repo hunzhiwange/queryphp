@@ -1,5 +1,5 @@
 <p align="center">
-    [English](./README.md) | [中文](./README-zh-CN.md)
+    <a href="./README.md">English</a> | <a href="./README-zh-CN.md">中文</a>
 </p>
 
 ![](queryphp-use-leevel.png)
