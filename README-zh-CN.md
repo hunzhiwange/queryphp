@@ -1,5 +1,5 @@
 <p align="center">
-    [English](README.md) | [中文](README-zh-CN.md)
+    [English](./README.md) | [中文](./README-zh-CN.md)
 </p>
 
 ![](queryphp-use-leevel.png)
@@ -21,7 +21,7 @@ QueryPHP 是一款现代化的高性能 PHP 7 常驻框架，以工程师用户�
 
 百分之百单元测试覆盖直面 Bug 一剑封喉，基于 Zephir 实现框架常驻，依托 Swoole 生态实现业务常驻，此刻未来逐步渐进。 我们的愿景是 **<span style="color:#e82e7d;">USE LEEVEL WITH SWOOLE DO BETTER</span>**, 让您的业务撑起更多的用户服务。
 
-*The PHP Framework For Code Poem As Free As Wind, Starts From This Moment With QueryPHP.*
+*代码如诗，自由如风, 此刻携手 QueryPHP 共创美好.*
 
 * Site: <https://www.queryphp.com/>
 * API: <https://api.queryphp.com>
@@ -48,7 +48,7 @@ QueryPHP 是一款现代化的高性能 PHP 7 常驻框架，以工程师用户�
 composer create-project hunzhiwange/queryphp myapp dev-master
 ```
 
-## 大开浏览器访问
+## 打开浏览器访问
 
 ![](home.jpg)
 
@@ -56,12 +56,12 @@ composer create-project hunzhiwange/queryphp myapp dev-master
 php leevel server <Visite http://127.0.0.1:9527/>
 ```
 
- * Home <http://127.0.0.1:9527/>
- * Mvc router <http://127.0.0.1:9527/api/test>
- * Mvc restful router http://127.0.0.1:9527/restful/123
- * Mvc restful router with method http://127.0.0.1:9527/restful/123/show
- * Annotation router http://127.0.0.1:9527/api/v1/petLeevelForApi/helloworld
- * Annotation router with bind http://127.0.0.1:9527/api/v2/withBind/foobar
+ * 首页 <http://127.0.0.1:9527/>
+ * Mvc 路由 <http://127.0.0.1:9527/api/test>
+ * Mvc restful 路由 http://127.0.0.1:9527/restful/123
+ * 指定方法的 Mvc restful 路由 http://127.0.0.1:9527/restful/123/show
+ * 注解路由 http://127.0.0.1:9527/api/v1/petLeevelForApi/helloworld
+ * 带有绑定的注解路由 http://127.0.0.1:9527/api/v2/withBind/foobar
  * php leevel link:public <http://127.0.0.1:9527/public/css/page.css>
  * php leevel link:storage <http://127.0.0.1:9527/storage/logo.png>
  * php leevel link:apis <http://127.0.0.1:9527/apis/>
@@ -71,7 +71,7 @@ php leevel server <Visite http://127.0.0.1:9527/>
 
 ### 关闭调试
 
-Modify .env or runtime/bootstrap/option.php.
+修改 .env 或者 runtime/bootstrap/option.php.
 
 ```
 // Environment production、testing and development
@@ -83,7 +83,7 @@ DEBUG = false
 
 ### 执行优化指令
 
-The commands below can make queryphp faster.
+下面的指令可以让 QueryPHP 运行得更加快速。
 
 ```
 php leevel router:cache
@@ -93,7 +93,7 @@ php leevel view:cache
 php leevel autoload (contains `composer dump-autoload --optimize`)
 ```
 
-Or
+或者
 
 ```
 php leevel production # `php leevel development` will back.
