@@ -31,23 +31,25 @@ class Code
     /**
      * 响应方法.
      *
-     * @param \Leevel\Http\Request         $request
-     * @param \Admin\App\Service\Login\Code         $service
+     * @param \Leevel\Http\Request          $request
+     * @param \Admin\App\Service\Login\Code $service
      */
     public function handle(Request $request, Service $service): void
-    {   
-         $service->handle($this->input($request));
+    {
+        $service->handle($this->input($request));
     }
 
     /**
      * 输入数据.
      *
-     * @param \Leevel\Http\Request         $request
-     * 
+     * @param \Leevel\Http\Request $request
+     *
      * @return array
      */
     protected function input(Request $request): array
     {
-        return ['id' => $request->query->get('id')];
+        return [
+            'id' => $request->query->get('id'),
+        ];
     }
 }

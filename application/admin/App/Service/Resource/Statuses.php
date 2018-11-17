@@ -15,11 +15,12 @@ declare(strict_types=1);
 namespace Admin\App\Service\Resource;
 
 use Common\Domain\Entity\Resource;
+use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Kernel\HandleException;
 
 /**
- * 后台部门编辑更新.
+ * 批量修改资源状态.
  *
  * @author Name Your <your@mail.com>
  *
@@ -29,13 +30,17 @@ use Leevel\Kernel\HandleException;
  */
 class Statuses
 {
+    /**
+     * 事务工作单元.
+     *
+     * @var \Leevel\Database\Ddd\IUnitOfWork
+     */
     protected $w;
 
     /**
      * 构造函数.
      *
-     * @param \queryyetsimple\http\request $oRequest
-     * @param \common\is\repository\menu   $oRepository
+     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -45,11 +50,41 @@ class Statuses
     /**
      * 响应方法.
      *
-     * @param array $aCategory
+     * @param array $input
      *
      * @return array
      */
-    public function handle(array $input)
+    public function handle(array $input): array
+    {
+        $this->save($this->findAll($input), $input['status']);
+
+        return [];
+    }
+
+    /**
+     * 保存状态
+     *
+     * @param \Leevel\Collection\Collection $resources
+     * @param string                        $status
+     */
+    protected function save(Collection $resources, string $status)
+    {
+        foreach ($resources as $resource) {
+            $resource->status = $status;
+            $this->w->persist($resource);
+        }
+
+        $this->w->flush();
+    }
+
+    /**
+     * 查询符合条件的资源.
+     *
+     * @param array $input
+     *
+     * @return \Leevel\Collection\Collection
+     */
+    protected function findAll(array $input): Collection
     {
         $resources = $this->w->repository(Resource::class)->
 
@@ -61,13 +96,6 @@ class Statuses
             throw new HandleException(__('未发现资源'));
         }
 
-        foreach ($resources as $resource) {
-            $resource->status = $input['status'];
-            $this->w->persist($resource);
-        }
-
-        $this->w->flush();
-
-        return [];
+        return $resources;
     }
 }

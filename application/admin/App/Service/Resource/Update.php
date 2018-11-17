@@ -28,13 +28,17 @@ use Leevel\Database\Ddd\IUnitOfWork;
  */
 class Update
 {
+    /**
+     * 事务工作单元.
+     *
+     * @var \Leevel\Database\Ddd\IUnitOfWork
+     */
     protected $w;
 
     /**
      * 构造函数.
      *
-     * @param \queryyetsimple\http\request $oRequest
-     * @param \common\is\repository\menu   $oRepository
+     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -44,46 +48,43 @@ class Update
     /**
      * 响应方法.
      *
-     * @param array $aCategory
+     * @param array $input
      *
      * @return array
      */
-    public function handle(array $input)
+    public function handle(array $input): array
     {
-       $this->w->persist($resource = $this->entity($input));
-       $this->w->flush();
-
-       $result =  $resource->toArray();
-
-        $result['status_name'] = $this->statusName($result['status']);
-
-        return $result;
+        return $this->save($input)->toArray();
     }
 
     /**
-     * 状态名字.
+     * 保存.
      *
-     * @param string $strStatus
+     * @param array $input
      *
-     * @return string
+     * @return \Common\Domain\Entity\Resource
      */
-    protected function statusName($strStatus)
+    protected function save(array $input): Resource
     {
-        return Resource::STRUCT['status']['enum'][$strStatus];
+        $this->w->persist($resource = $this->entity($input))->
+
+        flush();
+
+        return $resource;
     }
 
     /**
      * 验证参数.
      *
-     * @param array $aStructure
+     * @param array $input
      *
-     * @return \admin\domain\entity\structure
+     * @return \Common\Domain\Entity\Resource
      */
     protected function entity(array $input)
     {
         $resource = $this->find((int) $input['id']);
 
-        $resource->props($this->data($input));
+        $resource->withProps($this->data($input));
 
         return $resource;
     }
@@ -91,28 +92,28 @@ class Update
     /**
      * 查找实体.
      *
-     * @param int $intId
+     * @param int $id
      *
-     * @return \admin\domain\entity\structure|void
+     * @return \Common\Domain\Entity\Resource
      */
-    protected function find(int $id)
+    protected function find(int $id): Resource
     {
         return $this->w->repository(Resource::class)->findOrFail($id);
     }
 
     /**
-     * 组装 POST 数据.
+     * 组装实体数据.
      *
-     * @param array $aCategory
+     * @param array $input
      *
      * @return array
      */
-    protected function data(array $input)
+    protected function data(array $input): array
     {
         return [
-            'name'   => trim($input['name']),
+            'name'       => trim($input['name']),
             'identity'   => trim($input['identity']),
-            'status' => $input['status'],
+            'status'     => $input['status'],
         ];
     }
 }

@@ -18,7 +18,7 @@ use Common\Domain\Entity\Resource;
 use Leevel\Database\Ddd\IUnitOfWork;
 
 /**
- * 后台职位删除.
+ * 资源删除.
  *
  * @author Name Your <your@mail.com>
  *
@@ -28,13 +28,17 @@ use Leevel\Database\Ddd\IUnitOfWork;
  */
 class Destroy
 {
+    /**
+     * 事务工作单元.
+     *
+     * @var \Leevel\Database\Ddd\IUnitOfWork
+     */
     protected $w;
 
     /**
      * 构造函数.
      *
-     * @param \queryyetsimple\http\request $oRequest
-     * @param \common\is\repository\menu   $oRepository
+     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -44,19 +48,27 @@ class Destroy
     /**
      * 响应方法.
      *
-     * @param array $aCategory
+     * @param array $input
      *
      * @return array
      */
-    public function handle(array $input)
+    public function handle(array $input): array
     {
-        $resource = $this->find($input['id']);
+        $this->remove($this->find($input['id']));
 
+        return [];
+    }
+
+    /**
+     * 删除实体.
+     *
+     * @param \Common\Domain\Entity\Resource $resource
+     */
+    protected function remove(Resource $resource)
+    {
         $this->w->persist($resource)->
         remove($resource)->
         flush();
-
-        return [];
     }
 
     /**
@@ -64,9 +76,9 @@ class Destroy
      *
      * @param int $intId
      *
-     * @return \admin\domain\entity\structure|void
+     * @return \Common\Domain\Entity\Resource
      */
-    protected function find(int $id)
+    protected function find(int $id): Resource
     {
         return $this->w->repository(Resource::class)->findOrFail($id);
     }

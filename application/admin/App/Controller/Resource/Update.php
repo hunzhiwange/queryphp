@@ -18,7 +18,7 @@ use Admin\App\Service\Resource\Update as service;
 use Leevel\Http\Request;
 
 /**
- * 后台部门编辑更新.
+ * 资源更新.
  *
  * @author Name Your <your@mail.com>
  *
@@ -31,25 +31,24 @@ class Update
     /**
      * 响应方法.
      *
-     * @param \admin\app\service\position_category\store          $oService
-     * @param \admin\domain\value_object\position_category\status $oStatus
+     * @param \Leevel\Http\Request               $request
+     * @param \Admin\App\Service\Resource\Update $service
      *
-     * @return mixed
+     * @return array
      */
-    public function handle(Request $request, Service $service)
+    public function handle(Request $request, Service $service): array
     {
         return $service->handle($this->input($request));
     }
 
     /**
-     * /**
-     * POST 数据.
+     * 输入数据.
      *
-     * @param mixed $request
+     * @param \Leevel\Http\Request $request
      *
      * @return array
      */
-    protected function input($request)
+    protected function input(Request $request): array
     {
         return $request->only([
             'id',

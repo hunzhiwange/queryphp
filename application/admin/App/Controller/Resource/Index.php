@@ -18,7 +18,7 @@ use Admin\App\Service\Resource\Index as service;
 use Leevel\Http\Request;
 
 /**
- * 验证登录.
+ * 资源列表.
  *
  * @author Name Your <your@mail.com>
  *
@@ -31,24 +31,24 @@ class Index
     /**
      * 响应方法.
      *
-     * @param \admin\app\service\login\check $oService
-     * @param \admin\is\seccode\code         $oCode
+     * @param \Leevel\Http\Request              $request
+     * @param \Admin\App\Service\Resource\Index $service
      *
      * @return array
      */
-    public function handle(Request $request, Service $service)
+    public function handle(Request $request, Service $service): array
     {
         return $service->handle($this->input($request));
     }
 
     /**
-     * POST 数据.
+     * 输入数据.
      *
-     * @param mixed $request
+     * @param \Leevel\Http\Request $request
      *
      * @return array
      */
-    protected function input($request)
+    protected function input(Request $request): array
     {
         return $request->only([
             'key',

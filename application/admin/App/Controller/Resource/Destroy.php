@@ -18,7 +18,7 @@ use Admin\App\Service\Resource\Destroy as service;
 use Leevel\Http\Request;
 
 /**
- * 后台职位删除.
+ * 资源删除.
  *
  * @author Name Your <your@mail.com>
  *
@@ -31,25 +31,27 @@ class Destroy
     /**
      * 响应方法.
      *
-     * @param \admin\app\service\position_category\store          $oService
-     * @param \admin\domain\value_object\position_category\status $oStatus
+     * @param \Leevel\Http\Request                $request
+     * @param \Admin\App\Service\Resource\Destroy $service
      *
-     * @return mixed
+     * @return array
      */
-    public function handle(Request $request, Service $service)
+    public function handle(Request $request, Service $service): array
     {
         return $service->handle($this->input($request));
     }
 
     /**
-     * 删除 ID.
+     * 输入数据.
      *
-     * @param mixed $request
+     * @param \Leevel\Http\Request $request
      *
-     * @return int
+     * @return array
      */
-    protected function input($request)
+    protected function input(Request $request): array
     {
-        return ['id' => (int) ($request->params->get('_param0'))];
+        return [
+            'id' => (int) ($request->params->get('_param0')),
+        ];
     }
 }

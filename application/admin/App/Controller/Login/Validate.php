@@ -31,20 +31,21 @@ class Validate
     /**
      * 响应方法.
      *
-     * @param \Leevel\Http\Request         $request
-     * @param \Admin\App\Service\Login\Validate         $service
+     * @param \Leevel\Http\Request              $request
+     * @param \Admin\App\Service\Login\Validate $service
      *
      * @return array
      */
-    public function handle(Request $request, Service $service)
-    {   
+    public function handle(Request $request, Service $service): array
+    {
         return $service->handle($this->input($request));
     }
 
     /**
      * 输入数据.
      *
-     * @param \Leevel\Http\Request         $request
+     * @param \Leevel\Http\Request $request
+     *
      * @return array
      */
     protected function input(Request $request): array

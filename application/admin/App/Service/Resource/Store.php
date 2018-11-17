@@ -28,13 +28,17 @@ use Leevel\Database\Ddd\IUnitOfWork;
  */
 class Store
 {
+    /**
+     * 事务工作单元.
+     *
+     * @var \Leevel\Database\Ddd\IUnitOfWork
+     */
     protected $w;
 
     /**
      * 构造函数.
      *
-     * @param \queryyetsimple\http\request $oRequest
-     * @param \common\is\repository\menu   $oRepository
+     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -44,60 +48,56 @@ class Store
     /**
      * 响应方法.
      *
-     * @param array $aCategory
+     * @param array $input
      *
      * @return array
      */
-    public function handle(array $input)
+    public function handle(array $input): array
     {
-        $this->w->persist($resource = $this->entity($input));
+        return $this->save($input)->toArray();
+    }
 
-        $this->w->flush();
+    /**
+     * 保存.
+     *
+     * @param array $input
+     *
+     * @return \Common\Domain\Entity\Resource
+     */
+    protected function save(array $input): Resource
+    {
+        $this->w->persist($resource = $this->entity($input))->
 
-        $result = $resource->toArray();
+        flush();
 
-        $result['status_name'] = $this->statusName($result['status']);
-
-        return $result;
+        return $resource;
     }
 
     /**
      * 创建实体.
      *
-     * @param array $aCategory
+     * @param array $input
      *
-     * @return \admin\domain\entity\position_category
+     * @return \Common\Domain\Entity\Resource
      */
-    protected function entity(array $input)
+    protected function entity(array $input): Resource
     {
         return new Resource($this->data($input));
     }
 
     /**
-     * 组装 POST 数据.
+     * 组装实体数据.
      *
-     * @param array $aCategory
+     * @param array $input
      *
      * @return array
      */
-    protected function data(array $input)
+    protected function data(array $input): array
     {
         return [
             'name'       => trim($input['name']),
             'identity'   => trim($input['identity']),
             'status'     => $input['status'],
         ];
-    }
-
-    /**
-     * 状态名字.
-     *
-     * @param string $strStatus
-     *
-     * @return string
-     */
-    protected function statusName($strStatus)
-    {
-        return Resource::STRUCT['status']['enum'][$strStatus];
     }
 }

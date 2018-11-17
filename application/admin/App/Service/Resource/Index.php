@@ -14,13 +14,14 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Resource;
 
+use Closure;
 use Common\Domain\Entity\Resource;
 use Leevel\Database\Ddd\IEntity;
 use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Database\Ddd\Select;
 
 /**
- * 用户登出.
+ * 资源列表.
  *
  * @author Name Your <your@mail.com>
  *
@@ -30,13 +31,17 @@ use Leevel\Database\Ddd\Select;
  */
 class Index
 {
+    /**
+     * 事务工作单元.
+     *
+     * @var \Leevel\Database\Ddd\IUnitOfWork
+     */
     protected $w;
 
     /**
      * 构造函数.
      *
-     * @param \queryyetsimple\http\request $oRequest
-     * @param \common\is\repository\menu   $oRepository
+     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -46,43 +51,49 @@ class Index
     /**
      * 响应方法.
      *
-     * @param array  $input
-     * @param string $strCode
+     * @param array $input
      *
      * @return array
      */
-    public function handle(array $input = []/*, $strCode*/)
+    public function handle(array $input): array
     {
         $repository = $this->w->repository(Resource::class);
 
-        $resource = $repository->findPage(
+        list($page, $resources) = $repository->findPage(
             (int) ($input['page'] ?: 1),
             (int) ($input['size'] ?? 10),
-            function (Select $select, IEntity $entity) use ($input) {
-                if (null !== $input['key']) {
-                    $select->where(function ($select) use ($input) {
-                        $select->orWhere('name', 'like', '%'.$input['key'].'%')->
-                         orWhere('identity', 'like', '%'.$input['key'].'%');
-                    });
-                }
-
-                if ((int) ($input['status']) > 0) {
-                    $select->where('status', $input['status']);
-                }
-
-                $select->orderBy('id DESC');
-            }
+            $this->condition($input)
         );
 
-        $data['page'] = $resource[0];
-        $data['data'] = $resource[1]->toArray();
-
-        $statusName = Resource::STRUCT['status']['enum'];
-
-        foreach ($data['data'] as &$item) {
-            $item['status_name'] = $statusName[$item['status']];
-        }
+        $data['page'] = $page;
+        $data['data'] = $resources->toArray();
 
         return $data;
+    }
+
+    /**
+     * 查询条件.
+     *
+     * @param array $input
+     *
+     * @return \Closure
+     */
+    protected function condition(array $input): Closure
+    {
+        return function (Select $select, IEntity $entity) use ($input) {
+            if (null !== $input['key']) {
+                $select->where(function ($select) use ($input) {
+                    $select->orWhere('name', 'like', '%'.$input['key'].'%')->
+
+                        orWhere('identity', 'like', '%'.$input['key'].'%');
+                });
+            }
+
+            if ((int) ($input['status']) > 0) {
+                $select->where('status', $input['status']);
+            }
+
+            $select->orderBy('id DESC');
+        };
     }
 }

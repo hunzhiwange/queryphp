@@ -65,6 +65,7 @@ class Resource extends Entity
                 '1' => '启用',
             ],
         ],
+        //'status_name' => [],
         'create_at'      => [],
     ];
 
@@ -96,6 +97,7 @@ class Resource extends Entity
      */
     private $status;
     private $createAt;
+    private $statusName;
 
     /**
      * setter.

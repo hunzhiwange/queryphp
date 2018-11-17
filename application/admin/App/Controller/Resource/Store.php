@@ -18,44 +18,37 @@ use Admin\App\Service\Resource\Store as service;
 use Leevel\Http\Request;
 
 /**
- * 后台职位分类新增保存.
+ * 资源保存.
  *
  * @author Name Your <your@mail.com>
  *
  * @since 2017.12.19
  *
  * @version 1.0
- * @menu
- * @title 保存
- * @name
- * @path
- * @component
- * @icon
  */
 class Store
 {
     /**
      * 响应方法.
      *
-     * @param \admin\app\service\position_category\store          $oService
-     * @param \admin\domain\value_object\position_category\status $oStatus
+     * @param \Leevel\Http\Request              $request
+     * @param \Admin\App\Service\Resource\Store $service
      *
-     * @return mixed
+     * @return array
      */
-    public function handle(Request $request, Service $service)
+    public function handle(Request $request, Service $service): array
     {
         return $service->handle($this->input($request));
     }
 
     /**
-     * /**
-     * POST 数据.
+     * 输入数据.
      *
-     * @param mixed $request
+     * @param \Leevel\Http\Request $request
      *
      * @return array
      */
-    protected function input($request)
+    protected function input(Request $request): array
     {
         return $request->only([
             'name',
