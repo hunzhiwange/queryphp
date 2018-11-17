@@ -1,7 +1,3 @@
-<p align="center">
-    <a href="./README.md">English</a> | <a href="./README-zh-CN.md">中文</a>
-</p>
-
 ![](queryphp-use-leevel.png)
 
 <p align="center">
@@ -13,6 +9,10 @@
     <img alt="Latest Version" src="https://poser.pugx.org/hunzhiwange/queryphp/version" /></a>
   <a href="http://opensource.org/licenses/MIT">
     <img alt="QueryPHP License" src="https://poser.pugx.org/hunzhiwange/queryphp/license.svg" /></a>
+</p>
+
+<p align="center">
+    <a href="./README.md">English</a> | <a href="./README-zh-CN.md">中文</a>
 </p>
 
 # The QueryPHP Application
