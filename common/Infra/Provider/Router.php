@@ -49,7 +49,6 @@ class Router extends RouterProvider
 
         // api 请求中间件
         'api' => [
-            'auth',
             'throttler:60,1',
         ],
 
@@ -67,8 +66,7 @@ class Router extends RouterProvider
      * @var array
      */
     protected $middlewareAlias = [
-        //'auth'        => 'Leevel\\Auth\\Middleware\\Auth',
-        // 'auth'        => 'Admin\\App\\Middleware\\Auth',
+        'auth'        => 'Admin\\App\\Middleware\\Auth',
         'debug'       => 'Leevel\\Debug\\Middleware\\Debug',
         'log'         => 'Leevel\\Log\\Middleware\\Log',
         'session'     => 'Leevel\\Session\\Middleware\\Session',

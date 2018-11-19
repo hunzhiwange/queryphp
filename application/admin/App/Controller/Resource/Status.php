@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Controller\Resource;
 
-use Admin\App\Service\Resource\Statuses as service;
+use Admin\App\Service\Resource\Status as service;
 use Leevel\Http\Request;
 
 /**
@@ -26,7 +26,7 @@ use Leevel\Http\Request;
  *
  * @version 1.0
  */
-class Statuses
+class Status
 {
     /**
      * 响应方法.

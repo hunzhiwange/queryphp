@@ -162,7 +162,7 @@ export default {
                 status: type,
             }
 
-            this.apiPost('resource/statuses', data).then(res => {
+            this.apiPost('resource/status', data).then(res => {
                 this.data.forEach((item, index) => {
                     if (selected.includes(item.id)) {
                         this.$set(this.data[index], 'status', type)

@@ -28,7 +28,7 @@ use Leevel\Kernel\HandleException;
  *
  * @version 1.0
  */
-class Statuses
+class Status
 {
     /**
      * 事务工作单元.

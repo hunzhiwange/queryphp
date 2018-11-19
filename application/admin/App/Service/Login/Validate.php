@@ -217,7 +217,7 @@ class Validate
             ]
         );
 
-        if (!$validate->success()) {
+        if ($validate->fail()) {
             throw new HandleException($validate->errorMessage());
         }
     }
