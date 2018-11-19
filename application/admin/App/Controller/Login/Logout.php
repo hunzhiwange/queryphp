@@ -30,12 +30,12 @@ class Logout
     /**
      * 响应方法.
      *
-     * @param \Admin\App\Service\Login\Logout         $service
+     * @param \Admin\App\Service\Login\Logout $service
      */
     public function handle(Service $service): array
     {
-         $service->handle();
+        $service->handle();
 
-         return [];
+        return [];
     }
 }

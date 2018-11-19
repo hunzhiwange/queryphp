@@ -32,7 +32,7 @@ class Index
      * @return array
      */
     public function handle()
-    {   
+    {
         // nothing to do
     }
 }

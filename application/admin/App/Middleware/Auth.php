@@ -15,10 +15,10 @@ declare(strict_types=1);
 namespace Admin\App\Middleware;
 
 use Closure;
-use Leevel\Http\IRequest;
-use Leevel\Auth\Middleware\Auth as BaseAuth;
-use Leevel\Kernel\UnauthorizedHttpException;
 use Leevel\Auth\AuthException;
+use Leevel\Auth\Middleware\Auth as BaseAuth;
+use Leevel\Http\IRequest;
+use Leevel\Kernel\UnauthorizedHttpException;
 
 /**
  * auth 中间件.
@@ -51,8 +51,9 @@ class Auth extends BaseAuth
             die;
         }
 
-        if (in_array($request->getPathInfo(), $this->ignorePathInfo())) {
+        if (in_array($request->getPathInfo(), $this->ignorePathInfo(), true)) {
             $next($request);
+
             return;
         }
 
@@ -66,8 +67,8 @@ class Auth extends BaseAuth
     }
 
     /**
-     * 忽略路由
-     * 
+     * 忽略路由.
+     *
      * @return array
      */
     protected function ignorePathInfo(): array
