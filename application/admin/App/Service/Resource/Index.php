@@ -89,7 +89,7 @@ class Index
                 });
             }
 
-            if ((int) ($input['status']) > 0) {
+            if (is_string($input['status'])) {
                 $select->where('status', $input['status']);
             }
 

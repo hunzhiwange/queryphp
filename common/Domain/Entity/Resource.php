@@ -60,12 +60,11 @@ class Resource extends Entity
         'name'          => [],
         'identity'      => [],
         'status'        => [
-            'enum' => [
+            self::ENUM => [
                 '0' => '禁用',
                 '1' => '启用',
             ],
         ],
-        //'status_name' => [],
         'create_at'      => [],
     ];
 
