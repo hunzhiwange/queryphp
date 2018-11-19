@@ -75,7 +75,7 @@ class Foobar
  *             "middlewares": "api"
  *         },
  *         ":admin/*": {
- *             "middlewares": "auth"
+ *             "middlewares": "admin_auth"
  *         },
  *         "admin/show": {
  *             "middlewares": "auth"

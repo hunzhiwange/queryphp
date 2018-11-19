@@ -66,11 +66,12 @@ class Router extends RouterProvider
      * @var array
      */
     protected $middlewareAlias = [
-        'auth'        => 'Admin\\App\\Middleware\\Auth',
-        'debug'       => 'Leevel\\Debug\\Middleware\\Debug',
-        'log'         => 'Leevel\\Log\\Middleware\\Log',
-        'session'     => 'Leevel\\Session\\Middleware\\Session',
-        'throttler'   => 'Leevel\\Throttler\\Middleware\\Throttler',
+        'auth'              => 'Leevel\Auth\Middleware\\Auth',
+        'admin_auth'        => 'Admin\\App\\Middleware\\Auth',
+        'debug'             => 'Leevel\\Debug\\Middleware\\Debug',
+        'log'               => 'Leevel\\Log\\Middleware\\Log',
+        'session'           => 'Leevel\\Session\\Middleware\\Session',
+        'throttler'         => 'Leevel\\Throttler\\Middleware\\Throttler',
     ];
 
     /**
