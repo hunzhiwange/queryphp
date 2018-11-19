@@ -30,8 +30,11 @@ class Test
      *
      * @return array
      */
-    public function handle()
+    public function handle(): array
     {
+        // var_dump(PHP_VERSION);
+        // var_dump($_GET);
+//         die;
         return ['hello' => 'world'];
     }
 }

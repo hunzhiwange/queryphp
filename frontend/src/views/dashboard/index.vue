@@ -4,7 +4,7 @@
             <Card>
                 <p slot="title">
                     <Icon type="flag"></Icon>
-                    The QueryPHP Vue SPA Application
+                    QueryPHP <Icon type="ios-heart" color="red"></Icon> Vue
                 </p>
                 <i-button slot="extra" type="text" @click="officeSite()">{{
                     __('官方网站')
@@ -23,9 +23,6 @@
                                 <div style="margin-top: 20px">
                                     <i-button @click="officeSite()" round>{{
                                         __('官方网站')
-                                    }}</i-button>
-                                    <i-button @click="supportSite()" round>{{
-                                        __('捐赠')
                                     }}</i-button>
                                     <i-button @click="githubSite()" round
                                         >Github</i-button

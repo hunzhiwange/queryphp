@@ -14,9 +14,9 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Login;
 
-use Leevel\Seccode\Seccode;
+use Admin\Infra\Code as Codes;
 use Leevel;
-use Leevel\Cache;
+use Leevel\Seccode\Seccode;
 
 /**
  * 验证码生成.
@@ -30,22 +30,39 @@ use Leevel\Cache;
 class Code
 {
     /**
+     * 验证码存储.
+     *
+     * @var \Admin\Infra\Code
+     */
+    protected $code;
+
+    /**
+     * 构造函数.
+     *
+     * @param \Admin\Infra\Code $code
+     */
+    public function __construct(Codes $code)
+    {
+        $this->code = $code;
+    }
+
+    /**
      * 响应方法.
      *
-     * @param array  $input
+     * @param array $input
      */
     public function handle(array $input)
     {
         $seccode = new Seccode([
             'background_path' => Leevel::commonPath('ui/seccode/background'),
             'font_path'       => Leevel::commonPath('ui/seccode/font'),
-            'width'  => 120,
-            'height' => 36,
+            'width'           => 120,
+            'height'          => 36,
         ]);
 
         $seccode->display(4);
 
-        Cache::set('code_'.$input['id'], $seccode->getCode());
+        $this->code->set($input['id'], $seccode->getCode());
 
         die;
     }

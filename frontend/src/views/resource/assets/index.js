@@ -33,7 +33,7 @@ export default {
                 },
                 {
                     title: '状态',
-                    key: 'status_name',
+                    key: 'status_enum',
                     width: 120,
                     render: (h, params) => {
                         const row = params.row
@@ -43,7 +43,7 @@ export default {
                                 color={
                                     row.status === '1' ? 'green' : 'default'
                                 }>
-                                {row.status_name}
+                                {row.status_enum}
                             </tag>
                         )
                     },
@@ -168,7 +168,7 @@ export default {
                         this.$set(this.data[index], 'status', type)
                         this.$set(
                             this.data[index],
-                            'status_name',
+                            'status_enum',
                             type === '1' ? __('启用') : __('禁用')
                         )
                     }
@@ -214,7 +214,7 @@ export default {
                         identity: res.identity,
                         id: res.id,
                         status: res.status,
-                        status_name: res.status_name,
+                        status_enum: res.status_enum,
                     }
 
                     this.data.unshift(addNode)

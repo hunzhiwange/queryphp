@@ -68,7 +68,7 @@ class Router extends RouterProvider
      */
     protected $middlewareAlias = [
         //'auth'        => 'Leevel\\Auth\\Middleware\\Auth',
-        'auth'        => 'Admin\\App\\Middleware\\Auth',
+        // 'auth'        => 'Admin\\App\\Middleware\\Auth',
         'debug'       => 'Leevel\\Debug\\Middleware\\Debug',
         'log'         => 'Leevel\\Log\\Middleware\\Log',
         'session'     => 'Leevel\\Session\\Middleware\\Session',
