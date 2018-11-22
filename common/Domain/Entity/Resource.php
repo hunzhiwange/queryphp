@@ -17,55 +17,55 @@ namespace Common\Domain\Entity;
 use Leevel\Database\Ddd\Entity;
 
 /**
- * 资源实体.
+ * Resource.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2018.11.09
+ * @since 2018.11.20
  *
  * @version 1.0
  */
 class Resource extends Entity
 {
     /**
-     * table.
+     * database table.
      *
-     * @var string
+     * @string
      */
     const TABLE = 'resource';
 
     /**
-     * id.
+     * primary key.
      *
-     * @var string
+     * @string|null
      */
     const ID = 'id';
 
     /**
-     * auto.
+     * auto increment.
      *
-     * @var string
+     * @string|null
      */
     const AUTO = 'id';
 
     /**
-     * struct.
+     * entity struct.
      *
-     * @var array
+     * @array
      */
     const STRUCT = [
         'id' => [
-            'readonly'             => true,
+            'readonly' => true,
         ],
-        'name'          => [],
-        'identity'      => [],
-        'status'        => [
+        'name'     => [],
+        'identity' => [],
+        'status'   => [
             self::ENUM => [
                 '0' => '禁用',
                 '1' => '启用',
             ],
         ],
-        'create_at'      => [],
+        'create_at' => [],
     ];
 
     /**
@@ -76,27 +76,32 @@ class Resource extends Entity
     private $id;
 
     /**
-     * name.
+     * 资源名字.
      *
      * @var string
      */
     private $name;
 
     /**
-     * name.
+     * 唯一标识符.
      *
      * @var string
      */
     private $identity;
 
     /**
-     * name.
+     * 状态 0=禁用;1=启用;.
+     *
+     * @var int
+     */
+    private $status;
+
+    /**
+     * 创建时间.
      *
      * @var string
      */
-    private $status;
     private $createAt;
-    private $statusName;
 
     /**
      * setter.

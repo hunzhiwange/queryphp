@@ -1,12 +1,17 @@
 import http from '@/utils/http'
 
+const resetFrom = {
+    key: '',
+    status: '',
+    page: 1,
+    pageSize: 10,
+}
+
 export default {
     data() {
         return {
-            searchForm: {
-                key: '',
-                status: '',
-            },
+            searchForm: Object.assign({}, resetFrom),
+            searchReset: Object.assign({}, resetFrom),
             searchRule: {},
             searchItem: {
                 status: [
@@ -14,29 +19,33 @@ export default {
                     {status: '0', title: __('禁用')},
                 ],
             },
+            searchShow: false,
         }
     },
     methods: {
         search(page, pageSize) {
-            let data = this.searchForm
-
-            if (!page) {
-                page = 1
+            if (page) {
+                this.searchForm.page = 1
             }
 
-            if (!pageSize) {
-                pageSize = 10
+            if (pageSize) {
+                this.searchForm.pageSize = pageSize
             }
 
-            data['page'] = page
-            data['size'] = pageSize
-
-            this.apiGet('resource', {}, data).then(res => {
+            this.apiGet('resource', {}, this.searchForm).then(res => {
                 this.$emit('getDataFromSearch', res)
+            })
+        },
+        reset() {
+            Object.keys(this.searchForm).forEach(key => {
+                this.searchForm[key] = this.searchReset[key]
             })
         },
         add() {
             this.$emit('add')
+        },
+        toggleShow() {
+            this.searchShow = !this.searchShow
         },
     },
     mixins: [http],

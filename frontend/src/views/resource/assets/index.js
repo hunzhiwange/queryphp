@@ -52,25 +52,24 @@ export default {
                     title: '操作',
                     key: 'action',
                     width: 120,
-                    align: 'right',
+                    fixed: 'right',
+                    align: 'left',
                     render: (h, params) => {
                         return (
-                            <dropdown
-                                placement="bottom-end"
-                                style="textAlign: left;"
-                                on-on-click={name => this[name](params)}>
-                                <a href="javascript:void(0)">
-                                    <icon type="more" />
-                                </a>
-                                <dropdownMenu slot="list">
-                                    <dropdownItem name="edit">
-                                        <icon type="edit" /> {__('编辑')}
-                                    </dropdownItem>
-                                    <dropdownItem name="remove">
-                                        <icon type="trash-b" /> {__('删除')}
-                                    </dropdownItem>
-                                </dropdownMenu>
-                            </dropdown>
+                            <div>
+                                <buttonGroup size="small" shape="circle">
+                                    <i-button
+                                        type="text"
+                                        onClick={() => this.edit(params)}>
+                                        编辑
+                                    </i-button>
+                                    <i-button
+                                        type="text"
+                                        onClick={() => this.remove(params)}>
+                                        删除
+                                    </i-button>
+                                </buttonGroup>
+                            </div>
                         )
                     },
                 },
@@ -86,7 +85,7 @@ export default {
                 id: null,
                 name: '',
                 identity: '',
-                status: true,
+                status: '1',
             },
             minForm: false,
             rules: {
@@ -120,7 +119,6 @@ export default {
 
             let data = {}
             Object.keys(this.formItem).forEach(item => (data[item] = row[item]))
-            data.status = data.status == '1' ? true : false
             this.formItem = data
         },
         add: function() {
@@ -139,14 +137,6 @@ export default {
                     })
                 },
                 onCancel: () => {},
-            })
-        },
-        status(nodeData, status) {
-            this.apiPut('structure/enable', nodeData.id, {
-                status: status,
-            }).then(res => {
-                this.$set(nodeData, 'status', status)
-                utils.success(res.message)
             })
         },
         statusMany(type) {
@@ -205,7 +195,6 @@ export default {
         },
         saveResource(form) {
             var formData = this.formItem
-            formData.status = formData.status ? '1' : '0'
 
             this.apiPost('resource', formData).then(
                 res => {
@@ -231,7 +220,6 @@ export default {
         },
         updateResource(form) {
             var formData = this.formItem
-            formData.status = formData.status ? '1' : '0'
 
             this.apiPut('resource', this.formItem.id, formData).then(
                 res => {

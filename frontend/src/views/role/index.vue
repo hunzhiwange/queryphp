@@ -1,14 +1,10 @@
 <template>
-    <div id="resource-page">
+    <div class="position-category-page">
         <Row>
             <div class="min-form" v-show="minForm">
                 <div class="min-form-inner">
                     <legend>
-                        {{
-                            formItem.id
-                                ? __('编辑职位分类')
-                                : __('新增职位分类')
-                        }}
+                        {{ formItem.id ? __('编辑角色') : __('新增角色') }}
                     </legend>
                     <div class="min-form-body">
                         <i-form
@@ -26,9 +22,9 @@
                                             placeholder=""
                                         ></i-input>
                                     </FormItem>
-                                    <FormItem :label="__('备注')">
+                                    <FormItem :label="__('标识符')">
                                         <i-input
-                                            v-model="formItem.remark"
+                                            v-model="formItem.identity"
                                             type="textarea"
                                             :autosize="{minRows: 2, maxRows: 5}"
                                             placeholder=""
@@ -39,10 +35,10 @@
                                             v-model="formItem.status"
                                             size="large"
                                         >
-                                            <span slot="open">{{
+                                            <span slot="true">{{
                                                 __('启用')
                                             }}</span>
-                                            <span slot="close">{{
+                                            <span slot="false">{{
                                                 __('禁用')
                                             }}</span>
                                         </i-switch>
@@ -71,49 +67,55 @@
 
             <Row>
                 <i-col span="24">
-                    <div
-                        style="    position: relative;
-    max-height: 100%;
-    overflow: auto;"
+                    <i-table
+                        stripe
+                        :loading="loadingTable"
+                        border
+                        ref="table"
+                        :border="false"
+                        :columns="columns"
+                        :data="data"
+                        class="search-table"
+                        :height="tableHeight"
+                        @on-selection-change="onSelectionChange"
                     >
-                        <i-table
-                            stripe
-                            :loading="loadingTable"
-                            border
-                            ref="table"
-                            :border="false"
-                            :columns="columns"
-                            :data="data"
-                            class="search-table"
-                            :height="tableHeight"
-                        >
-                            <div slot="header">
-                                <search
-                                    @getDataFromSearch="getDataFromSearch"
-                                    @add="add"
-                                ></search>
-                            </div>
-                        </i-table>
-                    </div>
+                        <div slot="header">
+                            <search
+                                ref="search"
+                                @getDataFromSearch="getDataFromSearch"
+                                @add="add"
+                            ></search>
+                        </div>
+                    </i-table>
                 </i-col>
             </Row>
         </Row>
 
-        <Row class="m-t-10">
-            <ButtonGroup shape="circle">
-                <i-button
-                    type="primary"
-                    icon="eye"
-                    @click="statusMany('enable')"
-                    >{{ __('启用') }}</i-button
-                >
-                <i-button
-                    type="primary"
-                    icon="eye-disabled"
-                    @click="statusMany('disable')"
-                    >{{ __('禁用') }}</i-button
-                >
-            </ButtonGroup>
+        <Row class="m-t-10" justify="end">
+            <i-col span="8">
+                <ButtonGroup shape="circle">
+                    <i-button
+                        type="primary"
+                        icon="eye"
+                        @click="statusMany('1')"
+                        >{{ __('启用') }}</i-button
+                    >
+                    <i-button
+                        type="primary"
+                        icon="eye-disabled"
+                        @click="statusMany('0')"
+                        >{{ __('禁用') }}</i-button
+                    >
+                </ButtonGroup>
+            </i-col>
+            <i-col span="8" offset="8" class-name="fr">
+                <Page
+                    :total="total"
+                    show-sizer
+                    @on-change="changePage"
+                    @on-page-size-change="changePageSize"
+                ></Page>
+            </i-col>
         </Row>
     </div>
 </template>

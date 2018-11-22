@@ -58,9 +58,23 @@ class User extends Entity
             'readonly' => true,
         ],
         'name'      => [],
+        'identity'  => [],
         'password'  => [],
-        'status'    => [],
+        'status'    => [
+            self::ENUM => [
+                '0' => '禁用',
+                '1' => '启用',
+            ],
+        ],
         'create_at' => [],
+        'role'      => [
+            self::MANY_MANY     => Role::class,
+            'middle_entity'     => UserRole::class,
+            'source_key'        => 'id',
+            'target_key'        => 'id',
+            'middle_source_key' => 'user_id',
+            'middle_target_key' => 'role_id',
+        ],
     ];
 
     /**
@@ -76,6 +90,13 @@ class User extends Entity
      * @var string
      */
     private $name;
+
+    /**
+     * 唯一标识符.
+     *
+     * @var string
+     */
+    private $identity;
 
     /**
      * 密码.
@@ -97,6 +118,13 @@ class User extends Entity
      * @var string
      */
     private $createAt;
+
+    /**
+     * 角色.
+     *
+     * @var string
+     */
+    private $role;
 
     /**
      * setter.

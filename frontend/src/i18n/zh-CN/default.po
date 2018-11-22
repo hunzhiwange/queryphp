@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2018-11-12 21:40+0800\n"
-"PO-Revision-Date: 2018-11-12 21:40+0800\n"
+"PO-Revision-Date: 2018-11-21 15:14+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh_CN\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: src_router_router.js.tmp.i18n.js:1 src_views_login_index.vue.tmp.i18n.js:7
 msgid "登录"
-msgstr "login"
+msgstr ""
 
 #: src_router_router.js.tmp.i18n.js:2
 msgid "系统已锁定"
@@ -202,8 +202,6 @@ msgid ""
 "欢迎使用 QueryPHP Vue 单页面通用极速后台开发框架，本框架包含了基本认证、权"
 "限和账号管理功能，开发者可以在此基础上快速构建自己的应用。"
 msgstr ""
-"welcome to QueryPHP Vue 单页面通用极速后台开发框架，本框架包含了基本认证、"
-"权限和账号管理功能，开发者可以在此基础上快速构建自己的应用。"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:4
 msgid "捐赠"
@@ -899,4 +897,4 @@ msgstr ""
 
 #: src_views_structure_index.vue.tmp.i18n.js:11
 msgid "公司整个部门的组织结构"
-msgstr "allllxxx"
+msgstr ""

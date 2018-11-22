@@ -37,6 +37,7 @@
                                                 v-model.trim="form.name"
                                                 :placeholder="__('账号')"
                                                 size="large"
+                                                @on-change="refreshSeccode()"
                                             ></i-input>
                                         </FormItem>
                                         <FormItem prop="password">
@@ -60,7 +61,10 @@
                                                         size="large"
                                                     ></i-input>
                                                 </i-col>
-                                                <i-col span="12">
+                                                <i-col
+                                                    span="12"
+                                                    v-if="form.name"
+                                                >
                                                     <img
                                                         :src="codeUrl"
                                                         @click="
@@ -90,31 +94,33 @@
                                                 >{{ __('登录') }}</i-button
                                             >
                                         </FormItem>
-                                        <FormItem>
-                                            <Row>
-                                                <i-col span="12">
-                                                    <i-button
-                                                        type="text"
-                                                        size="large"
-                                                        >{{
-                                                            __('找回密码')
-                                                        }}</i-button
+                                        <!--
+                                            <FormItem>
+                                                <Row>
+                                                    <i-col span="12">
+                                                        <i-button
+                                                            type="text"
+                                                            size="large"
+                                                            >{{
+                                                                __('找回密码')
+                                                            }}</i-button
+                                                        >
+                                                    </i-col>
+                                                    <i-col
+                                                        span="12"
+                                                        style="text-align:right;"
                                                     >
-                                                </i-col>
-                                                <i-col
-                                                    span="12"
-                                                    style="text-align:right;"
-                                                >
-                                                    <i-button
-                                                        type="text"
-                                                        size="large"
-                                                        >{{
-                                                            __('新用户注册')
-                                                        }}</i-button
-                                                    >
-                                                </i-col>
-                                            </Row>
-                                        </FormItem>
+                                                        <i-button
+                                                            type="text"
+                                                            size="large"
+                                                            >{{
+                                                                __('新用户注册')
+                                                            }}</i-button
+                                                        >
+                                                    </i-col>
+                                                </Row>
+                                            </FormItem>
+                                        -->
                                     </i-form>
                                 </TabPane>
                                 <!--

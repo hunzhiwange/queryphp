@@ -11,9 +11,9 @@ export default {
             img_login_banner: img_login_banner,
             loading: false,
             form: {
-                name: 'admin',
-                password: '123456',
-                code: 'eeee',
+                name: '',
+                password: '',
+                code: '',
             },
             codeUrl: '',
             codeImg: ENV.BASE_API + '/:admin/login/code',

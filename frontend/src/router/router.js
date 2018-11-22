@@ -112,22 +112,13 @@ let appRouterData = [
                 meta: {
                     title: __('职位分类'),
                 },
-                component: importRouter('position_category/index'),
-            },
-            {
-                path: 'structure',
-                icon: '',
-                name: 'structure_index',
-                meta: {
-                    title: __('组织管理'),
-                },
-                component: importRouter('structure/index'),
+                component: importRouter('menu/index'),
             },
         ],
     },
     {
         path: '/permission',
-        icon: 'ios-gear',
+        icon: 'ios-people',
         name: 'permission',
         meta: {
             title: __('权限管理'),
@@ -135,13 +126,22 @@ let appRouterData = [
         component: layout,
         children: [
             {
+                path: 'user',
+                icon: '',
+                name: 'user_index',
+                meta: {
+                    title: __('用户管理'),
+                },
+                component: importRouter('user/index'),
+            },
+            {
                 path: 'role',
                 icon: '',
                 name: 'role_index',
                 meta: {
                     title: __('角色管理'),
                 },
-                component: importRouter('menu/index'),
+                component: importRouter('role/index'),
             },
             {
                 path: 'permission',
@@ -150,7 +150,7 @@ let appRouterData = [
                 meta: {
                     title: __('权限管理'),
                 },
-                component: importRouter('structure/index'),
+                component: importRouter('permission/index'),
             },
             {
                 path: 'resource',

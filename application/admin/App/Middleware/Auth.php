@@ -57,7 +57,10 @@ class Auth extends BaseAuth
             return;
         }
 
-        $request->query->set('token', $request->headers->get('token'));
+        // 兼容 header，也可以通过 get 或者 post 来设置 token
+        if ($token = $request->headers->get('token')) {
+            $request->query->set('token', $token);
+        }
 
         try {
             parent::handle($next, $request);
