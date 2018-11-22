@@ -1,13 +1,17 @@
 <template>
     <div class="search-wrap">
         <Row :gutter="16">
-            <Col span="18">
+            <i-col span="18">
                 <Row :gutter="16">
-                    <Col span="8">
-                        <Input v-model="searchForm.key" :placeholder="__('关键字')" clearable>
-                        </Input>
-                    </Col>
-                    <Col span="4">
+                    <i-col span="8">
+                        <i-input
+                            v-model="searchForm.key"
+                            :placeholder="__('关键字')"
+                            clearable
+                        >
+                        </i-input>
+                    </i-col>
+                    <i-col span="4">
                         <i-select
                             v-model="searchForm.status"
                             style="width:120px"
@@ -23,27 +27,44 @@
                                 >{{ item.title }}</i-option
                             >
                         </i-select>
-                    </Col>
-                    <Col span="4"></Col>
-                    <Col span="4"></Col>
-                    <Col span="4"></Col>
+                    </i-col>
+                    <i-col span="4"></i-col>
+                    <i-col span="4"></i-col>
+                    <i-col span="4"></i-col>
                 </Row>
                 <Row v-show="searchShow" :gutter="16" class="m-t-10">
-                    <Col span="8"></Col>
-                    <Col span="4"></Col>
-                    <Col span="4"></Col>
-                    <Col span="4"></Col>
-                    <Col span="4"></Col>
+                    <i-col span="8"></i-col>
+                    <i-col span="4"></i-col>
+                    <i-col span="4"></i-col>
+                    <i-col span="4"></i-col>
+                    <i-col span="4"></i-col>
                 </Row>
-            </Col>
-            <Col span="4">
-                <Button type="primary" icon="ios-search" @click.native.prevent="search()" class="m-r-5">搜索</Button>
-                <Button type="ghost" icon="refresh" @click.native.prevent="reset()" class="m-r-5">重置</Button>
+            </i-col>
+            <i-col span="4">
+                <i-button
+                    type="primary"
+                    icon="ios-search"
+                    @click.native.prevent="search()"
+                    class="m-r-5"
+                    >搜索</i-button
+                >
+                <i-button
+                    type="ghost"
+                    icon="refresh"
+                    @click.native.prevent="reset()"
+                    class="m-r-5"
+                    >重置</i-button
+                >
                 <a @click="toggleShow()" style="display:none;">
-                    {{ searchShow ? __('收起') : __('展开') }} <Icon :type="( searchShow ? __('chevron-up') : __('chevron-down') )"></Icon>
+                    {{ searchShow ? __('收起') : __('展开') }}
+                    <Icon
+                        :type="
+                            searchShow ? __('chevron-up') : __('chevron-down')
+                        "
+                    ></Icon>
                 </a>
-            </Col>
-            <Col span="2" style="text-align:right">
+            </i-col>
+            <i-col span="2" style="text-align:right">
                 <i-button
                     size="small"
                     type="text"
@@ -52,7 +73,7 @@
                     ><Icon type="android-add-circle"></Icon>
                     {{ __('新增') }}</i-button
                 >
-            </Col>
+            </i-col>
         </Row>
     </div>
 </template>
