@@ -30,4 +30,7 @@
             <directory suffix=".php">common</directory>
         </whitelist>
     </filter>
+    <php>
+        <env name="ENVIRONMENT" value="testing"/>
+    </php>
 </phpunit>

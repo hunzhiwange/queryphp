@@ -25,6 +25,9 @@
         </whitelist>
     </filter>
     <logging>
-        <log type="coverage-html" target="logs/report"/>
+        <log type="coverage-html" target="runtime/tests/report"/>
     </logging>
+    <php>
+        <env name="ENVIRONMENT" value="testing"/>
+    </php>
 </phpunit>
