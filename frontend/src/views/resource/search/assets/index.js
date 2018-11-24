@@ -11,7 +11,6 @@ export default {
     data() {
         return {
             searchForm: Object.assign({}, resetFrom),
-            searchReset: Object.assign({}, resetFrom),
             searchRule: {},
             searchItem: {
                 status: [
@@ -37,9 +36,7 @@ export default {
             })
         },
         reset() {
-            Object.keys(this.searchForm).forEach(key => {
-                this.searchForm[key] = this.searchReset[key]
-            })
+            Object.assign(this.searchForm, resetFrom)
         },
         add() {
             this.$emit('add')
