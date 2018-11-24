@@ -45,6 +45,8 @@ install:
 script:
   - mkdir -p logs
   - mkdir -p build/logs
+  - mkdir -p runtime/tests
+  - php leevel migrate:migrate -e testing
   - php vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
 
 after_success:

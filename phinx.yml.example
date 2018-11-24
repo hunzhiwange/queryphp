@@ -24,12 +24,12 @@ environments:
         charset:              utf8
 
     testing:
-        adapter:              mysql
-        host:                 localhost
-        name:                 queryphp_testing_db
-        user:                 root
-        pass:                 ''
-        port:                 3306
-        charset:              utf8
+        adapter: mysql
+        host: '127.0.0.1'
+        name: test
+        user: root
+        pass: ''
+        port: 3306
+        charset: utf8
 
 version_order:                creation
