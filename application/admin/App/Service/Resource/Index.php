@@ -81,7 +81,7 @@ class Index
     protected function condition(array $input): Closure
     {
         return function (Select $select, IEntity $entity) use ($input) {
-            if (null !== $input['key']) {
+            if ($input['key']) {
                 $select->where(function ($select) use ($input) {
                     $select->orWhere('name', 'like', '%'.$input['key'].'%')->
 
@@ -89,7 +89,7 @@ class Index
                 });
             }
 
-            if (is_string($input['status'])) {
+            if ($input['status'] || '0' === $input['status']) {
                 $select->where('status', $input['status']);
             }
 

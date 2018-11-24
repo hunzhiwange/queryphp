@@ -14,7 +14,6 @@
                     <i-col span="4">
                         <i-select
                             v-model="searchForm.status"
-                            style="width:120px"
                             :placeholder="__('选择状态')"
                             clearable
                             @on-change="search()"
@@ -28,8 +27,33 @@
                             >
                         </i-select>
                     </i-col>
-                    <i-col span="4"></i-col>
-                    <i-col span="4"></i-col>
+                    <i-col span="6">
+                        <i-button
+                            type="primary"
+                            icon="ios-search"
+                            @click.native.prevent="search()"
+                            class="m-r-5"
+                            >搜索</i-button
+                        >
+                        <i-button
+                            type="ghost"
+                            icon="refresh"
+                            @click.native.prevent="reset()"
+                            class="m-r-5"
+                            >重置</i-button
+                        >
+                        <a @click="toggleShow()" style="display:none;">
+                            {{ searchShow ? __('收起') : __('展开') }}
+                            <Icon
+                                :type="
+                                    searchShow
+                                        ? __('chevron-up')
+                                        : __('chevron-down')
+                                "
+                            ></Icon>
+                        </a>
+                    </i-col>
+                    <i-col span="2"></i-col>
                     <i-col span="4"></i-col>
                 </Row>
                 <Row v-show="searchShow" :gutter="16" class="m-t-10">
@@ -40,30 +64,7 @@
                     <i-col span="4"></i-col>
                 </Row>
             </i-col>
-            <i-col span="4">
-                <i-button
-                    type="primary"
-                    icon="ios-search"
-                    @click.native.prevent="search()"
-                    class="m-r-5"
-                    >搜索</i-button
-                >
-                <i-button
-                    type="ghost"
-                    icon="refresh"
-                    @click.native.prevent="reset()"
-                    class="m-r-5"
-                    >重置</i-button
-                >
-                <a @click="toggleShow()" style="display:none;">
-                    {{ searchShow ? __('收起') : __('展开') }}
-                    <Icon
-                        :type="
-                            searchShow ? __('chevron-up') : __('chevron-down')
-                        "
-                    ></Icon>
-                </a>
-            </i-col>
+            <i-col span="4"> &nbsp; </i-col>
             <i-col span="2" style="text-align:right">
                 <i-button
                     size="small"

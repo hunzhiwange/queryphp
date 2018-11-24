@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Leevel\Bootstrap\Testing\Database;
 use Leevel\Bootstrap\Testing\TestCase as TestCases;
 
 /**
@@ -28,4 +29,6 @@ use Leevel\Bootstrap\Testing\TestCase as TestCases;
 abstract class TestCase extends TestCases
 {
     use Helper;
+    use Project;
+    use Database;
 }

@@ -25,20 +25,11 @@ namespace Tests;
  */
 trait Helper
 {
-    protected function varJson(array $data, ?int $id = null)
-    {
-        $method = debug_backtrace()[1]['function'].$id;
-
-        list($traceDir, $className) = $this->makeLogsDir();
-
-        file_put_contents(
-            $traceDir.'/'.sprintf('%s::%s.log', $className, $method),
-            $result = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)
-        );
-
-        return $result;
-    }
-
+    /**
+     * 创建日志目录.
+     *
+     * @var array
+     */
     protected function makeLogsDir(): array
     {
         $tmp = explode('\\', static::class);
