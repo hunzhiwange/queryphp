@@ -5,6 +5,7 @@
   <a href="https://travis-ci.org/hunzhiwange/queryphp">
     <img alt="Build Status" src="https://img.shields.io/travis/hunzhiwange/queryphp.svg" /></a>
   <a href='https://coveralls.io/github/hunzhiwange/queryphp?branch=master'><img src='https://coveralls.io/repos/github/hunzhiwange/queryphp/badge.svg?branch=master' alt='Coverage Status' /></a>
+  <a href='https://coveralls.io/github/hunzhiwange/framework?branch=master'><img src='https://coveralls.io/repos/github/hunzhiwange/framework/badge.svg?branch=master' alt='Coverage Status' /></a>
   <a href="https://github.com/hunzhiwange/queryphp/releases">
     <img alt="Latest Version" src="https://poser.pugx.org/hunzhiwange/queryphp/version" /></a>
   <a href="http://opensource.org/licenses/MIT">
