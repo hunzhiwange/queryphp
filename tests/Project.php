@@ -18,6 +18,7 @@ use Common\App\Exception\Runtime;
 use Common\App\Kernel;
 use Common\App\KernelConsole;
 use Leevel\Bootstrap\Project as BaseProject;
+use Leevel\Http\Request;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
 use Leevel\Kernel\IRuntime;
@@ -49,6 +50,8 @@ trait Project
         $project->singleton(IKernelConsole::class, KernelConsole::class);
 
         $project->singleton(IRuntime::class, Runtime::class);
+
+        $project->instance('request', Request::createFromGlobals());
 
         $project->make(IKernelConsole::class)->bootstrap();
 
