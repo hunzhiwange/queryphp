@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: QueryPHP Validate\n"
 "POT-Creation-Date: 2017-11-18 14:10+0800\n"
-"PO-Revision-Date: 2018-08-11 10:21+0800\n"
+"PO-Revision-Date: 2018-11-25 18:49+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: validate.php:2283 validate.php:2323
 msgid "{field} 不能为空"
-msgstr "{field} can not be empty"
+msgstr "{field} cannot be empty"
 
 #: validate.php:2284
 msgid "{field} 必须是数字"
@@ -186,7 +186,7 @@ msgstr "{field} must be null"
 
 #: validate.php:2325
 msgid "{field} 不能为 null"
-msgstr "{field} can not be null"
+msgstr "{field} cannot be null"
 
 #: validate.php:2326
 msgid "{field} 长度不符合要求 {rule}"
