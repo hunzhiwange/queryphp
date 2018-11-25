@@ -12,12 +12,6 @@
     stopOnFailure="false">
     <listeners>
         <listener class="NunoMaduro\Collision\Adapters\Phpunit\Listener" />
-        <listener class="hollodotme\PHPUnit\TestListeners\TestDox\Markdown">
-            <arguments>
-                <string name="environment">Development</string>
-                <string name="outputFile">build/logs/TestDox.md</string>
-            </arguments>
-        </listener>
     </listeners>
     <testsuites>
         <testsuite name="Application Test Suite">
