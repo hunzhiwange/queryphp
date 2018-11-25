@@ -48,6 +48,7 @@ script:
   - mkdir -p runtime/tests
   - cp .testing.example .testing
   - cp .env.example .env
+  - cp phinx.yml.example phinx.yml
   - php leevel migrate:migrate -e testing
   - php vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
 
