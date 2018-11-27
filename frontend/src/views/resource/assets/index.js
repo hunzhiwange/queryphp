@@ -1,7 +1,6 @@
 import http from '@/utils/http'
 import {validateAlphaDash} from '@/utils/validate'
 import Vue from 'vue'
-
 import search from './../search/index'
 
 export default {
@@ -13,26 +12,26 @@ export default {
             columns: [
                 {
                     type: 'selection',
-                    width: 40,
+                    width: 60,
                     align: 'center',
                     className: 'table-selection',
                 },
                 {
                     type: 'index',
-                    width: 20,
+                    width: 50,
                     align: 'center',
                     className: 'table-index',
                 },
                 {
-                    title: '名字',
+                    title: this.__('名字'),
                     key: 'name',
                 },
                 {
-                    title: '标识符',
+                    title: this.__('标识符'),
                     key: 'identity',
                 },
                 {
-                    title: '状态',
+                    title: this.__('状态'),
                     key: 'status_enum',
                     width: 120,
                     render: (h, params) => {
@@ -49,7 +48,7 @@ export default {
                     },
                 },
                 {
-                    title: '操作',
+                    title: this.__('操作'),
                     key: 'action',
                     width: 120,
                     fixed: 'right',
@@ -61,12 +60,12 @@ export default {
                                     <i-button
                                         type="text"
                                         onClick={() => this.edit(params)}>
-                                        编辑
+                                        {this.__('编辑')}
                                     </i-button>
                                     <i-button
                                         type="text"
                                         onClick={() => this.remove(params)}>
-                                        删除
+                                        {this.__('删除')}
                                     </i-button>
                                 </buttonGroup>
                             </div>
@@ -99,6 +98,9 @@ export default {
                     {
                         required: true,
                         message: this.__('请输入资源标识符'),
+                    },
+                    {
+                        validator: validateAlphaDash,
                     },
                 ],
             },

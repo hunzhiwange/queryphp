@@ -4,7 +4,7 @@ const resetFrom = {
     key: '',
     status: '',
     page: 1,
-    pageSize: 10,
+    size: 10,
 }
 
 export default {
@@ -14,8 +14,8 @@ export default {
             searchRule: {},
             searchItem: {
                 status: [
-                    {status: '1', title: __('启用')},
-                    {status: '0', title: __('禁用')},
+                    {status: '1', title: this.__('启用')},
+                    {status: '0', title: this.__('禁用')},
                 ],
             },
             searchShow: false,
@@ -24,11 +24,11 @@ export default {
     methods: {
         search(page, pageSize) {
             if (page) {
-                this.searchForm.page = 1
+                this.searchForm.page = page
             }
 
             if (pageSize) {
-                this.searchForm.pageSize = pageSize
+                this.searchForm.size = pageSize
             }
 
             this.apiGet('resource', {}, this.searchForm).then(res => {

@@ -33,14 +33,14 @@
                             icon="ios-search"
                             @click.native.prevent="search()"
                             class="m-r-5"
-                            >搜索</i-button
+                            >{{ __('搜索') }}</i-button
                         >
                         <i-button
                             type="ghost"
                             icon="refresh"
                             @click.native.prevent="reset()"
                             class="m-r-5"
-                            >重置</i-button
+                            >{{ __('重置') }}</i-button
                         >
                         <a @click="toggleShow()" style="display:none;">
                             {{ searchShow ? __('收起') : __('展开') }}

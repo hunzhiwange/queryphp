@@ -60,7 +60,7 @@ util.handleItem = function(vm, item) {
         meta: {
             title: item.meta && item.meta.title ? item.meta.title : '',
         },
-        icon: typeof item.icon === 'undefined' ? '' : item.icon,
+        icon: item.icon ? item.icon : '',
         name: item.name,
         path: item.path,
     }
@@ -75,6 +75,7 @@ util.setCurrentPath = function(vm, name) {
         if (item.children.length === 1) {
             if (item.children[0].name === name) {
                 curRouter = util.handleItem(vm, item)
+
                 if (item.name === 'otherRouter') {
                     isOtherRouter = true
                 }
@@ -83,6 +84,7 @@ util.setCurrentPath = function(vm, name) {
             item.children.forEach(child => {
                 if (child.name === name) {
                     curRouter = util.handleItem(vm, child)
+
                     if (item.name === 'otherRouter') {
                         isOtherRouter = true
                     }
@@ -93,7 +95,7 @@ util.setCurrentPath = function(vm, name) {
 
     if (name === 'dashboard') {
         currentPathArr = [curRouter]
-    } else if (name && (name.indexOf('_index') >= 0 || isOtherRouter)) {
+    } else if (name && isOtherRouter) {
         currentPathArr = [
             util.handleItem(
                 vm,

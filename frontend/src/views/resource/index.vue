@@ -31,9 +31,14 @@
                                                     placeholder=""
                                                 ></i-input>
                                             </FormItem>
-                                            <FormItem :label="__('标识符')">
+                                            <FormItem
+                                                :label="__('标识符')"
+                                                prop="identity"
+                                            >
                                                 <i-input
-                                                    v-model="formItem.identity"
+                                                    v-model.trim="
+                                                        formItem.identity
+                                                    "
                                                     placeholder=""
                                                 ></i-input>
                                             </FormItem>
@@ -132,5 +137,4 @@
     </div>
 </template>
 
-<style lang="less" src="./assets/index.less"></style>
 <script src="./assets/index.js"></script>
