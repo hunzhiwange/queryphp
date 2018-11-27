@@ -22,6 +22,9 @@
         "codedungeon/phpunit-result-printer": "^0.20.1"
     },
     "autoload": {
+        "files": [
+            "common/Infra/functions.php"
+        ],
         "psr-4": {
             "App\\" : "application/app",
             "Admin\\" : "application/admin",
