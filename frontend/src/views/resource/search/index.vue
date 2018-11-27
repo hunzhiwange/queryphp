@@ -6,7 +6,7 @@
                     <i-col span="8">
                         <i-input
                             v-model="searchForm.key"
-                            :placeholder="__('关键字')"
+                            :placeholder="__('名字') + ',' + __('标识符')"
                             clearable
                         >
                         </i-input>

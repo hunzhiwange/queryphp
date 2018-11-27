@@ -30,7 +30,7 @@ export default {
         },
         handleUnlock() {
             if (!this.password) {
-                utils.warning(__('请输入密码'))
+                utils.warning(this.__('请输入密码'))
                 return
             }
 

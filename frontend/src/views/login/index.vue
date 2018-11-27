@@ -13,7 +13,7 @@
                 <Row>
                     <i-col span="14">
                         <div class="pull-left big-logo">
-                            <img :src="img_login_banner" alt="" />
+                            <img :src="img_login_banner" alt="" width="610px" />
                         </div>
                     </i-col>
                     <i-col span="10">

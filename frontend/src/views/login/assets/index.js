@@ -21,33 +21,33 @@ export default {
                 name: [
                     {
                         required: true,
-                        message: __('请输入账号'),
+                        message: this.__('请输入账号'),
                         trigger: 'blur',
                     },
                 ],
                 password: [
                     {
                         required: true,
-                        message: __('请输入密码'),
+                        message: this.__('请输入密码'),
                         trigger: 'blur',
                     },
                     {
                         min: 6,
                         max: 12,
-                        message: __('长度在 %d 到 %d 个字符', 6, 12),
+                        message: this.__('长度在 %d 到 %d 个字符', 6, 12),
                         trigger: 'blur',
                     },
                 ],
                 code: [
                     {
                         required: true,
-                        message: __('请输入验证码'),
+                        message: this.__('请输入验证码'),
                         trigger: 'blur',
                     },
                     {
                         min: 4,
                         max: 4,
-                        message: __('长度为 %d 个字符', 4),
+                        message: this.__('长度为 %d 个字符', 4),
                         trigger: 'blur',
                     },
                     {

@@ -86,8 +86,8 @@ export default {
         },
         logout() {
             this.$Modal.confirm({
-                title: __('提示'),
-                content: __('确认退出吗?'),
+                title: this.__('提示'),
+                content: this.__('确认退出吗?'),
                 onOk: () => {
                     this.changePasswordLogout()
                 },

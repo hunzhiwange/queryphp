@@ -10,7 +10,7 @@ export default {
 
             setTimeout(() => {
                 if (!value) {
-                    callback(new Error(__('请输入菜单方法名称')))
+                    callback(new Error(this.__('请输入菜单方法名称')))
                 } else {
                     return callback()
                 }
@@ -24,7 +24,7 @@ export default {
 
             setTimeout(() => {
                 if (!value) {
-                    callback(new Error(__('请输入菜单控制器名称')))
+                    callback(new Error(this.__('请输入菜单控制器名称')))
                 } else {
                     return callback()
                 }
@@ -38,7 +38,7 @@ export default {
 
             setTimeout(() => {
                 if (!value) {
-                    callback(new Error(__('请输入菜单路由名称')))
+                    callback(new Error(this.__('请输入菜单路由名称')))
                 } else {
                     return callback()
                 }
@@ -52,7 +52,7 @@ export default {
 
             setTimeout(() => {
                 if (!value) {
-                    callback(new Error(__('请输入菜单路由路径')))
+                    callback(new Error(this.__('请输入菜单路由路径')))
                 } else {
                     return callback()
                 }
@@ -66,7 +66,7 @@ export default {
 
             setTimeout(() => {
                 if (!value) {
-                    callback(new Error(__('请输入菜单路由组件')))
+                    callback(new Error(this.__('请输入菜单路由组件')))
                 } else {
                     return callback()
                 }
@@ -102,13 +102,13 @@ export default {
                 title: [
                     {
                         required: true,
-                        message: __('请输入菜单标题'),
+                        message: this.__('请输入菜单标题'),
                     },
                 ],
                 app: [
                     {
                         required: true,
-                        message: __('请输入菜单应用名称'),
+                        message: this.__('请输入菜单应用名称'),
                     },
                     {
                         validator: validateAlphaDash,
@@ -278,7 +278,7 @@ export default {
             this.formItem = data
 
             let pidOptions = this.getArraySelect(this.dataTree, true)
-            pidOptions.unshift({value: -1, label: __('根菜单')})
+            pidOptions.unshift({value: -1, label: this.__('根菜单')})
             this.pidOptions = pidOptions
             let parentID = this.getParentID(root, nodeData).reverse()
             parentID.pop()
@@ -385,7 +385,7 @@ export default {
             this.pidDisabled = true
 
             let pidOptions = this.getArraySelect(this.dataTree)
-            pidOptions.unshift({value: -1, label: __('根菜单')})
+            pidOptions.unshift({value: -1, label: this.__('根菜单')})
             this.pidOptions = pidOptions
             setTimeout(() => {
                 this.formItem.pid = [-1]
@@ -397,8 +397,8 @@ export default {
             }
 
             this.$Modal.confirm({
-                title: __('提示'),
-                content: __('确认删除该菜单?'),
+                title: this.__('提示'),
+                content: this.__('确认删除该菜单?'),
                 onOk: () => {
                     this.apiDelete('menu', nodeData.id).then(res => {
                         utils.success(res.message)
@@ -433,7 +433,7 @@ export default {
         statusMany(type) {
             let selected = this.$refs.tree.getCheckedNodes()
             if (!selected.length) {
-                utils.warning(__('请勾选数据'))
+                utils.warning(this.__('请勾选数据'))
                 return
             }
 

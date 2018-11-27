@@ -34,11 +34,6 @@
                                             <FormItem :label="__('标识符')">
                                                 <i-input
                                                     v-model="formItem.identity"
-                                                    type="textarea"
-                                                    :autosize="{
-                                                        minRows: 2,
-                                                        maxRows: 5,
-                                                    }"
                                                     placeholder=""
                                                 ></i-input>
                                             </FormItem>

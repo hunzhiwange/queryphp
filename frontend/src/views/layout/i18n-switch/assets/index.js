@@ -33,7 +33,7 @@ export default {
 
             this.$forceUpdate()
 
-            utils.success(__('切换语言成功'))
+            utils.success(this.__('切换语言成功'))
         },
     },
     created() {

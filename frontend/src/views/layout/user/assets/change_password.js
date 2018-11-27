@@ -4,9 +4,9 @@ export default {
     data() {
         var validateConfirmPassword = (rule, value, callback) => {
             if (value === '') {
-                callback(new Error(__('请再次输入密码')))
+                callback(new Error(this.__('请再次输入密码')))
             } else if (value !== this.form.new_pwd) {
-                callback(new Error(__('两次输入密码不一致!')))
+                callback(new Error(this.__('两次输入密码不一致!')))
             } else {
                 callback()
             }
@@ -25,26 +25,26 @@ export default {
                 old_pwd: [
                     {
                         required: true,
-                        message: __('请输入旧密码'),
+                        message: this.__('请输入旧密码'),
                         trigger: 'blur',
                     },
                     {
                         min: 6,
                         max: 12,
-                        message: __('长度在 %d 到 %d 个字符', 6, 12),
+                        message: this.__('长度在 %d 到 %d 个字符', 6, 12),
                         trigger: 'blur',
                     },
                 ],
                 new_pwd: [
                     {
                         required: true,
-                        message: __('请输入新密码'),
+                        message: this.__('请输入新密码'),
                         trigger: 'blur',
                     },
                     {
                         min: 6,
                         max: 12,
-                        message: __('长度在 %d 到 %d 个字符', 6, 12),
+                        message: this.__('长度在 %d 到 %d 个字符', 6, 12),
                         trigger: 'blur',
                     },
                 ],
@@ -57,7 +57,7 @@ export default {
                     {
                         min: 6,
                         max: 12,
-                        message: __('长度在 %d 到 %d 个字符', 6, 12),
+                        message: this.__('长度在 %d 到 %d 个字符', 6, 12),
                         trigger: 'blur',
                     },
                 ],

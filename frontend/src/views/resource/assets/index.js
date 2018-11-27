@@ -92,13 +92,13 @@ export default {
                 name: [
                     {
                         required: true,
-                        message: __('请输入资源名字'),
+                        message: this.__('请输入资源名字'),
                     },
                 ],
                 identity: [
                     {
                         required: true,
-                        message: __('请输入资源标识符'),
+                        message: this.__('请输入资源标识符'),
                     },
                 ],
             },
@@ -127,8 +127,8 @@ export default {
         },
         remove(params) {
             this.$Modal.confirm({
-                title: __('提示'),
-                content: __('确认删除该资源?'),
+                title: this.__('提示'),
+                content: this.__('确认删除该资源?'),
                 onOk: () => {
                     this.apiDelete('resource', params.row.id).then(res => {
                         utils.success(res.message)
@@ -143,7 +143,7 @@ export default {
             let selected = this.selectedData
 
             if (!selected.length) {
-                utils.warning(__('请勾选数据'))
+                utils.warning(this.__('请勾选数据'))
                 return
             }
 
@@ -159,7 +159,7 @@ export default {
                         this.$set(
                             this.data[index],
                             'status_enum',
-                            type === '1' ? __('启用') : __('禁用')
+                            type === '1' ? this.__('启用') : this.__('禁用')
                         )
                     }
                 })

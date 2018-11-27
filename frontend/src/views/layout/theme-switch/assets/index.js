@@ -7,56 +7,56 @@ export default {
             themeList: [
                 {
                     name: 'black_b',
-                    title: __('青蓝冰水') + '.' + __('暗夜'),
+                    title: this.__('青蓝冰水') + '.' + this.__('暗夜'),
                     menu: '#ffde00',
                     element: '#2d8cf0',
                     placement: 'top',
                 },
                 {
                     name: 'black_g',
-                    title: __('千山一碧') + '.' + __('暗夜'),
+                    title: this.__('千山一碧') + '.' + this.__('暗夜'),
                     menu: 'rgba(174, 221, 129, 1)',
                     element: '#33b976',
                     placement: 'top',
                 },
                 {
                     name: 'black_y',
-                    title: __('灿若云霞') + '.' + __('暗夜'),
+                    title: this.__('灿若云霞') + '.' + this.__('暗夜'),
                     menu: 'rgba(219, 208, 167, 1)',
                     element: 'rgba(230, 155, 3, 1)',
                     placement: 'top',
                 },
                 {
                     name: 'black_r',
-                    title: __('红尘有你') + '.' + __('暗夜'),
+                    title: this.__('红尘有你') + '.' + this.__('暗夜'),
                     menu: 'rgba(112, 149, 159, 1)',
                     element: 'rgba(186, 40, 53, 1)',
                     placement: 'top',
                 },
                 {
                     name: 'light_b',
-                    title: __('青蓝冰水') + '.' + __('光天'),
+                    title: this.__('青蓝冰水') + '.' + this.__('光天'),
                     menu: '#eeeeee',
                     element: '#2d8cf0',
                     placement: 'bottom',
                 },
                 {
                     name: 'light_g',
-                    title: __('千山一碧') + '.' + __('光天'),
+                    title: this.__('千山一碧') + '.' + this.__('光天'),
                     menu: '#eeeeee',
                     element: '#33b976',
                     placement: 'bottom',
                 },
                 {
                     name: 'light_y',
-                    title: __('灿若云霞') + '.' + __('光天'),
+                    title: this.__('灿若云霞') + '.' + this.__('光天'),
                     menu: '#eeeeee',
                     element: 'rgba(230, 155, 3, 1)',
                     placement: 'bottom',
                 },
                 {
                     name: 'light_r',
-                    title: __('红尘有你') + '.' + __('光天'),
+                    title: this.__('红尘有你') + '.' + this.__('光天'),
                     menu: '#eee',
                     element: 'rgba(186, 40, 53, 1)',
                     placement: 'bottom',
@@ -129,7 +129,7 @@ export default {
 
             this.themeSelect = false
 
-            utils.success(__('主题切换成功'))
+            utils.success(this.__('主题切换成功'))
         },
     },
     created() {
