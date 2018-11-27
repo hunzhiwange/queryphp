@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: QueryPHP Validate\n"
-"POT-Creation-Date: 2017-11-18 14:11+0800\n"
-"PO-Revision-Date: 2018-08-11 10:24+0800\n"
+"POT-Creation-Date: 2018-11-27 12:51+0800\n"
+"PO-Revision-Date: 2018-11-27 12:51+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh\n"
@@ -16,258 +16,262 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: validate.php:2283 validate.php:2323
+#: Validate.php:80 Validate.php:120
 msgid "{field} 不能为空"
 msgstr ""
 
-#: validate.php:2284
+#: Validate.php:81
 msgid "{field} 必须是数字"
 msgstr ""
 
-#: validate.php:2285
+#: Validate.php:82
 msgid "{field} 必须是浮点数"
 msgstr ""
 
-#: validate.php:2286
+#: Validate.php:83
 msgid "{field} 必须是双精度浮点数"
 msgstr ""
 
-#: validate.php:2287
+#: Validate.php:84
 msgid "{field} 必须是布尔值"
 msgstr ""
 
-#: validate.php:2288
+#: Validate.php:85
 msgid "{field} 必须是数组"
 msgstr ""
 
-#: validate.php:2289
+#: Validate.php:86
 msgid "{field} 必须是 yes、on、true 或者 1"
 msgstr ""
 
-#: validate.php:2290
+#: Validate.php:87
 msgid "{field} 不是正确的日期格式"
 msgstr ""
 
-#: validate.php:2291
+#: Validate.php:88
 msgid "{field} 必须使用日期格式 {rule}"
 msgstr ""
 
-#: validate.php:2292
+#: Validate.php:89
 msgid "{field} 不是正确的时区"
 msgstr ""
 
-#: validate.php:2293
+#: Validate.php:90
 msgid "{field} 只能是字母"
 msgstr ""
 
-#: validate.php:2294
+#: Validate.php:91
 msgid "{field} 只能是大写字母"
 msgstr ""
 
-#: validate.php:2295
+#: Validate.php:92
 msgid "{field} 只能是小写字母"
 msgstr ""
 
-#: validate.php:2296
+#: Validate.php:93
 msgid "{field} 只能是字母和数字"
 msgstr ""
 
-#: validate.php:2297
+#: Validate.php:94
 msgid "{field} 只能是字母、数字、短横线和下划线"
 msgstr ""
 
-#: validate.php:2298
+#: Validate.php:95
 msgid "{field} 只能是汉字"
 msgstr ""
 
-#: validate.php:2299
+#: Validate.php:96
 msgid "{field} 只能是汉字、字母、数字"
 msgstr ""
 
-#: validate.php:2300
+#: Validate.php:97
 msgid "{field} 只能是汉字、字母、数字、短横线和下划线"
 msgstr ""
 
-#: validate.php:2301
+#: Validate.php:98
 msgid "{field} 不是有效的 URL 地址"
 msgstr ""
 
-#: validate.php:2302
+#: Validate.php:99
 msgid "{field} 不是有效的域名或者 IP"
 msgstr ""
 
-#: validate.php:2303
+#: Validate.php:100
 msgid "{field} 不是有效的 IP 地址"
 msgstr ""
 
-#: validate.php:2304
+#: Validate.php:101
 msgid "{field} 不是有效的 IPV4 地址"
 msgstr ""
 
-#: validate.php:2305
+#: Validate.php:102
 msgid "{field} 不是有效的 IPV6 地址"
 msgstr ""
 
-#: validate.php:2306
+#: Validate.php:103
 msgid "{field} 必须在 {rule} 范围内"
 msgstr ""
 
-#: validate.php:2307
+#: Validate.php:104
 msgid "{field} 不能在 {rule} 范围内"
 msgstr ""
 
-#: validate.php:2308
+#: Validate.php:105
 msgid "{field} 只能在 {rule} 和 {rule1} 之间，不包含等于"
 msgstr ""
 
-#: validate.php:2309
+#: Validate.php:106
 msgid "{field} 不在 {rule} 和 {rule1} 之间，不包含等于"
 msgstr ""
 
-#: validate.php:2310
+#: Validate.php:107
 msgid "{field} 只能在 {rule} 和 {rule1} 之间，包含等于"
 msgstr ""
 
-#: validate.php:2311
+#: Validate.php:108
 msgid "{field} 不在 {rule} 和 {rule1} 之间，包含等于"
 msgstr ""
 
-#: validate.php:2312
+#: Validate.php:109
 msgid "{field} 必须大于 {rule}"
 msgstr ""
 
-#: validate.php:2313
+#: Validate.php:110
 msgid "{field} 必须大于等于 {rule}"
 msgstr ""
 
-#: validate.php:2314
+#: Validate.php:111
 msgid "{field} 必须小于 {rule}"
 msgstr ""
 
-#: validate.php:2315
+#: Validate.php:112
 msgid "{field} 必须小于等于 {rule}"
 msgstr ""
 
-#: validate.php:2316
+#: Validate.php:113
 msgid "{field} 必须等于 {rule}"
 msgstr ""
 
-#: validate.php:2317
+#: Validate.php:114
 msgid "{field} 不能等于 {rule}"
 msgstr ""
 
-#: validate.php:2318
+#: Validate.php:115
 msgid "{field} 必须等于字段 {rule}"
 msgstr ""
 
-#: validate.php:2319
+#: Validate.php:116
 msgid "{field} 不能等于字段 {rule}"
 msgstr ""
 
-#: validate.php:2320
+#: Validate.php:117
 msgid "{field} 必须完全等于 {rule}"
 msgstr ""
 
-#: validate.php:2321
+#: Validate.php:118
 msgid "{field} 不能完全等于 {rule}"
 msgstr ""
 
-#: validate.php:2322
+#: Validate.php:119
 msgid "{field} 必须为空"
 msgstr ""
 
-#: validate.php:2324
+#: Validate.php:121
 msgid "{field} 必须 null"
 msgstr ""
 
-#: validate.php:2325
+#: Validate.php:122
 msgid "{field} 不能为 null"
 msgstr ""
 
-#: validate.php:2326
+#: Validate.php:123
 msgid "{field} 长度不符合要求 {rule}"
 msgstr ""
 
-#: validate.php:2327
+#: Validate.php:124
 msgid "{field} 长度不能超过 {rule}"
 msgstr ""
 
-#: validate.php:2328
+#: Validate.php:125
 msgid "{field} 长度不能小于 {rule}"
 msgstr ""
 
-#: validate.php:2329
+#: Validate.php:126
 msgid "{field} 字符串中的字符必须都是数字"
 msgstr ""
 
-#: validate.php:2330
+#: Validate.php:127
 msgid "{field} 类型不符合要求 {rule}"
 msgstr ""
 
-#: validate.php:2331
+#: Validate.php:128
 msgid "{field} 必须全部是小写"
 msgstr ""
 
-#: validate.php:2332
+#: Validate.php:129
 msgid "{field} 必须全部是大写"
 msgstr ""
 
-#: validate.php:2333
+#: Validate.php:130
 msgid "{field} 不满足最小长度 {rule}"
 msgstr ""
 
-#: validate.php:2334
+#: Validate.php:131
 msgid "{field} 不满足最大长度 {rule}"
 msgstr ""
 
-#: validate.php:2335
+#: Validate.php:132
 msgid "{field} 必须是有效的中国大陆身份证"
 msgstr ""
 
-#: validate.php:2336
+#: Validate.php:133
 msgid "{field} 必须是有效的中国邮政编码"
 msgstr ""
 
-#: validate.php:2337
+#: Validate.php:134
 msgid "{field} 必须是有效的 QQ 号码"
 msgstr ""
 
-#: validate.php:2338
+#: Validate.php:135
 msgid "{field} 必须是有效的电话号码或者手机号"
 msgstr ""
 
-#: validate.php:2339
+#: Validate.php:136
 msgid "{field} 必须是有效的手机号"
 msgstr ""
 
-#: validate.php:2340
+#: Validate.php:137
 msgid "{field} 必须是有效的电话号码"
 msgstr ""
 
-#: validate.php:2341
+#: Validate.php:138
 msgid "{field} 必须为正确的电子邮件格式"
 msgstr ""
 
-#: validate.php:2342
+#: Validate.php:139
 msgid "{field} 必须为正确的符合 luhn 格式算法银行卡"
 msgstr ""
 
-#: validate.php:2343
+#: Validate.php:140
 msgid "{field} 日期不能小于 {rule}"
 msgstr ""
 
-#: validate.php:2344
+#: Validate.php:141
 msgid "{field} 日期不能超过 {rule}"
 msgstr ""
 
-#: validate.php:2345
+#: Validate.php:142
 msgid "{field} 不允许的 IP 访问 {rule}"
 msgstr ""
 
-#: validate.php:2346
+#: Validate.php:143
 msgid "{field} 禁止的 IP 访问 {rule}"
 msgstr ""
 
-#: validate.php:2348
+#: Validate.php:144
 msgid "{field} 不是有效的 JSON"
+msgstr ""
+
+#: Validate.php:145
+msgid "{field} 不能出现重复值"
 msgstr ""
