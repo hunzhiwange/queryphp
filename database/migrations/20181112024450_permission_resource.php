@@ -39,7 +39,7 @@ class PermissionResource extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('permission_resource');
+        $table = $this->table('permission_resource', ['id' => false, 'primary_key' => ['permission_id', 'resource_id']]);
         $table->addColumn('permission_id', 'integer', ['limit' => 11, 'comment' => '权限 ID']);
         $table->addColumn('resource_id', 'integer', ['limit' => 11, 'comment' => '资源 ID']);
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);

@@ -39,7 +39,7 @@ class RolePermission extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('role_permission');
+        $table = $this->table('role_permission', ['id' => false, 'primary_key' => ['role_id', 'permission_id']]);
         $table->addColumn('role_id', 'integer', ['limit' => 11, 'comment' => '角色 ID']);
         $table->addColumn('permission_id', 'integer', ['limit' => 11, 'comment' => '权限 ID']);
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);

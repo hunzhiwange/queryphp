@@ -39,7 +39,7 @@ class UserRole extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('user_role');
+        $table = $this->table('user_role', ['id' => false, 'primary_key' => ['user_id', 'role_id']]);
         $table->addColumn('user_id', 'integer', ['limit' => 11, 'comment' => '用户 ID']);
         $table->addColumn('role_id', 'integer', ['limit' => 11, 'comment' => '角色 ID']);
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
