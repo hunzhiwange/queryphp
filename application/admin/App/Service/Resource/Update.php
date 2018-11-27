@@ -16,6 +16,9 @@ namespace Admin\App\Service\Resource;
 
 use Common\Domain\Entity\Resource;
 use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Kernel\HandleException;
+use Leevel\Validate;
+use Leevel\Validate\UniqueRule;
 
 /**
  * 资源更新.
@@ -36,6 +39,13 @@ class Update
     protected $w;
 
     /**
+     * 输入数据.
+     *
+     * @var array
+     */
+    protected $input;
+
+    /**
      * 构造函数.
      *
      * @param \Leevel\Database\Ddd\IUnitOfWork $w
@@ -54,6 +64,10 @@ class Update
      */
     public function handle(array $input): array
     {
+        $this->input = $input;
+
+        $this->validateArgs();
+
         return $this->save($input)->toArray();
     }
 
@@ -115,5 +129,27 @@ class Update
             'identity'   => trim($input['identity']),
             'status'     => $input['status'],
         ];
+    }
+
+    /**
+     * 校验基本参数.
+     */
+    protected function validateArgs()
+    {
+        $validate = Validate::make(
+            $this->input,
+            [
+                'name'          => 'required|chinese_alpha_num|max_length:50',
+                'identity'      => 'required|alpha_dash|'.UniqueRule::rule(Resource::class, '_', $this->input['id']),
+            ],
+            [
+                'name'          => __('名字'),
+                'identity'      => __('标识符'),
+            ]
+        );
+
+        if ($validate->fail()) {
+            throw new HandleException($validate->errorMessage());
+        }
     }
 }
