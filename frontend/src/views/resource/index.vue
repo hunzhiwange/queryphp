@@ -40,7 +40,8 @@
                                                         formItem.identity
                                                     "
                                                     placeholder=""
-                                                ></i-input>
+                                                >
+                                                </i-input>
                                             </FormItem>
                                             <FormItem :label="__('状态')">
                                                 <i-switch
