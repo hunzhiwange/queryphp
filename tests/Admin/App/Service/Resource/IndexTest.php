@@ -109,7 +109,6 @@ eot;
         $this->assertSame('foo', $first['name']);
         $this->assertSame('bar', $first['identity']);
         $this->assertSame('1', $first['status']);
-        $this->assertContains(date('Y-m-d'), $first['create_at']);
     }
 
     protected function clear()
