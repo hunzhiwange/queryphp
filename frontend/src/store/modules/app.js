@@ -1,47 +1,47 @@
-import { otherRouter, appRouter } from "@/router/router";
-import Vue from "vue";
-import Cookies from "js-cookie";
+import {otherRouter, appRouter} from '@/router/router'
+import Vue from 'vue'
+import Cookies from 'js-cookie'
 
 const app = {
     state: {
         cachePage: [],
-        lang: "zh-CN",
+        lang: 'zh-CN',
         isFullScreen: false,
         openedSubmenuArr: [], // 要展开的菜单数组
-        menuTheme: "light", // 主题
-        themeColor: "",
+        menuTheme: 'light', // 主题
+        themeColor: '',
         pageOpenedDashboard: {
             meta: {
-                title: __("首页")
+                title: __('首页'),
             },
-            path: "/dashboard",
-            name: "dashboard"
+            path: '/dashboard',
+            name: 'dashboard',
         },
         pageOpenedList: [],
-        currentPageName: "",
+        currentPageName: '',
         currentPath: [
             {
                 meta: {
-                    title: __("首页")
+                    title: __('首页'),
                 },
-                icon: "ios-home-outline",
-                path: "/dashboard",
-                name: "dashboard"
-            }
+                icon: 'ios-home-outline',
+                path: '/dashboard',
+                name: 'dashboard',
+            },
         ], // 面包屑数组
         menuList: [],
         routers: [otherRouter, ...appRouter],
         tagsList: [...otherRouter.children],
         messageCount: 0,
-        dontCache: ["text-editor", "artical-publish"] // 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
+        dontCache: ['text-editor', 'artical-publish'], // 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
     },
     mutations: {
         setTagsList(state, list) {
-            state.tagsList.push(...list);
+            state.tagsList.push(...list)
         },
         updateMenulist(state) {
-            let accessCode = parseInt(Cookies.get("access"));
-            let menuList = [];
+            let accessCode = parseInt(Cookies.get('access'))
+            let menuList = []
 
             if (!appRouter) {
                 //return
@@ -69,182 +69,182 @@ const app = {
                 //     }
                 // } else {
                 if (item.children.length === 1) {
-                    menuList.push(item);
+                    menuList.push(item)
                 } else {
-                    let len = menuList.push(item);
-                    let childrenArr = [];
+                    let len = menuList.push(item)
+                    let childrenArr = []
                     childrenArr = item.children.filter(child => {
                         if (child.access !== undefined) {
                             if (utils.showThisRoute(child.access, accessCode)) {
-                                return child;
+                                return child
                             }
                         } else {
-                            return child;
+                            return child
                         }
-                    });
-                    let handledItem = JSON.parse(
-                        JSON.stringify(menuList[len - 1])
-                    );
-                    handledItem.children = childrenArr;
-                    menuList.splice(len - 1, 1, handledItem);
+                    })
+                    let handledItem = JSON.parse(JSON.stringify(menuList[len - 1]))
+                    handledItem.children = childrenArr
+                    menuList.splice(len - 1, 1, handledItem)
                 }
                 //}
-            });
-            state.menuList = menuList;
+            })
+            state.menuList = menuList
         },
         changeMenuTheme(state, theme) {
-            state.menuTheme = theme;
+            state.menuTheme = theme
         },
         changeMainTheme(state, mainTheme) {
-            state.themeColor = mainTheme;
+            state.themeColor = mainTheme
         },
         addOpenSubmenu(state, name) {
-            let hasThisName = false;
-            let isEmpty = false;
+            let hasThisName = false
+            let isEmpty = false
             if (name.length === 0) {
-                isEmpty = true;
+                isEmpty = true
             }
             if (state.openedSubmenuArr.indexOf(name) > -1) {
-                hasThisName = true;
+                hasThisName = true
             }
             if (!hasThisName && !isEmpty) {
-                state.openedSubmenuArr.push(name);
+                state.openedSubmenuArr.push(name)
             }
         },
         closePage(state, name) {
             state.cachePage.forEach((item, index) => {
                 if (item === name) {
-                    state.cachePage.splice(index, 1);
+                    state.cachePage.splice(index, 1)
                 }
-            });
+            })
         },
         initCachepage(state) {
             if (localStorage.cachePage) {
-                state.cachePage = JSON.parse(localStorage.cachePage);
+                state.cachePage = JSON.parse(localStorage.cachePage)
             }
         },
         removeTag(state, name) {
             state.pageOpenedList.map((item, index) => {
                 if (item.name === name) {
-                    state.pageOpenedList.splice(index, 1);
+                    state.pageOpenedList.splice(index, 1)
                 }
-            });
+            })
         },
         pageOpenedList(state, get) {
-            let openedPage = state.pageOpenedList[get.index];
+            let openedPage = state.pageOpenedList[get.index]
             if (get.argu) {
-                openedPage.argu = get.argu;
+                openedPage.argu = get.argu
             }
             if (get.query) {
-                openedPage.query = get.query;
+                openedPage.query = get.query
             }
-            state.pageOpenedList.splice(get.index, 1, openedPage);
-            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+            state.pageOpenedList.splice(get.index, 1, openedPage)
+            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList)
         },
         clearAllTags(state, vm) {
-            state.pageOpenedList = [];
-            state.cachePage.length = 0;
-            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
-            vm.$router.push({ name: "dashboard" });
+            state.pageOpenedList = []
+            state.cachePage.length = 0
+            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList)
+            vm.$router.push({name: 'dashboard'})
         },
         clearOtherTags(state, vm) {
-            let currentName = vm.$route.name;
-            let currentIndex = 0;
+            let currentName = vm.$route.name
+            let currentIndex = 0
 
             state.pageOpenedList.forEach((item, index) => {
                 if (item.name === currentName) {
-                    currentIndex = index;
-                    return;
+                    currentIndex = index
+                    return
                 }
-            });
+            })
+
             if (currentIndex === 0) {
-                state.pageOpenedList.splice(0);
+                state.pageOpenedList.splice(0)
             } else {
-                state.pageOpenedList.splice(currentIndex + 1);
-                state.pageOpenedList.splice(0, currentIndex - 1);
+                state.pageOpenedList.splice(currentIndex + 1)
+                state.pageOpenedList.splice(0, currentIndex - 1)
             }
             let newCachepage = state.cachePage.filter(item => {
-                return item === currentName;
-            });
-            state.cachePage = newCachepage;
-            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+                return item === currentName
+            })
+
+            state.cachePage = newCachepage
+            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList)
         },
         clearCurrentTag(state, vm) {
-            let currentName = vm.$route.name;
-            let currentIndex = 0;
+            let currentName = vm.$route.name
+            let currentIndex = 0
 
             state.pageOpenedList.forEach((item, index) => {
                 if (item.name === currentName) {
-                    currentIndex = index;
-                    return;
+                    currentIndex = index
+                    return
                 }
-            });
+            })
 
-            state.pageOpenedList.splice(currentIndex, 1);
+            state.pageOpenedList.splice(currentIndex, 1)
             let newCachepage = state.cachePage.filter(item => {
-                return item !== currentName;
-            });
-            state.cachePage = newCachepage;
-            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+                return item !== currentName
+            })
+            state.cachePage = newCachepage
+            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList)
 
             vm.$router.push({
-                name: state.pageOpenedList[currentIndex - 1].name
-            });
+                name: state.pageOpenedList.length > 0 ? state.pageOpenedList[currentIndex - 1].name : 'dashboard',
+            })
         },
         clearRightsTag(state, vm) {
-            let currentName = vm.$route.name;
-            let currentIndex = 0;
-            let find = false;
-            let rightName = [];
+            let currentName = vm.$route.name
+            let currentIndex = 0
+            let find = false
+            let rightName = []
 
             state.pageOpenedList.forEach((item, index) => {
                 if (item.name === currentName) {
-                    currentIndex = index;
-                    find = true;
+                    currentIndex = index
+                    find = true
                 }
                 if (find === true) {
-                    rightName.push(item.name);
+                    rightName.push(item.name)
                 }
-            });
+            })
 
-            rightName.shift();
+            rightName.shift()
             if (rightName.length == 0) {
-                return;
+                return
             }
 
-            state.pageOpenedList.splice(currentIndex + 1);
+            state.pageOpenedList.splice(currentIndex + 1)
             let newCachepage = state.cachePage.filter(item => {
-                return !rightName.includes(item);
-            });
-            state.cachePage = newCachepage;
-            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+                return !rightName.includes(item)
+            })
+            state.cachePage = newCachepage
+            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList)
         },
         clearLeftsTag(state, vm) {
-            let currentName = vm.$route.name;
-            let currentIndex = 0;
-            let find = false;
-            let leftName = [];
+            let currentName = vm.$route.name
+            let currentIndex = 0
+            let find = false
+            let leftName = []
 
             state.pageOpenedList.forEach((item, index) => {
                 if (item.name === currentName) {
-                    currentIndex = index;
-                    find = true;
+                    currentIndex = index
+                    find = true
                 }
                 if (find === false) {
-                    leftName.push(item.name);
+                    leftName.push(item.name)
                 }
-            });
+            })
 
             if (leftName.length == 0) {
-                return;
+                return
             }
 
-            state.pageOpenedList.splice(0, currentIndex - 1);
+            state.pageOpenedList.splice(0, currentIndex)
             let newCachepage = state.cachePage.filter(item => {
-                return !leftName.includes(item);
-            });
-            state.cachePage = newCachepage;
-            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+                return !leftName.includes(item)
+            })
+            state.cachePage = newCachepage
+            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList)
         },
 
         /**
@@ -255,35 +255,33 @@ const app = {
          * @return void
          */
         dragTags(state, newTags) {
-            state.pageOpenedList = newTags;
-            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+            state.pageOpenedList = newTags
+            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList)
         },
 
         setOpenedList(state) {
-            state.pageOpenedList = localStorage.pageOpenedList
-                ? JSON.parse(localStorage.pageOpenedList)
-                : [];
+            state.pageOpenedList = localStorage.pageOpenedList ? JSON.parse(localStorage.pageOpenedList) : []
         },
         setCurrentPath(state, pathArr) {
-            state.currentPath = pathArr;
+            state.currentPath = pathArr
         },
         setCurrentPageName(state, name) {
-            state.currentPageName = name;
+            state.currentPageName = name
         },
         setAvator(state, path) {
-            localStorage.avatorImgPath = path;
+            localStorage.avatorImgPath = path
         },
         switchLang(state, lang) {
-            state.lang = lang;
-            Vue.config.lang = lang;
+            state.lang = lang
+            Vue.config.lang = lang
             // queryphpI18n
             //   queryphpI18n.lang(lang)
         },
         clearOpenedSubmenu(state) {
-            state.openedSubmenuArr.length = 0;
+            state.openedSubmenuArr.length = 0
         },
         setMessageCount(state, count) {
-            state.messageCount = count;
+            state.messageCount = count
         },
         /**
          * 创建一个标签
@@ -294,19 +292,20 @@ const app = {
          */
         increateTag(state, tagObj) {
             // 刷新和首页被记入标签中直接跳过
-            if (["refresh", "dashboard"].includes(tagObj.name)) {
-                return;
+            if (['refresh', 'dashboard'].includes(tagObj.name)) {
+                return
             }
 
             if (!utils.oneOf(tagObj.name, state.dontCache)) {
-                state.cachePage.push(tagObj.name);
-                localStorage.cachePage = JSON.stringify(state.cachePage);
+                state.cachePage.push(tagObj.name)
+                localStorage.cachePage = JSON.stringify(state.cachePage)
             }
-            state.pageOpenedList.push(tagObj);
-            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
-        }
-    },
-    actions: {}
-};
 
-export default app;
+            state.pageOpenedList.push(tagObj)
+            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList)
+        },
+    },
+    actions: {},
+}
+
+export default app

@@ -44,6 +44,10 @@ export default {
             return this.$store.state.app.menuList
         },
         pageTagsList() {
+            if (localStorage.pageOpenedList) {
+                this.$store.state.app.pageOpenedList = JSON.parse(localStorage.pageOpenedList)
+            }
+
             return this.$store.state.app.pageOpenedList // 打开的页面的页面对象
         },
         currentPath() {
@@ -71,15 +75,22 @@ export default {
     },
     methods: {
         init() {
-            let pathArr = utils.setCurrentPath(this, this.$route.name)
-            this.$store.commit('updateMenulist')
-            if (pathArr.length >= 2) {
-                this.$store.commit('addOpenSubmenu', pathArr[1].name)
-            }
+            // 消息
             let messageCount = 3
             this.messageCount = messageCount.toString()
-            this.checkTag(this.$route.name)
             this.$store.commit('setMessageCount', 3)
+
+            // 初始化菜单
+            this.$store.commit('setCurrentPageName', this.$route.name)
+            let pathArr = utils.setCurrentPath(this, this.$route.name)
+            if (pathArr.length > 2) {
+                this.$store.commit('addOpenSubmenu', pathArr[1].name)
+            }
+            this.checkTag(this.$route.name)
+            localStorage.currentPageName = this.$route.name
+
+            // 菜单
+            this.$store.commit('updateMenulist')
         },
         toggleClick() {
             this.shrink = !this.shrink
@@ -131,14 +142,10 @@ export default {
                     return true
                 }
             })
+
             if (!openpageHasTag) {
                 //  解决关闭当前标签后再点击回退按钮会退到当前页时没有标签的问题
-                utils.openNewPage(
-                    this,
-                    name,
-                    this.$route.params || {},
-                    this.$route.query || {}
-                )
+                utils.openNewPage(this, name, this.$route.params || {}, this.$route.query || {})
             }
         },
         handleSubmenuChange(val) {},

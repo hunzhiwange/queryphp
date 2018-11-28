@@ -101,18 +101,9 @@ let appRouterData = [
                 icon: '',
                 name: 'menu_index',
                 meta: {
-                    title: __('菜单管理'),
+                    title: __('基础设置'),
                 },
-                component: importRouter('menu/index'),
-            },
-            {
-                path: 'position_category',
-                icon: '',
-                name: 'position_category_index',
-                meta: {
-                    title: __('职位分类'),
-                },
-                component: importRouter('menu/index'),
+                component: importRouter('test/test'),
             },
         ],
     },
@@ -160,6 +151,26 @@ let appRouterData = [
                     title: __('资源管理'),
                 },
                 component: importRouter('resource/index'),
+            },
+        ],
+    },
+    {
+        path: '/test',
+        icon: 'social-codepen',
+        name: 'test',
+        meta: {
+            title: __('测试页面'),
+        },
+        component: layout,
+        children: [
+            {
+                path: 'test',
+                icon: '',
+                name: 'test_index',
+                meta: {
+                    title: __('测试页面'),
+                },
+                component: importRouter('test/test'),
             },
         ],
     },

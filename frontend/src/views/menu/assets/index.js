@@ -163,20 +163,15 @@ export default {
         renderContent(h, {root, node, data}) {
             const status = data.status == 'enable'
             return (
-                <span
-                    class="tree-item"
-                    style="display: inline-block; width: 100%;">
+                <span class="tree-item" style="display: inline-block; width: 100%;">
                     <span
                         class="tree-item-title"
                         style={{
-                            textDecoration:
-                                data.rule == 'T' ? 'none' : 'line-through',
+                            textDecoration: data.rule == 'T' ? 'none' : 'line-through',
                         }}>
                         {data.title}
                     </span>
-                    <span
-                        class="tree-item-operate"
-                        style="display: inline-block;float: right;margin-right: 32px;">
+                    <span class="tree-item-operate" style="display: inline-block;float: right;margin-right: 32px;">
                         <i-button
                             icon="plus-circled"
                             type="default"
@@ -205,24 +200,14 @@ export default {
                                 color: status ? '' : '#bbbec4',
                                 marginRight: '8px',
                             }}
-                            on-click={() =>
-                                this.status(data, status ? 'disable' : 'enable')
-                            }>
+                            on-click={() => this.status(data, status ? 'disable' : 'enable')}>
                             {status ? __('禁用') : __('启用')}
                         </i-button>
-                        <dropdown
-                            on-on-click={name => this[name](root, node, data)}
-                            placement="bottom-end">
-                            <i-button
-                                icon="more"
-                                type="default"
-                                shape="circle"
-                                size="small"
-                            />
+                        <dropdown on-on-click={name => this[name](root, node, data)} placement="bottom-end">
+                            <i-button icon="more" type="default" shape="circle" size="small" />
                             <dropdownMenu slot="list">
                                 <dropdownItem name="top">
-                                    <icon type="android-arrow-dropup-circle" />{' '}
-                                    {__('置顶')}
+                                    <icon type="android-arrow-dropup-circle" /> {__('置顶')}
                                 </dropdownItem>
                                 <dropdownItem name="up">
                                     <icon type="arrow-up-a" />
@@ -232,14 +217,7 @@ export default {
                                     <icon type="arrow-down-a" />
                                     {__('下移')}
                                 </dropdownItem>
-                                <dropdownItem
-                                    name="remove"
-                                    disabled={
-                                        data.children &&
-                                        data.children.length > 0
-                                            ? true
-                                            : false
-                                    }>
+                                <dropdownItem name="remove" disabled={data.children && data.children.length > 0 ? true : false}>
                                     <icon type="trash-b" /> {__('删除')}
                                 </dropdownItem>
                             </dropdownMenu>
@@ -289,8 +267,7 @@ export default {
             if (data.type == 'action') {
                 const parentKey = node.parent
                 if (parentKey !== undefined) {
-                    const parent = root.find(el => el.nodeKey === parentKey)
-                        .node
+                    const parent = root.find(el => el.nodeKey === parentKey).node
                     let siblingsList = []
                     if (parent.children) {
                         parent.children.forEach(item => {
@@ -305,11 +282,7 @@ export default {
                     this.$set(this, 'siblingsList', siblingsList)
                 }
 
-                this.siblings = this.formItem.siblings
-                    ? this.formItem.siblings
-                          .split(',')
-                          .map(item => parseInt(item))
-                    : []
+                this.siblings = this.formItem.siblings ? this.formItem.siblings.split(',').map(item => parseInt(item)) : []
             } else {
                 this.$set(this, 'siblingsList', [])
                 this.siblings = []
@@ -369,8 +342,7 @@ export default {
         getParentID(root, nodeData) {
             let result = [nodeData.id]
 
-            const parentKey = root.find(el => el.nodeKey === nodeData.nodeKey)
-                .parent
+            const parentKey = root.find(el => el.nodeKey === nodeData.nodeKey).parent
             if (parentKey !== undefined) {
                 const parent = root.find(el => el.nodeKey === parentKey).node
                 result = result.concat(this.getParentID(root, parent))
@@ -405,15 +377,11 @@ export default {
 
                         const parentKey = root.find(el => el === node).parent
                         if (parentKey !== undefined) {
-                            const parent = root.find(
-                                el => el.nodeKey === parentKey
-                            ).node
+                            const parent = root.find(el => el.nodeKey === parentKey).node
                             const index = parent.children.indexOf(nodeData)
                             parent.children.splice(index, 1)
                         } else {
-                            const nowNode = this.dataTree.find(
-                                el => el.nodeKey === node.nodeKey
-                            )
+                            const nowNode = this.dataTree.find(el => el.nodeKey === node.nodeKey)
                             const index = this.dataTree.indexOf(nowNode)
                             this.dataTree.splice(index, 1)
                         }
@@ -423,12 +391,10 @@ export default {
             })
         },
         status(nodeData, status) {
-            this.apiPut('menu/enable/', nodeData.id, {status: status}).then(
-                res => {
-                    this.$set(nodeData, 'status', status)
-                    utils.success(res.message)
-                }
-            )
+            this.apiPut('menu/enable/', nodeData.id, {status: status}).then(res => {
+                this.$set(nodeData, 'status', status)
+                utils.success(res.message)
+            })
         },
         statusMany(type) {
             let selected = this.$refs.tree.getCheckedNodes()
@@ -467,9 +433,7 @@ export default {
                 var parent = root.find(el => el.nodeKey === parentKey).node
                 var index = parent.children.indexOf(nodeData)
             } else {
-                const nowNode = this.dataTree.find(
-                    el => el.nodeKey === node.nodeKey
-                )
+                const nowNode = this.dataTree.find(el => el.nodeKey === node.nodeKey)
                 var index = this.dataTree.indexOf(nowNode)
             }
 
@@ -497,49 +461,25 @@ export default {
                 if (parentKey !== undefined) {
                     switch (type) {
                         case 'up':
-                            parent.children = this.swapItems(
-                                parent.children,
-                                index,
-                                index - 1
-                            )
+                            parent.children = this.swapItems(parent.children, index, index - 1)
                             break
                         case 'down':
-                            parent.children = this.swapItems(
-                                parent.children,
-                                index,
-                                index + 1
-                            )
+                            parent.children = this.swapItems(parent.children, index, index + 1)
                             break
                         case 'top':
-                            parent.children = this.swapItems(
-                                parent.children,
-                                index,
-                                0
-                            )
+                            parent.children = this.swapItems(parent.children, index, 0)
                             break
                     }
                 } else {
                     switch (type) {
                         case 'up':
-                            this.dataTree = this.swapItems(
-                                this.dataTree,
-                                index,
-                                index - 1
-                            )
+                            this.dataTree = this.swapItems(this.dataTree, index, index - 1)
                             break
                         case 'down':
-                            this.dataTree = this.swapItems(
-                                this.dataTree,
-                                index,
-                                index + 1
-                            )
+                            this.dataTree = this.swapItems(this.dataTree, index, index + 1)
                             break
                         case 'top':
-                            this.dataTree = this.swapItems(
-                                this.dataTree,
-                                index,
-                                0
-                            )
+                            this.dataTree = this.swapItems(this.dataTree, index, 0)
                             break
                     }
                 }
@@ -551,7 +491,6 @@ export default {
         },
         init: function() {
             this.apiGet('menu').then(res => {
-                // console.log(res);
                 this.dataTree = res
             })
         },
@@ -580,10 +519,7 @@ export default {
             return result
         },
         handleSubmit(form) {
-            if (
-                this.formItem.controller &&
-                ['category', 'controller'].includes(this.formItem.type)
-            ) {
+            if (this.formItem.controller && ['category', 'controller'].includes(this.formItem.type)) {
                 if (!this.formItem.name) {
                     this.formItem.name = this.formItem.controller
                 }
@@ -594,9 +530,7 @@ export default {
             }
 
             if (this.formItem.type == 'action') {
-                this.formItem.siblings = this.siblings
-                    ? this.siblings.join(',')
-                    : ''
+                this.formItem.siblings = this.siblings ? this.siblings.join(',') : ''
             } else {
                 this.formItem.siblings = ''
             }
@@ -647,35 +581,17 @@ export default {
         updateMenu(form) {
             this.apiPut('menu', this.formItem.id, this.formItem).then(
                 res => {
-                    const parentKey = this.formItem.pid[
-                        this.formItem.pid.length - 1
-                    ]
-                    const oldParentKey = this.oldEditPid[
-                        this.oldEditPid.length - 1
-                    ]
+                    const parentKey = this.formItem.pid[this.formItem.pid.length - 1]
+                    const oldParentKey = this.oldEditPid[this.oldEditPid.length - 1]
 
                     if (parentKey === oldParentKey) {
-                        this.$set(
-                            this.currentParentData,
-                            'title',
-                            this.formItem.title
-                        )
-                        this.$set(
-                            this.currentParentData,
-                            'status',
-                            this.formItem.status ? 'enable' : 'disable'
-                        )
-                        this.$set(
-                            this.currentParentData,
-                            'rule',
-                            this.formItem.rule
-                        )
+                        this.$set(this.currentParentData, 'title', this.formItem.title)
+                        this.$set(this.currentParentData, 'status', this.formItem.status ? 'enable' : 'disable')
+                        this.$set(this.currentParentData, 'rule', this.formItem.rule)
                     } else {
                         // new parent
                         if (parentKey != -1) {
-                            let parent = this.nodeRoot.find(
-                                el => el.node.id === parentKey
-                            ).node
+                            let parent = this.nodeRoot.find(el => el.node.id === parentKey).node
                             let children = parent.children || []
                             children.push(this.currentParentData)
                             this.$set(parent, 'children', children)
@@ -698,19 +614,13 @@ export default {
 
                         // old parent
                         if (oldParentKey != -1) {
-                            let oldParent = this.nodeRoot.find(
-                                el => el.node.id === oldParentKey
-                            ).node
-                            const index = oldParent.children.indexOf(
-                                this.currentParentData
-                            )
+                            let oldParent = this.nodeRoot.find(el => el.node.id === oldParentKey).node
+                            const index = oldParent.children.indexOf(this.currentParentData)
                             oldParent.children.splice(index, 1)
                             this.$set(oldParent, 'children', oldParent.children)
                             this.$set(oldParent, 'expand', false)
                         } else {
-                            const index = this.dataTree.indexOf(
-                                this.currentParentData
-                            )
+                            const index = this.dataTree.indexOf(this.currentParentData)
                             this.dataTree.splice(index, 1)
                         }
                     }
