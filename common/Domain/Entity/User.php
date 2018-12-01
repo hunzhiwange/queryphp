@@ -60,6 +60,8 @@ class User extends Entity
         'name'      => [],
         'identity'  => [],
         'password'  => [],
+        'email'     => [],
+        'mobile'    => [],
         'status'    => [
             self::ENUM => [
                 '0' => '禁用',
@@ -104,6 +106,20 @@ class User extends Entity
      * @var string
      */
     private $password;
+
+    /**
+     * 电子邮件.
+     *
+     * @var string
+     */
+    private $email;
+
+    /**
+     * 手机号.
+     *
+     * @var string
+     */
+    private $mobile;
 
     /**
      * 状态 0=禁用;1=启用;.
