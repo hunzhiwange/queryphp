@@ -64,14 +64,14 @@ class Status
     /**
      * 保存状态
      *
-     * @param \Leevel\Collection\Collection $resources
+     * @param \Leevel\Collection\Collection $entitys
      * @param string                        $status
      */
-    protected function save(Collection $resources, string $status)
+    protected function save(Collection $entitys, string $status)
     {
-        foreach ($resources as $resource) {
-            $resource->status = $status;
-            $this->w->persist($resource);
+        foreach ($entitys as $entity) {
+            $entity->status = $status;
+            $this->w->persist($entity);
         }
 
         $this->w->flush();
@@ -86,16 +86,16 @@ class Status
      */
     protected function findAll(array $input): Collection
     {
-        $resources = $this->w->repository(User::class)->
+        $entitys = $this->w->repository(User::class)->
 
         findAll(function ($select) use ($input) {
             $select->whereIn('id', $input['ids']);
         });
 
-        if (0 === count($resources)) {
+        if (0 === count($entitys)) {
             throw new HandleException(__('未发现用户'));
         }
 
-        return $resources;
+        return $entitys;
     }
 }

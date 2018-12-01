@@ -82,11 +82,11 @@ class UpdateInfo
      */
     protected function save(array $input): User
     {
-        $this->w->persist($resource = $this->entity($input));
+        $this->w->persist($entity = $this->entity($input));
 
         $this->w->flush();
 
-        return $resource;
+        return $entity;
     }
 
     /**
@@ -98,11 +98,11 @@ class UpdateInfo
      */
     protected function entity(array $input): User
     {
-        $resource = $this->find((int) $input['id']);
+        $entity = $this->find((int) $input['id']);
 
-        $resource->withProps($this->data($input));
+        $entity->withProps($this->data($input));
 
-        return $resource;
+        return $entity;
     }
 
     /**

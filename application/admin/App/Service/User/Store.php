@@ -74,11 +74,11 @@ class Store
      */
     protected function save(array $input): User
     {
-        $this->w->persist($resource = $this->entity($input))->
+        $this->w->persist($entity = $this->entity($input))->
 
         flush();
 
-        return $resource;
+        return $entity;
     }
 
     /**

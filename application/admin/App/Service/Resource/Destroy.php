@@ -62,12 +62,12 @@ class Destroy
     /**
      * 删除实体.
      *
-     * @param \Common\Domain\Entity\Resource $resource
+     * @param \Common\Domain\Entity\Resource $entity
      */
-    protected function remove(Resource $resource)
+    protected function remove(Resource $entity)
     {
-        $this->w->persist($resource)->
-        remove($resource)->
+        $this->w->persist($entity)->
+        remove($entity)->
         flush();
     }
 

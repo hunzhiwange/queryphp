@@ -59,14 +59,14 @@ class Index
     {
         $repository = $this->w->repository(Permission::class);
 
-        list($page, $resources) = $repository->findPage(
+        list($page, $entitys) = $repository->findPage(
             (int) ($input['page'] ?: 1),
             (int) ($input['size'] ?? 10),
             $this->condition($input)
         );
 
         $data['page'] = $page;
-        $data['data'] = $resources->toArray();
+        $data['data'] = $entitys->toArray();
 
         return $data;
     }

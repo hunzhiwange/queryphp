@@ -59,7 +59,7 @@ class Index
     {
         $repository = $this->w->repository(User::class);
 
-        list($page, $resources) = $repository->findPage(
+        list($page, $entitys) = $repository->findPage(
             (int) ($input['page'] ?: 1),
             (int) ($input['size'] ?? 10),
             $this->condition($input)
@@ -68,7 +68,7 @@ class Index
         $data['page'] = $page;
         $data['data'] = [];
 
-        foreach ($resources as $item) {
+        foreach ($entitys as $item) {
             $tmp = $item->toArray();
             $tmp['role'] = $item->role->toArray();
             $data['data'][] = $tmp;

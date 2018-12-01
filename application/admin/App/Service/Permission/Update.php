@@ -66,11 +66,11 @@ class Update
      */
     protected function save(array $input): Permission
     {
-        $this->w->persist($resource = $this->entity($input))->
+        $this->w->persist($entity = $this->entity($input))->
 
         flush();
 
-        return $resource;
+        return $entity;
     }
 
     /**
@@ -82,11 +82,11 @@ class Update
      */
     protected function entity(array $input)
     {
-        $resource = $this->find((int) $input['id']);
+        $entity = $this->find((int) $input['id']);
 
-        $resource->withProps($this->data($input));
+        $entity->withProps($this->data($input));
 
-        return $resource;
+        return $entity;
     }
 
     /**
