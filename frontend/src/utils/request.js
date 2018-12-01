@@ -1,4 +1,5 @@
 import axios from 'axios'
+import isJSON from 'validator/lib/isJSON'
 
 // 创建 axios 实例
 const service = axios.create({
@@ -26,14 +27,17 @@ service.interceptors.request.use(
 // respone 拦截器
 service.interceptors.response.use(
     response => {
-        if (typeof response.data == 'object') {
-            if (!response.data.message) {
-                response.data.message = __('操作成功')
-            }
+        if ('object' !== typeof response.data) {
+            utils.error('Response data must be JSON.')
+            return Promise.reject()
+        }
 
-            if (response.data[':trace']) {
-                delete response.data[':trace']
-            }
+        if (!response.data.message) {
+            response.data.message = __('操作成功')
+        }
+
+        if (response.data[':trace']) {
+            delete response.data[':trace']
         }
 
         return response.data
@@ -127,9 +131,17 @@ service.interceptors.response.use(
             //     default:
             // }
 
-            err.message = err.response.data.error.message
+            if (isJSON(err.response.data.error.message)) {
+                let tmp = JSON.parse(err.response.data.error.message)
 
-            utils.error(err.message)
+                Object.keys(tmp).forEach(key => {
+                    tmp[key].forEach(v => {
+                        utils.error(v)
+                    })
+                })
+            } else {
+                utils.error(err.response.data.error.message)
+            }
 
             if (401 === err.response.status) {
                 setTimeout(() => {
@@ -139,7 +151,7 @@ service.interceptors.response.use(
             }
         }
 
-        return Promise.reject(error)
+        return Promise.reject(err)
     }
 )
 

@@ -16,7 +16,6 @@ export default {
             dialogVisible: false,
             loading: false,
             form: {
-                auth_key: '',
                 old_pwd: '',
                 new_pwd: '',
                 confirm_pwd: '',
@@ -72,9 +71,9 @@ export default {
             this.$refs.form.validate(pass => {
                 if (pass) {
                     this.loading = true
-                    this.apiPost('user/change_password', this.form).then(
+                    this.apiPost('user/change-password', this.form).then(
                         res => {
-                            utils.success(res.message)
+                            utils.success(this.__('修改密码后你需要从新登陆'))
                             setTimeout(() => {
                                 this.$emit('logout')
                             }, 1000)
@@ -90,8 +89,6 @@ export default {
             this.dialogVisible = false
         },
     },
-    created() {
-        this.form.auth_key = this.$store.state.user.token
-    },
+    created() {},
     mixins: [http],
 }

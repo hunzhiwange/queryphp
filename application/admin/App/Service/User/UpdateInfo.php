@@ -12,24 +12,24 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Admin\App\Service\Resource;
+namespace Admin\App\Service\User;
 
-use Common\Domain\Entity\Resource;
+use Common\Domain\Entity\User;
 use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Kernel\HandleException;
-use Leevel\Validate;
-use Leevel\Validate\UniqueRule;
+use Leevel\Validate as Validates;
+use Leevel\Validate\IValidator;
 
 /**
- * 资源更新.
+ * 用户修改资料.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2017.10.23
+ * @since 2017.11.21
  *
  * @version 1.0
  */
-class Update
+class UpdateInfo
 {
     /**
      * 事务工作单元.
@@ -68,7 +68,9 @@ class Update
 
         $this->validateArgs();
 
-        return $this->save($input)->toArray();
+        $this->save($input)->toArray();
+
+        return [];
     }
 
     /**
@@ -76,13 +78,13 @@ class Update
      *
      * @param array $input
      *
-     * @return \Common\Domain\Entity\Resource
+     * @return \Common\Domain\Entity\User
      */
-    protected function save(array $input): Resource
+    protected function save(array $input): User
     {
-        $this->w->persist($resource = $this->entity($input))->
+        $this->w->persist($resource = $this->entity($input));
 
-        flush();
+        $this->w->flush();
 
         return $resource;
     }
@@ -92,9 +94,9 @@ class Update
      *
      * @param array $input
      *
-     * @return \Common\Domain\Entity\Resource
+     * @return \Common\Domain\Entity\User
      */
-    protected function entity(array $input)
+    protected function entity(array $input): User
     {
         $resource = $this->find((int) $input['id']);
 
@@ -108,11 +110,11 @@ class Update
      *
      * @param int $id
      *
-     * @return \Common\Domain\Entity\Resource
+     * @return \Common\Domain\Entity\User
      */
-    protected function find(int $id): Resource
+    protected function find(int $id): User
     {
-        return $this->w->repository(Resource::class)->findOrFail($id);
+        return $this->w->repository(User::class)->findOrFail($id);
     }
 
     /**
@@ -125,9 +127,8 @@ class Update
     protected function data(array $input): array
     {
         return [
-            'name'       => trim($input['name']),
-            'identity'   => trim($input['identity']),
-            'status'     => $input['status'],
+            'email'        => $input['email'] ?: '',
+            'mobile'       => $input['mobile'] ?: '',
         ];
     }
 
@@ -136,15 +137,15 @@ class Update
      */
     protected function validateArgs()
     {
-        $validator = Validate::make(
+        $validator = Validates::make(
             $this->input,
             [
-                'name'          => 'required|chinese_alpha_num|max_length:50',
-                'identity'      => 'required|alpha_dash|'.UniqueRule::rule(Resource::class, null, $this->input['id']),
+                'email'       => 'email|'.IValidator::CONDITION_VALUE,
+                'mobile'      => 'mobile|'.IValidator::CONDITION_VALUE,
             ],
             [
-                'name'          => __('名字'),
-                'identity'      => __('标识符'),
+                'email'       => __('邮件'),
+                'mobile'      => __('手机'),
             ]
         );
 

@@ -165,11 +165,10 @@ class Validate
     }
 
     /**
-     * 对比验证码
+     * 校验密码
      *
-     * @param string $strInputCode
-     * @param string $strCode
-     * @param mixed  $code
+     * @param string $password
+     * @param string $hash
      *
      * @return bool
      */
@@ -199,7 +198,7 @@ class Validate
      */
     protected function validateArgs()
     {
-        $validate = Validates::make(
+        $validator = Validates::make(
             $this->input,
             [
                 'app_id'       => 'required|alpha_dash',
@@ -217,8 +216,8 @@ class Validate
             ]
         );
 
-        if ($validate->fail()) {
-            throw new HandleException($validate->errorMessage());
+        if ($validator->fail()) {
+            throw new HandleException(json_encode($validator->error()));
         }
     }
 }

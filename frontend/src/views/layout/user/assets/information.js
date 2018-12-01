@@ -1,5 +1,5 @@
 import http from '@/utils/http'
-import {validateChineseAlphaDash, validateMobile} from '@/utils/validate'
+import {validateEmail, validateMobile} from '@/utils/validate'
 
 export default {
     data() {
@@ -7,30 +7,20 @@ export default {
             dialogVisible: false,
             loading: false,
             form: {
-                nikename: '',
                 email: '',
                 mobile: '',
             },
             rules: {
-                nikename: [
-                    {
-                        required: true,
-                        validator: validateChineseAlphaDash,
-                    },
-                ],
                 email: [
                     {
-                        type: 'email',
-                        required: true,
-                        message: __('请输入有效的邮箱'),
+                        validator: validateEmail,
+                        trigger: 'blur',
                     },
                 ],
                 mobile: [
                     {
-                        type: 'number',
                         validator: validateMobile,
-                        required: true,
-                        message: __('请输入有效的手机号'),
+                        trigger: 'blur',
                     },
                 ],
             },
@@ -44,12 +34,11 @@ export default {
             this.$refs.form.validate(pass => {
                 if (pass) {
                     this.loading = true
-                    this.apiPost('user/update_info', this.form).then(
+                    this.apiPost('user/update-info', this.form).then(
                         res => {
                             utils.success(res.message)
 
                             let users = this.$store.state.user.users
-                            users.nikename = this.form.nikename
                             users.email = this.form.email
                             users.mobile = this.form.mobile
 
@@ -73,7 +62,6 @@ export default {
     },
     created() {
         let users = this.$store.state.user.users
-        this.form.nikename = users.nikename
         this.form.email = users.email
         this.form.mobile = users.mobile
     },

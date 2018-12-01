@@ -3,7 +3,6 @@ import packjson from '../../package.json'
 
 let util = {}
 util.title = function(title) {
-    title = title || 'QueryPHP-Vue'
     window.document.title = title
 }
 
@@ -96,16 +95,7 @@ util.setCurrentPath = function(vm, name) {
     if (name === 'dashboard') {
         currentPathArr = [curRouter]
     } else if (name && isOtherRouter) {
-        currentPathArr = [
-            util.handleItem(
-                vm,
-                util.getRouterObjByName(
-                    vm.$store.state.app.routers,
-                    'dashboard'
-                )
-            ),
-            curRouter,
-        ]
+        currentPathArr = [util.handleItem(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'dashboard')), curRouter]
     } else {
         let currentPathObj = vm.$store.state.app.routers.filter(item => {
             if (item.children.length <= 1) {
@@ -127,16 +117,7 @@ util.setCurrentPath = function(vm, name) {
         if (currentPathObj === undefined) {
             throw 'Can not find children router'
         } else if (currentPathObj.children.length <= 1) {
-            currentPathArr = [
-                util.handleItem(
-                    vm,
-                    util.getRouterObjByName(
-                        vm.$store.state.app.routers,
-                        'dashboard'
-                    )
-                ),
-                util.handleItem(vm, currentPathObj),
-            ]
+            currentPathArr = [util.handleItem(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'dashboard')), util.handleItem(vm, currentPathObj)]
         } else {
             let childObj = currentPathObj.children.filter(child => {
                 return child.name === name
@@ -147,17 +128,7 @@ util.setCurrentPath = function(vm, name) {
             parent.name = childFirst.name
             parent.path = childFirst.path
 
-            currentPathArr = [
-                util.handleItem(
-                    vm,
-                    util.getRouterObjByName(
-                        vm.$store.state.app.routers,
-                        'dashboard'
-                    )
-                ),
-                parent,
-                util.handleItem(vm, childObj),
-            ]
+            currentPathArr = [util.handleItem(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'dashboard')), parent, util.handleItem(vm, childObj)]
         }
     }
 
@@ -170,8 +141,7 @@ util.openNewPage = function(vm, name, argu, query) {
         return
     }
 
-    let pageOpenedList =
-        vm.$store.state != undefined ? vm.$store.state.app.pageOpenedList : []
+    let pageOpenedList = vm.$store.state != undefined ? vm.$store.state.app.pageOpenedList : []
     let openedPageLen = pageOpenedList.length
     let i = 0
     let tagHasOpened = false
@@ -217,11 +187,7 @@ util.toDefaultPage = function(routers, name, route, next) {
     let i = 0
     let notHandle = true
     while (i < len) {
-        if (
-            routers[i].name === name &&
-            routers[i].children &&
-            routers[i].redirect === undefined
-        ) {
+        if (routers[i].name === name && routers[i].children && routers[i].redirect === undefined) {
             route.replace({name: routers[i].children[0].name})
             notHandle = false
             next()
@@ -284,7 +250,7 @@ util.warning = function(message, title) {
 }
 
 util.error = function(message) {
-    bus.$Message.error(message)
+    bus.$Message.error({content: message, duration: 5})
 }
 
 util.clearVuex = function(cate) {
@@ -326,8 +292,7 @@ util.parseTime = function(time, cFormat) {
     }
     const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
         let value = formatObj[key]
-        if (key === 'a')
-            return ['一', '二', '三', '四', '五', '六', '日'][value - 1]
+        if (key === 'a') return ['一', '二', '三', '四', '五', '六', '日'][value - 1]
         if (result.length > 0 && value < 10) {
             value = '0' + value
         }
@@ -356,17 +321,7 @@ util.formatTime = function(time, option) {
     if (option) {
         return parseTime(time, option)
     } else {
-        return (
-            d.getMonth() +
-            1 +
-            '月' +
-            d.getDate() +
-            '日' +
-            d.getHours() +
-            '时' +
-            d.getMinutes() +
-            '分'
-        )
+        return d.getMonth() + 1 + '月' + d.getDate() + '日' + d.getHours() + '时' + d.getMinutes() + '分'
     }
 }
 
@@ -488,9 +443,7 @@ util.toggleClass = function(element, className) {
     if (nameIndex === -1) {
         classString += '' + className
     } else {
-        classString =
-            classString.substr(0, nameIndex) +
-            classString.substr(nameIndex + className.length)
+        classString = classString.substr(0, nameIndex) + classString.substr(nameIndex + className.length)
     }
     element.className = classString
 }

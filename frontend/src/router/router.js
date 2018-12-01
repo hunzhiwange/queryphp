@@ -88,20 +88,29 @@ export const otherRouter = {
 
 let appRouterData = [
     {
-        path: '/option',
+        path: '/base',
         icon: 'ios-gear',
-        name: 'option',
+        name: 'base',
         meta: {
-            title: __('基础设置'),
+            title: __('基础配置'),
         },
         component: layout,
         children: [
             {
-                path: 'menu',
+                path: 'option',
                 icon: '',
-                name: 'menu_index',
+                name: 'option_index',
                 meta: {
-                    title: __('基础设置'),
+                    title: __('系统配置'),
+                },
+                component: importRouter('test/test'),
+            },
+            {
+                path: 'profile',
+                icon: '',
+                name: 'profile_index',
+                meta: {
+                    title: __('个人中心'),
                 },
                 component: importRouter('test/test'),
             },
