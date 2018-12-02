@@ -1,5 +1,6 @@
 import axios from 'axios'
 import isJSON from 'validator/lib/isJSON'
+import {lock} from '@/utils/auth'
 
 // 创建 axios 实例
 const service = axios.create({
@@ -143,7 +144,13 @@ service.interceptors.response.use(
                 utils.error(err.response.data.error.message)
             }
 
-            if (401 === err.response.status) {
+            if (424 === err.response.status) {
+                lock('dashboard')
+
+                setTimeout(() => {
+                    router.replace('/locking')
+                }, 1000)
+            } else if (401 === err.response.status) {
                 setTimeout(() => {
                     bus.$store.dispatch('logout')
                     router.replace('/login')

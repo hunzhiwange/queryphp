@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\User;
 
+use Admin\Infra\Lock;
 use Common\Domain\Entity\User;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\IUnitOfWork;
@@ -21,7 +22,7 @@ use Leevel\Kernel\HandleException;
 use Leevel\Validate as Validates;
 
 /**
- * 用户修改密码.
+ * 解锁.
  *
  * @author Name Your <your@mail.com>
  *
@@ -29,7 +30,7 @@ use Leevel\Validate as Validates;
  *
  * @version 1.0
  */
-class ChangePassword
+class Unlock
 {
     /**
      * 事务工作单元.
@@ -46,6 +47,13 @@ class ChangePassword
     protected $hash;
 
     /**
+     * 锁定缓存.
+     *
+     * @var \Admin\Infra\Lock
+     */
+    protected $lock;
+
+    /**
      * 输入数据.
      *
      * @var array
@@ -57,11 +65,13 @@ class ChangePassword
      *
      * @param \Leevel\Database\Ddd\IUnitOfWork $w
      * @param \Leevel\Auth\Hash                $hash
+     * @param \Admin\Infra\Lock                $lock
      */
-    public function __construct(IUnitOfWork $w, Hash $hash)
+    public function __construct(IUnitOfWork $w, Hash $hash, Lock $lock)
     {
         $this->w = $w;
         $this->hash = $hash;
+        $this->lock = $lock;
     }
 
     /**
@@ -79,9 +89,17 @@ class ChangePassword
 
         $this->validateUser();
 
-        $this->save($input)->toArray();
+        $this->unlock();
 
         return [];
+    }
+
+    /**
+     * 解锁.
+     */
+    protected function unlock()
+    {
+        $this->lock->delete($this->input['token']);
     }
 
     /**
@@ -101,23 +119,11 @@ class ChangePassword
             throw new HandleException(__('账号不存在或者已禁用'));
         }
 
-        if (!$this->verifyPassword($this->input['old_pwd'], $user->password)) {
-            throw new HandleException(__('账户旧密码错误'));
+        if (!$this->verifyPassword($this->input['password'], $user->password)) {
+            throw new HandleException(__('解锁密码错误'));
         }
 
         return $user;
-    }
-
-    /**
-     * 创建密码
-     *
-     * @param string $password
-     *
-     * @return string
-     */
-    protected function createPassword(string $password): string
-    {
-        return $this->hash->password($password);
     }
 
     /**
@@ -134,64 +140,6 @@ class ChangePassword
     }
 
     /**
-     * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User
-     */
-    protected function save(array $input): User
-    {
-        $this->w->persist($entity = $this->entity($input));
-
-        $this->w->flush();
-
-        return $entity;
-    }
-
-    /**
-     * 验证参数.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User
-     */
-    protected function entity(array $input): User
-    {
-        $entity = $this->find((int) $input['id']);
-
-        $entity->withProps($this->data($input));
-
-        return $entity;
-    }
-
-    /**
-     * 查找实体.
-     *
-     * @param int $id
-     *
-     * @return \Common\Domain\Entity\User
-     */
-    protected function find(int $id): User
-    {
-        return $this->w->repository(User::class)->findOrFail($id);
-    }
-
-    /**
-     * 组装实体数据.
-     *
-     * @param array $input
-     *
-     * @return array
-     */
-    protected function data(array $input): array
-    {
-        return [
-            'password'       => $this->createPassword(trim($input['new_pwd'])),
-        ];
-    }
-
-    /**
      * 校验基本参数.
      */
     protected function validateArgs()
@@ -199,16 +147,14 @@ class ChangePassword
         $validator = Validates::make(
             $this->input,
             [
-                'id'                  => 'required',
-                'old_pwd'             => 'required|alpha_dash|min_length:6',
-                'new_pwd'             => 'required|alpha_dash|min_length:6',
-                'confirm_pwd'         => 'required|alpha_dash|min_length:6|equal_to:new_pwd',
+                'id'                   => 'required',
+                'token'                => 'required',
+                'password'             => 'required|alpha_dash|min_length:6',
             ],
             [
-                'id'                  => 'ID',
-                'old_pwd'             => __('旧密码'),
-                'new_pwd'             => __('新密码'),
-                'confirm_pwd'         => __('确认密码'),
+                'id'                   => 'ID',
+                'token'                => 'Token',
+                'password'             => __('解锁密码'),
             ]
         );
 

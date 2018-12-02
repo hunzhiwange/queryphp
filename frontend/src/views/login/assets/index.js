@@ -64,12 +64,7 @@ export default {
         refreshSeccode() {
             this.codeUrl = ''
             setTimeout(() => {
-                this.codeUrl =
-                    this.codeImg +
-                    '?id=' +
-                    this.form.name +
-                    '&time=' +
-                    moment().unix()
+                this.codeUrl = this.codeImg + '?id=' + this.form.name + '&time=' + moment().unix()
             }, 300)
         },
         handleSubmit(form) {
@@ -93,7 +88,7 @@ export default {
 
                     this.apiPost('login/validate', data).then(
                         res => {
-                            utils.success(res.message)
+                            utils.success(this.__('登陆成功'))
 
                             this.$store.dispatch('login', res)
 

@@ -28,8 +28,23 @@ export default {
             lockdiv.setAttribute('id', 'lock_screen_back')
             lockdiv.setAttribute('class', 'lock-screen-back')
             document.body.appendChild(lockdiv)
+            let x = window.screen.height
+            let y = window.screen.width
+            let r = Math.sqrt(x * x + y * y)
+            let size = parseInt(r)
+            document.body.style.height = size + 'px'
         }
         let lockScreenBack = document.getElementById('lock_screen_back')
         lockScreenBack.style.zIndex = -1
+
+        window.addEventListener('resize', () => {
+            let x = document.body.clientWidth
+            let y = document.body.clientHeight
+            let r = Math.sqrt(x * x + y * y)
+            let size = parseInt(r)
+            this.lockScreenSize = size
+            lockScreenBack.style.transition = 'all 0s'
+            lockScreenBack.style.width = lockScreenBack.style.height = size + 'px'
+        })
     },
 }

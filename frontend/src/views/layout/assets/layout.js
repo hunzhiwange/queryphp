@@ -15,6 +15,7 @@ import information from '@/views/layout/user/information'
 // 图片
 import img_logo from '@/assets/images/logo_admin_light.png'
 import img_mini_logo from '@/assets/images/logo_96x96_light.png'
+import avator from '@/assets/images/avator.png'
 
 export default {
     components: {
@@ -37,6 +38,7 @@ export default {
             isFullScreen: false,
             openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
             dialogVisible: false,
+            avator: avator,
         }
     },
     computed: {
@@ -54,7 +56,7 @@ export default {
             return this.$store.state.app.currentPath // 当前面包屑数组
         },
         avatorPath() {
-            return localStorage.avatorImgPath
+            return this.avator
         },
         cachePage() {
             return []
@@ -106,9 +108,7 @@ export default {
             })
         },
         changePasswordLogout() {
-            let data = {
-                authkey: this.$store.state.user.token,
-            }
+            let data = {}
             this.apiPost('login/logout', data).then(res => {
                 this.$store.dispatch('logout')
                 utils.success(this.__('登出成功'))
