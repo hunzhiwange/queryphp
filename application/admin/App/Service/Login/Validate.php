@@ -90,7 +90,7 @@ class Validate
 
         Auth::setTokenName($token = $this->createToken());
 
-        Auth::login($userInfo = $user->toArray(['id', 'name', 'create_at']));
+        Auth::login($userInfo = $user->toArray([], ['password']));
 
         return [
             'token'     => $token,

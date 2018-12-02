@@ -112,7 +112,7 @@ let appRouterData = [
                 meta: {
                     title: __('个人中心'),
                 },
-                component: importRouter('test/test'),
+                component: importRouter('base/profile'),
             },
         ],
     },
