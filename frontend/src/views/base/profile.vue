@@ -18,8 +18,8 @@
                     </p>
                     <div>
                         <Row>
-                            <button type="success" long>{{ email }}</button> <br /><br />
-                            <button type="info" long>{{ mobile }}</button>
+                            <i-button type="success" long>{{ email }}</i-button> <br /><br />
+                            <i-button type="info" long>{{ mobile }}</i-button>
                         </Row>
                     </div>
                 </Card>
