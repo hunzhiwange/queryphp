@@ -13,18 +13,18 @@
                 <div class="unlock-input-overflow-con">
                     <div class="unlock-overflow-body" :style="{right: inputLeft}">
                         <input ref="inputEle" v-model="password" class="unlock-input" type="password" :placeholder="__('密码同登录密码')" />
-                        <button ref="unlockBtn" @mousedown="unlockMousedown" @mouseup="unlockMouseup" @click="handleUnlock" class="unlock-btn">
+                        <i-button ref="unlockBtn" @mousedown="unlockMousedown" @mouseup="unlockMouseup" @click="handleUnlock" class="unlock-btn">
                             <Icon color="white" type="key"></Icon>
-                        </button>
+                        </i-button>
                     </div>
                 </div>
             </div>
             <div class="unlock-locking-tip-con">
                 <Dropdown @on-click="handleClickLock">
-                    <button type="primary">
+                    <i-button type="primary">
                         {{ __('已锁定') }}
                         <Icon type="arrow-down-b"></Icon>
-                    </button>
+                    </i-button>
                     <DropdownMenu slot="list">
                         <DropdownItem name="lock">
                             <Icon :type="inputLeft !== '0px' ? 'unlocked' : 'locked'"></Icon> {{ inputLeft !== '0px' ? __('解锁') : __('取消') }}</DropdownItem
