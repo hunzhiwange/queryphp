@@ -121,7 +121,7 @@ class ChangePassword
     }
 
     /**
-     * 对比验证码
+     * 校验旧密码
      *
      * @param string $password
      * @param string $hash
