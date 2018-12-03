@@ -103,7 +103,7 @@ let appRouterData = [
                 meta: {
                     title: __('系统配置'),
                 },
-                component: importRouter('test/test'),
+                component: importRouter('base/option'),
             },
             {
                 path: 'profile',
