@@ -59,7 +59,9 @@ class User extends Entity
         ],
         'name'      => [],
         'identity'  => [],
-        'password'  => [],
+        'password'  => [
+            'show_prop_black' => true,
+        ],
         'email'     => [],
         'mobile'    => [],
         'status'    => [
