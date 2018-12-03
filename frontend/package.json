@@ -32,6 +32,7 @@
     "showdown": "1.7.1",
     "sortablejs": "1.5.1",
     "sprintf-js": "^1.1.1",
+    "validator": "^10.9.0",
     "vue": "2.5.2",
     "vue-count-to": "1.0.5",
     "vue-gettext": "^2.1.1",
