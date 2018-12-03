@@ -108,7 +108,7 @@ class Update
      *
      * @return \Common\Domain\Entity\User
      */
-    protected function entity(array $input)
+    protected function entity(array $input): User
     {
         $entity = $this->find((int) $input['id']);
 

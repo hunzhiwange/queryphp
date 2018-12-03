@@ -80,7 +80,7 @@ class Update
      *
      * @return \Common\Domain\Entity\Role
      */
-    protected function entity(array $input)
+    protected function entity(array $input): Role
     {
         $entity = $this->find((int) $input['id']);
 

@@ -80,7 +80,7 @@ class Update
      *
      * @return \Common\Domain\Entity\Permission
      */
-    protected function entity(array $input)
+    protected function entity(array $input): Permission
     {
         $entity = $this->find((int) $input['id']);
 

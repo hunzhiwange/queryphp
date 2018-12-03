@@ -94,7 +94,7 @@ class Update
      *
      * @return \Common\Domain\Entity\Resource
      */
-    protected function entity(array $input)
+    protected function entity(array $input): Resource
     {
         $entity = $this->find((int) $input['id']);
 
