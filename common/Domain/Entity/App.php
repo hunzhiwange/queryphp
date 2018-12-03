@@ -58,6 +58,12 @@ class App extends Entity
             'readonly'             => true,
         ],
         'identity'  => [],
+        'status'    => [
+            self::ENUM => [
+                '0' => '禁用',
+                '1' => '启用',
+            ],
+        ],
         'key'       => [],
         'secret'    => [],
         'create_at' => [],
@@ -76,6 +82,13 @@ class App extends Entity
      * @var string
      */
     private $identity;
+
+    /**
+     * 状态 0=禁用;1=启用;.
+     *
+     * @var int
+     */
+    private $status;
 
     /**
      * key.
