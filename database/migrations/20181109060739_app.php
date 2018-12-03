@@ -47,5 +47,18 @@ class App extends AbstractMigration
         $table->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'comment' => '状态 0=禁用;1=启用;']);
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
         $table->create();
+
+        // 创建一个默认应用
+        $adminApp = [
+            'id'        => 1,
+            'identity'  => 'admin',
+            'key'       => 'B1DA4485-B49D-D8E3-0F9E-168D7605A797',
+            'secret'    => '4282222',
+            'status'    => '1',
+        ];
+
+        $table = $this->table('app');
+        $table->insert($adminApp);
+        $table->saveData();
     }
 }

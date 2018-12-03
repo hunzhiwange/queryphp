@@ -49,5 +49,17 @@ class User extends AbstractMigration
         $table->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'comment' => '状态 0=禁用;1=启用;']);
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
         $table->create();
+
+        // 创建一个默认用户
+        $user = [
+            'id'       => 1,
+            'name'     => 'admin',
+            'password' => '$2y$10$Gsfcl8pAAEwYhfBoc9Dj.e2r9LHnEl89uZMWtsfQHMWY1YddY0Y.C',
+            'status'   => '1',
+        ];
+
+        $table = $this->table('user');
+        $table->insert($user);
+        $table->saveData();
     }
 }

@@ -44,5 +44,21 @@ class Option extends AbstractMigration
         $table->addColumn('value', 'text', ['comment' => '配置值']);
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
         $table->create();
+
+        // 初始化配置
+        $rows = [
+            [
+                'name'  => 'site_name',
+                'value' => 'QueryPHP',
+            ],
+            [
+                'name'  => 'site_close',
+                'value' => '1',
+            ],
+        ];
+
+        $table = $this->table('option');
+        $table->insert($rows);
+        $table->save();
     }
 }
