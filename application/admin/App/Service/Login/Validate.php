@@ -82,7 +82,10 @@ class Validate
 
         $this->validateArgs();
 
-        $this->validateCode();
+        // Mac 自带 PHP 有问题
+        if (function_exists('imagettftext')) {
+            $this->validateCode();
+        }
 
         $this->validateApp();
 

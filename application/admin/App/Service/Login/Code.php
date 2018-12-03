@@ -53,6 +53,13 @@ class Code
      */
     public function handle(array $input)
     {
+        // Mac 自带 PHP 有问题
+        if (!function_exists('imagettftext')) {
+            header('Content-Type: image/png;text/html; charset=utf-8');
+            echo file_get_contents(Leevel::publicPath('images/code.png'));
+            die;
+        }
+
         $seccode = new Seccode([
             'background_path' => Leevel::commonPath('ui/seccode/background'),
             'font_path'       => Leevel::commonPath('ui/seccode/font'),
