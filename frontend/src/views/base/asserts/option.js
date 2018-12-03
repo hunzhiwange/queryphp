@@ -9,12 +9,6 @@ export default {
 
                     this.apiPost('base/option', this.formItem).then(
                         res => {
-                            // this.data.forEach((item, index) => {
-                            //     if (item.id === this.formItem.id) {
-                            //         this.$set(this.data, index, res)
-                            //     }
-                            // })
-
                             this.loading = !this.loading
 
                             utils.success(res.message)
@@ -28,6 +22,13 @@ export default {
         },
         handleReset(form) {
             this.$refs[form].resetFields()
+        },
+        init: function() {
+            this.apiGet('base/get-option').then(res => {
+                Object.keys(this.formItem).forEach(val => {
+                    this.formItem[val] = res[val]
+                })
+            })
         },
     },
     data() {
@@ -46,6 +47,9 @@ export default {
                 ],
             },
         }
+    },
+    created: function() {
+        this.init()
     },
     mixins: [http],
 }

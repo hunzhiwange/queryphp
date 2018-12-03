@@ -58,7 +58,9 @@ class Option extends Entity
             'readonly' => true,
         ],
         'value'     => [],
-        'create_at' => [],
+        'create_at' => [
+            'show_prop_black' => true,
+        ],
     ];
 
     /**
