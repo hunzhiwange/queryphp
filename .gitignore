@@ -14,10 +14,8 @@ frontend/node_modules/
 package-lock.json
 .php_cs.cache
 logs/
-
 www/public
 www/storage
 www/apis
 www/debugbar
-/phinx.yml
 /.testing

@@ -25,6 +25,6 @@
         </whitelist>
     </filter>
     <php>
-        <env name="ENVIRONMENT" value="testing"/>
+        <env name="RUNTIME_ENVIRONMENT" value="testing"/>
     </php>
 </phpunit>
