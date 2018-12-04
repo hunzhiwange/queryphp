@@ -18,7 +18,6 @@
                                     </FormItem>
                                     <FormItem>
                                         <i-button type="primary" :loading="loading" @click.native.prevent="handleSubmit('form')">{{ __('确定') }}</i-button>
-                                        <i-button type="ghost" style="margin-left: 8px;" @click="handleReset('form')">{{ __('重置') }}</i-button>
                                     </FormItem>
                                 </i-form>
                             </i-col>

@@ -20,9 +20,6 @@ export default {
                 }
             })
         },
-        handleReset(form) {
-            this.$refs[form].resetFields()
-        },
         init: function() {
             this.apiGet('base/get-option').then(res => {
                 Object.keys(this.formItem).forEach(val => {
