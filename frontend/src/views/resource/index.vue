@@ -46,7 +46,6 @@
                                 :columns="columns"
                                 :data="data"
                                 class="search-table"
-                                :height="tableHeight"
                                 @on-selection-change="onSelectionChange"
                             >
                             </i-table>

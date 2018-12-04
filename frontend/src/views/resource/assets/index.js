@@ -37,11 +37,7 @@ export default {
                     render: (h, params) => {
                         const row = params.row
                         return (
-                            <tag
-                                type="dot"
-                                color={
-                                    row.status === '1' ? 'green' : 'default'
-                                }>
+                            <tag type="dot" color={row.status === '1' ? 'green' : 'default'}>
                                 {row.status_enum}
                             </tag>
                         )
@@ -57,14 +53,10 @@ export default {
                         return (
                             <div>
                                 <buttonGroup size="small" shape="circle">
-                                    <i-button
-                                        type="text"
-                                        onClick={() => this.edit(params)}>
+                                    <i-button type="text" onClick={() => this.edit(params)}>
                                         {this.__('编辑')}
                                     </i-button>
-                                    <i-button
-                                        type="text"
-                                        onClick={() => this.remove(params)}>
+                                    <i-button type="text" onClick={() => this.remove(params)}>
                                         {this.__('删除')}
                                     </i-button>
                                 </buttonGroup>
@@ -77,9 +69,7 @@ export default {
             page: 1,
             pageSize: 10,
             data: [],
-            tableHeight: 'auto',
             loadingTable: true,
-            dataBackup: null,
             formItem: {
                 id: null,
                 name: '',
@@ -158,11 +148,7 @@ export default {
                 this.data.forEach((item, index) => {
                     if (selected.includes(item.id)) {
                         this.$set(this.data[index], 'status', type)
-                        this.$set(
-                            this.data[index],
-                            'status_enum',
-                            type === '1' ? this.__('启用') : this.__('禁用')
-                        )
+                        this.$set(this.data[index], 'status_enum', type === '1' ? this.__('启用') : this.__('禁用'))
                     }
                 })
 

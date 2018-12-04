@@ -1,7 +1,6 @@
 import http from '@/utils/http'
 import {validateAlphaDash} from '@/utils/validate'
 import Vue from 'vue'
-
 import search from './../search/index'
 
 export default {
@@ -13,64 +12,55 @@ export default {
             columns: [
                 {
                     type: 'selection',
-                    width: 40,
+                    width: 60,
                     align: 'center',
                     className: 'table-selection',
                 },
                 {
                     type: 'index',
-                    width: 20,
+                    width: 50,
                     align: 'center',
                     className: 'table-index',
                 },
                 {
-                    title: '名字',
+                    title: this.__('名字'),
                     key: 'name',
                 },
                 {
-                    title: '标识符',
+                    title: this.__('标识符'),
                     key: 'identity',
                 },
                 {
-                    title: '状态',
+                    title: this.__('状态'),
                     key: 'status_enum',
                     width: 120,
                     render: (h, params) => {
                         const row = params.row
                         return (
-                            <tag
-                                type="dot"
-                                color={
-                                    row.status === '1' ? 'green' : 'default'
-                                }>
+                            <tag type="dot" color={row.status === '1' ? 'green' : 'default'}>
                                 {row.status_enum}
                             </tag>
                         )
                     },
                 },
                 {
-                    title: '操作',
+                    title: this.__('操作'),
                     key: 'action',
                     width: 120,
-                    align: 'right',
+                    fixed: 'right',
+                    align: 'left',
                     render: (h, params) => {
                         return (
-                            <dropdown
-                                placement="bottom-end"
-                                style="textAlign: left;"
-                                on-on-click={name => this[name](params)}>
-                                <a href="javascript:void(0)">
-                                    <icon type="more" />
-                                </a>
-                                <dropdownMenu slot="list">
-                                    <dropdownItem name="edit">
-                                        <icon type="edit" /> {__('编辑')}
-                                    </dropdownItem>
-                                    <dropdownItem name="remove">
-                                        <icon type="trash-b" /> {__('删除')}
-                                    </dropdownItem>
-                                </dropdownMenu>
-                            </dropdown>
+                            <div>
+                                <buttonGroup size="small" shape="circle">
+                                    <i-button type="text" onClick={() => this.edit(params)}>
+                                        {this.__('编辑')}
+                                    </i-button>
+                                    <i-button type="text" onClick={() => this.remove(params)}>
+                                        {this.__('删除')}
+                                    </i-button>
+                                </buttonGroup>
+                            </div>
                         )
                     },
                 },
@@ -86,20 +76,23 @@ export default {
                 id: null,
                 name: '',
                 identity: '',
-                status: true,
+                status: '1',
             },
             minForm: false,
             rules: {
                 name: [
                     {
                         required: true,
-                        message: __('请输入角色名字'),
+                        message: this.__('请输入角色名字'),
                     },
                 ],
                 identity: [
                     {
                         required: true,
-                        message: __('请输入角色标识符'),
+                        message: this.__('请输入角色标识符'),
+                    },
+                    {
+                        validator: validateAlphaDash,
                     },
                 ],
             },
@@ -120,7 +113,6 @@ export default {
 
             let data = {}
             Object.keys(this.formItem).forEach(item => (data[item] = row[item]))
-            data.status = data.status == '1' ? true : false
             this.formItem = data
         },
         add: function() {
@@ -129,8 +121,8 @@ export default {
         },
         remove(params) {
             this.$Modal.confirm({
-                title: __('提示'),
-                content: __('确认删除该角色?'),
+                title: this.__('提示'),
+                content: this.__('确认删除该角色?'),
                 onOk: () => {
                     this.apiDelete('role', params.row.id).then(res => {
                         utils.success(res.message)
@@ -141,19 +133,11 @@ export default {
                 onCancel: () => {},
             })
         },
-        status(nodeData, status) {
-            this.apiPut('structure/enable', nodeData.id, {
-                status: status,
-            }).then(res => {
-                this.$set(nodeData, 'status', status)
-                utils.success(res.message)
-            })
-        },
         statusMany(type) {
             let selected = this.selectedData
 
             if (!selected.length) {
-                utils.warning(__('请勾选数据'))
+                utils.warning(this.__('请勾选数据'))
                 return
             }
 
@@ -166,11 +150,7 @@ export default {
                 this.data.forEach((item, index) => {
                     if (selected.includes(item.id)) {
                         this.$set(this.data[index], 'status', type)
-                        this.$set(
-                            this.data[index],
-                            'status_enum',
-                            type === '1' ? __('启用') : __('禁用')
-                        )
+                        this.$set(this.data[index], 'status_enum', type === '1' ? this.__('启用') : this.__('禁用'))
                     }
                 })
 
@@ -196,16 +176,15 @@ export default {
                 if (pass) {
                     this.loading = !this.loading
                     if (!this.formItem.id) {
-                        this.saveResource(form)
+                        this.saveRole(form)
                     } else {
-                        this.updateResource(form)
+                        this.updateRole(form)
                     }
                 }
             })
         },
-        saveResource(form) {
+        saveRole(form) {
             var formData = this.formItem
-            formData.status = formData.status ? '1' : '0'
 
             this.apiPost('role', formData).then(
                 res => {
@@ -229,9 +208,8 @@ export default {
                 }
             )
         },
-        updateResource(form) {
+        updateRole(form) {
             var formData = this.formItem
-            formData.status = formData.status ? '1' : '0'
 
             this.apiPut('role', this.formItem.id, formData).then(
                 res => {
