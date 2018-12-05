@@ -4,13 +4,13 @@
     <a href="./README.md">English</a> | <a href="./README-zh-CN.md">中文</a>
 </p>
 
-This will help php developer to use QueryPHP.
+这个项目可以帮助你更好地使用 QueryPHP.
 
-This project is base on [VueThink](https://github.com/honraytech/VueThink)、[VueElementAdmin](https://github.com/PanJiaChen/vue-element-admin)、[IViewAdmin](https://github.com/iview/iview-admin)，thanks
+本项目基于 [VueThink](https://github.com/honraytech/VueThink)、[VueElementAdmin](https://github.com/PanJiaChen/vue-element-admin)、[IViewAdmin](https://github.com/iview/iview-admin)，感谢这些优秀的项目。
 
 ## Development
 
-First to create config file,PHP composer will help you.
+首先创建配置文件,PHP 的 composer 会帮助你创建它.
 
 ```
 # local
@@ -20,41 +20,41 @@ cp .env.example .env.local
 cp .env.example .env.production
 ```
 
-Then
+接着
 
 ```bas
 npm install -g cnpm --registry=https://registry.npm.taobao.org // Just once
 cnpm install
 npm run serve # npm run dev
 ```
-View http://127.0.0.1:9528
+访问 http://127.0.0.1:9528
 
-## Publish
+## 发布
 
 ```bash
 npm run build
 ```
 
-## Run tests
+## 运行测试文件
 
 ```
 npm run test
 ```
 
-## Style format
+## 统一团队代码风格
 
 ```
 cnpm install --global prettier
 cnpm install gulp -g
 ```
 
-Then
+接着
 
 ```
 sh ./style.sh // All
 ```
 
-With git
+配置 Git Hook 来格式化
 
 See `./../build/pre-commit.sh`
 
@@ -73,9 +73,9 @@ git update-index -g
 
 ```
 
-## I18n workflow
+## 语言工作流
 
-First use gulp to extract i18n.
+使用 Gulp 导出语言包.
 
 ```
 gulp
@@ -89,7 +89,7 @@ Saved src_utils_request.js.tmp.i18n.js
 ...
 ```
 
-Then use poedit to extract po file.
+使用 poedit 软件导出 po 语言包.
 
 ```
 ./tmp-i18n/*
@@ -103,7 +103,7 @@ __('权限不足')
 src/i18n/zh-CN/default.po
 ```
 
-Then po to json.
+将 po 语言包转为 json.
 
 ```
 gulp po
