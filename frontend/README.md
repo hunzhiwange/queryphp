@@ -46,6 +46,7 @@ npm run lint
 
 ```
 cnpm install --global prettier
+cnpm install gulp -g
 ```
 
 Then
