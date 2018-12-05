@@ -6,12 +6,14 @@ This project is base on [VueThink](https://github.com/honraytech/VueThink)、[Vu
 
 ## Development
 
-First to create config file.
+First to create config file,php composer will help you.
 
 ```
-cp config/dev.env.js.example config/dev.env.js
-cp config/prod.env.js.example config/prod.env.js
-cp config/sit.env.js.example config/sit.env.js
+# local
+cp .env.example .env.local
+
+# production
+cp .env.example .env.production
 ```
 
 Then
@@ -21,7 +23,7 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org // Just once
 cnpm install
 npm run serve # npm run dev
 ```
-View http://localhost:9528
+View http://127.0.0.1:9528
 
 ## Publish
 
