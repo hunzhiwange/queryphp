@@ -1,8 +1,11 @@
 {
-  "name": "my-project",
-  "version": "0.1.0",
+  "name": "QueryPHP-Vue",
+  "version": "1.0.0",
+  "description": "QueryVue made by vue 2.0 For The QueryPHP Framework",
+  "author": "QueryPHP.COM && Honray Inc && Pan <panfree23@gmail.com>",
   "private": true,
   "scripts": {
+    "dev": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
@@ -29,12 +32,14 @@
     "@vue/test-utils": "^1.0.0-beta.10",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.8.0",
+    "eslint-plugin-cypress": "^2.0.1",
     "eslint-plugin-vue": "^5.0.0-0",
-    "vue-template-compiler": "^2.5.17",
+    "gulp": "^3.9.1",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "lint-staged": "^6.0.0",
-    "eslint-plugin-cypress": "^2.0.1"
+    "node-po": "^0.1.2",
+    "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
     "root": true,
@@ -59,5 +64,18 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  }
 }

@@ -62,14 +62,7 @@ function poToJson(i18n) {
                 }
             })
 
-            let result =
-                '/* ' +
-                moment().format('YYYY-MM-DD HH:mm:ss') +
-                ' */' +
-                '\n' +
-                'export default ' +
-                JSON.stringify(items) +
-                ';'
+            let result = '/* ' + moment().format('YYYY-MM-DD HH:mm:ss') + ' */' + '\n' + 'export default ' + JSON.stringify(items) + ';'
 
             let saveFile = 'src/i18n/' + i18n + '/index.js'
 
@@ -111,99 +104,37 @@ function readDirIView(filePath) {
                         if (isFile) {
                             var ext = filedir.split('.').pop()
                             if (supportExt.contains(ext)) {
-                                fs.readFile(filedir, 'utf8', function(
-                                    err,
-                                    files
-                                ) {
-                                    var result = files.replace(
-                                        /\<Input(\s){1}/g,
-                                        '<i-input '
-                                    )
-                                    result = result.replace(
-                                        /\<\/Input\>/g,
-                                        '</i-input>'
-                                    )
+                                fs.readFile(filedir, 'utf8', function(err, files) {
+                                    var result = files.replace(/\<Input(\s){1}/g, '<i-input ')
+                                    result = result.replace(/\<\/Input\>/g, '</i-input>')
 
-                                    result = result.replace(
-                                        /\<Col(\s){1}/g,
-                                        '<i-col '
-                                    )
-                                    result = result.replace(
-                                        /\<\/Col\>/g,
-                                        '</i-col>'
-                                    )
+                                    result = result.replace(/\<Col(\s){1}/g, '<i-col ')
+                                    result = result.replace(/\<\/Col\>/g, '</i-col>')
 
-                                    result = result.replace(
-                                        /\<Button(\s){1}/g,
-                                        '<i-button '
-                                    )
-                                    result = result.replace(
-                                        /\<\/Button\>/g,
-                                        '</i-button>'
-                                    )
+                                    result = result.replace(/\<Button(\s){1}/g, '<i-button ')
+                                    result = result.replace(/\<\/Button\>/g, '</i-button>')
 
-                                    result = result.replace(
-                                        /\<Form(\s){1}/g,
-                                        '<i-form '
-                                    )
-                                    result = result.replace(
-                                        /\<\/Form\>/g,
-                                        '</i-form>'
-                                    )
+                                    result = result.replace(/\<Form(\s){1}/g, '<i-form ')
+                                    result = result.replace(/\<\/Form\>/g, '</i-form>')
 
-                                    result = result.replace(
-                                        /\<Select(\s){1}/g,
-                                        '<i-select '
-                                    )
-                                    result = result.replace(
-                                        /\<\/Select\>/g,
-                                        '</i-select>'
-                                    )
+                                    result = result.replace(/\<Select(\s){1}/g, '<i-select ')
+                                    result = result.replace(/\<\/Select\>/g, '</i-select>')
 
-                                    result = result.replace(
-                                        /\<Option(\s){1}/g,
-                                        '<i-option '
-                                    )
-                                    result = result.replace(
-                                        /\<\/Option\>/g,
-                                        '</i-option>'
-                                    )
+                                    result = result.replace(/\<Option(\s){1}/g, '<i-option ')
+                                    result = result.replace(/\<\/Option\>/g, '</i-option>')
 
-                                    result = result.replace(
-                                        /\<Progress(\s){1}/g,
-                                        '<i-progress '
-                                    )
-                                    result = result.replace(
-                                        /\<\/Progress\>/g,
-                                        '</i-progress>'
-                                    )
+                                    result = result.replace(/\<Progress(\s){1}/g, '<i-progress ')
+                                    result = result.replace(/\<\/Progress\>/g, '</i-progress>')
 
-                                    result = result.replace(
-                                        /\<Menu(\s){1}/g,
-                                        '<i-menu '
-                                    )
-                                    result = result.replace(
-                                        /\<\/Menu\>/g,
-                                        '</i-menu>'
-                                    )
+                                    result = result.replace(/\<Menu(\s){1}/g, '<i-menu ')
+                                    result = result.replace(/\<\/Menu\>/g, '</i-menu>')
 
-                                    result = result.replace(
-                                        /\<Table(\s){1}/g,
-                                        '<i-table '
-                                    )
-                                    result = result.replace(
-                                        /\<\/Table\>/g,
-                                        '</i-table>'
-                                    )
+                                    result = result.replace(/\<Table(\s){1}/g, '<i-table ')
+                                    result = result.replace(/\<\/Table\>/g, '</i-table>')
 
-                                    fs.writeFile(
-                                        filedir,
-                                        result,
-                                        'utf8',
-                                        function(err) {
-                                            if (err) return console.log(err)
-                                        }
-                                    )
+                                    fs.writeFile(filedir, result, 'utf8', function(err) {
+                                        if (err) return console.log(err)
+                                    })
                                 })
                             }
                         }
@@ -235,10 +166,7 @@ function readDir(filePath) {
 
                         if (isFile) {
                             var ext = filedir.split('.').pop()
-                            if (
-                                supportExt.contains(ext) &&
-                                -1 === filedir.indexOf('.tmp.i18n.js')
-                            ) {
+                            if (supportExt.contains(ext) && -1 === filedir.indexOf('.tmp.i18n.js')) {
                                 readLang(filedir)
                             }
                         }

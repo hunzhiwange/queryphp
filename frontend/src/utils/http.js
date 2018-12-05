@@ -31,18 +31,11 @@ const apiMethods = {
                 if (['GET', 'POST'].includes(arguments[0])) {
                     data.url = 'admin/' + arguments[1]
                     data.data = arguments[2] ? arguments[2] : []
-                    data.url += arguments[3]
-                        ? '?=' + this.param(arguments[3])
-                        : ''
+                    data.url += arguments[3] ? '?=' + this.param(arguments[3]) : ''
                 } else {
-                    data.url =
-                        'admin/' +
-                        arguments[1] +
-                        (arguments[2] ? '/' + arguments[2] : '')
+                    data.url = 'admin/' + arguments[1] + (arguments[2] ? '/' + arguments[2] : '')
                     data.data = arguments[3] ? arguments[3] : []
-                    data.url += arguments[4]
-                        ? '?=' + this.param(arguments[4])
-                        : ''
+                    data.url += arguments[4] ? '?=' + this.param(arguments[4]) : ''
                 }
 
                 this.$options.apiMultiData.push(data)
@@ -90,11 +83,7 @@ const apiMethods = {
                 paramStr += '&' + key + '=' + encodeURIComponent(param)
             } else {
                 for (let i in param) {
-                    let k =
-                        key == null
-                            ? i
-                            : key +
-                              (param instanceof Array ? '[' + i + ']' : '.' + i)
+                    let k = key == null ? i : key + (param instanceof Array ? '[' + i + ']' : '.' + i)
                     paramStr += '&' + this.param(param[i], k)
                 }
             }

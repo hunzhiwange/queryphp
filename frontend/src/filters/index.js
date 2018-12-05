@@ -45,8 +45,7 @@ export function parseTime(time, cFormat) {
     }
     const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
         let value = formatObj[key]
-        if (key === 'a')
-            return ['一', '二', '三', '四', '五', '六', '日'][value - 1]
+        if (key === 'a') return ['一', '二', '三', '四', '五', '六', '日'][value - 1]
         if (result.length > 0 && value < 10) {
             value = '0' + value
         }
@@ -75,17 +74,7 @@ export function formatTime(time, option) {
     if (option) {
         return parseTime(time, option)
     } else {
-        return (
-            d.getMonth() +
-            1 +
-            '月' +
-            d.getDate() +
-            '日' +
-            d.getHours() +
-            '时' +
-            d.getMinutes() +
-            '分'
-        )
+        return d.getMonth() + 1 + '月' + d.getDate() + '日' + d.getHours() + '时' + d.getMinutes() + '分'
     }
 }
 
@@ -101,11 +90,7 @@ export function nFormatter(num, digits) {
     ]
     for (let i = 0; i < si.length; i++) {
         if (num >= si[i].value) {
-            return (
-                (num / si[i].value + 0.1)
-                    .toFixed(digits)
-                    .replace(/\.0+$|(\.[0-9]*[1-9])0+$/, '$1') + si[i].symbol
-            )
+            return (num / si[i].value + 0.1).toFixed(digits).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, '$1') + si[i].symbol
         }
     }
     return num.toString()
@@ -142,9 +127,7 @@ export function html2Text(val) {
 }
 
 export function toThousandslsFilter(num) {
-    return (+num || 0)
-        .toString()
-        .replace(/^-?\d+/g, m => m.replace(/(?=(?!\b)(\d{3})+$)/g, ','))
+    return (+num || 0).toString().replace(/^-?\d+/g, m => m.replace(/(?=(?!\b)(\d{3})+$)/g, ','))
 }
 
 export function status(value) {

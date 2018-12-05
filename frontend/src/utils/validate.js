@@ -97,11 +97,7 @@ export function validateChineseAlphaDash(rule, value, callback) {
     }
     setTimeout(() => {
         if (!/^[\u4E00-\u9FA5\w\d-]+$/u.test(value)) {
-            return callback(
-                new Error(
-                    __('只能包括中文字符、英文字母、数字、短横线和下划线')
-                )
-            )
+            return callback(new Error(__('只能包括中文字符、英文字母、数字、短横线和下划线')))
         } else {
             return callback()
         }
@@ -152,10 +148,7 @@ export function validatePhone(rule, value, callback) {
         return callback()
     }
     setTimeout(() => {
-        if (
-            !/^\d{3,4}-?\d{7,9}$/.test(value) &&
-            !(value.length == 11 && !/^((1[0-9]{1})+\d{9})$/.test(value))
-        ) {
+        if (!/^\d{3,4}-?\d{7,9}$/.test(value) && !(value.length == 11 && !/^((1[0-9]{1})+\d{9})$/.test(value))) {
             callback(new Error(__('请输入有效的电话或者手机号码')))
         } else {
             return callback()
@@ -194,11 +187,7 @@ export function validateEmail(rule, value, callback) {
         return callback()
     }
     setTimeout(() => {
-        if (
-            !/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(
-                value
-            )
-        ) {
+        if (!/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(value)) {
             callback(new Error(__('请输入有效的邮箱地址')))
         } else {
             return callback()
@@ -289,11 +278,7 @@ export function validateIp(rule, value, callback) {
         return callback()
     }
     setTimeout(() => {
-        if (
-            !/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(
-                value
-            )
-        ) {
+        if (!/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(value)) {
             callback(new Error(__('请输入有效的 IP 地址')))
         } else {
             return callback()
@@ -349,11 +334,7 @@ export function validateChinesePlateNumber(rule, value, callback) {
         return callback()
     }
     setTimeout(() => {
-        if (
-            !/^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/.test(
-                value
-            )
-        ) {
+        if (!/^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/.test(value)) {
             callback(new Error(__('请输入有效的中国车牌号')))
         } else {
             return callback()

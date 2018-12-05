@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import moment from 'moment'
 import http from '@/utils/http'
 import {validateAlpha} from '@/utils/validate'
 import img_logo from '@/assets/images/logo.png'
