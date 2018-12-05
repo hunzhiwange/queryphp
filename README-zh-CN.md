@@ -68,6 +68,81 @@ php leevel server <Visite http://127.0.0.1:9527/>
  * php leevel link:apis <http://127.0.0.1:9527/apis/>
  * php leevel link:debugbar <http://127.0.0.1:9527/debugbar/debugbar.css>
 
+## 连接数据库
+
+首先创建一个数据库.
+
+```
+CREATE DATABASE IF NOT EXISTS myapp DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+```
+
+修改 .env
+
+``
+vim .env
+
+...
+// Database
+DATABASE_DRIVER = mysql
+DATABASE_HOST = 127.0.0.1
+DATABASE_PORT = 3306
+DATABASE_NAME = queryphp_development_db
+DATABASE_USER = root
+DATABASE_PASSWORD =
+...
+
+to
+
+...
+// Database
+DATABASE_DRIVER = mysql
+DATABASE_HOST = 127.0.0.1
+DATABASE_PORT = 3306
+DATABASE_NAME = myapp
+DATABASE_USER = root
+DATABASE_PASSWORD =123456
+...
+
+```
+
+执行数据库迁移命令
+
+```
+php leevel migrate:migrate
+php leevel server
+``
+
+测试连接数据库 <http://127.0.0.1:9527/api/entity>
+
+```
+{
+ count: 4,
+ :trace: {
+     ...
+ }
+}
+```
+
+## 登陆到 QueryVue 后台
+
+第一步安装前端,细节信息可以在 `frontend/README.md` 查看.
+
+```
+cd frontend
+npm install -g cnpm --registry=https://registry.npm.taobao.org // Just once
+cnpm install
+npm run serve # npm run dev
+```
+
+接着登陆
+
+访问这个登陆地址. <http://127.0.0.1:9528/#/login>
+
+```
+user: admin
+password: 123456
+```
+
 ## 基本优化
 
 ### 关闭调试

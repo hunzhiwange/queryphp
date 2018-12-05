@@ -69,6 +69,81 @@ php leevel server <Visite http://127.0.0.1:9527/>
  * php leevel link:apis <http://127.0.0.1:9527/apis/>
  * php leevel link:debugbar <http://127.0.0.1:9527/debugbar/debugbar.css>
 
+## Connect database
+
+First to create a database.
+
+```
+CREATE DATABASE IF NOT EXISTS myapp DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+```
+
+Then modify .env
+
+``
+vim .env
+
+...
+// Database
+DATABASE_DRIVER = mysql
+DATABASE_HOST = 127.0.0.1
+DATABASE_PORT = 3306
+DATABASE_NAME = queryphp_development_db
+DATABASE_USER = root
+DATABASE_PASSWORD =
+...
+
+to
+
+...
+// Database
+DATABASE_DRIVER = mysql
+DATABASE_HOST = 127.0.0.1
+DATABASE_PORT = 3306
+DATABASE_NAME = myapp
+DATABASE_USER = root
+DATABASE_PASSWORD =123456
+...
+
+```
+
+Migrate
+
+```
+php leevel migrate:migrate
+php leevel server
+``
+
+Test with database <http://127.0.0.1:9527/api/entity>
+
+```
+{
+    count: 4,
+    :trace: {
+        ...
+    }
+}
+```
+
+## Login to QueryVue
+
+First to install the frontend,see more detail on `frontend/README.md`.
+
+```
+cd frontend
+npm install -g cnpm --registry=https://registry.npm.taobao.org // Just once
+cnpm install
+npm run serve # npm run dev
+```
+
+Then login
+
+Visite it. <http://127.0.0.1:9528/#/login>
+
+```
+user: admin
+password: 123456
+```
+
 ## Base optimization
 
 ### Debug
