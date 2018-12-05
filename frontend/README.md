@@ -45,7 +45,7 @@ npm run lint
 ## Style format
 
 ```
-cnpm install --save-dev --save-exact prettier
+cnpm install --global prettier
 ```
 
 Then
