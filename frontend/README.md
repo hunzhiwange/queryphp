@@ -31,9 +31,8 @@ View http://127.0.0.1:9528
 npm run build
 ```
 
-## Other
+## Run tests
 
-### Run your tests
 ```
 npm run test
 ```
