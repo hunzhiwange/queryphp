@@ -142,6 +142,8 @@ npm run serve # npm run dev
 
 接着访问这个登陆地址. <http://127.0.0.1:9528/#/login>
 
+![](login.jpg)
+
 ```
 user: admin
 password: 123456

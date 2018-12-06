@@ -143,6 +143,8 @@ npm run serve # npm run dev
 
 Then visite it. <http://127.0.0.1:9528/#/login>
 
+![](login.jpg)
+
 ```
 user: admin
 password: 123456
