@@ -110,9 +110,11 @@ DATABASE_PASSWORD =123456
 ```
 php leevel migrate:migrate
 php leevel server
-``
+```
 
-测试连接数据库 <http://127.0.0.1:9527/api/entity>
+### 测试连接数据库 
+
+<http://127.0.0.1:9527/api/entity>
 
 ```
 {
