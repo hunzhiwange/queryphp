@@ -147,6 +147,65 @@ user: admin
 password: 123456
 ```
 
+## 运行测试
+
+### 首先创建一个用于测试的数据库 test.
+
+```
+CREATE DATABASE IF NOT EXISTS test DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+```
+
+### 修改 .testing
+
+```
+vim .testing
+
+...
+// Database
+DATABASE_DRIVER = mysql
+DATABASE_HOST = 127.0.0.1
+DATABASE_PORT = 3306
+DATABASE_NAME = test
+DATABASE_USER = root
+DATABASE_PASSWORD =
+...
+
+to
+
+...
+// Database
+DATABASE_DRIVER = mysql
+DATABASE_HOST = 127.0.0.1
+DATABASE_PORT = 3306
+DATABASE_NAME = test
+DATABASE_USER = root
+DATABASE_PASSWORD =123456
+...
+
+```
+
+### 执行数据库迁移命令
+
+```
+php leevel migrate:migrate -e testing
+```
+
+### 运行
+
+```
+_____________                           _______________
+ ______/     \__  _____  ____  ______  / /_  _________
+  ____/ __   / / / / _ \/ __`\/ / __ \/ __ \/ __ \___
+   __/ / /  / /_/ /  __/ /  \  / /_/ / / / / /_/ /__
+     \_\ \_/\____/\___/_/   / / .___/_/ /_/ .___/
+        \_\                /_/_/         /_/
+
+$cd /data/codes/queryphp/
+$vim .testing # modify database redis and other
+$php leevel migrate:migrate -e testing
+$php vendor/bin/phpunit tests
+```
+
 ## 基本优化
 
 ### 关闭调试
@@ -219,9 +278,30 @@ php leevel swoole:http
 
 ## 统一团队代码风格
 
+### 安装 PHP 代码格式化工具
+
+<https://github.com/friendsofphp/php-cs-fixer>
+
+### 基本使用
+
 ```
 $cd /data/codes/queryphp
 $php-cs-fixer fix --config=.php_cs.dist
+```
+
+### 使用 Git 钩子
+
+添加一个 pre-commit 钩子.
+
+```
+ln -s ./build/pre-commit.sh ./.git/hooks/pre-commit
+```
+
+跳过钩子
+
+```
+# git commit -h
+# git commit -n -m 'pass hook' #bypass pre-commit and commit-msg hooks
 ```
 
 ## 致谢

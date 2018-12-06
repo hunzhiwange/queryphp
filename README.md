@@ -148,6 +148,65 @@ user: admin
 password: 123456
 ```
 
+## Run Tests
+
+### First to create a test database.
+
+```
+CREATE DATABASE IF NOT EXISTS test DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+```
+
+### Then modify .testing
+
+```
+vim .testing
+
+...
+// Database
+DATABASE_DRIVER = mysql
+DATABASE_HOST = 127.0.0.1
+DATABASE_PORT = 3306
+DATABASE_NAME = test
+DATABASE_USER = root
+DATABASE_PASSWORD =
+...
+
+to
+
+...
+// Database
+DATABASE_DRIVER = mysql
+DATABASE_HOST = 127.0.0.1
+DATABASE_PORT = 3306
+DATABASE_NAME = test
+DATABASE_USER = root
+DATABASE_PASSWORD =123456
+...
+
+```
+
+### Migrate
+
+```
+php leevel migrate:migrate -e testing
+```
+
+### Run
+
+```
+_____________                           _______________
+ ______/     \__  _____  ____  ______  / /_  _________
+  ____/ __   / / / / _ \/ __`\/ / __ \/ __ \/ __ \___
+   __/ / /  / /_/ /  __/ /  \  / /_/ / / / / /_/ /__
+     \_\ \_/\____/\___/_/   / / .___/_/ /_/ .___/
+        \_\                /_/_/         /_/
+
+$cd /data/codes/queryphp/
+$vim .testing # modify database redis and other
+$php leevel migrate:migrate -e testing
+$php vendor/bin/phpunit tests
+```
+
 ## Base optimization
 
 ### Debug
@@ -220,9 +279,30 @@ php leevel swoole:http
 
 ## Unified Code Style
 
+### Install PHP Coding Standards Fixer
+
+<https://github.com/friendsofphp/php-cs-fixer>
+
+### Base use
+
 ```
 $cd /data/codes/queryphp
 $php-cs-fixer fix --config=.php_cs.dist
+```
+
+### With Git hooks
+
+Add a pre-commit for it.
+
+```
+ln -s ./build/pre-commit.sh ./.git/hooks/pre-commit
+```
+
+Pass hook
+
+```
+# git commit -h
+# git commit -n -m 'pass hook' #bypass pre-commit and commit-msg hooks
 ```
 
 ## Thanks
