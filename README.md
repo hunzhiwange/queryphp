@@ -113,7 +113,7 @@ php leevel migrate:migrate
 php leevel server
 ```
 
-### Test with database 
+### Test with database
 
 <http://127.0.0.1:9527/api/entity>
 
@@ -128,6 +128,8 @@ php leevel server
 
 ## Login to QueryVue
 
+### Install frontend
+
 First to install the frontend,see more detail on `frontend/README.md`.
 
 ```
@@ -137,9 +139,9 @@ cnpm install
 npm run serve # npm run dev
 ```
 
-Then login
+### Login
 
-Visite it. <http://127.0.0.1:9528/#/login>
+Then visite it. <http://127.0.0.1:9528/#/login>
 
 ```
 user: admin
