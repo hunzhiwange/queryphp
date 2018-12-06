@@ -70,15 +70,15 @@ php leevel server <Visite http://127.0.0.1:9527/>
 
 ## 连接数据库
 
-首先创建一个数据库.
+### 首先创建一个数据库.
 
 ```
 CREATE DATABASE IF NOT EXISTS myapp DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 ```
 
-修改 .env
+### 修改 .env
 
-``
+```
 vim .env
 
 ...
@@ -105,7 +105,7 @@ DATABASE_PASSWORD =123456
 
 ```
 
-执行数据库迁移命令
+### 执行数据库迁移命令
 
 ```
 php leevel migrate:migrate

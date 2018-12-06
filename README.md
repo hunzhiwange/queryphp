@@ -71,15 +71,15 @@ php leevel server <Visite http://127.0.0.1:9527/>
 
 ## Connect database
 
-First to create a database.
+### First to create a database.
 
 ```
 CREATE DATABASE IF NOT EXISTS myapp DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 ```
 
-Then modify .env
+### Then modify .env
 
-``
+```
 vim .env
 
 ...
@@ -106,7 +106,7 @@ DATABASE_PASSWORD =123456
 
 ```
 
-Migrate
+### Migrate
 
 ```
 php leevel migrate:migrate
