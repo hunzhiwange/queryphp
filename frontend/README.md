@@ -1,5 +1,5 @@
 <p align="center">
-# QueryVue
+    <h1>QueryVue</h1>
 </p>
 
 <p align="center">
