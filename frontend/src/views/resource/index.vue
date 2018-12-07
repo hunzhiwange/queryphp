@@ -1,31 +1,33 @@
 <template>
     <div class="body">
         <div class="min-form" v-show="minForm">
-            <div class="min-form-inner">
-                <legend>{{ formItem.id ? __('编辑资源') : __('新增资源') }}</legend>
-                <div class="min-form-body">
-                    <i-form ref="form" :rules="rules" :model="formItem" :label-width="110" class="w-1000">
-                        <Row :gutter="16">
-                            <i-col span="12">
-                                <FormItem :label="__('名字')" prop="name"> <i-input v-model.trim="formItem.name" placeholder=""></i-input> </FormItem>
-                                <FormItem :label="__('标识符')" prop="identity">
-                                    <i-input v-model.trim="formItem.identity" placeholder=""> </i-input>
-                                </FormItem>
-                                <FormItem :label="__('状态')">
-                                    <i-switch v-model="formItem.status" size="large" true-value="1" false-value="0">
-                                        <span slot="open">{{ __('启用') }}</span> <span slot="close">{{ __('禁用') }}</span>
-                                    </i-switch>
-                                </FormItem>
-                            </i-col>
-                            <i-col span="12"> </i-col>
-                        </Row>
-                    </i-form>
+            <Card :bordered="false">
+                <p slot="title">{{ formItem.id ? __('编辑资源') : __('新增资源') }}</p>
+                <div class="min-form-inner">
+                    <div class="min-form-body">
+                        <i-form ref="form" :rules="rules" :model="formItem" :label-width="110" class="w-1000">
+                            <Row :gutter="16">
+                                <i-col span="12">
+                                    <FormItem :label="__('名字')" prop="name"> <i-input v-model.trim="formItem.name" placeholder=""></i-input> </FormItem>
+                                    <FormItem :label="__('标识符')" prop="identity">
+                                        <i-input v-model.trim="formItem.identity" placeholder=""> </i-input>
+                                    </FormItem>
+                                    <FormItem :label="__('状态')">
+                                        <i-switch v-model="formItem.status" size="large" true-value="1" false-value="0">
+                                            <span slot="open">{{ __('启用') }}</span> <span slot="close">{{ __('禁用') }}</span>
+                                        </i-switch>
+                                    </FormItem>
+                                </i-col>
+                                <i-col span="12"> </i-col>
+                            </Row>
+                        </i-form>
+                    </div>
+                    <div class="min-form-footer">
+                        <i-button type="primary" :loading="loading" @click.native.prevent="handleSubmit('form')">{{ __('确定') }}</i-button>
+                        <i-button style="margin-left: 8px;" @click="cancelMinForm('form')">{{ __('取消') }}</i-button>
+                    </div>
                 </div>
-                <div class="min-form-footer">
-                    <i-button type="primary" :loading="loading" @click.native.prevent="handleSubmit('form')">{{ __('确定') }}</i-button>
-                    <i-button style="margin-left: 8px;" @click="cancelMinForm('form')">{{ __('取消') }}</i-button>
-                </div>
-            </div>
+            </Card>
         </div>
         <div class="wrap">
             <div class="fixed-footer-offset">
