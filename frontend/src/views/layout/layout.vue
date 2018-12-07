@@ -1,12 +1,7 @@
 <template>
     <div class="main" :class="{'main-hide-text': shrink}">
-        <div
-            slot="top"
-            class="logo-con"
-            :style="{width: shrink ? '60px' : '200px'}"
-        >
-            <img v-show="!shrink" :src="img_logo" key="max-logo" />
-            <img v-show="shrink" :src="img_mini_logo" key="min-logo" />
+        <div slot="top" class="logo-con" :style="{width: shrink ? '60px' : '200px'}">
+            <img v-show="!shrink" :src="img_logo" key="max-logo" /> <img v-show="shrink" :src="img_mini_logo" key="min-logo" />
         </div>
         <div
             class="sidebar-menu-con"
@@ -25,18 +20,12 @@
             >
             </shrinkable-menu>
         </div>
-        <div
-            class="main-header-con"
-            :style="{paddingLeft: shrink ? '60px' : '200px'}"
-        >
+        <div class="main-header-con" :style="{paddingLeft: shrink ? '60px' : '200px'}">
             <div class="main-header">
                 <div class="navicon-con">
                     <i-button
                         :style="{
-                            transform:
-                                'rotateZ(' +
-                                (this.shrink ? '180' : '0') +
-                                'deg)',
+                            transform: 'rotateZ(' + (this.shrink ? '180' : '0') + 'deg)',
                         }"
                         type="text"
                         @click="toggleClick"
@@ -45,18 +34,10 @@
                     </i-button>
                 </div>
                 <div class="header-middle-con">
-                    <div class="tags-con">
-                        <tags-page-opened
-                            :pageTagsList="pageTagsList"
-                        ></tags-page-opened>
-                    </div>
+                    <div class="tags-con"><tags-page-opened :pageTagsList="pageTagsList"></tags-page-opened></div>
                 </div>
                 <div class="header-avator-con">
-                    <i-menu
-                        mode="horizontal"
-                        theme="primary"
-                        class="pull-right"
-                    >
+                    <i-menu mode="horizontal" theme="primary" class="pull-right">
                         <!-- prettier-ignore -->
                         <MenuItem name="2" style="padding: 0;">
                     <Dropdown transfer class="header-menuitem">
@@ -92,17 +73,14 @@
                             <Avatar :src="avatorPath" class="user-avatar"></Avatar>
                         </span>
                         <DropdownMenu slot="list">
-                            <DropdownItem>
-                                <Avatar size="small" :src="avatorPath"></Avatar> {{username}}</DropdownItem>
                             <DropdownItem name="information">
-                                <Icon type="md-person"></Icon> {{__('账号设置')}}</DropdownItem>
+                                <Icon type="md-person"></Icon> {{username}}</DropdownItem>
                             <DropdownItem name="changePassword">
                                 <Icon type="md-key"></Icon> {{__('修改密码')}}</DropdownItem>
                             <DropdownItem name="logout">
                                 <Icon type="md-log-out"></Icon> {{__('退出')}}</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
-                    <!-- <Avatar :src="avatorPath" class="user-avatar"></Avatar> -->
                     <!-- prettier-ignore -->
                     </MenuItem>
                     </i-menu>
@@ -112,22 +90,12 @@
         <div class="single-page-con" :style="{left: shrink ? '60px' : '200px'}">
             <div class="single-page">
                 <Row>
-                    <div class="main-breadcrumb">
-                        <breadcrumb-nav
-                            :currentPath="currentPath"
-                        ></breadcrumb-nav>
-                    </div>
+                    <div class="main-breadcrumb"><breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav></div>
                 </Row>
-                <keep-alive :include="cachePage">
-                    <router-view></router-view>
-                </keep-alive>
+                <keep-alive :include="cachePage"> <router-view></router-view> </keep-alive>
             </div>
         </div>
-        <changePassword
-            ref="changePassword"
-            @logout="changePasswordLogout"
-        ></changePassword>
-        <information ref="information"></information>
+        <changePassword ref="changePassword" @logout="changePasswordLogout"></changePassword> <information ref="information"></information>
     </div>
 </template>
 
