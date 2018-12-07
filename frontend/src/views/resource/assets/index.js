@@ -36,11 +36,7 @@ export default {
                     width: 120,
                     render: (h, params) => {
                         const row = params.row
-                        return (
-                            <tag type="dot" color={row.status === '1' ? 'green' : 'default'}>
-                                {row.status_enum}
-                            </tag>
-                        )
+                        return <tag color={row.status === '1' ? 'green' : 'red'}>{row.status_enum}</tag>
                     },
                 },
                 {
