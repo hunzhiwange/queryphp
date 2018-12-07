@@ -6,10 +6,10 @@
                 <DropdownMenu slot="list">
                     <DropdownItem name="refreshTag"> <Icon type="md-refresh" /> {{ __('刷新本页') }} </DropdownItem>
                     <DropdownItem name="clearTag"><Icon type="md-close" /> {{ __('关闭标签') }}</DropdownItem>
-                    <DropdownItem name="clearOthers"><Icon type="md-close-circle" /> {{ __('关闭其他') }}</DropdownItem>
+                    <DropdownItem name="clearOthers"><Icon type="md-trash" /> {{ __('关闭其他') }}</DropdownItem>
                     <DropdownItem name="clearRights"><Icon type="md-return-right" /> {{ __('关闭右侧') }}</DropdownItem>
                     <DropdownItem name="clearLefts"><Icon type="md-return-left" /> {{ __('关闭左侧') }}</DropdownItem>
-                    <DropdownItem name="clearAll"><Icon type="md-trash" /> {{ __('关闭所有') }}</DropdownItem>
+                    <DropdownItem name="clearAll"><Icon type="md-globe" /> {{ __('关闭所有') }}</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
         </div>
@@ -19,10 +19,10 @@
                 <DropdownMenu slot="list">
                     <DropdownItem name="refreshTag"> <Icon type="md-refresh" /> {{ __('刷新本页') }} </DropdownItem>
                     <DropdownItem name="clearTag"><Icon type="md-close" /> {{ __('关闭标签') }}</DropdownItem>
-                    <DropdownItem name="clearOthers"><Icon type="md-close-circle" /> {{ __('关闭其他') }}</DropdownItem>
+                    <DropdownItem name="clearOthers"><Icon type="md-trash" /> {{ __('关闭其他') }}</DropdownItem>
                     <DropdownItem name="clearRights"><Icon type="md-return-right" /> {{ __('关闭右侧') }}</DropdownItem>
                     <DropdownItem name="clearLefts"><Icon type="md-return-left" /> {{ __('关闭左侧') }}</DropdownItem>
-                    <DropdownItem name="clearAll"><Icon type="md-trash" /> {{ __('关闭所有') }}</DropdownItem>
+                    <DropdownItem name="clearAll"><Icon type="md-globe" /> {{ __('关闭所有') }}</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
         </div>

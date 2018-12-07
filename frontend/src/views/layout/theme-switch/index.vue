@@ -1,35 +1,18 @@
 <template>
     <div @click="handleSelect" class="switch-theme-con">
-        <Icon
-            :style="{verticalAlign: 'middle'}"
-            type="ios-color-palette"
-            :size="22"
-        ></Icon>
+        <Icon :style="{verticalAlign: 'middle'}" type="ios-color-palette" :size="14"></Icon> {{ __('主题') }}
         <Modal v-model="themeSelect" width="360" class="switch-theme-select">
             <p>
                 <Row type="flex" justify="center" align="middle">
-                    <i-col
-                        v-for="(item, index) in themeList"
-                        :key="index"
-                        :name="item.name"
-                        span="6"
-                        class="tx-c"
-                    >
+                    <i-col v-for="(item, index) in themeList" :key="index" :name="item.name" span="6" class="tx-c">
                         <div @click="setTheme(item.name)">
-                            <Tooltip
-                                :content="item.title"
-                                :placement="item.placement"
-                            >
+                            <Tooltip :content="item.title" :placement="item.placement">
                                 <Avatar
                                     :style="{
                                         'background-color': item.element,
                                         color: item.menu,
                                     }"
-                                    :icon="
-                                        item.name.substr(0, 1) !== 'b'
-                                            ? 'ios-color-palette'
-                                            : 'ios-color-palette-outline'
-                                    "
+                                    :icon="item.name.substr(0, 1) !== 'b' ? 'ios-color-palette' : 'ios-color-palette-outline'"
                                     class="pointer"
                                     @on-click="setTheme(item.name)"
                                 ></Avatar>
@@ -39,13 +22,7 @@
                 </Row>
             </p>
             <div slot="footer">
-                <i-button
-                    type="primary"
-                    size="large"
-                    long
-                    :loading="modalLoading"
-                    >{{ __('确定') }}</i-button
-                >
+                <i-button type="primary" size="large" long :loading="modalLoading">{{ __('确定') }}</i-button>
             </div>
         </Modal>
     </div>
