@@ -7,6 +7,7 @@ import draggable from 'vuedraggable'
 
 export default {
     name: 'tagsPageOpened',
+    inject: ['reload'],
     data() {
         return {
             currentPageName: this.$route.name,
@@ -124,7 +125,7 @@ export default {
                     break
 
                 case 'refreshTag':
-                    utils.shallowRefresh(this.currentPageName)
+                    this.reload()
                     break
             }
             this.tagBodyLeft = 0
@@ -135,13 +136,7 @@ export default {
             // 标签在可视区域左侧
             if (tag.offsetLeft < -this.tagBodyLeft) {
                 this.tagBodyLeft = -tag.offsetLeft // 标签在可视区域右侧
-            } else if (
-                (rightWidth =
-                    this.tagBodyLeft +
-                    tag.offsetLeft +
-                    tag.offsetWidth -
-                    this.viewWidth())
-            ) {
+            } else if ((rightWidth = this.tagBodyLeft + tag.offsetLeft + tag.offsetWidth - this.viewWidth())) {
                 if (this.tagBodyLeft - rightWidth > 0) {
                     this.tagBodyLeft = 0
                 } else {

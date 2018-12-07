@@ -74,7 +74,7 @@
                         </span>
                         <DropdownMenu slot="list">
                             <DropdownItem name="information">
-                                <Icon type="md-person"></Icon> {{username}}</DropdownItem>
+                                <Icon type="md-person" size="22" ></Icon> {{username}}</DropdownItem>
                             <DropdownItem name="changePassword">
                                 <Icon type="md-key"></Icon> {{__('修改密码')}}</DropdownItem>
                             <DropdownItem name="logout">

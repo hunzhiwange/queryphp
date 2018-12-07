@@ -1,6 +1,6 @@
 <template>
     <div @click="handleSelect" class="switch-theme-con">
-        <Icon :style="{verticalAlign: 'middle'}" type="ios-color-palette" :size="14"></Icon> {{ __('主题') }}
+        <Icon :style="{verticalAlign: 'middle'}" type="ios-color-palette" size="22"></Icon> {{ __('主题') }}
         <Modal v-model="themeSelect" width="360" class="switch-theme-select">
             <p>
                 <Row type="flex" justify="center" align="middle">

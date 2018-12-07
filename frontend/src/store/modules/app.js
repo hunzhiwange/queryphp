@@ -147,7 +147,7 @@ const app = {
         },
         clearOtherTags(state, vm) {
             let currentName = vm.$route.name
-            let currentIndex = 0
+            let currentIndex = -1
 
             state.pageOpenedList.forEach((item, index) => {
                 if (item.name === currentName) {
@@ -156,11 +156,11 @@ const app = {
                 }
             })
 
-            if (currentIndex === 0) {
+            if (currentIndex === -1) {
                 state.pageOpenedList.splice(0)
             } else {
                 state.pageOpenedList.splice(currentIndex + 1)
-                state.pageOpenedList.splice(0, currentIndex - 1)
+                state.pageOpenedList.splice(0, currentIndex)
             }
             let newCachepage = state.cachePage.filter(item => {
                 return item === currentName

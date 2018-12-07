@@ -4,7 +4,7 @@
             <Dropdown transfer @on-click="handleTagsOption">
                 <i-button size="small" type="primary" @click="seeLeftTag()"> <Icon type="md-more" :size="22"></Icon> </i-button>
                 <DropdownMenu slot="list">
-                    <DropdownItem name="refreshTag"> <Icon type="md-refresh" /> {{ __('刷新本页') }} </DropdownItem>
+                    <DropdownItem name="refreshTag"> <Icon type="md-refresh" size="22" /> {{ __('刷新') }} </DropdownItem>
                     <DropdownItem name="clearTag"><Icon type="md-close" /> {{ __('关闭标签') }}</DropdownItem>
                     <DropdownItem name="clearOthers"><Icon type="md-trash" /> {{ __('关闭其他') }}</DropdownItem>
                     <DropdownItem name="clearRights"><Icon type="md-return-right" /> {{ __('关闭右侧') }}</DropdownItem>
@@ -17,7 +17,7 @@
             <Dropdown transfer @on-click="handleTagsOption">
                 <i-button size="small" type="primary" @click="seeRightTag()"> <Icon type="md-more" :size="22"></Icon> </i-button>
                 <DropdownMenu slot="list">
-                    <DropdownItem name="refreshTag"> <Icon type="md-refresh" /> {{ __('刷新本页') }} </DropdownItem>
+                    <DropdownItem name="refreshTag"> <Icon type="md-refresh" size="22" /> {{ __('刷新') }} </DropdownItem>
                     <DropdownItem name="clearTag"><Icon type="md-close" /> {{ __('关闭标签') }}</DropdownItem>
                     <DropdownItem name="clearOthers"><Icon type="md-trash" /> {{ __('关闭其他') }}</DropdownItem>
                     <DropdownItem name="clearRights"><Icon type="md-return-right" /> {{ __('关闭右侧') }}</DropdownItem>

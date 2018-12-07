@@ -68,14 +68,6 @@ export const otherRouter = {
             component: importRouter('dashboard/index'),
         },
         {
-            meta: {
-                title: __('刷新页面'),
-            },
-            path: 'refresh',
-            component: importRouter('layout/refresh'),
-            name: 'refresh',
-        },
-        {
             path: 'message',
             meta: {
                 title: __('消息中心'),

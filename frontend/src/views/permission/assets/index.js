@@ -243,11 +243,5 @@ export default {
     created: function() {
         this.init()
     },
-    mounted: function() {},
-    activated: function() {
-        if (utils.needRefresh(this)) {
-            this.init()
-        }
-    },
     mixins: [http],
 }

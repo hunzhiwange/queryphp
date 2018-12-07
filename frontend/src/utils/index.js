@@ -211,19 +211,6 @@ util.j2s = function(obj) {
     return JSON.stringify(obj)
 }
 
-util.shallowRefresh = function(name) {
-    router.replace({
-        path: '/refresh',
-        query: {
-            name: name,
-        },
-    })
-}
-
-util.needRefresh = function(vm) {
-    return vm.$route.query.refresh == 'page'
-}
-
 util.cloneJson = function(obj) {
     return JSON.parse(JSON.stringify(obj))
 }

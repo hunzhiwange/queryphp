@@ -677,10 +677,5 @@ export default {
     created: function() {
         this.init()
     },
-    activated: function() {
-        if (utils.needRefresh(this)) {
-            this.init()
-        }
-    },
     mixins: [http],
 }
