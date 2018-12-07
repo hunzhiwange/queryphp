@@ -1,10 +1,6 @@
-<p align="center">
-    <h1>QueryVue</h1>
-</p>
+# QueryVue
 
-<p align="center">
-    <a href="./README.md">English</a> | <a href="./README-zh-CN.md">中文</a>
-</p>
+<a href="./README.md">English</a> | <a href="./README-zh-CN.md">中文</a>
 
 这个项目可以帮助你更好地使用 QueryPHP.
 
