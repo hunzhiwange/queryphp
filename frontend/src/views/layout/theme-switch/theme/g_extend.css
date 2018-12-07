@@ -22,10 +22,24 @@
     background: #00a854 !important;
 }
 
-.main .tags-con .tags-outer-scroll-con .close-all-tag-con, .main .tags-con .tags-outer-scroll-con .leftmove-tag-con, .main .tags-con .tags-outer-scroll-con .tag-dashboard {
+.main .tags-con .tags-outer-scroll-con .close-all-tag-con,
+.main .tags-con .tags-outer-scroll-con .leftmove-tag-con,
+.main .tags-con .tags-outer-scroll-con .tag-dashboard {
     background: #33b976;
 }
 
 .main .tags-con .ivu-tag-blue.ivu-tag-dot .ivu-tag-dot-inner {
     background: rgba(174, 221, 129, 1);
+}
+
+.main .header-avator-con .ivu-menu-primary.ivu-menu-horizontal .ivu-menu-item:hover {
+    background: #00a854 !important;
+}
+
+.main .header-avator-con .ivu-menu-primary.ivu-menu-horizontal .ivu-menu-item-active {
+    background: #33b976 !important;
+}
+
+.main .tags-con .ivu-tag-blue .ivu-tag-text {
+    color: #ffff99 !important;
 }

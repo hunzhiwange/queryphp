@@ -22,7 +22,9 @@
     background: rgba(219, 208, 167, 1) !important;
 }
 
-.main .tags-con .tags-outer-scroll-con .close-all-tag-con, .main .tags-con .tags-outer-scroll-con .leftmove-tag-con, .main .tags-con .tags-outer-scroll-con .tag-dashboard {
+.main .tags-con .tags-outer-scroll-con .close-all-tag-con,
+.main .tags-con .tags-outer-scroll-con .leftmove-tag-con,
+.main .tags-con .tags-outer-scroll-con .tag-dashboard {
     background: rgba(230, 155, 3, 1);
 }
 
@@ -30,6 +32,14 @@
     background: rgba(255, 238, 210, 1);
 }
 
-.main .header-avator-con .ivu-menu-primary.ivu-menu-horizontal .ivu-menu-item:hover,.main .header-avator-con .ivu-menu-primary.ivu-menu-horizontal .ivu-menu-item-active {
+.main .header-avator-con .ivu-menu-primary.ivu-menu-horizontal .ivu-menu-item:hover {
     background: rgba(219, 208, 167, 1) !important;
+}
+
+.main .header-avator-con .ivu-menu-primary.ivu-menu-horizontal .ivu-menu-item-active {
+    background: rgba(230, 155, 3, 1) !important;
+}
+
+.main .tags-con .ivu-tag-blue .ivu-tag-text {
+    color: #ff6600 !important;
 }
