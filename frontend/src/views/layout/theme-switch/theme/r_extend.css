@@ -43,3 +43,7 @@
 .main .tags-con .ivu-tag-blue .ivu-tag-text {
     color: #ccffff !important;
 }
+
+.ivu-select-dropdown {
+    padding: 0;
+}
