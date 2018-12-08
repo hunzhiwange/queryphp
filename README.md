@@ -150,6 +150,14 @@ user: admin
 password: 123456
 ```
 
+### Home
+
+![](index.jpg)
+
+### Resource list with red theme
+
+![](list.jpg)
+
 ## Run Tests
 
 ### First to create a test database.

@@ -149,6 +149,14 @@ user: admin
 password: 123456
 ```
 
+### Home
+
+![](index.jpg)
+
+### Resource list with red theme
+
+![](list.jpg)
+
 ## 运行测试
 
 ### 首先创建一个用于测试的数据库 test.
