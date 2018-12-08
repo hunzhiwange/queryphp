@@ -45,7 +45,15 @@ class Option extends AbstractMigration
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
         $table->create();
 
-        // 初始化配置
+        // 初始化数据
+        $this->seed();
+    }
+
+    /**
+     * 初始化数据.
+     */
+    private function seed()
+    {
         $rows = [
             [
                 'name'  => 'site_name',

@@ -44,11 +44,19 @@ class App extends AbstractMigration
         $table->addColumn('identity', 'string', ['limit' => 64, 'comment' => '应用 ID']);
         $table->addColumn('key', 'string', ['limit' => 64, 'comment' => '应用 KEY']);
         $table->addColumn('secret', 'string', ['limit' => 64, 'comment' => '应用秘钥']);
-        $table->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'comment' => '状态 0=禁用;1=启用;']);
+        $table->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => '1', 'comment' => '状态 0=禁用;1=启用;']);
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
         $table->create();
 
-        // 创建一个默认应用
+        // 初始化数据
+        $this->seed();
+    }
+
+    /**
+     * 初始化数据.
+     */
+    private function seed()
+    {
         $adminApp = [
             'id'        => 1,
             'identity'  => 'admin',

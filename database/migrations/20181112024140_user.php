@@ -46,11 +46,19 @@ class User extends AbstractMigration
         $table->addColumn('password', 'string', ['limit' => 255, 'comment' => '密码']);
         $table->addColumn('email', 'string', ['limit' => 100, 'comment' => 'Email']);
         $table->addColumn('mobile', 'char', ['limit' => 11, 'comment' => '手机']);
-        $table->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'comment' => '状态 0=禁用;1=启用;']);
+        $table->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => '1', 'comment' => '状态 0=禁用;1=启用;']);
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
         $table->create();
 
-        // 创建一个默认用户
+        // 初始化数据
+        $this->seed();
+    }
+
+    /**
+     * 初始化数据.
+     */
+    private function seed()
+    {
         $user = [
             'id'       => 1,
             'name'     => 'admin',

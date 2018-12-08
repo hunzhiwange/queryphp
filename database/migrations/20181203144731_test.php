@@ -43,7 +43,15 @@ class Test extends AbstractMigration
         $table->addColumn('name', 'string', ['limit' => 200, 'comment' => '测试名']);
         $table->create();
 
-        // 初始化测试值
+        // 初始化数据
+        $this->seed();
+    }
+
+    /**
+     * 初始化数据.
+     */
+    private function seed()
+    {
         $rows = [
             [
                 'name'  => 'foo',
