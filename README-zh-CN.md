@@ -149,11 +149,11 @@ user: admin
 password: 123456
 ```
 
-### Home
+### 后台首页
 
 ![](index.jpg)
 
-### Resource list with red theme
+### 红色主题的资源列表
 
 ![](list.jpg)
 
