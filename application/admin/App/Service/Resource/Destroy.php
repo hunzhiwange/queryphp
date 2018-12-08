@@ -16,6 +16,8 @@ namespace Admin\App\Service\Resource;
 
 use Common\Domain\Entity\Resource;
 use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Kernel\HandleException;
+use Leevel\Validate;
 
 /**
  * 资源删除.
@@ -36,6 +38,13 @@ class Destroy
     protected $w;
 
     /**
+     * 输入数据.
+     *
+     * @var array
+     */
+    protected $input;
+
+    /**
      * 构造函数.
      *
      * @param \Leevel\Database\Ddd\IUnitOfWork $w
@@ -54,6 +63,10 @@ class Destroy
      */
     public function handle(array $input): array
     {
+        $this->input = $input;
+
+        $this->validateArgs();
+
         $this->remove($this->find($input['id']));
 
         return [];
@@ -81,5 +94,25 @@ class Destroy
     protected function find(int $id): Resource
     {
         return $this->w->repository(Resource::class)->findOrFail($id);
+    }
+
+    /**
+     * 校验基本参数.
+     */
+    protected function validateArgs()
+    {
+        $validator = Validate::make(
+            $this->input,
+            [
+                'id'          => 'required',
+            ],
+            [
+                'id'          => 'ID',
+            ]
+        );
+
+        if ($validator->fail()) {
+            throw new HandleException(json_encode($validator->error()));
+        }
     }
 }

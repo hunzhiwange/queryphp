@@ -139,10 +139,12 @@ class Update
         $validator = Validate::make(
             $this->input,
             [
+                'id'            => 'required',
                 'name'          => 'required|chinese_alpha_num|max_length:50',
                 'identity'      => 'required|alpha_dash|'.UniqueRule::rule(Resource::class, null, $this->input['id']),
             ],
             [
+                'id'            => 'ID',
                 'name'          => __('名字'),
                 'identity'      => __('标识符'),
             ]

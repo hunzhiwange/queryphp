@@ -18,6 +18,7 @@ use Common\Domain\Entity\Resource;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Kernel\HandleException;
+use Leevel\Validate;
 
 /**
  * 批量修改资源状态.
@@ -38,6 +39,13 @@ class Status
     protected $w;
 
     /**
+     * 输入数据.
+     *
+     * @var array
+     */
+    protected $input;
+
+    /**
      * 构造函数.
      *
      * @param \Leevel\Database\Ddd\IUnitOfWork $w
@@ -56,6 +64,10 @@ class Status
      */
     public function handle(array $input): array
     {
+        $this->input = $input;
+
+        $this->validateArgs();
+
         $this->save($this->findAll($input), $input['status']);
 
         return [];
@@ -97,5 +109,25 @@ class Status
         }
 
         return $entitys;
+    }
+
+    /**
+     * 校验基本参数.
+     */
+    protected function validateArgs()
+    {
+        $validator = Validate::make(
+            $this->input,
+            [
+                'ids'          => 'required|array',
+            ],
+            [
+                'ids'          => 'ID',
+            ]
+        );
+
+        if ($validator->fail()) {
+            throw new HandleException(json_encode($validator->error()));
+        }
     }
 }
