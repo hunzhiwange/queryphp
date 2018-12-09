@@ -2,9 +2,18 @@
 const importRouter = require('./import_' + process.env.NODE_ENV)
 import layout from '../views/layout/layout'
 import routerMenu from './menu'
+import {sprintf} from 'sprintf-js'
 
 window.__ = window.gettext = function() {
-    return arguments[0]
+    if ('object' === typeof bus) {
+        return bus.__.apply(bus, arguments)
+    } else {
+        if (arguments.length > 1) {
+            return sprintf.apply(null, arguments)
+        } else {
+            return arguments[0]
+        }
+    }
 }
 
 // 不作为 layout 组件的子页面展示的页面单

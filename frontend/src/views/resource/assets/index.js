@@ -42,7 +42,7 @@ export default {
                 {
                     title: this.__('操作'),
                     key: 'action',
-                    width: 120,
+                    width: 130,
                     fixed: 'right',
                     align: 'left',
                     render: (h, params) => {

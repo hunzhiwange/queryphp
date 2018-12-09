@@ -15,7 +15,7 @@ export default {
                         },
                     },
                 },
-                '标为已读'
+                this.__('标为已读')
             )
         }
         const deleteMesBtn = (h, params) => {
@@ -32,7 +32,7 @@ export default {
                         },
                     },
                 },
-                '删除'
+                this.__('删除')
             )
         }
         const restoreBtn = (h, params) => {
@@ -48,7 +48,7 @@ export default {
                         },
                     },
                 },
-                '还原'
+                this.__('还原')
             )
         }
         return {
@@ -61,7 +61,7 @@ export default {
             unreadCount: 0,
             hasreadCount: 0,
             recyclebinCount: 0,
-            noDataText: '暂无未读消息',
+            noDataText: this.__('暂无未读消息'),
             mes: {
                 title: '',
                 time: '',
@@ -162,13 +162,13 @@ export default {
             }
             this.currentMessageType = type
             if (type === 'unread') {
-                this.noDataText = '暂无未读消息'
+                this.noDataText = this.__('暂无未读消息')
                 this.currentMesList = this.unreadMesList
             } else if (type === 'hasread') {
-                this.noDataText = '暂无已读消息'
+                this.noDataText = this.__('暂无已读消息')
                 this.currentMesList = this.hasreadMesList
             } else {
-                this.noDataText = '回收站无消息'
+                this.noDataText = this.__('回收站无消息')
                 this.currentMesList = this.recyclebinList
             }
         },

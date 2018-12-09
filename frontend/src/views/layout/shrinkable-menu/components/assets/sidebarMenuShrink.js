@@ -19,7 +19,7 @@ export default {
         },
         itemTitle(item) {
             if (item.meta) {
-                return item.meta.title
+                return this.__(item.meta.title)
             }
             return ''
         },

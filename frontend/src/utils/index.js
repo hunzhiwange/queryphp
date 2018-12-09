@@ -3,7 +3,7 @@ import packjson from '../../package.json'
 
 let util = {}
 util.title = function(title) {
-    window.document.title = title
+    window.document.title = __(title)
 }
 
 util.inOf = function(arr, targetArr) {

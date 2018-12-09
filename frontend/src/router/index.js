@@ -22,7 +22,8 @@ iView.LoadingBar.config({
 
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start()
-    utils.title(to.meta.title)
+
+    setTimeout(() => utils.title(to.meta.title), 0)
 
     if (!getToken() && to.name !== 'login') {
         next({
