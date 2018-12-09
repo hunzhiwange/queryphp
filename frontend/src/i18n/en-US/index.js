@@ -1,4 +1,4 @@
-/* 2018-12-09 14:28:09 */
+/* 2018-12-09 21:19:27 */
 export default {
     登录: 'Login',
     系统已锁定: 'System has locked',
@@ -15,7 +15,7 @@ export default {
     角色管理: 'Role',
     资源管理: 'Resource',
     测试页面: 'Test',
-    操作成功: 'succeed',
+    操作成功: 'Succeed',
     只能是英文字母: 'Can only be alpha',
     只能是大写字母: 'Can only be upper alpha',
     只能是小写字母: 'Can only be lower alpha',
