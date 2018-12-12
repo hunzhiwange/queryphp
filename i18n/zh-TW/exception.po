@@ -1,0 +1,89 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: QueryPHP Exception\n"
+"POT-Creation-Date: 2018-05-04 07:54+0800\n"
+"PO-Revision-Date: 2018-05-04 08:24+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.7\n"
+"X-Poedit-Basepath: ../../common/ui/exception\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: 400.php:12
+msgid "错误请求"
+msgstr "錯誤請求"
+
+#: 400.php:13
+msgid "服务器不理解请求的语法"
+msgstr "服務器不理解請求的語法"
+
+#: 401.php:12
+msgid "未授权"
+msgstr "未授權"
+
+#: 401.php:13
+msgid "对于需要登录的网页，服务器可能返回此响应"
+msgstr "對於需要登入的網頁，服務器可能返回此響應"
+
+#: 403.php:12
+msgid "禁止"
+msgstr "禁止"
+
+#: 403.php:13
+msgid "服务器拒绝请求"
+msgstr "服務器拒絕請求"
+
+#: 404.php:12
+msgid "页面未找到"
+msgstr "頁面未找到"
+
+#: 404.php:13
+msgid "用户发出的请求针对的是不存在的页面"
+msgstr "用戶發出的請求針對的是不存在的頁面"
+
+#: 405.php:12
+msgid "方法禁用"
+msgstr "方法禁用"
+
+#: 405.php:13
+msgid "禁用请求中指定的方法"
+msgstr "禁用請求中指定的方法"
+
+#: 422.php:12
+msgid "无法处理的实体"
+msgstr "無法處理的實體"
+
+#: 422.php:13
+msgid "请求格式正确，但是由于含有语义错误，无法响应"
+msgstr "請求格式正確，但是由於含有語義錯誤，無法響應"
+
+#: 429.php:12
+msgid "太多请求"
+msgstr "太多請求"
+
+#: 429.php:13
+msgid "用户在给定的时间内发送了太多的请求"
+msgstr "用戶在給定的時間內發送了太多的請求"
+
+#: 500.php:12
+msgid "服务器内部错误"
+msgstr "服務器內部錯誤"
+
+#: 500.php:13
+msgid "服务器遇到错误，无法完成请求"
+msgstr "服務器遇到錯誤，無法完成請求"
+
+#: layout.php:95
+msgid "首页"
+msgstr "首頁"
+
+#: layout.php:96
+msgid "重试"
+msgstr "重試"

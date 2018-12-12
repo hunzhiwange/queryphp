@@ -1,0 +1,283 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: QueryPHP Validate\n"
+"POT-Creation-Date: 2018-11-27 12:51+0800\n"
+"PO-Revision-Date: 2018-11-27 12:55+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.7\n"
+"X-Poedit-Basepath: ../../vendor/hunzhiwange/framework/src/Leevel/"
+"Validate\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: Validate.php:80 Validate.php:120
+msgid "{field} 不能为空"
+msgstr "{field} cannot be empty"
+
+#: Validate.php:81
+msgid "{field} 必须是数字"
+msgstr "{field} must be number"
+
+#: Validate.php:82
+msgid "{field} 必须是浮点数"
+msgstr "{field} must be float"
+
+#: Validate.php:83
+msgid "{field} 必须是双精度浮点数"
+msgstr "{field} must be double"
+
+#: Validate.php:84
+msgid "{field} 必须是布尔值"
+msgstr "{field} must be boolean"
+
+#: Validate.php:85
+msgid "{field} 必须是数组"
+msgstr "{field} must be an array"
+
+#: Validate.php:86
+msgid "{field} 必须是 yes、on、true 或者 1"
+msgstr "{field} must be yes, on, true or 1"
+
+#: Validate.php:87
+msgid "{field} 不是正确的日期格式"
+msgstr "{field} is not the correct date"
+
+#: Validate.php:88
+msgid "{field} 必须使用日期格式 {rule}"
+msgstr "{field} must use date format {rule}"
+
+#: Validate.php:89
+msgid "{field} 不是正确的时区"
+msgstr "{field} is not the correct time zone"
+
+#: Validate.php:90
+msgid "{field} 只能是字母"
+msgstr "{field} can only be alpha"
+
+#: Validate.php:91
+msgid "{field} 只能是大写字母"
+msgstr "{field} can only be upper alpha"
+
+#: Validate.php:92
+msgid "{field} 只能是小写字母"
+msgstr "{field} can only be lower alpha"
+
+#: Validate.php:93
+msgid "{field} 只能是字母和数字"
+msgstr "{field} can only be alpha and number"
+
+#: Validate.php:94
+msgid "{field} 只能是字母、数字、短横线和下划线"
+msgstr "{field} can only be alpha, numbers, short lines and underscores"
+
+#: Validate.php:95
+msgid "{field} 只能是汉字"
+msgstr "{field} can only be Chinese characters"
+
+#: Validate.php:96
+msgid "{field} 只能是汉字、字母、数字"
+msgstr "{field} can only be Chinese characters, alpha, numbers"
+
+#: Validate.php:97
+msgid "{field} 只能是汉字、字母、数字、短横线和下划线"
+msgstr ""
+"{field} can only be chinese characters,alpha, numbers, short lines and "
+"underscores"
+
+#: Validate.php:98
+msgid "{field} 不是有效的 URL 地址"
+msgstr "{field} is not a valid URL address"
+
+#: Validate.php:99
+msgid "{field} 不是有效的域名或者 IP"
+msgstr "{field} is not a valid domain name or IP"
+
+#: Validate.php:100
+msgid "{field} 不是有效的 IP 地址"
+msgstr "{field} is not a valid IP address"
+
+#: Validate.php:101
+msgid "{field} 不是有效的 IPV4 地址"
+msgstr "{field} is not a valid IPV4 address"
+
+#: Validate.php:102
+msgid "{field} 不是有效的 IPV6 地址"
+msgstr "{field} is not a valid IPV6 address"
+
+#: Validate.php:103
+msgid "{field} 必须在 {rule} 范围内"
+msgstr "{field} must be in the range of {rule}"
+
+#: Validate.php:104
+msgid "{field} 不能在 {rule} 范围内"
+msgstr "{field} is not within {rule}"
+
+#: Validate.php:105
+msgid "{field} 只能在 {rule} 和 {rule1} 之间，不包含等于"
+msgstr ""
+"{field} can only be between {rule} and {rule1}, and does not contain equal"
+
+#: Validate.php:106
+msgid "{field} 不在 {rule} 和 {rule1} 之间，不包含等于"
+msgstr "{field} is not between {rule} and {rule1}, does not contain equal"
+
+#: Validate.php:107
+msgid "{field} 只能在 {rule} 和 {rule1} 之间，包含等于"
+msgstr "{field} can only be between {rule} and {rule1}, and contains equal"
+
+#: Validate.php:108
+msgid "{field} 不在 {rule} 和 {rule1} 之间，包含等于"
+msgstr "{field} is not between {rule} and {rule1}, contains equals"
+
+#: Validate.php:109
+msgid "{field} 必须大于 {rule}"
+msgstr "{field} must be greater than {rule}"
+
+#: Validate.php:110
+msgid "{field} 必须大于等于 {rule}"
+msgstr "{field} must be greater than or equal to {rule}"
+
+#: Validate.php:111
+msgid "{field} 必须小于 {rule}"
+msgstr "{field} must be less than {rule}"
+
+#: Validate.php:112
+msgid "{field} 必须小于等于 {rule}"
+msgstr "{field} must be less than or equal to {rule}"
+
+#: Validate.php:113
+msgid "{field} 必须等于 {rule}"
+msgstr "{field} must be equal to {rule}"
+
+#: Validate.php:114
+msgid "{field} 不能等于 {rule}"
+msgstr "{field} cannot be equal to {rule}"
+
+#: Validate.php:115
+msgid "{field} 必须等于字段 {rule}"
+msgstr "{field} must be equal to field {rule}"
+
+#: Validate.php:116
+msgid "{field} 不能等于字段 {rule}"
+msgstr "{field} cannot be equal to field {rule}"
+
+#: Validate.php:117
+msgid "{field} 必须完全等于 {rule}"
+msgstr "{field} must be exactly equal to {rule}"
+
+#: Validate.php:118
+msgid "{field} 不能完全等于 {rule}"
+msgstr "{field} is not exactly equal to {rule}"
+
+#: Validate.php:119
+msgid "{field} 必须为空"
+msgstr "{field} must be empty"
+
+#: Validate.php:121
+msgid "{field} 必须 null"
+msgstr "{field} must be null"
+
+#: Validate.php:122
+msgid "{field} 不能为 null"
+msgstr "{field} cannot be null"
+
+#: Validate.php:123
+msgid "{field} 长度不符合要求 {rule}"
+msgstr "{field} length does not meet the requirements of {rule}"
+
+#: Validate.php:124
+msgid "{field} 长度不能超过 {rule}"
+msgstr "{field} length must not exceed {rule}"
+
+#: Validate.php:125
+msgid "{field} 长度不能小于 {rule}"
+msgstr "{field} length must not be less than {rule}"
+
+#: Validate.php:126
+msgid "{field} 字符串中的字符必须都是数字"
+msgstr "The characters in the {field} string must be all numeric"
+
+#: Validate.php:127
+msgid "{field} 类型不符合要求 {rule}"
+msgstr "{field} type does not meet the requirement {rule}"
+
+#: Validate.php:128
+msgid "{field} 必须全部是小写"
+msgstr "{field} must be all lowercase"
+
+#: Validate.php:129
+msgid "{field} 必须全部是大写"
+msgstr "{field} must all be capitalized"
+
+#: Validate.php:130
+msgid "{field} 不满足最小长度 {rule}"
+msgstr "{field} does not satisfy the minimum length {rule}"
+
+#: Validate.php:131
+msgid "{field} 不满足最大长度 {rule}"
+msgstr "{field} does not satisfy the maximum length {rule}"
+
+#: Validate.php:132
+msgid "{field} 必须是有效的中国大陆身份证"
+msgstr "{field} must be valid Chinese mainland ID card"
+
+#: Validate.php:133
+msgid "{field} 必须是有效的中国邮政编码"
+msgstr "{field} must be valid Chinese postal code"
+
+#: Validate.php:134
+msgid "{field} 必须是有效的 QQ 号码"
+msgstr "{field} must be a valid QQ number"
+
+#: Validate.php:135
+msgid "{field} 必须是有效的电话号码或者手机号"
+msgstr "{field} must be a valid phone number or cell phone number"
+
+#: Validate.php:136
+msgid "{field} 必须是有效的手机号"
+msgstr "{field} must be a valid cell phone number"
+
+#: Validate.php:137
+msgid "{field} 必须是有效的电话号码"
+msgstr "{field} must be a valid phone number"
+
+#: Validate.php:138
+msgid "{field} 必须为正确的电子邮件格式"
+msgstr "{field} must be in the right e-mail format"
+
+#: Validate.php:139
+msgid "{field} 必须为正确的符合 luhn 格式算法银行卡"
+msgstr ""
+"{field} must be the correct bank card in accordance with the Luhn format "
+"algorithm"
+
+#: Validate.php:140
+msgid "{field} 日期不能小于 {rule}"
+msgstr "{field} date must not be less than {rule}"
+
+#: Validate.php:141
+msgid "{field} 日期不能超过 {rule}"
+msgstr "{field} date must not exceed {rule}"
+
+#: Validate.php:142
+msgid "{field} 不允许的 IP 访问 {rule}"
+msgstr "IP not allowed by {field} to access {rule}"
+
+#: Validate.php:143
+msgid "{field} 禁止的 IP 访问 {rule}"
+msgstr "{field} prohibited IP access to {rule}"
+
+#: Validate.php:144
+msgid "{field} 不是有效的 JSON"
+msgstr "{field} is not a valid JSON"
+
+#: Validate.php:145
+msgid "{field} 不能出现重复值"
+msgstr "{field} cannot be duplicated"
