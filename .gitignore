@@ -19,3 +19,6 @@ www/storage
 www/apis
 www/debugbar
 /.testing
+/frontend/.env.local
+/frontend/.env.production
+/frontend/tmp-i18n/
