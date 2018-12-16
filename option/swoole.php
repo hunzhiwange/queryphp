@@ -18,7 +18,7 @@ return [
      * 默认 swoole 服务驱动
      * ---------------------------------------------------------------
      *
-     * swoole 服务类型，支持 default,http,websocket
+     * swoole 服务类型，支持 default,http,websocket,rpc
      * see https://wiki.swoole.com/wiki/page/p-server.html
      */
     'default' => Leevel::env('swoole_server', 'http'),
