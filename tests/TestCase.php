@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Leevel\Bootstrap\Testing\Database;
-use Leevel\Bootstrap\Testing\TestCase as TestCases;
+use Leevel\Leevel\Testing\Database;
+use Leevel\Leevel\Testing\TestCase as TestCases;
 
 /**
  * phpunit 基础测试类.

@@ -17,11 +17,11 @@ namespace Tests;
 use Common\App\Exception\Runtime;
 use Common\App\Kernel;
 use Common\App\KernelConsole;
-use Leevel\Bootstrap\Project as BaseProject;
 use Leevel\Http\Request;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
 use Leevel\Kernel\IRuntime;
+use Leevel\Leevel\Project as BaseProject;
 
 /**
  * 初始化应用.
@@ -37,7 +37,7 @@ trait Project
     /**
      * 初始化项目.
      *
-     * @return \Leevel\Bootstrap\Project
+     * @return \Leevel\Leevel\Project
      */
     protected function createProject(): BaseProject
     {
