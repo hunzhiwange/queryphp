@@ -18,7 +18,7 @@
 
 # 渐进式 PHP 常驻框架引擎
 
-> 这是 QueryPHP 应用部分，核心框架可以在这里找到 [Framework](https://github.com/hunzhiwange/framework)。
+> 这是一个 QueryPHP 应用，其核心框架可以在这里找到 [Framework](https://github.com/hunzhiwange/framework)。
 
 QueryPHP 是一款现代化的高性能 PHP 7 常驻框架，以工程师用户体验为历史使命，让每一个 PHP 应用都有一个好框架。
 
