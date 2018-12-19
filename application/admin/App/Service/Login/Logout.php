@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Login;
 
-use Leevel\Auth;
+use Leevel\Auth\Facade\Auth;
 
 /**
  * 用户登出.

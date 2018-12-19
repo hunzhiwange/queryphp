@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\Infra;
 
-use Leevel\Cache;
+use Leevel\Cache\Facade\Cache;
 
 /**
  * 锁屏存储.

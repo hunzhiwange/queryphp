@@ -17,7 +17,7 @@ namespace Admin\App\Service\Resource;
 use Common\Domain\Entity\Resource;
 use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Kernel\HandleException;
-use Leevel\Validate;
+use Leevel\Validate\Facade\Validate;
 
 /**
  * 资源删除.

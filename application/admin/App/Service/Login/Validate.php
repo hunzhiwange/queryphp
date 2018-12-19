@@ -17,7 +17,7 @@ namespace Admin\App\Service\Login;
 use Admin\Infra\Code;
 use Common\Domain\Entity\App;
 use Common\Domain\Entity\User;
-use Leevel\Auth;
+use Leevel\Auth\Facade\Auth;
 use Leevel\Auth\Hash;
 use Leevel\Http\Request;
 use Leevel\Kernel\HandleException;
