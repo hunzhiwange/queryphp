@@ -15,8 +15,8 @@ declare(strict_types=1);
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidFileException;
 use Dotenv\Exception\InvalidPathException;
-use Leevel\Bootstrap\Project;
 use Leevel\Kernel\IProject;
+use Leevel\Leevel\Project;
 use Symfony\Component\Console\Input\ArgvInput;
 
 /**
