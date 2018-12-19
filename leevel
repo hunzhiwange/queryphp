@@ -16,7 +16,7 @@ declare(strict_types=1);
 use Common\App\Exception\Runtime;
 use Common\App\Kernel;
 use Common\App\KernelConsole;
-use Leevel\Bootstrap\Project;
+use Leevel\Leevel\Project;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
 use Leevel\Kernel\IRuntime;

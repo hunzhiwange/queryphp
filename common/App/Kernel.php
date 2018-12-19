@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Common\App;
 
-use Leevel\Bootstrap\Kernel as Kernels;
+use Leevel\Leevel\Kernel as Kernels;
 
 /**
  * Kernel.

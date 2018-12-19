@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Common\App;
 
-use Leevel\Bootstrap\KernelConsole as KernelConsoles;
+use Leevel\Leevel\KernelConsole as KernelConsoles;
 
 /**
  * Kernel Console.

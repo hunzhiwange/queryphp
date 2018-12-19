@@ -16,9 +16,9 @@ namespace Common\App\Exception;
 
 use Exception;
 use Leevel;
-use Leevel\Bootstrap\Runtime as Runtimes;
 use Leevel\Http\IRequest;
 use Leevel\Http\IResponse;
+use Leevel\Leevel\Runtime as Runtimes;
 
 /**
  * 异常处理.
