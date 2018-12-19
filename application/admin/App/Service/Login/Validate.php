@@ -22,7 +22,7 @@ use Leevel\Auth\Hash;
 use Leevel\Http\Request;
 use Leevel\Kernel\HandleException;
 use Leevel\Support\Str;
-use Leevel\Validate as Validates;
+use Leevel\Validate\Facade\Validate as Validates;
 
 /**
  * 验证登录.

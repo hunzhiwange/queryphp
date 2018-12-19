@@ -17,7 +17,7 @@ namespace Admin\App\Service\User;
 use Common\Domain\Entity\User;
 use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Kernel\HandleException;
-use Leevel\Validate as Validates;
+use Leevel\Validate\Facade\Validate as Validates;
 use Leevel\Validate\IValidator;
 
 /**

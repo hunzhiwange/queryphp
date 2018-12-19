@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Admin\App\Service\User;
 
 use Admin\Infra\Lock as CacheLock;
-use Leevel\Validate as Validates;
+use Leevel\Validate\Facade\Validate as Validates;
 
 /**
  * 锁定管理面板
