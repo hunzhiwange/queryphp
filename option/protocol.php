@@ -15,16 +15,6 @@ declare(strict_types=1);
 return [
     /*
      * ---------------------------------------------------------------
-     * 默认 swoole 服务驱动
-     * ---------------------------------------------------------------
-     *
-     * swoole 服务类型，支持 default,http,websocket,rpc
-     * see https://wiki.swoole.com/wiki/page/p-server.html
-     */
-    'default' => Leevel::env('swoole_server', 'http'),
-
-    /*
-     * ---------------------------------------------------------------
      * 默认 swoole 服务更新延迟时间
      * ---------------------------------------------------------------
      *
@@ -77,12 +67,6 @@ return [
         // https://wiki.swoole.com/wiki/page/276.html
         'task_worker_num' => 4,
 
-        // swoole 进程名称
-        'process_name' => 'queryphp.swoole.default',
-
-        // swoole 进程保存路径
-        'pid_path' => Leevel::runtimePath('swoole/http.pid'),
-
         // 自定义进程
         'processes' => [
             'Leevel\\Protocol\\Process\\HotOverload',
@@ -100,17 +84,17 @@ return [
      * https://wiki.swoole.com/wiki/page/274.html
      * https://wiki.swoole.com/wiki/page/620.html
      */
-    'http_server' => [
+    'http' => [
         // 监听端口
         // see https://wiki.swoole.com/wiki/page/p-server.html
         // see https://wiki.swoole.com/wiki/page/327.html
         'port' => '9501',
 
         // swoole 进程名称
-        'process_name' => 'queryphp.swoole.http',
+        'process_name' => 'leevel.http',
 
         // swoole 进程保存路径
-        'pid_path' => Leevel::runtimePath('swoole/http.pid'),
+        'pid_path' => Leevel::runtimePath('protocol/http.pid'),
 
         // 开启静态路径
         // 配合 Nginx 可以设置这里为 false,nginx 设置规则解析静态路径动态路由转发给 swoole
@@ -130,7 +114,7 @@ return [
      * https://wiki.swoole.com/wiki/page/620.html
      * https://wiki.swoole.com/wiki/page/397.html
      */
-    'websocket_server' => [
+    'websocket' => [
         // 监听 IP 地址
         // see https://wiki.swoole.com/wiki/page/p-server.html
         // see https://wiki.swoole.com/wiki/page/327.html
@@ -146,10 +130,10 @@ return [
         'task_worker_num' => 4,
 
         // swoole 进程名称
-        'process_name' => 'queryphp.swoole.websocket',
+        'process_name' => 'leevel.websocket',
 
         // swoole 进程保存路径
-        'pid_path' => Leevel::runtimePath('swoole/websocket.pid'),
+        'pid_path' => Leevel::runtimePath('protocol/websocket.pid'),
     ],
 
     /*
@@ -162,7 +146,7 @@ return [
      * http://thrift.apache.org/
      * 定义的 thrift 结构见 src/Leevel/Protocol/Thrift/Struct/queryphp.thrift
      */
-    'rpc_server' => [
+    'rpc' => [
         // 监听 IP 地址
         // see https://wiki.swoole.com/wiki/page/p-server.html
         // see https://wiki.swoole.com/wiki/page/327.html
@@ -208,9 +192,9 @@ return [
         'package_body_offset' => 4,
 
         // swoole 进程名称
-        'process_name' => 'queryphp.swoole.rpc',
+        'process_name' => 'leevel.rpc',
 
         // swoole 进程保存路径
-        'pid_path' => Leevel::runtimePath('swoole/rpc.pid'),
+        'pid_path' => Leevel::runtimePath('protocol/rpc.pid'),
     ],
 ];
