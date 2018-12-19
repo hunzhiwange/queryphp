@@ -18,6 +18,8 @@
 
 # The QueryPHP Application
 
+> This is the QueryPHP application, the core framework can be found here [Framework](https://github.com/hunzhiwange/framework).
+
 QueryPHP is a modern, high performance PHP 7 resident framework, with engineer user experience as its historical mission, let every PHP application have a good framework.
 
 A hundred percent coverage of the unit tests to facing the bug,based on Zephir implemented framework resident,with Swoole ecology to achieve business resident,
