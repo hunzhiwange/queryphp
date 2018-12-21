@@ -5,8 +5,7 @@
   <title>基于 Swoole 的聊天室</title>
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
   <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
-  <link rel="stylesheet" type="text/css" media="screen" href="http://akquinet.github.io/jquery-toastmessage-plugin/demo/css/jquery.toastmessage-min.css">
-  <script src="http://akquinet.github.io/jquery-toastmessage-plugin/demo/jquery.toastmessage-min.js"></script>
+  <script src="//res.layui.com/layui/release/layer/dist/layer.js?v=3111"></script>
   <!-- From http://www.cnblogs.com/felixnet/p/8019446.html -->
   <!-- From https://www.jianshu.com/p/f75abbc684d8 -->
   <style type="text/css">
@@ -64,7 +63,6 @@
     text-align: right;
   }
   .chat-receiver div:nth-of-type(3){
-    /*float:right;*/
     background-color: #b2e281;
     margin: 0px 50px 10px 50px;
     padding: 10px 10px 10px 10px;
@@ -75,7 +73,6 @@
   .chat-sender div:first-child img{
     width: 40px;
     height: 40px;
-    /*border-radius: 10%;*/
   }
 
   .chat-left_triangle{
@@ -165,14 +162,14 @@ websocket.onopen = function (evt) {
 
 function send(){
     if (3 === websocket.readyState) {
-        $().toastmessage('showErrorToast', "聊天室已经断开,请刷新重现连接");
+        layer.msg('聊天室已经断开,请刷新重现连接');
         return;
     }
 
     var text = document.getElementById('text').value;
 
     if (!text) {
-        $().toastmessage('showNoticeToast', '请输入聊天消息');
+        layer.msg('请输入聊天消息');
         return;
     }
 
@@ -212,12 +209,12 @@ function isJSON(str) {
 function closeChat()
 {
     if (3 === websocket.readyState) {
-        $().toastmessage('showErrorToast', "聊天室已经断开,请刷新重现连接");
+        layer.msg('聊天室已经断开,请刷新重现连接');
         return;
     }
 
     websocket.close();
-    $().toastmessage('showErrorToast', '聊天室已经断开');
+    layer.msg('聊天室已经断开');
 }
 
 function scroll()
@@ -233,11 +230,11 @@ websocket.onclose = function (evt) {
 //onmessage 监听服务器数据推送
 websocket.onmessage = function (evt) {
     if (3 === websocket.readyState) {
-        $().toastmessage('showErrorToast', "聊天室已经断开,请刷新重现连接");
+        layer.msg('聊天室已经断开,请刷新重现连接');
         return;
     }
     
-    $().toastmessage('showSuccessToast', "您有新消息啦！");
+    layer.msg('您有新消息啦！');
     var date = new Date().Format("MM-dd hh:mm:ss");
 
     if (isJSON(evt.data)) {
