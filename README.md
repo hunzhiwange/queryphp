@@ -317,7 +317,7 @@ Websocket Server Version 1.0.0
 +-----------------+--------------------------------------+
 ```
 
-Visited <http://127.0.0.1:9527/websocket/chat>
+Visite <http://127.0.0.1:9527/websocket/chat>
 
 ![](websocket.jpg)
 
