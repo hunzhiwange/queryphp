@@ -30,7 +30,7 @@ use Swoole\WebSocket\Server;
 class Test
 {
     /**
-     * WebSocket客户端与服务器建立连接并完成握手后.
+     * WebSocket 客户端与服务器建立连接并完成握手后.
      *
      * @param \Swoole\Websocket\Server $server
      * @param \Swoole\Http\IRequest    $request
