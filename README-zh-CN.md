@@ -282,11 +282,43 @@ extension = leevel.so
 
 ## 使用 swoole 提升性能
 
-Swoole 后续会逐步提供支持.
+### Websocket 服务
 
 ```
-php leevel swoole:http
+php leevel websocket:server
+php leevel websocket:reload
+php leevel websocket:stop
+php leevel websocket:status
 ```
+
+一个聊天室测试
+
+```
+root@vagrant-ubuntu-10-0-2-5:/data/codes/queryphp# php leevel websocket:server
+_____________                           _______________
+ ______/     \__  _____  ____  ______  / /_  _________
+  ____/ __   / / / / _ \/ __`\/ / __ \/ __ \/ __ \___
+   __/ / /  / /_/ /  __/ /  \  / /_/ / / / / /_/ /__
+     \_\ \_/\____/\___/_/   / / .___/_/ /_/ .___/
+        \_\                /_/_/         /_/
+Websocket Server Version 1.0.0
+
++-----------------+--------------------------------------+
+| Item            | Value                                |
++-----------------+--------------------------------------+
+| host            | 0.0.0.0                              |
+| port            | 9502                                 |
+| process_name    | leevel.websocket                     |
+| pid_path        | @path/runtime/protocol/websocket.pid |
+| worker_num      | 8                                    |
+| daemonize       | 0                                    |
+| task_worker_num | 4                                    |
++-----------------+--------------------------------------+
+```
+
+访问 <http://127.0.0.1:9527/websocket/chat>
+
+![](websocket.jpg)
 
 ## 统一团队代码风格
 
