@@ -282,6 +282,53 @@ extension = leevel.so
 
 ## 使用 swoole 提升性能
 
+### Http 服务
+
+```
+php leevel http:server
+php leevel http:reload
+php leevel http:stop
+php leevel http:status
+```
+
+Swoole http 和 php-fpm 保持一致
+
+```
+root@vagrant-ubuntu-10-0-2-5:/data/codes/queryphp# php leevel http:server
+_____________                           _______________
+ ______/     \__  _____  ____  ______  / /_  _________
+  ____/ __   / / / / _ \/ __`\/ / __ \/ __ \/ __ \___
+   __/ / /  / /_/ /  __/ /  \  / /_/ / / / / /_/ /__
+     \_\ \_/\____/\___/_/   / / .___/_/ /_/ .___/
+        \_\                /_/_/         /_/
+Http Server Version 1.0.0
+
++-----------------------+---------------------------------+
+| Item                  | Value                           |
++-----------------------+---------------------------------+
+| host                  | 0.0.0.0                         |
+| port                  | 9501                            |
+| process_name          | leevel.http                     |
+| pid_path              | @path/runtime/protocol/http.pid |
+| worker_num            | 8                               |
+| daemonize             | 0                               |
+| enable_static_handler | 1                               |
+| document_root         | @path/www                       |
+| task_worker_num       | 4                               |
++-----------------------+---------------------------------+
+```
+
+ * 首页 <http://127.0.0.1:9501/>
+ * Mvc 路由 <http://127.0.0.1:9501/api/test>
+ * Mvc restful 路由 http://127.0.0.1:9501/restful/123
+ * 指定方法的 Mvc restful 路由 http://127.0.0.1:9501/restful/123/show
+ * 注解路由 http://127.0.0.1:9501/api/v1/petLeevelForApi/helloworld
+ * 带有绑定的注解路由 http://127.0.0.1:9501/api/v2/withBind/foobar
+ * php leevel link:public <http://127.0.0.1:9501/public/css/page.css>
+ * php leevel link:storage <http://127.0.0.1:9501/storage/logo.png>
+ * php leevel link:apis <http://127.0.0.1:9501/apis/>
+ * php leevel link:debugbar <http://127.0.0.1:9501/debugbar/debugbar.css>
+
 ### Websocket 服务
 
 ```

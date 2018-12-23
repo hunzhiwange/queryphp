@@ -283,6 +283,53 @@ extension = leevel.so
 
 ## Use Swoole With Ultra High Performance
 
+### Http
+
+```
+php leevel http:server
+php leevel http:reload
+php leevel http:stop
+php leevel http:status
+```
+
+The same with php-fpm
+
+```
+root@vagrant-ubuntu-10-0-2-5:/data/codes/queryphp# php leevel http:server
+_____________                           _______________
+ ______/     \__  _____  ____  ______  / /_  _________
+  ____/ __   / / / / _ \/ __`\/ / __ \/ __ \/ __ \___
+   __/ / /  / /_/ /  __/ /  \  / /_/ / / / / /_/ /__
+     \_\ \_/\____/\___/_/   / / .___/_/ /_/ .___/
+        \_\                /_/_/         /_/
+Http Server Version 1.0.0
+
++-----------------------+---------------------------------+
+| Item                  | Value                           |
++-----------------------+---------------------------------+
+| host                  | 0.0.0.0                         |
+| port                  | 9501                            |
+| process_name          | leevel.http                     |
+| pid_path              | @path/runtime/protocol/http.pid |
+| worker_num            | 8                               |
+| daemonize             | 0                               |
+| enable_static_handler | 1                               |
+| document_root         | @path/www                       |
+| task_worker_num       | 4                               |
++-----------------------+---------------------------------+
+```
+
+Home http://127.0.0.1:9501/
+Mvc router http://127.0.0.1:9501/api/test
+Mvc restful router http://127.0.0.1:9501/restful/123
+Mvc restful router with method http://127.0.0.1:9501/restful/123/show
+Annotation router http://127.0.0.1:9501/api/v1/petLeevelForApi/helloworld
+Annotation router with bind http://127.0.0.1:9501/api/v2/withBind/foobar
+php leevel link:public http://127.0.0.1:9501/public/css/page.css
+php leevel link:storage http://127.0.0.1:9501/storage/logo.png
+php leevel link:apis http://127.0.0.1:9501/apis/
+php leevel link:debugbar http://127.0.0.1:9501/debugbar/debugbar.css
+
 ### Websocket
 
 ```
