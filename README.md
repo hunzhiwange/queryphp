@@ -283,7 +283,7 @@ extension = leevel.so
 
 ## Use Swoole With Ultra High Performance
 
-### Http
+### Http server
 
 ```
 php leevel http:server
@@ -330,7 +330,7 @@ php leevel link:storage http://127.0.0.1:9501/storage/logo.png
 php leevel link:apis http://127.0.0.1:9501/apis/
 php leevel link:debugbar http://127.0.0.1:9501/debugbar/debugbar.css
 
-### Websocket
+### Websocket server
 
 ```
 php leevel websocket:server
