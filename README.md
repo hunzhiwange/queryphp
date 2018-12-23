@@ -319,16 +319,16 @@ Http Server Version 1.0.0
 +-----------------------+---------------------------------+
 ```
 
-Home http://127.0.0.1:9501/
-Mvc router http://127.0.0.1:9501/api/test
-Mvc restful router http://127.0.0.1:9501/restful/123
-Mvc restful router with method http://127.0.0.1:9501/restful/123/show
-Annotation router http://127.0.0.1:9501/api/v1/petLeevelForApi/helloworld
-Annotation router with bind http://127.0.0.1:9501/api/v2/withBind/foobar
-php leevel link:public http://127.0.0.1:9501/public/css/page.css
-php leevel link:storage http://127.0.0.1:9501/storage/logo.png
-php leevel link:apis http://127.0.0.1:9501/apis/
-php leevel link:debugbar http://127.0.0.1:9501/debugbar/debugbar.css
+ * Home http://127.0.0.1:9501/
+ * Mvc router http://127.0.0.1:9501/api/test
+ * Mvc restful router http://127.0.0.1:9501/restful/123
+ * Mvc restful router with method http://127.0.0.1:9501/restful/123/show
+ * Annotation router http://127.0.0.1:9501/api/v1/petLeevelForApi/helloworld
+ * Annotation router with bind http://127.0.0.1:9501/api/v2/withBind/foobar
+ * php leevel link:public http://127.0.0.1:9501/public/css/page.css
+ * php leevel link:storage http://127.0.0.1:9501/storage/logo.png
+ * php leevel link:apis http://127.0.0.1:9501/apis/
+ * php leevel link:debugbar http://127.0.0.1:9501/debugbar/debugbar.css
 
 ### Websocket server
 
