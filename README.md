@@ -286,7 +286,7 @@ extension = leevel.so
 ### Http server
 
 ```
-php leevel http:server
+php leevel http:server # php leevel http:server -d
 php leevel http:reload
 php leevel http:stop
 php leevel http:status
@@ -333,7 +333,7 @@ Http Server Version 1.0.0
 ### Websocket server
 
 ```
-php leevel websocket:server
+php leevel websocket:server # php leevel websocket:server -d
 php leevel websocket:reload
 php leevel websocket:stop
 php leevel websocket:status
@@ -367,6 +367,104 @@ Websocket Server Version 1.0.0
 Visite <http://127.0.0.1:9527/websocket/chat>
 
 ![](websocket.jpg)
+
+### Rpc server
+
+```
+php leevel rpc:server # php leevel rpc:server -d
+php leevel rpc:reload
+php leevel rpc:stop
+php leevel rpc:status
+```
+
+A rpc demo
+
+```
+root@vagrant-ubuntu-10-0-2-5:/data/codes/queryphp# php leevel rpc:server
+_____________                           _______________
+ ______/     \__  _____  ____  ______  / /_  _________
+  ____/ __   / / / / _ \/ __`\/ / __ \/ __ \/ __ \___
+   __/ / /  / /_/ /  __/ /  \  / /_/ / / / / /_/ /__
+     \_\ \_/\____/\___/_/   / / .___/_/ /_/ .___/
+        \_\                /_/_/         /_/
+Rpc Server Version 1.0.0
+
++-----------------------+--------------------------------+
+| Item                  | Value                          |
++-----------------------+--------------------------------+
+| host                  | 0.0.0.0                        |
+| port                  | 1355                           |
+| process_name          | leevel.rpc                     |
+| pid_path              | @path/runtime/protocol/rpc.pid |
+| worker_num            | 8                              |
+| daemonize             | 0                              |
+| dispatch_mode         | 1                              |
+| open_length_check     | 1                              |
+| package_max_length    | 8192000                        |
+| package_length_type   | N                              |
+| package_length_offset | 0                              |
+| package_body_offset   | 4                              |
+| task_worker_num       | 4                              |
++-----------------------+--------------------------------+
+```
+
+Visite <http://127.0.0.1:9527/api/rpc>
+
+``` php
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the forcodepoem package.
+ *
+ * The PHP Application Created By Code Poem. <Query Yet Simple>
+ * (c) 2018-2099 http://forcodepoem.com All rights reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\App\Controller\Api;
+
+use Leevel\Http\IResponse;
+use Leevel\Protocol\Facade\Rpc as Rpcs;
+
+/**
+ * rpc tests.
+ *
+ * @author Name Your <your@mail.com>
+ *
+ * @since 2018.08.31
+ *
+ * @version 1.0
+ */
+class Rpc
+{
+    /**
+     * 默认方法.
+     *
+     * @return \Leevel\Http\IResponse
+     */
+    public function handle(): IResponse
+    {
+        return Rpcs::call('api/rpc/rpc-result', ['foo', 'bar'], ['arg1' => 'hello', 'arg2' => 'world']);
+    }
+
+    /**
+     * RPC 结果.
+     *
+     * @return array
+     */
+    public function rpcResult(string $arg1, string $arg2, array $metas): array
+    {
+        return ['arg1' => $arg1, 'arg2' => $arg2, 'metas' => $metas];
+    }
+}
+
+// The result
+// {"arg1":"foo","arg2":"bar","metas":{"arg1":"hello","arg2":"world"}}
+```
 
 ## Unified Code Style
 
