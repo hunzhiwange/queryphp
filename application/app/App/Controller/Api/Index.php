@@ -25,7 +25,7 @@ use Leevel;
  *
  * @version 1.0
  */
-class Show
+class Index
 {
     /**
      * 响应.
