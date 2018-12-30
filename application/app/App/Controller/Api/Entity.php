@@ -31,6 +31,8 @@ class Entity
     /**
      * 默认方法.
      *
+     * @param \Leevel\Database\Ddd\UnitOfWork $w
+     *
      * @return array
      */
     public function handle(UnitOfWork $w): array
