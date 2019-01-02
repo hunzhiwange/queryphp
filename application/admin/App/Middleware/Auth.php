@@ -39,7 +39,7 @@ class Auth extends BaseAuth
      * @param \Closure              $next
      * @param \Leevel\Http\IRequest $request
      */
-    public function handle(Closure $next, IRequest $request)
+    public function handle(Closure $next, IRequest $request): void
     {
         // header('Access-Control-Allow-Origin: '.($_SERVER['HTTP_ORIGIN'] ?? ''));
         header('Access-Control-Allow-Origin: *');

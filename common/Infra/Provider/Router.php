@@ -91,7 +91,7 @@ class Router extends RouterProvider
     /**
      * bootstrap.
      */
-    public function bootstrap()
+    public function bootstrap(): void
     {
         parent::bootstrap();
     }

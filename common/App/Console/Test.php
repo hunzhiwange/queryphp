@@ -55,7 +55,7 @@ EOF;
     /**
      * 响应命令.
      */
-    public function handle()
+    public function handle(): void
     {
         $this->info('Hello my test command.');
     }
@@ -65,7 +65,7 @@ EOF;
      *
      * @return array
      */
-    protected function getArguments()
+    protected function getArguments(): array
     {
         return [];
     }
@@ -75,7 +75,7 @@ EOF;
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [];
     }
