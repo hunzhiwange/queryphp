@@ -28,7 +28,7 @@ export default {
                 this.searchForm.size = pageSize
             }
 
-            this.apiGet('permission', {}, this.searchForm).then(res => {
+            this.apiGet('permission', this.searchForm).then(res => {
                 this.$emit('getDataFromSearch', res)
             })
         },

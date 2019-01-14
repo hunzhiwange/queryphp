@@ -13,10 +13,7 @@ export default {
             searchForm: Object.assign({}, resetFrom),
             searchRule: {},
             searchItem: {
-                status: [
-                    {status: '1', title: this.__('启用')},
-                    {status: '0', title: this.__('禁用')},
-                ],
+                status: [{status: '1', title: this.__('启用')}, {status: '0', title: this.__('禁用')}],
             },
             searchShow: false,
         }
@@ -31,7 +28,7 @@ export default {
                 this.searchForm.size = pageSize
             }
 
-            this.apiGet('resource', {}, this.searchForm).then(res => {
+            this.apiGet('resource', this.searchForm).then(res => {
                 this.$emit('getDataFromSearch', res)
             })
         },

@@ -4,8 +4,8 @@ const apiMethods = {
     apiMultiData: [],
     apiMultiCalback: [],
     methods: {
-        apiGet(url, data, params) {
-            return this.api(url, data, 'get', params)
+        apiGet(url, params) {
+            return this.api(url, {}, 'get', params)
         },
         apiPost(url, data, params) {
             return this.api(url, data, 'post', params)
