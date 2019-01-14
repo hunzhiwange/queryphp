@@ -3,53 +3,19 @@
         <Row :gutter="16">
             <i-col span="18">
                 <Row :gutter="16">
-                    <i-col span="8">
-                        <i-input
-                            v-model="searchForm.key"
-                            :placeholder="__('名字') + ',' + __('标识符')"
-                            clearable
-                        >
-                        </i-input>
-                    </i-col>
+                    <i-col span="8"> <i-input v-model="searchForm.key" :placeholder="__('名字') + ',' + __('标识符')" clearable> </i-input> </i-col>
                     <i-col span="4">
-                        <i-select
-                            v-model="searchForm.status"
-                            :placeholder="__('选择状态')"
-                            clearable
-                            @on-change="search()"
-                        >
+                        <i-select v-model="searchForm.status" :placeholder="__('选择状态')" clearable @on-change="search()">
                             <i-option value="">{{ __('选择状态') }}</i-option>
-                            <i-option
-                                v-for="item in searchItem.status"
-                                :key="item.status"
-                                :value="item.status"
-                                >{{ item.title }}</i-option
-                            >
+                            <i-option v-for="item in searchItem.status" :key="item.value" :value="item.value">{{ item.title }}</i-option>
                         </i-select>
                     </i-col>
                     <i-col span="6">
-                        <i-button
-                            type="primary"
-                            icon="ios-search"
-                            @click.native.prevent="search()"
-                            class="m-r-5"
-                            >{{ __('搜索') }}</i-button
-                        >
-                        <i-button
-                            icon="md-refresh"
-                            @click.native.prevent="reset()"
-                            class="m-r-5"
-                            >{{ __('重置') }}</i-button
-                        >
+                        <i-button type="primary" icon="ios-search" @click.native.prevent="search()" class="m-r-5">{{ __('搜索') }}</i-button>
+                        <i-button icon="md-refresh" @click.native.prevent="reset()" class="m-r-5">{{ __('重置') }}</i-button>
                         <a @click="toggleShow()" style="display:none;">
                             {{ searchShow ? __('收起') : __('展开') }}
-                            <Icon
-                                :type="
-                                    searchShow
-                                        ? __('chevron-up')
-                                        : __('chevron-down')
-                                "
-                            ></Icon>
+                            <Icon :type="searchShow ? __('chevron-up') : __('chevron-down')"></Icon>
                         </a>
                     </i-col>
                     <i-col span="2"></i-col>
@@ -65,14 +31,7 @@
             </i-col>
             <i-col span="4"> &nbsp; </i-col>
             <i-col span="2" style="text-align:right">
-                <i-button
-                    size="small"
-                    type="text"
-                    @click="add()"
-                    class="add-extra"
-                    ><Icon type="md-add-circle"></Icon>
-                    {{ __('新增') }}</i-button
-                >
+                <i-button size="small" type="text" @click="add()" class="add-extra"><Icon type="md-add-circle"></Icon> {{ __('新增') }}</i-button>
             </i-col>
         </Row>
     </div>

@@ -7,7 +7,7 @@
                     <i-col span="4">
                         <i-select v-model="searchForm.status" :placeholder="__('选择状态')" clearable @on-change="search()">
                             <i-option value="">{{ __('选择状态') }}</i-option>
-                            <i-option v-for="item in searchItem.status" :key="item.status" :value="item.status">{{ item.title }}</i-option>
+                            <i-option v-for="item in searchItem.status" :key="item.value" :value="item.value">{{ item.title }}</i-option>
                         </i-select>
                     </i-col>
                     <i-col span="6">
