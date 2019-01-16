@@ -45,6 +45,7 @@ class Role extends AbstractMigration
         $table->addColumn('identity', 'string', ['limit' => 64, 'comment' => '唯一标识符']);
         $table->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => '1', 'comment' => '状态 0=禁用;1=启用;']);
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
+        $table->addIndex('identity', ['unique' => true]);
         $table->create();
     }
 }

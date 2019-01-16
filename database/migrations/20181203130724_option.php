@@ -43,6 +43,7 @@ class Option extends AbstractMigration
         $table->addColumn('name', 'string', ['limit' => 200, 'comment' => '配置名']);
         $table->addColumn('value', 'text', ['comment' => '配置值']);
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
+        $table->addIndex('name', ['unique' => true]);
         $table->create();
 
         // 初始化数据

@@ -48,6 +48,7 @@ class User extends AbstractMigration
         $table->addColumn('mobile', 'char', ['limit' => 11, 'comment' => '手机']);
         $table->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => '1', 'comment' => '状态 0=禁用;1=启用;']);
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
+        $table->addIndex('identity', ['unique' => true]);
         $table->create();
 
         // 初始化数据
