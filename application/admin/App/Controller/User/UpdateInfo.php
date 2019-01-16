@@ -16,7 +16,7 @@ namespace Admin\App\Controller\User;
 
 use Admin\App\Service\User\UpdateInfo as service;
 use Leevel\Auth\Facade\Auth;
-use Leevel\Http\Request;
+use Leevel\Http\IRequest;
 
 /**
  * 用户修改资料.
@@ -32,12 +32,12 @@ class UpdateInfo
     /**
      * 响应方法.
      *
-     * @param \Leevel\Http\Request               $request
+     * @param \Leevel\Http\IRequest              $request
      * @param \Admin\App\Service\User\UpdateInfo $service
      *
      * @return array
      */
-    public function handle(Request $request, Service $service): array
+    public function handle(IRequest $request, Service $service): array
     {
         return $service->handle(array_merge(['id' => $this->id()], $this->input($request)));
     }
@@ -55,11 +55,11 @@ class UpdateInfo
     /**
      * 输入数据.
      *
-     * @param \Leevel\Http\Request $request
+     * @param \Leevel\Http\IRequest $request
      *
      * @return array
      */
-    protected function input(Request $request): array
+    protected function input(IRequest $request): array
     {
         return $request->only([
             'email',

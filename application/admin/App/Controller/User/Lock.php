@@ -16,7 +16,7 @@ namespace Admin\App\Controller\User;
 
 use Admin\App\Service\User\Lock as service;
 use Leevel\Auth\Facade\Auth;
-use Leevel\Http\Request;
+use Leevel\Http\IRequest;
 
 /**
  * 锁定管理面板.
@@ -32,12 +32,12 @@ class Lock
     /**
      * 响应方法.
      *
-     * @param \Leevel\Http\Request         $request
+     * @param \Leevel\Http\IRequest        $request
      * @param \Admin\App\Service\User\Lock $service
      *
      * @return array
      */
-    public function handle(Request $request, Service $service): array
+    public function handle(IRequest $request, Service $service): array
     {
         return $service->handle(['token' => $this->token()]);
     }

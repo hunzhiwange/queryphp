@@ -84,6 +84,8 @@ class Store
 
         flush();
 
+        $entity->refresh();
+
         return $entity;
     }
 

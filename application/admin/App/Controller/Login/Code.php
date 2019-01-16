@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Admin\App\Controller\Login;
 
 use Admin\App\Service\Login\Code as Service;
-use Leevel\Http\Request;
+use Leevel\Http\IRequest;
 
 /**
  * 验证码.
@@ -31,10 +31,10 @@ class Code
     /**
      * 响应方法.
      *
-     * @param \Leevel\Http\Request          $request
+     * @param \Leevel\Http\IRequest         $request
      * @param \Admin\App\Service\Login\Code $service
      */
-    public function handle(Request $request, Service $service): void
+    public function handle(IRequest $request, Service $service): void
     {
         $service->handle($this->input($request));
     }
@@ -42,11 +42,11 @@ class Code
     /**
      * 输入数据.
      *
-     * @param \Leevel\Http\Request $request
+     * @param \Leevel\Http\IRequest $request
      *
      * @return array
      */
-    protected function input(Request $request): array
+    protected function input(IRequest $request): array
     {
         return [
             'id' => $request->query->get('id'),

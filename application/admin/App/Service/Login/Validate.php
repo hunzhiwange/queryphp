@@ -19,7 +19,7 @@ use Common\Domain\Entity\App;
 use Common\Domain\Entity\User;
 use Leevel\Auth\Facade\Auth;
 use Leevel\Auth\Hash;
-use Leevel\Http\Request;
+use Leevel\Http\IRequest;
 use Leevel\Kernel\HandleException;
 use Leevel\Support\Str;
 use Leevel\Validate\Facade\Validate as Validates;
@@ -59,10 +59,10 @@ class Validate
     /**
      * 构造函数.
      *
-     * @param \Leevel\Http\Request $request
-     * @param \Admin\Infra\Code    $code
+     * @param \Leevel\Http\IRequest $request
+     * @param \Admin\Infra\Code     $code
      */
-    public function __construct(Request $request, Code $code)
+    public function __construct(IRequest $request, Code $code)
     {
         $this->request = $request;
 

@@ -70,6 +70,8 @@ class Update
 
         flush();
 
+        $entity->refresh();
+
         return $entity;
     }
 

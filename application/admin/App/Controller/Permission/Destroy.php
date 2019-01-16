@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Admin\App\Controller\Permission;
 
 use Admin\App\Service\Permission\Destroy as service;
-use Leevel\Http\Request;
+use Leevel\Http\IRequest;
 
 /**
  * 权限删除.
@@ -31,12 +31,12 @@ class Destroy
     /**
      * 响应方法.
      *
-     * @param \Leevel\Http\Request                  $request
+     * @param \Leevel\Http\IRequest                 $request
      * @param \Admin\App\Service\Permission\Destroy $service
      *
      * @return array
      */
-    public function handle(Request $request, Service $service): array
+    public function handle(IRequest $request, Service $service): array
     {
         return $service->handle($this->input($request));
     }
@@ -44,11 +44,11 @@ class Destroy
     /**
      * 输入数据.
      *
-     * @param \Leevel\Http\Request $request
+     * @param \Leevel\Http\IRequest $request
      *
      * @return array
      */
-    protected function input(Request $request): array
+    protected function input(IRequest $request): array
     {
         return [
             'id' => (int) ($request->params->get('_param0')),

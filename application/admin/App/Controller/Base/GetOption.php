@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Admin\App\Controller\Base;
 
 use Admin\App\Service\Base\GetOption as service;
-use Leevel\Http\Request;
+use Leevel\Http\IRequest;
 
 /**
  * 获取配置.
@@ -31,12 +31,12 @@ class GetOption
     /**
      * 响应方法.
      *
-     * @param \Leevel\Http\Request              $request
+     * @param \Leevel\Http\IRequest             $request
      * @param \Admin\App\Service\Base\GetOption $service
      *
      * @return array
      */
-    public function handle(Request $request, Service $service): array
+    public function handle(IRequest $request, Service $service): array
     {
         return $service->handle();
     }

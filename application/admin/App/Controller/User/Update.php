@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Admin\App\Controller\User;
 
 use Admin\App\Service\User\Update as service;
-use Leevel\Http\Request;
+use Leevel\Http\IRequest;
 
 /**
  * 用户更新.
@@ -31,12 +31,12 @@ class Update
     /**
      * 响应方法.
      *
-     * @param \Leevel\Http\Request           $request
+     * @param \Leevel\Http\IRequest          $request
      * @param \Admin\App\Service\User\Update $service
      *
      * @return array
      */
-    public function handle(Request $request, Service $service): array
+    public function handle(IRequest $request, Service $service): array
     {
         return $service->handle($this->input($request));
     }
@@ -44,11 +44,11 @@ class Update
     /**
      * 输入数据.
      *
-     * @param \Leevel\Http\Request $request
+     * @param \Leevel\Http\IRequest $request
      *
      * @return array
      */
-    protected function input(Request $request): array
+    protected function input(IRequest $request): array
     {
         return $request->only([
             'id',

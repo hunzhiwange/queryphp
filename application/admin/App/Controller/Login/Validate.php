@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Admin\App\Controller\Login;
 
 use Admin\App\Service\Login\Validate as Service;
-use Leevel\Http\Request;
+use Leevel\Http\IRequest;
 
 /**
  * 验证登录.
@@ -31,12 +31,12 @@ class Validate
     /**
      * 响应方法.
      *
-     * @param \Leevel\Http\Request              $request
+     * @param \Leevel\Http\IRequest             $request
      * @param \Admin\App\Service\Login\Validate $service
      *
      * @return array
      */
-    public function handle(Request $request, Service $service): array
+    public function handle(IRequest $request, Service $service): array
     {
         return $service->handle($this->input($request));
     }
@@ -44,11 +44,11 @@ class Validate
     /**
      * 输入数据.
      *
-     * @param \Leevel\Http\Request $request
+     * @param \Leevel\Http\IRequest $request
      *
      * @return array
      */
-    protected function input(Request $request): array
+    protected function input(IRequest $request): array
     {
         return $request->only([
             'app_id',
