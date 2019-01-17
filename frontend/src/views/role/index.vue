@@ -57,8 +57,8 @@
             <Row justify="end">
                 <i-col span="8">
                     <ButtonGroup shape="circle">
-                        <i-button type="primary" icon="eye" @click="statusMany('1')">{{ __('启用') }}</i-button>
-                        <i-button type="primary" icon="eye-disabled" @click="statusMany('0')">{{ __('禁用') }}</i-button>
+                        <i-button type="primary" icon="md-eye" @click="statusMany('1')">{{ __('启用') }}</i-button>
+                        <i-button type="primary" icon="md-eye-off" @click="statusMany('0')">{{ __('禁用') }}</i-button>
                     </ButtonGroup>
                 </i-col>
                 <i-col span="8" offset="8" class-name="fr">

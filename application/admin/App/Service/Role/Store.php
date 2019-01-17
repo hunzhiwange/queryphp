@@ -16,6 +16,9 @@ namespace Admin\App\Service\Role;
 
 use Common\Domain\Entity\Role;
 use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Kernel\HandleException;
+use Leevel\Validate\Facade\Validate;
+use Leevel\Validate\UniqueRule;
 
 /**
  * 角色保存.
@@ -36,6 +39,13 @@ class Store
     protected $w;
 
     /**
+     * 输入数据.
+     *
+     * @var array
+     */
+    protected $input;
+
+    /**
      * 构造函数.
      *
      * @param \Leevel\Database\Ddd\IUnitOfWork $w
@@ -54,6 +64,10 @@ class Store
      */
     public function handle(array $input): array
     {
+        $this->input = $input;
+
+        $this->validateArgs();
+
         return $this->save($input)->toArray();
     }
 
@@ -101,5 +115,27 @@ class Store
             'identity'   => trim($input['identity']),
             'status'     => $input['status'],
         ];
+    }
+
+    /**
+     * 校验基本参数.
+     */
+    protected function validateArgs()
+    {
+        $validator = Validate::make(
+            $this->input,
+            [
+                'name'          => 'required|chinese_alpha_num|max_length:50',
+                'identity'      => 'required|alpha_dash|'.UniqueRule::rule(Role::class),
+            ],
+            [
+                'name'          => __('名字'),
+                'identity'      => __('标识符'),
+            ]
+        );
+
+        if ($validator->fail()) {
+            throw new HandleException(json_encode($validator->error()));
+        }
     }
 }

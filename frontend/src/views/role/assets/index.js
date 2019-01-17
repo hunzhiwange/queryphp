@@ -184,13 +184,7 @@ export default {
 
             this.apiPost('role', formData).then(
                 res => {
-                    const addNode = {
-                        name: res.name,
-                        identity: res.identity,
-                        id: res.id,
-                        status: res.status,
-                        status_enum: res.status_enum,
-                    }
+                    let addNode = Object.assign({}, this.formItem, res)
 
                     this.data.unshift(addNode)
 
