@@ -114,17 +114,15 @@ export default {
                     },
                 ])
             }
-            let stylePath = ''
-            if (process.env.NODE_ENV === 'development') {
-                stylePath = '/'
-            } else {
-                stylePath = 'dist/'
-            }
+
+            let stylePath = '/'
+
             if (mainTheme !== 'b') {
                 path = stylePath + mainTheme + '.css'
             } else {
                 path = ''
             }
+
             themeLink.setAttribute('href', path)
 
             this.themeSelect = false
@@ -133,13 +131,9 @@ export default {
         },
     },
     created() {
-        let stylePath = ''
-        if (process.env.NODE_ENV === 'development') {
-            stylePath = '/'
-        } else {
-            stylePath = 'dist/'
-        }
+        let stylePath = '/'
         let name = this.$store.state.user.users.name
+
         if (localStorage.theme) {
             let hasThisUser = JSON.parse(localStorage.theme).some(item => {
                 if (item.userName === name) {
@@ -150,6 +144,7 @@ export default {
                     return false
                 }
             })
+
             if (!hasThisUser) {
                 this.$store.commit('changeMenuTheme', 'light')
                 this.$store.commit('changeMainTheme', 'b')
@@ -160,8 +155,7 @@ export default {
         }
         // 根据用户设置主题
         if (this.$store.state.app.themeColor !== 'b') {
-            let stylesheetPath =
-                stylePath + this.$store.state.app.themeColor + '.css'
+            let stylesheetPath = stylePath + this.$store.state.app.themeColor + '.css'
             let themeLink = document.querySelector('link[name="theme"]')
             themeLink.setAttribute('href', stylesheetPath)
         }
