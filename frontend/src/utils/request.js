@@ -33,10 +33,6 @@ service.interceptors.response.use(
             return Promise.reject()
         }
 
-        if (!response.data.message) {
-            response.data.message = __('操作成功')
-        }
-
         if (response.data[':trace']) {
             delete response.data[':trace']
         }

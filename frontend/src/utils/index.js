@@ -218,26 +218,26 @@ util.cloneJson = function(obj) {
 util.success = function(message, title) {
     bus.$Notice.success({
         title: title ? title : '',
-        desc: message,
+        desc: message ? message : __('操作成功'),
     })
 }
 
 util.info = function(message, title) {
     bus.$Notice.info({
         title: title ? title : '',
-        desc: message,
+        desc: message ? message : __('操作成功'),
     })
 }
 
 util.warning = function(message, title) {
     bus.$Notice.warning({
         title: title ? title : '',
-        desc: message,
+        desc: message ? message : __('操作失败'),
     })
 }
 
 util.error = function(message) {
-    bus.$Message.error({content: message, duration: 5})
+    bus.$Message.error({content: message ? message : __('操作失败'), duration: 5})
 }
 
 util.clearVuex = function(cate) {
