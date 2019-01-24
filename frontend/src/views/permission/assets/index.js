@@ -3,6 +3,13 @@ import {validateAlphaDash} from '@/utils/validate'
 import Vue from 'vue'
 import search from './../search/index'
 
+const resetForm = {
+    id: null,
+    name: '',
+    identity: '',
+    status: '1',
+}
+
 export default {
     components: {
         search,
@@ -66,12 +73,7 @@ export default {
             pageSize: 10,
             data: [],
             loadingTable: true,
-            formItem: {
-                id: null,
-                name: '',
-                identity: '',
-                status: '1',
-            },
+            formItem: Object.assign({}, resetForm),
             minForm: false,
             rules: {
                 name: [
@@ -110,6 +112,7 @@ export default {
         add: function() {
             this.minForm = true
             this.formItem.id = ''
+            this.reset()
         },
         remove(params) {
             this.$Modal.confirm({
@@ -229,6 +232,9 @@ export default {
         cancelMinForm: function(form) {
             this.minForm = false
             this.handleReset(form)
+        },
+        reset() {
+            Object.assign(this.formItem, resetForm)
         },
     },
     computed: {},
