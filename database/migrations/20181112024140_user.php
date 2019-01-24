@@ -63,6 +63,7 @@ class User extends AbstractMigration
         $user = [
             'id'       => 1,
             'name'     => 'admin',
+            'identity' => 'admin',
             'password' => '$2y$10$Gsfcl8pAAEwYhfBoc9Dj.e2r9LHnEl89uZMWtsfQHMWY1YddY0Y.C',
             'status'   => '1',
         ];
