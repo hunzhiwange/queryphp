@@ -107,11 +107,10 @@ export default {
             this.minForm = true
             this.formItem.id = row.id
 
-            let data = {}
-            Object.keys(this.formItem).forEach(item => (data[item] = row[item]))
+            Object.assign(this.formItem, row)
+
             this.userRole = []
             row.role.forEach(item => this.userRole.push(item.id))
-            this.formItem = data
         },
         add: function() {
             this.minForm = true
