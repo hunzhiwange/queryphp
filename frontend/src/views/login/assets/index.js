@@ -115,7 +115,8 @@ export default {
             this.checked = this.isKeepLogin()
         },
         isKeepLogin() {
-            return Cookies.get('keep_login') === 'T'
+            let keepLogin = Cookies.get('keep_login')
+            return !keepLogin || 'T' === keepLogin
         },
     },
     created() {
