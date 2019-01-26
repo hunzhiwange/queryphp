@@ -61,6 +61,9 @@ fi
 jsfiles=$(git diff --cached --name-only --diff-filter=ACM "*.js" "*.jsx" "*.vue" "*.css" "*.less" | tr '\n' ' ')
 [ -z "$jsfiles" ] && exit 0
 
+# format iview
+gulp iview --gulpfile frontend/gulpfile.js
+
 # Prettify all staged .js files
 echo "$jsfiles" | xargs prettier --config frontend/.prettierrc.js --ignore-path frontend/.prettierignore --write
 

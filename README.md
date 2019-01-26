@@ -541,7 +541,8 @@ $php-cs-fixer fix --config=.php_cs.dist
 Add a pre-commit for it.
 
 ```
-ln -s ./build/pre-commit.sh ./.git/hooks/pre-commit
+cp ./build/pre-commit.sh ./.git/hooks/pre-commit
+chmod 777 ./.git/hooks/pre-commit
 ```
 
 Pass hook

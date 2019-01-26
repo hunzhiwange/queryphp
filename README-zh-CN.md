@@ -540,7 +540,8 @@ $php-cs-fixer fix --config=.php_cs.dist
 添加一个 pre-commit 钩子.
 
 ```
-ln -s ./build/pre-commit.sh ./.git/hooks/pre-commit
+cp ./build/pre-commit.sh ./.git/hooks/pre-commit
+chmod 777 ./.git/hooks/pre-commit
 ```
 
 跳过钩子
