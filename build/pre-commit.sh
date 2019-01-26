@@ -4,7 +4,8 @@
 # https://blog.csdn.net/xsgnzb/article/details/52222366?locationNum=4&fps=1
 # https://blog.csdn.net/ljihe/article/details/80826071
 # =================== how to use ====================
-# ln -s pre-commit.sh ./../.git/hooks/pre-commit
+# cp ./build/pre-commit.sh ./.git/hooks/pre-commit
+# chmod 777 ./.git/hooks/pre-commit
 # git commit -h
 # git commit -n -m 'pass hook' #bypass pre-commit and commit-msg hooks
 # ==================== end ==========================
