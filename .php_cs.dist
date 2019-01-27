@@ -95,5 +95,7 @@ return PhpCsFixer\Config::create()
             ->in(__DIR__.'/option')
             ->in(__DIR__.'/database')
             ->in(__DIR__.'/common')
+            ->exclude(__DIR__.'/vendor')
+            ->exclude(__DIR__.'/runtime')
     )
 ;
