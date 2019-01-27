@@ -1,6 +1,5 @@
 import http from '@/utils/http'
 import {validateAlphaDash} from '@/utils/validate'
-import Vue from 'vue'
 import search from './../search/index'
 
 const resetForm = {

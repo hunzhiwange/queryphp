@@ -30,44 +30,34 @@ class UserRole extends Entity
     /**
      * database table.
      *
-     * @string
+     * @var string
      */
     const TABLE = 'user_role';
 
     /**
      * primary key.
      *
-     * @string|null
+     * @var array
      */
     const ID = ['user_id', 'role_id'];
 
     /**
      * auto increment.
      *
-     * @string|null
+     * @var string
      */
     const AUTO = null;
 
     /**
      * entity struct.
      *
-     * @array
+     * @var array
      */
     const STRUCT = [
-        // 'id' => [
-        //     'readonly' => true,
-        // ],
         'user_id'   => [],
         'role_id'   => [],
         'create_at' => [],
     ];
-
-    /**
-     * id.
-     *
-     * @var int
-     */
-    //private $id;
 
     /**
      * 用户 ID.

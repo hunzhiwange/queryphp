@@ -30,28 +30,28 @@ class Option extends Entity
     /**
      * database table.
      *
-     * @string
+     * @var string
      */
     const TABLE = 'option';
 
     /**
      * primary key.
      *
-     * @string|null
+     * @var string
      */
     const ID = 'name';
 
     /**
      * auto increment.
      *
-     * @string|null
+     * @var null
      */
     const AUTO = null;
 
     /**
      * entity struct.
      *
-     * @array
+     * @var array
      */
     const STRUCT = [
         'name' => [

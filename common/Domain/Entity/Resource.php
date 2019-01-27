@@ -30,28 +30,28 @@ class Resource extends Entity
     /**
      * database table.
      *
-     * @string
+     * @var string
      */
     const TABLE = 'resource';
 
     /**
      * primary key.
      *
-     * @string|null
+     * @var string
      */
     const ID = 'id';
 
     /**
      * auto increment.
      *
-     * @string|null
+     * @var string
      */
     const AUTO = 'id';
 
     /**
      * entity struct.
      *
-     * @array
+     * @var array
      */
     const STRUCT = [
         'id' => [
