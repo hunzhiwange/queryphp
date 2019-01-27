@@ -42,6 +42,19 @@ then
 
     for FILE in $SFILES
     do
+
+        if [[ ${FILE} =~ 'vendor/composer' ]]
+        then
+            echo "Ignore file of composer"
+            continue
+        fi
+
+        if [[ ${FILE} =~ 'vendor/autoloadLeevel.php' ]]
+        then
+            echo "Ignore file of autoloadLeevel"
+            continue
+        fi
+
         result=`~/.composer/vendor/bin/php-cs-fixer fix $FILE --config=.php_cs.dist`
 
         if [ "$result" != "" ]
