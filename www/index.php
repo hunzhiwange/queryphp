@@ -29,10 +29,10 @@ use Leevel\Leevel\Project;
  * 我们 classmap 需要通过 `php leevel autoload` 生成，包含命令 `composer dump-autoload -o`
  * 对于助手函数需要自己引入
  */
-$leevelAutoload = __DIR__.'/../runtime/autoload.php';
+$autoloadLeevel = __DIR__.'/../vendor/autoloadLeevel.php';
 
-if (is_file($leevelAutoload)) {
-    require_once $leevelAutoload;
+if (is_file($autoloadLeevel)) {
+    require_once $autoloadLeevel;
 } else {
     require_once __DIR__.'/../vendor/autoload.php';
 }
