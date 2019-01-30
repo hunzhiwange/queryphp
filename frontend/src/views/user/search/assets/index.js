@@ -13,7 +13,7 @@ export default {
             searchForm: Object.assign({}, resetFrom),
             searchRule: {},
             searchItem: {
-                status: [{value: '1', title: this.__('启用')}, {value: '0', title: this.__('禁用')}],
+                status: [{status: '1', title: this.__('启用')}, {status: '0', title: this.__('禁用')}],
             },
             searchShow: false,
         }

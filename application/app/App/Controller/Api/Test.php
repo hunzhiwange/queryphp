@@ -25,13 +25,20 @@ namespace App\App\Controller\Api;
  */
 class Test
 {
+    //use Hello;
+
     /**
      * 默认方法.
      *
      * @return array
      */
-    public function handle(): array
+    public function handle()//: array
     {
+        // \Leevel::app('session');
+        //return PHP_VERSION;
+        //return 'x';
+        //print_r(get_included_files());
+        // die;
         return ['hello' => 'world'];
     }
 }

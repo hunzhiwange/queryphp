@@ -32,7 +32,7 @@ class Lock
      *
      * @param string $id
      */
-    public function set(string $id)
+    public function set(string $id): void
     {
         Cache::set('lock_'.$id, '1');
     }
@@ -42,7 +42,7 @@ class Lock
      *
      * @param string $id
      */
-    public function delete(string $id)
+    public function delete(string $id): void
     {
         Cache::delete('lock_'.$id);
     }
@@ -54,7 +54,7 @@ class Lock
      *
      * @return bool
      */
-    public function has($id): bool
+    public function has(string $id): bool
     {
         return false !== Cache::get('lock_'.$id);
     }

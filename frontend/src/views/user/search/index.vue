@@ -7,7 +7,7 @@
                     <i-col span="4">
                         <i-select v-model="searchForm.status" :placeholder="__('选择状态')" clearable @on-change="search()">
                             <i-option value="">{{ __('选择状态') }}</i-option>
-                            <i-option v-for="item in searchItem.status" :key="item.value" :value="item.value">{{ item.title }}</i-option>
+                            <i-option v-for="item in searchItem.status" :key="item.status" :value="item.status">{{ item.title }}</i-option>
                         </i-select>
                     </i-col>
                     <i-col span="6">
@@ -31,7 +31,9 @@
             </i-col>
             <i-col span="4"> &nbsp; </i-col>
             <i-col span="2" style="text-align:right">
-                <i-button size="small" type="text" @click="add()" class="add-extra"><Icon type="md-add-circle"></Icon> {{ __('新增') }}</i-button>
+                <i-button size="small" type="text" @click="add()" class="add-extra" :disabled="!utils.permission('user_add_button')"
+                    ><Icon type="md-add-circle"></Icon> {{ __('新增') }}</i-button
+                >
             </i-col>
         </Row>
     </div>

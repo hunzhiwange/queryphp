@@ -14,11 +14,10 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Permission;
 
-use Closure;
 use Common\Domain\Entity\Permission;
-use Leevel\Database\Ddd\IEntity;
+use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Database\Ddd\Select;
+use Leevel\Tree\Tree;
 
 /**
  * 权限列表.
@@ -51,49 +50,61 @@ class Index
     /**
      * 响应方法.
      *
-     * @param array $input
-     *
      * @return array
      */
-    public function handle(array $input): array
+    public function handle(): array
     {
         $repository = $this->w->repository(Permission::class);
 
-        list($page, $entitys) = $repository->findPage(
-            (int) ($input['page'] ?: 1),
-            (int) ($input['size'] ?? 10),
-            $this->condition($input)
-        );
-
-        $data['page'] = $page;
-        $data['data'] = $entitys->toArray();
-
-        return $data;
+        return $this->normalizeTree($repository->findAll());
     }
 
     /**
-     * 查询条件.
+     * 将节点载入节点树并返回树结构.
      *
-     * @param array $input
+     * @param \Leevel\Collection\Collection $entitys
      *
-     * @return \Closure
+     * @return array
      */
-    protected function condition(array $input): Closure
+    protected function normalizeTree(Collection $entitys): array
     {
-        return function (Select $select, IEntity $entity) use ($input) {
-            if ($input['key']) {
-                $select->where(function ($select) use ($input) {
-                    $select->orWhere('name', 'like', '%'.$input['key'].'%')->
+        return $this->createTree($entitys)->
+        toArray(function (array $item) {
+            return array_merge(['id' => $item['value'], 'expand' => true], $item['data']);
+        });
+    }
 
-                        orWhere('identity', 'like', '%'.$input['key'].'%');
-                });
-            }
+    /**
+     * 生成节点树.
+     *
+     * @param \Leevel\Collection\Collection $entitys
+     *
+     * @return \Leevel\Tree\Tree
+     */
+    protected function createTree(Collection $entitys): Tree
+    {
+        return new Tree($this->parseToNode($entitys));
+    }
 
-            if ($input['status'] || '0' === $input['status']) {
-                $select->where('status', $input['status']);
-            }
+    /**
+     * 转换为节点数组.
+     *
+     * @param \Leevel\Collection\Collection $entitys
+     *
+     * @return array
+     */
+    protected function parseToNode(Collection $entitys): array
+    {
+        $node = [];
 
-            $select->orderBy('id DESC');
-        };
+        foreach ($entitys as $e) {
+            $node[] = [
+                $e->id,
+                $e->pid,
+                $e->toArray(),
+            ];
+        }
+
+        return $node;
     }
 }

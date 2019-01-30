@@ -33,7 +33,7 @@ class Code
      * @param string $id
      * @param string $code
      */
-    public function set(string $id, string $code)
+    public function set(string $id, string $code): void
     {
         Cache::set('code_'.$id, $code);
     }
@@ -45,8 +45,8 @@ class Code
      *
      * @return string
      */
-    public function get($id): string
+    public function get(string $id): string
     {
-        return Cache::get('code_'.$id);
+        return Cache::get('code_'.$id) ?: '';
     }
 }

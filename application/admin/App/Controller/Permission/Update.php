@@ -55,6 +55,7 @@ class Update
             'name',
             'identity',
             'status',
+            'pid',
         ]);
     }
 }

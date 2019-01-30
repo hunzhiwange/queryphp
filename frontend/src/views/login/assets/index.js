@@ -94,7 +94,8 @@ export default {
                             this.$store.dispatch('login', res)
 
                             setTimeout(() => {
-                                router.replace('/')
+                                window.location.reload()
+                                //router.replace('/')
                             }, 1000)
                         },
                         res => {
@@ -108,15 +109,14 @@ export default {
         },
         keepLogin() {
             Cookies.set('keep_login', this.checked ? 'T' : 'F', {
-                expires: 30,
+                expires: 60,
             })
         },
         checkKeepLogin() {
             this.checked = this.isKeepLogin()
         },
         isKeepLogin() {
-            let keepLogin = Cookies.get('keep_login')
-            return !keepLogin || 'T' === keepLogin
+            return Cookies.get('keep_login') === 'T' || !Cookies.get('keep_login')
         },
     },
     created() {

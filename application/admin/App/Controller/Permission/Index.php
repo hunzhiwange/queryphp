@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace Admin\App\Controller\Permission;
 
 use Admin\App\Service\Permission\Index as service;
-use Leevel\Http\IRequest;
 
 /**
  * 权限列表.
@@ -31,30 +30,12 @@ class Index
     /**
      * 响应方法.
      *
-     * @param \Leevel\Http\IRequest               $request
      * @param \Admin\App\Service\Permission\Index $service
      *
      * @return array
      */
-    public function handle(IRequest $request, Service $service): array
+    public function handle(Service $service): array
     {
-        return $service->handle($this->input($request));
-    }
-
-    /**
-     * 输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
-     */
-    protected function input(IRequest $request): array
-    {
-        return $request->only([
-            'key',
-            'status',
-            'page',
-            'size',
-        ]);
+        return $service->handle();
     }
 }

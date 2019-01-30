@@ -52,7 +52,6 @@ class Update
     {
         return $request->only([
             'id',
-            'name',
             'identity',
             'status',
             'userRole',

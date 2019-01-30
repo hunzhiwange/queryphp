@@ -44,5 +44,23 @@ class PermissionResource extends AbstractMigration
         $table->addColumn('resource_id', 'integer', ['limit' => 11, 'comment' => '资源 ID']);
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
         $table->create();
+
+        // 初始化数据
+        $this->seed();
+    }
+
+    /**
+     * 初始化数据.
+     */
+    private function seed()
+    {
+        $premissionResource = [
+            'permission_id'       => 1,
+            'resource_id'         => 26,
+        ];
+
+        $table = $this->table('permission_resource');
+        $table->insert($premissionResource);
+        $table->saveData();
     }
 }

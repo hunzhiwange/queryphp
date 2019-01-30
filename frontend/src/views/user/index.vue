@@ -8,9 +8,11 @@
                         <i-form ref="form" :rules="rules" :model="formItem" :label-width="110" class="w-1000">
                             <Row :gutter="16">
                                 <i-col span="12">
-                                    <FormItem :label="__('名字')" prop="name"> <i-input v-model.trim="formItem.name" placeholder=""></i-input> </FormItem>
-                                    <FormItem :label="__('标识符')">
-                                        <i-input v-model="formItem.identity" type="textarea" :autosize="{minRows: 2, maxRows: 5}" placeholder=""></i-input>
+                                    <FormItem :label="__('名字')" :prop="formItem.id ? '' : 'name'">
+                                        <i-input v-model.trim="formItem.name" placeholder="" :disabled="formItem.id ? true : false"></i-input>
+                                    </FormItem>
+                                    <FormItem :label="__('标识符')" prop="identity">
+                                        <i-input v-model="formItem.identity" placeholder=""></i-input>
                                     </FormItem>
                                     <FormItem :label="__('状态')">
                                         <i-switch v-model="formItem.status" size="large" true-value="1" false-value="0">
@@ -61,8 +63,12 @@
             <Row justify="end">
                 <i-col span="8">
                     <ButtonGroup shape="circle">
-                        <i-button type="primary" icon="md-eye" @click="statusMany('1')">{{ __('启用') }}</i-button>
-                        <i-button type="primary" icon="md-eye-off" @click="statusMany('0')">{{ __('禁用') }}</i-button>
+                        <i-button type="primary" icon="md-eye" @click="statusMany('1')" :disabled="!utils.permission('user_status_button')">{{
+                            __('启用')
+                        }}</i-button>
+                        <i-button type="primary" icon="md-eye-off" @click="statusMany('0')" :disabled="!utils.permission('user_status_button')">{{
+                            __('禁用')
+                        }}</i-button>
                     </ButtonGroup>
                 </i-col>
                 <i-col span="8" offset="8" class-name="fr">

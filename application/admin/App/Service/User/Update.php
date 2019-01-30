@@ -14,9 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\User;
 
-use Common\Domain\Entity\User;
-use Common\Domain\Service\User\UserRole;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Common\Domain\Service\User\UserRoleUpdate;
 
 /**
  * 用户更新.
@@ -30,27 +28,19 @@ use Leevel\Database\Ddd\IUnitOfWork;
 class Update
 {
     /**
-     * 事务工作单元.
+     * 用户更新服务.
      *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
-     */
-    protected $w;
-
-    /**
-     * 事务工作单元.
-     *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
+     * @var \Common\Domain\Service\User\UserRoleUpdate
      */
     protected $userRole;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @param \Common\Domain\Service\User\UserRoleUpdate $userRolew
      */
-    public function __construct(IUnitOfWork $w, UserRole $userRole)
+    public function __construct(UserRoleUpdate $userRole)
     {
-        $this->w = $w;
         $this->userRole = $userRole;
     }
 
@@ -63,85 +53,6 @@ class Update
      */
     public function handle(array $input): array
     {
-        $result = $this->save($input)->toArray();
-
-        return $result;
-    }
-
-    /**
-     * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User
-     */
-    protected function save(array $input): User
-    {
-        $this->w->persist($entity = $this->entity($input));
-
-        // $this->w->on($entity, function ($p) use ($input) {
-        //     //$guest_book->content = 'guest_book content was post id is '.$p->id;
-        //
-        // });
-
-        $this->userRole->handle([
-            'user_id'  => $input['id'],
-            'userRole' => $input['userRole'],
-        ]);
-
-        //
-        // var_dump([
-        //     'user_id' => $p->id,
-        //     'userRole' => $input['userRole'],
-        // ]);
-        //var_dump($this->w);
-
-        $this->w->flush();
-
-        return $entity;
-    }
-
-    /**
-     * 验证参数.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User
-     */
-    protected function entity(array $input): User
-    {
-        $entity = $this->find((int) $input['id']);
-
-        $entity->withProps($this->data($input));
-
-        return $entity;
-    }
-
-    /**
-     * 查找实体.
-     *
-     * @param int $id
-     *
-     * @return \Common\Domain\Entity\User
-     */
-    protected function find(int $id): User
-    {
-        return $this->w->repository(User::class)->findOrFail($id);
-    }
-
-    /**
-     * 组装实体数据.
-     *
-     * @param array $input
-     *
-     * @return array
-     */
-    protected function data(array $input): array
-    {
-        return [
-            'name'       => trim($input['name']),
-            'identity'   => trim($input['identity']),
-            'status'     => $input['status'],
-        ];
+        return $this->userRole->handle($input);
     }
 }

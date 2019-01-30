@@ -15,8 +15,10 @@ declare(strict_types=1);
 namespace Admin\App\Service\Login;
 
 use Admin\Infra\Code;
+use Admin\Infra\Permission;
 use Common\Domain\Entity\App;
 use Common\Domain\Entity\User;
+use Common\Domain\Service\User\UserPermission;
 use Leevel\Auth\Facade\Auth;
 use Leevel\Auth\Hash;
 use Leevel\Http\IRequest;
@@ -57,16 +59,33 @@ class Validate
     protected $secret;
 
     /**
+     * 权限缓存.
+     *
+     * @var \Admin\Infra\Permission
+     */
+    protected $permissionCache;
+
+    /**
+     * 获取用户权限.
+     *
+     * @var \Common\Domain\Service\User\UserPermission
+     */
+    protected $permission;
+
+    /**
      * 构造函数.
      *
-     * @param \Leevel\Http\IRequest $request
-     * @param \Admin\Infra\Code     $code
+     * @param \Leevel\Http\IRequest                      $request
+     * @param \Admin\Infra\Code                          $code
+     * @param \Admin\Infra\Permission                    $permissionCache
+     * @param \Common\Domain\Service\User\UserPermission $permission
      */
-    public function __construct(IRequest $request, Code $code)
+    public function __construct(IRequest $request, Code $code, Permission $permissionCache, UserPermission $permission)
     {
         $this->request = $request;
-
         $this->code = $code;
+        $this->permissionCache = $permissionCache;
+        $this->permission = $permission;
     }
 
     /**
@@ -83,7 +102,7 @@ class Validate
         $this->validateArgs();
 
         // Mac 自带 PHP 有问题
-        if (function_exists('imagettftext')) {
+        if (\function_exists('imagettftext')) {
             $this->validateCode();
         }
 
@@ -95,12 +114,31 @@ class Validate
 
         Auth::login($userInfo = $user->toArray());
 
+        $permission = $this->getPermission($token, (int) $userInfo['id']);
+
         return [
             'token'     => $token,
             'userInfo'  => $userInfo,
             'menusList' => [],
-            'authList'  => [],
+            'authList'  => $permission,
         ];
+    }
+
+    /**
+     * 获取权限.
+     *
+     * @param string $param
+     * @param int    $userId
+     *
+     * @return array
+     */
+    protected function getPermission(string $token, int $userId): array
+    {
+        $permission = $this->permission->handle(['user_id' => $userId]);
+
+        $this->permissionCache->set($token, $permission);
+
+        return $permission;
     }
 
     /**

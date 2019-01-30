@@ -11,3 +11,20 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
+use Common\Infra\Facade\Permission;
+
+if (!function_exists('permission')) {
+    /**
+     * 校验权限.
+     *
+     * @param string      $resource
+     * @param null|string $method
+     *
+     * @return bool
+     */
+    function permission(string $resource, ?string $method = null): bool
+    {
+        return Permission::handle($resource, $method);
+    }
+}

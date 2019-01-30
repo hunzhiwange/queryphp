@@ -32,6 +32,13 @@ window.store = store
 window._ = _
 window.router = router
 
+Vue.prototype.utils = utils
+
+// 权限设置
+let permission = window.localStorage.getItem('authList')
+permission = Object.assign({static: [], dynamic: []}, permission ? JSON.parse(permission) : {})
+window.PERMISSIONS = permission
+
 window.bus = new Vue({
     router,
     store,

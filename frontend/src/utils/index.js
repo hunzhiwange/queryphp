@@ -1,7 +1,7 @@
-import semver from 'semver'
-import packjson from '../../package.json'
+var minimatch = require('minimatch')
 
 let util = {}
+
 util.title = function(title) {
     window.document.title = __(title)
 }
@@ -450,12 +450,12 @@ util.debounce = function(func, wait, immediate) {
         // 据上一次触发时间间隔
         const last = +new Date() - timestamp
 
-        // 上次被包装函数被调用时间间隔last小于设定时间间隔wait
+        // 上次被包装函数被调用时间间隔 last 小于设定时间间隔 wait
         if (last < wait && last > 0) {
             timeout = setTimeout(later, wait - last)
         } else {
             timeout = null
-            // 如果设定为immediate===true，因为开始边界已经调用过了此处无需调用
+            // 如果设定为 immediate===true，因为开始边界已经调用过了此处无需调用
             if (!immediate) {
                 result = func.apply(context, args)
                 if (!timeout) context = args = null
@@ -494,6 +494,68 @@ util.deepClone = function(source) {
         }
     }
     return targetObj
+}
+
+var timeoutForOnce = null
+util.once = function(fn, time) {
+    if (timeoutForOnce) {
+        clearTimeout(timeoutForOnce)
+    }
+
+    timeoutForOnce = setTimeout(fn, time)
+}
+
+util.pregQuote = function(data) {
+    // 不包含 *，因为要作为通配符匹配规则
+    // Js 版本的 preg-quote
+    // http://php.net/manual/zh/function.preg-quote.php
+    // JS 配合 minimatch 来实现和 PHP 一样的效果，可能有点差异
+    // 通过设置正则规则限制一些非常特殊的字符串来达到效果
+    // console.log(minimatch("hello?worldyes", util.pregQuote("hello?world*yes"))) // true
+    // $regex = preg_quote($regex, '/');
+    // $regex = '/^'.str_replace('\*', '(\S*)', $regex).'$/';
+    // return $regex;
+
+    let specials = '.+?[^]$(){}=!<>|-:'
+
+    specials.split('').forEach(v => {
+        data = data.replace(new RegExp('\\' + v, 'g'), '\\' + v)
+    })
+
+    return data
+}
+
+util.permission = function(resource, method) {
+    let permission = PERMISSIONS
+
+    // 超级管理员
+    if (permission.static.includes('*')) {
+        return true
+    }
+
+    // 所有请求
+    if (permission.static.includes(resource)) {
+        return true
+    }
+
+    // 带有请求类型
+    if (method && permission.static.includes(method + ':' + resource)) {
+        return true
+    }
+
+    permission.dynamic.forEach(p => {
+        // 无请求类型
+        if (minimatch(resource, util.pregQuote(p))) {
+            return true
+        }
+
+        // 带有请求类型
+        if (method && minimatch(method + ':' + resource, util.pregQuote(p))) {
+            return true
+        }
+    })
+
+    return false
 }
 
 export default util

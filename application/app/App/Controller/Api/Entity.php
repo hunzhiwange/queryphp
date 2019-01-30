@@ -16,6 +16,7 @@ namespace App\App\Controller\Api;
 
 use Common\Domain\Entity\Test;
 use Leevel\Database\Ddd\UnitOfWork;
+use Leevel\Database\Facade\Db;
 
 /**
  * 实体使用.
@@ -35,12 +36,18 @@ class Entity
      *
      * @return array
      */
-    public function handle(UnitOfWork $w): array
+    public function handle(/*UnitOfWork $w*/): array
     {
-        $w->persist(new Test(['name' => 'hello world']));
-        $w->persist(new Test(['name' => 'foo bar']));
+        $x = new Test(['name' => 'hello world']);
 
-        $w->flush();
+        // $w->persist(new Test(['name' => 'hello world']));
+        // $w->persist(new Test(['name' => 'foo bar']));
+
+        // $w->flush();
+
+        //Db::table('test')->insert(['name' => '小马哥']);
+
+        print_r(get_included_files());
 
         return ['count' => Test::findCount()];
     }

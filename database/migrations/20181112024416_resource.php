@@ -83,6 +83,7 @@ INSERT INTO `resource` VALUES (22, '用户删除', 'user_destroy', 1, '2018-12-0
 INSERT INTO `resource` VALUES (23, '更新个人资料', 'profile_update', 1, '2018-12-08 13:18:23');
 INSERT INTO `resource` VALUES (24, '修改个人密码', 'profile_change_password', 1, '2018-12-08 13:19:05');
 INSERT INTO `resource` VALUES (25, '系统配置', 'option', 1, '2018-12-08 13:00:03');
+INSERT INTO `resource` VALUES (26, '超级管理员', '*', 1, '2018-12-08 13:00:03');
 EOT;
 
         $this->execute($sql);

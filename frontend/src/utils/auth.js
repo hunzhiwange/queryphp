@@ -10,7 +10,7 @@ export function getToken() {
 
 export function setToken(token, keepLogin) {
     return Cookies.set(tokenKey, token, {
-        expires: keepLogin === true ? 30 : null,
+        expires: keepLogin === true ? 60 : null,
     })
 }
 
@@ -27,10 +27,10 @@ export function lockLastPage() {
 }
 
 export function lock(lastPage) {
-    Cookies.set(lastPageKey, lastPage, {expires: 30})
-    return Cookies.set(lockKey, 1, {expires: 30})
+    Cookies.set(lastPageKey, lastPage, {expires: 60})
+    return Cookies.set(lockKey, 1, {expires: 60})
 }
 
 export function unlock() {
-    return Cookies.set(lockKey, 0, {expires: 30})
+    return Cookies.set(lockKey, 0, {expires: 60})
 }

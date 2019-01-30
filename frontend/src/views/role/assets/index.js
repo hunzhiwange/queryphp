@@ -9,6 +9,8 @@ const resetForm = {
     status: '1',
 }
 
+const resetFormPermission = {}
+
 export default {
     components: {
         search,
@@ -48,17 +50,20 @@ export default {
                 {
                     title: this.__('操作'),
                     key: 'action',
-                    width: 130,
+                    width: 160,
                     fixed: 'right',
                     align: 'left',
                     render: (h, params) => {
                         return (
                             <div>
                                 <buttonGroup size="small" shape="circle">
-                                    <i-button type="text" onClick={() => this.edit(params)}>
+                                    <i-button type="text" onClick={() => this.edit(params)} disabled={!utils.permission('role_edit_button')}>
                                         {this.__('编辑')}
                                     </i-button>
-                                    <i-button type="text" onClick={() => this.remove(params)}>
+                                    <i-button type="text" onClick={() => this.permission(params)} disabled={!utils.permission('role_permission_button')}>
+                                        {this.__('授权')}
+                                    </i-button>
+                                    <i-button type="text" onClick={() => this.remove(params)} disabled={!utils.permission('role_delete_button')}>
                                         {this.__('删除')}
                                     </i-button>
                                 </buttonGroup>
@@ -95,6 +100,19 @@ export default {
             },
             loading: false,
             selectedData: [],
+            rightForm: false,
+            styles: {
+                height: 'calc(100% - 55px)',
+                overflow: 'auto',
+                paddingBottom: '53px',
+                position: 'static',
+            },
+            formPermission: resetFormPermission,
+            viewDetail: {},
+            dataTree: [],
+            dataTreeInit: false,
+            permissionRoleId: '',
+            selectPermissionId: [],
         }
     },
     methods: {
@@ -236,6 +254,82 @@ export default {
         },
         reset() {
             Object.assign(this.formItem, resetForm)
+        },
+        permission(params) {
+            if (!this.dataTreeInit) {
+                this.apiGet('permission').then(res => {
+                    this.dataTree = res
+                    this.dataTreeInit = true
+                })
+            }
+            this.permissionRoleId = params.row.id
+            this.viewDetail = params.row
+
+            this.apiGet('role/' + params.row.id).then(res => {
+                let selectPermissionId = []
+                res.permission.forEach(item => {
+                    selectPermissionId.push(item.id)
+                })
+
+                this.selectPermissionId = selectPermissionId
+
+                this.travelTree(this.dataTree)
+            })
+
+            this.rightForm = true
+        },
+        travelTree(data) {
+            data.forEach(item => {
+                if (this.selectPermissionId.includes(item.id)) {
+                    this.$set(item, 'checked', true)
+                } else {
+                    this.$set(item, 'checked', false)
+                }
+
+                if (item.children) {
+                    this.travelTree(item.children)
+                }
+            })
+        },
+        renderContent(h, {root, node, data}) {
+            const status = data.status == 'enable'
+            return (
+                <span class="tree-item" style="display: inline-block; width: 100%;">
+                    <span
+                        class="tree-item-title"
+                        style={{
+                            textDecoration: data.rule == 'T' ? 'none' : '2line-through',
+                        }}>
+                        {data.name}
+                    </span>
+                    <span class="tree-item-text">{data.identity}</span>
+                </span>
+            )
+        },
+        handlePermissionSubmit(form) {
+            this.loading = !this.loading
+
+            let selected = this.$refs.tree.getCheckedNodes()
+
+            let selectedIds = []
+            selected.forEach(({id}) => selectedIds.push(id))
+
+            var formData = {
+                id: this.permissionRoleId,
+                permission_id: selectedIds,
+            }
+
+            this.apiPost('role/permission', formData).then(
+                res => {
+                    this.loading = !this.loading
+                    this.rightForm = false
+
+                    utils.success(res.message)
+                },
+                res => {
+                    this.loading = !this.loading
+                }
+            )
         },
     },
     computed: {},

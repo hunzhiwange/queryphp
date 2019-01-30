@@ -114,15 +114,12 @@ export default {
                     },
                 ])
             }
-
             let stylePath = '/'
-
             if (mainTheme !== 'b') {
                 path = stylePath + mainTheme + '.css'
             } else {
                 path = ''
             }
-
             themeLink.setAttribute('href', path)
 
             this.themeSelect = false
@@ -133,7 +130,6 @@ export default {
     created() {
         let stylePath = '/'
         let name = this.$store.state.user.users.name
-
         if (localStorage.theme) {
             let hasThisUser = JSON.parse(localStorage.theme).some(item => {
                 if (item.userName === name) {
@@ -144,7 +140,6 @@ export default {
                     return false
                 }
             })
-
             if (!hasThisUser) {
                 this.$store.commit('changeMenuTheme', 'light')
                 this.$store.commit('changeMainTheme', 'b')

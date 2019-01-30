@@ -16,6 +16,7 @@ namespace Admin\App\Service\Permission;
 
 use Common\Domain\Entity\Permission;
 use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Kernel\HandleException;
 
 /**
  * 权限删除.
@@ -66,6 +67,8 @@ class Destroy
      */
     protected function remove(Permission $entity)
     {
+        $this->checkChildren((int) $entity->id);
+
         $this->w->persist($entity)->
         remove($entity)->
         flush();
@@ -81,5 +84,17 @@ class Destroy
     protected function find(int $id): Permission
     {
         return $this->w->repository(Permission::class)->findOrFail($id);
+    }
+
+    /**
+     * 判断是否存在子项.
+     *
+     * @param int $id
+     */
+    protected function checkChildren(int $id): void
+    {
+        if ($this->w->repository(Permission::class)->hasChildren($id)) {
+            throw new HandleException(__('权限包含子项，请先删除子项.'));
+        }
     }
 }

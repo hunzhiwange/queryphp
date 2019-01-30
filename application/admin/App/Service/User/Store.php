@@ -14,36 +14,34 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\User;
 
-use Common\Domain\Entity\User;
-use Common\Domain\Service\User\UserRole;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Common\Domain\Service\User\UserRoleStore;
 
 /**
  * 用户保存.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2017.12.19
+ * @since 2017.10.23
  *
  * @version 1.0
  */
 class Store
 {
     /**
-     * 事务工作单元.
+     * 用户保存授权服务.
      *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
+     * @var \Common\Domain\Service\User\UserRoleStore
      */
-    protected $w;
+    protected $userRole;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @param \Common\Domain\Service\User\UserRoleStore $userRolew
      */
-    public function __construct(IUnitOfWork $w, UserRole $userRole)
+    public function __construct(UserRoleStore $userRole)
     {
-        $this->w = $w;
+        $this->userRole = $userRole;
     }
 
     /**
@@ -55,59 +53,6 @@ class Store
      */
     public function handle(array $input): array
     {
-        $result = $this->save($input)->toArray();
-
-        // $this->userRole->handle([
-        //     'user_id' => $result['id'],
-        //     'userRole' => $input['userRole']
-        // ]);
-
-        return $result;
-    }
-
-    /**
-     * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User
-     */
-    protected function save(array $input): User
-    {
-        $this->w->persist($entity = $this->entity($input))->
-
-        flush();
-
-        $entity->refresh();
-
-        return $entity;
-    }
-
-    /**
-     * 创建实体.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User
-     */
-    protected function entity(array $input): User
-    {
-        return new User($this->data($input));
-    }
-
-    /**
-     * 组装实体数据.
-     *
-     * @param array $input
-     *
-     * @return array
-     */
-    protected function data(array $input): array
-    {
-        return [
-            'name'       => trim($input['name']),
-            'identity'   => trim($input['identity']),
-            'status'     => $input['status'],
-        ];
+        return $this->userRole->handle($input);
     }
 }

@@ -3,7 +3,9 @@
         <Row :gutter="16">
             <i-col span="18">
                 <Row :gutter="16">
-                    <i-col span="8"> <i-input v-model="searchForm.key" :placeholder="__('名字') + ',' + __('标识符')" clearable> </i-input> </i-col>
+                    <i-col span="8">
+                        <i-input v-model="searchForm.key" :placeholder="__('名字') + ',' + __('标识符')" clearable> </i-input>
+                    </i-col>
                     <i-col span="4">
                         <i-select v-model="searchForm.status" :placeholder="__('选择状态')" clearable @on-change="search()">
                             <i-option value="">{{ __('选择状态') }}</i-option>
@@ -31,7 +33,9 @@
             </i-col>
             <i-col span="4"> &nbsp; </i-col>
             <i-col span="2" style="text-align:right">
-                <i-button size="small" type="text" @click="add()" class="add-extra"><Icon type="md-add-circle"></Icon> {{ __('新增') }}</i-button>
+                <i-button size="small" type="text" @click="add()" class="add-extra" :disabled="!utils.permission('resource_add_button')"
+                    ><Icon type="md-add-circle"></Icon> {{ __('新增') }}</i-button
+                >
             </i-col>
         </Row>
     </div>

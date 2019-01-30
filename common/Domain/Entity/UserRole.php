@@ -37,7 +37,7 @@ class UserRole extends Entity
     /**
      * primary key.
      *
-     * @var array
+     * @var string
      */
     const ID = ['user_id', 'role_id'];
 
@@ -58,6 +58,13 @@ class UserRole extends Entity
         'role_id'   => [],
         'create_at' => [],
     ];
+
+    /**
+     * id.
+     *
+     * @var int
+     */
+    //private $id;
 
     /**
      * 用户 ID.

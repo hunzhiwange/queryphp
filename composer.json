@@ -37,6 +37,7 @@
         },
         "leevel": {
             "providers": [
+                "Common\\Infra\\Provider\\App",
                 "Common\\Infra\\Provider\\Event",
                 "Common\\Infra\\Provider\\Router"
             ],

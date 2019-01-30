@@ -44,7 +44,7 @@ class Option extends Entity
     /**
      * auto increment.
      *
-     * @var null
+     * @var string
      */
     const AUTO = null;
 

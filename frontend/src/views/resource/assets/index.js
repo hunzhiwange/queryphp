@@ -1,5 +1,4 @@
 import http from '@/utils/http'
-import {validateAlphaDash} from '@/utils/validate'
 import search from './../search/index'
 
 const resetForm = {
@@ -55,10 +54,10 @@ export default {
                         return (
                             <div>
                                 <buttonGroup size="small" shape="circle">
-                                    <i-button type="text" onClick={() => this.edit(params)}>
+                                    <i-button type="text" onClick={() => this.edit(params)} disabled={!utils.permission('resource_edit_button')}>
                                         {this.__('编辑')}
                                     </i-button>
-                                    <i-button type="text" onClick={() => this.remove(params)}>
+                                    <i-button type="text" onClick={() => this.remove(params)} disabled={!utils.permission('resource_delete_button')}>
                                         {this.__('删除')}
                                     </i-button>
                                 </buttonGroup>
@@ -85,9 +84,6 @@ export default {
                     {
                         required: true,
                         message: this.__('请输入资源标识符'),
-                    },
-                    {
-                        validator: validateAlphaDash,
                     },
                 ],
             },

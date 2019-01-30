@@ -44,5 +44,23 @@ class RolePermission extends AbstractMigration
         $table->addColumn('permission_id', 'integer', ['limit' => 11, 'comment' => '权限 ID']);
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
         $table->create();
+
+        // 初始化数据
+        $this->seed();
+    }
+
+    /**
+     * 初始化数据.
+     */
+    private function seed()
+    {
+        $rolePremission = [
+            'role_id'       => 1,
+            'permission_id' => 1,
+        ];
+
+        $table = $this->table('role_permission');
+        $table->insert($rolePremission);
+        $table->saveData();
     }
 }

@@ -2,15 +2,19 @@
     <div>
         <div class="login-header">
             <div class="login-inner">
-                <div class="logo pull-left"><img :src="img_logo" alt="QueryPHP" /></div>
-                <div class="description">{{ __('用户登录') }}</div>
+                <div class="logo pull-left">
+                    <img :src="img_logo" alt="DHB168" />
+                </div>
+                <div class="description">{{ __('工具箱') }}</div>
             </div>
         </div>
         <div class="login-content">
             <div class="login-inner">
                 <Row>
                     <i-col span="14">
-                        <div class="pull-left big-logo"><img :src="img_login_banner" alt="" width="610px" /></div>
+                        <div class="pull-left big-logo">
+                            <img :src="img_login_banner" alt="" width="610px" />
+                        </div>
                     </i-col>
                     <i-col span="10">
                         <div class="login-box">
@@ -35,7 +39,9 @@
                                                         @on-focus="refreshSeccode()"
                                                     ></i-input>
                                                 </i-col>
-                                                <i-col span="12" v-if="form.name"> <img :src="codeUrl" @click="refreshSeccode()" class="code" /> </i-col>
+                                                <i-col span="12" v-if="form.name">
+                                                    <img :src="codeUrl" @click="refreshSeccode()" class="code" />
+                                                </i-col>
                                             </Row>
                                         </FormItem>
                                         <FormItem>
@@ -91,7 +97,10 @@
         </div>
         <div class="login-footer">
             <div class="login-inner">
-                <div>© 2018 <a href="http://www.queryphp.com">QueryPHP.COM</a> All rights reserved.</div>
+                <div>
+                    © 2019
+                    <a href="https://www.dhb168.com">DHB168.COM</a> All rights reserved.
+                </div>
             </div>
         </div>
     </div>

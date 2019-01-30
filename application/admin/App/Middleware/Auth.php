@@ -17,9 +17,11 @@ namespace Admin\App\Middleware;
 use Admin\App\Exception\LockException;
 use Admin\Infra\Lock;
 use Closure;
+use Common\Infra\Facade\Permission;
 use Leevel\Auth\AuthException;
 use Leevel\Auth\Middleware\Auth as BaseAuth;
 use Leevel\Http\IRequest;
+use Leevel\Kernel\HandleException;
 use Leevel\Kernel\UnauthorizedHttpException;
 
 /**
@@ -53,7 +55,7 @@ class Auth extends BaseAuth
             die;
         }
 
-        if (in_array($pathInfo = $request->getPathInfo(), $this->ignorePathInfo(), true)) {
+        if (\in_array($pathInfo = $request->getPathInfo(), $this->ignorePathInfo(), true)) {
             $next($request);
 
             return;
@@ -62,18 +64,43 @@ class Auth extends BaseAuth
         // 兼容 header，也可以通过 get 或者 post 来设置 token
         if ($token = $request->headers->get('token')) {
             $request->query->set('token', $token);
+        } else {
+            $token = $request->query->get('token');
         }
 
         try {
-            // 后台已锁定
-            if (!in_array($pathInfo, $this->ignoreLockPathInfo(), true) &&
-                (new Lock())->has($token)) {
-                throw new LockException(__('系统已锁定'));
+            if ($this->manager->isLogin()) {
+                // 后台已锁定
+                if (!\in_array($pathInfo, $this->ignoreLockPathInfo(), true) &&
+                    $token && (new Lock())->has($token)) {
+                    throw new LockException(__('系统已锁定'));
+                }
+
+                if (!\in_array($pathInfo, $this->ignorePermissionPathInfo(), true)) {
+                    $this->validatePermission($request);
+                }
             }
 
             parent::handle($next, $request);
         } catch (AuthException $e) {
             throw new UnauthorizedHttpException($e->getMessage());
+        }
+    }
+
+    /**
+     * 权限校验.
+     *
+     * @param \Leevel\Http\IRequest $request
+     */
+    protected function validatePermission(IRequest $request): void
+    {
+        if (!empty($_GET['debug'])) {
+            $pathInfo = str_replace('/:admin/', '', $request->getPathInfo());
+            $method = strtolower($request->getMethod());
+
+            if (!Permission::handle($pathInfo, $method)) {
+                throw new HandleException('你没有权限执行操作');
+            }
         }
     }
 
@@ -87,6 +114,18 @@ class Auth extends BaseAuth
         return [
             '/:admin/login/code',
             '/:admin/login/validate',
+        ];
+    }
+
+    /**
+     * 忽略权限路由.
+     *
+     * @return array
+     */
+    protected function ignorePermissionPathInfo(): array
+    {
+        return [
+            '/:admin/login/logout',
         ];
     }
 

@@ -143,7 +143,7 @@ class Update
             [
                 'id'            => 'required',
                 'name'          => 'required|chinese_alpha_num|max_length:50',
-                'identity'      => 'required|alpha_dash|'.UniqueRule::rule(Resource::class, null, $this->input['id']),
+                'identity'      => 'required|'.UniqueRule::rule(Resource::class, null, $this->input['id']),
             ],
             [
                 'id'            => 'ID',

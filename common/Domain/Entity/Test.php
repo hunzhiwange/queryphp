@@ -48,6 +48,16 @@ class Test extends Entity
      */
     const AUTO = 'id';
 
+    const NAME_YES = '0';
+
+    const NAME = [
+        'yes' => '0',
+    ];
+
+    const NAME2 = [
+        'yes' => ['0' => 'hello'],
+    ];
+
     /**
      * struct.
      *
@@ -57,7 +67,11 @@ class Test extends Entity
         'id' => [
             'readonly'             => true,
         ],
-        'name'      => [],
+        'name'      => [
+            'enum' => [
+                self::NAME['yes'] => 'hello',
+            ],
+        ],
     ];
 
     /**

@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Domain\Entity;
 
+use Common\Infra\Repository\Permission as RepositoryPermission;
 use Leevel\Database\Ddd\Entity;
 
 /**
@@ -27,6 +28,13 @@ use Leevel\Database\Ddd\Entity;
  */
 class Permission extends Entity
 {
+    /**
+     * 仓储.
+     *
+     * @var string
+     */
+    const REPOSITORY = RepositoryPermission::class;
+
     /**
      * database table.
      *
@@ -44,7 +52,7 @@ class Permission extends Entity
     /**
      * auto increment.
      *
-     * @var string
+     * @var null|array|string
      */
     const AUTO = 'id';
 
@@ -57,6 +65,7 @@ class Permission extends Entity
         'id' => [
             'readonly' => true,
         ],
+        'pid'      => [],
         'name'     => [],
         'identity' => [],
         'status'   => [
@@ -65,7 +74,15 @@ class Permission extends Entity
                 '1' => '启用',
             ],
         ],
-        'create_at' => [],
+        'create_at'     => [],
+        'resource'      => [
+            self::MANY_MANY     => Resource::class,
+            'middle_entity'     => PermissionResource::class,
+            'source_key'        => 'id',
+            'target_key'        => 'id',
+            'middle_source_key' => 'permission_id',
+            'middle_target_key' => 'resource_id',
+        ],
     ];
 
     /**
@@ -74,6 +91,13 @@ class Permission extends Entity
      * @var int
      */
     private $id;
+
+    /**
+     * 父级 ID.
+     *
+     * @var int
+     */
+    private $pid;
 
     /**
      * 权限名字.
@@ -102,6 +126,13 @@ class Permission extends Entity
      * @var string
      */
     private $createAt;
+
+    /**
+     * 资源.
+     *
+     * @var \Leevel\Collection\Collection
+     */
+    private $resource;
 
     /**
      * setter.

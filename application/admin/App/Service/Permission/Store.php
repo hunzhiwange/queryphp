@@ -110,11 +110,32 @@ class Store
      */
     protected function data(array $input): array
     {
+        $input['pid'] = $this->parseParentId($input['pid']);
+
         return [
+            'pid'        => $input['pid'],
             'name'       => trim($input['name']),
             'identity'   => trim($input['identity']),
             'status'     => $input['status'],
         ];
+    }
+
+    /**
+     * 分析父级数据.
+     *
+     * @param array $pid
+     *
+     * @return int
+     */
+    protected function parseParentId(array $pid): int
+    {
+        $p = (int) (array_pop($pid));
+
+        if ($p < 0) {
+            $p = 0;
+        }
+
+        return $p;
     }
 
     /**

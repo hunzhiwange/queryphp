@@ -3,7 +3,9 @@
         <Row>
             <div class="min-form" v-show="minForm">
                 <div class="min-form-inner">
-                    <legend>{{ formItem.id ? __('编辑菜单') : __('新增菜单') }}</legend>
+                    <legend>
+                        {{ formItem.id ? __('编辑菜单') : __('新增菜单') }}
+                    </legend>
                     <div class="min-form-body">
                         <i-form ref="form" :rules="rules" :model="formItem" :label-width="110" class="w-1000">
                             <Row :gutter="16">
@@ -26,7 +28,9 @@
                                             <Radio label="action" :disabled="this.typeDisabled">{{ __('方法') }}</Radio>
                                         </RadioGroup>
                                     </FormItem>
-                                    <FormItem :label="__('应用')" prop="app"> <i-input v-model.trim="formItem.app" placeholder=""></i-input> </FormItem>
+                                    <FormItem :label="__('应用')" prop="app">
+                                        <i-input v-model.trim="formItem.app" placeholder=""></i-input>
+                                    </FormItem>
                                     <FormItem :label="__('控制器')" prop="controller" v-show="showController">
                                         <i-input v-model.trim="formItem.controller" placeholder=""></i-input>
                                     </FormItem>
@@ -46,18 +50,27 @@
                                     </FormItem>
                                     <FormItem :label="__('状态')">
                                         <i-switch v-model="formItem.status" size="large">
-                                            <span slot="open">{{ __('启用') }}</span> <span slot="close">{{ __('禁用') }}</span>
+                                            <span slot="open">{{ __('启用') }}</span>
+                                            <span slot="close">{{ __('禁用') }}</span>
                                         </i-switch>
                                     </FormItem>
                                 </i-col>
                                 <i-col span="12">
-                                    <FormItem :label="__('路由标题')" prop="title"> <i-input v-model.trim="formItem.title" placeholder=""></i-input> </FormItem>
-                                    <FormItem :label="__('路由名称')" prop="name"> <i-input v-model.trim="formItem.name" placeholder=""></i-input> </FormItem>
-                                    <FormItem :label="__('路由路径')" prop="path"> <i-input v-model.trim="formItem.path" placeholder=""></i-input> </FormItem>
+                                    <FormItem :label="__('路由标题')" prop="title">
+                                        <i-input v-model.trim="formItem.title" placeholder=""></i-input>
+                                    </FormItem>
+                                    <FormItem :label="__('路由名称')" prop="name">
+                                        <i-input v-model.trim="formItem.name" placeholder=""></i-input>
+                                    </FormItem>
+                                    <FormItem :label="__('路由路径')" prop="path">
+                                        <i-input v-model.trim="formItem.path" placeholder=""></i-input>
+                                    </FormItem>
                                     <FormItem :label="__('路由组件')" prop="component">
                                         <i-input v-model.trim="formItem.component" placeholder=""></i-input>
                                     </FormItem>
-                                    <FormItem :label="__('路由图标')" prop="icon"> <i-input v-model.trim="formItem.icon" placeholder=""></i-input> </FormItem>
+                                    <FormItem :label="__('路由图标')" prop="icon">
+                                        <i-input v-model.trim="formItem.icon" placeholder=""></i-input>
+                                    </FormItem>
                                 </i-col>
                             </Row>
                         </i-form>
@@ -73,7 +86,8 @@
                 <div slot="title">
                     <Poptip confirm :title="__('你确认同步菜单数据吗？')" @on-ok="synchrodataMenu" placement="bottom-start">
                         <i-button type="primary" :loading="loadingSynchrodata" icon="loop">
-                            <span v-if="!loadingSynchrodata">{{ __('菜单数据同步') }}</span> <span v-else>{{ __('菜单数据同步中，请稍后') }}...</span>
+                            <span v-if="!loadingSynchrodata">{{ __('菜单数据同步') }}</span>
+                            <span v-else>{{ __('菜单数据同步中，请稍后') }}...</span>
                         </i-button>
                     </Poptip>
                     <Checkbox v-model="synchrodataReplace" class="synchrodata-replace">{{ __('覆盖') }}</Checkbox>
@@ -87,7 +101,9 @@
                 </a>
                 <div>
                     <Row>
-                        <i-col span="24"> <Tree :data="dataTree" ref="tree" show-checkbox multiple :render="renderContent"></Tree> </i-col>
+                        <i-col span="24">
+                            <Tree :data="dataTree" ref="tree" show-checkbox multiple :render="renderContent"></Tree>
+                        </i-col>
                     </Row>
                 </div>
             </Card>

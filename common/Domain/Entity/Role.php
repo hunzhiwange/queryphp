@@ -65,7 +65,15 @@ class Role extends Entity
                 '1' => '启用',
             ],
         ],
-        'create_at' => [],
+        'create_at'       => [],
+        'permission'      => [
+            self::MANY_MANY     => Permission::class,
+            'middle_entity'     => RolePermission::class,
+            'source_key'        => 'id',
+            'target_key'        => 'id',
+            'middle_source_key' => 'role_id',
+            'middle_target_key' => 'permission_id',
+        ],
     ];
 
     /**
@@ -102,6 +110,13 @@ class Role extends Entity
      * @var string
      */
     private $createAt;
+
+    /**
+     * 权限.
+     *
+     * @var \Leevel\Collection\Collection
+     */
+    private $permission;
 
     /**
      * setter.

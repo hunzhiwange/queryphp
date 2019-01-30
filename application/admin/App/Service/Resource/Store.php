@@ -126,7 +126,7 @@ class Store
             $this->input,
             [
                 'name'          => 'required|chinese_alpha_num|max_length:50',
-                'identity'      => 'required|alpha_dash|'.UniqueRule::rule(Resource::class),
+                'identity'      => 'required|'.UniqueRule::rule(Resource::class),
             ],
             [
                 'name'          => __('名字'),

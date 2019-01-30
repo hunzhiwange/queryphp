@@ -41,11 +41,34 @@ class Permission extends AbstractMigration
     public function change()
     {
         $table = $this->table('permission');
+        $table->addColumn('pid', 'integer', ['limit' => 11, 'comment' => '父级 ID']);
         $table->addColumn('name', 'string', ['limit' => 64, 'comment' => '权限名字']);
         $table->addColumn('identity', 'string', ['limit' => 64, 'comment' => '唯一标识符']);
         $table->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => '1', 'comment' => '状态 0=禁用;1=启用;']);
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
         $table->addIndex('identity', ['unique' => true]);
+        $table->addIndex('pid');
         $table->create();
+
+        // 初始化数据
+        $this->seed();
+    }
+
+    /**
+     * 初始化数据.
+     */
+    private function seed()
+    {
+        $permission = [
+            'id'       => 1,
+            'pid'      => 0,
+            'name'     => '超级管理员',
+            'identity' => 'SuperAdministrator',
+            'status'   => '1',
+        ];
+
+        $table = $this->table('permission');
+        $table->insert($permission);
+        $table->saveData();
     }
 }

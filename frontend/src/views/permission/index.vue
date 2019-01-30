@@ -8,9 +8,8 @@
                         <i-form ref="form" :rules="rules" :model="formItem" :label-width="110" class="w-1000">
                             <Row :gutter="16">
                                 <i-col span="12">
-                                    <FormItem :label="__('名字')" prop="name"> <i-input v-model.trim="formItem.name" placeholder=""></i-input> </FormItem>
-                                    <FormItem :label="__('标识符')" prop="identity">
-                                        <i-input v-model.trim="formItem.identity" placeholder=""> </i-input>
+                                    <FormItem :label="__('上级权限')" prop="pid">
+                                        <Cascader v-model="formItem.pid" :data="pidOptions" :disabled="pidDisabled" filterable change-on-select></Cascader>
                                     </FormItem>
                                     <FormItem :label="__('状态')">
                                         <i-switch v-model="formItem.status" size="large" true-value="1" false-value="0">
@@ -18,7 +17,12 @@
                                         </i-switch>
                                     </FormItem>
                                 </i-col>
-                                <i-col span="12"> </i-col>
+                                <i-col span="12">
+                                    <FormItem :label="__('名字')" prop="name"> <i-input v-model.trim="formItem.name" placeholder=""></i-input> </FormItem>
+                                    <FormItem :label="__('标识符')" prop="identity">
+                                        <i-input v-model.trim="formItem.identity" placeholder=""> </i-input>
+                                    </FormItem>
+                                </i-col>
                             </Row>
                         </i-form>
                     </div>
@@ -29,42 +33,60 @@
                 </div>
             </Card>
         </div>
-        <div class="wrap">
-            <div class="fixed-footer-offset">
+        <Card>
+            <div slot="title">
+                <i-button size="small" type="text" @click="add()" class="add-extra" :disabled="!utils.permission('permission_add_button')"
+                    ><Icon type="md-add-circle"></Icon> {{ __('新增') }}</i-button
+                >
+            </div>
+            <div class="tree-for-list">
                 <Row>
                     <i-col span="24">
-                        <search ref="search" @getDataFromSearch="getDataFromSearch" @add="add"></search>
-
-                        <i-table
-                            stripe
-                            :loading="loadingTable"
-                            border
-                            ref="table"
-                            :border="false"
-                            :columns="columns"
-                            :data="data"
-                            class="search-table"
-                            @on-selection-change="onSelectionChange"
-                        >
-                        </i-table>
+                        <Tree :data="dataTree" ref="tree" show-checkbox2 multiple :render="renderContent"></Tree>
                     </i-col>
                 </Row>
             </div>
-        </div>
-        <div class="fixed-footer">
-            <Row justify="end">
-                <i-col span="8">
-                    <ButtonGroup shape="circle">
-                        <i-button type="primary" icon="md-eye" @click="statusMany('1')">{{ __('启用') }}</i-button>
-                        <i-button type="primary" icon="md-eye-off" @click="statusMany('0')">{{ __('禁用') }}</i-button>
-                    </ButtonGroup>
-                </i-col>
-                <i-col span="8" offset="8" class-name="fr">
-                    <Page class="fr" :total="total" show-sizer @on-change="changePage" @on-page-size-change="changePageSize"></Page>
-                </i-col>
-            </Row>
-        </div>
+        </Card>
+
+        <!--<Row class="m-t-10">
+            <ButtonGroup shape="circle">
+                <i-button type="primary" icon="md-eye" @click="statusMany('enable')">{{ __('启用') }}</i-button>
+                <i-button type="primary" icon="md-eye-off" @click="statusMany('disable')">{{ __('禁用') }}</i-button>
+            </ButtonGroup>
+        </Row>-->
+
+        <Drawer :title="viewDetail.name + ' 资源授权'" v-model="rightForm" width="800" :mask-closable="false" :styles="styles">
+            <i-form ref="formResource" :model="formResource">
+                <Row :gutter="32">
+                    <i-col span="24">
+                        <FormItem label="请输入资源关键字" label-position="top">
+                            <!--<div class="resource-page"><Page :total="resourceTotal" size="small" @on-change="changeResourcePage" /></div>-->
+                            <i-select
+                                v-model="selectResource"
+                                multiple
+                                filterable
+                                remote
+                                :remote-method="searchResource"
+                                @on-change="changeResource"
+                                :loading="loadingResource"
+                            >
+                                <i-option v-for="r in resources" :value="r.id + '``' + r.name + '|' + r.identity" :key="r.id" :label="r.name">
+                                    <span>{{ r.name }}</span>
+                                    <span class="resource-text">{{ r.identity }}</span>
+                                </i-option>
+                            </i-select>
+                        </FormItem>
+                    </i-col>
+                    <i-col span="24"> </i-col>
+                </Row>
+            </i-form>
+            <div class="demo-drawer-footer">
+                <i-button style="margin-right: 8px" @click="rightForm = false">取消</i-button>
+                <i-button type="primary" :loading="loading" @click.native.prevent="handleResourceSubmit('formResource')">确定</i-button>
+            </div>
+        </Drawer>
     </div>
 </template>
 
+<style lang="less" src="./assets/index.less"></style>
 <script src="./assets/index.js"></script>

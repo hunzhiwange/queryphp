@@ -86,6 +86,12 @@ function fsExistsSync(path) {
     return true
 }
 
+function firstWordUpperCase(str) {
+    return str.toLowerCase().replace(/(\s|^)[a-z]/g, function(char) {
+        return char.toUpperCase()
+    })
+}
+
 function readDirIView(filePath) {
     fs.readdir(filePath, function(err, files) {
         if (err) {

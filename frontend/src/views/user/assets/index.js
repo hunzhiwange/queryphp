@@ -55,10 +55,10 @@ export default {
                         return (
                             <div>
                                 <buttonGroup size="small" shape="circle">
-                                    <i-button type="text" onClick={() => this.edit(params)}>
+                                    <i-button type="text" onClick={() => this.edit(params)} disabled={!utils.permission('user_edit_button')}>
                                         {this.__('编辑')}
                                     </i-button>
-                                    <i-button type="text" onClick={() => this.remove(params)}>
+                                    <i-button type="text" onClick={() => this.remove(params)} disabled={!utils.permission('user_delete_button')}>
                                         {this.__('删除')}
                                     </i-button>
                                 </buttonGroup>
@@ -116,6 +116,7 @@ export default {
         add: function() {
             this.minForm = true
             this.formItem.id = ''
+            this.userRole = []
             this.reset()
         },
         remove(params) {
@@ -188,6 +189,7 @@ export default {
         },
         saveUser(form) {
             var formData = this.formItem
+            formData.userRole = this.userRole
 
             this.apiPost('user', formData).then(
                 res => {
@@ -209,6 +211,8 @@ export default {
         updateUser(form) {
             var formData = this.formItem
             formData.userRole = this.userRole
+
+            delete formData.name
 
             this.apiPut('user', this.formItem.id, formData).then(
                 res => {

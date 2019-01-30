@@ -47,5 +47,25 @@ class Role extends AbstractMigration
         $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
         $table->addIndex('identity', ['unique' => true]);
         $table->create();
+
+        // 初始化数据
+        $this->seed();
+    }
+
+    /**
+     * 初始化数据.
+     */
+    private function seed()
+    {
+        $role = [
+            'id'       => 1,
+            'name'     => '超级管理员',
+            'identity' => 'SuperAdministrator',
+            'status'   => '1',
+        ];
+
+        $table = $this->table('role');
+        $table->insert($role);
+        $table->saveData();
     }
 }

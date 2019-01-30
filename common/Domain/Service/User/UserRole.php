@@ -14,11 +14,11 @@ declare(strict_types=1);
 
 namespace Common\Domain\Service\User;
 
-use Common\Domain\Entity\UserRole as UserRoles;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Common\Domain\Entity\User;
+use Common\Domain\Entity\UserRole as EntityUserRole;
 
 /**
- * 用户授权.
+ * 更新授权.
  *
  * @author Name Your <your@mail.com>
  *
@@ -26,115 +26,57 @@ use Leevel\Database\Ddd\IUnitOfWork;
  *
  * @version 1.0
  */
-class UserRole
+trait UserRole
 {
     /**
-     * 事务工作单元.
+     * 准备数据.
      *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
-     */
-    protected $w;
-
-    /**
-     * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
-     */
-    public function __construct(IUnitOfWork $w)
-    {
-        $this->w = $w;
-    }
-
-    /**
-     * 响应方法.
-     *
-     * @param array $input
+     * @param \Common\Domain\Entity\User $user
      *
      * @return array
      */
-    public function handle(array $input): array
+    protected function prepareData(User $user): array
     {
-        $items = $this->w->repository(UserRoles::class)->findAll(function ($select) use ($input) {
-            $select->where('user_id', $input['user_id']);
-        });
+        return (new PrepareForUser())->handle($user);
+    }
 
-        //$this->w->flush();
-
-        //print_r($this->w);
-        //die;
+    /**
+     * 设置用户授权.
+     *
+     * @param int   $userId
+     * @param array $roleId
+     */
+    protected function setUserRole(int $userId, array $roleId): void
+    {
         $existRole = [];
 
-        foreach ($input['userRole'] as $roleId) {
-            $this->w->replace(new UserRoles([
-                'user_id' => $input['user_id'],
-                'role_id' => $roleId,
-            ]));
-
-            $existRole[] = $roleId;
-
-            // foreach ($items as $item) {
-            //     $this->w->delete($item);
-            // }
+        foreach ($roleId as $rid) {
+            $this->w->replace($this->entityUserRole($userId, (int) $rid));
+            $existRole[] = $rid;
         }
 
-        foreach ($items as $item) {
-            if (in_array($item['role_id'], $existRole, true)) {
+        foreach ($this->findRoles($userId) as $r) {
+            if (\in_array($r['role_id'], $existRole, true)) {
                 continue;
             }
 
-            $this->w->delete($item);
+            $this->w->delete($r);
         }
-
-        //dump($this->w);
-        //    die;
-        return [];
-        die;
-        die;
-
-        return $this->save($input)->toArray();
     }
 
     /**
-     * 保存.
+     * 创建授权实体.
      *
-     * @param array $input
+     * @param int $userId
+     * @param int $roleId
      *
-     * @return \Common\Domain\Entity\Permission
+     * @return \Common\Domain\Entity\UserRole
      */
-    protected function save(array $input): Permission
+    protected function entityUserRole(int $userId, int $roleId): EntityUserRole
     {
-        $this->w->persist($resource = $this->entity($input))->
-
-        flush();
-
-        return $resource;
-    }
-
-    /**
-     * 创建实体.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\Permission
-     */
-    protected function entity(array $input): Permission
-    {
-        return new Permission($this->data($input));
-    }
-
-    /**
-     * 组装实体数据.
-     *
-     * @param array $input
-     *
-     * @return array
-     */
-    protected function data(array $input): array
-    {
-        return [
-            'name'       => trim($input['name']),
-            'identity'   => trim($input['identity']),
-            'status'     => $input['status'],
-        ];
+        return new EntityUserRole([
+            'user_id' => $userId,
+            'role_id' => $roleId,
+        ]);
     }
 }

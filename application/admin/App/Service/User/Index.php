@@ -16,6 +16,8 @@ namespace Admin\App\Service\User;
 
 use Closure;
 use Common\Domain\Entity\User;
+use Common\Domain\Service\User\PrepareForUser;
+use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IEntity;
 use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Database\Ddd\Select;
@@ -66,15 +68,29 @@ class Index
         );
 
         $data['page'] = $page;
-        $data['data'] = [];
-
-        foreach ($entitys as $item) {
-            $tmp = $item->toArray();
-            $tmp['role'] = $item->role->toArray();
-            $data['data'][] = $tmp;
-        }
+        $data['data'] = $this->prepareData($entitys);
 
         return $data;
+    }
+
+    /**
+     * 准备数据.
+     *
+     * @param \Leevel\Collection\Collection $data
+     *
+     * @return array
+     */
+    protected function prepareData(Collection &$data): array
+    {
+        $prepare = new PrepareForUser();
+
+        $result = [];
+
+        foreach ($data as $v) {
+            $result[] = $prepare->handle($v);
+        }
+
+        return $result;
     }
 
     /**
