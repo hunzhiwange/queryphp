@@ -127,7 +127,7 @@ class Validate
     /**
      * 获取权限.
      *
-     * @param string $param
+     * @param string $token
      * @param int    $userId
      *
      * @return array

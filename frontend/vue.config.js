@@ -13,7 +13,7 @@ const resolve = dir => {
 // 例如：https://www.foobar.com/my-app/
 // 需要将它改为'/my-app/'
 // iview-admin线上演示打包路径： https://file.iviewui.com/admin-dist/
-const BASE_URL = process.env.NODE_ENV === 'production' ? '/' : '/'
+const PUBLIC_PATH = process.env.NODE_ENV === 'production' ? '/' : '/'
 
 module.exports = {
     // Project deployment base
@@ -23,7 +23,7 @@ module.exports = {
     // sub-path here. For example, if your app is deployed at
     // https://www.foobar.com/my-app/
     // then change this to '/my-app/'
-    baseUrl: BASE_URL,
+    publicPath: PUBLIC_PATH,
     // tweak internal webpack configuration.
     // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
     // 如果你不需要使用eslint，把lintOnSave设为false即可
@@ -48,7 +48,7 @@ module.exports = {
     devServer: {
         open: process.platform === 'darwin',
         host: '127.0.0.1',
-        port: 9528,
+        port: 9555,
         https: false,
         hotOnly: false,
         // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy

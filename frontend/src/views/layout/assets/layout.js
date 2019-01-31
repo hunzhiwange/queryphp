@@ -43,7 +43,17 @@ export default {
     },
     computed: {
         menuList() {
-            return this.$store.state.app.menuList
+            let menuList = this.$store.state.app.menuList
+
+            menuList.forEach(item => {
+                item.permission = utils.permission(item.name + '_menu')
+
+                item.children.forEach(v => {
+                    v.permission = utils.permission(v.name + '_menu')
+                })
+            })
+
+            return menuList
         },
         pageTagsList() {
             if (localStorage.pageOpenedList) {
@@ -78,9 +88,9 @@ export default {
     methods: {
         init() {
             // 消息
-            let messageCount = 3
+            let messageCount = 0
             this.messageCount = messageCount.toString()
-            this.$store.commit('setMessageCount', 3)
+            this.$store.commit('setMessageCount', 0)
 
             // 初始化菜单
             this.$store.commit('setCurrentPageName', this.$route.name)
@@ -93,6 +103,19 @@ export default {
 
             // 菜单
             this.$store.commit('updateMenulist')
+
+            // 刷新后台自动刷新权限，每一小时刷新一次用户权限
+            this.refreshPermission()
+
+            setInterval(() => {
+                this.refreshPermission()
+            }, 1000 * 60 * 60)
+        },
+        // 刷新权限，防止需要重新登录才刷新权限
+        refreshPermission() {
+            this.apiGet('user/permission', {refresh: '1'}).then(res => {
+                this.$store.dispatch('setRules', res)
+            })
         },
         toggleClick() {
             this.shrink = !this.shrink

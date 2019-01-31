@@ -526,24 +526,32 @@ util.pregQuote = function(data) {
 }
 
 util.permission = function(resource, method) {
-    let permission = PERMISSIONS
+    let permissionData = {}
+
+    if ('object' === typeof bus) {
+        Object.assign(permissionData, bus.$store.state.user.rules)
+    } else {
+        // 权限设置
+        let temp = window.localStorage.getItem('authList')
+        Object.assign(permissionData, temp ? JSON.parse(temp) : {static: [], dynamic: []})
+    }
 
     // 超级管理员
-    if (permission.static.includes('*')) {
+    if (permissionData.static.includes('*')) {
         return true
     }
 
     // 所有请求
-    if (permission.static.includes(resource)) {
+    if (permissionData.static.includes(resource)) {
         return true
     }
 
     // 带有请求类型
-    if (method && permission.static.includes(method + ':' + resource)) {
+    if (method && permissionData.static.includes(method + ':' + resource)) {
         return true
     }
 
-    permission.dynamic.forEach(p => {
+    permissionData.dynamic.forEach(p => {
         // 无请求类型
         if (minimatch(resource, util.pregQuote(p))) {
             return true

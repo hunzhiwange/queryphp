@@ -94,8 +94,7 @@ export default {
                             this.$store.dispatch('login', res)
 
                             setTimeout(() => {
-                                window.location.reload()
-                                //router.replace('/')
+                                router.replace('/')
                             }, 1000)
                         },
                         res => {
