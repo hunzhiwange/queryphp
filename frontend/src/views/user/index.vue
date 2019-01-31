@@ -46,7 +46,6 @@
                         <i-table
                             stripe
                             :loading="loadingTable"
-                            border
                             ref="table"
                             :border="false"
                             :columns="columns"

@@ -1,7 +1,7 @@
 <template>
     <div>
         <Breadcrumb separator="<b class='breadcrumb-separator'>></b>">
-            <BreadcrumbItem v-for="item in currentPath">
+            <BreadcrumbItem v-for="item in currentPath" :key="item">
                 <Icon v-if="item.icon" :type="itemIcon(item)" :class="itemIcon(item)"></Icon>
                 {{ itemTitle(item) }}</BreadcrumbItem
             >
