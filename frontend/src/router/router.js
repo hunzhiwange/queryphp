@@ -1,7 +1,6 @@
 // in development env not use Lazy Loading,because Lazy Loading too many pages will cause webpack hot update too slow.so only in production use Lazy Loading
 const importRouter = require('./import_' + process.env.NODE_ENV)
 import layout from '../views/layout/layout'
-import routerMenu from './menu'
 import {sprintf} from 'sprintf-js'
 
 window.__ = window.gettext = function() {

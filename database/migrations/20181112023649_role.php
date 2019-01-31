@@ -57,15 +57,12 @@ class Role extends AbstractMigration
      */
     private function seed()
     {
-        $role = [
-            'id'       => 1,
-            'name'     => '超级管理员',
-            'identity' => 'SuperAdministrator',
-            'status'   => '1',
-        ];
+        $sql = <<<'EOT'
+INSERT INTO `role`(`id`, `name`, `identity`, `status`, `create_at`) VALUES (1, '超级管理员', 'SuperAdministrator', 1, '2019-01-31 01:14:34');
+INSERT INTO `role`(`id`, `name`, `identity`, `status`, `create_at`) VALUES (2, '管理员', 'admin', 1, '2019-01-31 01:49:49');
+INSERT INTO `role`(`id`, `name`, `identity`, `status`, `create_at`) VALUES (3, '会员', 'vip', 1, '2019-01-31 01:49:56');
+EOT;
 
-        $table = $this->table('role');
-        $table->insert($role);
-        $table->saveData();
+        $this->execute($sql);
     }
 }

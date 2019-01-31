@@ -12,7 +12,6 @@ import axios from 'axios'
 import utils from './utils'
 import extend from './utils/extend'
 import './errorLog' // error log
-import './permission' // 权限
 import 'assets/css/global.css'
 
 Vue.use(iView)

@@ -94,13 +94,11 @@ class Auth extends BaseAuth
      */
     protected function validatePermission(IRequest $request): void
     {
-        if (!empty($_GET['debug'])) {
-            $pathInfo = str_replace('/:admin/', '', $request->getPathInfo());
-            $method = strtolower($request->getMethod());
+        $pathInfo = str_replace('/:admin/', '', $request->getPathInfo());
+        $method = strtolower($request->getMethod());
 
-            if (!Permission::handle($pathInfo, $method)) {
-                throw new HandleException('你没有权限执行操作');
-            }
+        if (!Permission::handle($pathInfo, $method)) {
+            throw new HandleException('你没有权限执行操作');
         }
     }
 
@@ -126,6 +124,10 @@ class Auth extends BaseAuth
     {
         return [
             '/:admin/login/logout',
+            '/:admin/user/update-info',
+            '/:admin/user/lock',
+            '/:admin/user/unlock',
+            '/:admin/user/change-password',
         ];
     }
 

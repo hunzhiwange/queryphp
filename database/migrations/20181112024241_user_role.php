@@ -54,13 +54,12 @@ class UserRole extends AbstractMigration
      */
     private function seed()
     {
-        $userRole = [
-            'user_id'       => 1,
-            'role_id'       => 1,
-        ];
+        $sql = <<<'EOT'
+INSERT INTO `user_role`(`user_id`, `role_id`, `create_at`) VALUES (1, 1, '2019-01-31 01:14:34');
+INSERT INTO `user_role`(`user_id`, `role_id`, `create_at`) VALUES (2, 3, '2019-01-31 01:51:47');
+INSERT INTO `user_role`(`user_id`, `role_id`, `create_at`) VALUES (3, 2, '2019-01-31 01:51:40');
+EOT;
 
-        $table = $this->table('user_role');
-        $table->insert($userRole);
-        $table->saveData();
+        $this->execute($sql);
     }
 }

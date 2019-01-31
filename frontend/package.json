@@ -15,7 +15,6 @@
     "iview": "3.1.5",
     "js-cookie": "^2.2.0",
     "moment": "^2.22.2",
-    "nprogress": "^0.2.0",
     "sprintf-js": "^1.1.1",
     "validator": "^10.9.0",
     "vue": "^2.5.17",
