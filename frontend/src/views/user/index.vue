@@ -71,7 +71,7 @@
                         }}</i-button>
                     </ButtonGroup>
                 </i-col>
-                <i-col span="8" offset="8" class-name="fr">
+                <i-col span="16" class-name="fr">
                     <Page class="fr" :total="total" show-sizer @on-change="changePage" @on-page-size-change="changePageSize"></Page>
                 </i-col>
             </Row>

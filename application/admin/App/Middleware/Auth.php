@@ -128,6 +128,7 @@ class Auth extends BaseAuth
             '/:admin/user/lock',
             '/:admin/user/unlock',
             '/:admin/user/change-password',
+            '/:admin/search',
         ];
     }
 
