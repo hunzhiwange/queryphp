@@ -1,4 +1,3 @@
-import logo from '@/assets/images/logo.png'
 import avator from '@/assets/images/avator.png'
 
 export default {

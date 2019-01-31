@@ -36,7 +36,7 @@
                 <transition-group name="taglist-moving-animation">
                     <Tag
                         type="dot"
-                        v-for="(item, index) in pageTagsLists"
+                        v-for="item in pageTagsLists"
                         ref="tagsPageOpened"
                         :key="item.name"
                         :name="item.name"

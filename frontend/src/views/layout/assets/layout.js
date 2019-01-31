@@ -132,7 +132,7 @@ export default {
         },
         changePasswordLogout() {
             let data = {}
-            this.apiPost('login/logout', data).then(res => {
+            this.apiPost('login/logout', data).then(() => {
                 this.$store.dispatch('logout')
                 utils.success(this.__('登出成功'))
                 setTimeout(() => {
@@ -171,11 +171,11 @@ export default {
                 utils.openNewPage(this, name, this.$route.params || {}, this.$route.query || {})
             }
         },
-        handleSubmenuChange(val) {},
-        beforePush(name) {
+        handleSubmenuChange() {},
+        beforePush() {
             return true
         },
-        fullscreenChange(isFullScreen) {},
+        fullscreenChange() {},
     },
     watch: {
         $route(to) {

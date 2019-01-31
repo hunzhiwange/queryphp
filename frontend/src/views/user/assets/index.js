@@ -137,7 +137,7 @@ export default {
             let selected = this.selectedData
 
             if (!selected.length) {
-                utils.warning(this.__('请勾选数据'))
+                this.utils.warning(this.__('请勾选数据'))
                 return
             }
 
@@ -201,9 +201,9 @@ export default {
                     this.loading = !this.loading
                     this.cancelMinForm(form)
 
-                    utils.success(res.message)
+                    this.utils.success(res.message)
                 },
-                res => {
+                () => {
                     this.loading = !this.loading
                 }
             )
@@ -226,9 +226,9 @@ export default {
                     this.loading = !this.loading
                     this.cancelMinForm(form)
 
-                    utils.success(res.message)
+                    this.utils.success(res.message)
                 },
-                res => {
+                () => {
                     this.loading = !this.loading
                 }
             )

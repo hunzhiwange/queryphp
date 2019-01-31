@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import iView from 'iview'
-import {routers, otherRouter, appRouter} from './router'
+import {routers} from './router'
 import {getToken, isLock} from '../utils/auth'
 
 Vue.use(Router)

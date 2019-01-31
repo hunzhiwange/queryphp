@@ -40,7 +40,7 @@ const apiMethods = {
 
                 this.$options.apiMultiData.push(data)
                 // 尝试写一个空的回调,保证每一个 API 都有回调
-                this.then(res => {}, true)
+                this.then(() => {}, true)
                 return this
             }
         },

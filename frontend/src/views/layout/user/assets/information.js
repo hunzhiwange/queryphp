@@ -49,7 +49,7 @@ export default {
                                 this.cancel()
                             }, 1000)
                         },
-                        res => {
+                        () => {
                             this.loading = !this.loading
                         }
                     )

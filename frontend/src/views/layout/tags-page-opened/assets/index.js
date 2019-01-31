@@ -25,7 +25,7 @@ export default {
         pageTagsList: Array,
         beforePush: {
             type: Function,
-            default: item => {
+            default: () => {
                 return true
             },
         },

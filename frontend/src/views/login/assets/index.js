@@ -97,7 +97,7 @@ export default {
                                 router.replace('/')
                             }, 1000)
                         },
-                        res => {
+                        () => {
                             this.loading = !this.loading
                         }
                     )

@@ -66,7 +66,6 @@ export default {
     },
     methods: {
         renderContent(h, {root, node, data}) {
-            const status = data.status == 'enable'
             return (
                 <span class="tree-item" style="display: inline-block; width: 100%;">
                     <span

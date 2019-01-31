@@ -11,7 +11,7 @@ export default {
     },
     methods: {
         lockScreen() {
-            this.apiPost('user/lock').then(res => {
+            this.apiPost('user/lock').then(() => {
                 let lockScreenBack = document.getElementById('lock_screen_back')
                 lockScreenBack.style.transition = 'all 3s'
                 lockScreenBack.style.zIndex = 10000
