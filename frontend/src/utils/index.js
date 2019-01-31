@@ -536,6 +536,10 @@ util.permission = function(resource, method) {
         Object.assign(permissionData, temp ? JSON.parse(temp) : {static: [], dynamic: []})
     }
 
+    if (!permissionData.static) {
+        return false
+    }
+
     // 超级管理员
     if (permissionData.static.includes('*')) {
         return true
