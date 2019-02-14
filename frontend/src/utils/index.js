@@ -555,7 +555,12 @@ util.permission = function(resource, method) {
         return true
     }
 
-    permissionData.dynamic.forEach(p => {
+    // 动态类型
+    let p = ''
+
+    for (let i = 0; i < permissionData.dynamic.length; i++) {
+        p = permissionData.dynamic[i]
+
         // 无请求类型
         if (minimatch(resource, util.pregQuote(p))) {
             return true
@@ -565,7 +570,7 @@ util.permission = function(resource, method) {
         if (method && minimatch(method + ':' + resource, util.pregQuote(p))) {
             return true
         }
-    })
+    }
 
     return false
 }
