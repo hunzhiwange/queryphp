@@ -14,7 +14,7 @@
                     </i-col>
                     <i-col span="6">
                         <i-button type="primary" icon="ios-search" @click.native.prevent="search()" class="m-r-5">{{ __('搜索') }}</i-button>
-                        <i-button icon="md-refresh" @click.native.prevent="reset()" class="m-r-5">{{ __('重置') }}</i-button>
+                        <i-button type="text" icon="md-refresh" @click.native.prevent="reset()" class="m-r-5">{{ __('重置') }}</i-button>
                         <a @click="toggleShow()" style="display:none;">
                             {{ searchShow ? __('收起') : __('展开') }}
                             <Icon :type="searchShow ? __('chevron-up') : __('chevron-down')"></Icon>
