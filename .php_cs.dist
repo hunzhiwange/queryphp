@@ -84,6 +84,7 @@ return PhpCsFixer\Config::create()
         'yoda_style'                            => true,
         'binary_operator_spaces'                => ['align_double_arrow' => true], // 自动对齐数组
         'increment_style'                       => ['style' => 'post'], // 自增自减操作符位置
+        'native_function_invocation'            => false, // 在函数调用之前添加前导 “\” 以加速解析。
     ])
     ->setRiskyAllowed(true)
     ->setFinder(
