@@ -226,7 +226,7 @@ export default {
 
                     utils.success(res.message)
                 },
-                res => {
+                () => {
                     this.loading = !this.loading
                 }
             )
@@ -251,7 +251,7 @@ export default {
 
                     utils.success(res.message)
                 },
-                res => {
+                () => {
                     this.loading = !this.loading
                 }
             )
