@@ -62,10 +62,6 @@ const user = {
             localStorage.removeItem('authList')
             localStorage.removeItem('userInfo')
         },
-        setToken({commit}, token) {
-            commit('setToken', token)
-            setToken(token)
-        },
         setMenus({commit}, menus) {
             commit('setMenus', menus)
             localStorage.setItem('menus', JSON.stringify(menus))

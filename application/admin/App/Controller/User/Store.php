@@ -55,6 +55,7 @@ class Store
             'identity',
             'status',
             'userRole',
+            'password',
         ]);
     }
 }

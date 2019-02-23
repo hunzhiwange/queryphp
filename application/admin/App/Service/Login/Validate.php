@@ -121,6 +121,7 @@ class Validate
             'userInfo'  => $userInfo,
             'menusList' => [],
             'authList'  => $permission,
+            'keepLogin' => 1 === (int) $input['remember'],
         ];
     }
 

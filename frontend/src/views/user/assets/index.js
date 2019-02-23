@@ -7,6 +7,7 @@ const resetForm = {
     name: '',
     identity: '',
     status: '1',
+    password: '',
 }
 
 export default {
@@ -14,6 +15,20 @@ export default {
         search,
     },
     data() {
+        var validatePassword = (rule, value, callback) => {
+            if (this.formItem.id) {
+                return callback()
+            }
+
+            setTimeout(() => {
+                if (!value) {
+                    callback(new Error(this.__('请输入用户密码')))
+                } else {
+                    return callback()
+                }
+            }, 50)
+        }
+
         return {
             columns: [
                 {
@@ -85,6 +100,14 @@ export default {
                     {
                         required: true,
                         message: this.__('请输入用户标识符'),
+                    },
+                    {
+                        validator: validateAlphaDash,
+                    },
+                ],
+                password: [
+                    {
+                        validator: validatePassword,
                     },
                     {
                         validator: validateAlphaDash,
@@ -203,7 +226,7 @@ export default {
 
                     utils.success(res.message)
                 },
-                () => {
+                res => {
                     this.loading = !this.loading
                 }
             )
@@ -228,7 +251,7 @@ export default {
 
                     utils.success(res.message)
                 },
-                () => {
+                res => {
                     this.loading = !this.loading
                 }
             )

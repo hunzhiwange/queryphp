@@ -14,10 +14,8 @@
                                     <FormItem :label="__('标识符')" prop="identity">
                                         <i-input v-model="formItem.identity" placeholder=""></i-input>
                                     </FormItem>
-                                    <FormItem :label="__('状态')">
-                                        <i-switch v-model="formItem.status" size="large" true-value="1" false-value="0">
-                                            <span slot="open">{{ __('启用') }}</span> <span slot="close">{{ __('禁用') }}</span>
-                                        </i-switch>
+                                    <FormItem :label="__('密码')" prop="password">
+                                        <i-input v-model="formItem.password" :placeholder="formItem.id ? '不修改密码请留空' : '密码不能为空'"></i-input>
                                     </FormItem>
                                 </i-col>
                                 <i-col span="12">
@@ -25,6 +23,11 @@
                                         <i-select v-model="userRole" multiple style="width:400px">
                                             <i-option v-for="item in roles" :value="item.id" :key="item.id">{{ item.name }}</i-option>
                                         </i-select>
+                                    </FormItem>
+                                    <FormItem :label="__('状态')">
+                                        <i-switch v-model="formItem.status" size="large" true-value="1" false-value="0">
+                                            <span slot="open">{{ __('启用') }}</span> <span slot="close">{{ __('禁用') }}</span>
+                                        </i-switch>
                                     </FormItem>
                                 </i-col>
                             </Row>

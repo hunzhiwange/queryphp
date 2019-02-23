@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User;
 
 use Common\Domain\Entity\User;
+use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\IUnitOfWork;
 
 /**
@@ -38,13 +39,22 @@ class UserRoleStore
     protected $w;
 
     /**
+     * Hash 组件.
+     *
+     * @var \Leevel\Auth\Hash
+     */
+    protected $hash;
+
+    /**
      * 构造函数.
      *
      * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @param \Leevel\Auth\Hash                $hash
      */
-    public function __construct(IUnitOfWork $w)
+    public function __construct(IUnitOfWork $w, Hash $hash)
     {
         $this->w = $w;
+        $this->hash = $hash;
     }
 
     /**
@@ -106,6 +116,18 @@ class UserRoleStore
     }
 
     /**
+     * 创建密码
+     *
+     * @param string $password
+     *
+     * @return string
+     */
+    protected function createPassword(string $password): string
+    {
+        return $this->hash->password($password);
+    }
+
+    /**
      * 组装实体数据.
      *
      * @param array $input
@@ -118,6 +140,7 @@ class UserRoleStore
             'name'       => trim($input['name']),
             'identity'   => trim($input['identity']),
             'status'     => $input['status'],
+            'password'   => $this->createPassword(trim($input['password'])),
         ];
     }
 }

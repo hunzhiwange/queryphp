@@ -21,7 +21,7 @@ use Leevel\Database\Ddd\Entity;
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2018.11.20
+ * @since 2019.01.31
  *
  * @version 1.0
  */
@@ -37,7 +37,7 @@ class UserRole extends Entity
     /**
      * primary key.
      *
-     * @var string
+     * @var array
      */
     const ID = ['user_id', 'role_id'];
 
@@ -54,17 +54,14 @@ class UserRole extends Entity
      * @var array
      */
     const STRUCT = [
-        'user_id'   => [],
-        'role_id'   => [],
+        'user_id' => [
+            'readonly' => true,
+        ],
+        'role_id' => [
+            'readonly' => true,
+        ],
         'create_at' => [],
     ];
-
-    /**
-     * id.
-     *
-     * @var int
-     */
-    //private $id;
 
     /**
      * 用户 ID.

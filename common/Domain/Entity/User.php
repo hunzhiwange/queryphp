@@ -21,7 +21,7 @@ use Leevel\Database\Ddd\Entity;
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2018.11.08
+ * @since 2019.01.31
  *
  * @version 1.0
  */
@@ -59,26 +59,11 @@ class User extends Entity
         ],
         'name'      => [],
         'identity'  => [],
-        'password'  => [
-            'show_prop_black' => true,
-        ],
+        'password'  => [],
         'email'     => [],
         'mobile'    => [],
-        'status'    => [
-            self::ENUM => [
-                '0' => '禁用',
-                '1' => '启用',
-            ],
-        ],
+        'status'    => [],
         'create_at' => [],
-        'role'      => [
-            self::MANY_MANY     => Role::class,
-            'middle_entity'     => UserRole::class,
-            'source_key'        => 'id',
-            'target_key'        => 'id',
-            'middle_source_key' => 'user_id',
-            'middle_target_key' => 'role_id',
-        ],
     ];
 
     /**
@@ -110,14 +95,14 @@ class User extends Entity
     private $password;
 
     /**
-     * 电子邮件.
+     * Email.
      *
      * @var string
      */
     private $email;
 
     /**
-     * 手机号.
+     * 手机.
      *
      * @var string
      */
@@ -136,13 +121,6 @@ class User extends Entity
      * @var string
      */
     private $createAt;
-
-    /**
-     * 角色.
-     *
-     * @var string
-     */
-    private $role;
 
     /**
      * setter.
