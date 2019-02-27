@@ -43,19 +43,21 @@ then
     for FILE in $SFILES
     do
 
-        if [[ ${FILE} =~ 'vendor/composer' ]]
-        then
-            echo "Ignore file of composer"
-            continue
-        fi
+        IGNORE_PATH=(
+            'vendor'
+        )
 
-        if [[ ${FILE} =~ 'vendor/autoloadLeevel.php' ]]
-        then
-            echo "Ignore file of autoloadLeevel"
-            continue
-        fi
+        for IGNORE_ITEM in ${IGNORE_PATH[@]}
+        do
+            if [[ ${FILE} =~ ${IGNORE_ITEM} ]]
+            then
+                echo "Ignore file of "${IGNORE_ITEM}
+                continue 2
+            fi 
+        done
 
-        result=`~/.composer/vendor/bin/php-cs-fixer fix $FILE --config=.php_cs.dist`
+        #result=`~/.composer/vendor/bin/php-cs-fixer fix $FILE --config=.php_cs.dist`
+        result=`php-cs-fixer fix $FILE --config=.php_cs.dist
 
         if [ "$result" != "" ]
         then
