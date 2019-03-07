@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Home;
 
-use Leevel\Mvc\Controller;
+use Leevel\Router\Facade\View;
 
 /**
  * 首页.
@@ -25,7 +25,7 @@ use Leevel\Mvc\Controller;
  *
  * @version 1.0
  */
-class Index extends Controller
+class Index
 {
     /**
      * 默认方法.
@@ -34,6 +34,6 @@ class Index extends Controller
      */
     public function handle(): string
     {
-        return $this->display('home');
+        return View::display('home');
     }
 }
