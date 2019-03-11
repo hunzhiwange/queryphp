@@ -28,16 +28,5 @@ if (false === is_file($vendorDir.'/autoload.php')) {
         php composer.phar install');
 }
 
-include $vendorDir.'/autoload.php';
-
-spl_autoload_register(function ($class) {
-    if (0 === stripos($class, 'Tests\\')) {
-        $path = __DIR__.'/'.strtr(substr($class, 5), '\\', '/').'.php';
-
-        if (true === is_file($path) && true === is_readable($path)) {
-            require_once $path;
-
-            return true;
-        }
-    }
-});
+$composer = include $vendorDir.'/autoload.php';
+$composer->addPsr4('Tests\\', __DIR__);
