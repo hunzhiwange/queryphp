@@ -12,7 +12,7 @@
 
 PROJECT=$(git rev-parse --show-toplevel)
 cd $PROJECT
-SFILES=$(git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\.php)
+SFILES=$(git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\.php$)
 
 # Determine if a file list is passed
 if [ "$#" -ne 0 ]
