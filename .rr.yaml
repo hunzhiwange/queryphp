@@ -1,0 +1,6 @@
+http:
+  address: 0.0.0.0:9601
+  workers:
+    command: "php leevel rrserver"
+    pool:
+      numWorkers: 4
