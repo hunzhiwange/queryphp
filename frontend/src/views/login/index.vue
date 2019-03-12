@@ -5,7 +5,7 @@
                 <div class="logo pull-left">
                     <img :src="img_logo" alt="DHB168" />
                 </div>
-                <div class="description">{{ __('工具箱') }}</div>
+                <div class="description">{{ __('用户登陆') }}</div>
             </div>
         </div>
         <div class="login-content">
