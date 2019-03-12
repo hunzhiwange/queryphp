@@ -14,14 +14,10 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Role;
 
-use Common\Domain\Entity\Role;
-use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\HandleException;
-use Leevel\Validate\Facade\Validate;
-use Leevel\Validate\UniqueRule;
+use Common\Domain\Service\User\Role\Update as Service;
 
 /**
- * 角色更新.
+ * 角色更新状态.
  *
  * @author Name Your <your@mail.com>
  *
@@ -32,27 +28,20 @@ use Leevel\Validate\UniqueRule;
 class Update
 {
     /**
-     * 事务工作单元.
+     * 角色更新服务.
      *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
+     * @var \Common\Domain\Service\User\Role\Update
      */
-    protected $w;
-
-    /**
-     * 输入数据.
-     *
-     * @var array
-     */
-    protected $input;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @param \Common\Domain\Service\User\Role\Update $service
      */
-    public function __construct(IUnitOfWork $w)
+    public function __construct(Service $service)
     {
-        $this->w = $w;
+        $this->service = $service;
     }
 
     /**
@@ -64,96 +53,6 @@ class Update
      */
     public function handle(array $input): array
     {
-        $this->input = $input;
-
-        $this->validateArgs();
-
-        return $this->save($input)->toArray();
-    }
-
-    /**
-     * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\Role
-     */
-    protected function save(array $input): Role
-    {
-        $this->w->persist($entity = $this->entity($input))->
-
-        flush();
-
-        $entity->refresh();
-
-        return $entity;
-    }
-
-    /**
-     * 验证参数.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\Role
-     */
-    protected function entity(array $input): Role
-    {
-        $entity = $this->find((int) $input['id']);
-
-        $entity->withProps($this->data($input));
-
-        return $entity;
-    }
-
-    /**
-     * 查找实体.
-     *
-     * @param int $id
-     *
-     * @return \Common\Domain\Entity\Role
-     */
-    protected function find(int $id): Role
-    {
-        return $this->w->repository(Role::class)->findOrFail($id);
-    }
-
-    /**
-     * 组装实体数据.
-     *
-     * @param array $input
-     *
-     * @return array
-     */
-    protected function data(array $input): array
-    {
-        return [
-            'name'       => trim($input['name']),
-            'identity'   => trim($input['identity']),
-            'status'     => $input['status'],
-        ];
-    }
-
-    /**
-     * 校验基本参数.
-     */
-    protected function validateArgs()
-    {
-        $validator = Validate::make(
-            $this->input,
-            [
-                'id'            => 'required',
-                'name'          => 'required|chinese_alpha_num|max_length:50',
-                'identity'      => 'required|alpha_dash|'.UniqueRule::rule(Role::class, null, $this->input['id']),
-            ],
-            [
-                'id'            => 'ID',
-                'name'          => __('名字'),
-                'identity'      => __('标识符'),
-            ]
-        );
-
-        if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
-        }
+        return $this->service->handle($input);
     }
 }

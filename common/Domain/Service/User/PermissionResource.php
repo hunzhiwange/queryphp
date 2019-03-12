@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Common\Domain\Service\User;
 
-use Common\Domain\Entity\Permission;
-use Common\Domain\Entity\PermissionResource as EntityPermissionResource;
+use Common\Domain\Entity\User\Permission;
+use Common\Domain\Entity\User\PermissionResource as EntityPermissionResource;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
 
@@ -66,7 +66,7 @@ class PermissionResource
      *
      * @param array $input
      *
-     * @return \Common\Domain\Entity\Permission
+     * @return \Common\Domain\Entity\User\Permission
      */
     protected function save(array $input): Permission
     {
@@ -88,10 +88,11 @@ class PermissionResource
      */
     protected function findResources(int $permissionId): Collection
     {
-        return $this->w->repository(EntityPermissionResource::class)->
-        findAll(function ($select) use ($permissionId) {
-            $select->where('permission_id', $permissionId);
-        });
+        return $this->w
+            ->repository(EntityPermissionResource::class)
+            ->findAll(function ($select) use ($permissionId) {
+                $select->where('permission_id', $permissionId);
+            });
     }
 
     /**
@@ -99,7 +100,7 @@ class PermissionResource
      *
      * @param array $input
      *
-     * @return \Common\Domain\Entity\Permission
+     * @return \Common\Domain\Entity\User\Permission
      */
     protected function entity(array $input): Permission
     {
@@ -111,7 +112,7 @@ class PermissionResource
      *
      * @param int $id
      *
-     * @return \Common\Domain\Entity\Permission
+     * @return \Common\Domain\Entity\User\Permission
      */
     protected function find(int $id): Permission
     {

@@ -32,16 +32,16 @@ class Permission
      *
      * @var \Common\Domain\Service\User\RolePermission
      */
-    protected $rolePermission;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Common\Domain\Service\User\RolePermission $rolePermission
+     * @param \Common\Domain\Service\User\RolePermission $service
      */
-    public function __construct(RolePermission $rolePermission)
+    public function __construct(RolePermission $service)
     {
-        $this->rolePermission = $rolePermission;
+        $this->service = $service;
     }
 
     /**
@@ -53,6 +53,6 @@ class Permission
      */
     public function handle(array $input): array
     {
-        return $this->rolePermission->handle($input);
+        return $this->service->handle($input);
     }
 }

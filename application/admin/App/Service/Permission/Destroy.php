@@ -14,12 +14,10 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Permission;
 
-use Common\Domain\Entity\Permission;
-use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\HandleException;
+use Common\Domain\Service\User\Permission\Destroy as Service;
 
 /**
- * 权限删除.
+ * 权限删除状态.
  *
  * @author Name Your <your@mail.com>
  *
@@ -30,20 +28,20 @@ use Leevel\Kernel\HandleException;
 class Destroy
 {
     /**
-     * 事务工作单元.
+     * 权限删除服务.
      *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
+     * @var \Common\Domain\Service\User\Permission\Destroy
      */
-    protected $w;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @param \Common\Domain\Service\User\Permission\Destroy $service
      */
-    public function __construct(IUnitOfWork $w)
+    public function __construct(Service $service)
     {
-        $this->w = $w;
+        $this->service = $service;
     }
 
     /**
@@ -55,46 +53,6 @@ class Destroy
      */
     public function handle(array $input): array
     {
-        $this->remove($this->find($input['id']));
-
-        return [];
-    }
-
-    /**
-     * 删除实体.
-     *
-     * @param \Common\Domain\Entity\Permission $entity
-     */
-    protected function remove(Permission $entity)
-    {
-        $this->checkChildren((int) $entity->id);
-
-        $this->w->persist($entity)->
-        remove($entity)->
-        flush();
-    }
-
-    /**
-     * 查找实体.
-     *
-     * @param int $intId
-     *
-     * @return \Common\Domain\Entity\Permission
-     */
-    protected function find(int $id): Permission
-    {
-        return $this->w->repository(Permission::class)->findOrFail($id);
-    }
-
-    /**
-     * 判断是否存在子项.
-     *
-     * @param int $id
-     */
-    protected function checkChildren(int $id): void
-    {
-        if ($this->w->repository(Permission::class)->hasChildren($id)) {
-            throw new HandleException(__('权限包含子项，请先删除子项.'));
-        }
+        return $this->service->handle($input);
     }
 }

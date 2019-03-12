@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Common\Domain\Service\User;
 
-use Common\Domain\Entity\Role;
-use Common\Domain\Entity\RolePermission as EntityRolePermission;
+use Common\Domain\Entity\User\Role;
+use Common\Domain\Entity\User\RolePermission as EntityRolePermission;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
 
@@ -66,7 +66,7 @@ class RolePermission
      *
      * @param array $input
      *
-     * @return \Common\Domain\Entity\Role
+     * @return \Common\Domain\Entity\User\Role
      */
     protected function save(array $input): Role
     {
@@ -88,10 +88,11 @@ class RolePermission
      */
     protected function findPermissions(int $roleId): Collection
     {
-        return $this->w->repository(EntityRolePermission::class)->
-        findAll(function ($select) use ($roleId) {
-            $select->where('role_id', $roleId);
-        });
+        return $this->w
+            ->repository(EntityRolePermission::class)
+            ->findAll(function ($select) use ($roleId) {
+                $select->where('role_id', $roleId);
+            });
     }
 
     /**
@@ -99,7 +100,7 @@ class RolePermission
      *
      * @param array $input
      *
-     * @return \Common\Domain\Entity\Role
+     * @return \Common\Domain\Entity\User\Role
      */
     protected function entity(array $input): Role
     {
@@ -111,7 +112,7 @@ class RolePermission
      *
      * @param int $id
      *
-     * @return \Common\Domain\Entity\Role
+     * @return \Common\Domain\Entity\User\Role
      */
     protected function find(int $id): Role
     {

@@ -12,9 +12,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Service\User;
+namespace Common\Infra\Repository\User\User;
 
-use Common\Domain\Entity\User;
+use Common\Domain\Entity\User\User;
 
 /**
  * 准备用户基础数据.
@@ -30,7 +30,7 @@ class PrepareForUser
     /**
      * 响应方法.
      *
-     * @param \Common\Domain\Entity\User $user
+     * @param \Common\Domain\Entity\User\User $user
      *
      * @return array
      */
@@ -40,9 +40,28 @@ class PrepareForUser
     }
 
     /**
+     * 批量处理.
+     * 支持 array|\Leevel\Collection\Collection 等支持循环遍历的数据.
+     *
+     * @param mixed $data
+     *
+     * @return array
+     */
+    public function handleMulti($data): array
+    {
+        $result = [];
+
+        foreach ($data as $v) {
+            $result[] = $this->handle($v);
+        }
+
+        return $result;
+    }
+
+    /**
      * 准备用户数据.
      *
-     * @param \Common\Domain\Entity\User $user
+     * @param \Common\Domain\Entity\User\User $user
      *
      * @return array
      */

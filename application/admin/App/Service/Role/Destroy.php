@@ -14,11 +14,10 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Role;
 
-use Common\Domain\Entity\Role;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Common\Domain\Service\User\Role\Destroy as Service;
 
 /**
- * 角色删除.
+ * 角色删除状态.
  *
  * @author Name Your <your@mail.com>
  *
@@ -29,20 +28,20 @@ use Leevel\Database\Ddd\IUnitOfWork;
 class Destroy
 {
     /**
-     * 事务工作单元.
+     * 角色删除服务.
      *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
+     * @var \Common\Domain\Service\User\Role\Destroy
      */
-    protected $w;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @param \Common\Domain\Service\User\Role\Destroy $service
      */
-    public function __construct(IUnitOfWork $w)
+    public function __construct(Service $service)
     {
-        $this->w = $w;
+        $this->service = $service;
     }
 
     /**
@@ -54,32 +53,6 @@ class Destroy
      */
     public function handle(array $input): array
     {
-        $this->remove($this->find($input['id']));
-
-        return [];
-    }
-
-    /**
-     * 删除实体.
-     *
-     * @param \Common\Domain\Entity\Role $entity
-     */
-    protected function remove(Role $entity)
-    {
-        $this->w->persist($entity)->
-        remove($entity)->
-        flush();
-    }
-
-    /**
-     * 查找实体.
-     *
-     * @param int $intId
-     *
-     * @return \Common\Domain\Entity\Role
-     */
-    protected function find(int $id): Role
-    {
-        return $this->w->repository(Role::class)->findOrFail($id);
+        return $this->service->handle($input);
     }
 }

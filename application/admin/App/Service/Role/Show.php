@@ -14,35 +14,34 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Role;
 
-use Common\Domain\Entity\Role;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Common\Infra\Repository\User\Role\Show as Repository;
 
 /**
  * 角色查询.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2017.10.23
+ * @since 2017.11.23
  *
  * @version 1.0
  */
 class Show
 {
     /**
-     * 事务工作单元.
+     * 角色查询服务.
      *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
+     * @var \Common\Infra\Repository\User\Role\Show
      */
-    protected $w;
+    protected $repository;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @param \Common\Infra\Repository\User\Role\Show $repository
      */
-    public function __construct(IUnitOfWork $w)
+    public function __construct(Repository $repository)
     {
-        $this->w = $w;
+        $this->repository = $repository;
     }
 
     /**
@@ -54,23 +53,6 @@ class Show
      */
     public function handle(array $input): array
     {
-        $entity = $this->find($input['id']);
-
-        $result = $entity->toArray();
-        $result['permission'] = $entity->permission->toArray();
-
-        return $result;
-    }
-
-    /**
-     * 查找实体.
-     *
-     * @param int $intId
-     *
-     * @return \Common\Domain\Entity\Role
-     */
-    protected function find(int $id): Role
-    {
-        return $this->w->repository(Role::class)->findOrFail($id);
+        return $this->repository->handle($input);
     }
 }

@@ -14,13 +14,10 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Resource;
 
-use Common\Domain\Entity\Resource;
-use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\HandleException;
-use Leevel\Validate\Facade\Validate;
+use Common\Domain\Service\User\Resource\Destroy as Service;
 
 /**
- * 资源删除.
+ * 资源删除状态.
  *
  * @author Name Your <your@mail.com>
  *
@@ -31,27 +28,20 @@ use Leevel\Validate\Facade\Validate;
 class Destroy
 {
     /**
-     * 事务工作单元.
+     * 资源删除服务.
      *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
+     * @var \Common\Domain\Service\User\Resource\Destroy
      */
-    protected $w;
-
-    /**
-     * 输入数据.
-     *
-     * @var array
-     */
-    protected $input;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @param \Common\Domain\Service\User\Resource\Destroy $service
      */
-    public function __construct(IUnitOfWork $w)
+    public function __construct(Service $service)
     {
-        $this->w = $w;
+        $this->service = $service;
     }
 
     /**
@@ -63,56 +53,6 @@ class Destroy
      */
     public function handle(array $input): array
     {
-        $this->input = $input;
-
-        $this->validateArgs();
-
-        $this->remove($this->find($input['id']));
-
-        return [];
-    }
-
-    /**
-     * 删除实体.
-     *
-     * @param \Common\Domain\Entity\Resource $entity
-     */
-    protected function remove(Resource $entity)
-    {
-        $this->w->persist($entity)->
-        remove($entity)->
-        flush();
-    }
-
-    /**
-     * 查找实体.
-     *
-     * @param int $intId
-     *
-     * @return \Common\Domain\Entity\Resource
-     */
-    protected function find(int $id): Resource
-    {
-        return $this->w->repository(Resource::class)->findOrFail($id);
-    }
-
-    /**
-     * 校验基本参数.
-     */
-    protected function validateArgs()
-    {
-        $validator = Validate::make(
-            $this->input,
-            [
-                'id'          => 'required',
-            ],
-            [
-                'id'          => 'ID',
-            ]
-        );
-
-        if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
-        }
+        return $this->service->handle($input);
     }
 }

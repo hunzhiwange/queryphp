@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Infra\Repository;
+namespace Common\Infra\Repository\User;
 
 use Leevel\Database\Ddd\Repository;
 use Leevel\Database\Ddd\Select;

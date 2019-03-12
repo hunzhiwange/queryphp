@@ -14,11 +14,10 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\User;
 
-use Admin\Infra\Permission as PermissionCache;
-use Common\Domain\Service\User\UserPermission;
+use Common\Infra\Repository\User\User\Permission as Repository;
 
 /**
- * 用户权限数据.
+ * 用户权限数据服务.
  *
  * @author Name Your <your@mail.com>
  *
@@ -29,29 +28,20 @@ use Common\Domain\Service\User\UserPermission;
 class Permission
 {
     /**
-     * 权限缓存.
+     * 用户权限数据服务.
      *
-     * @var \Admin\Infra\Permission
+     * @var \Common\Infra\Repository\User\User\Permission
      */
-    protected $permissionCache;
-
-    /**
-     * 获取用户权限.
-     *
-     * @var \Common\Domain\Service\User\UserPermission
-     */
-    protected $permission;
+    protected $repository;
 
     /**
      * 构造函数.
      *
-     * @param \Admin\Infra\Permission                    $permissionCache
-     * @param \Common\Domain\Service\User\UserPermission $permission
+     * @param \Common\Infra\Repository\User\User\Permission $repository
      */
-    public function __construct(PermissionCache $permissionCache, UserPermission $permission)
+    public function __construct(Repository $repository)
     {
-        $this->permissionCache = $permissionCache;
-        $this->permission = $permission;
+        $this->repository = $repository;
     }
 
     /**
@@ -63,28 +53,6 @@ class Permission
      */
     public function handle(array $input): array
     {
-        // 刷线缓存
-        if ($input['refresh']) {
-            return $this->getPermission($input['token'], (int) $input['id']);
-        }
-
-        return $this->permissionCache->get($input['token']);
-    }
-
-    /**
-     * 获取权限.
-     *
-     * @param string $token
-     * @param int    $userId
-     *
-     * @return array
-     */
-    protected function getPermission(string $token, int $userId): array
-    {
-        $permission = $this->permission->handle(['user_id' => $userId]);
-
-        $this->permissionCache->set($token, $permission);
-
-        return $permission;
+        return $this->repository->handle($input);
     }
 }

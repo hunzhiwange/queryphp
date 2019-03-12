@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Domain\Service\User;
 
-use Common\Domain\Entity\User;
+use Common\Domain\Entity\User\User;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\IUnitOfWork;
 
@@ -74,7 +74,7 @@ class UserRoleStore
      *
      * @param array $input
      *
-     * @return \Common\Domain\Entity\User
+     * @return \Common\Domain\Entity\User\User
      */
     protected function save(array $input): User
     {
@@ -108,7 +108,7 @@ class UserRoleStore
      *
      * @param array $input
      *
-     * @return \Common\Domain\Entity\User
+     * @return \Common\Domain\Entity\User\User
      */
     protected function entity(array $input): User
     {

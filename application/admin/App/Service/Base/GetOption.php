@@ -14,35 +14,34 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Base;
 
-use Common\Domain\Entity\Option as Options;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Common\Infra\Repository\Base\GetOption as Repository;
 
 /**
- * 获取配置.
+ * 获取配置服务.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2018.12.03
+ * @since 2017.11.23
  *
  * @version 1.0
  */
 class GetOption
 {
     /**
-     * 事务工作单元.
+     * 获取配置服务.
      *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
+     * @var \Common\Infra\Repository\Base\GetOption
      */
-    protected $w;
+    protected $repository;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @param \Common\Infra\Repository\Base\GetOption $repository
      */
-    public function __construct(IUnitOfWork $w)
+    public function __construct(Repository $repository)
     {
-        $this->w = $w;
+        $this->repository = $repository;
     }
 
     /**
@@ -52,10 +51,6 @@ class GetOption
      */
     public function handle(): array
     {
-        $options = $this->w->repository(Options::class)->findAll();
-
-        $result = $options->toArray();
-
-        return $result ? array_column($result, 'value', 'name') : [];
+        return $this->repository->handle();
     }
 }

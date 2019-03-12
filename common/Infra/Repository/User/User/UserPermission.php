@@ -12,9 +12,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Service\User;
+namespace Common\Infra\Repository\User\User;
 
-use Common\Domain\Entity\User;
+use Common\Domain\Entity\User\User;
 use Leevel\Database\Ddd\IUnitOfWork;
 
 /**
@@ -88,7 +88,7 @@ class UserPermission
     /**
      * 查询权限数据.
      *
-     * @param \Common\Domain\Entity\User $user
+     * @param \Common\Domain\Entity\User\User $user
      *
      * @return array
      */
@@ -124,7 +124,7 @@ class UserPermission
      *
      * @param int $id
      *
-     * @return \Common\Domain\Entity\User
+     * @return \Common\Domain\Entity\User\User
      */
     protected function findUser(int $id): User
     {

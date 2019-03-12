@@ -14,35 +14,34 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Base;
 
-use Common\Domain\Entity\Option as Options;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Common\Domain\Service\Base\Option as Service;
 
 /**
- * 配置更新.
+ * 配置更新服务.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2018.12.03
+ * @since 2017.10.23
  *
  * @version 1.0
  */
 class Option
 {
     /**
-     * 事务工作单元.
+     * 配置更新服务.
      *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
+     * @var \Common\Domain\Service\Base\Option
      */
-    protected $w;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @param \Common\Domain\Service\Base\Option $service
      */
-    public function __construct(IUnitOfWork $w)
+    public function __construct(Service $service)
     {
-        $this->w = $w;
+        $this->service = $service;
     }
 
     /**
@@ -54,35 +53,6 @@ class Option
      */
     public function handle(array $input): array
     {
-        $this->save($input);
-
-        return [];
-    }
-
-    /**
-     * 保存.
-     *
-     * @param array $input
-     */
-    protected function save(array $input): void
-    {
-        foreach ($input as $k => $v) {
-            $this->w->replace($this->entity($k, $v));
-        }
-
-        $this->w->flush();
-    }
-
-    /**
-     * 组成实体.
-     *
-     * @param string $name
-     * @param string $value
-     *
-     * @return \Common\Domain\Entity\Option
-     */
-    protected function entity(string $name, string $value): Options
-    {
-        return new Options(['name' => $name, 'value' => $value]);
+        return $this->service->handle($input);
     }
 }

@@ -14,100 +14,45 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Attachment;
 
-use Leevel\Filesystem\Facade\Filesystem;
-use Leevel\Http\UploadedFile;
-use Leevel\Kernel\HandleException;
-use Leevel\Option\Facade\Option;
-use Leevel\Support\Str;
+use Common\Domain\Service\Attachment\Upload as Service;
 
 /**
- * 文件上传.
+ * 上传服务.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2019.01.11
+ * @since 2017.10.23
  *
  * @version 1.0
  */
 class Upload
 {
     /**
+     * 上传服务.
+     *
+     * @var \Common\Domain\Service\Attachment\Upload
+     */
+    protected $service;
+
+    /**
+     * 构造函数.
+     *
+     * @param \Common\Domain\Service\Attachment\Upload $service
+     */
+    public function __construct(Service $service)
+    {
+        $this->service = $service;
+    }
+
+    /**
      * 响应方法.
      *
      * @param array $input
      *
-     * @return string
+     * @return array
      */
-    public function handle(array $input): string
+    public function handle(array $input): array
     {
-        $this->closeDebug();
-
-        return $this->save($input['file']);
-    }
-
-    /**
-     * 关闭调试.
-     */
-    protected function closeDebug(): void
-    {
-        Option::set('debug', false);
-    }
-
-    /**
-     * 保存文件.
-     *
-     * @param \Leevel\Http\UploadedFile $file
-     *
-     * @return string
-     */
-    protected function save(UploadedFile $file): string
-    {
-        if (!$file->isValid()) {
-            throw new HandleException($file->getErrorMessage());
-        }
-
-        $savePath = $this->getSavePath($file);
-
-        $this->saveFile($file->getPathname(), $savePath);
-
-        return $this->savePathForUrl($savePath);
-    }
-
-    /**
-     * 获取文件保存路径.
-     *
-     * @param \Leevel\Http\UploadedFile $file
-     *
-     * @return string
-     */
-    protected function getSavePath(UploadedFile $file): string
-    {
-        return date('Y-m-d').'/'.date('H').'/'.
-            md5(uniqid().Str::randAlpha(32)).'.'.$file->getOriginalExtension();
-    }
-
-    /**
-     * 保存文件到服务器.
-     *
-     * @param string $sourcePath
-     * @param string $savePath
-     */
-    protected function saveFile(string $sourcePath, string $savePath): void
-    {
-        if (false === Filesystem::put($savePath, file_get_contents($sourcePath))) {
-            throw new HandleException(__('文件上传失败'));
-        }
-    }
-
-    /**
-     * 获取文件上传路径 URL.
-     *
-     * @param string $savePath
-     *
-     * @return string
-     */
-    protected function savePathForUrl(string $savePath): string
-    {
-        return Option::get('storage').'/'.$savePath;
+        return $this->service->handle($input);
     }
 }

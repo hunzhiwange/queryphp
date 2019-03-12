@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Common\Domain\Service\User;
 
-use Common\Domain\Entity\User;
-use Common\Domain\Entity\UserRole as EntityUserRole;
+use Common\Domain\Entity\User\User;
+use Common\Domain\Entity\User\UserRole as EntityUserRole;
 use Leevel\Auth\Hash;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
@@ -76,7 +76,7 @@ class UserRoleUpdate
      *
      * @param array $input
      *
-     * @return \Common\Domain\Entity\User
+     * @return \Common\Domain\Entity\User\User
      */
     protected function save(array $input): User
     {
@@ -100,10 +100,11 @@ class UserRoleUpdate
      */
     protected function findRoles(int $userId): Collection
     {
-        return $this->w->repository(EntityUserRole::class)->
-        findAll(function ($select) use ($userId) {
-            $select->where('user_id', $userId);
-        });
+        return $this->w
+            ->repository(EntityUserRole::class)
+            ->findAll(function ($select) use ($userId) {
+                $select->where('user_id', $userId);
+            });
     }
 
     /**
@@ -111,7 +112,7 @@ class UserRoleUpdate
      *
      * @param array $input
      *
-     * @return \Common\Domain\Entity\User
+     * @return \Common\Domain\Entity\User\User
      */
     protected function entity(array $input): User
     {
@@ -127,11 +128,13 @@ class UserRoleUpdate
      *
      * @param int $id
      *
-     * @return \Common\Domain\Entity\User
+     * @return \Common\Domain\Entity\User\User
      */
     protected function find(int $id): User
     {
-        return $this->w->repository(User::class)->findOrFail($id);
+        return $this->w
+            ->repository(User::class)
+            ->findOrFail($id);
     }
 
     /**

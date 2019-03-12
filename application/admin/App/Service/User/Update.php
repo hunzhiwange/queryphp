@@ -32,16 +32,16 @@ class Update
      *
      * @var \Common\Domain\Service\User\UserRoleUpdate
      */
-    protected $userRole;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Common\Domain\Service\User\UserRoleUpdate $userRolew
+     * @param \Common\Domain\Service\User\UserRoleUpdate $service
      */
-    public function __construct(UserRoleUpdate $userRole)
+    public function __construct(UserRoleUpdate $service)
     {
-        $this->userRole = $userRole;
+        $this->service = $service;
     }
 
     /**
@@ -53,6 +53,6 @@ class Update
      */
     public function handle(array $input): array
     {
-        return $this->userRole->handle($input);
+        return $this->service->handle($input);
     }
 }

@@ -14,16 +14,10 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\User;
 
-use Closure;
-use Common\Domain\Entity\User;
-use Common\Domain\Service\User\PrepareForUser;
-use Leevel\Collection\Collection;
-use Leevel\Database\Ddd\IEntity;
-use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Database\Ddd\Select;
+use Common\Infra\Repository\User\User\Index as Repository;
 
 /**
- * 用户列表.
+ * 用户列表服务.
  *
  * @author Name Your <your@mail.com>
  *
@@ -34,20 +28,20 @@ use Leevel\Database\Ddd\Select;
 class Index
 {
     /**
-     * 事务工作单元.
+     * 用户列表服务.
      *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
+     * @var \Common\Infra\Repository\User\User\Index
      */
-    protected $w;
+    protected $repository;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @param \Common\Infra\Repository\User\User\Index $repository
      */
-    public function __construct(IUnitOfWork $w)
+    public function __construct(Repository $repository)
     {
-        $this->w = $w;
+        $this->repository = $repository;
     }
 
     /**
@@ -59,65 +53,6 @@ class Index
      */
     public function handle(array $input): array
     {
-        $repository = $this->w->repository(User::class);
-
-        list($page, $entitys) = $repository->findPage(
-            (int) ($input['page'] ?: 1),
-            (int) ($input['size'] ?? 10),
-            $this->condition($input)
-        );
-
-        $data['page'] = $page;
-        $data['data'] = $this->prepareData($entitys);
-
-        return $data;
-    }
-
-    /**
-     * 准备数据.
-     *
-     * @param \Leevel\Collection\Collection $data
-     *
-     * @return array
-     */
-    protected function prepareData(Collection &$data): array
-    {
-        $prepare = new PrepareForUser();
-
-        $result = [];
-
-        foreach ($data as $v) {
-            $result[] = $prepare->handle($v);
-        }
-
-        return $result;
-    }
-
-    /**
-     * 查询条件.
-     *
-     * @param array $input
-     *
-     * @return \Closure
-     */
-    protected function condition(array $input): Closure
-    {
-        return function (Select $select, IEntity $entity) use ($input) {
-            $select->eager(['role']);
-
-            if ($input['key']) {
-                $select->where(function ($select) use ($input) {
-                    $select->orWhere('name', 'like', '%'.$input['key'].'%')->
-
-                        orWhere('identity', 'like', '%'.$input['key'].'%');
-                });
-            }
-
-            if ($input['status'] || '0' === $input['status']) {
-                $select->where('status', $input['status']);
-            }
-
-            $select->orderBy('id DESC');
-        };
+        return $this->repository->handle($input);
     }
 }

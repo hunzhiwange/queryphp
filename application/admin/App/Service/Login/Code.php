@@ -14,36 +14,34 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Login;
 
-use Admin\Infra\Code as Codes;
-use Leevel;
-use Leevel\Seccode\Seccode;
+use Common\Domain\Service\Login\Code as Service;
 
 /**
- * 验证码生成.
+ * 验证生成服务.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2017.11.23
+ * @since 2017.10.23
  *
  * @version 1.0
  */
 class Code
 {
     /**
-     * 验证码存储.
+     * 验证生成服务.
      *
-     * @var \Admin\Infra\Code
+     * @var \Common\Domain\Service\Login\Code
      */
-    protected $code;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Admin\Infra\Code $code
+     * @param \Common\Domain\Service\Login\Code $service
      */
-    public function __construct(Codes $code)
+    public function __construct(Service $service)
     {
-        $this->code = $code;
+        $this->service = $service;
     }
 
     /**
@@ -51,26 +49,8 @@ class Code
      *
      * @param array $input
      */
-    public function handle(array $input)
+    public function handle(array $input): void
     {
-        // Mac 自带 PHP 有问题
-        if (!function_exists('imagettftext')) {
-            header('Content-Type: image/png;text/html; charset=utf-8');
-            echo file_get_contents(Leevel::publicPath('images/code.png'));
-            die;
-        }
-
-        $seccode = new Seccode([
-            'background_path' => Leevel::commonPath('ui/seccode/background'),
-            'font_path'       => Leevel::commonPath('ui/seccode/font'),
-            'width'           => 120,
-            'height'          => 36,
-        ]);
-
-        $seccode->display(4);
-
-        $this->code->set($input['id'], $seccode->getCode());
-
-        die;
+        $this->service->handle($input);
     }
 }

@@ -32,16 +32,16 @@ class Store
      *
      * @var \Common\Domain\Service\User\UserRoleStore
      */
-    protected $userRole;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Common\Domain\Service\User\UserRoleStore $userRolew
+     * @param \Common\Domain\Service\User\UserRoleStore $service
      */
-    public function __construct(UserRoleStore $userRole)
+    public function __construct(UserRoleStore $service)
     {
-        $this->userRole = $userRole;
+        $this->service = $service;
     }
 
     /**
@@ -53,6 +53,6 @@ class Store
      */
     public function handle(array $input): array
     {
-        return $this->userRole->handle($input);
+        return $this->service->handle($input);
     }
 }

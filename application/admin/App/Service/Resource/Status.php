@@ -14,14 +14,10 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Resource;
 
-use Common\Domain\Entity\Resource;
-use Leevel\Collection\Collection;
-use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\HandleException;
-use Leevel\Validate\Facade\Validate;
+use Common\Domain\Service\User\Resource\Status as Service;
 
 /**
- * 批量修改资源状态.
+ * 批量设置资源状态.
  *
  * @author Name Your <your@mail.com>
  *
@@ -32,27 +28,20 @@ use Leevel\Validate\Facade\Validate;
 class Status
 {
     /**
-     * 事务工作单元.
+     * 批量设置资源状态服务.
      *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
+     * @var \Common\Domain\Service\User\Resource\Status
      */
-    protected $w;
-
-    /**
-     * 输入数据.
-     *
-     * @var array
-     */
-    protected $input;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @param \Common\Domain\Service\User\Resource\Status $service
      */
-    public function __construct(IUnitOfWork $w)
+    public function __construct(Service $service)
     {
-        $this->w = $w;
+        $this->service = $service;
     }
 
     /**
@@ -64,70 +53,6 @@ class Status
      */
     public function handle(array $input): array
     {
-        $this->input = $input;
-
-        $this->validateArgs();
-
-        $this->save($this->findAll($input), $input['status']);
-
-        return [];
-    }
-
-    /**
-     * 保存状态
-     *
-     * @param \Leevel\Collection\Collection $entitys
-     * @param string                        $status
-     */
-    protected function save(Collection $entitys, string $status)
-    {
-        foreach ($entitys as $entity) {
-            $entity->status = $status;
-            $this->w->persist($entity);
-        }
-
-        $this->w->flush();
-    }
-
-    /**
-     * 查询符合条件的资源.
-     *
-     * @param array $input
-     *
-     * @return \Leevel\Collection\Collection
-     */
-    protected function findAll(array $input): Collection
-    {
-        $entitys = $this->w->repository(Resource::class)->
-
-        findAll(function ($select) use ($input) {
-            $select->whereIn('id', $input['ids']);
-        });
-
-        if (0 === count($entitys)) {
-            throw new HandleException(__('未发现资源'));
-        }
-
-        return $entitys;
-    }
-
-    /**
-     * 校验基本参数.
-     */
-    protected function validateArgs()
-    {
-        $validator = Validate::make(
-            $this->input,
-            [
-                'ids'          => 'required|array',
-            ],
-            [
-                'ids'          => 'ID',
-            ]
-        );
-
-        if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
-        }
+        return $this->service->handle($input);
     }
 }

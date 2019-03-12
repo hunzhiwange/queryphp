@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Api;
 
-use Common\Domain\Entity\Test;
+use Common\Domain\Entity\Demo\Test;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Database\Facade\Db;
 

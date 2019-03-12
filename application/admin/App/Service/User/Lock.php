@@ -14,42 +14,34 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\User;
 
-use Admin\Infra\Lock as CacheLock;
-use Leevel\Validate\Facade\Validate as Validates;
+use Common\Infra\Repository\User\User\Lock as Repository;
 
 /**
- * 锁定管理面板
+ * 面板锁定服务.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2017.11.21
+ * @since 2017.11.23
  *
  * @version 1.0
  */
 class Lock
 {
     /**
-     * 锁定缓存.
+     * 面板锁定服务.
      *
-     * @var \Admin\Infra\Lock
+     * @var \Common\Infra\Repository\User\User\Lock
      */
-    protected $lock;
-
-    /**
-     * 输入数据.
-     *
-     * @var array
-     */
-    protected $input;
+    protected $repository;
 
     /**
      * 构造函数.
      *
-     * @param \Admin\Infra\Lock $lock
+     * @param \Common\Infra\Repository\User\User\Lock $repository
      */
-    public function __construct(CacheLock $lock)
+    public function __construct(Repository $repository)
     {
-        $this->lock = $lock;
+        $this->repository = $repository;
     }
 
     /**
@@ -61,40 +53,6 @@ class Lock
      */
     public function handle(array $input): array
     {
-        $this->input = $input;
-
-        $this->validateArgs();
-
-        $this->lock();
-
-        return [];
-    }
-
-    /**
-     * 锁定.
-     */
-    protected function lock()
-    {
-        $this->lock->set($this->input['token']);
-    }
-
-    /**
-     * 校验基本参数.
-     */
-    protected function validateArgs()
-    {
-        $validator = Validates::make(
-            $this->input,
-            [
-                'token'       => 'required',
-            ],
-            [
-                'token'      => 'Token',
-            ]
-        );
-
-        if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
-        }
+        return $this->repository->handle($input);
     }
 }

@@ -14,45 +14,34 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\User;
 
-use Common\Domain\Entity\User;
-use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\HandleException;
-use Leevel\Validate\Facade\Validate as Validates;
-use Leevel\Validate\IValidator;
+use Common\Domain\Service\User\User\UpdateInfo as Service;
 
 /**
  * 用户修改资料.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2017.11.21
+ * @since 2017.10.23
  *
  * @version 1.0
  */
 class UpdateInfo
 {
     /**
-     * 事务工作单元.
+     * 用户修改资料.
      *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
+     * @var \Common\Domain\Service\User\User\UpdateInfo
      */
-    protected $w;
-
-    /**
-     * 输入数据.
-     *
-     * @var array
-     */
-    protected $input;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @param \Common\Domain\Service\User\User\UpdateInfo $service
      */
-    public function __construct(IUnitOfWork $w)
+    public function __construct(Service $service)
     {
-        $this->w = $w;
+        $this->service = $service;
     }
 
     /**
@@ -64,93 +53,6 @@ class UpdateInfo
      */
     public function handle(array $input): array
     {
-        $this->input = $input;
-
-        $this->validateArgs();
-
-        $this->save($input)->toArray();
-
-        return [];
-    }
-
-    /**
-     * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User
-     */
-    protected function save(array $input): User
-    {
-        $this->w->persist($entity = $this->entity($input));
-
-        $this->w->flush();
-
-        return $entity;
-    }
-
-    /**
-     * 验证参数.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User
-     */
-    protected function entity(array $input): User
-    {
-        $entity = $this->find((int) $input['id']);
-
-        $entity->withProps($this->data($input));
-
-        return $entity;
-    }
-
-    /**
-     * 查找实体.
-     *
-     * @param int $id
-     *
-     * @return \Common\Domain\Entity\User
-     */
-    protected function find(int $id): User
-    {
-        return $this->w->repository(User::class)->findOrFail($id);
-    }
-
-    /**
-     * 组装实体数据.
-     *
-     * @param array $input
-     *
-     * @return array
-     */
-    protected function data(array $input): array
-    {
-        return [
-            'email'        => $input['email'] ?: '',
-            'mobile'       => $input['mobile'] ?: '',
-        ];
-    }
-
-    /**
-     * 校验基本参数.
-     */
-    protected function validateArgs()
-    {
-        $validator = Validates::make(
-            $this->input,
-            [
-                'email'       => 'email|'.IValidator::CONDITION_VALUE,
-                'mobile'      => 'mobile|'.IValidator::CONDITION_VALUE,
-            ],
-            [
-                'email'       => __('邮件'),
-                'mobile'      => __('手机'),
-            ]
-        );
-
-        if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
-        }
+        return $this->service->handle($input);
     }
 }

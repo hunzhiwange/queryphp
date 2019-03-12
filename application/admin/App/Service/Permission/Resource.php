@@ -32,16 +32,16 @@ class Resource
      *
      * @var \Common\Domain\Service\User\PermissionResource
      */
-    protected $permissionResource;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Common\Domain\Service\User\PermissionResource $permissionResource
+     * @param \Common\Domain\Service\User\PermissionResource $service
      */
-    public function __construct(PermissionResource $permissionResource)
+    public function __construct(PermissionResource $service)
     {
-        $this->permissionResource = $permissionResource;
+        $this->service = $service;
     }
 
     /**
@@ -53,6 +53,6 @@ class Resource
      */
     public function handle(array $input): array
     {
-        return $this->permissionResource->handle($input);
+        return $this->service->handle($input);
     }
 }

@@ -14,11 +14,10 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\User;
 
-use Common\Domain\Entity\User;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Common\Domain\Service\User\User\Destroy as Service;
 
 /**
- * 用户删除.
+ * 用户删除服务.
  *
  * @author Name Your <your@mail.com>
  *
@@ -29,20 +28,20 @@ use Leevel\Database\Ddd\IUnitOfWork;
 class Destroy
 {
     /**
-     * 事务工作单元.
+     * 用户删除服务.
      *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
+     * @var \Common\Domain\Service\User\User\Destroy
      */
-    protected $w;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @param \Common\Domain\Service\User\User\Destroy $service
      */
-    public function __construct(IUnitOfWork $w)
+    public function __construct(Service $service)
     {
-        $this->w = $w;
+        $this->service = $service;
     }
 
     /**
@@ -54,32 +53,6 @@ class Destroy
      */
     public function handle(array $input): array
     {
-        $this->remove($this->find($input['id']));
-
-        return [];
-    }
-
-    /**
-     * 删除实体.
-     *
-     * @param \Common\Domain\Entity\User $entity
-     */
-    protected function remove(User $entity)
-    {
-        $this->w->persist($entity)->
-        remove($entity)->
-        flush();
-    }
-
-    /**
-     * 查找实体.
-     *
-     * @param int $intId
-     *
-     * @return \Common\Domain\Entity\User
-     */
-    protected function find(int $id): User
-    {
-        return $this->w->repository(User::class)->findOrFail($id);
+        return $this->service->handle($input);
     }
 }

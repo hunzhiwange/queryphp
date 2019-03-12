@@ -14,8 +14,9 @@ declare(strict_types=1);
 
 namespace Common\Domain\Service\User;
 
-use Common\Domain\Entity\User;
-use Common\Domain\Entity\UserRole as EntityUserRole;
+use Common\Domain\Entity\User\User;
+use Common\Domain\Entity\User\UserRole as EntityUserRole;
+use Common\Infra\Repository\User\User\PrepareForUser;
 
 /**
  * 更新授权.
@@ -31,7 +32,7 @@ trait UserRole
     /**
      * 准备数据.
      *
-     * @param \Common\Domain\Entity\User $user
+     * @param \Common\Domain\Entity\User\User $user
      *
      * @return array
      */
@@ -70,7 +71,7 @@ trait UserRole
      * @param int $userId
      * @param int $roleId
      *
-     * @return \Common\Domain\Entity\UserRole
+     * @return \Common\Domain\Entity\User\UserRole
      */
     protected function entityUserRole(int $userId, int $roleId): EntityUserRole
     {

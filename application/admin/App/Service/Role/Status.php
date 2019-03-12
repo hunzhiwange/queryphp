@@ -14,13 +14,10 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Role;
 
-use Common\Domain\Entity\Role;
-use Leevel\Collection\Collection;
-use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\HandleException;
+use Common\Domain\Service\User\Role\Status as Service;
 
 /**
- * 批量修改角色状态.
+ * 批量设置角色状态.
  *
  * @author Name Your <your@mail.com>
  *
@@ -31,20 +28,20 @@ use Leevel\Kernel\HandleException;
 class Status
 {
     /**
-     * 事务工作单元.
+     * 批量设置角色状态服务.
      *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
+     * @var \Common\Domain\Service\User\Role\Status
      */
-    protected $w;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @param \Common\Domain\Service\User\Role\Status $service
      */
-    public function __construct(IUnitOfWork $w)
+    public function __construct(Service $service)
     {
-        $this->w = $w;
+        $this->service = $service;
     }
 
     /**
@@ -56,46 +53,6 @@ class Status
      */
     public function handle(array $input): array
     {
-        $this->save($this->findAll($input), $input['status']);
-
-        return [];
-    }
-
-    /**
-     * 保存状态
-     *
-     * @param \Leevel\Collection\Collection $entitys
-     * @param string                        $status
-     */
-    protected function save(Collection $entitys, string $status)
-    {
-        foreach ($entitys as $entity) {
-            $entity->status = $status;
-            $this->w->persist($entity);
-        }
-
-        $this->w->flush();
-    }
-
-    /**
-     * 查询符合条件的角色.
-     *
-     * @param array $input
-     *
-     * @return \Leevel\Collection\Collection
-     */
-    protected function findAll(array $input): Collection
-    {
-        $entitys = $this->w->repository(Role::class)->
-
-        findAll(function ($select) use ($input) {
-            $select->whereIn('id', $input['ids']);
-        });
-
-        if (0 === count($entitys)) {
-            throw new HandleException(__('未发现角色'));
-        }
-
-        return $entitys;
+        return $this->service->handle($input);
     }
 }
