@@ -514,6 +514,51 @@ class Rpc
 // {"arg1":"foo","arg2":"bar","metas":{"arg1":"hello","arg2":"world"}}
 ```
 
+## RoadRunner 支持
+
+RoadRunner 是一个开源的高性能 PHP 应用服务器、负载均衡器和流程管理器。它支持作为一个服务运行，能够在每个项目的基础上扩展其功能。
+
+### 安装 RoadRunner
+
+你可以下载二进制文件.
+
+```
+cd /data/server
+wget https://github.com/spiral/roadrunner/releases/download/v1.3.5/roadrunner-1.3.5-darwin-amd64.zip
+unzip roadrunner-1.3.5-darwin-amd64.zip
+cd /data/codes/queryphp
+```
+
+### Roadrunner 服务
+
+```
+/data/server/roadrunner-1.3.5-darwin-amd64/rr serve -d -v # -d = debug
+/data/server/roadrunner-1.3.5-darwin-amd64/rr http:reset
+/data/server/roadrunner-1.3.5-darwin-amd64/rr http:workers -i
+```
+
+Roadrunner 和 php-fpm 保持一致
+
+```
+root@vagrant-ubuntu-10-0-2-5:/data/codes/queryphp# /data/server/roadrunner-1.3.5-darwin-amd64/rr serve -d -v
+DEBU[0000] [static]: disabled
+DEBU[0000] [rpc]: started
+DEBU[0000] [http]: started
+INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9601/api/test
+```
+
+ * Home http://127.0.0.1:9601/
+ * Mvc router http://127.0.0.1:9601/api/test
+ * Mvc restful router http://127.0.0.1:9601/restful/123
+ * Mvc restful router with method http://127.0.0.1:9601/restful/123/show
+ * Annotation router http://127.0.0.1:9601/api/v1/petLeevelForApi/helloworld
+ * Annotation router with bind http://127.0.0.1:9601/api/v2/withBind/foobar
+ * php leevel link:public http://127.0.0.1:9601/public/css/page.css
+ * php leevel link:storage http://127.0.0.1:9601/storage/logo.png
+ * php leevel link:apis http://127.0.0.1:9601/apis/
+ * php leevel link:debugbar http://127.0.0.1:9601/debugbar/debugbar.css
+
+
 ## 统一团队代码风格
 
 ### 安装 PHP 代码格式化工具
