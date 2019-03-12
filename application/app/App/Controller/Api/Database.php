@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Api;
 
-use Leevel\Db;
+use Leevel\Database\Facade\Db;
 
 /**
  * 查询数据库.
