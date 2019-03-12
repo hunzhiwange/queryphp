@@ -12,12 +12,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Entity;
+namespace Common\Domain\Entity\Base;
 
 use Leevel\Database\Ddd\Entity;
 
 /**
- * Resource.
+ * Option.
  *
  * @author Name Your <your@mail.com>
  *
@@ -25,28 +25,28 @@ use Leevel\Database\Ddd\Entity;
  *
  * @version 1.0
  */
-class Resource extends Entity
+class Option extends Entity
 {
     /**
      * database table.
      *
      * @var string
      */
-    const TABLE = 'resource';
+    const TABLE = 'option';
 
     /**
      * primary key.
      *
      * @var string
      */
-    const ID = 'id';
+    const ID = 'name';
 
     /**
      * auto increment.
      *
      * @var string
      */
-    const AUTO = 'id';
+    const AUTO = null;
 
     /**
      * entity struct.
@@ -54,47 +54,28 @@ class Resource extends Entity
      * @var array
      */
     const STRUCT = [
-        'id' => [
+        'name' => [
             'readonly' => true,
         ],
-        'name'     => [],
-        'identity' => [],
-        'status'   => [
-            self::ENUM => [
-                '0' => '禁用',
-                '1' => '启用',
-            ],
+        'value'     => [],
+        'create_at' => [
+            'show_prop_black' => true,
         ],
-        'create_at' => [],
     ];
 
     /**
-     * id.
-     *
-     * @var int
-     */
-    private $id;
-
-    /**
-     * 资源名字.
+     * 配置名.
      *
      * @var string
      */
     private $name;
 
     /**
-     * 唯一标识符.
+     * 配置值.
      *
      * @var string
      */
-    private $identity;
-
-    /**
-     * 状态 0=禁用;1=启用;.
-     *
-     * @var int
-     */
-    private $status;
+    private $value;
 
     /**
      * 创建时间.

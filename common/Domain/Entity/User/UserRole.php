@@ -12,34 +12,34 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Entity;
+namespace Common\Domain\Entity\User;
 
 use Leevel\Database\Ddd\Entity;
 
 /**
- * Option.
+ * UserRole.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2018.11.20
+ * @since 2019.01.31
  *
  * @version 1.0
  */
-class Option extends Entity
+class UserRole extends Entity
 {
     /**
      * database table.
      *
      * @var string
      */
-    const TABLE = 'option';
+    const TABLE = 'user_role';
 
     /**
      * primary key.
      *
-     * @var string
+     * @var array
      */
-    const ID = 'name';
+    const ID = ['user_id', 'role_id'];
 
     /**
      * auto increment.
@@ -54,28 +54,28 @@ class Option extends Entity
      * @var array
      */
     const STRUCT = [
-        'name' => [
+        'user_id' => [
             'readonly' => true,
         ],
-        'value'     => [],
-        'create_at' => [
-            'show_prop_black' => true,
+        'role_id' => [
+            'readonly' => true,
         ],
+        'create_at' => [],
     ];
 
     /**
-     * 配置名.
+     * 用户 ID.
      *
-     * @var string
+     * @var int
      */
-    private $name;
+    private $userId;
 
     /**
-     * 配置值.
+     * 角色 ID.
      *
-     * @var string
+     * @var int
      */
-    private $value;
+    private $roleId;
 
     /**
      * 创建时间.

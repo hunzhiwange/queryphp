@@ -12,73 +12,105 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Entity;
+namespace Common\Domain\Entity\Base;
 
 use Leevel\Database\Ddd\Entity;
 
 /**
- * UserRole.
+ * 应用实体.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2019.01.31
+ * @since 2018.11.09
  *
  * @version 1.0
  */
-class UserRole extends Entity
+class App extends Entity
 {
     /**
-     * database table.
+     * table.
      *
      * @var string
      */
-    const TABLE = 'user_role';
+    const TABLE = 'app';
 
     /**
-     * primary key.
-     *
-     * @var array
-     */
-    const ID = ['user_id', 'role_id'];
-
-    /**
-     * auto increment.
+     * id.
      *
      * @var string
      */
-    const AUTO = null;
+    const ID = 'id';
 
     /**
-     * entity struct.
+     * auto.
+     *
+     * @var string
+     */
+    const AUTO = 'id';
+
+    /**
+     * struct.
      *
      * @var array
      */
     const STRUCT = [
-        'user_id' => [
-            'readonly' => true,
+        'id' => [
+            'readonly'             => true,
         ],
-        'role_id' => [
-            'readonly' => true,
-        ],
+        'identity'  => [],
+        'status'    => [],
+        'key'       => [],
+        'secret'    => [],
         'create_at' => [],
     ];
 
     /**
-     * 用户 ID.
+     * 状态值.
+     *
+     * @var array
+     */
+    const STATUS_ENUM = [
+        'disable' => [0, '禁用'],
+        'enable'  => [1, '启用'],
+    ];
+
+    /**
+     * id.
      *
      * @var int
      */
-    private $userId;
+    private $id;
 
     /**
-     * 角色 ID.
+     * name.
+     *
+     * @var string
+     */
+    private $identity;
+
+    /**
+     * 状态 0=禁用;1=启用;.
      *
      * @var int
      */
-    private $roleId;
+    private $status;
 
     /**
-     * 创建时间.
+     * key.
+     *
+     * @var string
+     */
+    private $key;
+
+    /**
+     * secret.
+     *
+     * @var string
+     */
+    private $secret;
+
+    /**
+     * create_at.
      *
      * @var string
      */

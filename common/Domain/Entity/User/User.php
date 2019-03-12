@@ -12,35 +12,27 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Entity;
+namespace Common\Domain\Entity\User;
 
-use Common\Infra\Repository\Permission as RepositoryPermission;
 use Leevel\Database\Ddd\Entity;
 
 /**
- * Permission.
+ * User.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2018.11.20
+ * @since 2018.11.08
  *
  * @version 1.0
  */
-class Permission extends Entity
+class User extends Entity
 {
-    /**
-     * 仓储.
-     *
-     * @var string
-     */
-    const REPOSITORY = RepositoryPermission::class;
-
     /**
      * database table.
      *
      * @var string
      */
-    const TABLE = 'permission';
+    const TABLE = 'user';
 
     /**
      * primary key.
@@ -52,7 +44,7 @@ class Permission extends Entity
     /**
      * auto increment.
      *
-     * @var null|array|string
+     * @var string
      */
     const AUTO = 'id';
 
@@ -65,24 +57,33 @@ class Permission extends Entity
         'id' => [
             'readonly' => true,
         ],
-        'pid'      => [],
-        'name'     => [],
-        'identity' => [],
-        'status'   => [
-            self::ENUM => [
-                '0' => '禁用',
-                '1' => '启用',
-            ],
+        'name'      => [],
+        'identity'  => [],
+        'password'  => [
+            'show_prop_black' => true,
         ],
-        'create_at'     => [],
-        'resource'      => [
-            self::MANY_MANY     => Resource::class,
-            'middle_entity'     => PermissionResource::class,
+        'email'     => [],
+        'mobile'    => [],
+        'status'    => [],
+        'create_at' => [],
+        'role'      => [
+            self::MANY_MANY     => Role::class,
+            'middle_entity'     => UserRole::class,
             'source_key'        => 'id',
             'target_key'        => 'id',
-            'middle_source_key' => 'permission_id',
-            'middle_target_key' => 'resource_id',
+            'middle_source_key' => 'user_id',
+            'middle_target_key' => 'role_id',
         ],
+    ];
+
+    /**
+     * 状态值.
+     *
+     * @var array
+     */
+    const STATUS_ENUM = [
+        'disable' => [0, '禁用'],
+        'enable'  => [1, '启用'],
     ];
 
     /**
@@ -93,14 +94,7 @@ class Permission extends Entity
     private $id;
 
     /**
-     * 父级 ID.
-     *
-     * @var int
-     */
-    private $pid;
-
-    /**
-     * 权限名字.
+     * 用户名字.
      *
      * @var string
      */
@@ -112,6 +106,27 @@ class Permission extends Entity
      * @var string
      */
     private $identity;
+
+    /**
+     * 密码.
+     *
+     * @var string
+     */
+    private $password;
+
+    /**
+     * 电子邮件.
+     *
+     * @var string
+     */
+    private $email;
+
+    /**
+     * 手机号.
+     *
+     * @var string
+     */
+    private $mobile;
 
     /**
      * 状态 0=禁用;1=启用;.
@@ -128,11 +143,11 @@ class Permission extends Entity
     private $createAt;
 
     /**
-     * 资源.
+     * 角色.
      *
-     * @var \Leevel\Collection\Collection
+     * @var string
      */
-    private $resource;
+    private $role;
 
     /**
      * setter.

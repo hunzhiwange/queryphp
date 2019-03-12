@@ -12,81 +12,77 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Entity;
+namespace Common\Domain\Entity\User;
 
 use Leevel\Database\Ddd\Entity;
 
 /**
- * 测试实体.
+ * RolePermission.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2018.01.29
+ * @since 2019.01.13
  *
  * @version 1.0
  */
-class Test extends Entity
+class RolePermission extends Entity
 {
     /**
-     * table.
+     * database table.
      *
      * @var string
      */
-    const TABLE = 'test';
+    const TABLE = 'role_permission';
 
     /**
-     * id.
+     * primary key.
+     *
+     * @var array
+     */
+    const ID = ['role_id', 'permission_id'];
+
+    /**
+     * auto increment.
      *
      * @var string
      */
-    const ID = 'id';
+    const AUTO = null;
 
     /**
-     * auto.
-     *
-     * @var string
-     */
-    const AUTO = 'id';
-
-    const NAME_YES = '0';
-
-    const NAME = [
-        'yes' => '0',
-    ];
-
-    const NAME2 = [
-        'yes' => ['0' => 'hello'],
-    ];
-
-    /**
-     * struct.
+     * entity struct.
      *
      * @var array
      */
     const STRUCT = [
-        'id' => [
-            'readonly'             => true,
+        'role_id' => [
+            'readonly' => true,
         ],
-        'name'      => [
-            'enum' => [
-                self::NAME['yes'] => 'hello',
-            ],
+        'permission_id' => [
+            'readonly' => true,
         ],
+        'create_at' => [],
     ];
 
     /**
-     * id.
+     * 角色 ID.
      *
      * @var int
      */
-    private $id;
+    private $roleId;
 
     /**
-     * name.
+     * 权限 ID.
+     *
+     * @var int
+     */
+    private $permissionId;
+
+    /**
+     * 创建时间.
      *
      * @var string
      */
-    private $name;
+    private $createAt;
 
     /**
      * setter.

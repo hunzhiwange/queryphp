@@ -12,58 +12,52 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Entity;
+namespace Common\Domain\Demo\Entity;
 
 use Leevel\Database\Ddd\Entity;
 
 /**
- * User.
+ * 测试实体.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2019.01.31
+ * @since 2018.01.29
  *
  * @version 1.0
  */
-class User extends Entity
+class Test extends Entity
 {
     /**
-     * database table.
+     * table.
      *
      * @var string
      */
-    const TABLE = 'user';
+    const TABLE = 'test';
 
     /**
-     * primary key.
+     * id.
      *
      * @var string
      */
     const ID = 'id';
 
     /**
-     * auto increment.
+     * auto.
      *
      * @var string
      */
     const AUTO = 'id';
 
     /**
-     * entity struct.
+     * struct.
      *
      * @var array
      */
     const STRUCT = [
         'id' => [
-            'readonly' => true,
+            'readonly'             => true,
         ],
         'name'      => [],
-        'identity'  => [],
-        'password'  => [],
-        'email'     => [],
-        'mobile'    => [],
-        'status'    => [],
-        'create_at' => [],
     ];
 
     /**
@@ -74,53 +68,11 @@ class User extends Entity
     private $id;
 
     /**
-     * 用户名字.
+     * name.
      *
      * @var string
      */
     private $name;
-
-    /**
-     * 唯一标识符.
-     *
-     * @var string
-     */
-    private $identity;
-
-    /**
-     * 密码.
-     *
-     * @var string
-     */
-    private $password;
-
-    /**
-     * Email.
-     *
-     * @var string
-     */
-    private $email;
-
-    /**
-     * 手机.
-     *
-     * @var string
-     */
-    private $mobile;
-
-    /**
-     * 状态 0=禁用;1=启用;.
-     *
-     * @var int
-     */
-    private $status;
-
-    /**
-     * 创建时间.
-     *
-     * @var string
-     */
-    private $createAt;
 
     /**
      * setter.

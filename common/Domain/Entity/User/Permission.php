@@ -12,12 +12,13 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Entity;
+namespace Common\Domain\Entity\User;
 
+use Common\Infra\Repository\User\Permission as RepositoryPermission;
 use Leevel\Database\Ddd\Entity;
 
 /**
- * Role.
+ * Permission.
  *
  * @author Name Your <your@mail.com>
  *
@@ -25,14 +26,21 @@ use Leevel\Database\Ddd\Entity;
  *
  * @version 1.0
  */
-class Role extends Entity
+class Permission extends Entity
 {
+    /**
+     * 仓储.
+     *
+     * @var string
+     */
+    const REPOSITORY = RepositoryPermission::class;
+
     /**
      * database table.
      *
      * @var string
      */
-    const TABLE = 'role';
+    const TABLE = 'permission';
 
     /**
      * primary key.
@@ -44,7 +52,7 @@ class Role extends Entity
     /**
      * auto increment.
      *
-     * @var string
+     * @var null|array|string
      */
     const AUTO = 'id';
 
@@ -57,23 +65,29 @@ class Role extends Entity
         'id' => [
             'readonly' => true,
         ],
-        'name'     => [],
-        'identity' => [],
-        'status'   => [
-            self::ENUM => [
-                '0' => '禁用',
-                '1' => '启用',
-            ],
-        ],
-        'create_at'       => [],
-        'permission'      => [
-            self::MANY_MANY     => Permission::class,
-            'middle_entity'     => RolePermission::class,
+        'pid'           => [],
+        'name'          => [],
+        'identity'      => [],
+        'status'        => [],
+        'create_at'     => [],
+        'resource'      => [
+            self::MANY_MANY     => Resource::class,
+            'middle_entity'     => PermissionResource::class,
             'source_key'        => 'id',
             'target_key'        => 'id',
-            'middle_source_key' => 'role_id',
-            'middle_target_key' => 'permission_id',
+            'middle_source_key' => 'permission_id',
+            'middle_target_key' => 'resource_id',
         ],
+    ];
+
+    /**
+     * 状态值.
+     *
+     * @var array
+     */
+    const STATUS_ENUM = [
+        'disable' => [0, '禁用'],
+        'enable'  => [1, '启用'],
     ];
 
     /**
@@ -84,7 +98,14 @@ class Role extends Entity
     private $id;
 
     /**
-     * 角色名字.
+     * 父级 ID.
+     *
+     * @var int
+     */
+    private $pid;
+
+    /**
+     * 权限名字.
      *
      * @var string
      */
@@ -112,11 +133,11 @@ class Role extends Entity
     private $createAt;
 
     /**
-     * 权限.
+     * 资源.
      *
      * @var \Leevel\Collection\Collection
      */
-    private $permission;
+    private $resource;
 
     /**
      * setter.

@@ -12,41 +12,41 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Entity;
+namespace Common\Domain\Entity\User;
 
 use Leevel\Database\Ddd\Entity;
 
 /**
- * PermissionResource.
+ * Role.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2019.01.13
+ * @since 2018.11.20
  *
  * @version 1.0
  */
-class PermissionResource extends Entity
+class Role extends Entity
 {
     /**
      * database table.
      *
      * @var string
      */
-    const TABLE = 'permission_resource';
+    const TABLE = 'role';
 
     /**
      * primary key.
      *
-     * @var array
+     * @var string
      */
-    const ID = ['permission_id', 'resource_id'];
+    const ID = 'id';
 
     /**
      * auto increment.
      *
-     * @var null
+     * @var string
      */
-    const AUTO = null;
+    const AUTO = 'id';
 
     /**
      * entity struct.
@@ -54,28 +54,60 @@ class PermissionResource extends Entity
      * @var array
      */
     const STRUCT = [
-        'permission_id' => [
+        'id' => [
             'readonly' => true,
         ],
-        'resource_id' => [
-            'readonly' => true,
+        'name'            => [],
+        'identity'        => [],
+        'status'          => [],
+        'create_at'       => [],
+        'permission'      => [
+            self::MANY_MANY     => Permission::class,
+            'middle_entity'     => RolePermission::class,
+            'source_key'        => 'id',
+            'target_key'        => 'id',
+            'middle_source_key' => 'role_id',
+            'middle_target_key' => 'permission_id',
         ],
-        'create_at' => [],
     ];
 
     /**
-     * 权限 ID.
+     * 状态值.
      *
-     * @var int
+     * @var array
      */
-    private $permissionId;
+    const STATUS_ENUM = [
+        'disable' => [0, '禁用'],
+        'enable'  => [1, '启用'],
+    ];
 
     /**
-     * 资源 ID.
+     * id.
      *
      * @var int
      */
-    private $resourceId;
+    private $id;
+
+    /**
+     * 角色名字.
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
+     * 唯一标识符.
+     *
+     * @var string
+     */
+    private $identity;
+
+    /**
+     * 状态 0=禁用;1=启用;.
+     *
+     * @var int
+     */
+    private $status;
 
     /**
      * 创建时间.
@@ -83,6 +115,13 @@ class PermissionResource extends Entity
      * @var string
      */
     private $createAt;
+
+    /**
+     * 权限.
+     *
+     * @var \Leevel\Collection\Collection
+     */
+    private $permission;
 
     /**
      * setter.

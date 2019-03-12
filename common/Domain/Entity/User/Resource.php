@@ -12,41 +12,41 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Entity;
+namespace Common\Domain\Entity\User;
 
 use Leevel\Database\Ddd\Entity;
 
 /**
- * RolePermission.
+ * Resource.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2019.01.13
+ * @since 2018.11.20
  *
  * @version 1.0
  */
-class RolePermission extends Entity
+class Resource extends Entity
 {
     /**
      * database table.
      *
      * @var string
      */
-    const TABLE = 'role_permission';
+    const TABLE = 'resource';
 
     /**
      * primary key.
      *
-     * @var array
+     * @var string
      */
-    const ID = ['role_id', 'permission_id'];
+    const ID = 'id';
 
     /**
      * auto increment.
      *
      * @var string
      */
-    const AUTO = null;
+    const AUTO = 'id';
 
     /**
      * entity struct.
@@ -54,28 +54,52 @@ class RolePermission extends Entity
      * @var array
      */
     const STRUCT = [
-        'role_id' => [
+        'id' => [
             'readonly' => true,
         ],
-        'permission_id' => [
-            'readonly' => true,
-        ],
+        'name'      => [],
+        'identity'  => [],
+        'status'    => [],
         'create_at' => [],
     ];
 
     /**
-     * 角色 ID.
+     * 状态值.
      *
-     * @var int
+     * @var array
      */
-    private $roleId;
+    const STATUS_ENUM = [
+        'disable' => [0, '禁用'],
+        'enable'  => [1, '启用'],
+    ];
 
     /**
-     * 权限 ID.
+     * id.
      *
      * @var int
      */
-    private $permissionId;
+    private $id;
+
+    /**
+     * 资源名字.
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
+     * 唯一标识符.
+     *
+     * @var string
+     */
+    private $identity;
+
+    /**
+     * 状态 0=禁用;1=启用;.
+     *
+     * @var int
+     */
+    private $status;
 
     /**
      * 创建时间.
