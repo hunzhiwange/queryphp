@@ -88,9 +88,9 @@ export default {
     methods: {
         init() {
             // 消息
-            let messageCount = 0
+            let messageCount = 3
             this.messageCount = messageCount.toString()
-            this.$store.commit('setMessageCount', 0)
+            this.$store.commit('setMessageCount', 3)
 
             // 初始化菜单
             this.$store.commit('setCurrentPageName', this.$route.name)
