@@ -29,10 +29,8 @@ class Index
 {
     /**
      * 响应.
-     *
-     * @return string
      */
-    public function handle(): string
+    public function handle()
     {
         error_reporting(E_ERROR | E_PARSE | E_STRICT);
 

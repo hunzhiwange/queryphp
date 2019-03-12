@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Demo\Entity;
+namespace Common\Domain\Entity\Demo;
 
 use Leevel\Database\Ddd\Entity;
 
