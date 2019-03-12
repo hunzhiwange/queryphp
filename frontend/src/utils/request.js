@@ -33,7 +33,14 @@ service.interceptors.response.use(
             return Promise.reject()
         }
 
-        if (response.data[':trace']) {
+        // 调试信息
+        if (Object.prototype.toString.call(response.data) === '[object Array]') {
+            let lastItem = response.data[response.data.length - 1]
+
+            if (lastItem && lastItem[':trace']) {
+                response.data.pop()
+            }
+        } else if (response.data[':trace']) {
             delete response.data[':trace']
         }
 
