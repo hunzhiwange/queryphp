@@ -15,9 +15,8 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\Role;
 
 use Common\Domain\Entity\User\Role;
+use Common\Infra\Support\Workflow;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\HandleException;
-use Leevel\Validate\Facade\Validate;
 use Leevel\Validate\UniqueRule;
 
 /**
@@ -31,19 +30,41 @@ use Leevel\Validate\UniqueRule;
  */
 class Update
 {
+    use Workflow;
+
+    /**
+     * 允许的输入字段.
+     *
+     * allowedInput:输入数据白名单
+     * filterInput:过滤输入数据
+     * validateInput:校验输入数据
+     *
+     * @var array
+     */
+    const WORKFLOW = [
+        'allowedInput',
+        'filterInput',
+        'validateInput',
+    ];
+
+    /**
+     * 允许的输入字段.
+     *
+     * @var array
+     */
+    const ALLOWED_INPUT = [
+        'id',
+        'name',
+        'identity',
+        'status',
+    ];
+
     /**
      * 事务工作单元.
      *
      * @var \Leevel\Database\Ddd\IUnitOfWork
      */
     protected $w;
-
-    /**
-     * 输入数据.
-     *
-     * @var array
-     */
-    protected $input;
 
     /**
      * 构造函数.
@@ -64,11 +85,7 @@ class Update
      */
     public function handle(array $input): array
     {
-        $this->input = $input;
-
-        $this->validateArgs();
-
-        return $this->save($input)->toArray();
+        return $this->workflow($input);
     }
 
     /**
@@ -90,15 +107,74 @@ class Update
     }
 
     /**
+     * 输入数据白名单.
+     *
+     * @param array $input
+     */
+    private function allowedInput(array &$input): void
+    {
+        $this->allowedInputBase($input, self::ALLOWED_INPUT);
+    }
+
+    /**
+     * 过滤输入数据.
+     *
+     * @param array $input
+     */
+    private function filterInput(array &$input): void
+    {
+        $rules = [
+            'id'     => ['intval'],
+            'status' => ['intval'],
+        ];
+
+        $this->filterInputBase($input, $rules);
+    }
+
+    /**
+     * 校验输入数据.
+     *
+     * @param array $input
+     */
+    private function validateInput(array $input): void
+    {
+        $rules = [
+            'id'            => 'required',
+            'name'          => 'required|chinese_alpha_num|max_length:50',
+            'identity'      => 'required|alpha_dash|'.UniqueRule::rule(Role::class, null, $input['id']),
+        ];
+
+        $names = [
+            'id'            => 'ID',
+            'name'          => __('名字'),
+            'identity'      => __('标识符'),
+        ];
+
+        $this->validateInputBase($input, $rules, $names);
+    }
+
+    /**
+     * 过滤输入数据.
+     *
+     * @param array $input
+     *
+     * @return array
+     */
+    private function main(array &$input): array
+    {
+        return $this->save($input)->toArray();
+    }
+
+    /**
      * 验证参数.
      *
      * @param array $input
      *
      * @return \Common\Domain\Entity\User\Role
      */
-    protected function entity(array $input): Role
+    private function entity(array $input): Role
     {
-        $entity = $this->find((int) $input['id']);
+        $entity = $this->find($input['id']);
 
         $entity->withProps($this->data($input));
 
@@ -112,7 +188,7 @@ class Update
      *
      * @return \Common\Domain\Entity\User\Role
      */
-    protected function find(int $id): Role
+    private function find(int $id): Role
     {
         return $this->w->repository(Role::class)->findOrFail($id);
     }
@@ -124,36 +200,12 @@ class Update
      *
      * @return array
      */
-    protected function data(array $input): array
+    private function data(array $input): array
     {
         return [
-            'name'       => trim($input['name']),
-            'identity'   => trim($input['identity']),
+            'name'       => $input['name'],
+            'identity'   => $input['identity'],
             'status'     => $input['status'],
         ];
-    }
-
-    /**
-     * 校验基本参数.
-     */
-    protected function validateArgs()
-    {
-        $validator = Validate::make(
-            $this->input,
-            [
-                'id'            => 'required',
-                'name'          => 'required|chinese_alpha_num|max_length:50',
-                'identity'      => 'required|alpha_dash|'.UniqueRule::rule(Role::class, null, $this->input['id']),
-            ],
-            [
-                'id'            => 'ID',
-                'name'          => __('名字'),
-                'identity'      => __('标识符'),
-            ]
-        );
-
-        if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
-        }
     }
 }
