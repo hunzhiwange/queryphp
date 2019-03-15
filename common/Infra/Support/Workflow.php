@@ -57,7 +57,7 @@ trait Workflow
      */
     private function normalizeWorkflow(): array
     {
-        $workflow = self::WORKFLOW;
+        $workflow = $this->workflow;
 
         if (!is_array($workflow)) {
             throw new InvalidArgumentException('Invalid workflow.');
@@ -98,7 +98,7 @@ trait Workflow
      */
     private function allowedInputBase(array &$input, array $allowed): void
     {
-        $input = Arr::only($input, self::ALLOWED_INPUT);
+        $input = Arr::only($input, $this->allowedInput);
     }
 
     /**

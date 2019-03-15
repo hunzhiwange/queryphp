@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\Role;
 
 use Common\Domain\Entity\User\Role;
-use Common\Infra\Support\Workflow;
+use Common\Domain\Service\Support\Workflow;
 use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Validate\UniqueRule;
 
@@ -33,6 +33,13 @@ class Update
     use Workflow;
 
     /**
+     * 事务工作单元.
+     *
+     * @var \Leevel\Database\Ddd\IUnitOfWork
+     */
+    protected $w;
+
+    /**
      * 允许的输入字段.
      *
      * allowedInput:输入数据白名单
@@ -41,7 +48,7 @@ class Update
      *
      * @var array
      */
-    const WORKFLOW = [
+    private $workflow = [
         'allowedInput',
         'filterInput',
         'validateInput',
@@ -52,19 +59,12 @@ class Update
      *
      * @var array
      */
-    const ALLOWED_INPUT = [
+    private $allowedInput = [
         'id',
         'name',
         'identity',
         'status',
     ];
-
-    /**
-     * 事务工作单元.
-     *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
-     */
-    protected $w;
 
     /**
      * 构造函数.
@@ -89,54 +89,26 @@ class Update
     }
 
     /**
-     * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\Role
-     */
-    protected function save(array $input): Role
-    {
-        $this->w
-            ->persist($entity = $this->entity($input))
-            ->flush();
-
-        $entity->refresh();
-
-        return $entity;
-    }
-
-    /**
-     * 输入数据白名单.
+     * 过滤数据规则.
      *
      * @param array $input
      */
-    private function allowedInput(array &$input): void
+    private function filterInputRules(): array
     {
-        $this->allowedInputBase($input, self::ALLOWED_INPUT);
-    }
-
-    /**
-     * 过滤输入数据.
-     *
-     * @param array $input
-     */
-    private function filterInput(array &$input): void
-    {
-        $rules = [
+        return [
             'id'     => ['intval'],
             'status' => ['intval'],
         ];
-
-        $this->filterInputBase($input, $rules);
     }
 
     /**
-     * 校验输入数据.
+     * 校验数据规则.
      *
      * @param array $input
+     *
+     * @return array
      */
-    private function validateInput(array $input): void
+    private function validateInputRules(array $input): array
     {
         $rules = [
             'id'            => 'required',
@@ -150,7 +122,7 @@ class Update
             'identity'      => __('标识符'),
         ];
 
-        $this->validateInputBase($input, $rules, $names);
+        return [$rules, $names];
     }
 
     /**
@@ -207,5 +179,23 @@ class Update
             'identity'   => $input['identity'],
             'status'     => $input['status'],
         ];
+    }
+
+    /**
+     * 保存.
+     *
+     * @param array $input
+     *
+     * @return \Common\Domain\Entity\User\Role
+     */
+    private function save(array $input): Role
+    {
+        $this->w
+            ->persist($entity = $this->entity($input))
+            ->flush();
+
+        $entity->refresh();
+
+        return $entity;
     }
 }
