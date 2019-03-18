@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Controller\Login;
 
+use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Login\Validate as Service;
 use Leevel\Http\IRequest;
 
@@ -28,6 +29,22 @@ use Leevel\Http\IRequest;
  */
 class Validate
 {
+    use Controller;
+
+    /**
+     * 允许的输入字段.
+     *
+     * @var array
+     */
+    private $allowedInput = [
+        'app_id',
+        'app_key',
+        'name',
+        'password',
+        'remember',
+        'code',
+    ];
+
     /**
      * 响应方法.
      *
@@ -38,25 +55,6 @@ class Validate
      */
     public function handle(IRequest $request, Service $service): array
     {
-        return $service->handle($this->input($request));
-    }
-
-    /**
-     * 输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
-     */
-    protected function input(IRequest $request): array
-    {
-        return $request->only([
-            'app_id',
-            'app_key',
-            'name',
-            'password',
-            'remember',
-            'code',
-        ]);
+        return $this->main($request, $service);
     }
 }

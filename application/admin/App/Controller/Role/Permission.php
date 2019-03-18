@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Controller\Role;
 
+use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Role\Permission as service;
 use Leevel\Http\IRequest;
 
@@ -28,6 +29,18 @@ use Leevel\Http\IRequest;
  */
 class Permission
 {
+    use Controller;
+
+    /**
+     * 允许的输入字段.
+     *
+     * @var array
+     */
+    private $allowedInput = [
+        'id',
+        'permission_id',
+    ];
+
     /**
      * 响应方法.
      *
@@ -38,21 +51,6 @@ class Permission
      */
     public function handle(IRequest $request, Service $service): array
     {
-        return $service->handle($this->input($request));
-    }
-
-    /**
-     * 输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
-     */
-    protected function input(IRequest $request): array
-    {
-        return $request->only([
-            'id',
-            'permission_id',
-        ]);
+        return $this->main($request, $service);
     }
 }

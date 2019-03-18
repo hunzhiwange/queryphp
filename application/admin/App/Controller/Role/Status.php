@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Controller\Role;
 
+use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Role\Status as service;
 use Leevel\Http\IRequest;
 
@@ -28,31 +29,28 @@ use Leevel\Http\IRequest;
  */
 class Status
 {
+    use Controller;
+
+    /**
+     * 允许的输入字段.
+     *
+     * @var array
+     */
+    private $allowedInput = [
+        'ids',
+        'status',
+    ];
+
     /**
      * 响应方法.
      *
-     * @param \Leevel\Http\IRequest            $request
-     * @param \Admin\App\Service\Role\Statuses $service
+     * @param \Leevel\Http\IRequest          $request
+     * @param \Admin\App\Service\Role\Status $service
      *
      * @return array
      */
     public function handle(IRequest $request, Service $service): array
     {
-        return $service->handle($this->input($request));
-    }
-
-    /**
-     * 输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
-     */
-    protected function input(IRequest $request): array
-    {
-        return $request->only([
-            'ids',
-            'status',
-        ]);
+        return $this->main($request, $service);
     }
 }

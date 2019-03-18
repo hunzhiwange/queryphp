@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Controller\Login;
 
+use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Login\Code as Service;
 use Leevel\Http\IRequest;
 
@@ -28,6 +29,8 @@ use Leevel\Http\IRequest;
  */
 class Code
 {
+    use Controller;
+
     /**
      * 响应方法.
      *
@@ -36,7 +39,7 @@ class Code
      */
     public function handle(IRequest $request, Service $service): void
     {
-        $service->handle($this->input($request));
+        $this->main($request, $service);
     }
 
     /**
@@ -46,7 +49,7 @@ class Code
      *
      * @return array
      */
-    protected function input(IRequest $request): array
+    private function input(IRequest $request): array
     {
         return [
             'id' => $request->query->get('id'),

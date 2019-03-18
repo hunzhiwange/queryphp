@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Controller\User;
 
+use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\User\Lock as service;
 use Leevel\Auth\Facade\Auth;
 use Leevel\Http\IRequest;
@@ -29,6 +30,8 @@ use Leevel\Http\IRequest;
  */
 class Lock
 {
+    use Controller;
+
     /**
      * 响应方法.
      *
@@ -39,7 +42,19 @@ class Lock
      */
     public function handle(IRequest $request, Service $service): array
     {
-        return $service->handle(['token' => $this->token()]);
+        return $this->main($request, $service);
+    }
+
+    /**
+     * 输入数据.
+     *
+     * @param \Leevel\Http\IRequest $request
+     *
+     * @return array
+     */
+    private function input(IRequest $request): array
+    {
+        return ['token' => $this->token()];
     }
 
     /**
@@ -47,7 +62,7 @@ class Lock
      *
      * @return string
      */
-    protected function token(): string
+    private function token(): string
     {
         return Auth::getTokenName();
     }

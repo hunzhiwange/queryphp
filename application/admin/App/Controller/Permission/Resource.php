@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Controller\Permission;
 
+use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Permission\Resource as service;
 use Leevel\Http\IRequest;
 
@@ -28,6 +29,18 @@ use Leevel\Http\IRequest;
  */
 class Resource
 {
+    use Controller;
+
+    /**
+     * 允许的输入字段.
+     *
+     * @var array
+     */
+    private $allowedInput = [
+        'id',
+        'resource_id',
+    ];
+
     /**
      * 响应方法.
      *
@@ -38,21 +51,6 @@ class Resource
      */
     public function handle(IRequest $request, Service $service): array
     {
-        return $service->handle($this->input($request));
-    }
-
-    /**
-     * 输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
-     */
-    protected function input(IRequest $request): array
-    {
-        return $request->only([
-            'id',
-            'resource_id',
-        ]);
+        return $this->main($request, $service);
     }
 }

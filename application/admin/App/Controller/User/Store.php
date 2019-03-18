@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Controller\User;
 
+use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\User\Store as service;
 use Leevel\Http\IRequest;
 
@@ -28,6 +29,21 @@ use Leevel\Http\IRequest;
  */
 class Store
 {
+    use Controller;
+
+    /**
+     * 允许的输入字段.
+     *
+     * @var array
+     */
+    private $allowedInput = [
+        'name',
+        'identity',
+        'status',
+        'userRole',
+        'password',
+    ];
+
     /**
      * 响应方法.
      *
@@ -38,24 +54,6 @@ class Store
      */
     public function handle(IRequest $request, Service $service): array
     {
-        return $service->handle($this->input($request));
-    }
-
-    /**
-     * 输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
-     */
-    protected function input(IRequest $request): array
-    {
-        return $request->only([
-            'name',
-            'identity',
-            'status',
-            'userRole',
-            'password',
-        ]);
+        return $this->main($request, $service);
     }
 }

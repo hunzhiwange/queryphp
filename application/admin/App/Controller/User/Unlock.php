@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Controller\User;
 
+use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\User\Unlock as service;
 use Leevel\Auth\Facade\Auth;
 use Leevel\Http\IRequest;
@@ -29,6 +30,17 @@ use Leevel\Http\IRequest;
  */
 class Unlock
 {
+    use Controller;
+
+    /**
+     * 允许的输入字段.
+     *
+     * @var array
+     */
+    private $allowedInput = [
+        'password',
+    ];
+
     /**
      * 响应方法.
      *
@@ -39,7 +51,22 @@ class Unlock
      */
     public function handle(IRequest $request, Service $service): array
     {
-        return $service->handle(array_merge(['token' => $this->token(), 'id' => $this->id()], $this->input($request)));
+        return $this->main($request, $service);
+    }
+
+    /**
+     * 扩展输入数据.
+     *
+     * @param \Leevel\Http\IRequest $request
+     *
+     * @return array
+     */
+    private function extendInput(IRequest $request): array
+    {
+        return [
+            'id'    => $this->id(),
+            'token' => $this->token(),
+        ];
     }
 
     /**
@@ -47,7 +74,7 @@ class Unlock
      *
      * @return string
      */
-    protected function token(): string
+    private function token(): string
     {
         return Auth::getTokenName();
     }
@@ -57,22 +84,8 @@ class Unlock
      *
      * @return int
      */
-    protected function id(): int
+    private function id(): int
     {
         return (int) Auth::getLogin()['id'];
-    }
-
-    /**
-     * 输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
-     */
-    protected function input(IRequest $request): array
-    {
-        return $request->only([
-            'password',
-        ]);
     }
 }

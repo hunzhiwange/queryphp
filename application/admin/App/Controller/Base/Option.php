@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Controller\Base;
 
+use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Base\Option as service;
 use Leevel\Http\IRequest;
 
@@ -28,6 +29,18 @@ use Leevel\Http\IRequest;
  */
 class Option
 {
+    use Controller;
+
+    /**
+     * 允许的输入字段.
+     *
+     * @var array
+     */
+    private $allowedInput = [
+        'site_name',
+        'site_close',
+    ];
+
     /**
      * 响应方法.
      *
@@ -38,21 +51,6 @@ class Option
      */
     public function handle(IRequest $request, Service $service): array
     {
-        return $service->handle($this->input($request));
-    }
-
-    /**
-     * 输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
-     */
-    protected function input(IRequest $request): array
-    {
-        return $request->only([
-            'site_name',
-            'site_close',
-        ]);
+        return $this->main($request, $service);
     }
 }

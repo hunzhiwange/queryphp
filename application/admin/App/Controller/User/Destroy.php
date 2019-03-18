@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Controller\User;
 
+use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\User\Destroy as service;
 use Leevel\Http\IRequest;
 
@@ -28,6 +29,8 @@ use Leevel\Http\IRequest;
  */
 class Destroy
 {
+    use Controller;
+
     /**
      * 响应方法.
      *
@@ -38,7 +41,7 @@ class Destroy
      */
     public function handle(IRequest $request, Service $service): array
     {
-        return $service->handle($this->input($request));
+        return $this->main($request, $service);
     }
 
     /**
@@ -48,10 +51,8 @@ class Destroy
      *
      * @return array
      */
-    protected function input(IRequest $request): array
+    private function input(IRequest $request): array
     {
-        return [
-            'id' => (int) ($request->params->get('_param0')),
-        ];
+        return $this->restfulInput($request);
     }
 }

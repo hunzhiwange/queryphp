@@ -36,9 +36,9 @@ class Upload
      *
      * @param array $input
      *
-     * @return string
+     * @return array
      */
-    public function handle(array $input): string
+    public function handle(array $input): array
     {
         $this->closeDebug();
 
@@ -58,9 +58,9 @@ class Upload
      *
      * @param \Leevel\Http\UploadedFile $file
      *
-     * @return string
+     * @return array
      */
-    protected function save(UploadedFile $file): string
+    protected function save(UploadedFile $file): array
     {
         if (!$file->isValid()) {
             throw new HandleException($file->getErrorMessage());
@@ -70,7 +70,7 @@ class Upload
 
         $this->saveFile($file->getPathname(), $savePath);
 
-        return $this->savePathForUrl($savePath);
+        return [$this->savePathForUrl($savePath)];
     }
 
     /**

@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Controller\Search;
 
+use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Search\Index as service;
 use Leevel\Http\IRequest;
 
@@ -28,6 +29,8 @@ use Leevel\Http\IRequest;
  */
 class Index
 {
+    use Controller;
+
     /**
      * 响应方法.
      *
@@ -38,7 +41,7 @@ class Index
      */
     public function handle(IRequest $request, Service $service): array
     {
-        return $service->handle($this->input($request));
+        return $this->main($request, $service);
     }
 
     /**
@@ -48,7 +51,7 @@ class Index
      *
      * @return array
      */
-    protected function input(IRequest $request): array
+    private function input(IRequest $request): array
     {
         return $request->all();
     }
