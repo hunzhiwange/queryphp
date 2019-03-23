@@ -40,7 +40,7 @@ class Update
     protected $w;
 
     /**
-     * 允许的输入字段.
+     * 工作流.
      *
      * allowedInput:输入数据白名单
      * filterInput:过滤输入数据

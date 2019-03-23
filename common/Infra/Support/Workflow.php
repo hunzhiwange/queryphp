@@ -68,8 +68,8 @@ trait Workflow
          * 与 __construct 唯一不同的是会传入输入值.
          * 这是一个可选的值.
          */
-        if (method_exists($this, 'new')) {
-            array_unshift($workflow, 'new');
+        if (method_exists($this, 'init')) {
+            array_unshift($workflow, 'init');
         }
 
         /*
