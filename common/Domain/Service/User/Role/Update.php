@@ -111,9 +111,19 @@ class Update
     private function validateInputRules(array $input): array
     {
         $rules = [
-            'id'            => 'required',
-            'name'          => 'required|chinese_alpha_num|max_length:50',
-            'identity'      => 'required|alpha_dash|'.UniqueRule::rule(Role::class, null, $input['id']),
+            'id' => [
+                'required',
+            ],
+            'name' => [
+                'required',
+                'chinese_alpha_num',
+                'max_length:50',
+            ],
+            'identity' => [
+                'required',
+                'alpha_dash',
+                UniqueRule::rule(Role::class, null, $input['id']),
+            ],
         ];
 
         $names = [
