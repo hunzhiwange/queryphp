@@ -172,7 +172,9 @@ class Update
      */
     private function find(int $id): Role
     {
-        return $this->w->repository(Role::class)->findOrFail($id);
+        return $this->w
+            ->repository(Role::class)
+            ->findOrFail($id);
     }
 
     /**

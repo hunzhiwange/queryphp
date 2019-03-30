@@ -114,7 +114,9 @@ class Update
      */
     protected function find(int $id): Resource
     {
-        return $this->w->repository(Resource::class)->findOrFail($id);
+        return $this->w
+            ->repository(Resource::class)
+            ->findOrFail($id);
     }
 
     /**

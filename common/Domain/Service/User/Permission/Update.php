@@ -112,7 +112,9 @@ class Update
      */
     protected function find(int $id): Permission
     {
-        return $this->w->repository(Permission::class)->findOrFail($id);
+        return $this->w
+            ->repository(Permission::class)
+            ->findOrFail($id);
     }
 
     /**

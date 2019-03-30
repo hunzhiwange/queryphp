@@ -114,7 +114,9 @@ class UpdateInfo
      */
     protected function find(int $id): User
     {
-        return $this->w->repository(User::class)->findOrFail($id);
+        return $this->w
+            ->repository(User::class)
+            ->findOrFail($id);
     }
 
     /**
