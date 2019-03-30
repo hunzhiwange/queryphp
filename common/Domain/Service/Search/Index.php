@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Common\Domain\Service\Search;
 
+use Common\Infra\Exception\SearchItemNotFoundException;
 use Leevel;
-use Leevel\Kernel\HandleException;
 
 /**
  * 搜索列表.
@@ -29,6 +29,38 @@ use Leevel\Kernel\HandleException;
 class Index
 {
     /**
+     * 顶级命名空间.
+     *
+     * @var string
+     */
+    private $topNamespace;
+
+    /**
+     * 特殊的语言保留关键字.
+     *
+     * 遇到一个新增加即可，不需要全部添加.
+     *
+     * @var array
+     */
+    private $keyMap = [
+        'return' => 'returns',
+        'list'   => 'lists',
+        'new'    => 'news',
+    ];
+
+    /**
+     * 构造函数.
+     *
+     * 加入顶层命名空间以便于做单元测试
+     *
+     * @param string $topNamespace
+     */
+    public function __construct(string $topNamespace = 'Admin')
+    {
+        $this->topNamespace = $topNamespace;
+    }
+
+    /**
      * 响应方法.
      *
      * @param array $input
@@ -38,30 +70,39 @@ class Index
     public function handle(array $input): array
     {
         $result = [];
+        $keyMap = $this->keyMap;
 
         foreach ($input as $service => $method) {
             if (!is_array($method)) {
                 continue;
             }
 
-            $convertService = $this->convertService($service);
-            $serviceClass = '\\Admin\\App\\Service\\'.$convertService.'\\Search\\';
+            $convertService = $this->convertService($keyMap[$service] ?? $service);
+            $serviceClass = '\\'.$this->topNamespace.'\\App\\Service\\Search\\'.$convertService.'\\';
 
             foreach ($method as $v) {
+                if (isset($keyMap[$v])) {
+                    $v = $keyMap[$v];
+                }
+
                 $convertMethod = $this->convertService($v);
                 $serviceHandle = $serviceClass.$convertMethod;
 
                 if (!class_exists($serviceHandle)) {
-                    throw new HandleException(sprintf('Service %s was not found.', $serviceHandle));
+                    $e = sprintf('Service `%s` was not found.', $serviceHandle);
+
+                    throw new SearchItemNotFoundException($e);
                 }
 
                 $serviceObj = Leevel::make($serviceHandle);
 
                 if (!is_object($serviceObj) || !is_callable([$serviceObj, 'handle'])) {
-                    throw new HandleException(sprintf('Service %s:%s was invalid.', $serviceHandle, 'handle'));
+                    $e = sprintf('Service `%s:%s` was invalid.', $serviceHandle, 'handle');
+
+                    throw new SearchItemNotFoundException($e);
                 }
 
-                $result[lcfirst($convertService)][lcfirst($convertMethod)] = Leevel::call([$serviceObj, 'handle']);
+                $result[lcfirst($convertService)][lcfirst($convertMethod)] = Leevel::call([$serviceObj, 'handle'], [$input]);
             }
         }
 
