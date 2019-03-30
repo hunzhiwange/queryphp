@@ -35,9 +35,8 @@ trait WorkflowWithInput
      * 输入数据白名单基础方法.
      *
      * @param array $input
-     * @param array $allowed
      */
-    private function allowedInputBase(array &$input, array $allowed): void
+    private function allowedInputBase(array &$input): void
     {
         $input = Arr::only($input, $this->allowedInput);
     }
