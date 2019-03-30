@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Admin\App\Controller\Support;
 
 use Leevel\Http\IRequest;
+use Leevel\Router\IRouter;
 
 /**
  * 控制器.
@@ -68,7 +69,7 @@ trait Controller
     private function restfulInput(IRequest $request): array
     {
         return [
-            'id' => (int) ($request->params->get('_param0')),
+            'id' => (int) ($request->params->get(IRouter::RESTFUL_ID)),
         ];
     }
 }

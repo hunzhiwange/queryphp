@@ -55,4 +55,16 @@ class Update
     {
         return $this->main($request, $service);
     }
+
+    /**
+     * 输入数据.
+     *
+     * @param \Leevel\Http\IRequest $request
+     *
+     * @return array
+     */
+    private function extendInput(IRequest $request): array
+    {
+        return $this->restfulInput($request);
+    }
 }
