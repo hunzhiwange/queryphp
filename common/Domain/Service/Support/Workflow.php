@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Domain\Service\Support;
 
-use Common\Infra\Support\Workflow as Workflows;
+use Common\Infra\Support\WorkflowWithInput;
 use InvalidArgumentException;
 
 /**
@@ -28,7 +28,7 @@ use InvalidArgumentException;
  */
 trait Workflow
 {
-    use Workflows;
+    use WorkflowWithInput;
 
     /**
      * 输入数据白名单.

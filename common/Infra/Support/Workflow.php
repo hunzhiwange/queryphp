@@ -15,9 +15,6 @@ declare(strict_types=1);
 namespace Common\Infra\Support;
 
 use InvalidArgumentException;
-use Leevel\Kernel\HandleException;
-use Leevel\Support\Arr;
-use Leevel\Validate\Facade\Validate;
 
 /**
  * 工作流.
@@ -39,12 +36,20 @@ trait Workflow
      */
     private function workflow(array &$input): array
     {
-        $result = [];
+        $result = $args = [];
 
         foreach ($this->normalizeWorkflow() as $wf) {
-            if (null !== ($_ = $this->{$wf}($input, $result))) {
+            if (!method_exists($this, $wf)) {
+                $e = sprintf('Workflow `%s` was not found.', $wf);
+
+                throw new InvalidArgumentException($e);
+            }
+
+            if (null !== ($_ = $this->{$wf}($input, $args))) {
                 $result = $_;
             }
+
+            $args[$wf] = $_;
         }
 
         return $result;
@@ -88,49 +93,5 @@ trait Workflow
         }
 
         return $workflow;
-    }
-
-    /**
-     * 输入数据白名单基础方法.
-     *
-     * @param array $input
-     * @param array $allowed
-     */
-    private function allowedInputBase(array &$input, array $allowed): void
-    {
-        $input = Arr::only($input, $this->allowedInput);
-    }
-
-    /**
-     * 过滤输入数据基础方法.
-     *
-     * @param array $input
-     * @param array $rules
-     */
-    private function filterInputBase(array &$input, array $rules): void
-    {
-        $input = Arr::filter($input, $rules);
-    }
-
-    /**
-     * 校验输入数据基础方法.
-     *
-     * @param array $input
-     * @param array $rules
-     * @param array $names
-     * @param array $messages
-     */
-    private function validateInputBase(array $input, array $rules = [], array $names = [], array $messages = []): void
-    {
-        $validator = Validate::make(
-            $input,
-            $rules,
-            $names,
-            $messages
-        );
-
-        if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
-        }
     }
 }
