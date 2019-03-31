@@ -105,7 +105,7 @@ eot;
     {
         $this->expectException(\Leevel\Kernel\HandleException::class);
         $this->expectExceptionMessage(
-            '{"foo":["nikeFoo must be number"]}'
+            '{"foo":["nikeFoo 必须是数字"]}'
         );
 
         $input = [

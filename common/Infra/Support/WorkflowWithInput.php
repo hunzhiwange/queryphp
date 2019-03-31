@@ -70,7 +70,9 @@ trait WorkflowWithInput
         );
 
         if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
+            $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
+
+            throw new HandleException($e);
         }
     }
 }
