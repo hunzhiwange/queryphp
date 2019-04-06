@@ -29,6 +29,6 @@ use Leevel\Leevel\Testing\TestCase as TestCases;
 abstract class TestCase extends TestCases
 {
     use Helper;
-    use Project;
+    use App;
     use Database;
 }

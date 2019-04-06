@@ -5,7 +5,7 @@ const resolve = dir => {
     return path.join(__dirname, dir)
 }
 
-// 项目部署基础
+// 应用部署基础
 // 默认情况下，我们假设你的应用将被部署在域的根目录下,
 // 例如：https://www.my-app.com/
 // 默认：'/'
@@ -16,7 +16,7 @@ const resolve = dir => {
 const PUBLIC_PATH = process.env.NODE_ENV === 'production' ? '/' : '/'
 
 module.exports = {
-    // Project deployment base
+    // App deployment base
     // By default we assume your app will be deployed at the root of a domain,
     // e.g. https://www.my-app.com/
     // If your app is deployed at a sub-path, you will need to specify that

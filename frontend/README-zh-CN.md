@@ -2,9 +2,9 @@
 
 <a href="./README.md">English</a> | <a href="./README-zh-CN.md">中文</a>
 
-这个项目可以帮助你更好地使用 QueryPHP.
+这个应用可以帮助你更好地使用 QueryPHP.
 
-本项目基于 [VueThink](https://github.com/honraytech/VueThink)、[VueElementAdmin](https://github.com/PanJiaChen/vue-element-admin)、[IViewAdmin](https://github.com/iview/iview-admin)，感谢这些优秀的项目。
+本应用基于 [VueThink](https://github.com/honraytech/VueThink)、[VueElementAdmin](https://github.com/PanJiaChen/vue-element-admin)、[IViewAdmin](https://github.com/iview/iview-admin)，感谢这些优秀的应用。
 
 ## Development
 

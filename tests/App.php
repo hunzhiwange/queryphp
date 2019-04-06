@@ -21,7 +21,7 @@ use Leevel\Http\Request;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
 use Leevel\Kernel\IRuntime;
-use Leevel\Leevel\Project as BaseProject;
+use Leevel\Leevel\App as BaseApp;
 
 /**
  * 初始化应用.
@@ -32,29 +32,29 @@ use Leevel\Leevel\Project as BaseProject;
  *
  * @version 1.0
  */
-trait Project
+trait App
 {
     /**
-     * 初始化项目.
+     * 初始化应用.
      *
-     * @return \Leevel\Leevel\Project
+     * @return \Leevel\Leevel\App
      */
-    protected function createProject(): BaseProject
+    protected function createApp(): BaseApp
     {
         require_once __DIR__.'/../vendor/autoload.php';
 
-        $project = BaseProject::singletons(__DIR__.'/..');
+        $app = BaseApp::singletons(__DIR__.'/..');
 
-        $project->singleton(IKernel::class, Kernel::class);
+        $app->singleton(IKernel::class, Kernel::class);
 
-        $project->singleton(IKernelConsole::class, KernelConsole::class);
+        $app->singleton(IKernelConsole::class, KernelConsole::class);
 
-        $project->singleton(IRuntime::class, Runtime::class);
+        $app->singleton(IRuntime::class, Runtime::class);
 
-        $project->instance('request', Request::createFromGlobals());
+        $app->instance('request', Request::createFromGlobals());
 
-        $project->make(IKernelConsole::class)->bootstrap();
+        $app->make(IKernelConsole::class)->bootstrap();
 
-        return $project;
+        return $app;
     }
 }

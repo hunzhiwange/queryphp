@@ -17,7 +17,7 @@ use Common\App\Kernel;
 use Leevel\Http\Request;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IRuntime;
-use Leevel\Leevel\Project;
+use Leevel\Leevel\App;
 
 /**
  * ---------------------------------------------------------------
@@ -39,25 +39,25 @@ if (is_file($autoloadLeevel)) {
 
 /**
  * ---------------------------------------------------------------
- * 创建项目
+ * 创建应用
  * ---------------------------------------------------------------.
  *
- * 注册项目基础服务
+ * 注册应用基础服务
  */
-$project = Project::singletons(realpath(__DIR__.'/..'));
+$app = App::singletons(realpath(__DIR__.'/..'));
 
-$project->singleton(IKernel::class, Kernel::class);
+$app->singleton(IKernel::class, Kernel::class);
 
-$project->singleton(IRuntime::class, Runtime::class);
+$app->singleton(IRuntime::class, Runtime::class);
 
 /**
  * ---------------------------------------------------------------
- * 执行项目
+ * 执行应用
  * ---------------------------------------------------------------.
  *
  * 根据内核调度请求返回响应
  */
-$kernel = $project->make(IKernel::class);
+$kernel = $app->make(IKernel::class);
 
 $response = $kernel->handle(
     $request = Request::createFromGlobals()

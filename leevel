@@ -16,7 +16,7 @@ declare(strict_types=1);
 use Common\App\Exception\Runtime;
 use Common\App\Kernel;
 use Common\App\KernelConsole;
-use Leevel\Leevel\Project;
+use Leevel\Leevel\App;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
 use Leevel\Kernel\IRuntime;
@@ -32,27 +32,27 @@ require_once __DIR__.'/vendor/autoload.php';
 
 /**
  * ---------------------------------------------------------------
- * 创建项目
+ * 创建应用
  * ---------------------------------------------------------------.
  *
- * 注册项目基础服务
+ * 注册应用基础服务
  */
-$project = Project::singletons(__DIR__);
+$app = App::singletons(__DIR__);
 
-$project->singleton(IKernel::class, Kernel::class);
+$app->singleton(IKernel::class, Kernel::class);
 
-$project->singleton(IKernelConsole::class, KernelConsole::class);
+$app->singleton(IKernelConsole::class, KernelConsole::class);
 
-$project->singleton(IRuntime::class, Runtime::class);
+$app->singleton(IRuntime::class, Runtime::class);
 
 /**
  * ---------------------------------------------------------------
- * 执行项目
+ * 执行应用
  * ---------------------------------------------------------------.
  *
  * 根据内核调度请求返回响应
  */
-$kernel = $project->make(IKernelConsole::class);
+$kernel = $app->make(IKernelConsole::class);
 
 $status = $kernel->handle();
 
