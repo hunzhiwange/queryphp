@@ -65,23 +65,6 @@ return [
             'suffix' => '.twig',
         ],
 
-        'v8js' => [
-            // driver
-            'driver' => 'v8js',
-
-            // 后缀
-            'suffix' => '.js',
-
-            // vue path
-            'vue_path' => Leevel::path('node_modules/vue/dist/vue.js'),
-
-            // vue renderer
-            'vue_renderer' => Leevel::path('node_modules/vue-server-renderer/basic.js'),
-
-            // art path
-            'art_path' => Leevel::path('node_modules/art-template/lib/template-web.js'),
-        ],
-
         'phpui' => [
             // driver
             'driver' => 'phpui',
