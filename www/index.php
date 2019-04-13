@@ -32,9 +32,9 @@ use Leevel\Leevel\App;
 $autoloadLeevel = __DIR__.'/../vendor/autoloadLeevel.php';
 
 if (is_file($autoloadLeevel)) {
-    require_once $autoloadLeevel;
+    $composer = require $autoloadLeevel;
 } else {
-    require_once __DIR__.'/../vendor/autoload.php';
+    $composer = require __DIR__.'/../vendor/autoload.php';
 }
 
 /**
@@ -45,6 +45,8 @@ if (is_file($autoloadLeevel)) {
  * 注册应用基础服务
  */
 $app = App::singletons(realpath(__DIR__.'/..'));
+
+$app->setComposer($composer);
 
 $app->singleton(IKernel::class, Kernel::class);
 

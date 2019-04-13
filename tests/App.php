@@ -41,9 +41,11 @@ trait App
      */
     protected function createApp(): BaseApp
     {
-        require_once __DIR__.'/../vendor/autoload.php';
+        $composer = require __DIR__.'/../vendor/autoload.php';
 
         $app = BaseApp::singletons(__DIR__.'/..');
+
+        $app->setComposer($composer);
 
         $app->singleton(IKernel::class, Kernel::class);
 
