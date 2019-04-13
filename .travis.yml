@@ -2,19 +2,16 @@ language: php
 
 env:
   global:
-    - MIN_PHP=7.1.3
+    - MIN_PHP=7.3.2
     - setup=stable
 
 matrix:
   include:
-    - php: 7.1.3
-    - php: 7.1.3
+    - php: 7.3.2
+    - php: 7.3.2
       env: setup=lowest
-    - php: 7.2
-    - php: 7.2
-      env: setup=lowest
-    - php: 7.3
-    - php: 7.3
+    - php: 7.3.4
+    - php: 7.3.4
       env: setup=lowest
 
   fast_finish: true

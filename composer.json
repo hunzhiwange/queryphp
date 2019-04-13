@@ -13,7 +13,7 @@
         "email": "635750556@qq.com"
     }],
     "require": {
-        "php": "^7.1.3",
+        "php": "^7.3.2",
         "hunzhiwange/framework": "dev-master"
     },
     "require-dev": {
