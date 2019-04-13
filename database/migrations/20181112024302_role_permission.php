@@ -55,17 +55,17 @@ class RolePermission extends AbstractMigration
     private function seed()
     {
         $sql = <<<'EOT'
-INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (1, 1, '2019-01-31 01:14:34');
-INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 2, '2019-01-31 09:46:31');
-INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 3, '2019-01-31 09:46:31');
-INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 4, '2019-01-31 09:46:31');
-INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 5, '2019-01-31 09:27:04');
-INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 6, '2019-01-31 09:46:31');
-INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 7, '2019-01-31 09:27:15');
-INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 8, '2019-01-31 09:27:04');
-INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 9, '2019-01-31 09:27:04');
-INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (3, 7, '2019-01-31 09:27:42');
-EOT;
+            INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (1, 1, '2019-01-31 01:14:34');
+            INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 2, '2019-01-31 09:46:31');
+            INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 3, '2019-01-31 09:46:31');
+            INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 4, '2019-01-31 09:46:31');
+            INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 5, '2019-01-31 09:27:04');
+            INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 6, '2019-01-31 09:46:31');
+            INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 7, '2019-01-31 09:27:15');
+            INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 8, '2019-01-31 09:27:04');
+            INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (2, 9, '2019-01-31 09:27:04');
+            INSERT INTO `role_permission`(`role_id`, `permission_id`, `create_at`) VALUES (3, 7, '2019-01-31 09:27:42');
+            EOT;
 
         $this->execute($sql);
     }

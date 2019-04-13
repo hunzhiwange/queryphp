@@ -31,23 +31,23 @@ class IndexTest extends TestCase
         $result = $m->handle($input);
 
         $json = <<<'eot'
-{
-    "test": {
-        "foo": {
-            "foo": {
-                "hello": "world",
-                "foo": "bar"
+            {
+                "test": {
+                    "foo": {
+                        "foo": {
+                            "hello": "world",
+                            "foo": "bar"
+                        }
+                    },
+                    "bar": {
+                        "foo": {
+                            "hello": "world",
+                            "foo": "bar"
+                        }
+                    }
+                }
             }
-        },
-        "bar": {
-            "foo": {
-                "hello": "world",
-                "foo": "bar"
-            }
-        }
-    }
-}
-eot;
+            eot;
 
         $this->assertSame(
             $json,
@@ -67,8 +67,8 @@ eot;
         $result = $m->handle($input);
 
         $json = <<<'eot'
-[]
-eot;
+            []
+            eot;
 
         $this->assertSame(
             $json,
@@ -88,17 +88,17 @@ eot;
         $result = $m->handle($input);
 
         $json = <<<'eot'
-{
-    "test": {
-        "lists": {
-            "speciallists": {
-                "hello": "world",
-                "foo": "bar"
+            {
+                "test": {
+                    "lists": {
+                        "speciallists": {
+                            "hello": "world",
+                            "foo": "bar"
+                        }
+                    }
+                }
             }
-        }
-    }
-}
-eot;
+            eot;
 
         $this->assertSame(
             $json,
@@ -118,23 +118,23 @@ eot;
         $result = $m->handle($input);
 
         $json = <<<'eot'
-{
-    "testConvert": {
-        "fooHello": {
-            "FooHello": {
-                "hello": "world",
-                "foo": "bar"
+            {
+                "testConvert": {
+                    "fooHello": {
+                        "FooHello": {
+                            "hello": "world",
+                            "foo": "bar"
+                        }
+                    },
+                    "barWorld": {
+                        "FooHello": {
+                            "hello": "world",
+                            "foo": "bar"
+                        }
+                    }
+                }
             }
-        },
-        "barWorld": {
-            "FooHello": {
-                "hello": "world",
-                "foo": "bar"
-            }
-        }
-    }
-}
-eot;
+            eot;
 
         $this->assertSame(
             $json,

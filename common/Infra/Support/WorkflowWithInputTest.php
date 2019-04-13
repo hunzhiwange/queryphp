@@ -32,12 +32,12 @@ class WorkflowWithInputTest extends TestCase
         $result = $m->handle($input);
 
         $json = <<<'eot'
-{
-    "main": {
-        "foo": "bar"
-    }
-}
-eot;
+            {
+                "main": {
+                    "foo": "bar"
+                }
+            }
+            eot;
 
         $this->assertSame(
             $json,
@@ -58,13 +58,13 @@ eot;
         $result = $m->handle($input);
 
         $json = <<<'eot'
-{
-    "main": {
-        "foo": 0,
-        "hello": "world extends"
-    }
-}
-eot;
+            {
+                "main": {
+                    "foo": 0,
+                    "hello": "world extends"
+                }
+            }
+            eot;
 
         $this->assertSame(
             $json,
@@ -85,13 +85,13 @@ eot;
         $result = $m->handle($input);
 
         $json = <<<'eot'
-{
-    "main": {
-        "foo": "bar",
-        "hello": "world"
-    }
-}
-eot;
+            {
+                "main": {
+                    "foo": "bar",
+                    "hello": "world"
+                }
+            }
+            eot;
 
         $this->assertSame(
             $json,

@@ -61,10 +61,10 @@ class User extends AbstractMigration
     private function seed()
     {
         $sql = <<<'EOT'
-INSERT INTO `user`(`id`, `name`, `identity`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (1, 'admin', 'admin', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:14:34');
-INSERT INTO `user`(`id`, `name`, `identity`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (2, 'user', 'user', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:47:27');
-INSERT INTO `user`(`id`, `name`, `identity`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (3, 'manager', 'manager', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:51:09');
-EOT;
+            INSERT INTO `user`(`id`, `name`, `identity`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (1, 'admin', 'admin', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:14:34');
+            INSERT INTO `user`(`id`, `name`, `identity`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (2, 'user', 'user', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:47:27');
+            INSERT INTO `user`(`id`, `name`, `identity`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (3, 'manager', 'manager', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:51:09');
+            EOT;
 
         $this->execute($sql);
     }

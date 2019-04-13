@@ -55,13 +55,13 @@ class IndexTest extends TestCase
         ]);
 
         $data = <<<'eot'
-{
-    "per_page": 10,
-    "current_page": 1,
-    "total_record": 0,
-    "from": 0
-}
-eot;
+            {
+                "per_page": 10,
+                "current_page": 1,
+                "total_record": 0,
+                "from": 0
+            }
+            eot;
 
         $this->assertSame(
             $data,
@@ -87,13 +87,13 @@ eot;
         ]);
 
         $data = <<<'eot'
-{
-    "per_page": 10,
-    "current_page": 1,
-    "total_record": 1,
-    "from": 0
-}
-eot;
+            {
+                "per_page": 10,
+                "current_page": 1,
+                "total_record": 1,
+                "from": 0
+            }
+            eot;
 
         $this->assertSame(
             $data,
@@ -104,7 +104,7 @@ eot;
 
         $first = $result['data'][0];
 
-        $this->assertSame(1, count($result['data']));
+        $this->assertCount(1, $result['data']);
         $this->assertSame('1', $first['id']);
         $this->assertSame('foo', $first['name']);
         $this->assertSame('bar', $first['identity']);

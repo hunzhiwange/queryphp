@@ -32,13 +32,13 @@ class WorkflowTest extends TestCase
         $result = $m->handle($input);
 
         $json = <<<'eot'
-{
-    "main": {
-        "foo": "bar",
-        "hello": "world"
-    }
-}
-eot;
+            {
+                "main": {
+                    "foo": "bar",
+                    "hello": "world"
+                }
+            }
+            eot;
 
         $this->assertSame(
             $json,
@@ -59,27 +59,27 @@ eot;
         $result = $m->handle($input);
 
         $json = <<<'eot'
-{
-    "main": {
-        "foo": "bar",
-        "hello": "world"
-    },
-    "args": {
-        "foo": {
-            "foo": {
-                "foo": "bar",
-                "hello": "world"
+            {
+                "main": {
+                    "foo": "bar",
+                    "hello": "world"
+                },
+                "args": {
+                    "foo": {
+                        "foo": {
+                            "foo": "bar",
+                            "hello": "world"
+                        }
+                    },
+                    "bar": {
+                        "bar": {
+                            "foo": "bar",
+                            "hello": "world"
+                        }
+                    }
+                }
             }
-        },
-        "bar": {
-            "bar": {
-                "foo": "bar",
-                "hello": "world"
-            }
-        }
-    }
-}
-eot;
+            eot;
 
         $this->assertSame(
             $json,
@@ -132,21 +132,21 @@ eot;
         $result = $m->handle($input);
 
         $json = <<<'eot'
-{
-    "main": {
-        "foo": "bar",
-        "hello": "world"
-    },
-    "args": {
-        "init": {
-            "init": {
-                "foo": "bar",
-                "hello": "world"
+            {
+                "main": {
+                    "foo": "bar",
+                    "hello": "world"
+                },
+                "args": {
+                    "init": {
+                        "init": {
+                            "foo": "bar",
+                            "hello": "world"
+                        }
+                    }
+                }
             }
-        }
-    }
-}
-eot;
+            eot;
 
         $this->assertSame(
             $json,
