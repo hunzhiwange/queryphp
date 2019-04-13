@@ -13,14 +13,14 @@ declare(strict_types=1);
  */
 
 $header = <<<'EOF'
-This file is part of the your app package.
-
-The PHP Application For Code Poem For You.
-(c) 2018-2099 http://yourdomian.com All rights reserved.
-
-For the full copyright and license information, please view the LICENSE
-file that was distributed with this source code.
-EOF;
+    This file is part of the your app package.
+    
+    The PHP Application For Code Poem For You.
+    (c) 2018-2099 http://yourdomian.com All rights reserved.
+    
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+    EOF;
 
 // https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/2.12/.php_cs.dist
 return PhpCsFixer\Config::create()
@@ -85,6 +85,7 @@ return PhpCsFixer\Config::create()
         'binary_operator_spaces'                => ['align_double_arrow' => true], // 自动对齐数组
         'increment_style'                       => ['style' => 'post'], // 自增自减操作符位置
         'native_function_invocation'            => false, // 在函数调用之前添加前导 “\” 以加速解析。
+        'heredoc_indentation'                   => true, // Heredoc / nowdoc 内容必须正确缩进。
     ])
     ->setRiskyAllowed(true)
     ->setFinder(
