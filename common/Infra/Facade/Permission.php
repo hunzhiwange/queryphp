@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Infra\Facade;
 
-use Leevel\Support\Facade;
+use Leevel\Leevel\App;
 
 /**
  * 门面 Permission.
@@ -25,15 +25,20 @@ use Leevel\Support\Facade;
  *
  * @version 1.0
  */
-class Permission extends Facade
+class Permission
 {
     /**
-     * 返回门面名字.
+     * call.
      *
-     * @return string
+     * @param string $method
+     * @param array  $args
+     *
+     * @return mixed
      */
-    protected static function name(): string
+    public static function __callStatic(string $method, array $args)
     {
-        return 'permission';
+        return App::singletons()
+            ->make('permission')
+            ->{$method}(...$args);
     }
 }
