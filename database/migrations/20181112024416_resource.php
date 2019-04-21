@@ -12,7 +12,6 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 
 class Resource extends AbstractMigration
@@ -38,24 +37,36 @@ class Resource extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change()
+    public function change(): void
     {
-        $table = $this->table('resource');
-        $table->addColumn('name', 'string', ['limit' => 64, 'comment' => '资源名字']);
-        $table->addColumn('identity', 'string', ['limit' => 64, 'comment' => '唯一标识符']);
-        $table->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => '1', 'comment' => '状态 0=禁用;1=启用;']);
-        $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
-        $table->addIndex('identity', ['unique' => true]);
-        $table->create();
-
-        // 初始化数据
+        $this->struct();
         $this->seed();
     }
 
     /**
-     * 初始化数据.
+     * struct.
      */
-    private function seed()
+    private function struct(): void
+    {
+        $sql = <<<'EOT'
+            CREATE TABLE `resource` (
+                `id` int(11) NOT NULL AUTO_INCREMENT,
+                `name` varchar(64) NOT NULL COMMENT '资源名字',
+                `identity` varchar(64) NOT NULL COMMENT '唯一标识符',
+                `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
+                `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `identity` (`identity`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+            EOT;
+
+        $this->execute($sql);
+    }
+
+    /**
+     * seed.
+     */
+    private function seed(): void
     {
         $sql = <<<'EOT'
             INSERT INTO `resource`(`id`, `name`, `identity`, `status`, `create_at`) VALUES (2, '资源列表', 'get:resource', 1, '2018-12-08 13:00:38');

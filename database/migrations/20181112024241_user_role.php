@@ -37,22 +37,33 @@ class UserRole extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change()
+    public function change(): void
     {
-        $table = $this->table('user_role', ['id' => false, 'primary_key' => ['user_id', 'role_id']]);
-        $table->addColumn('user_id', 'integer', ['limit' => 11, 'comment' => '用户 ID']);
-        $table->addColumn('role_id', 'integer', ['limit' => 11, 'comment' => '角色 ID']);
-        $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
-        $table->create();
-
-        // 初始化数据
+        $this->struct();
         $this->seed();
     }
 
     /**
-     * 初始化数据.
+     * struct.
      */
-    private function seed()
+    private function struct(): void
+    {
+        $sql = <<<'EOT'
+            CREATE TABLE `user_role` (
+                `user_id` int(11) NOT NULL COMMENT '用户 ID',
+                `role_id` int(11) NOT NULL COMMENT '角色 ID',
+                `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                PRIMARY KEY (`user_id`,`role_id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+            EOT;
+
+        $this->execute($sql);
+    }
+
+    /**
+     * seed.
+     */
+    private function seed(): void
     {
         $sql = <<<'EOT'
             INSERT INTO `user_role`(`user_id`, `role_id`, `create_at`) VALUES (1, 1, '2019-01-31 01:14:34');

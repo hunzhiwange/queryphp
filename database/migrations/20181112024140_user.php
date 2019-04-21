@@ -12,7 +12,6 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 
 class User extends AbstractMigration
@@ -38,27 +37,39 @@ class User extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change()
+    public function change(): void
     {
-        $table = $this->table('user');
-        $table->addColumn('name', 'string', ['limit' => 64, 'comment' => '用户名字']);
-        $table->addColumn('identity', 'string', ['limit' => 64, 'comment' => '唯一标识符']);
-        $table->addColumn('password', 'string', ['limit' => 255, 'comment' => '密码']);
-        $table->addColumn('email', 'string', ['limit' => 100, 'comment' => 'Email']);
-        $table->addColumn('mobile', 'char', ['limit' => 11, 'comment' => '手机']);
-        $table->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => '1', 'comment' => '状态 0=禁用;1=启用;']);
-        $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
-        $table->addIndex('identity', ['unique' => true]);
-        $table->create();
-
-        // 初始化数据
+        $this->struct();
         $this->seed();
     }
 
     /**
-     * 初始化数据.
+     * struct.
      */
-    private function seed()
+    private function struct(): void
+    {
+        $sql = <<<'EOT'
+            CREATE TABLE `user` (
+                `id` int(11) NOT NULL AUTO_INCREMENT,
+                `name` varchar(64) NOT NULL COMMENT '用户名字',
+                `identity` varchar(64) NOT NULL COMMENT '唯一标识符',
+                `password` varchar(255) NOT NULL COMMENT '密码',
+                `email` varchar(100) NOT NULL COMMENT 'Email',
+                `mobile` char(11) NOT NULL COMMENT '手机',
+                `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
+                `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `identity` (`identity`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+            EOT;
+
+        $this->execute($sql);
+    }
+
+    /**
+     * seed.
+     */
+    private function seed(): void
     {
         $sql = <<<'EOT'
             INSERT INTO `user`(`id`, `name`, `identity`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (1, 'admin', 'admin', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:14:34');

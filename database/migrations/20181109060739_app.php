@@ -12,7 +12,6 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 
 class App extends AbstractMigration
@@ -38,36 +37,42 @@ class App extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change()
+    public function change(): void
     {
-        $table = $this->table('app');
-        $table->addColumn('identity', 'string', ['limit' => 64, 'comment' => '应用 ID']);
-        $table->addColumn('key', 'string', ['limit' => 64, 'comment' => '应用 KEY']);
-        $table->addColumn('secret', 'string', ['limit' => 64, 'comment' => '应用秘钥']);
-        $table->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => '1', 'comment' => '状态 0=禁用;1=启用;']);
-        $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
-        $table->addIndex('identity', ['unique' => true]);
-        $table->create();
-
-        // 初始化数据
+        $this->struct();
         $this->seed();
     }
 
     /**
-     * 初始化数据.
+     * struct.
      */
-    private function seed()
+    private function struct(): void
     {
-        $adminApp = [
-            'id'        => 1,
-            'identity'  => 'admin',
-            'key'       => 'B1DA4485-B49D-D8E3-0F9E-168D7605A797',
-            'secret'    => '4282222',
-            'status'    => '1',
-        ];
+        $sql = <<<'EOT'
+            CREATE TABLE `app` (
+                `id` int(11) NOT NULL AUTO_INCREMENT,
+                `identity` varchar(64) NOT NULL COMMENT '应用 ID',
+                `key` varchar(64) NOT NULL COMMENT '应用 KEY',
+                `secret` varchar(64) NOT NULL COMMENT '应用秘钥',
+                `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
+                `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `identity` (`identity`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+            EOT;
 
-        $table = $this->table('app');
-        $table->insert($adminApp);
-        $table->saveData();
+        $this->execute($sql);
+    }
+
+    /**
+     * seed.
+     */
+    private function seed(): void
+    {
+        $sql = <<<'EOT'
+            INSERT INTO `app`(`id`, `identity`, `key`, `secret`, `status`, `create_at`) VALUES (1, 'admin', 'B1DA4485-B49D-D8E3-0F9E-168D7605A797', '4282222', 1, '2019-04-14 22:26:25');
+            EOT;
+
+        $this->execute($sql);
     }
 }

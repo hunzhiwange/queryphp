@@ -37,22 +37,33 @@ class PermissionResource extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change()
+    public function change(): void
     {
-        $table = $this->table('permission_resource', ['id' => false, 'primary_key' => ['permission_id', 'resource_id']]);
-        $table->addColumn('permission_id', 'integer', ['limit' => 11, 'comment' => '权限 ID']);
-        $table->addColumn('resource_id', 'integer', ['limit' => 11, 'comment' => '资源 ID']);
-        $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
-        $table->create();
-
-        // 初始化数据
+        $this->struct();
         $this->seed();
     }
 
     /**
-     * 初始化数据.
+     * struct.
      */
-    private function seed()
+    private function struct(): void
+    {
+        $sql = <<<'EOT'
+            CREATE TABLE `permission_resource` (
+                `permission_id` int(11) NOT NULL COMMENT '权限 ID',
+                `resource_id` int(11) NOT NULL COMMENT '资源 ID',
+                `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                PRIMARY KEY (`permission_id`,`resource_id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+            EOT;
+
+        $this->execute($sql);
+    }
+
+    /**
+     * seed.
+     */
+    private function seed(): void
     {
         $sql = <<<'EOT'
             INSERT INTO `permission_resource`(`permission_id`, `resource_id`, `create_at`) VALUES (1, 26, '2019-01-31 01:14:34');

@@ -37,32 +37,38 @@ class Test extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change()
+    public function change(): void
     {
-        $table = $this->table('test');
-        $table->addColumn('name', 'string', ['limit' => 200, 'comment' => '测试名']);
-        $table->create();
-
-        // 初始化数据
+        $this->struct();
         $this->seed();
     }
 
     /**
-     * 初始化数据.
+     * struct.
      */
-    private function seed()
+    private function struct(): void
     {
-        $rows = [
-            [
-                'name'  => 'foo',
-            ],
-            [
-                'name'  => 'bar',
-            ],
-        ];
+        $sql = <<<'EOT'
+            CREATE TABLE `test` (
+              `id` int(11) NOT NULL AUTO_INCREMENT,
+              `name` varchar(200) NOT NULL COMMENT '测试名',
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+            EOT;
 
-        $table = $this->table('test');
-        $table->insert($rows);
-        $table->save();
+        $this->execute($sql);
+    }
+
+    /**
+     * seed.
+     */
+    private function seed(): void
+    {
+        $sql = <<<'EOT'
+            INSERT INTO `test`(`id`, `name`) VALUES (1, 'foo');
+            INSERT INTO `test`(`id`, `name`) VALUES (2, 'bar');
+            EOT;
+
+        $this->execute($sql);
     }
 }

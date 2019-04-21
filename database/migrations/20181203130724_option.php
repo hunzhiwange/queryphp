@@ -37,37 +37,40 @@ class Option extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change()
+    public function change(): void
     {
-        $table = $this->table('option', ['id' => false, 'primary_key' => ['name']]);
-        $table->addColumn('name', 'string', ['limit' => 200, 'comment' => '配置名']);
-        $table->addColumn('value', 'text', ['comment' => '配置值']);
-        $table->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间']);
-        $table->addIndex('name', ['unique' => true]);
-        $table->create();
-
-        // 初始化数据
+        $this->struct();
         $this->seed();
     }
 
     /**
-     * 初始化数据.
+     * struct.
      */
-    private function seed()
+    private function struct(): void
     {
-        $rows = [
-            [
-                'name'  => 'site_name',
-                'value' => 'QueryPHP',
-            ],
-            [
-                'name'  => 'site_close',
-                'value' => '1',
-            ],
-        ];
+        $sql = <<<'EOT'
+            CREATE TABLE `option` (
+                `name` varchar(200) NOT NULL COMMENT '配置名',
+                `value` text NOT NULL COMMENT '配置值',
+                `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                PRIMARY KEY (`name`),
+                UNIQUE KEY `name` (`name`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+            EOT;
 
-        $table = $this->table('option');
-        $table->insert($rows);
-        $table->save();
+        $this->execute($sql);
+    }
+
+    /**
+     * seed.
+     */
+    private function seed(): void
+    {
+        $sql = <<<'EOT'
+            INSERT INTO `option`(`name`, `value`, `create_at`) VALUES ('site_close', '1', '2019-04-14 22:26:25');
+            INSERT INTO `option`(`name`, `value`, `create_at`) VALUES ('site_name', 'QueryPHP', '2019-04-14 22:26:25');
+            EOT;
+
+        $this->execute($sql);
     }
 }
