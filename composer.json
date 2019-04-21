@@ -17,9 +17,12 @@
         "hunzhiwange/framework": "dev-master"
     },
     "require-dev": {
-        "php-coveralls/php-coveralls":"^2.1",
-        "phpunit/phpunit": "~7.0",
-        "codedungeon/phpunit-result-printer": "^0.26.2"
+        "codedungeon/phpunit-result-printer": "^0.26.2",
+        "php-coveralls/php-coveralls": "^2.1",
+        "phpunit/phpunit": "^8.0",
+        "nunomaduro/collision": "~3.0",
+        "fzaninotto/faker": "^1.6",
+        "robmorgan/phinx": "^0.9.2"
     },
     "autoload": {
         "files": [
