@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Infra\Support;
 
+use InvalidArgumentException;
 use Leevel\Kernel\HandleException;
 use Leevel\Support\Arr;
 use Leevel\Validate\Facade\Validate;
@@ -27,9 +28,53 @@ use Leevel\Validate\Facade\Validate;
  *
  * @version 1.0
  */
-trait WorkflowWithInput
+trait WorkflowService
 {
     use Workflow;
+
+    /**
+     * 输入数据白名单.
+     *
+     * @param array $input
+     */
+    private function allowedInput(array &$input): void
+    {
+        $this->allowedInputBase($input, $this->allowedInput);
+    }
+
+    /**
+     * 过滤输入数据.
+     *
+     * @param array $input
+     */
+    private function filterInput(array &$input): void
+    {
+        $rules = $this->filterInputRules();
+
+        $this->filterInputBase($input, $rules);
+    }
+
+    /**
+     * 校验输入数据.
+     *
+     * @param array $input
+     */
+    private function validateInput(array $input): void
+    {
+        $_ = $this->validateInputRules($input);
+
+        if (2 > count($_)) {
+            throw new InvalidArgumentException('Invalid validate input rules.');
+        }
+
+        if (!isset($_[2])) {
+            $_[2] = [];
+        }
+
+        list($rules, $names, $messages) = $_;
+
+        $this->validateInputBase($input, $rules, $names, $messages);
+    }
 
     /**
      * 输入数据白名单基础方法.

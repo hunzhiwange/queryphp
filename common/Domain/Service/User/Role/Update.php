@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\Role;
 
 use Common\Domain\Entity\User\Role;
-use Common\Domain\Service\Support\Workflow;
+use Common\Infra\Support\WorkflowService;
 use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Validate\UniqueRule;
 
@@ -30,7 +30,7 @@ use Leevel\Validate\UniqueRule;
  */
 class Update
 {
-    use Workflow;
+    use WorkflowService;
 
     /**
      * 事务工作单元.

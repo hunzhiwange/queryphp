@@ -19,7 +19,7 @@ use Tests\TestCase;
 /**
  * @codeCoverageIgnore
  */
-class WorkflowWithInputTest extends TestCase
+class WorkflowServiceTest extends TestCase
 {
     public function testBaseUse(): void
     {
@@ -28,7 +28,7 @@ class WorkflowWithInputTest extends TestCase
             'hello' => 'world',
         ];
 
-        $m = new WorkflowWithInput1();
+        $m = new WorkflowService1();
         $result = $m->handle($input);
 
         $json = <<<'eot'
@@ -54,7 +54,7 @@ class WorkflowWithInputTest extends TestCase
             'hello' => 'world',
         ];
 
-        $m = new WorkflowWithInput2();
+        $m = new WorkflowService2();
         $result = $m->handle($input);
 
         $json = <<<'eot'
@@ -81,7 +81,7 @@ class WorkflowWithInputTest extends TestCase
             'hello' => 'world',
         ];
 
-        $m = new WorkflowWithInput3();
+        $m = new WorkflowService3();
         $result = $m->handle($input);
 
         $json = <<<'eot'
@@ -113,17 +113,33 @@ class WorkflowWithInputTest extends TestCase
             'hello' => 'world',
         ];
 
-        $m = new WorkflowWithInput4();
+        $m = new WorkflowService4();
         $m->handle($input);
+    }
+
+    public function testValidateInputRulesIsInvalid(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Invalid validate input rules.'
+        );
+
+        $input = [
+            'foo'   => 'bar',
+            'hello' => 'world',
+        ];
+
+        $m = new WorkflowService5();
+        $result = $m->handle($input);
     }
 }
 
 /**
  * @codeCoverageIgnore
  */
-class WorkflowWithInput1
+class WorkflowService1
 {
-    use WorkflowWithInput;
+    use WorkflowService;
 
     private $workflow = [
         'allowedInput',
@@ -152,9 +168,9 @@ class WorkflowWithInput1
 /**
  * @codeCoverageIgnore
  */
-class WorkflowWithInput2
+class WorkflowService2
 {
-    use WorkflowWithInput;
+    use WorkflowService;
 
     private $workflow = [
         'filterInput',
@@ -188,9 +204,9 @@ class WorkflowWithInput2
 /**
  * @codeCoverageIgnore
  */
-class WorkflowWithInput3
+class WorkflowService3
 {
-    use WorkflowWithInput;
+    use WorkflowService;
 
     private $workflow = [
         'validateInput',
@@ -223,9 +239,9 @@ class WorkflowWithInput3
 /**
  * @codeCoverageIgnore
  */
-class WorkflowWithInput4
+class WorkflowService4
 {
-    use WorkflowWithInput;
+    use WorkflowService;
 
     private $workflow = [
         'validateInput',
@@ -252,5 +268,32 @@ class WorkflowWithInput4
         $messages = [];
 
         $this->validateInputBase($input, $rules, $names, $messages);
+    }
+}
+
+/**
+ * @codeCoverageIgnore
+ */
+class WorkflowService5
+{
+    use WorkflowService;
+
+    private $workflow = [
+        'validateInput',
+    ];
+
+    public function handle(array $input): array
+    {
+        return $this->workflow($input);
+    }
+
+    private function main(array $input): array
+    {
+        return ['main' => $input];
+    }
+
+    private function validateInputRules(): array
+    {
+        return [];
     }
 }
