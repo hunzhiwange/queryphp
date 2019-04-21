@@ -1,7 +1,7 @@
 {
     "name": "hunzhiwange/queryphp",
     "description": "The QueryPHP Application.",
-    "keywords": ["php", "framework", "queryphp", "vue", "swoole", "iview", "iview"],
+    "keywords": ["php", "framework", "queryphp", "vue", "swoole", "iview"],
     "license": "MIT",
     "homepage": "http://www.queryphp.com",
     "support": {
@@ -19,7 +19,7 @@
     "require-dev": {
         "php-coveralls/php-coveralls":"^2.1",
         "phpunit/phpunit": "~7.0",
-        "codedungeon/phpunit-result-printer": "^0.20.1"
+        "codedungeon/phpunit-result-printer": "^0.26.2"
     },
     "autoload": {
         "files": [
@@ -36,23 +36,29 @@
             "dev-master": "1.0-dev"
         },
         "leevel": {
+            "@providers": "The prividers",
             "providers": [
                 "Common\\Infra\\Provider\\App",
                 "Common\\Infra\\Provider\\Event",
                 "Common\\Infra\\Provider\\Router"
             ],
+            "@ignores": "Ignore the automatic discovery prividers",
             "ignores": [
                 "Leevel\\Notexits\\Provider\\Register"
             ],
+            "@commands": "The commands",
             "commands": [
                 "Common\\App\\Console"
             ],
+            "@options": "The extend options",
             "options": {
                 "test": "common/ui/option/test.php"
             },
+            "@i18ns": "The extend i18ns",
             "i18ns": [
                 "common/ui/i18n"
             ],
+            "@metas": "The metas",
             "metas": {
                 "foo": "bar"
             }
@@ -98,7 +104,7 @@
             "@php -r \"file_exists('.testing') || copy('.testing.example', '.testing');\"",
             "@php -r \"file_exists('frontend/.env.local') || copy('frontend/.env.example', 'frontend/.env.local');\"",
             "@php -r \"file_exists('frontend/.env.production') || copy('frontend/.env.example', 'frontend/.env.production');\"",
-            "@php leevel autoload --ignore=1"
+            "@php leevel autoload --ignore"
         ]
     },
     "config": {
