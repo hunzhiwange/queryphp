@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Common\Domain\Entity\Base;
 
 use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\IEntity;
 
 /**
  * Option.
@@ -92,7 +93,7 @@ class Option extends Entity
      *
      * @return $this
      */
-    public function setter(string $prop, $value): Entity
+    public function setter(string $prop, $value): IEntity
     {
         $this->{$this->prop($prop)} = $value;
 

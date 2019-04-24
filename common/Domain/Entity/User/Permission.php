@@ -16,6 +16,7 @@ namespace Common\Domain\Entity\User;
 
 use Common\Infra\Repository\User\Permission as RepositoryPermission;
 use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\IEntity;
 
 /**
  * Permission.
@@ -147,7 +148,7 @@ class Permission extends Entity
      *
      * @return $this
      */
-    public function setter(string $prop, $value): Entity
+    public function setter(string $prop, $value): IEntity
     {
         $this->{$this->prop($prop)} = $value;
 

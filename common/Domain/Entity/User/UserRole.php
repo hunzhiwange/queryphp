@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Common\Domain\Entity\User;
 
 use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\IEntity;
 
 /**
  * UserRole.
@@ -92,7 +93,7 @@ class UserRole extends Entity
      *
      * @return $this
      */
-    public function setter(string $prop, $value): Entity
+    public function setter(string $prop, $value): IEntity
     {
         $this->{$this->prop($prop)} = $value;
 
