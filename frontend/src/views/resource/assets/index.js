@@ -229,7 +229,7 @@ export default {
             this.handleReset(form)
         },
         reset() {
-            Object.assign(this.formItem, resetForm)
+            this.formItem = resetForm
         },
     },
     computed: {},

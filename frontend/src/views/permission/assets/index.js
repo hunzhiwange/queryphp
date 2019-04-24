@@ -445,7 +445,7 @@ export default {
             )
         },
         reset() {
-            Object.assign(this.formItem, resetForm)
+            this.formItem = resetForm
         },
         changeResourcePage(page) {
             this.resourcePage = page
