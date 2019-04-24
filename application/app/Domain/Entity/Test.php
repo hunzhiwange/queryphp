@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace App\Domain\Entity;
 
 use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\IEntity;
 
 /**
  * Test.
@@ -82,7 +83,7 @@ class Test extends Entity
      *
      * @return $this
      */
-    public function setter(string $prop, $value): Entity
+    public function setter(string $prop, $value): IEntity
     {
         $this->{$this->prop($prop)} = $value;
 
