@@ -104,17 +104,21 @@ export default {
             // 菜单
             this.$store.commit('updateMenulist')
 
-            // 刷新后台自动刷新权限，每一小时刷新一次用户权限
+            // 刷新后台自动刷新权限
             this.refreshPermission()
 
-            setInterval(() => {
-                this.refreshPermission()
-            }, 1000 * 60 * 60)
+            // 刷新用户信息
+            this.userInfo()
         },
         // 刷新权限，防止需要重新登录才刷新权限
         refreshPermission() {
             this.apiGet('user/permission', {refresh: '1'}).then(res => {
                 this.$store.dispatch('setRules', res)
+            })
+        },
+        userInfo(token) {
+            this.apiGet('user/info', {refresh: '1'}).then(res => {
+                this.$store.dispatch('setUsers', res)
             })
         },
         toggleClick() {

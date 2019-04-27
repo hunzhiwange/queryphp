@@ -112,34 +112,9 @@ class Validate
 
         Auth::setTokenName($token = $this->createToken());
 
-        Auth::login($userInfo = $user->toArray());
+        Auth::login($user->toArray());
 
-        $permission = $this->getPermission($token, (int) $userInfo['id']);
-
-        return [
-            'token'     => $token,
-            'userInfo'  => $userInfo,
-            'menusList' => [],
-            'authList'  => $permission,
-            'keepLogin' => 1 === (int) $input['remember'],
-        ];
-    }
-
-    /**
-     * 获取权限.
-     *
-     * @param string $token
-     * @param int    $userId
-     *
-     * @return array
-     */
-    protected function getPermission(string $token, int $userId): array
-    {
-        $permission = $this->permission->handle(['user_id' => $userId]);
-
-        $this->permissionCache->set($token, $permission);
-
-        return $permission;
+        return ['token' => $token];
     }
 
     /**

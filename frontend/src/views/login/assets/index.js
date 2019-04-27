@@ -91,10 +91,14 @@ export default {
                         res => {
                             utils.success(this.__('登陆成功'))
 
+                            res.keepLogin = this.isKeepLogin()
+                            this.refreshPermission(res.token)
+                            this.userInfo(res.token)
                             this.$store.dispatch('login', res)
 
                             setTimeout(() => {
-                                router.replace('/')
+                                window.location.href = '/'
+                                //router.replace('/')
                             }, 1000)
                         },
                         () => {
@@ -116,6 +120,16 @@ export default {
         },
         isKeepLogin() {
             return Cookies.get('keep_login') === 'T' || !Cookies.get('keep_login')
+        },
+        refreshPermission(token) {
+            this.apiGet('user/permission', {refresh: '1', token: token}).then(res => {
+                this.$store.dispatch('setRules', res)
+            })
+        },
+        userInfo(token) {
+            this.apiGet('user/info', {refresh: '1', token: token}).then(res => {
+                this.$store.dispatch('setUsers', res)
+            })
         },
     },
     created() {

@@ -68,6 +68,7 @@ class Auth extends BaseAuth
         '/:admin/user/unlock',
         '/:admin/user/change-password',
         '/:admin/user/permission',
+        '/:admin/user/info',
         '/:admin/search',
     ];
 

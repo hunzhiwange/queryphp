@@ -12,9 +12,6 @@ const user = {
         setToken: (state, token) => {
             state.token = token
         },
-        setMenus(state, menus) {
-            state.menus = menus
-        },
         setRules(state, rules) {
             state.rules = rules
         },
@@ -25,16 +22,7 @@ const user = {
 
     actions: {
         login({commit}, data) {
-            data.authList = Object.assign({static: [], dynamic: []}, data.authList)
-
-            commit('setMenus', data.menusList)
-            commit('setRules', data.authList)
-            commit('setUsers', data.userInfo)
-
             setToken(data.token, data.keepLogin)
-            localStorage.setItem('menus', JSON.stringify(data.menusList))
-            localStorage.setItem('authList', JSON.stringify(data.authList))
-            localStorage.setItem('userInfo', JSON.stringify(data.userInfo))
         },
         loginStorage({commit}) {
             let userInfo = localStorage.getItem('userInfo')
@@ -46,13 +34,11 @@ const user = {
             menus = menus ? JSON.parse(menus) : []
 
             commit('setToken', getToken())
-            commit('setMenus', menus)
             commit('setRules', authList)
             commit('setUsers', userInfo)
         },
         logout({commit}) {
             commit('setToken', '')
-            commit('setMenus', [])
             commit('setRules', [])
             commit('setUsers', [])
 
@@ -61,10 +47,6 @@ const user = {
             localStorage.removeItem('menus')
             localStorage.removeItem('authList')
             localStorage.removeItem('userInfo')
-        },
-        setMenus({commit}, menus) {
-            commit('setMenus', menus)
-            localStorage.setItem('menus', JSON.stringify(menus))
         },
         setRules({commit}, rules) {
             rules = Object.assign({static: [], dynamic: []}, rules)
