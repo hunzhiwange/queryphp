@@ -1,5 +1,5 @@
 <template>
-    <div class="body">
+    <div class="body" id="permission-page">
         <div class="min-form" v-show="minForm">
             <Card :bordered="false">
                 <p slot="title">{{ formItem.id ? __('编辑权限') : __('新增权限') }}</p>
