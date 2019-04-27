@@ -11,7 +11,7 @@
 
                     <div>
                         <Row :gutter="16">
-                            <i-col span="15">
+                            <i-col span="12">
                                 <p>
                                     {{
                                         __(
@@ -19,18 +19,9 @@
                                         )
                                     }}
                                 </p>
-                                <div>
-                                    <div style="margin-top: 20px">
-                                        <i-button type="text" @click="officeSite()" round>{{ __('官方网站') }}</i-button>
-                                        <i-button type="text" @click="githubSite()" round>Github</i-button>
-                                        <i-button type="text" @click="page403" round>403</i-button>
-                                        <i-button type="text" @click="page404" round>404</i-button>
-                                        <i-button type="text" @click="page500" round>500</i-button>
-                                    </div>
-                                </div>
                             </i-col>
-                            <i-col span="9" style="text-align:right;">
-                                <Card>
+                            <i-col span="12" style="text-align:right;">
+                                <Card :bordered="false">
                                     <div style="text-align:center">
                                         <img :src="logo" class="home-logo" alt="QueryPHP" />
                                         <h3>The PHP Framework For Code Poem As Free As Wind</h3>
@@ -78,6 +69,42 @@
             </Row>
 
             <Row class="m-t-10">
+                <Card shadow class="dashboard-link">
+                    <div>
+                        <Row :gutter="16">
+                            <i-col span="24">
+                                <Tabs>
+                                    <TabPane label="Link" icon="md-link" :key="0">
+                                        <Row>
+                                            <i-col span="4">
+                                                <i-button type="text" @click="officeSite()">{{ __('官方网站') }}</i-button>
+                                            </i-col>
+                                            <i-col span="4">
+                                                <i-button type="text" @click="githubSite()">Github</i-button>
+                                            </i-col>
+                                        </Row>
+                                    </TabPane>
+                                    <TabPane label="Error Page" :key="1">
+                                        <Row>
+                                            <i-col span="4">
+                                                <i-button type="text" @click="page403()">403</i-button>
+                                            </i-col>
+                                            <i-col span="4">
+                                                <i-button type="text" @click="page404()">404</i-button>
+                                            </i-col>
+                                            <i-col span="4">
+                                                <i-button type="text" @click="page500()">500</i-button>
+                                            </i-col>
+                                        </Row>
+                                    </TabPane>
+                                </Tabs>
+                            </i-col>
+                        </Row>
+                    </div>
+                </Card>
+            </Row>
+
+            <Row class="m-t-10">
                 <Alert type="success" show-icon>
                     {{ __('感谢信') }}
                     <p slot="desc">
@@ -102,4 +129,4 @@
 </template>
 
 <script src="./assets/index.js"></script>
-<style src="./assets/index.css"></style>
+<style lang="less" src="./assets/index.less"></style>
