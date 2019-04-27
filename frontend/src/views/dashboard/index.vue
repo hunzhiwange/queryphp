@@ -69,7 +69,7 @@
             </Row>
 
             <Row class="m-t-10">
-                <Card shadow class="dashboard-link">
+                <Card shadow class="tab-card">
                     <div>
                         <Row :gutter="16">
                             <i-col span="24">
