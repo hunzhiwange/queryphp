@@ -8,7 +8,7 @@
             <!-- prettier-ignore -->
             </MenuItem>
 
-            <Submenu v-if="item.children.length > 1" :name="item.name + '_name_sub'" :key="item.path + '_path_sub'">
+            <Submenu v-if="item.children.length > 1" :name="item.name" :key="item.path + '_path_sub'">
                 <template slot="title">
                     <Icon :type="item.icon" :size="iconSize" :style="!item.permission ? 'color:#c5c8ce;' : ''"></Icon>
                     <span class="layout-text" :style="!item.permission ? 'color:#c5c8ce;' : ''">{{ itemTitle(item) }}</span>

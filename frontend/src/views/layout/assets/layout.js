@@ -97,10 +97,8 @@ export default {
 
             // 初始化菜单
             this.$store.commit('setCurrentPageName', this.$route.name)
-            let pathArr = utils.setCurrentPath(this, this.$route.name)
-            if (pathArr.length > 2) {
-                this.$store.commit('addOpenSubmenu', pathArr[1].name)
-            }
+            utils.setCurrentPath(this, this.$route.name)
+            this.routeToOpen(this.$route)
             this.checkTag(this.$route.name)
             localStorage.currentPageName = this.$route.name
 
@@ -180,14 +178,23 @@ export default {
             return true
         },
         fullscreenChange() {},
+        routeToOpen(to) {
+            this.$store.commit('clearOpenedSubmenu')
+
+            if (to.meta.par) {
+                to.meta.par.forEach(v => {
+                    this.$store.commit('addOpenSubmenu', v)
+                })
+            }
+
+            this.$store.commit('addOpenSubmenu', to.name)
+        },
     },
     watch: {
         $route(to) {
             this.$store.commit('setCurrentPageName', to.name)
-            let pathArr = utils.setCurrentPath(this, to.name)
-            if (pathArr.length > 2) {
-                this.$store.commit('addOpenSubmenu', pathArr[1].name)
-            }
+            utils.setCurrentPath(this, to.name)
+            this.routeToOpen(to)
             this.checkTag(to.name)
             localStorage.currentPageName = to.name
         },

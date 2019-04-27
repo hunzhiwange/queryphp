@@ -102,6 +102,7 @@ let appRouterData = [
                 name: 'option_index',
                 meta: {
                     title: __('系统配置'),
+                    par: ['base'],
                 },
                 component: importRouter('base/option'),
             },
@@ -111,6 +112,7 @@ let appRouterData = [
                 name: 'profile_index',
                 meta: {
                     title: __('个人中心'),
+                    par: ['base'],
                 },
                 component: importRouter('base/profile'),
             },
@@ -131,6 +133,7 @@ let appRouterData = [
                 name: 'user_index',
                 meta: {
                     title: __('用户管理'),
+                    par: ['permission'],
                 },
                 component: importRouter('user/index'),
             },
@@ -140,6 +143,7 @@ let appRouterData = [
                 name: 'role_index',
                 meta: {
                     title: __('角色管理'),
+                    par: ['permission'],
                 },
                 component: importRouter('role/index'),
             },
@@ -149,6 +153,7 @@ let appRouterData = [
                 name: 'permission_index',
                 meta: {
                     title: __('权限管理'),
+                    par: ['permission'],
                 },
                 component: importRouter('permission/index'),
             },
@@ -158,6 +163,7 @@ let appRouterData = [
                 name: 'resource_index',
                 meta: {
                     title: __('资源管理'),
+                    par: ['permission'],
                 },
                 component: importRouter('resource/index'),
             },
@@ -178,6 +184,7 @@ let appRouterData = [
                 name: 'test_index',
                 meta: {
                     title: __('测试页面'),
+                    par: ['test'],
                 },
                 component: importRouter('test/test'),
             },
