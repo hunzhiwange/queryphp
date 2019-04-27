@@ -33,7 +33,7 @@
                 </div>
             </Card>
         </div>
-        <Card>
+        <Card shadow>
             <div slot="title">
                 <i-button size="small" type="text" @click="add()" class="add-extra" :disabled="!utils.permission('permission_add_button')"
                     ><Icon type="md-add-circle"></Icon> {{ __('新增') }}</i-button

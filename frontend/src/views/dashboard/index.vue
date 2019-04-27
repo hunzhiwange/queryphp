@@ -2,7 +2,7 @@
     <div class="dashboard-page2 body">
         <div class="wrap">
             <Row>
-                <Card>
+                <Card shadow>
                     <p slot="title">
                         <Icon type="flag"></Icon>
                         QueryPHP <Icon type="ios-heart" color="red"></Icon> Vue
@@ -43,7 +43,7 @@
             </Row>
 
             <Row class="m-t-10">
-                <Card>
+                <Card shadow>
                     <p slot="title">
                         <Icon type="ios-heart"></Icon>
                         {{ __('二次开发说明') }}
