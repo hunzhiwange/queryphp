@@ -81,12 +81,24 @@ util.setCurrentPath = function(vm, name) {
             }
         } else {
             item.children.forEach(child => {
-                if (child.name === name) {
-                    curRouter = util.handleItem(vm, child)
+                if (!child.children || child.children < 1) {
+                    if (child.name === name) {
+                        curRouter = util.handleItem(vm, child)
 
-                    if (item.name === 'otherRouter') {
-                        isOtherRouter = true
+                        if (item.name === 'otherRouter') {
+                            isOtherRouter = true
+                        }
                     }
+                } else {
+                    child.children.forEach(child => {
+                        if (child.name === name) {
+                            curRouter = util.handleItem(vm, child)
+
+                            if (item.name === 'otherRouter') {
+                                isOtherRouter = true
+                            }
+                        }
+                    })
                 }
             })
         }
@@ -114,6 +126,36 @@ util.setCurrentPath = function(vm, name) {
             }
         })[0]
 
+        let currentSubPathObj
+
+        if (!currentPathObj) {
+            let i = 0
+            let routerArr = vm.$store.state.app.routers
+            let len = routerArr.length
+            outer: while (i < len) {
+                let m = 0
+                let childArr = routerArr[i].children
+                let lenChild = childArr.length
+                while (m < lenChild) {
+                    if (childArr[m].children && childArr[m].children.length > 0) {
+                        let n = 0
+                        let subChildArr = childArr[m].children
+                        let lenSubChild = subChildArr.length
+                        while (n < lenSubChild) {
+                            if (subChildArr[n].name === name) {
+                                currentPathObj = childArr[m]
+                                currentSubPathObj = subChildArr[n]
+                                break outer
+                            }
+                            n++
+                        }
+                    }
+                    m++
+                }
+                i++
+            }
+        }
+
         if (currentPathObj === undefined) {
             throw 'Can not find children router'
         } else if (currentPathObj.children.length <= 1) {
@@ -128,7 +170,14 @@ util.setCurrentPath = function(vm, name) {
             parent.name = childFirst.name
             parent.path = childFirst.path
 
-            currentPathArr = [util.handleItem(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'dashboard')), parent, util.handleItem(vm, childObj)]
+            currentPathArr = [util.handleItem(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'dashboard')), parent]
+
+            if (currentSubPathObj) {
+                currentPathArr.push(util.handleItem(vm, currentPathObj))
+                currentPathArr.push(util.handleItem(vm, currentSubPathObj))
+            } else {
+                currentPathArr.push(util.handleItem(vm, childObj))
+            }
         }
     }
 

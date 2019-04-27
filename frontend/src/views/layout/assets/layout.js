@@ -50,6 +50,12 @@ export default {
 
                 item.children.forEach(v => {
                     v.permission = utils.permission(v.name + '_menu')
+
+                    if (v.children) {
+                        v.children.forEach(v => {
+                            v.permission = utils.permission(v.name + '_menu')
+                        })
+                    }
                 })
             })
 

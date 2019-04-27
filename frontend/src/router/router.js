@@ -190,6 +190,49 @@ let appRouterData = [
             },
         ],
     },
+    {
+        path: '/menu',
+        icon: 'ios-water',
+        name: 'menu',
+        meta: {
+            title: __('一级菜单'),
+        },
+        component: layout,
+        children: [
+            {
+                path: 'sub',
+                icon: '',
+                name: 'sub_index',
+                meta: {
+                    title: __('二级菜单'),
+                    par: ['menu'],
+                },
+                component: importRouter('layout/router-view'),
+                children: [
+                    {
+                        path: 'three1',
+                        icon: '',
+                        name: 'three1_index',
+                        meta: {
+                            title: __('三级菜单') + ' 1',
+                            par: ['menu', 'sub_index'],
+                        },
+                        component: importRouter('menu/test.1'),
+                    },
+                    {
+                        path: 'three2',
+                        icon: '',
+                        name: 'three2_index',
+                        meta: {
+                            title: __('三级菜单') + ' 2',
+                            par: ['menu', 'sub_index'],
+                        },
+                        component: importRouter('menu/test.2'),
+                    },
+                ],
+            },
+        ],
+    },
 ]
 
 let dataMenu = localStorage.getItem('menus')

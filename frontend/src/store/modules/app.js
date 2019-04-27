@@ -98,7 +98,6 @@ const app = {
             if (!hasThisName && !isEmpty) {
                 state.openedSubmenuArr.push(name)
             }
-            console.log(state.openedSubmenuArr)
         },
         closePage(state, name) {
             state.cachePage.forEach((item, index) => {
