@@ -32,7 +32,7 @@ export default {
     },
     computed: {
         bgColor() {
-            return this.theme === 'dark' ? '#495060' : '#fff'
+            return this.theme === 'dark' ? 'rgb(81, 90, 110)' : '#fff'
         },
         shrinkIconColor() {
             return this.theme === 'dark' ? '#fff' : '#495060'
