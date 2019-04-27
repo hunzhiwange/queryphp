@@ -34,7 +34,7 @@ export default {
         return {
             img_logo: img_logo,
             img_mini_logo: img_mini_logo,
-            shrink: false,
+            //shrink: false,
             isFullScreen: false,
             openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
             dialogVisible: false,
@@ -75,6 +75,9 @@ export default {
         lang() {
             return this.$store.state.app.lang
         },
+        shrink() {
+            return this.$store.state.app.shrink
+        },
         menuTheme() {
             return this.$store.state.app.menuTheme
         },
@@ -101,9 +104,6 @@ export default {
             this.checkTag(this.$route.name)
             localStorage.currentPageName = this.$route.name
 
-            // 菜单
-            this.$store.commit('updateMenulist')
-
             // 刷新后台自动刷新权限
             this.refreshPermission()
 
@@ -122,7 +122,7 @@ export default {
             })
         },
         toggleClick() {
-            this.shrink = !this.shrink
+            this.$store.commit('changeMenuShrink', !this.shrink)
         },
         logout() {
             this.$Modal.confirm({

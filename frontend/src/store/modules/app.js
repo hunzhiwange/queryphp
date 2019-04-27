@@ -1,6 +1,5 @@
 import {otherRouter, appRouter} from '@/router/router'
 import Vue from 'vue'
-import Cookies from 'js-cookie'
 
 const app = {
     state: {
@@ -10,6 +9,7 @@ const app = {
         openedSubmenuArr: [], // 要展开的菜单数组
         menuTheme: 'light', // 主题
         themeColor: '',
+        shrink: false,
         pageOpenedDashboard: {
             meta: {
                 title: __('首页'),
@@ -40,7 +40,7 @@ const app = {
             state.tagsList.push(...list)
         },
         updateMenulist(state) {
-            let accessCode = parseInt(Cookies.get('access'))
+            //let accessCode = parseInt(Cookies.get('access'))
             let menuList = []
 
             if (!appRouter) {
@@ -48,47 +48,33 @@ const app = {
             }
 
             appRouter.forEach((item, index) => {
-                // if (item.access !== undefined) {
-                //     if (Util.showThisRoute(item.access, accessCode)) {
-                //         if (item.children.length === 1) {
-                //             menuList.push(item);
-                //         } else {
-                //             let len = menuList.push(item);
-                //             let childrenArr = [];
-                //             childrenArr = item.children.filter(child => {
-                //                 if (child.access !== undefined) {
-                //                     if (child.access === accessCode) {
-                //                         return child;
-                //                     }
-                //                 } else {
-                //                     return child;
-                //                 }
-                //             });
-                //             menuList[len - 1].children = childrenArr;
-                //         }
-                //     }
-                // } else {
                 if (item.children.length === 1) {
                     menuList.push(item)
                 } else {
                     let len = menuList.push(item)
                     let childrenArr = []
                     childrenArr = item.children.filter(child => {
-                        if (child.access !== undefined) {
-                            if (utils.showThisRoute(child.access, accessCode)) {
-                                return child
-                            }
-                        } else {
-                            return child
-                        }
+                        //if (child.access !== undefined) {
+                        //if (utils.showThisRoute(child.access, accessCode)) {
+                        //return child
+                        //}
+                        //} else {
+                        return child
+                        //}
                     })
                     let handledItem = JSON.parse(JSON.stringify(menuList[len - 1]))
                     handledItem.children = childrenArr
                     menuList.splice(len - 1, 1, handledItem)
                 }
-                //}
             })
             state.menuList = menuList
+        },
+        initMenuShrink(state) {
+            // 菜单折叠
+            let menuShrink = localStorage.getItem('menu_shrink')
+            if (null !== menuShrink) {
+                state.shrink = 'true' === menuShrink ? true : false
+            }
         },
         changeMenuTheme(state, theme) {
             state.menuTheme = theme
@@ -96,13 +82,17 @@ const app = {
         changeMainTheme(state, mainTheme) {
             state.themeColor = mainTheme
         },
+        changeMenuShrink(state, shrink) {
+            state.shrink = shrink
+            localStorage.setItem('menu_shrink', shrink)
+        },
         addOpenSubmenu(state, name) {
             let hasThisName = false
             let isEmpty = false
             if (name.length === 0) {
                 isEmpty = true
             }
-            if (state.openedSubmenuArr.indexOf(name) > -1) {
+            if (state.openedSubmenuArr.includes(name)) {
                 hasThisName = true
             }
             if (!hasThisName && !isEmpty) {
@@ -116,7 +106,7 @@ const app = {
                 }
             })
         },
-        initCachepage(state) {
+        initCachePage(state) {
             if (localStorage.cachePage) {
                 state.cachePage = JSON.parse(localStorage.cachePage)
             }
@@ -274,8 +264,6 @@ const app = {
         switchLang(state, lang) {
             state.lang = lang
             Vue.config.lang = lang
-            // queryphpI18n
-            //   queryphpI18n.lang(lang)
         },
         clearOpenedSubmenu(state) {
             state.openedSubmenuArr.length = 0
