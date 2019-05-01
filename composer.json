@@ -80,7 +80,11 @@
                 "@files": "The white of autoload files",
                 "files": [
                     "common/Infra/functions.php",
-                    "hunzhiwange/framework/src/Leevel/Leevel/functions.php"
+                    "hunzhiwange/framework/src/Leevel/Support/functions.php",
+                    "hunzhiwange/framework/src/Leevel/Leevel/functions.php",
+                    "zendframework/zend-diactoros/src/functions/normalize_server.php",
+                    "zendframework/zend-diactoros/src/functions/create_uploaded_file.php",
+                    "zircote/swagger-php/src/functions.php"
                 ]
             },
             "view-cache": {
