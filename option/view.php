@@ -57,14 +57,6 @@ return [
             'suffix' => '.html',
         ],
 
-        'twig' => [
-            // driver
-            'driver' => 'twig',
-
-            // 后缀
-            'suffix' => '.twig',
-        ],
-
         'phpui' => [
             // driver
             'driver' => 'phpui',
