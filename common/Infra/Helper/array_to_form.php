@@ -42,3 +42,7 @@ function array_to_form(array $data): string
 
     return PHP_EOL.implode(PHP_EOL, $query);
 }
+
+class array_to_form
+{
+}

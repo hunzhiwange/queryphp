@@ -27,3 +27,7 @@ function single_fn(): string
 {
     return 'call single_fn';
 }
+
+class single_fn
+{
+}

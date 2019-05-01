@@ -30,9 +30,6 @@ function foo_bar(string $extend = ''): string
     return 'call foo bar'.$extend;
 }
 
-/**
- * Prevent duplicate loading.
- */
 class index
 {
 }

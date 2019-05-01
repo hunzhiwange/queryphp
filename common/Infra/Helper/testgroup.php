@@ -42,9 +42,6 @@ function testgroup_fn2(): string
     return 'call testgroup_fn2';
 }
 
-/**
- * Prevent duplicate loading.
- */
 class testgroup
 {
 }
