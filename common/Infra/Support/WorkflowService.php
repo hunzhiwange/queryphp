@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Common\Infra\Support;
 
 use InvalidArgumentException;
-use Leevel\Kernel\HandleException;
+use Leevel\Kernel\Exception\HandleException;
 use Leevel\Support\Arr;
 use Leevel\Validate\Facade\Validate;
 

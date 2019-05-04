@@ -21,8 +21,8 @@ use Common\Infra\Facade\Permission;
 use Leevel\Auth\AuthException;
 use Leevel\Auth\Middleware\Auth as BaseAuth;
 use Leevel\Http\IRequest;
-use Leevel\Kernel\HandleException;
-use Leevel\Kernel\UnauthorizedHttpException;
+use Leevel\Kernel\Exception\HandleException;
+use Leevel\Kernel\Exception\UnauthorizedHttpException;
 
 /**
  * auth 中间件.

@@ -17,7 +17,7 @@ namespace Common\Domain\Service\User\Role;
 use Common\Domain\Entity\User\Role;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\HandleException;
+use Leevel\Kernel\Exception\HandleException;
 
 /**
  * 批量修改角色状态.

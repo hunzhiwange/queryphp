@@ -16,7 +16,7 @@ namespace Common\Domain\Service\User\Resource;
 
 use Common\Domain\Entity\User\Resource;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\HandleException;
+use Leevel\Kernel\Exception\HandleException;
 use Leevel\Validate\Facade\Validate;
 
 /**

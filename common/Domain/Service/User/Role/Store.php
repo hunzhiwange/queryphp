@@ -16,7 +16,7 @@ namespace Common\Domain\Service\User\Role;
 
 use Common\Domain\Entity\User\Role;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\HandleException;
+use Leevel\Kernel\Exception\HandleException;
 use Leevel\Validate\Facade\Validate;
 use Leevel\Validate\UniqueRule;
 

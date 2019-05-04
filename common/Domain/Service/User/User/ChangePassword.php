@@ -17,7 +17,7 @@ namespace Common\Domain\Service\User\User;
 use Common\Domain\Entity\User\User;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\HandleException;
+use Leevel\Kernel\Exception\HandleException;
 use Leevel\Validate\Facade\Validate as Validates;
 
 /**

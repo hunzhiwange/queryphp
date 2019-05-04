@@ -16,7 +16,7 @@ namespace Common\Domain\Service\Attachment;
 
 use Leevel\Filesystem\Facade\Filesystem;
 use Leevel\Http\UploadedFile;
-use Leevel\Kernel\HandleException;
+use Leevel\Kernel\Exception\HandleException;
 use Leevel\Option\Facade\Option;
 use Leevel\Support\Str;
 

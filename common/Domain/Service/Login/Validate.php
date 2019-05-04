@@ -22,7 +22,7 @@ use Common\Infra\Repository\User\User\UserPermission;
 use Leevel\Auth\Facade\Auth;
 use Leevel\Auth\Hash;
 use Leevel\Http\IRequest;
-use Leevel\Kernel\HandleException;
+use Leevel\Kernel\Exception\HandleException;
 use Leevel\Support\Str;
 use Leevel\Validate\Facade\Validate as Validates;
 

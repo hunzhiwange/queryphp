@@ -17,7 +17,7 @@ namespace Common\Domain\Service\User\Permission;
 use Common\Domain\Entity\User\Permission;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\HandleException;
+use Leevel\Kernel\Exception\HandleException;
 
 /**
  * 批量修改权限状态.

@@ -17,7 +17,7 @@ namespace Common\Domain\Service\User\User;
 use Common\Domain\Entity\User\User;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\HandleException;
+use Leevel\Kernel\Exception\HandleException;
 
 /**
  * 批量修改用户状态.

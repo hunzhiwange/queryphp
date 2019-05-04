@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Admin\App\Exception;
 
 use Exception;
-use Leevel\Kernel\HttpException;
+use Leevel\Kernel\Exception\HttpException;
 
 /**
  * 锁定
