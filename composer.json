@@ -14,13 +14,13 @@
     }],
     "require": {
         "php": "^7.3.2",
-        "hunzhiwange/framework": "dev-master"
+        "hunzhiwange/framework": "dev-master",
+        "nunomaduro/collision": "~3.0"
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.26.2",
         "php-coveralls/php-coveralls": "^2.1",
         "phpunit/phpunit": "^8.0",
-        "nunomaduro/collision": "~3.0",
         "fzaninotto/faker": "^1.6",
         "robmorgan/phinx": "^0.9.2"
     },
