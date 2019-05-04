@@ -38,10 +38,6 @@ class Index
             Leevel::appPath(),
         ];
 
-        if (!function_exists('\\OpenApi\\scan')) {
-            require_once Leevel::path('vendor').'/zircote/swagger-php/src/functions.php';
-        }
-
         $openApi = \OpenApi\scan($path);
 
         echo json_encode($openApi);
