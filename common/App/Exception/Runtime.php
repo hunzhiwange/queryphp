@@ -18,7 +18,7 @@ use Exception;
 use Leevel;
 use Leevel\Http\IRequest;
 use Leevel\Http\IResponse;
-use Leevel\Leevel\Runtime as Runtimes;
+use Leevel\Kernel\Runtime as Runtimes;
 
 /**
  * 异常处理.

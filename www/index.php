@@ -15,9 +15,9 @@ declare(strict_types=1);
 use Common\App\Exception\Runtime;
 use Common\App\Kernel;
 use Leevel\Http\Request;
+use Leevel\Kernel\App;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IRuntime;
-use Leevel\Leevel\App;
 
 /**
  * ---------------------------------------------------------------

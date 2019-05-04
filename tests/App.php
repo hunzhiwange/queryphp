@@ -18,10 +18,10 @@ use Common\App\Exception\Runtime;
 use Common\App\Kernel;
 use Common\App\KernelConsole;
 use Leevel\Http\Request;
+use Leevel\Kernel\App as BaseApp;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
 use Leevel\Kernel\IRuntime;
-use Leevel\Leevel\App as BaseApp;
 
 /**
  * 初始化应用.
@@ -37,7 +37,7 @@ trait App
     /**
      * 初始化应用.
      *
-     * @return \Leevel\Leevel\App
+     * @return \Leevel\Kernel\App
      */
     protected function createApp(): BaseApp
     {

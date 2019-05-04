@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Infra\Facade;
 
-use Leevel\Leevel\App;
+use Leevel\Kernel\App;
 
 /**
  * 门面 Permission.
