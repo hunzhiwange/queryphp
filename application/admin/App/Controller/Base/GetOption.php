@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Controller\Base;
 
-use Admin\App\Service\Base\GetOption as service;
+use Admin\App\Service\Base\GetOption as Service;
 use Leevel\Http\IRequest;
 
 /**

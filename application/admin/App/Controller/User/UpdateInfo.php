@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Admin\App\Controller\User;
 
 use Admin\App\Controller\Support\Controller;
-use Admin\App\Service\User\UpdateInfo as service;
+use Admin\App\Service\User\UpdateInfo as Service;
 use Leevel\Auth\Facade\Auth;
 use Leevel\Http\IRequest;
 

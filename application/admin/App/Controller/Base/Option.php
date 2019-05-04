@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Admin\App\Controller\Base;
 
 use Admin\App\Controller\Support\Controller;
-use Admin\App\Service\Base\Option as service;
+use Admin\App\Service\Base\Option as Service;
 use Leevel\Http\IRequest;
 
 /**

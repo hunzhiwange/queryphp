@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Admin\App\Controller\Search;
 
 use Admin\App\Controller\Support\Controller;
-use Admin\App\Service\Search\Index as service;
+use Admin\App\Service\Search\Index as Service;
 use Leevel\Http\IRequest;
 
 /**

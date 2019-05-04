@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Admin\App\Controller\Role;
 
 use Admin\App\Controller\Support\Controller;
-use Admin\App\Service\Role\Destroy as service;
+use Admin\App\Service\Role\Destroy as Service;
 use Leevel\Http\IRequest;
 
 /**

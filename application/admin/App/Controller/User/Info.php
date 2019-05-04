@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Controller\User;
 
-use Admin\App\Service\User\Info as service;
+use Admin\App\Service\User\Info as Service;
 
 /**
  * 当前登陆用户查询.

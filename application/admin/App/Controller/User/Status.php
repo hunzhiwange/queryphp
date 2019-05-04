@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Admin\App\Controller\User;
 
 use Admin\App\Controller\Support\Controller;
-use Admin\App\Service\User\Status as service;
+use Admin\App\Service\User\Status as Service;
 use Leevel\Http\IRequest;
 
 /**

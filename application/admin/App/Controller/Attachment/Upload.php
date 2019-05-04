@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Admin\App\Controller\Attachment;
 
 use Admin\App\Controller\Support\Controller;
-use Admin\App\Service\Attachment\Upload as service;
+use Admin\App\Service\Attachment\Upload as Service;
 use Leevel\Http\IRequest;
 
 /**
