@@ -14,8 +14,12 @@ declare(strict_types=1);
 
 use Common\App\Exception\Runtime;
 use Common\App\Kernel;
+use Composer\Autoload\ClassLoader;
+use Leevel\Di\Container;
+use Leevel\Di\IContainer;
 use Leevel\Http\Request;
 use Leevel\Kernel\App;
+use Leevel\Kernel\IApp;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IRuntime;
 
@@ -44,13 +48,18 @@ if (is_file($autoloadLeevel)) {
  *
  * 注册应用基础服务
  */
-$app = App::singletons(realpath(__DIR__.'/..'));
+$container = Container::singletons();
+$container->singleton(IContainer::class, $container);
 
-$app->setComposer($composer);
+$container->singleton('composer', $composer);
+$container->alias('composer', ClassLoader::class);
 
-$app->singleton(IKernel::class, Kernel::class);
+$container->singleton('app', new App($container, realpath(__DIR__.'/..')));
+$container->alias('app', [IApp::class, App::class]);
 
-$app->singleton(IRuntime::class, Runtime::class);
+$container->singleton(IKernel::class, Kernel::class);
+
+$container->singleton(IRuntime::class, Runtime::class);
 
 /**
  * ---------------------------------------------------------------
@@ -59,7 +68,7 @@ $app->singleton(IRuntime::class, Runtime::class);
  *
  * 根据内核调度请求返回响应
  */
-$kernel = $app->make(IKernel::class);
+$kernel = $container->make(IKernel::class);
 
 $response = $kernel->handle(
     $request = Request::createFromGlobals()
