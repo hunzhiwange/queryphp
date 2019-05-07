@@ -14,8 +14,7 @@
     }],
     "require": {
         "php": "^7.3.2",
-        "hunzhiwange/framework": "dev-master",
-        "nunomaduro/collision": "~3.0"
+        "hunzhiwange/framework": "dev-master"
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.26.2",
