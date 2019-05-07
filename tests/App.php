@@ -17,8 +17,13 @@ namespace Tests;
 use Common\App\Exception\Runtime;
 use Common\App\Kernel;
 use Common\App\KernelConsole;
+use Composer\Autoload\ClassLoader;
+use Leevel\Di\Container;
+use Leevel\Di\IContainer;
+use Leevel\Http\IRequest;
 use Leevel\Http\Request;
-use Leevel\Kernel\App as BaseApp;
+use Leevel\Kernel\App as KernelApp;
+use Leevel\Kernel\IApp;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
 use Leevel\Kernel\IRuntime;
@@ -39,23 +44,29 @@ trait App
      *
      * @return \Leevel\Kernel\App
      */
-    protected function createApp(): BaseApp
+    protected function createApp(): KernelApp
     {
         $composer = require __DIR__.'/../vendor/autoload.php';
 
-        $app = BaseApp::singletons(__DIR__.'/..');
+        $container = Container::singletons();
+        $container->singleton(IContainer::class, $container);
 
-        $app->setComposer($composer);
+        $container->singleton('composer', $composer);
+        $container->alias('composer', ClassLoader::class);
 
-        $app->singleton(IKernel::class, Kernel::class);
+        $container->singleton('app', $app = new KernelApp($container, realpath(__DIR__.'/..')));
+        $container->alias('app', [IApp::class, KernelApp::class]);
 
-        $app->singleton(IKernelConsole::class, KernelConsole::class);
+        $container->singleton(IKernel::class, Kernel::class);
 
-        $app->singleton(IRuntime::class, Runtime::class);
+        $container->singleton(IKernelConsole::class, KernelConsole::class);
 
-        $app->instance('request', Request::createFromGlobals());
+        $container->singleton(IRuntime::class, Runtime::class);
 
-        $app->make(IKernelConsole::class)->bootstrap();
+        $container->instance('request', Request::createFromGlobals());
+        $container->alias('request', [IRequest::class, Request::class]);
+
+        $container->make(IKernelConsole::class)->bootstrap();
 
         return $app;
     }
