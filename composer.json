@@ -33,7 +33,8 @@
             "Common\\" : "common"
         },
         "exclude-from-classmap": [
-            "/Tests/",
+            "/tests/",
+            "/**/Tests/",
             "/**/*Test.php",
             "/**/Fixtures/"
         ]
