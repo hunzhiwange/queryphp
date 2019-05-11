@@ -31,7 +31,12 @@
             "App\\" : "application/app",
             "Admin\\" : "application/admin",
             "Common\\" : "common"
-        }
+        },
+        "exclude-from-classmap": [
+            "/Tests/",
+            "/**/*Test.php",
+            "/**/Fixtures/"
+        ]
     },
     "extra": {
         "branch-alias": {
