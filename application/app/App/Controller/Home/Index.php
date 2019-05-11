@@ -14,9 +14,6 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Home;
 
-use Leevel\Cache\Proxy\Cache;
-use Leevel\Database\Proxy\Db;
-use Leevel\Filesystem\Proxy\Filesystem;
 use Leevel\Router\Proxy\View;
 
 /**
@@ -35,29 +32,8 @@ class Index
      *
      * @return string
      */
-    public function handle()//: string
+    public function handle(): string
     {
-        //Filesystem::put('new.txt', 'x小十分水电费水电费xxx');
-        echo 1;
-        app('logs')->info('xxx', ['info', 'hello']);
-
-        //app('caches')->set('xxx', '高级技师');
-    //    $auth->setTokenName('xx');
-    //    var_dump($auth->isLogin());
-        // /** @var \Leevel\Filesystem\Manager @db */
-        // $db = app('filesystems');
-
-        // print_r( $db
-        //     ->put(__DIR__.'/xx.php', '2222xxxx'));
-
-        //var_dump(Db::selfSelect());
-        // $x = Db::table('test')->limit(20)->findAll();
-        // print_r($x);
-//         Cache::set('xxxxxx', 'wwwwxx');
-// dump(Cache::get('xxxxxx'));
-//         $cache = app('caches');
-//       $cache->put(['hello' => '222']);
-// dump($cache->get('hello'));
-        //return View::display('home');
+        return View::display('home');
     }
 }
