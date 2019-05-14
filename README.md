@@ -211,9 +211,9 @@ $php leevel migrate:migrate -e testing
 $php vendor/bin/phpunit tests
 ```
 
-## Base optimization
+## Production optimization
 
-### Debug
+### Close Debug
 
 Modify .env or runtime/bootstrap/option.php.
 
@@ -223,9 +223,12 @@ ENVIRONMENT = production
 
 // Debug
 DEBUG = false
+DEBUG_JSON = false 
+DEBUG_CONSOLE = false
+DEBUG_JAVASCRIPT = false
 ```
 
-### Commands
+### Optimize Commands
 
 The commands below can make queryphp faster.
 
@@ -234,13 +237,48 @@ php leevel router:cache
 php leevel option:cache
 php leevel i18n:cache
 php leevel view:cache
-php leevel autoload (contains `composer dump-autoload --optimize`)
+php leevel autoload (Equivalent to `composer dump-autoload --optimize --no-dev`)
 ```
 
 Or
 
 ```
-php leevel production # `php leevel development` will back.
+php leevel production
+```
+
+## Development
+
+### Open Debug
+
+Modify .env or runtime/bootstrap/option.php.
+
+```
+// Environment production、testing and development
+ENVIRONMENT = development
+
+// Debug
+DEBUG = true
+DEBUG_JSON = true 
+DEBUG_CONSOLE = true
+DEBUG_JAVASCRIPT = true
+```
+
+### Clears Commands
+
+```
+php leevel i18n:clear
+php leevel log:clear
+php leevel option:clear
+php leevel router:clear
+php leevel session:clear
+php leevel view:clear
+php leevel autoload --dev (Equivalent to `composer dump-autoload --optimize`)
+```
+
+Or
+
+```
+php leevel development
 ```
 
 ## USE LEEVEL DO BETTER

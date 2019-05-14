@@ -210,7 +210,7 @@ $php leevel migrate:migrate -e testing
 $php vendor/bin/phpunit tests
 ```
 
-## 基本优化
+## 生产环境优化
 
 ### 关闭调试
 
@@ -222,6 +222,9 @@ ENVIRONMENT = production
 
 // Debug
 DEBUG = false
+DEBUG_JSON = false 
+DEBUG_CONSOLE = false
+DEBUG_JAVASCRIPT = false
 ```
 
 ### 执行优化指令
@@ -233,13 +236,48 @@ php leevel router:cache
 php leevel option:cache
 php leevel i18n:cache
 php leevel view:cache
-php leevel autoload (contains `composer dump-autoload --optimize`)
+php leevel autoload (Equivalent to `composer dump-autoload --optimize --no-dev`)
 ```
 
 或者
 
 ```
-php leevel production # `php leevel development` will back.
+php leevel production
+```
+
+## 开发阶段
+
+### 打开调试
+
+修改 .env 或者 runtime/bootstrap/option.php.
+
+```
+// Environment production、testing and development
+ENVIRONMENT = development
+
+// Debug
+DEBUG = true 
+DEBUG_JSON = true 
+DEBUG_CONSOLE = true
+DEBUG_JAVASCRIPT = true
+```
+
+### 清理缓存指令
+
+```
+php leevel i18n:clear
+php leevel log:clear
+php leevel option:clear
+php leevel router:clear
+php leevel session:clear
+php leevel view:clear
+php leevel autoload --dev (Equivalent to `composer dump-autoload --optimize`)
+```
+
+Or
+
+```
+php leevel development
 ```
 
 ## 安装 Leevel 扩展让性能更好

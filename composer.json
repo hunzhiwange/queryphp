@@ -72,26 +72,6 @@
             }
         },
         "leevel-console" : {
-            "autoload": {
-                "@namespaces": "The white of Psr4",
-                "namespaces": [
-                    "Leevel",
-                    "Dotenv",
-                    "Carbon",
-                    "Monolog",
-                    "Whoops",
-                    "Swagger"
-                ],
-                "@files": "The white of autoload files",
-                "files": [
-                    "common/Infra/functions.php",
-                    "hunzhiwange/framework/src/Leevel/Support/functions.php",
-                    "hunzhiwange/framework/src/Leevel/Kernel/functions.php",
-                    "zendframework/zend-diactoros/src/functions/normalize_server.php",
-                    "zendframework/zend-diactoros/src/functions/create_uploaded_file.php",
-                    "zircote/swagger-php/src/functions.php"
-                ]
-            },
             "view-cache": {
                 "paths": [
                     "common",
@@ -108,15 +88,13 @@
             "@php -r \"file_exists('frontend/.env.production') || copy('frontend/.env.example', 'frontend/.env.production');\""
         ],
         "post-create-project-cmd": [
-            "@php leevel links",
-            "@php leevel autoload:clear"
+            "@php leevel links"
         ],
         "post-autoload-dump": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php -r \"file_exists('.testing') || copy('.testing.example', '.testing');\"",
             "@php -r \"file_exists('frontend/.env.local') || copy('frontend/.env.example', 'frontend/.env.local');\"",
-            "@php -r \"file_exists('frontend/.env.production') || copy('frontend/.env.example', 'frontend/.env.production');\"",
-            "@php leevel autoload --ignore"
+            "@php -r \"file_exists('frontend/.env.production') || copy('frontend/.env.example', 'frontend/.env.production');\""
         ]
     },
     "config": {
