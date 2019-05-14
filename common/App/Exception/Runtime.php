@@ -54,7 +54,7 @@ class Runtime extends Runtimes
      *
      * @return string
      */
-    public function getHttpExceptionView(Exception $e)
+    public function getHttpExceptionView(Exception $e): string
     {
         return Leevel::commonPath('ui/exception/'.$e->getStatusCode().'.php');
     }
@@ -64,7 +64,7 @@ class Runtime extends Runtimes
      *
      * @return string
      */
-    public function getDefaultHttpExceptionView()
+    public function getDefaultHttpExceptionView(): string
     {
         return Leevel::commonPath('ui/exception/default.php');
     }
