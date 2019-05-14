@@ -29,17 +29,8 @@ use Leevel\Kernel\IRuntime;
  * ---------------------------------------------------------------.
  *
  * 用于管理 PHP 依赖包
- * 优化 composer 性能，提炼 composer 中的 autoload_static 中的我们关注的 psr4 命名空间映射
- * 我们 classmap 需要通过 `php leevel autoload` 生成，包含命令 `composer dump-autoload -o`
- * 对于助手函数需要自己引入
  */
-$autoloadLeevel = __DIR__.'/../vendor/autoloadLeevel.php';
-
-if (is_file($autoloadLeevel)) {
-    $composer = require $autoloadLeevel;
-} else {
-    $composer = require __DIR__.'/../vendor/autoload.php';
-}
+$composer = require __DIR__.'/../vendor/autoload.php';
 
 /**
  * ---------------------------------------------------------------
@@ -58,7 +49,6 @@ $container->singleton('app', new App($container, realpath(__DIR__.'/..')));
 $container->alias('app', [IApp::class, App::class]);
 
 $container->singleton(IKernel::class, Kernel::class);
-
 $container->singleton(IRuntime::class, Runtime::class);
 
 /**
