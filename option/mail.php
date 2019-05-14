@@ -30,8 +30,8 @@ return [
      * 必须设置邮件发送的邮箱
      */
     'global_from' => [
-        'address' => null,
-        'name'    => null,
+        'address' => Leevel::env('MAIL_GLOBAL_FROM_ADDRESS'),
+        'name'    => Leevel::env('MAIL_GLOBAL_FROM_NAME'),
     ],
 
     /*
