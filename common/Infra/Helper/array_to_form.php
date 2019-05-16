@@ -22,7 +22,7 @@ namespace Common\Infra\Helper;
  * 使用方法.
  *
  * ```
- * echo fn('Common\\Infra\\Helper\\array_to_form', ['foo' => 'bar']);
+ * echo f('Common\\Infra\\Helper\\array_to_form', ['foo' => 'bar']);
  * ```
  *
  * @param array $data

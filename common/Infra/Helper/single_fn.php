@@ -18,7 +18,7 @@ namespace Common\Infra\Helper;
  * 使用方法.
  *
  * ``` php
- * echo fn('Common\\Infra\\Helper\\single_fn');
+ * echo f('Common\\Infra\\Helper\\single_fn');
  * ```
  *
  * @return string

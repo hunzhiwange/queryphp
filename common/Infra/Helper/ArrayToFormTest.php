@@ -172,8 +172,5 @@ class ArrayToFormTest extends TestCase
     }
 }
 
-// @codeCoverageIgnoreStart
-if (!function_exists('Common\\Infra\\Helper\\array_to_form')) {
-    include __DIR__.'/array_to_form.php';
-}
-// @codeCoverageIgnoreEnd
+// import fn.
+class_exists(array_to_form::class);

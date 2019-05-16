@@ -18,7 +18,7 @@ namespace Common\Infra\Helper;
  * 使用方法.
  *
  * ``` php
- * echo fn('Common\\Infra\\Helper\\testgroup_fn1');
+ * echo f('Common\\Infra\\Helper\\testgroup_fn1');
  * ```
  *
  * @return string
@@ -32,7 +32,7 @@ function testgroup_fn1(): string
  * 使用方法.
  *
  * ``` php
- * echo fn('Common\\Infra\\Helper\\testgroup_fn2');
+ * echo f('Common\\Infra\\Helper\\testgroup_fn2');
  * ```
  *
  * @return string
