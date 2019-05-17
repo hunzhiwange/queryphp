@@ -514,7 +514,7 @@ declare(strict_types=1);
 namespace App\App\Controller\Api;
 
 use Leevel\Http\IResponse;
-use Leevel\Protocol\Facade\Rpc as Rpcs;
+use Leevel\Protocol\Proxy\Rpc as Rpcs;
 
 /**
  * rpc tests.

@@ -14,10 +14,10 @@ declare(strict_types=1);
 
 namespace Common\Domain\Service\Attachment;
 
-use Leevel\Filesystem\Facade\Filesystem;
+use Leevel\Filesystem\Proxy\Filesystem;
 use Leevel\Http\UploadedFile;
 use Leevel\Kernel\Exception\HandleException;
-use Leevel\Option\Facade\Option;
+use Leevel\Option\Proxy\Option;
 use Leevel\Support\Str;
 
 /**

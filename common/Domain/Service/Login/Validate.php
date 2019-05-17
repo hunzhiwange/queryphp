@@ -19,12 +19,12 @@ use Admin\Infra\Permission;
 use Common\Domain\Entity\Base\App;
 use Common\Domain\Entity\User\User;
 use Common\Infra\Repository\User\User\UserPermission;
-use Leevel\Auth\Facade\Auth;
 use Leevel\Auth\Hash;
+use Leevel\Auth\Proxy\Auth;
 use Leevel\Http\IRequest;
 use Leevel\Kernel\Exception\HandleException;
 use Leevel\Support\Str;
-use Leevel\Validate\Facade\Validate as Validates;
+use Leevel\Validate\Proxy\Validate as Validates;
 
 /**
  * 验证登录.

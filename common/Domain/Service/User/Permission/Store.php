@@ -17,7 +17,7 @@ namespace Common\Domain\Service\User\Permission;
 use Common\Domain\Entity\User\Permission;
 use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Kernel\Exception\HandleException;
-use Leevel\Validate\Facade\Validate;
+use Leevel\Validate\Proxy\Validate;
 use Leevel\Validate\UniqueRule;
 
 /**

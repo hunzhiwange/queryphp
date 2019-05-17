@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\Infra;
 
-use Leevel\Cache\Facade\Cache;
+use Leevel\Cache\Proxy\Cache;
 
 /**
  * 权限存储.

@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\User;
 
-use Leevel\Auth\Facade\Auth;
+use Leevel\Auth\Proxy\Auth;
 
 /**
  * 当前登陆用户查询.

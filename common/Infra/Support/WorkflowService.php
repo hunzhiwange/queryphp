@@ -17,7 +17,7 @@ namespace Common\Infra\Support;
 use InvalidArgumentException;
 use Leevel\Kernel\Exception\HandleException;
 use Leevel\Support\Arr;
-use Leevel\Validate\Facade\Validate;
+use Leevel\Validate\Proxy\Validate;
 
 /**
  * 工作流.

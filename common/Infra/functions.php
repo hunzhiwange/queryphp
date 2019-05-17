@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Common\Infra\Facade\Permission;
+use Common\Infra\Proxy\Permission;
 
 if (!function_exists('permission')) {
     /**

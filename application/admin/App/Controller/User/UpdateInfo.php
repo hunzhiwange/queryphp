@@ -16,7 +16,7 @@ namespace Admin\App\Controller\User;
 
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\User\UpdateInfo as Service;
-use Leevel\Auth\Facade\Auth;
+use Leevel\Auth\Proxy\Auth;
 use Leevel\Http\IRequest;
 
 /**

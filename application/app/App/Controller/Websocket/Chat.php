@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Websocket;
 
-use Leevel\Router\Facade\View;
+use Leevel\Router\Proxy\View;
 
 /**
  * Websocket tests.

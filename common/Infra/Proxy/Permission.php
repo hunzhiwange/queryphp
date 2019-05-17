@@ -12,12 +12,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Infra\Facade;
+namespace Common\Infra\Proxy;
 
 use Leevel\Kernel\App;
 
 /**
- * 门面 Permission.
+ * 代理 Permission.
  *
  * @author Xiangmin Liu <635750556@qq.com>
  *

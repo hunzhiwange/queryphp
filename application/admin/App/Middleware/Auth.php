@@ -17,7 +17,7 @@ namespace Admin\App\Middleware;
 use Admin\App\Exception\LockException;
 use Admin\Infra\Lock;
 use Closure;
-use Common\Infra\Facade\Permission;
+use Common\Infra\Proxy\Permission;
 use Leevel\Auth\AuthException;
 use Leevel\Auth\Middleware\Auth as BaseAuth;
 use Leevel\Http\IRequest;

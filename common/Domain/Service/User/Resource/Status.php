@@ -18,7 +18,7 @@ use Common\Domain\Entity\User\Resource;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Kernel\Exception\HandleException;
-use Leevel\Validate\Facade\Validate;
+use Leevel\Validate\Proxy\Validate;
 
 /**
  * 批量修改资源状态.
