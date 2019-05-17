@@ -18,7 +18,7 @@ namespace Common\Infra\Helper;
  * 使用方法.
  *
  * ``` php
- * echo fn('Common\\Infra\\Helper\\foo_bar');
+ * echo f('Common\\Infra\\Helper\\foo_bar');
  * ```
  *
  * @param string $extend
