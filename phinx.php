@@ -15,6 +15,7 @@ declare(strict_types=1);
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidFileException;
 use Dotenv\Exception\InvalidPathException;
+use Leevel\Di\Container;
 use Leevel\Kernel\App;
 use Leevel\Kernel\IApp;
 use Symfony\Component\Console\Input\ArgvInput;
@@ -26,7 +27,7 @@ use Symfony\Component\Console\Input\ArgvInput;
  *
  * 用于管理 PHP 依赖包
  */
-require_once __DIR__.'/vendor/autoload.php';
+require __DIR__.'/vendor/autoload.php';
 
 /**
  * ---------------------------------------------------------------
@@ -35,7 +36,8 @@ require_once __DIR__.'/vendor/autoload.php';
  *
  * 注册应用基础服务
  */
-$app = App::singletons(__DIR__);
+$container = Container::singletons();
+$app = new App($container, realpath(__DIR__));
 
 /*
  * ---------------------------------------------------------------
@@ -114,7 +116,9 @@ class PhinxLoad
 
         // 校验运行时环境，防止测试用例清空非测试库的业务数据
         if (!is_file($fullFile = $app->envPath().'/'.$file)) {
-            throw new RuntimeException(sprintf('Env file `%s` was not found.', $fullFile));
+            $e = sprintf('Env file `%s` was not found.', $fullFile);
+
+            throw new RuntimeException($e);
         }
 
         $app->setEnvFile($file);

@@ -45,7 +45,7 @@ class IndexTest extends TestCase
 
     public function testBaseUse()
     {
-        $service = $this->app->make(Index::class);
+        $service = $this->app->container()->make(Index::class);
 
         $result = $service->handle([
             'key'    => '',
@@ -77,7 +77,7 @@ class IndexTest extends TestCase
     {
         $this->createResource();
 
-        $service = $this->app->make(Index::class);
+        $service = $this->app->container()->make(Index::class);
 
         $result = $service->handle([
             'key'    => '',
@@ -118,7 +118,7 @@ class IndexTest extends TestCase
 
     protected function createResource()
     {
-        $service = $this->app->make(Store::class);
+        $service = $this->app->container()->make(Store::class);
 
         $service->handle([
             'name'     => 'foo',

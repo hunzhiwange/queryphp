@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Infra\Proxy;
 
-use Leevel\Kernel\App;
+use Leevel\Di\Container;
 
 /**
  * 代理 Permission.
@@ -37,7 +37,7 @@ class Permission
      */
     public static function __callStatic(string $method, array $args)
     {
-        return App::singletons()
+        return Container::singletons()
             ->make('permission')
             ->{$method}(...$args);
     }
