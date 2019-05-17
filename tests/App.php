@@ -58,9 +58,7 @@ trait App
         $container->alias('app', [IApp::class, KernelApp::class]);
 
         $container->singleton(IKernel::class, Kernel::class);
-
         $container->singleton(IKernelConsole::class, KernelConsole::class);
-
         $container->singleton(IRuntime::class, Runtime::class);
 
         $container->instance('request', Request::createFromGlobals());

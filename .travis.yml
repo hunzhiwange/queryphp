@@ -10,8 +10,8 @@ matrix:
     - php: 7.3.2
     - php: 7.3.2
       env: setup=lowest
-    - php: 7.3.4
-    - php: 7.3.4
+    - php: 7.4snapshot
+    - php: 7.4snapshot
       env: setup=lowest
 
   fast_finish: true
