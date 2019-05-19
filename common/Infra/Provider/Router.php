@@ -33,7 +33,7 @@ class Router extends RouterProvider
      *
      * @var string
      */
-    protected $controllerDir = 'App\\Controller';
+    protected string $controllerDir = 'App\\Controller';
 
     /**
      * 中间件分组
@@ -41,7 +41,7 @@ class Router extends RouterProvider
      *
      * @var array
      */
-    protected $middlewareGroups = [
+    protected array $middlewareGroups = [
         // web 请求中间件
         'web' => [
             'session',
@@ -66,7 +66,7 @@ class Router extends RouterProvider
      *
      * @var array
      */
-    protected $middlewareAlias = [
+    protected array $middlewareAlias = [
         'auth'              => 'Leevel\Auth\Middleware\\Auth',
         'admin_auth'        => 'Admin\\App\\Middleware\\Auth',
         'debug'             => 'Leevel\\Debug\\Middleware\\Debug',

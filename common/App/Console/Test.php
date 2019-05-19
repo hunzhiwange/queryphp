@@ -46,7 +46,7 @@ class Test extends Command
      *
      * @var string
      */
-    protected $help = <<<'EOF'
+    protected string $help = <<<'EOF'
         The <info>%command.name%</info> command to show how to make a command:
         
           <info>php %command.full_name%</info>
