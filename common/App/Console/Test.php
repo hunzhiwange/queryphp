@@ -32,14 +32,14 @@ class Test extends Command
      *
      * @var string
      */
-    protected $name = 'common:test';
+    protected string $name = 'common:test';
 
     /**
      * 命令行描述.
      *
      * @var string
      */
-    protected $description = 'This is a test command';
+    protected string $description = 'This is a test command';
 
     /**
      * 命令帮助.

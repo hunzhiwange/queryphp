@@ -27,7 +27,7 @@ use Leevel\Event\EventProvider;
  */
 class Event extends EventProvider
 {
-    protected $listeners = [
+    protected array $listeners = [
         'Common\\Domain\\Event\\Test' => [
             // 优先级支持写法，数字越小越早执行，默认为 500
             // 'Common\\Domain\\Listener\\Test' => 6
