@@ -30,11 +30,14 @@ declare(strict_types=1);
  *     )
  * )
  */
-class Foobar
+class _
 {
+    // 占位防止代码格式化工具将注释破坏
 }
 
 /**
+ * leevels 为路由全局设置.
+ *
  * @OA\Tag(
  *     name="pet",
  *     leevelGroup="pet",
@@ -99,6 +102,7 @@ class Foobar
  *     }
  * )
  */
-class Foobar
+class _
 {
+    // 占位防止代码格式化工具将注释破坏
 }

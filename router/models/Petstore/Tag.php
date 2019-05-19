@@ -12,30 +12,30 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Petstore30;
+namespace Petstore;
 
 /**
- * Class Category.
+ * Class Tag.
  *
  *
  * @author  Donii Sergii <doniysa@gmail.com>
  *
  * @OA\Schema(
  *     type="object",
- *     description="Pets Category",
- *     title="Pets Category",
+ *     description="Tag",
+ *     title="Tag",
  *     @OA\Xml(
- *         name="Category"
+ *         name="Tag"
  *     )
  * )
  */
-class Category
+class Tag
 {
     /**
      * @OA\Property(
-     *     title="ID",
-     *     description="ID",
      *     format="int64",
+     *     description="ID",
+     *     title="ID"
      * )
      *
      * @var int
@@ -44,8 +44,8 @@ class Category
 
     /**
      * @OA\Property(
-     *     title="Category name",
-     *     description="Category name"
+     *     description="Name",
+     *     title="Name"
      * )
      *
      * @var string

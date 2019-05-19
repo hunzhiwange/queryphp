@@ -12,50 +12,43 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Petstore30;
+namespace Petstore;
 
 /**
- * Class ApiResponse.
+ * Class Category.
  *
  *
  * @author  Donii Sergii <doniysa@gmail.com>
  *
  * @OA\Schema(
  *     type="object",
- *     description="Api response",
- *     title="Api response"
+ *     description="Pets Category",
+ *     title="Pets Category",
+ *     @OA\Xml(
+ *         name="Category"
+ *     )
  * )
  */
-class ApiResponse
+class Category
 {
     /**
      * @OA\Property(
-     *     description="Code",
-     *     title="Code",
-     *     format="int32"
+     *     title="ID",
+     *     description="ID",
+     *     format="int64",
      * )
      *
      * @var int
      */
-    private $code;
-
-    /**
-     * OAS\Property(
-     *    description="Type",
-     *    title="Type",
-     * ).
-     *
-     * @var string
-     */
-    private $type;
+    private $id;
 
     /**
      * @OA\Property(
-     *     description="Message",
-     *     title="Message"
+     *     title="Category name",
+     *     description="Category name"
      * )
      *
      * @var string
      */
-    private $message;
+    private $name;
 }

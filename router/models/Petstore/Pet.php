@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Petstore30;
+namespace Petstore;
 
 /**
  * Class Pet.
@@ -49,7 +49,7 @@ class Pet
      *     title="Category",
      * )
      *
-     * @var \Petstore30\Category
+     * @var \Petstore\Category
      */
     private $category;
 
@@ -92,7 +92,7 @@ class Pet
      *     ),
      * )
      *
-     * @var \Petstore30\Tag[]
+     * @var \Petstore\Tag[]
      */
     private $tags;
 }

@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Petstore30;
+namespace Petstore;
 
 /**
  * @OA\RequestBody(
@@ -33,7 +33,7 @@ namespace Petstore30;
  *     )
  * )
  */
-class Foobar
+class _
 {
 }
 
@@ -53,6 +53,6 @@ class Foobar
  *     )
  * )
  */
-class Foobar
+class _
 {
 }

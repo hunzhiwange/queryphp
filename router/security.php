@@ -33,6 +33,7 @@ declare(strict_types=1);
  *     name="api_key"
  * )
  */
-class Foobar
+class _
 {
+    // 占位防止代码格式化工具将注释破坏
 }
