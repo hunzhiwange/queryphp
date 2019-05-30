@@ -604,11 +604,14 @@ INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9601/api/test
 
 <https://github.com/friendsofphp/php-cs-fixer>
 
+It can be used without installation,we download a version for you.
+
 ### Base use
 
-```
+```diff
 $cd /data/codes/queryphp
-$php-cs-fixer fix --config=.php_cs.dist
+- $php-cs-fixer fix --config=.php_cs.dist
++ $./build/php-cs-fixer fix --config=.php_cs.dist
 ```
 
 ### With Git hooks

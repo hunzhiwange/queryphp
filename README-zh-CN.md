@@ -603,11 +603,14 @@ INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9601/api/test
 
 <https://github.com/friendsofphp/php-cs-fixer>
 
+不需要安装即可使用，我们已经下载了版本。
+
 ### 基本使用
 
-```
+```diff
 $cd /data/codes/queryphp
-$php-cs-fixer fix --config=.php_cs.dist
+- $php-cs-fixer fix --config=.php_cs.dist
++ $./build/php-cs-fixer fix --config=.php_cs.dist
 ```
 
 ### 使用 Git 钩子
