@@ -197,7 +197,7 @@ php leevel migrate:migrate -e testing
 
 ### Run
 
-```
+```diff
 _____________                           _______________
  ______/     \__  _____  ____  ______  / /_  _________
   ____/ __   / / / / _ \/ __`\/ / __ \/ __ \/ __ \___
@@ -208,7 +208,8 @@ _____________                           _______________
 $cd /data/codes/queryphp/
 $vim .testing # modify database redis and other
 $php leevel migrate:migrate -e testing
-$php vendor/bin/phpunit tests
+- $php vendor/bin/phpunit tests
++ $php ./build/phpunit tests
 ```
 
 ## Production optimization
@@ -628,6 +629,12 @@ Pass hook
 ```
 # git commit -h
 # git commit -n -m 'pass hook' #bypass pre-commit and commit-msg hooks
+```
+
+## PHPStan 
+
+```
+php ./build/phpstan analyse
 ```
 
 ## Thanks
