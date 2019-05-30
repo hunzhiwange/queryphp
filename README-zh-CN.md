@@ -196,7 +196,7 @@ php leevel migrate:migrate -e testing
 
 ### 运行
 
-```
+```diff
 _____________                           _______________
  ______/     \__  _____  ____  ______  / /_  _________
   ____/ __   / / / / _ \/ __`\/ / __ \/ __ \/ __ \___
@@ -207,7 +207,8 @@ _____________                           _______________
 $cd /data/codes/queryphp/
 $vim .testing # modify database redis and other
 $php leevel migrate:migrate -e testing
-$php vendor/bin/phpunit tests
+- $php vendor/bin/phpunit tests
++ $php ./build/phpunit tests
 ```
 
 ## 生产环境优化
@@ -603,11 +604,14 @@ INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9601/api/test
 
 <https://github.com/friendsofphp/php-cs-fixer>
 
+不需要安装即可使用，我们已经下载了版本。
+
 ### 基本使用
 
-```
+```diff
 $cd /data/codes/queryphp
-$php-cs-fixer fix --config=.php_cs.dist
+- $php-cs-fixer fix --config=.php_cs.dist
++ $./build/php-cs-fixer fix --config=.php_cs.dist
 ```
 
 ### 使用 Git 钩子
@@ -624,6 +628,12 @@ chmod 777 ./.git/hooks/pre-commit
 ```
 # git commit -h
 # git commit -n -m 'pass hook' #bypass pre-commit and commit-msg hooks
+```
+
+## PHPStan 静态分析
+
+```
+php ./build/phpstan analyse
 ```
 
 ## 致谢

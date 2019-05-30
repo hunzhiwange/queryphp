@@ -1,4 +1,4 @@
-/* 2018-12-09 21:19:27 */
+/* 2019-05-30 13:42:09 */
 export default {
     登录: 'Login',
     系统已锁定: 'System has locked',

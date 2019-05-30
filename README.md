@@ -197,7 +197,7 @@ php leevel migrate:migrate -e testing
 
 ### Run
 
-```
+```diff
 _____________                           _______________
  ______/     \__  _____  ____  ______  / /_  _________
   ____/ __   / / / / _ \/ __`\/ / __ \/ __ \/ __ \___
@@ -208,7 +208,8 @@ _____________                           _______________
 $cd /data/codes/queryphp/
 $vim .testing # modify database redis and other
 $php leevel migrate:migrate -e testing
-$php vendor/bin/phpunit tests
+- $php vendor/bin/phpunit tests
++ $php ./build/phpunit tests
 ```
 
 ## Production optimization
@@ -604,11 +605,14 @@ INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9601/api/test
 
 <https://github.com/friendsofphp/php-cs-fixer>
 
+It can be used without installation,we download a version for you.
+
 ### Base use
 
-```
+```diff
 $cd /data/codes/queryphp
-$php-cs-fixer fix --config=.php_cs.dist
+- $php-cs-fixer fix --config=.php_cs.dist
++ $./build/php-cs-fixer fix --config=.php_cs.dist
 ```
 
 ### With Git hooks
@@ -625,6 +629,12 @@ Pass hook
 ```
 # git commit -h
 # git commit -n -m 'pass hook' #bypass pre-commit and commit-msg hooks
+```
+
+## PHPStan 
+
+```
+php ./build/phpstan analyse
 ```
 
 ## Thanks
