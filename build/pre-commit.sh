@@ -34,6 +34,8 @@ do
 done
 
 phpcsfixer_path=$(cd `dirname $0`; pwd)"/../../build/php-cs-fixer"
+gulp_path=$(cd `dirname $0`; pwd)"/../../frontend/node_modules/.bin/gulp"
+prettier_path=$(cd `dirname $0`; pwd)"/../../frontend/node_modules/.bin/prettier"
 
 # format code style
 if [ "$FILES" != "" ]
@@ -81,10 +83,10 @@ jsfiles=$(git diff --cached --name-only --diff-filter=ACM "*.js" "*.jsx" "*.vue"
 [ -z "$jsfiles" ] && exit 0
 
 # format iview
-gulp iview --gulpfile frontend/gulpfile.js
+$gulp_path iview --gulpfile frontend/gulpfile.js
 
 # Prettify all staged .js files
-echo "$jsfiles" | xargs prettier --config frontend/.prettierrc.js --ignore-path frontend/.prettierignore --write
+echo "$jsfiles" | xargs $prettier_path --config frontend/.prettierrc.js --ignore-path frontend/.prettierignore --write
 
 # Add back the modified/prettified files to staging
 echo "$jsfiles" | xargs git add
