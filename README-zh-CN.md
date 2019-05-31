@@ -207,8 +207,8 @@ _____________                           _______________
 $cd /data/codes/queryphp/
 $vim .testing # modify database redis and other
 $php leevel migrate:migrate -e testing
-- $php vendor/bin/phpunit tests
-+ $php ./build/phpunit tests
+- $php vendor/bin/phpunit
++ $php ./build/phpunit
 ```
 
 ## 生产环境优化
