@@ -30,6 +30,10 @@ QueryPHP 是一款现代化的高性能 PHP 7 常驻框架，以工程师用户�
 * API 文档: <https://api.queryphp.com>
 * 开发文档: <https://www.queryphp.com/docs/>
 
+![](doyouhaobaby.png)
+
+QueryPHP 基于一款成立于 2010 年的 PHP 框架 [DoYouHaoBaby](https://raw.githubusercontent.com/hunzhiwange/framework/master/doyouhaobaby-googlecode.jpg) 开发，继承了上一代产品的优秀之处，彻底革新并进行了长达 2 年重构.
+
 ## 核心包
 
  * QueryPHP On Github: <https://github.com/hunzhiwange/queryphp/>
@@ -42,6 +46,10 @@ QueryPHP 是一款现代化的高性能 PHP 7 常驻框架，以工程师用户�
  * Packages: <https://github.com/leevels/>
  * Packages From Hunzhiwange: <https://packagist.org/packages/hunzhiwange/>
  * Packages From Leevel: <https://packagist.org/packages/leevel/>
+
+## QueryPHP 框架 PHP 工程化实践
+
+<img src="./engineering-zh-CN.jpg" />
 
 ## 如何安装
 
