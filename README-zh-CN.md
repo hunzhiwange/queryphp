@@ -16,11 +16,11 @@
     <a href="./README.md">English</a> | <a href="./README-zh-CN.md">中文</a>
 </p>
 
-# 渐进式 PHP 常驻框架引擎
+# 渐进式 PHP 7 不仅仅是常驻框架引擎
 
 > 这是一个 QueryPHP 应用，其核心框架可以在这里找到 [Framework](https://github.com/hunzhiwange/framework)。
 
-QueryPHP 是一款现代化的高性能 PHP 7 常驻框架，以工程师用户体验为历史使命，让每一个 PHP 应用都有一个好框架。
+QueryPHP 是一款现代化的渐进式高性能 PHP 7 不仅仅是常驻框架，以工程师用户体验为历史使命，让每一个 PHP 应用都有一个好框架。
 
 百分之百单元测试覆盖直面 Bug 一剑封喉，基于 Zephir 实现框架常驻，依托 Swoole 生态实现业务常驻，此刻未来逐步渐进。 我们的愿景是 **<span style="color:#e82e7d;">USE LEEVEL WITH SWOOLE DO BETTER</span>**, 让您的业务撑起更多的用户服务。
 
