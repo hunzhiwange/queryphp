@@ -44,4 +44,13 @@ return [
      * 基于单元测试的文档自动生成
      */
     'framework_doc_outputdir' => Leevel::env('FRAMEWORK_DOC_OUTPUTDIR', ''),
+
+    /*
+     * ---------------------------------------------------------------
+     * 框架内部单元测试文档 Git 仓库
+     * ---------------------------------------------------------------
+     *
+     * 在文档中标注来源 Git 地址
+     */
+    'framework_doc_git' => Leevel::env('FRAMEWORK_DOC_GIT', ''),
 ];
