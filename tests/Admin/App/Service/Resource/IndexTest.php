@@ -43,7 +43,7 @@ class IndexTest extends TestCase
         $this->clear();
     }
 
-    public function testBaseUse()
+    public function testBaseUse(): void
     {
         $service = $this->app->container()->make(Index::class);
 
@@ -73,7 +73,7 @@ class IndexTest extends TestCase
         $this->assertSame([], $result['data']);
     }
 
-    public function testWithData()
+    public function testWithData(): void
     {
         $this->createResource();
 
