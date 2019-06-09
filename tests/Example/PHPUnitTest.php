@@ -27,7 +27,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PHPUnitTest extends TestCase
 {
-    public function testBaseUse()
+    public function testBaseUse(): void
     {
         $this->assertSame('QueryPHP', 'QueryPHP');
     }

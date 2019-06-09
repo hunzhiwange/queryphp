@@ -27,7 +27,7 @@ use Tests\TestCase;
  */
 class ExampleTest extends TestCase
 {
-    public function testBaseUse()
+    public function testBaseUse(): void
     {
         $this->assertSame('QueryPHP', 'QueryPHP');
     }
