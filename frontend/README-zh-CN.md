@@ -42,13 +42,6 @@ npm run test
 ## 统一团队代码风格
 
 ```
-cnpm install --global prettier
-cnpm install gulp -g
-```
-
-接着
-
-```
 sh ./style.sh // All
 ```
 
@@ -57,12 +50,18 @@ sh ./style.sh // All
 See `./../build/pre-commit.sh`
 
 ```
+gulp_path=$(cd `dirname $0`; pwd)"/../../frontend/node_modules/.bin/gulp"
+prettier_path=$(cd `dirname $0`; pwd)"/../../frontend/node_modules/.bin/prettier
+
 # for js
-jsfiles=$(git diff --cached --name-only --diff-filter=ACM "*.js" "*.jsx" "*.css" "*.vue" "*.css" "*.less" | tr '\n' ' ')
+jsfiles=$(git diff --cached --name-only --diff-filter=ACM "*.js" "*.jsx" "*.vue" "*.css" "*.less" | tr '\n' ' ')
 [ -z "$jsfiles" ] && exit 0
 
+# format iview
+$gulp_path iview --gulpfile frontend/gulpfile.js
+
 # Prettify all staged .js files
-echo "$jsfiles" | xargs ./frontend/node_modules/.bin/prettier --config frontend/.prettierrc.js --ignore-path frontend/.prettierignore --write
+echo "$jsfiles" | xargs $prettier_path --config frontend/.prettierrc.js --ignore-path frontend/.prettierignore --write
 
 # Add back the modified/prettified files to staging
 echo "$jsfiles" | xargs git add
@@ -76,7 +75,7 @@ git update-index -g
 使用 Gulp 导出语言包.
 
 ```
-gulp
+./node_modules/.bin/gulp
 
 ...
 [18:57:50] Using gulpfile /data/codes/queryphp/frontend/gulpfile.js
@@ -104,7 +103,7 @@ src/i18n/zh-CN/default.po
 将 po 语言包转为 json.
 
 ```
-gulp po
+./node_modules/.bin/gulp po
 
 [21:42:09] Using gulpfile /data/codes/queryphp/frontend/gulpfile.js
 [21:42:09] Starting 'po'...

@@ -30,3 +30,12 @@ if (false === is_file($vendorDir.'/autoload.php')) {
 
 $composer = include $vendorDir.'/autoload.php';
 $composer->addPsr4('Tests\\', __DIR__);
+
+if (!class_exists(\PHPUnit\Framework\TestCase::class) ||
+    !class_exists(\Codedungeon\PHPUnitPrettyResultPrinter\Printer::class)) {
+    $e = 'If you execute command `composer dump-autoload --optimize --no-dev`,'.
+    'then this will not be available.'.PHP_EOL.
+    'PHPUnit and PHPStan belongs to development dependence and `composer dump-autoload --optimize` is ok.';
+
+    throw new RuntimeException($e);
+}

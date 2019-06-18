@@ -1,0 +1,11 @@
+parameters:
+    level: 0
+    paths:
+        - application 
+        - common
+        - tests
+    autoload_files:
+    excludes_analyse:
+    bootstrap: %currentWorkingDirectory%/phpstan-bootstrap.php
+    ignoreErrors:
+        - '#[a-zA-Z0-9_]+::__construct\(\) does not call parent constructor from [a-zA-Z0-9_]+.#'

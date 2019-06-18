@@ -35,6 +35,7 @@ class Index
         error_reporting(E_ERROR | E_PARSE | E_STRICT);
 
         $path = [
+            Leevel::path('router'),
             Leevel::appPath(),
         ];
 

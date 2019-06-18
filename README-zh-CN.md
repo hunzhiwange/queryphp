@@ -16,11 +16,11 @@
     <a href="./README.md">English</a> | <a href="./README-zh-CN.md">中文</a>
 </p>
 
-# 渐进式 PHP 常驻框架引擎
+# 渐进式 PHP 7 不仅仅是常驻框架引擎
 
 > 这是一个 QueryPHP 应用，其核心框架可以在这里找到 [Framework](https://github.com/hunzhiwange/framework)。
 
-QueryPHP 是一款现代化的高性能 PHP 7 常驻框架，以工程师用户体验为历史使命，让每一个 PHP 应用都有一个好框架。
+QueryPHP 是一款现代化的渐进式高性能 PHP 7 不仅仅是常驻框架，以工程师用户体验为历史使命，让每一个 PHP 应用都有一个好框架。
 
 百分之百单元测试覆盖直面 Bug 一剑封喉，基于 Zephir 实现框架常驻，依托 Swoole 生态实现业务常驻，此刻未来逐步渐进。 我们的愿景是 **<span style="color:#e82e7d;">USE LEEVEL WITH SWOOLE DO BETTER</span>**, 让您的业务撑起更多的用户服务。
 
@@ -29,6 +29,10 @@ QueryPHP 是一款现代化的高性能 PHP 7 常驻框架，以工程师用户�
 * 官方网站: <https://www.queryphp.com/>
 * API 文档: <https://api.queryphp.com>
 * 开发文档: <https://www.queryphp.com/docs/>
+
+![](doyouhaobaby.png)
+
+QueryPHP 基于一款成立于 2010 年的 PHP 框架 [DoYouHaoBaby](https://raw.githubusercontent.com/hunzhiwange/framework/master/doyouhaobaby-googlecode.jpg) 开发，继承了上一代产品的优秀之处，彻底革新并进行了长达 2 年重构.
 
 ## 核心包
 
@@ -42,6 +46,10 @@ QueryPHP 是一款现代化的高性能 PHP 7 常驻框架，以工程师用户�
  * Packages: <https://github.com/leevels/>
  * Packages From Hunzhiwange: <https://packagist.org/packages/hunzhiwange/>
  * Packages From Leevel: <https://packagist.org/packages/leevel/>
+
+## QueryPHP 框架 PHP 工程化实践
+
+<img src="./engineering-zh-CN.jpg" />
 
 ## 如何安装
 
@@ -196,7 +204,7 @@ php leevel migrate:migrate -e testing
 
 ### 运行
 
-```
+```diff
 _____________                           _______________
  ______/     \__  _____  ____  ______  / /_  _________
   ____/ __   / / / / _ \/ __`\/ / __ \/ __ \/ __ \___
@@ -207,7 +215,8 @@ _____________                           _______________
 $cd /data/codes/queryphp/
 $vim .testing # modify database redis and other
 $php leevel migrate:migrate -e testing
-$php vendor/bin/phpunit tests
+- $php vendor/bin/phpunit
++ $php ./build/phpunit
 ```
 
 ## 生产环境优化
@@ -603,11 +612,14 @@ INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9601/api/test
 
 <https://github.com/friendsofphp/php-cs-fixer>
 
+不需要安装即可使用，我们已经下载了版本。
+
 ### 基本使用
 
-```
+```diff
 $cd /data/codes/queryphp
-$php-cs-fixer fix --config=.php_cs.dist
+- $php-cs-fixer fix --config=.php_cs.dist
++ $./build/php-cs-fixer fix --config=.php_cs.dist
 ```
 
 ### 使用 Git 钩子
@@ -624,6 +636,12 @@ chmod 777 ./.git/hooks/pre-commit
 ```
 # git commit -h
 # git commit -n -m 'pass hook' #bypass pre-commit and commit-msg hooks
+```
+
+## PHPStan 静态分析
+
+```
+php ./build/phpstan analyse
 ```
 
 ## 致谢

@@ -20,7 +20,7 @@
 
 > This is the QueryPHP application, the core framework can be found here [Framework](https://github.com/hunzhiwange/framework).
 
-QueryPHP is a modern, high performance PHP 7 resident framework, with engineer user experience as its historical mission, let every PHP application have a good framework.
+QueryPHP is a modern, progressive high performance PHP 7 not only resident framework, with engineer user experience as its historical mission, let every PHP application have a good framework.
 
 A hundred percent coverage of the unit tests to facing the bug,based on Zephir implemented framework resident,with Swoole ecology to achieve business resident,
 now or in the future step by step. Our vision is **<span style="color:#e82e7d;">USE LEEVEL WITH SWOOLE DO BETTER</span>**, let your business to support more user services.
@@ -30,6 +30,10 @@ now or in the future step by step. Our vision is **<span style="color:#e82e7d;">
 * Site: <https://www.queryphp.com/>
 * API: <https://api.queryphp.com>
 * Document: <https://www.queryphp.com/docs/>
+
+![](doyouhaobaby.png)
+
+QueryPHP was based on the [DoYouHaoBaby](https://raw.githubusercontent.com/hunzhiwange/framework/master/doyouhaobaby-googlecode.jpg) framework which released 0.0.1 version at 2010.10.03.
 
 ## The core packages
 
@@ -43,6 +47,10 @@ now or in the future step by step. Our vision is **<span style="color:#e82e7d;">
  * Packages: <https://github.com/leevels/>
  * Packages From Hunzhiwange: <https://packagist.org/packages/hunzhiwange/>
  * Packages From Leevel: <https://packagist.org/packages/leevel/>
+
+## PHP Engineering Practice Of QueryPHP
+
+<img src="./engineering.jpg" />
 
 ## How to install
 
@@ -197,7 +205,7 @@ php leevel migrate:migrate -e testing
 
 ### Run
 
-```
+```diff
 _____________                           _______________
  ______/     \__  _____  ____  ______  / /_  _________
   ____/ __   / / / / _ \/ __`\/ / __ \/ __ \/ __ \___
@@ -208,7 +216,8 @@ _____________                           _______________
 $cd /data/codes/queryphp/
 $vim .testing # modify database redis and other
 $php leevel migrate:migrate -e testing
-$php vendor/bin/phpunit tests
+- $php vendor/bin/phpunit
++ $php ./build/phpunit 
 ```
 
 ## Production optimization
@@ -604,11 +613,14 @@ INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9601/api/test
 
 <https://github.com/friendsofphp/php-cs-fixer>
 
+It can be used without installation,we download a version for you.
+
 ### Base use
 
-```
+```diff
 $cd /data/codes/queryphp
-$php-cs-fixer fix --config=.php_cs.dist
+- $php-cs-fixer fix --config=.php_cs.dist
++ $./build/php-cs-fixer fix --config=.php_cs.dist
 ```
 
 ### With Git hooks
@@ -625,6 +637,12 @@ Pass hook
 ```
 # git commit -h
 # git commit -n -m 'pass hook' #bypass pre-commit and commit-msg hooks
+```
+
+## PHPStan 
+
+```
+php ./build/phpstan analyse
 ```
 
 ## Thanks
