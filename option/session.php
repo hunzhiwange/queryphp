@@ -101,9 +101,9 @@ return [
             'expire' => null,
         ],
 
-        'nulls' => [
+        'test' => [
             // driver
-            'driver' => 'nulls',
+            'driver' => 'test',
         ],
     ],
 ];

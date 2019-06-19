@@ -83,9 +83,9 @@ return [
             'path' => '/usr/sbin/sendmail -bs',
         ],
 
-        'nulls' => [
+        'test' => [
             // driver
-            'driver' => 'nulls',
+            'driver' => 'test',
         ],
     ],
 ];
