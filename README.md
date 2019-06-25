@@ -434,7 +434,7 @@ namespace php Leevel.Protocol.Thrift.Service
 struct Request
 {
   // call 为字符串类型，是指 Service 接口的名称
-  // 例如：home:blog/info@get 为调用 mvc 接口中的数据
+  // 例如：home/blog/info@get 为调用 mvc 接口中的数据
   1: required string call;
 
   // params 为 list 类型数据，一个元素可重复的有序列表，C++ 之 vector，Java 之 ArrayList，PHP 之 array
