@@ -2,17 +2,14 @@ import axios from 'axios'
 import isJSON from 'validator/lib/isJSON'
 import {lock} from '@/utils/auth'
 import Vue from 'vue'
+import qs from 'qs'
 
 // 设置 axios 为 form-data
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.transformRequest = [
     function(data) {
-        let result = ''
-        for (let k in data) {
-            result += encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) + '&'
-        }
-        return result
+        return qs.stringify(data)
     },
 ]
 
