@@ -1,6 +1,22 @@
 import axios from 'axios'
 import isJSON from 'validator/lib/isJSON'
 import {lock} from '@/utils/auth'
+import Vue from 'vue'
+
+// 设置 axios 为 form-data
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded'
+axios.defaults.transformRequest = [
+    function(data) {
+        let result = ''
+        for (let k in data) {
+            result += encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) + '&'
+        }
+        return result
+    },
+]
+
+Vue.prototype.$axios = axios
 
 // 创建 axios 实例
 const service = axios.create({
@@ -17,7 +33,7 @@ service.interceptors.request.use(
             config.headers['token'] = apiToken
         }
 
-        config.headers['Content-Type'] = 'application/json'
+        // config.headers['Content-Type'] = 'application/json'
         return config
     },
     error => {
