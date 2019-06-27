@@ -80,7 +80,11 @@ class Auth extends BaseAuth
      */
     public function handle(Closure $next, IRequest $request): void
     {
-        $this->prepareCors($request);
+        if ($request->isOptions()) {
+            $this->prepareCors();
+
+            return;
+        }
 
         if ($this->isIgnoreRouter($request)) {
             $next($request);
@@ -107,21 +111,13 @@ class Auth extends BaseAuth
 
     /**
      * 准备跨域数据.
-     *
-     * @param \Leevel\Http\IRequest $request
      */
-    private function prepareCors(IRequest $request): void
+    private function prepareCors(): void
     {
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Credentials: true');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
         header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, token');
-
-        // 跨域校验
-        if ($request->isOptions()) {
-            echo 'Die because of CORS';
-            die;
-        }
     }
 
     /**
