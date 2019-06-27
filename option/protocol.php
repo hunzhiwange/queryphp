@@ -88,7 +88,7 @@ return [
         // 监听端口
         // see https://wiki.swoole.com/wiki/page/p-server.html
         // see https://wiki.swoole.com/wiki/page/327.html
-        'port' => '9501',
+        'port' => '9527',
 
         // swoole 进程名称
         'process_name' => 'leevel.http',
@@ -97,7 +97,7 @@ return [
         'pid_path' => Leevel::runtimePath('protocol/http.pid'),
 
         // 开启静态路径
-        // 配合 Nginx 可以设置这里为 false,nginx 设置规则解析静态路径动态路由转发给 swoole
+        // 配合 Nginx 可以设置这里为 false,nginx 解析静态路径,只将动态路由转发给 swoole
         'enable_static_handler' => true,
 
         // 开启静态路径目录
