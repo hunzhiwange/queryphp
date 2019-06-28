@@ -80,9 +80,9 @@ class Auth extends BaseAuth
      */
     public function handle(Closure $next, IRequest $request): void
     {
-        if ($request->isOptions()) {
-            $this->prepareCors();
+        $this->prepareCors();
 
+        if ($request->isOptions()) {
             return;
         }
 
