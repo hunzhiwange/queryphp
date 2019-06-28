@@ -101,7 +101,7 @@ return [
         'enable_static_handler' => true,
 
         // 开启静态路径目录
-        'document_root' => Leevel::path('www'),
+        'document_root' => Leevel::path(),
     ],
 
     /*
