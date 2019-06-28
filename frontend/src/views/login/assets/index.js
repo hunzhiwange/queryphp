@@ -63,10 +63,7 @@ export default {
     },
     methods: {
         refreshSeccode() {
-            this.codeUrl = ''
-            setTimeout(() => {
-                this.codeUrl = this.codeImg + '?id=' + this.form.name + '&time=' + moment().unix()
-            }, 300)
+            this.codeUrl = this.codeImg + '?id=' + this.form.name + '&time=' + moment().unix()
         },
         handleSubmit(form) {
             if (this.loading) return
@@ -98,7 +95,6 @@ export default {
 
                             setTimeout(() => {
                                 window.location.href = '/'
-                                //router.replace('/')
                             }, 1000)
                         },
                         () => {
@@ -133,7 +129,6 @@ export default {
         },
     },
     created() {
-        this.codeUrl = this.codeImg
         this.checkKeepLogin()
     },
     mounted() {

@@ -40,7 +40,7 @@
                                                     ></i-input>
                                                 </i-col>
                                                 <i-col span="12" v-if="form.name">
-                                                    <img :src="codeUrl" @click="refreshSeccode()" class="code" />
+                                                    <img :src="codeUrl" @click="refreshSeccode()" class="code" style="cursor:pointer;" />
                                                 </i-col>
                                             </Row>
                                         </FormItem>
