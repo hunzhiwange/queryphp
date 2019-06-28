@@ -17,6 +17,7 @@ namespace Admin\App\Controller\Login;
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Login\Code as Service;
 use Leevel\Http\IRequest;
+use Leevel\Http\Response;
 
 /**
  * 验证码.
@@ -36,10 +37,14 @@ class Code
      *
      * @param \Leevel\Http\IRequest         $request
      * @param \Admin\App\Service\Login\Code $service
+     *
+     * @return \Leevel\Http\Response
      */
-    public function handle(IRequest $request, Service $service): void
+    public function handle(IRequest $request, Service $service): Response
     {
-        $this->main($request, $service);
+        $code = $service->handle($this->input($request));
+
+        return new Response($code, 200, ['Content-type' => 'image/png']);
     }
 
     /**
