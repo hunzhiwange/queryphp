@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Api;
 
+use Common\Infra\Helper\force_close_debug;
 use Leevel;
 
 /**
@@ -29,8 +30,10 @@ class Index
 {
     /**
      * 响应.
+     *
+     * @return string
      */
-    public function handle()
+    public function handle(): string
     {
         error_reporting(E_ERROR | E_PARSE | E_STRICT);
 
@@ -41,7 +44,16 @@ class Index
 
         $openApi = \OpenApi\scan($path);
 
-        echo json_encode($openApi);
-        die;
+        $this->forceCloseDebug();
+
+        return json_encode($openApi);
+    }
+
+    /**
+     * 关闭 debug.
+     */
+    private function forceCloseDebug(): void
+    {
+        f(force_close_debug::class);
     }
 }
