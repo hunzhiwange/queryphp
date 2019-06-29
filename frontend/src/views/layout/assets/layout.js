@@ -141,6 +141,7 @@ export default {
             })
         },
         changePasswordLogout() {
+            let apiToken = this.$store.state.user.token
             let data = {token: apiToken}
             this.apiPost('login/logout', data).then(() => {
                 this.$store.dispatch('logout')
