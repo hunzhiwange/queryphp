@@ -20,7 +20,7 @@ use Leevel\Option\Helper\option_set;
  * 使用方法.
  *
  * ``` php
- * echo f('Common\\Infra\\Helper\\force_close_debug');
+ * f('Common\\Infra\\Helper\\force_close_debug');
  * ```
  */
 function force_close_debug(): void
