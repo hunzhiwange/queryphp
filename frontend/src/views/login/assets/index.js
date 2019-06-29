@@ -127,9 +127,27 @@ export default {
                 this.$store.dispatch('setUsers', res)
             })
         },
+        setTheme() {
+            let stylePath = '/'
+            if (localStorage.theme) {
+                let theme = JSON.parse(localStorage.theme)
+                this.$store.commit('changeMenuTheme', theme.menuTheme)
+                this.$store.commit('changeMainTheme', theme.mainTheme)
+            } else {
+                this.$store.commit('changeMenuTheme', 'light')
+                this.$store.commit('changeMainTheme', 'b')
+            }
+            // 根据用户设置主题
+            if (this.$store.state.app.themeColor !== 'b') {
+                let stylesheetPath = stylePath + this.$store.state.app.themeColor + '.css'
+                let themeLink = document.querySelector('link[name="theme"]')
+                themeLink.setAttribute('href', stylesheetPath)
+            }
+        },
     },
     created() {
         this.checkKeepLogin()
+        this.setTheme()
     },
     mounted() {
         window.addEventListener('keyup', e => {
