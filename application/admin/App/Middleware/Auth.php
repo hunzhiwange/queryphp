@@ -83,7 +83,7 @@ class Auth extends BaseAuth
         $this->prepareCors();
 
         if ($request->isOptions()) {
-            return;
+            die;
         }
 
         if ($this->isIgnoreRouter($request)) {
