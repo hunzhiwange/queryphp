@@ -89,13 +89,16 @@ export default {
                             utils.success(this.__('登陆成功'))
 
                             res.keepLogin = this.isKeepLogin()
-                            this.refreshPermission(res.token)
-                            this.userInfo(res.token)
                             this.$store.dispatch('login', res)
 
                             setTimeout(() => {
+                                this.refreshPermission(res.token)
+                                this.userInfo(res.token)
+                            }, 0)
+
+                            setTimeout(() => {
                                 window.location.href = '/'
-                            }, 1000)
+                            }, 500)
                         },
                         () => {
                             this.loading = !this.loading
