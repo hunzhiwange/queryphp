@@ -20,7 +20,7 @@ use Exception;
 use Throwable;
 
 /**
- * 定时器工作任务.
+ * 使用 Swoole 原生定时器工作任务.
  *
  * @author Name Your <your@mail.com>
  *
@@ -61,7 +61,7 @@ class Work
     {
         $count = 0;
 
-        swoole_timer_tick($perMillisecond, function ($timerId) use ($work, &$count, $perMillisecond, $maxCount) {
+        swoole_timer_tick($perMillisecond, function (int $timerId) use ($work, &$count, $perMillisecond, $maxCount) {
             $count++;
             $this->message(sprintf('Work doing at `%d` try', $count));
 

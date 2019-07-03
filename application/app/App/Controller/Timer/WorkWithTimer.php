@@ -15,43 +15,40 @@ declare(strict_types=1);
 namespace App\App\Controller\Timer;
 
 use Common\Infra\Helper\message_with_time;
+use Exception;
+use Leevel\Protocol\ITimer;
 
 /**
- * 使用 Swoole 原生每隔一段时间执行同一任务.
+ * 定时器工作任务.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2019.07.01
+ * @since 2019.07.03
  *
  * @version 1.0
  */
-class Index
+class WorkWithTimer
 {
     /**
      * 执行入口.
      *
+     * @param \Leevel\Protocol\ITimer $timer
+     *
      * @return string
      */
-    public function handle(): string
+    public function handle(ITimer $timer): string
     {
-        $this->message('Start timer');
+        $timer->work(function (): void {
+            $this->message('Failed test');
 
-        // 每隔 1 秒触发一次
-        $n = 1;
-        $timerId = swoole_timer_tick(1000, function () use (&$n) {
-            $this->message(sprintf('Try `%d`', $n));
-            $n++;
-        });
+            throw new Exception('Failed test');
+        }, 1000, 5);
 
-        $this->message(sprintf('Timer id is `%d`', $timerId));
+        $timer->work(function (): void {
+            $this->message('Success test');
+        }, 1000, 5);
 
-        // 运行 3 秒后删除定时器
-        swoole_timer_after(3000, function () use ($timerId) {
-            $this->message('Clear timer');
-            swoole_timer_clear($timerId);
-        });
-
-        return 'Timer done';
+        return 'Work done';
     }
 
     /**
