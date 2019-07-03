@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace App\App\Controller\Task;
+namespace Common\Domain\Task;
 
 use Swoole\Server as SwooleServer;
 
