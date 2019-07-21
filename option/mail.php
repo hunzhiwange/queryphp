@@ -63,7 +63,7 @@ return [
             'host' => Leevel::env('MAIL_HOST', 'smtp.qq.com'),
 
             // 端口
-            'port' => Leevel::env('MAIL_PORT', 587),
+            'port' => (int) Leevel::env('MAIL_PORT', 587),
 
             // 用户名
             'username' => Leevel::env('MAIL_USERNAME'),

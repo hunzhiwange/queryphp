@@ -55,7 +55,7 @@ return [
             'host' => Leevel::env('FILESYSTEM_FTP_HOST', 'ftp.example.com'),
 
             // 端口
-            'port' => Leevel::env('FILESYSTEM_FTP_PORT', 21),
+            'port' => (int) Leevel::env('FILESYSTEM_FTP_PORT', 21),
 
             // 用户名
             'username' => Leevel::env('FILESYSTEM_FTP_USERNAME', 'your-username'),
@@ -84,7 +84,7 @@ return [
             'host' => Leevel::env('FILESYSTEM_SFTP_HOST', 'sftp.example.com'),
 
             // 端口
-            'port' => Leevel::env('FILESYSTEM_SFTP_PORT', 22),
+            'port' => (int) Leevel::env('FILESYSTEM_SFTP_PORT', 22),
 
             // 用户名
             'username' => Leevel::env('FILESYSTEM_SFTP_USERNAME', 'your-username'),

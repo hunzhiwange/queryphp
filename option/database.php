@@ -38,7 +38,7 @@ return [
             'host' => Leevel::env('DATABASE_HOST', 'localhost'),
 
             // 端口
-            'port' => Leevel::env('DATABASE_PORT', 3306),
+            'port' => (int) Leevel::env('DATABASE_PORT', 3306),
 
             // 数据库名字
             'name' => Leevel::env('DATABASE_NAME', ''),

@@ -53,11 +53,11 @@ return [
         // 监听端口
         // see https://wiki.swoole.com/wiki/page/p-server.html
         // see https://wiki.swoole.com/wiki/page/327.html
-        'port' => '9500',
+        'port' => 9500,
 
         // 设置启动的 worker 进程数
         // see https://wiki.swoole.com/wiki/page/275.html
-        'worker_num' => 8,
+        'worker_num' => 1,
 
         // 守护进程化
         // see https://wiki.swoole.com/wiki/page/278.html
@@ -88,7 +88,7 @@ return [
         // 监听端口
         // see https://wiki.swoole.com/wiki/page/p-server.html
         // see https://wiki.swoole.com/wiki/page/327.html
-        'port' => '9527',
+        'port' => 9527,
 
         // swoole 进程名称
         'process_name' => 'leevel.http',
@@ -123,7 +123,7 @@ return [
         // 监听端口
         // see https://wiki.swoole.com/wiki/page/p-server.html
         // see https://wiki.swoole.com/wiki/page/327.html
-        'port' => '9502',
+        'port' => 9502,
 
         // 设置启动的 task worker 进程数
         // https://wiki.swoole.com/wiki/page/276.html
@@ -155,7 +155,7 @@ return [
         // 监听端口
         // see https://wiki.swoole.com/wiki/page/p-server.html
         // see https://wiki.swoole.com/wiki/page/327.html
-        'port' => '1355',
+        'port' => 1355,
 
         // 设置启动的 task worker 进程数
         // https://wiki.swoole.com/wiki/page/276.html
