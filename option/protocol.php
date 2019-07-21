@@ -57,7 +57,7 @@ return [
 
         // 设置启动的 worker 进程数
         // see https://wiki.swoole.com/wiki/page/275.html
-        'worker_num' => 1,
+        'worker_num' => 8,
 
         // 守护进程化
         // see https://wiki.swoole.com/wiki/page/278.html
