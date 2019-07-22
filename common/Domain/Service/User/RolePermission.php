@@ -72,7 +72,7 @@ class RolePermission
     {
         $entity = $this->entity($input);
 
-        $this->setRolePermission((int) $input['id'], $input['permission_id']);
+        $this->setRolePermission((int) $input['id'], $input['permission_id'] ?? []);
 
         $this->w->flush();
 
