@@ -39,6 +39,8 @@ class Demo6
      */
     public function handle(): string
     {
+        Runtime::enableCoroutine(false);
+
         $this->message('Start coroutine redis');
 
         // 同步版, redis 使用时会有 IO 阻塞
