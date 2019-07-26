@@ -8,6 +8,7 @@ env:
 matrix:
   include:
     - php: 7.3.2
+      env: test_coverage=true
     - php: 7.3.2
       env: setup=lowest
     - php: 7.4snapshot
@@ -30,6 +31,7 @@ before_install:
   - mysql -e "create database IF NOT EXISTS test;" -uroot
   - phpenv config-add build/redis.ini
   - travis_retry composer self-update
+  - if [[ $test_coverage != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
 
 install:
   - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
@@ -49,5 +51,7 @@ script:
   - php vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
 
 after_success:
-  - travis_retry php vendor/bin/php-coveralls
-  - travis_retry php vendor/bin/php-coveralls -v
+  - if [[ $test_coverage == 'true' ]]; then travis_retry php vendor/bin/php-coveralls -v; fi
+
+notifications:
+  email: false
