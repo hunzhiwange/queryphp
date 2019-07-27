@@ -15,11 +15,13 @@ declare(strict_types=1);
 namespace App\App\Controller\Coroutine;
 
 use Common\Infra\Helper\message_with_time;
-use Swoole\Coroutine\Channel;
 use Swoole\Coroutine\Http\Client;
+use Swoole\Coroutine\WaitGroup;
 
 /**
  * 协程：实现 sync.WaitGroup 功能.
+ *
+ * - Swoole 新版本自带 WaitGroup
  *
  * @author Name Your <your@mail.com>
  *
@@ -28,8 +30,9 @@ use Swoole\Coroutine\Http\Client;
  * @version 1.0
  *
  * @see https://wiki.swoole.com/wiki/page/p-waitgroup.html
+ * @see https://github.com/swoole/swoole-src/blob/master/library/core/Coroutine/WaitGroup.php
  */
-class WaitGroup
+class WaitGroup2
 {
     /**
      * 改变顺序.
@@ -43,7 +46,7 @@ class WaitGroup
         go(function () {
             $result = [];
 
-            $wg = new BaseWaitGroup();
+            $wg = new WaitGroup();
             $wg->add();
 
             // 启动第一个协程
@@ -108,56 +111,5 @@ class WaitGroup
     private function message(string $message): void
     {
         dump(f(message_with_time::class, $message));
-    }
-}
-
-class BaseWaitGroup
-{
-    /**
-     * 计数器.
-     *
-     * @var int
-     */
-    private $count = 0;
-
-    /**
-     * 通道.
-     *
-     * @var \Swoole\Coroutine\Channel[]
-     */
-    private $chan;
-
-    /**
-     * 构造函数.
-     */
-    public function __construct()
-    {
-        $this->chan = new Channel();
-    }
-
-    /**
-     * 方法增加计数.
-     */
-    public function add(): void
-    {
-        $this->count++;
-    }
-
-    /**
-     * 表示任务已完成.
-     */
-    public function done(): void
-    {
-        $this->chan->push(true);
-    }
-
-    /**
-     * 等待所有任务完成恢复当前协程的执行.
-     */
-    public function wait(): void
-    {
-        while ($this->count--) {
-            $this->chan->pop();
-        }
     }
 }
