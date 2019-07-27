@@ -31,6 +31,8 @@ class Database3
     /**
      * 响应.
      *
+     * - 设置 .env DATABASE_DRIVER = mysql 或者 mysqlPool.
+     *
      * @return string
      */
     public function handle(): string

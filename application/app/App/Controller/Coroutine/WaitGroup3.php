@@ -14,24 +14,27 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Coroutine;
 
-use Common\Domain\Entity\Demo\Test;
 use Common\Infra\Helper\message_with_time;
+use Swoole\Coroutine\WaitGroup;
 
 /**
- * 实体查询.
+ * 协程：实现 sync.WaitGroup 功能.
+ *
+ * - Swoole 新版本自带 WaitGroup
  *
  * @author Name Your <your@mail.com>
  *
  * @since 2019.07.27
  *
  * @version 1.0
+ *
+ * @see https://wiki.swoole.com/wiki/page/p-waitgroup.html
+ * @see https://github.com/swoole/swoole-src/blob/master/library/core/Coroutine/WaitGroup.php
  */
-class Entity
+class WaitGroup3
 {
     /**
-     * 响应.
-     *
-     * - 设置 .env DATABASE_DRIVER = mysql 或者 mysqlPool.
+     * 改变顺序.
      *
      * @return string
      */
@@ -40,11 +43,29 @@ class Entity
         $this->message('Start');
 
         go(function () {
+            $result = [];
             $time = time();
+            $wg = new WaitGroup();
 
-            for ($i = 0; $i < 5; $i++) {
-                $result = Test::query('SELECT sleep(2)');
-                dump($result);
+            $wg->add();
+            go(function () use ($wg, &$result) {
+                $result['k1'] = 'coroutine 1';
+                sleep(1);
+                $wg->done();
+            });
+
+            $wg->add();
+            go(function () use ($wg, &$result) {
+                $result['k2'] = 'coroutine 2';
+                sleep(2);
+                $wg->done();
+            });
+
+            $wg->wait();
+
+            foreach ($result as $k => $v) {
+                $this->message($k);
+                $this->message($v);
             }
 
             $this->message('Time: '.(time() - $time));
