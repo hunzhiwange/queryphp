@@ -15,9 +15,10 @@ declare(strict_types=1);
 namespace App\App\Controller\Coroutine;
 
 use Common\Infra\Helper\message_with_time;
+use Swoole\Coroutine\Channel;
 
 /**
- * 数据库.
+ * Redis.
  *
  * @author Name Your <your@mail.com>
  *
@@ -25,7 +26,7 @@ use Common\Infra\Helper\message_with_time;
  *
  * @version 1.0
  */
-class Database
+class Redis3
 {
     /**
      * 响应.
@@ -38,9 +39,19 @@ class Database
 
         go(function () {
             $time = time();
+            $chan = new Channel();
 
             for ($i = 0; $i < 5; $i++) {
-                $result = app('database')->query('SELECT sleep(2)');
+                go(function () use ($chan, $i) {
+                    app('cache')->set('h'.$i, 'w');
+                    $result = app('cache')->get('h'.$i);
+                    $chan->push($result);
+                    sleep(1);
+                });
+            }
+
+            for ($i = 0; $i < 5; $i++) {
+                $result = $chan->pop();
                 dump($result);
             }
 

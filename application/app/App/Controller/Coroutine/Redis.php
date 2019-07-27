@@ -17,7 +17,7 @@ namespace App\App\Controller\Coroutine;
 use Common\Infra\Helper\message_with_time;
 
 /**
- * 数据库.
+ * Redis.
  *
  * @author Name Your <your@mail.com>
  *
@@ -25,10 +25,12 @@ use Common\Infra\Helper\message_with_time;
  *
  * @version 1.0
  */
-class Database
+class Redis
 {
     /**
      * 响应.
+     *
+     * - 设置 .env CACHE_DRIVER = redis 或者 redisPool.
      *
      * @return string
      */
@@ -40,8 +42,10 @@ class Database
             $time = time();
 
             for ($i = 0; $i < 5; $i++) {
-                $result = app('database')->query('SELECT sleep(2)');
+                app('cache')->set('h'.$i, 'w');
+                $result = app('cache')->get('h'.$i);
                 dump($result);
+                sleep(1);
             }
 
             $this->message('Time: '.(time() - $time));
