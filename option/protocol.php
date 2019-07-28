@@ -77,7 +77,10 @@ return [
         'task_worker_num' => 4,
 
         // 自定义进程
-        'processes' => [
+        'processes' => [],
+
+        // 开发阶段自定义进程
+        'processes_dev' => [
             'Leevel\\Protocol\\Process\\HotOverload',
         ],
     ],
