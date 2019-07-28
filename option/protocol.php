@@ -19,8 +19,9 @@ return [
      * ---------------------------------------------------------------
      *
      * swoole 服务延迟重启计数器，单位为次
+     * 总延迟时间等于 hotoverload_delay_count*hotoverload_time_interval
      */
-    'hotoverload_delay_count' => 2,
+    'hotoverload_delay_count' => 5,
 
     /*
      * ---------------------------------------------------------------
