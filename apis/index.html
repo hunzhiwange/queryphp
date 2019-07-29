@@ -41,9 +41,14 @@
         window.location.href = window.location.href+'/';
       }
 
+      var url = '/swagger/';
+      if (window.location.hash) {
+        url = window.location.hash.substr(1)
+      }
+
       // Build a system
       const ui = SwaggerUIBundle({
-        url: "/api/",
+        url: url,
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [

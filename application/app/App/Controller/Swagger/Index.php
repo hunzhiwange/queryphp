@@ -12,10 +12,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace App\App\Controller\Api;
+namespace App\App\Controller\Swagger;
 
 use Common\Infra\Helper\force_close_debug;
 use Leevel;
+use function OpenApi\scan;
 
 /**
  * api 文档入口.
@@ -35,24 +36,47 @@ class Index
      */
     public function handle(): string
     {
+        // 关闭路由自定义标签警告
         error_reporting(E_ERROR | E_PARSE | E_STRICT);
 
-        $path = [
-            Leevel::path('router'),
-            Leevel::appPath(),
-        ];
+        // 扫描路径
+        $path = array_merge($this->basePath(), $this->path());
+        $openApi = scan($path);
 
-        $openApi = \OpenApi\scan($path);
-
+        // 关闭警告
         $this->forceCloseDebug();
 
         return json_encode($openApi);
     }
 
     /**
+     * 扫描路径.
+     *
+     * @return array
+     */
+    protected function path(): array
+    {
+        return [
+            Leevel::appPath(),
+        ];
+    }
+
+    /**
+     * 基本路径.
+     *
+     * @return array
+     */
+    protected function basePath(): array
+    {
+        return [
+            Leevel::path('router'),
+        ];
+    }
+
+    /**
      * 关闭 debug.
      */
-    private function forceCloseDebug(): void
+    protected function forceCloseDebug(): void
     {
         f(force_close_debug::class);
     }
