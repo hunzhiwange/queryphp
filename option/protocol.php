@@ -15,30 +15,30 @@ declare(strict_types=1);
 return [
     /*
      * ---------------------------------------------------------------
-     * 默认 swoole 服务延迟重启计数器
+     * 默认 Swoole 服务延迟重启计数器
      * ---------------------------------------------------------------
      *
-     * swoole 服务延迟重启计数器，单位为次
+     * Swoole 服务延迟重启计数器，单位为次
      * 总延迟时间等于 hotoverload_delay_count*hotoverload_time_interval
      */
     'hotoverload_delay_count' => 5,
 
     /*
      * ---------------------------------------------------------------
-     * 默认 swoole 检测间隔时间
+     * 默认 Swoole 检测间隔时间
      * ---------------------------------------------------------------
      *
-     * swoole 检测间隔时间，单位为毫秒
+     * Swoole 检测间隔时间，单位为毫秒
      */
     'hotoverload_time_interval' => 20,
 
     /*
      * ---------------------------------------------------------------
-     * 默认 swoole 源代码监听目录
+     * 默认 Swoole 源代码监听目录
      * ---------------------------------------------------------------
      *
      * 使用 HotOverload 监听 PHP 源码默认目录
-     * 程序文件更新时自动重启 swoole 服务端
+     * 程序文件更新时自动重启 Swoole 服务端
      */
     'hotoverload_watch' => [
         Leevel::appPath(),
@@ -47,10 +47,10 @@ return [
 
     /*
      * ---------------------------------------------------------------
-     * swoole server
+     * Swoole Server
      * ---------------------------------------------------------------
      *
-     * swoole 基础服务器配置参数
+     * Swoole 基础服务器配置参数
      * see https://wiki.swoole.com/wiki/page/274.html
      * see https://wiki.swoole.com/wiki/page/p-server.html
      */
@@ -88,10 +88,10 @@ return [
 
     /*
      * ---------------------------------------------------------------
-     * swoole http server
+     * Swoole HTTP Server
      * ---------------------------------------------------------------
      *
-     * swoole http 服务器配置参数
+     * Swoole HTTP 服务器配置参数
      * https://wiki.swoole.com/wiki/page/274.html
      * https://wiki.swoole.com/wiki/page/620.html
      */
@@ -101,14 +101,14 @@ return [
         // see https://wiki.swoole.com/wiki/page/327.html
         'port' => 9527,
 
-        // swoole 进程名称
+        // Swoole 进程名称
         'process_name' => 'leevel.http',
 
-        // swoole 进程保存路径
+        // Swoole 进程保存路径
         'pid_path' => Leevel::runtimePath('protocol/http.pid'),
 
         // 开启静态路径
-        // 配合 Nginx 可以设置这里为 false,nginx 解析静态路径,只将动态路由转发给 swoole
+        // 配合 Nginx 可以设置这里为 false,nginx 解析静态路径,只将动态路由转发给 Swoole
         'enable_static_handler' => true,
 
         // 开启静态路径目录
@@ -117,10 +117,10 @@ return [
 
     /*
      * ---------------------------------------------------------------
-     * swoole websocket server
+     * Swoole WebSocket Server
      * ---------------------------------------------------------------
      *
-     * swoole websocket 服务器配置参数
+     * Swoole websocket 服务器配置参数
      * https://wiki.swoole.com/wiki/page/274.html
      * https://wiki.swoole.com/wiki/page/620.html
      * https://wiki.swoole.com/wiki/page/397.html
@@ -140,19 +140,19 @@ return [
         // https://wiki.swoole.com/wiki/page/276.html
         'task_worker_num' => 4,
 
-        // swoole 进程名称
+        // Swoole 进程名称
         'process_name' => 'leevel.websocket',
 
-        // swoole 进程保存路径
+        // Swoole 进程保存路径
         'pid_path' => Leevel::runtimePath('protocol/websocket.pid'),
     ],
 
     /*
      * ---------------------------------------------------------------
-     * swoole rpc server
+     * Swoole RPC Server
      * ---------------------------------------------------------------
      *
-     * swoole rpc 服务器配置参数
+     * Swoole RPC 服务器配置参数
      * 底层基于 thrift 跨语言编程框架
      * http://thrift.apache.org/
      * 定义的 thrift 结构见 src/Leevel/Protocol/Thrift/Struct/queryphp.thrift
@@ -202,10 +202,10 @@ return [
         // https://wiki.swoole.com/wiki/page/287.html
         'package_body_offset' => 4,
 
-        // swoole 进程名称
+        // Swoole 进程名称
         'process_name' => 'leevel.rpc',
 
-        // swoole 进程保存路径
+        // Swoole 进程保存路径
         'pid_path' => Leevel::runtimePath('protocol/rpc.pid'),
     ],
 ];
