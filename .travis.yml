@@ -31,7 +31,7 @@ services:
 before_install:
   - mysql -e "create database IF NOT EXISTS test;" -uroot
   - phpenv config-add build/redis.ini
-  - wget https://github.com/swoole/swoole-src/archive/$swoole_version.tar.gz -O swoole.tar.gz && mkdir -p swoole && tar -xf swoole.tar.gz -C swoole --strip-components=1 && rm swoole.tar.gz && cd swoole && phpize && ./configure && make -j$(nproc) && make install && cd -
+  - wget https://github.com/swoole/swoole-src/archive/$swoole_version.tar.gz -O swoole.tar.gz && mkdir -p swoole && tar -xf swoole.tar.gz -C swoole --strip-components=1 && rm swoole.tar.gz && cd swoole && phpize && ./configure && make -j$(nproc) && make install && cd - && rm -rf swoole
   - echo "extension = swoole.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - travis_retry composer self-update
   - if [[ $test_coverage != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
