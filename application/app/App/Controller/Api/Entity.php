@@ -34,6 +34,6 @@ class Entity
      */
     public function handle(): array
     {
-        return ['count' => Test::findCount()];
+        return ['count' => Test::select()->findCount()];
     }
 }

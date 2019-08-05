@@ -46,7 +46,7 @@ class Entity3
 
             for ($i = 0; $i < 5; $i++) {
                 go(function () use ($chan) {
-                    $result = Test::query('SELECT sleep(2)');
+                    $result = Test::select()->query('SELECT sleep(2)');
                     $chan->push($result);
                 });
             }

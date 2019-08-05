@@ -44,7 +44,7 @@ class Entity2
 
             for ($i = 0; $i < 5; $i++) {
                 go(function () {
-                    $result = Test::query('SELECT sleep(2)');
+                    $result = Test::select()->query('SELECT sleep(2)');
                     dump($result);
                 });
             }
