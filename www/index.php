@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 use Common\App\Exception\Runtime;
 use Common\App\Kernel;
-use Composer\Autoload\ClassLoader;
 use Leevel\Di\Container;
 use Leevel\Di\IContainer;
 use Leevel\Http\Request;
@@ -30,7 +29,7 @@ use Leevel\Kernel\IRuntime;
  *
  * 用于管理 PHP 依赖包
  */
-$composer = require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 /**
  * ---------------------------------------------------------------
@@ -41,9 +40,6 @@ $composer = require __DIR__.'/../vendor/autoload.php';
  */
 $container = Container::singletons();
 $container->singleton(IContainer::class, $container);
-
-$container->singleton('composer', $composer);
-$container->alias('composer', ClassLoader::class);
 
 $container->singleton('app', new App($container, realpath(__DIR__.'/..')));
 $container->alias('app', [IApp::class, App::class]);
@@ -59,11 +55,6 @@ $container->singleton(IRuntime::class, Runtime::class);
  * 根据内核调度请求返回响应
  */
 $kernel = $container->make(IKernel::class);
-
-$response = $kernel->handle(
-    $request = Request::createFromGlobals()
-);
-
+$response = $kernel->handle($request = Request::createFromGlobals());
 $response->send();
-
 $kernel->terminate($request, $response);
