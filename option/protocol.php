@@ -67,7 +67,7 @@ return [
 
         // 设置启动的 worker 进程数
         // see https://wiki.swoole.com/wiki/page/275.html
-        'worker_num' => 2,
+        'worker_num' => 8,
 
         // 守护进程化
         // see https://wiki.swoole.com/wiki/page/278.html
@@ -75,7 +75,7 @@ return [
 
         // 设置启动的 task worker 进程数
         // https://wiki.swoole.com/wiki/page/276.html
-        'task_worker_num' => 2,
+        'task_worker_num' => 4,
 
         // 自定义进程
         'processes' => [],
