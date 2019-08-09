@@ -1,8 +1,5 @@
 {
-  "name": "queryphp",
-  "version": "1.0.0",
-  "description": "",
-  "dependencies": {},
+  "private": true,
   "devDependencies": {
     "cz-conventional-changelog": "^3.0.2"
   },
@@ -11,16 +8,6 @@
     "changelogs": "conventional-changelog -p angular -i CHANGELOG-1.0.md -s -r 0",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hunzhiwange/queryphp.git"
-  },
-  "author": "Xiangmin Liu <635750556@qq.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/hunzhiwange/queryphp/issues"
-  },
-  "homepage": "http://www.queryphp.com",
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
