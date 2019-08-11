@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Coroutine;
 
+use App;
 use Common\Infra\Helper\message_with_time;
 use Swoole\Coroutine\Channel;
 
@@ -45,7 +46,7 @@ class Database3
 
             for ($i = 0; $i < 5; $i++) {
                 go(function () use ($chan) {
-                    $result = app('database')->query('SELECT sleep(2)');
+                    $result = App::make('database')->query('SELECT sleep(2)');
                     $chan->push($result);
                 });
             }

@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Coroutine;
 
+use App;
 use Common\Infra\Helper\message_with_time;
 
 /**
@@ -43,8 +44,8 @@ class Redis2
 
             for ($i = 0; $i < 5; $i++) {
                 go(function () use ($i) {
-                    app('cache')->set('h'.$i, 'w');
-                    $result = app('cache')->get('h'.$i);
+                    App::make('cache')->set('h'.$i, 'w');
+                    $result = App::make('cache')->get('h'.$i);
                     dump($result);
                     sleep(1);
                 });
