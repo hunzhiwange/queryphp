@@ -83,14 +83,14 @@ a.button:hover {
     <div>
         <div id="header">
             <div id="status-code">
-                <?php echo $code ?? 500; ?>
+                <?php echo $status_code ?? 500; ?>
             </div>
         </div>
         
         <div id="content">
             <div>
                 <p id="title"><?php echo $title; ?></p>
-                <p id="sub-title"><?php echo $message; ?></p>
+                <p id="sub-title"><?php echo $code; ?> <?php echo $message; ?></p>
                 <div class="button">
                     <a class="button" href="/"><?php echo __('首页'); ?></a> 
                     <a class="button" href="javascript:;" onclick="window.location.reload();"><?php echo __('重试'); ?></a>
