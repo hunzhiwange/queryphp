@@ -67,7 +67,6 @@ class Upload
         }
 
         $savePath = $this->getSavePath($file);
-
         $this->saveFile($file->getPathname(), $savePath);
 
         return [$this->savePathForUrl($savePath)];

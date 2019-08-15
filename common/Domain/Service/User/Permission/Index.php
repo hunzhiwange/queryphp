@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Infra\Repository\User\Permission;
+namespace Common\Domain\Service\User\Permission;
 
 use Common\Domain\Entity\User\Permission;
 use Leevel\Collection\Collection;

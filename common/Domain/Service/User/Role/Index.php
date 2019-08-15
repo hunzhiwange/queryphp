@@ -12,17 +12,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Infra\Repository\User\User;
+namespace Common\Domain\Service\User\Role;
 
 use Closure;
-use Common\Domain\Entity\User\User;
-use Leevel\Collection\Collection;
+use Common\Domain\Entity\User\Role;
 use Leevel\Database\Ddd\IEntity;
 use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Database\Ddd\Select;
 
 /**
- * 用户列表.
+ * 角色列表.
  *
  * @author Name Your <your@mail.com>
  *
@@ -58,7 +57,7 @@ class Index
      */
     public function handle(array $input): array
     {
-        $repository = $this->w->repository(User::class);
+        $repository = $this->w->repository(Role::class);
 
         list($page, $entitys) = $repository->findPage(
             (int) ($input['page'] ?: 1),
@@ -67,21 +66,9 @@ class Index
         );
 
         $data['page'] = $page;
-        $data['data'] = $this->prepareData($entitys);
+        $data['data'] = $entitys->toArray();
 
         return $data;
-    }
-
-    /**
-     * 准备数据.
-     *
-     * @param \Leevel\Collection\Collection $data
-     *
-     * @return array
-     */
-    protected function prepareData(Collection $data): array
-    {
-        return (new PrepareForUser())->handleMulti($data);
     }
 
     /**
@@ -94,8 +81,6 @@ class Index
     protected function condition(array $input): Closure
     {
         return function (Select $select, IEntity $entity) use ($input) {
-            $select->eager(['role']);
-
             if ($input['key']) {
                 $select->where(function ($select) use ($input) {
                     $select

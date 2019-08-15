@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Permission;
 
-use Common\Infra\Repository\User\Permission\Index as Repository;
+use Common\Domain\Service\User\Permission\Index as Service;
 
 /**
  * 权限列表.
@@ -30,18 +30,18 @@ class Index
     /**
      * 权限查询服务.
      *
-     * @var \Common\Infra\Repository\User\Permission\Index
+     * @var \Common\Domain\Service\User\Permission\Index
      */
-    protected $repository;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Common\Infra\Repository\User\Permission\Index $repository
+     * @param \Common\Domain\Service\User\Permission\Index $service
      */
-    public function __construct(Repository $repository)
+    public function __construct(Service $service)
     {
-        $this->repository = $repository;
+        $this->service = $service;
     }
 
     /**
@@ -53,6 +53,6 @@ class Index
      */
     public function handle(): array
     {
-        return $this->repository->handle();
+        return $this->service->handle();
     }
 }

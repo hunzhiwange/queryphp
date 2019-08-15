@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Infra\Repository\User\User;
+namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
 use Leevel\Database\Ddd\IUnitOfWork;
@@ -55,9 +55,7 @@ class UserPermission
     public function handle(array $input): array
     {
         $user = $this->findUser((int) $input['user_id']);
-
         $data = $this->parsePermission($user);
-
         $data = $this->normalizePermission($data);
 
         return $data;
@@ -95,7 +93,6 @@ class UserPermission
     protected function parsePermission(User $user): array
     {
         $data = [];
-
         $roles = $user->role;
 
         if (\count($roles) > 0) {

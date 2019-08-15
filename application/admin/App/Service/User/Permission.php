@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\User;
 
-use Common\Infra\Repository\User\User\Permission as Repository;
+use Common\Domain\Service\User\User\Permission as Service;
 
 /**
  * 用户权限数据服务.
@@ -30,18 +30,18 @@ class Permission
     /**
      * 用户权限数据服务.
      *
-     * @var \Common\Infra\Repository\User\User\Permission
+     * @var \Common\Domain\Service\User\User\Permission
      */
-    protected $repository;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Common\Infra\Repository\User\User\Permission $repository
+     * @param \Common\Domain\Service\User\User\Permission $service
      */
-    public function __construct(Repository $repository)
+    public function __construct(Service $service)
     {
-        $this->repository = $repository;
+        $this->service = $service;
     }
 
     /**
@@ -53,6 +53,6 @@ class Permission
      */
     public function handle(array $input): array
     {
-        return $this->repository->handle($input);
+        return $this->service->handle($input);
     }
 }

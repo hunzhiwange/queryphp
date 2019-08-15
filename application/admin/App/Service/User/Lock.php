@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\User;
 
-use Common\Infra\Repository\User\User\Lock as Repository;
+use Common\Domain\Service\User\User\Lock as Service;
 
 /**
  * 面板锁定服务.
@@ -30,18 +30,18 @@ class Lock
     /**
      * 面板锁定服务.
      *
-     * @var \Common\Infra\Repository\User\User\Lock
+     * @var \Common\Domain\Service\User\User\Lock
      */
-    protected $repository;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Common\Infra\Repository\User\User\Lock $repository
+     * @param \Common\Domain\Service\User\User\Lock $service
      */
-    public function __construct(Repository $repository)
+    public function __construct(Service $service)
     {
-        $this->repository = $repository;
+        $this->service = $service;
     }
 
     /**
@@ -53,6 +53,6 @@ class Lock
      */
     public function handle(array $input): array
     {
-        return $this->repository->handle($input);
+        return $this->service->handle($input);
     }
 }

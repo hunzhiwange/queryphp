@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Infra\Repository\User\Resource;
+namespace Common\Domain\Service\User\Resource;
 
 use Closure;
 use Common\Domain\Entity\User\Resource;

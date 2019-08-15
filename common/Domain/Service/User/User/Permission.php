@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Infra\Repository\User\User;
+namespace Common\Domain\Service\User\User;
 
 use Admin\Infra\Permission as PermissionCache;
 
@@ -37,15 +37,15 @@ class Permission
     /**
      * 获取用户权限.
      *
-     * @var \Common\Infra\Repository\User\User\UserPermission
+     * @var \Common\Domain\Service\User\User\UserPermission
      */
     protected $permission;
 
     /**
      * 构造函数.
      *
-     * @param \Admin\Infra\Permission                           $permissionCache
-     * @param \Common\Infra\Repository\User\User\UserPermission $permission
+     * @param \Admin\Infra\Permission                         $permissionCache
+     * @param \Common\Domain\Service\User\User\UserPermission $permission
      */
     public function __construct(PermissionCache $permissionCache, UserPermission $permission)
     {
@@ -81,7 +81,6 @@ class Permission
     protected function getPermission(string $token, int $userId): array
     {
         $permission = $this->permission->handle(['user_id' => $userId]);
-
         $this->permissionCache->set($token, $permission);
 
         return $permission;

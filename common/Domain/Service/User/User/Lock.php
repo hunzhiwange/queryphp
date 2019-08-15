@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Infra\Repository\User\User;
+namespace Common\Domain\Service\User\User;
 
 use Admin\Infra\Lock as CacheLock;
 use Leevel\Validate\Proxy\Validate as Validates;
@@ -62,9 +62,7 @@ class Lock
     public function handle(array $input): array
     {
         $this->input = $input;
-
         $this->validateArgs();
-
         $this->lock();
 
         return [];

@@ -18,7 +18,7 @@ use Admin\Infra\Code;
 use Admin\Infra\Permission;
 use Common\Domain\Entity\Base\App;
 use Common\Domain\Entity\User\User;
-use Common\Infra\Repository\User\User\UserPermission;
+use Common\Domain\Service\User\User\UserPermission;
 use Leevel\Auth\Hash;
 use Leevel\Auth\Proxy\Auth;
 use Leevel\Http\IRequest;
@@ -68,17 +68,17 @@ class Validate
     /**
      * 获取用户权限.
      *
-     * @var \Common\Infra\Repository\User\User\UserPermission
+     * @var \Common\Domain\Service\User\User\UserPermission
      */
     protected $permission;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Http\IRequest                             $request
-     * @param \Admin\Infra\Code                                 $code
-     * @param \Admin\Infra\Permission                           $permissionCache
-     * @param \Common\Infra\Repository\User\User\UserPermission $permission
+     * @param \Leevel\Http\IRequest                           $request
+     * @param \Admin\Infra\Code                               $code
+     * @param \Admin\Infra\Permission                         $permissionCache
+     * @param \Common\Domain\Service\User\User\UserPermission $permission
      */
     public function __construct(IRequest $request, Code $code, Permission $permissionCache, UserPermission $permission)
     {
@@ -109,9 +109,7 @@ class Validate
         $this->validateApp();
 
         $user = $this->validateUser();
-
         Auth::setTokenName($token = $this->createToken());
-
         Auth::login($user->toArray());
 
         return ['token' => $token];
@@ -144,7 +142,8 @@ class Validate
      */
     protected function validateApp()
     {
-        $app = App::where('identity', $this->input['app_id'])
+        $app = App::select()
+            ->where('identity', $this->input['app_id'])
             ->where('key', $this->input['app_key'])
             ->findOne();
 
@@ -162,7 +161,8 @@ class Validate
      */
     protected function validateUser(): User
     {
-        $user = User::Where('status', '1')
+        $user = User::select()
+            ->where('status', '1')
             ->where('name', $this->input['name'])
             ->findOne();
 

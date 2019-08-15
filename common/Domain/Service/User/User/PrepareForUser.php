@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Infra\Repository\User\User;
+namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
 

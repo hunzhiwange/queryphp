@@ -16,7 +16,7 @@ namespace Common\Domain\Service\User;
 
 use Common\Domain\Entity\User\User;
 use Common\Domain\Entity\User\UserRole as EntityUserRole;
-use Common\Infra\Repository\User\User\PrepareForUser;
+use Common\Domain\Service\User\User\PrepareForUser;
 
 /**
  * 更新授权.

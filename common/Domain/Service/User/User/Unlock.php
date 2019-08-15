@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Infra\Repository\User\User;
+namespace Common\Domain\Service\User\User;
 
 use Admin\Infra\Lock;
 use Common\Domain\Entity\User\User;
@@ -84,11 +84,8 @@ class Unlock
     public function handle(array $input): array
     {
         $this->input = $input;
-
         $this->validateArgs();
-
         $this->validateUser();
-
         $this->unlock();
 
         return [];

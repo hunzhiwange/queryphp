@@ -12,21 +12,21 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Infra\Repository\Base;
+namespace Common\Domain\Service\User\Role;
 
-use Common\Domain\Entity\Base\Option as Options;
+use Common\Domain\Entity\User\Role;
 use Leevel\Database\Ddd\IUnitOfWork;
 
 /**
- * 获取配置.
+ * 角色查询.
  *
  * @author Name Your <your@mail.com>
  *
- * @since 2018.12.03
+ * @since 2017.10.23
  *
  * @version 1.0
  */
-class GetOption
+class Show
 {
     /**
      * 事务工作单元.
@@ -48,14 +48,29 @@ class GetOption
     /**
      * 响应方法.
      *
+     * @param array $input
+     *
      * @return array
      */
-    public function handle(): array
+    public function handle(array $input): array
     {
-        $options = $this->w->repository(Options::class)->findAll();
+        $entity = $this->find($input['id']);
 
-        $result = $options->toArray();
+        $result = $entity->toArray();
+        $result['permission'] = $entity->permission->toArray();
 
-        return $result ? array_column($result, 'value', 'name') : [];
+        return $result;
+    }
+
+    /**
+     * 查找实体.
+     *
+     * @param int $intId
+     *
+     * @return \Common\Domain\Entity\User\Role
+     */
+    protected function find(int $id): Role
+    {
+        return $this->w->repository(Role::class)->findOrFail($id);
     }
 }

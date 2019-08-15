@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Permission;
 
-use Common\Infra\Repository\User\Permission\Show as Repository;
+use Common\Domain\Service\User\Permission\Show as Service;
 
 /**
  * 权限查询.
@@ -30,18 +30,18 @@ class Show
     /**
      * 权限查询服务.
      *
-     * @var \Common\Infra\Repository\User\Permission\Show
+     * @var \Common\Domain\Service\User\Permission\Show
      */
-    protected $repository;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Common\Infra\Repository\User\Permission\Show $repository
+     * @param \Common\Domain\Service\User\Permission\Show $service
      */
-    public function __construct(Repository $repository)
+    public function __construct(Service $service)
     {
-        $this->repository = $repository;
+        $this->service = $service;
     }
 
     /**
@@ -53,6 +53,6 @@ class Show
      */
     public function handle(array $input): array
     {
-        return $this->repository->handle($input);
+        return $this->service->handle($input);
     }
 }
