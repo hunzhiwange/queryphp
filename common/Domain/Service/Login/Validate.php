@@ -19,10 +19,10 @@ use Admin\Infra\Permission;
 use Common\Domain\Entity\Base\App;
 use Common\Domain\Entity\User\User;
 use Common\Domain\Service\User\User\UserPermission;
+use Common\Infra\Exception\BusinessException;
 use Leevel\Auth\Hash;
 use Leevel\Auth\Proxy\Auth;
 use Leevel\Http\IRequest;
-use Leevel\Kernel\Exception\HandleException;
 use Leevel\Support\Str;
 use Leevel\Validate\Proxy\Validate as Validates;
 
@@ -150,7 +150,7 @@ class Validate
         $this->secret = $app->secret;
 
         if (!$app->id) {
-            throw new HandleException(__('应用无法找到'));
+            throw new BusinessException(__('应用无法找到'));
         }
     }
 
@@ -167,11 +167,11 @@ class Validate
             ->findOne();
 
         if (!$user->id) {
-            throw new HandleException(__('账号不存在或者已禁用'));
+            throw new BusinessException(__('账号不存在或者已禁用'));
         }
 
         if (!$this->verifyPassword($this->input['password'], $user->password)) {
-            throw new HandleException(__('账户密码错误'));
+            throw new BusinessException(__('账户密码错误'));
         }
 
         return $user;
@@ -202,7 +202,7 @@ class Validate
         }
 
         if (strtoupper($this->input['code']) !== strtoupper($codeFromCache)) {
-            throw new HandleException(__('验证码错误'));
+            throw new BusinessException(__('验证码错误'));
         }
     }
 
@@ -230,7 +230,7 @@ class Validate
         );
 
         if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
+            throw new BusinessException(json_encode($validator->error()));
         }
     }
 }

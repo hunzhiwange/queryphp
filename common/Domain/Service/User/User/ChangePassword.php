@@ -15,9 +15,9 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
+use Common\Infra\Exception\BusinessException;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\Exception\HandleException;
 use Leevel\Validate\Proxy\Validate as Validates;
 
 /**
@@ -96,11 +96,11 @@ class ChangePassword
             ->findOne();
 
         if (!$user->id) {
-            throw new HandleException(__('账号不存在或者已禁用'));
+            throw new BusinessException(__('账号不存在或者已禁用'));
         }
 
         if (!$this->verifyPassword($this->input['old_pwd'], $user->password)) {
-            throw new HandleException(__('账户旧密码错误'));
+            throw new BusinessException(__('账户旧密码错误'));
         }
 
         return $user;
@@ -213,7 +213,7 @@ class ChangePassword
         );
 
         if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
+            throw new BusinessException(json_encode($validator->error()));
         }
     }
 }

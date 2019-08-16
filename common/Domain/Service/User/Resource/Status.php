@@ -15,9 +15,9 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\Resource;
 
 use Common\Domain\Entity\User\Resource;
+use Common\Infra\Exception\BusinessException;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\Exception\HandleException;
 use Leevel\Validate\Proxy\Validate;
 
 /**
@@ -105,7 +105,7 @@ class Status
             });
 
         if (0 === count($entitys)) {
-            throw new HandleException(__('未发现资源'));
+            throw new BusinessException(__('未发现资源'));
         }
 
         return $entitys;
@@ -127,7 +127,7 @@ class Status
         );
 
         if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
+            throw new BusinessException(json_encode($validator->error()));
         }
     }
 }

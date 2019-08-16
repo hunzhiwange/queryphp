@@ -17,11 +17,11 @@ namespace Admin\App\Middleware;
 use Admin\App\Exception\LockException;
 use Admin\Infra\Lock;
 use Closure;
+use Common\Infra\Exception\BusinessException;
 use Common\Infra\Proxy\Permission;
 use Leevel\Auth\AuthException;
 use Leevel\Auth\Middleware\Auth as BaseAuth;
 use Leevel\Http\IRequest;
-use Leevel\Kernel\Exception\HandleException;
 use Leevel\Kernel\Exception\UnauthorizedHttpException;
 
 /**
@@ -171,7 +171,7 @@ class Auth extends BaseAuth
         $method = strtolower($request->getMethod());
 
         if (!Permission::handle($pathInfo, $method)) {
-            throw new HandleException('你没有权限执行操作');
+            throw new BusinessException(__('你没有权限执行操作'));
         }
     }
 }

@@ -15,9 +15,9 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\Role;
 
 use Common\Domain\Entity\User\Role;
+use Common\Infra\Exception\BusinessException;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\Exception\HandleException;
 
 /**
  * 批量修改角色状态.
@@ -93,7 +93,7 @@ class Status
             });
 
         if (0 === count($entitys)) {
-            throw new HandleException(__('未发现角色'));
+            throw new BusinessException(__('未发现角色'));
         }
 
         return $entitys;

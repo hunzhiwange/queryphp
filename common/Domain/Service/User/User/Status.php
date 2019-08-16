@@ -15,9 +15,9 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
+use Common\Infra\Exception\BusinessException;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\Exception\HandleException;
 
 /**
  * 批量修改用户状态.
@@ -93,7 +93,7 @@ class Status
             });
 
         if (0 === count($entitys)) {
-            throw new HandleException(__('未发现用户'));
+            throw new BusinessException(__('未发现用户'));
         }
 
         return $entitys;

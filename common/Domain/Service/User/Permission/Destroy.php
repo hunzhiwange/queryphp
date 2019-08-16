@@ -15,8 +15,8 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\Permission;
 
 use Common\Domain\Entity\User\Permission;
+use Common\Infra\Exception\BusinessException;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\Exception\HandleException;
 
 /**
  * 权限删除.
@@ -95,7 +95,7 @@ class Destroy
     protected function checkChildren(int $id): void
     {
         if ($this->w->repository(Permission::class)->hasChildren($id)) {
-            throw new HandleException(__('权限包含子项，请先删除子项.'));
+            throw new BusinessException(__('权限包含子项，请先删除子项.'));
         }
     }
 }

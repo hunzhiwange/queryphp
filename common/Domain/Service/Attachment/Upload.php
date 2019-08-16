@@ -14,9 +14,9 @@ declare(strict_types=1);
 
 namespace Common\Domain\Service\Attachment;
 
+use Common\Infra\Exception\BusinessException;
 use Leevel\Filesystem\Proxy\Filesystem;
 use Leevel\Http\UploadedFile;
-use Leevel\Kernel\Exception\HandleException;
 use Leevel\Option\Proxy\Option;
 use Leevel\Support\Str;
 
@@ -63,7 +63,7 @@ class Upload
     protected function save(UploadedFile $file): array
     {
         if (!$file->isValid()) {
-            throw new HandleException($file->getErrorMessage());
+            throw new BusinessException($file->getErrorMessage());
         }
 
         $savePath = $this->getSavePath($file);
@@ -94,7 +94,7 @@ class Upload
     protected function saveFile(string $sourcePath, string $savePath): void
     {
         if (false === Filesystem::put($savePath, file_get_contents($sourcePath))) {
-            throw new HandleException(__('文件上传失败'));
+            throw new BusinessException(__('文件上传失败'));
         }
     }
 

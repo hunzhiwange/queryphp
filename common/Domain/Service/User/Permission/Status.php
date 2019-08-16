@@ -15,9 +15,9 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\Permission;
 
 use Common\Domain\Entity\User\Permission;
+use Common\Infra\Exception\BusinessException;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\Exception\HandleException;
 
 /**
  * 批量修改权限状态.
@@ -93,7 +93,7 @@ class Status
             });
 
         if (0 === count($entitys)) {
-            throw new HandleException(__('未发现权限'));
+            throw new BusinessException(__('未发现权限'));
         }
 
         return $entitys;

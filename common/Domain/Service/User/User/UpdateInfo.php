@@ -15,8 +15,8 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
+use Common\Infra\Exception\BusinessException;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\Exception\HandleException;
 use Leevel\Validate\IValidator;
 use Leevel\Validate\Proxy\Validate as Validates;
 
@@ -152,7 +152,7 @@ class UpdateInfo
         );
 
         if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
+            throw new BusinessException(json_encode($validator->error()));
         }
     }
 }

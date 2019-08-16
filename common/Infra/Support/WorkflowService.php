@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Common\Infra\Support;
 
+use Common\Infra\Exception\BusinessException;
 use InvalidArgumentException;
-use Leevel\Kernel\Exception\HandleException;
 use Leevel\Support\Arr;
 use Leevel\Validate\Proxy\Validate;
 
@@ -117,7 +117,7 @@ trait WorkflowService
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
-            throw new HandleException($e);
+            throw new BusinessException($e);
         }
     }
 }
