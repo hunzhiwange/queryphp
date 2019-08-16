@@ -14,9 +14,17 @@ declare(strict_types=1);
 
 namespace Common\Infra\Exception;
 
+use Leevel\Kernel\Exception\HttpException as BaseHttpException;
+
 /**
- * 搜索项未找到.
+ * HTTP 异常.
+ *
+ * @author Xiangmin Liu <635750556@qq.com>
+ *
+ * @since 2017.08.10
+ *
+ * @version 1.0
  */
-class SearchItemNotFoundException extends NotFoundHttpException
+class HttpException extends BaseHttpException
 {
 }

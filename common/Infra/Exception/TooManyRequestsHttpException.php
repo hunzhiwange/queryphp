@@ -14,9 +14,19 @@ declare(strict_types=1);
 
 namespace Common\Infra\Exception;
 
+use Leevel\Kernel\Exception\TooManyRequestsHttpException as BaseTooManyRequestsHttpException;
+
 /**
- * 搜索项未找到.
+ * 请求过于频繁异常.
+ *
+ * - 用户在给定的时间内发送了太多的请求: 429.
+ *
+ * @author Xiangmin Liu <635750556@qq.com>
+ *
+ * @since 2017.08.10
+ *
+ * @version 1.0
  */
-class SearchItemNotFoundException extends NotFoundHttpException
+class TooManyRequestsHttpException extends BaseTooManyRequestsHttpException
 {
 }

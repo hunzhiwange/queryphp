@@ -14,9 +14,19 @@ declare(strict_types=1);
 
 namespace Common\Infra\Exception;
 
+use Leevel\Kernel\Exception\MethodNotAllowedHttpException as BaseMethodNotAllowedHttpException;
+
 /**
- * 搜索项未找到.
+ * 方法禁用.
+ *
+ * - 禁用请求中指定的方法: 405.
+ *
+ * @author Xiangmin Liu <635750556@qq.com>
+ *
+ * @since 2018.04.29
+ *
+ * @version 1.0
  */
-class SearchItemNotFoundException extends NotFoundHttpException
+class MethodNotAllowedHttpException extends BaseMethodNotAllowedHttpException
 {
 }

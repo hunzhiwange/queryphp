@@ -14,9 +14,19 @@ declare(strict_types=1);
 
 namespace Common\Infra\Exception;
 
+use Leevel\Kernel\Exception\ForbiddenHttpException as BaseForbiddenHttpException;
+
 /**
- * 搜索项未找到.
+ * 禁止.
+ *
+ * - 服务器拒绝请求: 403.
+ *
+ * @author Xiangmin Liu <635750556@qq.com>
+ *
+ * @since 2018.04.29
+ *
+ * @version 1.0
  */
-class SearchItemNotFoundException extends NotFoundHttpException
+class ForbiddenHttpException extends BaseForbiddenHttpException
 {
 }

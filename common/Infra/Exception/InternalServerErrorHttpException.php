@@ -14,9 +14,19 @@ declare(strict_types=1);
 
 namespace Common\Infra\Exception;
 
+use Leevel\Kernel\Exception\InternalServerErrorHttpException as BaseInternalServerErrorHttpException;
+
 /**
- * 搜索项未找到.
+ * 服务器内部错误.
+ *
+ * - 服务器遇到错误，无法完成请求: 500.
+ *
+ * @author Xiangmin Liu <635750556@qq.com>
+ *
+ * @since 2018.04.29
+ *
+ * @version 1.0
  */
-class SearchItemNotFoundException extends NotFoundHttpException
+class InternalServerErrorHttpException extends BaseInternalServerErrorHttpException
 {
 }
