@@ -80,6 +80,9 @@ class _
  *         ":admin/*": {
  *             "middlewares": "admin_auth,cors"
  *         },
+ *         "options/index": {
+ *             "middlewares": "cors"
+ *         },
  *         "admin/show": {
  *             "middlewares": "auth"
  *         },
