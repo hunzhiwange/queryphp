@@ -18,11 +18,11 @@ use Admin\App\Exception\LockException;
 use Admin\Infra\Lock;
 use Closure;
 use Common\Infra\Exception\BusinessException;
+use Common\Infra\Exception\UnauthorizedHttpException;
 use Common\Infra\Proxy\Permission;
 use Leevel\Auth\AuthException;
 use Leevel\Auth\Middleware\Auth as BaseAuth;
 use Leevel\Http\IRequest;
-use Leevel\Kernel\Exception\UnauthorizedHttpException;
 
 /**
  * auth 中间件.
