@@ -25,6 +25,7 @@ use Leevel\Http\IRequest;
  * @since 2018.12.03
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class GetOption
 {

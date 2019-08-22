@@ -26,6 +26,7 @@ use Leevel\Http\IRequest;
  * @since 2017.10.23
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Resource
 {

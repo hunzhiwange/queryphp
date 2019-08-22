@@ -24,6 +24,7 @@ use Admin\App\Service\User\Info as Service;
  * @since 2019.04.24
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Info
 {

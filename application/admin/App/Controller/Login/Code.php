@@ -28,6 +28,7 @@ use Leevel\Http\Response;
  * @since 2017.11.22
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Code
 {
@@ -44,7 +45,6 @@ class Code
     public function handle(IRequest $request, Service $service): Response
     {
         $code = $service->handle($this->input($request));
-
         $this->forceCloseDebug();
 
         return new Response($code, 200, ['Content-type' => 'image/png']);

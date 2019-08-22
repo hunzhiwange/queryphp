@@ -24,6 +24,7 @@ use Admin\App\Service\Login\Logout as Service;
  * @since 2017.11.22
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Logout
 {
