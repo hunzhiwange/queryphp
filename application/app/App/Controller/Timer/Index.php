@@ -24,6 +24,7 @@ use Common\Infra\Helper\message_with_time;
  * @since 2019.07.01
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Index
 {

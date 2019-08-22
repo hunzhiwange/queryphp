@@ -24,6 +24,7 @@ use Common\Domain\Entity\Demo\Test;
  * @since 2018.11.08
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Entity
 {

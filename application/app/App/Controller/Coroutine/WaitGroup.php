@@ -28,6 +28,7 @@ use Swoole\Coroutine\Http\Client;
  * @version 1.0
  *
  * @see https://wiki.swoole.com/wiki/page/p-waitgroup.html
+ * @codeCoverageIgnore
  */
 class WaitGroup
 {

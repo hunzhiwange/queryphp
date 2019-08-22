@@ -26,6 +26,7 @@ use Common\Infra\Helper\message_with_time;
  * @version 1.0
  *
  * @see https://wiki.swoole.com/wiki/page/p-go_defer.html
+ * @codeCoverageIgnore
  */
 class Defer
 {

@@ -17,8 +17,8 @@ namespace App\App\Controller\Petstore;
 /**
  * Class Api.
  *
- *
  * @author  Xiangmin Liu <635750556@qq.com>
+ * @codeCoverageIgnore
  */
 class Api
 {

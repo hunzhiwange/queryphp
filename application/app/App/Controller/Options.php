@@ -22,6 +22,7 @@ namespace App\App\Controller;
  * @since 2019.08.16
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Options
 {

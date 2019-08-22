@@ -27,6 +27,7 @@ use Common\Infra\Helper\message_with_time;
  * @version 1.0
  *
  * @see https://www.jianshu.com/p/745b0b3ffae7
+ * @codeCoverageIgnore
  */
 class Demo3
 {

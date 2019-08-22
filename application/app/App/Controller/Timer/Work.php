@@ -27,6 +27,7 @@ use Throwable;
  * @since 2019.07.01
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Work
 {

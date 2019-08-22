@@ -27,6 +27,7 @@ use Leevel;
  * @since 2019.07.29
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class User extends Index
 {

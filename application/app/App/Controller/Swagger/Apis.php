@@ -22,6 +22,7 @@ namespace App\App\Controller\Swagger;
  * @since 2019.07.31
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Apis
 {

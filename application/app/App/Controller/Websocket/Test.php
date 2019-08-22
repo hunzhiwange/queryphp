@@ -26,6 +26,7 @@ use Swoole\WebSocket\Server;
  * @since 2018.12.20
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Test
 {

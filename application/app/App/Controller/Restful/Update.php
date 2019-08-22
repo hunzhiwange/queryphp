@@ -24,6 +24,7 @@ use Leevel\Router\IRouter;
  * @since 2018.07.20
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Update
 {

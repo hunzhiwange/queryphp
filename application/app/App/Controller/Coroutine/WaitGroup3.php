@@ -30,6 +30,7 @@ use Swoole\Coroutine\WaitGroup;
  *
  * @see https://wiki.swoole.com/wiki/page/p-waitgroup.html
  * @see https://github.com/swoole/swoole-src/blob/master/library/core/Coroutine/WaitGroup.php
+ * @codeCoverageIgnore
  */
 class WaitGroup3
 {

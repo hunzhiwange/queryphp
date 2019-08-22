@@ -25,6 +25,7 @@ use Common\Infra\Helper\message_with_time;
  * @since 2019.07.27
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Database2
 {

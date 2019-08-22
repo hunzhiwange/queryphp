@@ -22,6 +22,7 @@ namespace App\App\Controller\Api;
  * @since 2018.08.31
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Test
 {

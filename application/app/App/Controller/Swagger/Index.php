@@ -26,6 +26,7 @@ use function OpenApi\scan;
  * @since 2017.10.12
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Index
 {

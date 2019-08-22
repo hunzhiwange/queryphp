@@ -27,6 +27,7 @@ use Swoole\Runtime;
  * @version 1.0
  *
  * @see https://wiki.swoole.com/wiki/page/1017.html
+ * @codeCoverageIgnore
  */
 class Shell2
 {

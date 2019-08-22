@@ -25,6 +25,7 @@ use Leevel\Protocol\ITimer;
  * @since 2019.07.03
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class PerWorkWithTimer
 {

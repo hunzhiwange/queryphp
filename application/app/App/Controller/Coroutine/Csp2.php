@@ -26,6 +26,7 @@ use Common\Infra\Helper\message_with_time;
  * @version 1.0
  *
  * @see https://wiki.swoole.com/wiki/page/p-csp.html
+ * @codeCoverageIgnore
  */
 class Csp2
 {
