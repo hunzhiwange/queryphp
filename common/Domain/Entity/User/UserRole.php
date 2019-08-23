@@ -38,16 +38,16 @@ class UserRole extends Entity
     /**
      * primary key.
      *
-     * @var array
+     * @var string
      */
-    const ID = ['user_id', 'role_id'];
+    const ID = 'id';
 
     /**
      * auto increment.
      *
      * @var string
      */
-    const AUTO = null;
+    const AUTO = 'id';
 
     /**
      * entity struct.
@@ -55,14 +55,32 @@ class UserRole extends Entity
      * @var array
      */
     const STRUCT = [
-        'user_id' => [
-            'readonly' => true,
+        'id' => [
+            self::READONLY => true,
         ],
-        'role_id' => [
-            'readonly' => true,
-        ],
+        'user_id'   => [],
+        'role_id'   => [],
         'create_at' => [],
+        'update_at' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'delete_at' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'create_account' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'update_account' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
     ];
+
+    /**
+     * id.
+     *
+     * @var int
+     */
+    private $id;
 
     /**
      * 用户 ID.
@@ -84,6 +102,34 @@ class UserRole extends Entity
      * @var string
      */
     private $createAt;
+
+    /**
+     * 更新时间.
+     *
+     * @var string
+     */
+    private $updateAt;
+
+    /**
+     * 删除时间 0=未删除;大于0=删除时间;.
+     *
+     * @var int
+     */
+    private $deleteAt;
+
+    /**
+     * 创建账号.
+     *
+     * @var int
+     */
+    private $createAccount;
+
+    /**
+     * 更新账号.
+     *
+     * @var int
+     */
+    private $updateAccount;
 
     /**
      * setter.

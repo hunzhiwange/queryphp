@@ -56,19 +56,31 @@ class Role extends Entity
      */
     const STRUCT = [
         'id' => [
-            'readonly' => true,
+            self::READONLY => true,
         ],
         'name'            => [],
         'identity'        => [],
         'status'          => [],
         'create_at'       => [],
+        'update_at'       => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'delete_at' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'create_account' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'update_account' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
         'permission'      => [
-            self::MANY_MANY     => Permission::class,
-            'middle_entity'     => RolePermission::class,
-            'source_key'        => 'id',
-            'target_key'        => 'id',
-            'middle_source_key' => 'role_id',
-            'middle_target_key' => 'permission_id',
+            self::MANY_MANY         => Permission::class,
+            self::MIDDLE_ENTITY     => RolePermission::class,
+            self::SOURCE_KEY        => 'id',
+            self::TARGET_KEY        => 'id',
+            self::MIDDLE_SOURCE_KEY => 'role_id',
+            self::MIDDLE_TARGET_KEY => 'permission_id',
         ],
     ];
 
@@ -116,6 +128,34 @@ class Role extends Entity
      * @var string
      */
     private $createAt;
+
+    /**
+     * 更新时间.
+     *
+     * @var string
+     */
+    private $updateAt;
+
+    /**
+     * 删除时间 0=未删除;大于0=删除时间;.
+     *
+     * @var int
+     */
+    private $deleteAt;
+
+    /**
+     * 创建账号.
+     *
+     * @var int
+     */
+    private $createAccount;
+
+    /**
+     * 更新账号.
+     *
+     * @var int
+     */
+    private $updateAccount;
 
     /**
      * 权限.

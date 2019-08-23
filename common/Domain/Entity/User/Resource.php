@@ -56,12 +56,24 @@ class Resource extends Entity
      */
     const STRUCT = [
         'id' => [
-            'readonly' => true,
+            self::READONLY => true,
         ],
         'name'      => [],
         'identity'  => [],
         'status'    => [],
         'create_at' => [],
+        'update_at' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'delete_at' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'create_account' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'update_account' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
     ];
 
     /**
@@ -108,6 +120,34 @@ class Resource extends Entity
      * @var string
      */
     private $createAt;
+
+    /**
+     * 更新时间.
+     *
+     * @var string
+     */
+    private $updateAt;
+
+    /**
+     * 删除时间 0=未删除;大于0=删除时间;.
+     *
+     * @var int
+     */
+    private $deleteAt;
+
+    /**
+     * 创建账号.
+     *
+     * @var int
+     */
+    private $createAccount;
+
+    /**
+     * 更新账号.
+     *
+     * @var int
+     */
+    private $updateAccount;
 
     /**
      * setter.

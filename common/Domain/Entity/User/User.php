@@ -56,24 +56,37 @@ class User extends Entity
      */
     const STRUCT = [
         'id' => [
-            'readonly' => true,
+            self::READONLY => true,
         ],
         'name'      => [],
         'identity'  => [],
         'password'  => [
-            'show_prop_black' => true,
+            self::SHOW_PROP_BLACK => true,
         ],
         'email'     => [],
         'mobile'    => [],
         'status'    => [],
         'create_at' => [],
+        'update_at' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'delete_at' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'create_account' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'update_account' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
         'role'      => [
-            self::MANY_MANY     => Role::class,
-            'middle_entity'     => UserRole::class,
-            'source_key'        => 'id',
-            'target_key'        => 'id',
-            'middle_source_key' => 'user_id',
-            'middle_target_key' => 'role_id',
+            self::MANY_MANY              => Role::class,
+            self::MIDDLE_ENTITY          => UserRole::class,
+            self::SOURCE_KEY             => 'id',
+            self::TARGET_KEY             => 'id',
+            self::MIDDLE_SOURCE_KEY      => 'user_id',
+            self::MIDDLE_TARGET_KEY      => 'role_id',
+            self::RELATION_SCOPE         => 'role',
         ],
     ];
 
@@ -144,6 +157,34 @@ class User extends Entity
     private $createAt;
 
     /**
+     * 更新时间.
+     *
+     * @var string
+     */
+    private $updateAt;
+
+    /**
+     * 删除时间 0=未删除;大于0=删除时间;.
+     *
+     * @var int
+     */
+    private $deleteAt;
+
+    /**
+     * 创建账号.
+     *
+     * @var int
+     */
+    private $createAccount;
+
+    /**
+     * 更新账号.
+     *
+     * @var int
+     */
+    private $updateAccount;
+
+    /**
      * 角色.
      *
      * @var string
@@ -175,5 +216,13 @@ class User extends Entity
     public function getter(string $prop)
     {
         return $this->{$this->prop($prop)};
+    }
+
+    public function scopeRole($select)
+    {
+        $select
+            ->withoutSoftDeleted()
+            ->where('user_role.delete_at', 0)
+            ->setColumns(['id,name', 'user_role.id']);
     }
 }
