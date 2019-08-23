@@ -50,13 +50,17 @@ class Role extends AbstractMigration
     {
         $sql = <<<'EOT'
             CREATE TABLE `role` (
-                `id` int(11) NOT NULL AUTO_INCREMENT,
+                `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
                 `name` varchar(64) NOT NULL COMMENT '角色名字',
                 `identity` varchar(64) NOT NULL COMMENT '唯一标识符',
-                `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
-                `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `status` tinyint(4) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
+                `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                `delete_at` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间 0=未删除;大于0=删除时间;',
+                `create_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建账号',
+                `update_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 PRIMARY KEY (`id`),
-                UNIQUE KEY `identity` (`identity`)
+                UNIQUE KEY `identity` (`identity`,`delete_at`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
             EOT;
 
