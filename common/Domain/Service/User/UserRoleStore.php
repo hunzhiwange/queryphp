@@ -138,7 +138,7 @@ class UserRoleStore
     {
         return [
             'name'       => trim($input['name']),
-            'identity'   => trim($input['identity']),
+            'num'        => trim($input['num']),
             'status'     => $input['status'],
             'password'   => $this->createPassword(trim($input['password'])),
         ];

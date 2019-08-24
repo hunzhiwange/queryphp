@@ -59,7 +59,7 @@ class User extends Entity
             self::READONLY => true,
         ],
         'name'      => [],
-        'identity'  => [],
+        'num'       => [],
         'password'  => [
             self::SHOW_PROP_BLACK => true,
         ],
@@ -115,11 +115,11 @@ class User extends Entity
     private $name;
 
     /**
-     * 唯一标识符.
+     * 编号.
      *
      * @var string
      */
-    private $identity;
+    private $num;
 
     /**
      * 密码.

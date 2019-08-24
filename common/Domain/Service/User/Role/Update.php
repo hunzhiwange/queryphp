@@ -62,7 +62,7 @@ class Update
     private $allowedInput = [
         'id',
         'name',
-        'identity',
+        'num',
         'status',
     ];
 
@@ -119,7 +119,7 @@ class Update
                 'chinese_alpha_num',
                 'max_length:50',
             ],
-            'identity' => [
+            'num' => [
                 'required',
                 'alpha_dash',
                 UniqueRule::rule(Role::class, null, $input['id']),
@@ -129,7 +129,7 @@ class Update
         $names = [
             'id'            => 'ID',
             'name'          => __('名字'),
-            'identity'      => __('标识符'),
+            'num'           => __('编号'),
         ];
 
         return [$rules, $names];
@@ -188,7 +188,7 @@ class Update
     {
         return [
             'name'       => $input['name'],
-            'identity'   => $input['identity'],
+            'num'        => $input['num'],
             'status'     => $input['status'],
         ];
     }

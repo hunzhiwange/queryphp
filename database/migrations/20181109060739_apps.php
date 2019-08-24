@@ -51,7 +51,7 @@ class Apps extends AbstractMigration
         $sql = <<<'EOT'
             CREATE TABLE `app` (
                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-                `identity` varchar(64) NOT NULL COMMENT '应用 ID',
+                `num` varchar(64) NOT NULL COMMENT '应用 ID',
                 `key` varchar(64) NOT NULL COMMENT '应用 KEY',
                 `secret` varchar(64) NOT NULL COMMENT '应用秘钥',
                 `status` tinyint(4) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
@@ -61,7 +61,7 @@ class Apps extends AbstractMigration
                 `create_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建账号',
                 `update_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 PRIMARY KEY (`id`),
-                UNIQUE KEY `identity` (`identity`,`delete_at`) USING BTREE
+                UNIQUE KEY `num` (`num`,`delete_at`) USING BTREE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
             EOT;
 
@@ -74,7 +74,7 @@ class Apps extends AbstractMigration
     private function seed(): void
     {
         $sql = <<<'EOT'
-            INSERT INTO `app`(`id`, `identity`, `key`, `secret`, `status`, `create_at`) VALUES (1, 'admin', 'B1DA4485-B49D-D8E3-0F9E-168D7605A797', '4282222', 1, '2019-04-14 22:26:25');
+            INSERT INTO `app`(`id`, `num`, `key`, `secret`, `status`, `create_at`) VALUES (1, 'admin', 'B1DA4485-B49D-D8E3-0F9E-168D7605A797', '4282222', 1, '2019-04-14 22:26:25');
             EOT;
 
         $this->execute($sql);

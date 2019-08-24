@@ -112,7 +112,7 @@ class Store
     {
         return [
             'name'       => trim($input['name']),
-            'identity'   => trim($input['identity']),
+            'num'        => trim($input['num']),
             'status'     => $input['status'],
         ];
     }
@@ -126,11 +126,11 @@ class Store
             $this->input,
             [
                 'name'          => 'required|chinese_alpha_num|max_length:50',
-                'identity'      => 'required|'.UniqueRule::rule(Resource::class),
+                'num'           => 'required|'.UniqueRule::rule(Resource::class),
             ],
             [
                 'name'          => __('名字'),
-                'identity'      => __('标识符'),
+                'num'           => __('编号'),
             ]
         );
 

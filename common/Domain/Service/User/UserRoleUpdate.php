@@ -159,7 +159,7 @@ class UserRoleUpdate
     protected function data(array $input): array
     {
         $data = [
-            'identity'   => trim($input['identity']),
+            'num'        => trim($input['num']),
             'status'     => $input['status'],
         ];
 

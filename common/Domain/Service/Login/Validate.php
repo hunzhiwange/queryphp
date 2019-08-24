@@ -143,7 +143,7 @@ class Validate
     protected function validateApp()
     {
         $app = App::select()
-            ->where('identity', $this->input['app_id'])
+            ->where('num', $this->input['app_id'])
             ->where('key', $this->input['app_key'])
             ->findOne();
 

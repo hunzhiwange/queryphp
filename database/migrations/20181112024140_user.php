@@ -52,7 +52,7 @@ class User extends AbstractMigration
             CREATE TABLE `user` (
                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
                 `name` varchar(64) NOT NULL COMMENT '用户名字',
-                `identity` varchar(64) NOT NULL COMMENT '唯一标识符',
+                `num` varchar(64) NOT NULL COMMENT '编号',
                 `password` varchar(255) NOT NULL COMMENT '密码',
                 `email` varchar(100) NOT NULL COMMENT 'Email',
                 `mobile` char(11) NOT NULL COMMENT '手机',
@@ -63,7 +63,7 @@ class User extends AbstractMigration
                 `create_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建账号',
                 `update_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 PRIMARY KEY (`id`),
-                UNIQUE KEY `identity` (`identity`,`delete_at`)
+                UNIQUE KEY `num` (`num`,`delete_at`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
             EOT;
 
@@ -76,9 +76,9 @@ class User extends AbstractMigration
     private function seed(): void
     {
         $sql = <<<'EOT'
-            INSERT INTO `user`(`id`, `name`, `identity`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (1, 'admin', 'admin', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:14:34');
-            INSERT INTO `user`(`id`, `name`, `identity`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (2, 'user', 'user', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:47:27');
-            INSERT INTO `user`(`id`, `name`, `identity`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (3, 'manager', 'manager', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:51:09');
+            INSERT INTO `user`(`id`, `name`, `num`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (1, 'admin', 'admin', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:14:34');
+            INSERT INTO `user`(`id`, `name`, `num`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (2, 'user', 'user', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:47:27');
+            INSERT INTO `user`(`id`, `name`, `num`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (3, 'manager', 'manager', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:51:09');
             EOT;
 
         $this->execute($sql);

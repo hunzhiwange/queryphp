@@ -68,7 +68,7 @@ class Permission extends Entity
         ],
         'pid'           => [],
         'name'          => [],
-        'identity'      => [],
+        'num'           => [],
         'status'        => [],
         'create_at'     => [],
         'update_at'     => [
@@ -125,11 +125,11 @@ class Permission extends Entity
     private $name;
 
     /**
-     * 唯一标识符.
+     * 编号.
      *
      * @var string
      */
-    private $identity;
+    private $num;
 
     /**
      * 状态 0=禁用;1=启用;.

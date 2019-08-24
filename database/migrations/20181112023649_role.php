@@ -52,7 +52,7 @@ class Role extends AbstractMigration
             CREATE TABLE `role` (
                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
                 `name` varchar(64) NOT NULL COMMENT '角色名字',
-                `identity` varchar(64) NOT NULL COMMENT '唯一标识符',
+                `num` varchar(64) NOT NULL COMMENT '编号',
                 `status` tinyint(4) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
                 `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                 `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -60,7 +60,7 @@ class Role extends AbstractMigration
                 `create_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建账号',
                 `update_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 PRIMARY KEY (`id`),
-                UNIQUE KEY `identity` (`identity`,`delete_at`)
+                UNIQUE KEY `num` (`num`,`delete_at`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
             EOT;
 
@@ -73,9 +73,9 @@ class Role extends AbstractMigration
     private function seed(): void
     {
         $sql = <<<'EOT'
-            INSERT INTO `role`(`id`, `name`, `identity`, `status`, `create_at`) VALUES (1, '超级管理员', 'SuperAdministrator', 1, '2019-01-31 01:14:34');
-            INSERT INTO `role`(`id`, `name`, `identity`, `status`, `create_at`) VALUES (2, '管理员', 'admin', 1, '2019-01-31 01:49:49');
-            INSERT INTO `role`(`id`, `name`, `identity`, `status`, `create_at`) VALUES (3, '会员', 'vip', 1, '2019-01-31 01:49:56');
+            INSERT INTO `role`(`id`, `name`, `num`, `status`, `create_at`) VALUES (1, '超级管理员', 'SuperAdministrator', 1, '2019-01-31 01:14:34');
+            INSERT INTO `role`(`id`, `name`, `num`, `status`, `create_at`) VALUES (2, '管理员', 'admin', 1, '2019-01-31 01:49:49');
+            INSERT INTO `role`(`id`, `name`, `num`, `status`, `create_at`) VALUES (3, '会员', 'vip', 1, '2019-01-31 01:49:56');
             EOT;
 
         $this->execute($sql);

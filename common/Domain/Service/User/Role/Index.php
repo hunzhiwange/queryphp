@@ -85,7 +85,7 @@ class Index
                 $select->where(function ($select) use ($input) {
                     $select
                         ->orWhere('name', 'like', '%'.$input['key'].'%')
-                        ->orWhere('identity', 'like', '%'.$input['key'].'%');
+                        ->orWhere('num', 'like', '%'.$input['key'].'%');
                 });
             }
 

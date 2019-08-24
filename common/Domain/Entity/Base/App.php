@@ -58,7 +58,7 @@ class App extends Entity
         'id' => [
             self::READONLY => true,
         ],
-        'identity'  => [],
+        'num'       => [],
         'status'    => [],
         'key'       => [],
         'secret'    => [],
@@ -99,7 +99,7 @@ class App extends Entity
      *
      * @var string
      */
-    private $identity;
+    private $num;
 
     /**
      * 状态 0=禁用;1=启用;.
