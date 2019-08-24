@@ -926,7 +926,7 @@ msgstr "Name"
 #: src_views_user_assets_index.js.tmp.i18n.js:2
 #: src_views_user_index.vue.tmp.i18n.js:4
 #: src_views_user_search_index.vue.tmp.i18n.js:2
-msgid "标识符"
+msgid "编号"
 msgstr "Indentify"
 
 #: src_views_permission_assets_index.js.tmp.i18n.js:4
@@ -948,8 +948,8 @@ msgid "请输入权限名字"
 msgstr "Please enter a permission name"
 
 #: src_views_permission_assets_index.js.tmp.i18n.js:8
-msgid "请输入权限标识符"
-msgstr "Please enter a privilege identifier"
+msgid "请输入权限编号"
+msgstr "Please enter a privilege number"
 
 #: src_views_permission_assets_index.js.tmp.i18n.js:10
 msgid "确认删除该权限?"
@@ -1021,8 +1021,8 @@ msgid "请输入资源名字"
 msgstr "Please enter the resource name"
 
 #: src_views_resource_assets_index.js.tmp.i18n.js:8
-msgid "请输入资源标识符"
-msgstr "Please enter a resource identifier"
+msgid "请输入资源编号"
+msgstr "Please enter a resource number"
 
 #: src_views_resource_assets_index.js.tmp.i18n.js:10
 msgid "确认删除该资源?"
@@ -1041,8 +1041,8 @@ msgid "请输入角色名字"
 msgstr "Please enter the role name"
 
 #: src_views_role_assets_index.js.tmp.i18n.js:8
-msgid "请输入角色标识符"
-msgstr "Please enter role identifier"
+msgid "请输入角色编号"
+msgstr "Please enter role number"
 
 #: src_views_role_assets_index.js.tmp.i18n.js:10
 msgid "确认删除该角色?"
@@ -1061,8 +1061,8 @@ msgid "请输入用户名字"
 msgstr "Please enter user name"
 
 #: src_views_user_assets_index.js.tmp.i18n.js:8
-msgid "请输入用户标识符"
-msgstr "Please enter user identifier"
+msgid "请输入用户编号"
+msgstr "Please enter user number"
 
 #: src_views_user_assets_index.js.tmp.i18n.js:10
 msgid "确认删除该用户?"

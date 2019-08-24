@@ -19,8 +19,8 @@
                                 </i-col>
                                 <i-col span="12">
                                     <FormItem :label="__('名字')" prop="name"> <i-input v-model.trim="formItem.name" placeholder=""></i-input> </FormItem>
-                                    <FormItem :label="__('标识符')" prop="identity">
-                                        <i-input v-model.trim="formItem.identity" placeholder=""> </i-input>
+                                    <FormItem :label="__('编号')" prop="num">
+                                        <i-input v-model.trim="formItem.num" placeholder=""> </i-input>
                                     </FormItem>
                                 </i-col>
                             </Row>
@@ -70,9 +70,9 @@
                                 @on-change="changeResource"
                                 :loading="loadingResource"
                             >
-                                <i-option v-for="r in resources" :value="r.id + '``' + r.name + '|' + r.identity" :key="r.id" :label="r.name">
+                                <i-option v-for="r in resources" :value="r.id + '``' + r.name + '|' + r.num" :key="r.id" :label="r.name">
                                     <span>{{ r.name }}</span>
-                                    <span class="resource-text">{{ r.identity }}</span>
+                                    <span class="resource-text">{{ r.num }}</span>
                                 </i-option>
                             </i-select>
                         </FormItem>

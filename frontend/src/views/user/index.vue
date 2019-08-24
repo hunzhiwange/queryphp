@@ -11,8 +11,8 @@
                                     <FormItem :label="__('名字')" :prop="formItem.id ? '' : 'name'">
                                         <i-input v-model.trim="formItem.name" placeholder="" :disabled="formItem.id ? true : false"></i-input>
                                     </FormItem>
-                                    <FormItem :label="__('标识符')" prop="identity">
-                                        <i-input v-model="formItem.identity" placeholder=""></i-input>
+                                    <FormItem :label="__('编号')" prop="num">
+                                        <i-input v-model="formItem.num" placeholder=""></i-input>
                                     </FormItem>
                                     <FormItem :label="__('密码')" prop="password">
                                         <i-input v-model="formItem.password" :placeholder="formItem.id ? '不修改密码请留空' : '密码不能为空'"></i-input>

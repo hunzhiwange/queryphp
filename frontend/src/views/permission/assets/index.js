@@ -5,7 +5,7 @@ const resetForm = {
     id: null,
     pid: [-1],
     name: '',
-    identity: '',
+    num: '',
     status: '1',
 }
 
@@ -30,10 +30,10 @@ export default {
                         message: this.__('请输入权限名字'),
                     },
                 ],
-                identity: [
+                num: [
                     {
                         required: true,
-                        message: this.__('请输入权限标识符'),
+                        message: this.__('请输入权限编号'),
                     },
                     {
                         validator: validateAlphaDash,
@@ -181,7 +181,7 @@ export default {
 
                 var selectResource = []
                 res.resource.forEach(item => {
-                    let temp = item.id + '``' + item.name + '|' + item.identity
+                    let temp = item.id + '``' + item.name + '|' + item.num
                     selectResource.push(temp)
                 })
                 this.selectResource = selectResource
