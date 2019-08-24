@@ -218,7 +218,12 @@ class User extends Entity
         return $this->{$this->prop($prop)};
     }
 
-    public function scopeRole($select)
+    /**
+     * 角色关联查询作用域.
+     *
+     * @param mixed $select
+     */
+    protected function relationScopeRole($select): void
     {
         $select
             ->withoutSoftDeleted()
