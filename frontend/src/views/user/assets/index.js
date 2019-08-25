@@ -6,7 +6,7 @@ const resetForm = {
     id: null,
     name: '',
     num: '',
-    status: '1',
+    status: 1,
     password: '',
 }
 
@@ -57,7 +57,7 @@ export default {
                     width: 120,
                     render: (h, params) => {
                         const row = params.row
-                        return <tag color={row.status === '1' ? 'green' : 'red'}>{row.status_enum}</tag>
+                        return <tag color={1 === row.status ? 'green' : 'red'}>{row.status_enum}</tag>
                     },
                 },
                 {
