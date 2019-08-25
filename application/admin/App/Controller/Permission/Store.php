@@ -39,7 +39,7 @@ class Store
      */
     private $allowedInput = [
         'name',
-        'identity',
+        'num',
         'status',
         'pid',
     ];

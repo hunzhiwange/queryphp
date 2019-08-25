@@ -40,7 +40,7 @@ class Update
     private $allowedInput = [
         'id',
         'name',
-        'identity',
+        'num',
         'status',
         'pid',
     ];

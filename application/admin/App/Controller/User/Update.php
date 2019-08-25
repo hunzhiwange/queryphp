@@ -39,7 +39,7 @@ class Update
      */
     private $allowedInput = [
         'id',
-        'identity',
+        'num',
         'status',
         'userRole',
         'password',
