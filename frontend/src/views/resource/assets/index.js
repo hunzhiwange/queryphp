@@ -140,7 +140,7 @@ export default {
                 this.data.forEach((item, index) => {
                     if (selected.includes(item.id)) {
                         this.$set(this.data[index], 'status', type)
-                        this.$set(this.data[index], 'status_enum', type === '1' ? this.__('启用') : this.__('禁用'))
+                        this.$set(this.data[index], 'status_enum', 1 === type ? this.__('启用') : this.__('禁用'))
                     }
                 })
 

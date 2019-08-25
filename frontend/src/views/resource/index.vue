@@ -54,10 +54,10 @@
             <Row justify="end">
                 <i-col span="8">
                     <ButtonGroup shape="circle">
-                        <i-button type="primary" icon="md-eye" @click="statusMany('1')" :disabled="!utils.permission('resource_status_button')">{{
+                        <i-button type="primary" icon="md-eye" @click="statusMany(1)" :disabled="!utils.permission('resource_status_button')">{{
                             __('启用')
                         }}</i-button>
-                        <i-button type="primary" icon="md-eye-off" @click="statusMany('0')" :disabled="!utils.permission('resource_status_button')">{{
+                        <i-button type="primary" icon="md-eye-off" @click="statusMany(0)" :disabled="!utils.permission('resource_status_button')">{{
                             __('禁用')
                         }}</i-button>
                     </ButtonGroup>
