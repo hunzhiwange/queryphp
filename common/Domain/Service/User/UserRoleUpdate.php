@@ -81,11 +81,8 @@ class UserRoleUpdate
     protected function save(array $input): User
     {
         $this->w->persist($entity = $this->entity($input));
-
         $this->setUserRole((int) $input['id'], $input['userRole']);
-
         $this->w->flush();
-
         $entity->refresh();
 
         return $entity;
@@ -117,7 +114,6 @@ class UserRoleUpdate
     protected function entity(array $input): User
     {
         $entity = $this->find((int) $input['id']);
-
         $entity->withProps($this->data($input));
 
         return $entity;
@@ -164,7 +160,6 @@ class UserRoleUpdate
         ];
 
         $password = trim($input['password']);
-
         if ($password) {
             $data['password'] = $this->createPassword($password);
         }

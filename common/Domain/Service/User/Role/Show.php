@@ -55,7 +55,6 @@ class Show
     public function handle(array $input): array
     {
         $entity = $this->find($input['id']);
-
         $result = $entity->toArray();
         $result['permission'] = $entity->permission->toArray();
 

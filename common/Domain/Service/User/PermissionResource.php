@@ -56,6 +56,9 @@ class PermissionResource
      */
     public function handle(array $input): array
     {
+        if (!isset($input['resource_id'])) {
+            $input['resource_id'] = [];
+        }
         $this->save($input);
 
         return [];
@@ -71,9 +74,7 @@ class PermissionResource
     protected function save(array $input): Permission
     {
         $entity = $this->entity($input);
-
         $this->setPermissionResource((int) $input['id'], $input['resource_id']);
-
         $this->w->flush();
 
         return $entity;

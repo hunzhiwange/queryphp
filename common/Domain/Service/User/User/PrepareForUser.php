@@ -50,7 +50,6 @@ class PrepareForUser
     public function handleMulti($data): array
     {
         $result = [];
-
         foreach ($data as $v) {
             $result[] = $this->handle($v);
         }

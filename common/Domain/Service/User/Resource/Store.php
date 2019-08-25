@@ -82,7 +82,6 @@ class Store
         $this->w
             ->persist($entity = $this->entity($input))
             ->flush();
-
         $entity->refresh();
 
         return $entity;

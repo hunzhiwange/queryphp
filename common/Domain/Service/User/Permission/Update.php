@@ -65,7 +65,6 @@ class Update
     public function handle(array $input): array
     {
         $this->input = $input;
-
         $this->validateArgs();
 
         return $this->save($input)->toArray();
@@ -97,7 +96,6 @@ class Update
     protected function entity(array $input): Permission
     {
         $entity = $this->find((int) $input['id']);
-
         $entity->withProps($this->data($input));
 
         return $entity;
@@ -146,7 +144,6 @@ class Update
     protected function parseParentId(array $pid): int
     {
         $p = (int) (array_pop($pid));
-
         if ($p < 0) {
             $p = 0;
         }

@@ -68,7 +68,6 @@ class Destroy
     protected function remove(Permission $entity)
     {
         $this->checkChildren((int) $entity->id);
-
         $this->w
             ->persist($entity)
             ->remove($entity)

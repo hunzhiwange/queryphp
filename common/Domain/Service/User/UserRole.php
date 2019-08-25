@@ -50,7 +50,6 @@ trait UserRole
     protected function setUserRole(int $userId, array $roleId): void
     {
         $existRole = [];
-
         foreach ($roleId as $rid) {
             $this->w->replace($this->entityUserRole($userId, (int) $rid));
             $existRole[] = $rid;
@@ -60,7 +59,6 @@ trait UserRole
             if (\in_array($r['role_id'], $existRole, true)) {
                 continue;
             }
-
             $this->w->delete($r);
         }
     }

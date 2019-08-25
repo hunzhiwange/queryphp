@@ -65,9 +65,7 @@ class Status
     public function handle(array $input): array
     {
         $this->input = $input;
-
         $this->validateArgs();
-
         $this->save($this->findAll($input), $input['status']);
 
         return [];

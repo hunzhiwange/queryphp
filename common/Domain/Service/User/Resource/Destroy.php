@@ -64,9 +64,7 @@ class Destroy
     public function handle(array $input): array
     {
         $this->input = $input;
-
         $this->validateArgs();
-
         $this->remove($this->find($input['id']));
 
         return [];

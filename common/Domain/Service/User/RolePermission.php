@@ -71,9 +71,7 @@ class RolePermission
     protected function save(array $input): Role
     {
         $entity = $this->entity($input);
-
         $this->setRolePermission((int) $input['id'], $input['permission_id'] ?? []);
-
         $this->w->flush();
 
         return $entity;
@@ -128,7 +126,6 @@ class RolePermission
     protected function setRolePermission(int $roleId, array $permissionId): void
     {
         $existPermission = [];
-
         foreach ($permissionId as $pid) {
             $this->w->replace($this->entityRolePermission($roleId, (int) $pid));
             $existPermission[] = $pid;

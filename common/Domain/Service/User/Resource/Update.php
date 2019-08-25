@@ -65,7 +65,6 @@ class Update
     public function handle(array $input): array
     {
         $this->input = $input;
-
         $this->validateArgs();
 
         return $this->save($input)->toArray();
@@ -83,7 +82,6 @@ class Update
         $this->w
             ->persist($entity = $this->entity($input))
             ->flush();
-
         $entity->refresh();
 
         return $entity;
@@ -99,7 +97,6 @@ class Update
     protected function entity(array $input): Resource
     {
         $entity = $this->find((int) $input['id']);
-
         $entity->withProps($this->data($input));
 
         return $entity;

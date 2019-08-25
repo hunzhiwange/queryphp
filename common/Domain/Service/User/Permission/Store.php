@@ -65,7 +65,6 @@ class Store
     public function handle(array $input): array
     {
         $this->input = $input;
-
         $this->validateArgs();
 
         return $this->save($input)->toArray();
@@ -83,7 +82,6 @@ class Store
         $this->w
             ->persist($entity = $this->entity($input))
             ->flush();
-
         $entity->refresh();
 
         return $entity;
@@ -130,7 +128,6 @@ class Store
     protected function parseParentId(array $pid): int
     {
         $p = (int) (array_pop($pid));
-
         if ($p < 0) {
             $p = 0;
         }

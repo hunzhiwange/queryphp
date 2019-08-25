@@ -105,7 +105,6 @@ class UserPermission
 
                         if (\count($resources) > 0) {
                             $resourceData = array_unique(array_column($resources->toArray(), 'num'));
-
                             $data = array_merge($data, $resourceData);
                         }
                     }

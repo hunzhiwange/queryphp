@@ -157,7 +157,6 @@ class Update
     private function entity(array $input): Role
     {
         $entity = $this->find($input['id']);
-
         $entity->withProps($this->data($input));
 
         return $entity;
@@ -205,7 +204,6 @@ class Update
         $this->w
             ->persist($entity = $this->entity($input))
             ->flush();
-
         $entity->refresh();
 
         return $entity;
