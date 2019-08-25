@@ -68,6 +68,10 @@ class UserRoleUpdate
      */
     public function handle(array $input): array
     {
+        if (!isset($input['userRole'])) {
+            $input['userRole'] = [];
+        }
+
         return $this->prepareData($this->save($input));
     }
 
