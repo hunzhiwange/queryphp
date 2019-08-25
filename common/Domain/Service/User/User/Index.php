@@ -16,6 +16,7 @@ namespace Common\Domain\Service\User\User;
 
 use Closure;
 use Common\Domain\Entity\User\User;
+use Common\Domain\Service\Support\Read;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IEntity;
 use Leevel\Database\Ddd\IUnitOfWork;
@@ -32,6 +33,8 @@ use Leevel\Database\Ddd\Select;
  */
 class Index
 {
+    use Read;
+
     /**
      * 事务工作单元.
      *
@@ -58,6 +61,10 @@ class Index
      */
     public function handle(array $input): array
     {
+        $this->filterSearchInput($input);
+        $input['column'] = 'id,name,num,email,mobile,status,create_at';
+        $input['order_by'] = 'id DESC';
+
         $repository = $this->w->repository(User::class);
 
         list($page, $entitys) = $repository->findPage(
@@ -95,20 +102,38 @@ class Index
     {
         return function (Select $select, IEntity $entity) use ($input) {
             $select->eager(['role']);
-
-            if ($input['key']) {
-                $select->where(function ($select) use ($input) {
-                    $select
-                        ->orWhere('name', 'like', '%'.$input['key'].'%')
-                        ->orWhere('identity', 'like', '%'.$input['key'].'%');
-                });
-            }
-
-            if ($input['status'] || '0' === $input['status']) {
-                $select->where('status', $input['status']);
-            }
-
-            $select->orderBy('id DESC');
+            $select->withoutSoftDeleted();
+            $this->spec($select, $input);
         };
+    }
+
+    /**
+     * 关键字条件.
+     *
+     * @param \Leevel\Database\Ddd\Select $select
+     * @param mixed                       $value
+     * @param array                       $meta
+     */
+    protected function keySpec(Select $select, $value, array $meta = []): void
+    {
+        $value = str_replace(' ', '%', $value);
+
+        $select->where(function ($select) use ($value) {
+            $select
+                ->orWhere('name', 'like', '%'.$value.'%')
+                ->orWhere('num', 'like', '%'.$value.'%');
+        });
+    }
+
+    /**
+     * 状态条件.
+     *
+     * @param \Leevel\Database\Ddd\Select $select
+     * @param mixed                       $value
+     * @param array                       $meta
+     */
+    protected function statusSpec(Select $select, $value, array $meta = []): void
+    {
+        $select->where('status', (int) $value);
     }
 }
