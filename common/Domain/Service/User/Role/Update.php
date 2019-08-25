@@ -42,9 +42,9 @@ class Update
     /**
      * 工作流.
      *
-     * allowedInput:输入数据白名单
-     * filterInput:过滤输入数据
-     * validateInput:校验输入数据
+     * - allowedInput:输入数据白名单
+     * - filterInput:过滤输入数据
+     * - validateInput:校验输入数据
      *
      * @var array
      */
