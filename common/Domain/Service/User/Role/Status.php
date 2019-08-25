@@ -82,6 +82,8 @@ class Status
      *
      * @param array $input
      *
+     * @throws \Common\Infra\Exception\BusinessException
+     *
      * @return \Leevel\Collection\Collection
      */
     protected function findAll(array $input): Collection

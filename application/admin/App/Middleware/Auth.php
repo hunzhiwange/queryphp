@@ -77,6 +77,8 @@ class Auth extends BaseAuth
      *
      * @param \Closure              $next
      * @param \Leevel\Http\IRequest $request
+     *
+     * @throws \Common\Infra\Exception\UnauthorizedHttpException
      */
     public function handle(Closure $next, IRequest $request): void
     {
@@ -139,6 +141,8 @@ class Auth extends BaseAuth
      *
      * @param \Leevel\Http\IRequest $request
      * @param string                $token
+     *
+     * @throws \Admin\App\Exception\LockException
      */
     private function validateLock(IRequest $request, string $token): void
     {
@@ -164,6 +168,8 @@ class Auth extends BaseAuth
      * 权限校验.
      *
      * @param \Leevel\Http\IRequest $request
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
     private function validatePermission(IRequest $request): void
     {

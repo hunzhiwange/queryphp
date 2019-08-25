@@ -117,6 +117,8 @@ class Store
 
     /**
      * 校验基本参数.
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
     protected function validateArgs()
     {

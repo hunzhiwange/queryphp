@@ -90,6 +90,8 @@ class Destroy
      * 判断是否存在子项.
      *
      * @param int $id
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
     protected function checkChildren(int $id): void
     {

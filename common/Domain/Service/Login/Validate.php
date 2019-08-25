@@ -139,8 +139,10 @@ class Validate
 
     /**
      * 校验应用.
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateApp()
+    protected function validateApp(): void
     {
         $app = App::select()
             ->where('num', $this->input['app_id'])
@@ -156,6 +158,8 @@ class Validate
 
     /**
      * 校验用户.
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      *
      * @return \Common\Domain\Entity\User\User
      */
@@ -191,7 +195,9 @@ class Validate
     }
 
     /**
-     * 校验验证码
+     * 校验验证码.
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
     protected function validateCode()
     {
@@ -208,6 +214,8 @@ class Validate
 
     /**
      * 校验基本参数.
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
     protected function validateArgs()
     {

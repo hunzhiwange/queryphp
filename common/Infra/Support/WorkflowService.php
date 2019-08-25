@@ -58,6 +58,8 @@ trait WorkflowService
      * 校验输入数据.
      *
      * @param array $input
+     *
+     * @throws \InvalidArgumentException
      */
     private function validateInput(array $input): void
     {
@@ -104,6 +106,8 @@ trait WorkflowService
      * @param array $rules
      * @param array $names
      * @param array $messages
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
     private function validateInputBase(array $input, array $rules = [], array $names = [], array $messages = []): void
     {

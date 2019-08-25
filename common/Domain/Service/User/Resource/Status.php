@@ -92,6 +92,8 @@ class Status
      *
      * @param array $input
      *
+     * @throws \Common\Infra\Exception\BusinessException
+     *
      * @return \Leevel\Collection\Collection
      */
     protected function findAll(array $input): Collection
@@ -111,6 +113,8 @@ class Status
 
     /**
      * 校验基本参数.
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
     protected function validateArgs()
     {

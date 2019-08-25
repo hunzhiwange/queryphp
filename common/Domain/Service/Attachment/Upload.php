@@ -58,6 +58,8 @@ class Upload
      *
      * @param \Leevel\Http\UploadedFile $file
      *
+     * @throws \Common\Infra\Exception\BusinessException
+     *
      * @return array
      */
     protected function save(UploadedFile $file): array
@@ -90,6 +92,8 @@ class Upload
      *
      * @param string $sourcePath
      * @param string $savePath
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
     protected function saveFile(string $sourcePath, string $savePath): void
     {

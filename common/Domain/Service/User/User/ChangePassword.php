@@ -84,6 +84,8 @@ class ChangePassword
     /**
      * 校验用户.
      *
+     * @throws \Common\Infra\Exception\BusinessException
+     *
      * @return \Common\Domain\Entity\User\User
      */
     protected function validateUser(): User
@@ -188,6 +190,8 @@ class ChangePassword
 
     /**
      * 校验基本参数.
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
     protected function validateArgs()
     {

@@ -35,6 +35,8 @@ class WorkWithTimer
      *
      * @param \Leevel\Protocol\ITimer $timer
      *
+     * @throws \Exception
+     *
      * @return string
      */
     public function handle(ITimer $timer): string

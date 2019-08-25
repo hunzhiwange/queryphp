@@ -34,6 +34,8 @@ class Work
     /**
      * 执行入口.
      *
+     * @throws \Exception
+     *
      * @return string
      */
     public function handle(): string
