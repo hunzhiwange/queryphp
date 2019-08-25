@@ -54,8 +54,12 @@ return [
 
             // 连接参数
             'options' => [
-                // 数据库是否支持长连接
-                PDO::ATTR_PERSISTENT => false,
+                PDO::ATTR_PERSISTENT        => false,
+                PDO::ATTR_CASE              => PDO::CASE_NATURAL,
+                PDO::ATTR_ERRMODE           => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_ORACLE_NULLS      => PDO::NULL_NATURAL,
+                PDO::ATTR_STRINGIFY_FETCHES => false,
+                PDO::ATTR_EMULATE_PREPARES  => false,
             ],
 
             // 数据库读写是否分离
