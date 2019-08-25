@@ -65,7 +65,6 @@ class Store
     public function handle(array $input): array
     {
         $this->input = $input;
-
         $this->validateArgs();
 
         return $this->save($input)->toArray();

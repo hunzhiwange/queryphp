@@ -105,10 +105,10 @@ class IndexTest extends TestCase
         $first = $result['data'][0];
 
         $this->assertCount(1, $result['data']);
-        $this->assertSame('1', $first['id']);
+        $this->assertSame(1, $first['id']);
         $this->assertSame('foo', $first['name']);
-        $this->assertSame('bar', $first['identity']);
-        $this->assertSame('1', $first['status']);
+        $this->assertSame('bar', $first['num']);
+        $this->assertSame(1, $first['status']);
     }
 
     protected function clear()
@@ -122,7 +122,7 @@ class IndexTest extends TestCase
 
         $service->handle([
             'name'     => 'foo',
-            'identity' => 'bar',
+            'num'      => 'bar',
             'status'   => '1',
         ]);
     }
