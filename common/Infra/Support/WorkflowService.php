@@ -50,7 +50,6 @@ trait WorkflowService
     private function filterInput(array &$input): void
     {
         $rules = $this->filterInputRules();
-
         $this->filterInputBase($input, $rules);
     }
 
@@ -63,17 +62,15 @@ trait WorkflowService
      */
     private function validateInput(array $input): void
     {
-        $_ = $this->validateInputRules($input);
-
-        if (2 > count($_)) {
+        $inputRules = $this->validateInputRules($input);
+        if (count($inputRules) < 2) {
             throw new InvalidArgumentException('Invalid validate input rules.');
         }
-
-        if (!isset($_[2])) {
-            $_[2] = [];
+        if (!isset($inputRules[2])) {
+            $inputRules[2] = [];
         }
 
-        list($rules, $names, $messages) = $_;
+        list($rules, $names, $messages) = $inputRules;
 
         $this->validateInputBase($input, $rules, $names, $messages);
     }
