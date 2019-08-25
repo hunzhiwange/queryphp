@@ -73,9 +73,9 @@ class Role extends AbstractMigration
     private function seed(): void
     {
         $sql = <<<'EOT'
-            INSERT INTO `role`(`id`, `name`, `num`, `status`, `create_at`) VALUES (1, '超级管理员', 'SuperAdministrator', 1, '2019-01-31 01:14:34');
-            INSERT INTO `role`(`id`, `name`, `num`, `status`, `create_at`) VALUES (2, '管理员', 'admin', 1, '2019-01-31 01:49:49');
-            INSERT INTO `role`(`id`, `name`, `num`, `status`, `create_at`) VALUES (3, '会员', 'vip', 1, '2019-01-31 01:49:56');
+            INSERT INTO `role`(`id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, '超级管理员', 'SuperAdministrator', 1, '2019-01-31 01:14:34', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `role`(`id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (2, '管理员', 'admin', 1, '2019-01-31 01:49:49', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `role`(`id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (3, '会员', 'vip', 1, '2019-01-31 01:49:56', '2019-08-25 21:19:23', 0, 0, 0);
             EOT;
 
         $this->execute($sql);

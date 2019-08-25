@@ -71,8 +71,8 @@ class Test extends AbstractMigration
     private function seed(): void
     {
         $sql = <<<'EOT'
-            INSERT INTO `test`(`id`, `name`) VALUES (1, 'foo');
-            INSERT INTO `test`(`id`, `name`) VALUES (2, 'bar');
+            INSERT INTO `test`(`id`, `name`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, 'foo', '2019-08-25 21:19:23', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `test`(`id`, `name`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (2, 'bar', '2019-08-25 21:19:23', '2019-08-25 21:19:23', 0, 0, 0);
             EOT;
 
         $this->execute($sql);

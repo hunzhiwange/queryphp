@@ -76,9 +76,9 @@ class User extends AbstractMigration
     private function seed(): void
     {
         $sql = <<<'EOT'
-            INSERT INTO `user`(`id`, `name`, `num`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (1, 'admin', 'admin', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:14:34');
-            INSERT INTO `user`(`id`, `name`, `num`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (2, 'user', 'user', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:47:27');
-            INSERT INTO `user`(`id`, `name`, `num`, `password`, `email`, `mobile`, `status`, `create_at`) VALUES (3, 'manager', 'manager', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:51:09');
+            INSERT INTO `user`(`id`, `name`, `num`, `password`, `email`, `mobile`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, 'admin', 'admin', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:14:34', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `user`(`id`, `name`, `num`, `password`, `email`, `mobile`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (2, 'user', 'user', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:47:27', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `user`(`id`, `name`, `num`, `password`, `email`, `mobile`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (3, 'manager', 'manager', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:51:09', '2019-08-25 21:19:23', 0, 0, 0);
             EOT;
 
         $this->execute($sql);

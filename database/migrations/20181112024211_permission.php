@@ -75,15 +75,15 @@ class Permission extends AbstractMigration
     private function seed(): void
     {
         $sql = <<<'EOT'
-            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`) VALUES (1, 0, '超级管理员', 'SuperAdministrator', 1, '2019-01-31 01:14:34');
-            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`) VALUES (2, 0, '权限管理', 'permission', 1, '2019-01-31 01:31:11');
-            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`) VALUES (3, 2, '用户管理', 'user_manager', 1, '2019-01-31 01:31:24');
-            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`) VALUES (4, 2, '角色管理', 'role_manager', 1, '2019-01-31 01:31:38');
-            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`) VALUES (5, 2, '权限管理', 'permission_manager', 1, '2019-01-31 01:31:51');
-            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`) VALUES (6, 2, '资源管理', 'resource_manager', 1, '2019-01-31 01:32:04');
-            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`) VALUES (7, 0, '测试页面', 'test', 1, '2019-01-31 09:19:26');
-            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`) VALUES (8, 0, '基本配置', 'base', 1, '2019-01-31 09:19:38');
-            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`) VALUES (9, 8, '系统配置', 'option', 1, '2019-01-31 09:20:08');
+            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, 0, '超级管理员', 'SuperAdministrator', 1, '2019-01-31 01:14:34', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (2, 0, '权限管理', 'permission', 1, '2019-01-31 01:31:11', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (3, 2, '用户管理', 'user_manager', 1, '2019-01-31 01:31:24', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (4, 2, '角色管理', 'role_manager', 1, '2019-01-31 01:31:38', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (5, 2, '权限管理', 'permission_manager', 1, '2019-01-31 01:31:51', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (6, 2, '资源管理', 'resource_manager', 1, '2019-01-31 01:32:04', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (7, 0, '测试页面', 'test', 1, '2019-01-31 09:19:26', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (8, 0, '基本配置', 'base', 1, '2019-01-31 09:19:38', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (9, 8, '系统配置', 'option', 1, '2019-01-31 09:20:08', '2019-08-25 21:19:23', 0, 0, 0);
             EOT;
 
         $this->execute($sql);

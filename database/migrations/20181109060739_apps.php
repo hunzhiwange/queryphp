@@ -74,7 +74,7 @@ class Apps extends AbstractMigration
     private function seed(): void
     {
         $sql = <<<'EOT'
-            INSERT INTO `app`(`id`, `num`, `key`, `secret`, `status`, `create_at`) VALUES (1, 'admin', 'B1DA4485-B49D-D8E3-0F9E-168D7605A797', '4282222', 1, '2019-04-14 22:26:25');
+            INSERT INTO `app`(`id`, `num`, `key`, `secret`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, 'admin', 'B1DA4485-B49D-D8E3-0F9E-168D7605A797', '4282222', 1, '2019-04-14 22:26:25', '2019-08-25 21:19:23', 0, 0, 0);
             EOT;
 
         $this->execute($sql);

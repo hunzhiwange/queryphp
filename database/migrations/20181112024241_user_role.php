@@ -72,9 +72,9 @@ class UserRole extends AbstractMigration
     private function seed(): void
     {
         $sql = <<<'EOT'
-            INSERT INTO `user_role`(`user_id`, `role_id`, `create_at`) VALUES (1, 1, '2019-01-31 01:14:34');
-            INSERT INTO `user_role`(`user_id`, `role_id`, `create_at`) VALUES (2, 3, '2019-01-31 01:51:47');
-            INSERT INTO `user_role`(`user_id`, `role_id`, `create_at`) VALUES (3, 2, '2019-01-31 01:51:40');
+            INSERT INTO `user_role`(`id`, `user_id`, `role_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, 1, 1, '2019-01-31 01:14:34', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `user_role`(`id`, `user_id`, `role_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (2, 2, 3, '2019-01-31 01:51:47', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `user_role`(`id`, `user_id`, `role_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (3, 3, 2, '2019-01-31 01:51:40', '2019-08-25 21:19:23', 0, 0, 0);
             EOT;
 
         $this->execute($sql);

@@ -72,8 +72,8 @@ class Option extends AbstractMigration
     private function seed(): void
     {
         $sql = <<<'EOT'
-            INSERT INTO `option`(`name`, `value`, `create_at`) VALUES ('site_close', '1', '2019-04-14 22:26:25');
-            INSERT INTO `option`(`name`, `value`, `create_at`) VALUES ('site_name', 'QueryPHP', '2019-04-14 22:26:25');
+            INSERT INTO `option`(`id`, `name`, `value`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, 'site_close', '1', '2019-04-14 22:26:25', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `option`(`id`, `name`, `value`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (2, 'site_name', 'QueryPHP', '2019-04-14 22:26:25', '2019-08-25 21:19:23', 0, 0, 0);
             EOT;
 
         $this->execute($sql);
