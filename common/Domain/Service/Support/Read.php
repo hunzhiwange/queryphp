@@ -180,7 +180,7 @@ trait Read
     }
 
     /**
-     * 转换为数组.
+     * 转换集合为数组.
      *
      * @param \Leevel\Collection\Collection $data
      *
