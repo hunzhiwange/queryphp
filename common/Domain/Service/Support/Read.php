@@ -35,7 +35,7 @@ trait Read
      * @param mixed                       $value
      * @param array                       $meta
      */
-    protected function keySpec(Select $select, $value, array $meta = []): void
+    private function keySpec(Select $select, $value, array $meta = []): void
     {
         $value = str_replace(' ', '%', $value);
 
@@ -53,7 +53,7 @@ trait Read
      * @param mixed                       $value
      * @param array                       $meta
      */
-    protected function statusSpec(Select $select, $value, array $meta = []): void
+    private function statusSpec(Select $select, $value, array $meta = []): void
     {
         $select->where('status', (int) $value);
     }
@@ -99,22 +99,6 @@ trait Read
     }
 
     /**
-     * 过滤搜索空值.
-     *
-     * @param array $input
-     */
-    private function filterSearchInput(array &$input): void
-    {
-        $input = array_map(function ($v) {
-            if ('' === $v) {
-                $v = null;
-            }
-
-            return $v;
-        }, $input);
-    }
-
-    /**
      * 字段查询条件.
      *
      * @param \Leevel\Database\Ddd\Select $select
@@ -151,5 +135,21 @@ trait Read
     private function orderBySpec(Select $select, $value, array $meta = []): void
     {
         $select->orderBy($value);
+    }
+
+    /**
+     * 过滤搜索空值.
+     *
+     * @param array $input
+     */
+    private function filterSearchInput(array &$input): void
+    {
+        $input = array_map(function ($v) {
+            if ('' === $v) {
+                $v = null;
+            }
+
+            return $v;
+        }, $input);
     }
 }
