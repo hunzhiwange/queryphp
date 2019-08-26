@@ -39,7 +39,7 @@ trait WorkflowService
      */
     private function allowedInput(array &$input): void
     {
-        $this->allowedInputBase($input, $this->allowedInput);
+        $this->allowedInputBase($input);
     }
 
     /**
@@ -49,30 +49,17 @@ trait WorkflowService
      */
     private function filterInput(array &$input): void
     {
-        $rules = $this->filterInputRules();
-        $this->filterInputBase($input, $rules);
+        $this->filterInputBase($input);
     }
 
     /**
      * 校验输入数据.
      *
      * @param array $input
-     *
-     * @throws \InvalidArgumentException
      */
     private function validateInput(array $input): void
     {
-        $inputRules = $this->validateInputRules($input);
-        if (count($inputRules) < 2) {
-            throw new InvalidArgumentException('Invalid validate input rules.');
-        }
-        if (!isset($inputRules[2])) {
-            $inputRules[2] = [];
-        }
-
-        list($rules, $names, $messages) = $inputRules;
-
-        $this->validateInputBase($input, $rules, $names, $messages);
+        $this->validateInputBase($input);
     }
 
     /**
@@ -89,10 +76,10 @@ trait WorkflowService
      * 过滤输入数据基础方法.
      *
      * @param array $input
-     * @param array $rules
      */
-    private function filterInputBase(array &$input, array $rules): void
+    private function filterInputBase(array &$input): void
     {
+        $rules = $this->filterInputRules();
         $input = Arr::filter($input, $rules);
     }
 
@@ -100,20 +87,22 @@ trait WorkflowService
      * 校验输入数据基础方法.
      *
      * @param array $input
-     * @param array $rules
-     * @param array $names
-     * @param array $messages
      *
      * @throws \Common\Infra\Exception\BusinessException
+     * @throws \InvalidArgumentException
      */
-    private function validateInputBase(array $input, array $rules = [], array $names = [], array $messages = []): void
+    private function validateInputBase(array $input): void
     {
-        $validator = Validate::make(
-            $input,
-            $rules,
-            $names,
-            $messages
-        );
+        $inputRules = $this->validateInputRules($input);
+        if (count($inputRules) < 2) {
+            throw new InvalidArgumentException('Invalid validate input rules.');
+        }
+        if (!isset($inputRules[2])) {
+            $inputRules[2] = [];
+        }
+        list($rules, $names, $messages) = $inputRules;
+
+        $validator = Validate::make($input, $rules, $names, $messages);
 
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
