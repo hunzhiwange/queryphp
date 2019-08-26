@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Domain\Service\Support;
 
+use Leevel\Database\Ddd\IRepository;
 use Leevel\Database\Ddd\Select;
 use Leevel\Support\Str\camelize;
 
@@ -28,36 +29,6 @@ use Leevel\Support\Str\camelize;
  */
 trait Read
 {
-    /**
-     * 关键字条件.
-     *
-     * @param \Leevel\Database\Ddd\Select $select
-     * @param mixed                       $value
-     * @param array                       $meta
-     */
-    private function keySpec(Select $select, $value, array $meta = []): void
-    {
-        $value = str_replace(' ', '%', $value);
-
-        $select->where(function ($select) use ($value, $meta) {
-            foreach ($meta['key_column'] as $v) {
-                $select->orWhere($v, 'like', '%'.$value.'%');
-            }
-        });
-    }
-
-    /**
-     * 状态条件.
-     *
-     * @param \Leevel\Database\Ddd\Select $select
-     * @param mixed                       $value
-     * @param array                       $meta
-     */
-    private function statusSpec(Select $select, $value, array $meta = []): void
-    {
-        $select->where('status', (int) $value);
-    }
-
     /**
      * 预处理.
      *
@@ -96,6 +67,36 @@ trait Read
                 }
             }
         }
+    }
+
+    /**
+     * 关键字条件.
+     *
+     * @param \Leevel\Database\Ddd\Select $select
+     * @param mixed                       $value
+     * @param array                       $meta
+     */
+    private function keySpec(Select $select, $value, array $meta = []): void
+    {
+        $value = str_replace(' ', '%', $value);
+
+        $select->where(function ($select) use ($value, $meta) {
+            foreach ($meta['key_column'] as $v) {
+                $select->orWhere($v, 'like', '%'.$value.'%');
+            }
+        });
+    }
+
+    /**
+     * 状态条件.
+     *
+     * @param \Leevel\Database\Ddd\Select $select
+     * @param mixed                       $value
+     * @param array                       $meta
+     */
+    private function statusSpec(Select $select, $value, array $meta = []): void
+    {
+        $select->where('status', (int) $value);
     }
 
     /**
@@ -151,5 +152,27 @@ trait Read
 
             return $v;
         }, $input);
+    }
+
+    /**
+     * 分页查询.
+     *
+     * @param array                            $input
+     * @param \Leevel\Database\Ddd\IRepository $repository
+     *
+     * @return array
+     */
+    private function findPage(array $input, IRepository $repository): array
+    {
+        list($page, $entitys) = $repository->findPage(
+            $input['page'],
+            $input['size'],
+            $this->condition($input),
+        );
+
+        $data['page'] = $page;
+        $data['data'] = $this->prepareData($entitys);
+
+        return $data;
     }
 }

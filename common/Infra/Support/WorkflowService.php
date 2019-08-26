@@ -110,4 +110,19 @@ trait WorkflowService
             throw new BusinessException($e);
         }
     }
+
+    /**
+     * 填充输入数据.
+     *
+     * @param array $input
+     * @param array $defaultInput
+     */
+    private function fillDefaultInput(array &$input, array $defaultInput): void
+    {
+        foreach ($defaultInput as $k => $v) {
+            if (!isset($input[$k])) {
+                $input[$k] = $v;
+            }
+        }
+    }
 }

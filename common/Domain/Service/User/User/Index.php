@@ -19,7 +19,6 @@ use Common\Domain\Entity\User\User;
 use Common\Domain\Service\Support\Read;
 use Common\Infra\Support\WorkflowService;
 use Leevel\Collection\Collection;
-use Leevel\Database\Ddd\IEntity;
 use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Database\Ddd\Select;
 
@@ -111,7 +110,7 @@ class Index
      */
     protected function condition(array $input): Closure
     {
-        return function (Select $select, IEntity $entity) use ($input) {
+        return function (Select $select) use ($input) {
             $select->eager(['role']);
             $select->withoutSoftDeleted();
             $this->spec($select, $input);
@@ -128,15 +127,7 @@ class Index
     private function main(array &$input): array
     {
         $repository = $this->w->repository(User::class);
-
-        list($page, $entitys) = $repository->findPage(
-            $input['page'],
-            $input['size'],
-            $this->condition($input),
-        );
-
-        $data['page'] = $page;
-        $data['data'] = $this->prepareData($entitys);
+        $data = $this->findPage($input, $repository);
 
         return $data;
     }
@@ -148,17 +139,15 @@ class Index
      */
     private function defaultInput(array &$input): void
     {
-        $input['column'] = 'id,name,num,email,mobile,status,create_at';
-        $input['order_by'] = 'id DESC';
+        $defaultInput = [
+            'column'   => 'id,name,num,email,mobile,status,create_at',
+            'order_by' => 'id DESC',
+            'page'     => 1,
+            'size'     => 10,
+        ];
+        $this->fillDefaultInput($input, $defaultInput);
+
         $input['key_column'] = ['id', 'name', 'num'];
-
-        if (!isset($input['page'])) {
-            $input['page'] = 1;
-        }
-
-        if (!isset($input['size'])) {
-            $input['size'] = 10;
-        }
     }
 
     /**
