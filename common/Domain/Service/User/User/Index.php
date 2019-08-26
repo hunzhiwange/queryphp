@@ -17,6 +17,7 @@ namespace Common\Domain\Service\User\User;
 use Closure;
 use Common\Domain\Entity\User\User;
 use Common\Domain\Service\Support\Read;
+use Common\Infra\Support\WorkflowService;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IEntity;
 use Leevel\Database\Ddd\IUnitOfWork;
@@ -34,6 +35,7 @@ use Leevel\Database\Ddd\Select;
 class Index
 {
     use Read;
+    use WorkflowService;
 
     /**
      * 事务工作单元.
@@ -41,6 +43,30 @@ class Index
      * @var \Leevel\Database\Ddd\IUnitOfWork
      */
     protected $w;
+
+    /**
+     * 工作流.
+     *
+     * @var array
+     */
+    private $workflow = [
+        'filterSearchInput',
+        'allowedInput',
+        'defaultInput',
+        'filterInput',
+    ];
+
+    /**
+     * 允许的输入字段.
+     *
+     * @var array
+     */
+    private $allowedInput = [
+        'key',
+        'status',
+        'page',
+        'size',
+    ];
 
     /**
      * 构造函数.
@@ -61,23 +87,7 @@ class Index
      */
     public function handle(array $input): array
     {
-        $this->filterSearchInput($input);
-        $input['column'] = 'id,name,num,email,mobile,status,create_at';
-        $input['order_by'] = 'id DESC';
-        $input['key_column'] = ['id', 'name', 'num'];
-
-        $repository = $this->w->repository(User::class);
-
-        list($page, $entitys) = $repository->findPage(
-            (int) ($input['page'] ?: 1),
-            (int) ($input['size'] ?? 10),
-            $this->condition($input)
-        );
-
-        $data['page'] = $page;
-        $data['data'] = $this->prepareData($entitys);
-
-        return $data;
+        return $this->workflow($input);
     }
 
     /**
@@ -106,5 +116,62 @@ class Index
             $select->withoutSoftDeleted();
             $this->spec($select, $input);
         };
+    }
+
+    /**
+     * 过滤输入数据.
+     *
+     * @param array $input
+     *
+     * @return array
+     */
+    private function main(array &$input): array
+    {
+        $repository = $this->w->repository(User::class);
+
+        list($page, $entitys) = $repository->findPage(
+            $input['page'],
+            $input['size'],
+            $this->condition($input),
+        );
+
+        $data['page'] = $page;
+        $data['data'] = $this->prepareData($entitys);
+
+        return $data;
+    }
+
+    /**
+     * 默认数据填充.
+     *
+     * @param array $input
+     */
+    private function defaultInput(array &$input): void
+    {
+        $input['column'] = 'id,name,num,email,mobile,status,create_at';
+        $input['order_by'] = 'id DESC';
+        $input['key_column'] = ['id', 'name', 'num'];
+
+        if (!isset($input['page'])) {
+            $input['page'] = 1;
+        }
+
+        if (!isset($input['size'])) {
+            $input['size'] = 10;
+        }
+    }
+
+    /**
+     * 过滤数据规则.
+     *
+     * @param array $input
+     */
+    private function filterInputRules(): array
+    {
+        return [
+            'status'   => ['intval'],
+            'page'     => ['intval'],
+            'size'     => ['intval'],
+        ];
     }
 }
