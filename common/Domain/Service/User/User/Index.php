@@ -64,6 +64,7 @@ class Index
         $this->filterSearchInput($input);
         $input['column'] = 'id,name,num,email,mobile,status,create_at';
         $input['order_by'] = 'id DESC';
+        $input['key_column'] = ['id', 'name', 'num'];
 
         $repository = $this->w->repository(User::class);
 
@@ -105,35 +106,5 @@ class Index
             $select->withoutSoftDeleted();
             $this->spec($select, $input);
         };
-    }
-
-    /**
-     * 关键字条件.
-     *
-     * @param \Leevel\Database\Ddd\Select $select
-     * @param mixed                       $value
-     * @param array                       $meta
-     */
-    protected function keySpec(Select $select, $value, array $meta = []): void
-    {
-        $value = str_replace(' ', '%', $value);
-
-        $select->where(function ($select) use ($value) {
-            $select
-                ->orWhere('name', 'like', '%'.$value.'%')
-                ->orWhere('num', 'like', '%'.$value.'%');
-        });
-    }
-
-    /**
-     * 状态条件.
-     *
-     * @param \Leevel\Database\Ddd\Select $select
-     * @param mixed                       $value
-     * @param array                       $meta
-     */
-    protected function statusSpec(Select $select, $value, array $meta = []): void
-    {
-        $select->where('status', (int) $value);
     }
 }

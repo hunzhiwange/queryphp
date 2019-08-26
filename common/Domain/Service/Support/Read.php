@@ -29,6 +29,36 @@ use Leevel\Support\Str\camelize;
 trait Read
 {
     /**
+     * 关键字条件.
+     *
+     * @param \Leevel\Database\Ddd\Select $select
+     * @param mixed                       $value
+     * @param array                       $meta
+     */
+    protected function keySpec(Select $select, $value, array $meta = []): void
+    {
+        $value = str_replace(' ', '%', $value);
+
+        $select->where(function ($select) use ($value, $meta) {
+            foreach ($meta['key_column'] as $v) {
+                $select->orWhere($v, 'like', '%'.$value.'%');
+            }
+        });
+    }
+
+    /**
+     * 状态条件.
+     *
+     * @param \Leevel\Database\Ddd\Select $select
+     * @param mixed                       $value
+     * @param array                       $meta
+     */
+    protected function statusSpec(Select $select, $value, array $meta = []): void
+    {
+        $select->where('status', (int) $value);
+    }
+
+    /**
      * 预处理.
      *
      * @param array $data
