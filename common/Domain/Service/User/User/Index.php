@@ -18,7 +18,6 @@ use Closure;
 use Common\Domain\Entity\User\User;
 use Common\Domain\Service\Support\Read;
 use Common\Infra\Support\WorkflowService;
-use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Database\Ddd\Select;
 
@@ -90,15 +89,18 @@ class Index
     }
 
     /**
-     * 准备数据.
+     * 准备用户数据.
      *
-     * @param \Leevel\Collection\Collection $data
+     * @param \Common\Domain\Entity\User\User $user
      *
      * @return array
      */
-    protected function prepareData(Collection $data): array
+    protected function prepareItem(User &$user): array
     {
-        return (new PrepareForUser())->handleMulti($data);
+        $data = $user->toArray();
+        $data['role'] = $user->role->toArray();
+
+        return $data;
     }
 
     /**

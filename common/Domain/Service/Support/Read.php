@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Domain\Service\Support;
 
+use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IRepository;
 use Leevel\Database\Ddd\Select;
 use Leevel\Support\Str\camelize;
@@ -171,8 +172,27 @@ trait Read
         );
 
         $data['page'] = $page;
-        $data['data'] = $this->prepareData($entitys);
+        $lists = $this->prepareToArray($entitys);
+        $this->prepare($lists, $input);
+        $data['data'] = $lists;
 
         return $data;
+    }
+
+    /**
+     * 转换为数组.
+     *
+     * @param \Leevel\Collection\Collection $data
+     *
+     * @return array
+     */
+    private function prepareToArray(Collection $data): array
+    {
+        $result = [];
+        foreach ($data as $v) {
+            $result[] = $this->prepareItem($v);
+        }
+
+        return $result;
     }
 }
