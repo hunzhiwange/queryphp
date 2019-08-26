@@ -42,10 +42,6 @@ class Update
     /**
      * 工作流.
      *
-     * - allowedInput:输入数据白名单
-     * - filterInput:过滤输入数据
-     * - validateInput:校验输入数据
-     *
      * @var array
      */
     private $workflow = [
@@ -86,53 +82,6 @@ class Update
     public function handle(array $input): array
     {
         return $this->workflow($input);
-    }
-
-    /**
-     * 过滤数据规则.
-     *
-     * @param array $input
-     */
-    private function filterInputRules(): array
-    {
-        return [
-            'id'     => ['intval'],
-            'status' => ['intval'],
-        ];
-    }
-
-    /**
-     * 校验数据规则.
-     *
-     * @param array $input
-     *
-     * @return array
-     */
-    private function validateInputRules(array $input): array
-    {
-        $rules = [
-            'id' => [
-                'required',
-            ],
-            'name' => [
-                'required',
-                'chinese_alpha_num',
-                'max_length:50',
-            ],
-            'num' => [
-                'required',
-                'alpha_dash',
-                UniqueRule::rule(Role::class, null, $input['id']),
-            ],
-        ];
-
-        $names = [
-            'id'            => 'ID',
-            'name'          => __('名字'),
-            'num'           => __('编号'),
-        ];
-
-        return [$rules, $names];
     }
 
     /**
@@ -207,5 +156,52 @@ class Update
         $entity->refresh();
 
         return $entity;
+    }
+
+    /**
+     * 过滤数据规则.
+     *
+     * @param array $input
+     */
+    private function filterInputRules(): array
+    {
+        return [
+            'id'     => ['intval'],
+            'status' => ['intval'],
+        ];
+    }
+
+    /**
+     * 校验数据规则.
+     *
+     * @param array $input
+     *
+     * @return array
+     */
+    private function validateInputRules(array $input): array
+    {
+        $rules = [
+            'id' => [
+                'required',
+            ],
+            'name' => [
+                'required',
+                'chinese_alpha_num',
+                'max_length:50',
+            ],
+            'num' => [
+                'required',
+                'alpha_dash',
+                UniqueRule::rule(Role::class, null, $input['id']),
+            ],
+        ];
+
+        $names = [
+            'id'            => 'ID',
+            'name'          => __('名字'),
+            'num'           => __('编号'),
+        ];
+
+        return [$rules, $names];
     }
 }
