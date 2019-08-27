@@ -66,9 +66,12 @@ class Destroy
      */
     protected function remove(User $entity)
     {
+        $entity
+            ->selectForEntity()
+            ->softDelete(false);
+
         $this->w
-            ->persist($entity)
-            ->remove($entity)
+            ->update($entity)
             ->flush();
     }
 
