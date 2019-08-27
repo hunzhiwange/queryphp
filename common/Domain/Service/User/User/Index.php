@@ -64,6 +64,8 @@ class Index
         'status',
         'page',
         'size',
+        'column',
+        'order_by',
     ];
 
     /**
