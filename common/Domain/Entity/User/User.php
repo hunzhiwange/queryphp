@@ -202,7 +202,7 @@ class User extends Entity
      */
     public function setter(string $prop, $value): IEntity
     {
-        $this->{$this->prop($prop)} = $value;
+        $this->{$this->realProp($prop)} = $value;
 
         return $this;
     }
@@ -216,7 +216,7 @@ class User extends Entity
      */
     public function getter(string $prop)
     {
-        return $this->{$this->prop($prop)};
+        return $this->{$this->realProp($prop)};
     }
 
     /**
