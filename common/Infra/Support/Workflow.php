@@ -47,11 +47,11 @@ trait Workflow
                 throw new InvalidArgumentException($e);
             }
 
-            if (null !== ($_ = $this->{$wf}($input, $args))) {
-                $result = $_;
+            if (null !== ($tmp = $this->{$wf}($input, $args))) {
+                $result = $tmp;
             }
 
-            $args[$wf] = $_;
+            $args[$wf] = $tmp;
         }
 
         return $result;
