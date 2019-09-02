@@ -127,7 +127,8 @@ class RolePermission
     {
         $existPermission = [];
         foreach ($permissionId as $pid) {
-            $this->w->replace($this->entityRolePermission($roleId, (int) $pid));
+            $pid = (int) $pid;
+            $this->w->replace($this->entityRolePermission($roleId, $pid));
             $existPermission[] = $pid;
         }
 
