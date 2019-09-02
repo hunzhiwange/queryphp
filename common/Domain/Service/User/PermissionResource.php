@@ -131,7 +131,8 @@ class PermissionResource
         $existResource = [];
 
         foreach ($resourceId as $rid) {
-            $this->w->replace($this->entityPermissionResource($permissionId, (int) $rid));
+            $rid = (int) $rid;
+            $this->w->replace($this->entityPermissionResource($permissionId, $rid));
             $existResource[] = $rid;
         }
 
