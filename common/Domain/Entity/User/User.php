@@ -229,6 +229,6 @@ class User extends Entity
         $relation
             ->withoutSoftDeleted()
             ->where('user_role.delete_at', 0)
-            ->setColumns(['id,name', 'user_role.id']);
+            ->setColumns(['id', 'name']);
     }
 }

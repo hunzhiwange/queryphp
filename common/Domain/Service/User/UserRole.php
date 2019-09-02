@@ -51,7 +51,8 @@ trait UserRole
     {
         $existRole = [];
         foreach ($roleId as $rid) {
-            $this->w->replace($this->entityUserRole($userId, (int) $rid));
+            $rid = (int) $rid;
+            $this->w->replace($this->entityUserRole($userId, $rid));
             $existRole[] = $rid;
         }
 
