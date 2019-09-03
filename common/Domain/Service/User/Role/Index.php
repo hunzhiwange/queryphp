@@ -81,6 +81,8 @@ class Index
     protected function condition(array $input): Closure
     {
         return function (Select $select, IEntity $entity) use ($input) {
+            $select->withoutSoftDeleted();
+
             if ($input['key']) {
                 $select->where(function ($select) use ($input) {
                     $select
