@@ -80,7 +80,7 @@ class UserRoleStore
     {
         $this->w->persist($entity = $this->entity($input));
         $this->w->on($entity, function (User $user) use ($input) {
-            $this->setUserRole((int) $user->id, $input['userRole']);
+            $this->setUserRole((int) $user->id, $input['userRole'] ?? []);
         });
         $this->w->flush();
         $entity->refresh();
