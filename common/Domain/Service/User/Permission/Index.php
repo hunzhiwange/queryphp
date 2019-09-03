@@ -56,7 +56,7 @@ class Index
     {
         $repository = $this->w->repository(Permission::class);
 
-        return $this->normalizeTree($repository->findAll());
+        return $this->normalizeTree($repository->withoutSoftDeleted()->findAll());
     }
 
     /**
@@ -97,7 +97,6 @@ class Index
     protected function parseToNode(Collection $entitys): array
     {
         $node = [];
-
         foreach ($entitys as $e) {
             $node[] = [
                 $e->id,

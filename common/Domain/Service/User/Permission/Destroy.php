@@ -68,9 +68,13 @@ class Destroy
     protected function remove(Permission $entity)
     {
         $this->checkChildren((int) $entity->id);
+
+        $entity
+            ->selectForEntity()
+            ->softDelete(false);
+
         $this->w
-            ->persist($entity)
-            ->remove($entity)
+            ->update($entity)
             ->flush();
     }
 
@@ -96,7 +100,9 @@ class Destroy
     protected function checkChildren(int $id): void
     {
         if ($this->w->repository(Permission::class)->hasChildren($id)) {
-            throw new BusinessException(__('权限包含子项，请先删除子项.'));
+            $e = __('权限包含子项，请先删除子项.');
+
+            throw new BusinessException($e);
         }
     }
 }
