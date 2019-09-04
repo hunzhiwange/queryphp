@@ -15,9 +15,7 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
-use Common\Infra\Exception\BusinessException;
-use Leevel\Collection\Collection;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Common\Domain\Service\Support\Status as CommonStatus;
 
 /**
  * 批量修改用户状态.
@@ -30,74 +28,15 @@ use Leevel\Database\Ddd\IUnitOfWork;
  */
 class Status
 {
-    /**
-     * 事务工作单元.
-     *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
-     */
-    protected $w;
+    use CommonStatus;
 
     /**
-     * 构造函数.
+     * 返回实体.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @return string
      */
-    public function __construct(IUnitOfWork $w)
+    private function entity(): string
     {
-        $this->w = $w;
-    }
-
-    /**
-     * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
-     */
-    public function handle(array $input): array
-    {
-        $this->save($this->findAll($input), $input['status']);
-
-        return [];
-    }
-
-    /**
-     * 保存状态
-     *
-     * @param \Leevel\Collection\Collection $entitys
-     * @param string                        $status
-     */
-    protected function save(Collection $entitys, string $status)
-    {
-        foreach ($entitys as $entity) {
-            $entity->status = $status;
-            $this->w->persist($entity);
-        }
-
-        $this->w->flush();
-    }
-
-    /**
-     * 查询符合条件的用户.
-     *
-     * @param array $input
-     *
-     * @throws \Common\Infra\Exception\BusinessException
-     *
-     * @return \Leevel\Collection\Collection
-     */
-    protected function findAll(array $input): Collection
-    {
-        $entitys = $this->w
-            ->repository(User::class)
-            ->findAll(function ($select) use ($input) {
-                $select->whereIn('id', $input['ids']);
-            });
-
-        if (0 === count($entitys)) {
-            throw new BusinessException(__('未发现用户'));
-        }
-
-        return $entitys;
+        return User::class;
     }
 }
