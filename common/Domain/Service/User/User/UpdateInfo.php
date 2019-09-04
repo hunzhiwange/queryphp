@@ -16,6 +16,7 @@ namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
 use Common\Infra\Exception\BusinessException;
+use Common\Infra\Support\WorkflowService;
 use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Validate\IValidator;
 use Leevel\Validate\Proxy\Validate as Validates;
@@ -31,6 +32,8 @@ use Leevel\Validate\Proxy\Validate as Validates;
  */
 class UpdateInfo
 {
+    use WorkflowService;
+
     /**
      * 事务工作单元.
      *
@@ -137,16 +140,10 @@ class UpdateInfo
      */
     protected function validateArgs()
     {
-        if (empty($this->input['email'])) {
-            $this->input['email'] = null;
-        }
-
-        if (empty($this->input['mobile'])) {
-            $this->input['mobile'] = null;
-        }
+        $input = $this->filterEmptyStringInput($this->input);
 
         $validator = Validates::make(
-            $this->input,
+            $input,
             [
                 'email'       => 'email|'.IValidator::OPTIONAL,
                 'mobile'      => 'mobile|'.IValidator::OPTIONAL,
