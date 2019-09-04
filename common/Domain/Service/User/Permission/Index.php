@@ -55,8 +55,12 @@ class Index
     public function handle(): array
     {
         $repository = $this->w->repository(Permission::class);
+        $permission = $repository
+            ->withoutSoftDeleted()
+            ->setColumns('id,pid,name,num,status,create_at')
+            ->findAll();
 
-        return $this->normalizeTree($repository->withoutSoftDeleted()->findAll());
+        return $this->normalizeTree($permission);
     }
 
     /**
