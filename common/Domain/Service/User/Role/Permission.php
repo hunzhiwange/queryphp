@@ -82,7 +82,7 @@ class Permission
      *
      * @param int $roleId
      *
-     * @return Leevel\Collection\Collection
+     * @return \Leevel\Collection\Collection
      */
     protected function findPermissions(int $roleId): Collection
     {

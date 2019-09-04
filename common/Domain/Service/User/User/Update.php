@@ -97,7 +97,7 @@ class Update
      *
      * @param int $userId
      *
-     * @return Leevel\Collection\Collection
+     * @return \Leevel\Collection\Collection
      */
     protected function findRoles(int $userId): Collection
     {

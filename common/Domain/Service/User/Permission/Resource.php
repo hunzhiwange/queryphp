@@ -85,7 +85,7 @@ class Resource
      *
      * @param int $permissionId
      *
-     * @return Leevel\Collection\Collection
+     * @return \Leevel\Collection\Collection
      */
     protected function findResources(int $permissionId): Collection
     {
