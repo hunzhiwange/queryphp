@@ -192,7 +192,7 @@ class Update
             'num' => [
                 'required',
                 'alpha_dash',
-                UniqueRule::rule(Role::class, null, $input['id']),
+                UniqueRule::rule(Role::class, null, $input['id'], null, 'delete_at', 0),
             ],
         ];
 
