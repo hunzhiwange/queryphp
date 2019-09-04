@@ -97,7 +97,7 @@ class Index
      *
      * @return array
      */
-    protected function prepareItem(User &$user): array
+    protected function prepareItem(User $user): array
     {
         $data = $user->toArray();
         $data['role'] = $user->role->toArray();
