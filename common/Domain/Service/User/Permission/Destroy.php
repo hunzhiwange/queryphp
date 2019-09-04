@@ -15,8 +15,8 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\Permission;
 
 use Common\Domain\Entity\User\Permission;
+use Common\Domain\Service\Support\Destroy as CommonDestroy;
 use Common\Infra\Exception\BusinessException;
-use Leevel\Database\Ddd\IUnitOfWork;
 
 /**
  * 权限删除.
@@ -29,65 +29,26 @@ use Leevel\Database\Ddd\IUnitOfWork;
  */
 class Destroy
 {
-    /**
-     * 事务工作单元.
-     *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
-     */
-    protected $w;
+    use CommonDestroy;
 
     /**
-     * 构造函数.
+     * 返回实体.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @return string
      */
-    public function __construct(IUnitOfWork $w)
+    private function entity(): string
     {
-        $this->w = $w;
+        return Permission::class;
     }
 
     /**
-     * 响应方法.
+     * 校验.
      *
      * @param array $input
-     *
-     * @return array
      */
-    public function handle(array $input): array
+    private function validate(array $input): void
     {
-        $this->remove($this->find($input['id']));
-
-        return [];
-    }
-
-    /**
-     * 删除实体.
-     *
-     * @param \Common\Domain\Entity\User\Permission $entity
-     */
-    protected function remove(Permission $entity)
-    {
-        $this->checkChildren((int) $entity->id);
-
-        $entity
-            ->selectForEntity()
-            ->softDelete(false);
-
-        $this->w
-            ->update($entity)
-            ->flush();
-    }
-
-    /**
-     * 查找实体.
-     *
-     * @param int $intId
-     *
-     * @return \Common\Domain\Entity\User\Permission
-     */
-    protected function find(int $id): Permission
-    {
-        return $this->w->repository(Permission::class)->findOrFail($id);
+        $this->checkChildren((int) $input['id']);
     }
 
     /**
@@ -97,7 +58,7 @@ class Destroy
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function checkChildren(int $id): void
+    private function checkChildren(int $id): void
     {
         if ($this->w->repository(Permission::class)->hasChildren($id)) {
             $e = __('权限包含子项，请先删除子项.');
