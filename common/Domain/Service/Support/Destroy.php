@@ -14,8 +14,10 @@ declare(strict_types=1);
 
 namespace Common\Domain\Service\Support;
 
+use Common\Infra\Exception\BusinessException;
 use Leevel\Database\Ddd\IEntity;
 use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Validate\Proxy\Validate;
 
 /**
  * 删除数据.
@@ -54,6 +56,10 @@ trait Destroy
      */
     public function handle(array $input): array
     {
+        $this->validateArgs($input);
+        if (method_exists($this, 'validate')) {
+            $this->validate($input);
+        }
         $this->remove($this->find($input['id']));
 
         return [];
@@ -85,5 +91,29 @@ trait Destroy
     private function find(int $id): IEntity
     {
         return $this->w->repository($this->entity())->findOrFail($id);
+    }
+
+    /**
+     * 校验基本参数.
+     *
+     * @param array $input
+     *
+     * @throws \Common\Infra\Exception\BusinessException
+     */
+    private function validateArgs(array $input): void
+    {
+        $validator = Validate::make(
+            $input,
+            [
+                'id'          => 'required',
+            ],
+            [
+                'id'          => 'ID',
+            ]
+        );
+
+        if ($validator->fail()) {
+            throw new BusinessException(json_encode($validator->error()));
+        }
     }
 }
