@@ -140,19 +140,13 @@ trait Read
     }
 
     /**
-     * 过滤搜索空值.
+     * 过滤搜索空字符串值.
      *
      * @param array $input
      */
     private function filterSearchInput(array &$input): void
     {
-        $input = array_map(function ($v) {
-            if ('' === $v) {
-                $v = null;
-            }
-
-            return $v;
-        }, $input);
+        $input = $this->filterEmptyStringInput($input);
     }
 
     /**

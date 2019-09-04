@@ -125,4 +125,24 @@ trait WorkflowService
             }
         }
     }
+
+    /**
+     * 过滤空字符串值.
+     *
+     * @param array $input
+     *
+     * @return array
+     */
+    private function filterEmptyStringInput(array $input): array
+    {
+        $input = array_map(function ($v) {
+            if ('' === $v) {
+                $v = null;
+            }
+
+            return $v;
+        }, $input);
+
+        return $input;
+    }
 }
