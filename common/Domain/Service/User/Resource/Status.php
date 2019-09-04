@@ -15,10 +15,7 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\Resource;
 
 use Common\Domain\Entity\User\Resource;
-use Common\Infra\Exception\BusinessException;
-use Leevel\Collection\Collection;
-use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Validate\Proxy\Validate;
+use Common\Domain\Service\Support\Status as CommonStatus;
 
 /**
  * 批量修改资源状态.
@@ -31,105 +28,15 @@ use Leevel\Validate\Proxy\Validate;
  */
 class Status
 {
-    /**
-     * 事务工作单元.
-     *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
-     */
-    protected $w;
+    use CommonStatus;
 
     /**
-     * 输入数据.
+     * 返回实体.
      *
-     * @var array
+     * @return string
      */
-    protected $input;
-
-    /**
-     * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
-     */
-    public function __construct(IUnitOfWork $w)
+    private function entity(): string
     {
-        $this->w = $w;
-    }
-
-    /**
-     * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
-     */
-    public function handle(array $input): array
-    {
-        $this->input = $input;
-        $this->validateArgs();
-        $this->save($this->findAll($input), $input['status']);
-
-        return [];
-    }
-
-    /**
-     * 保存状态
-     *
-     * @param \Leevel\Collection\Collection $entitys
-     * @param string                        $status
-     */
-    protected function save(Collection $entitys, string $status)
-    {
-        foreach ($entitys as $entity) {
-            $entity->status = $status;
-            $this->w->persist($entity);
-        }
-
-        $this->w->flush();
-    }
-
-    /**
-     * 查询符合条件的资源.
-     *
-     * @param array $input
-     *
-     * @throws \Common\Infra\Exception\BusinessException
-     *
-     * @return \Leevel\Collection\Collection
-     */
-    protected function findAll(array $input): Collection
-    {
-        $entitys = $this->w
-            ->repository(Resource::class)
-            ->findAll(function ($select) use ($input) {
-                $select->whereIn('id', $input['ids']);
-            });
-
-        if (0 === count($entitys)) {
-            throw new BusinessException(__('未发现资源'));
-        }
-
-        return $entitys;
-    }
-
-    /**
-     * 校验基本参数.
-     *
-     * @throws \Common\Infra\Exception\BusinessException
-     */
-    protected function validateArgs()
-    {
-        $validator = Validate::make(
-            $this->input,
-            [
-                'ids'          => 'required|array',
-            ],
-            [
-                'ids'          => 'ID',
-            ]
-        );
-
-        if ($validator->fail()) {
-            throw new BusinessException(json_encode($validator->error()));
-        }
+        return Resource::class;
     }
 }
