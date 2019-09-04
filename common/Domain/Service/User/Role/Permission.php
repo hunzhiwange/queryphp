@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Service\User;
+namespace Common\Domain\Service\User\Role;
 
 use Common\Domain\Entity\User\Role;
 use Common\Domain\Entity\User\RolePermission as EntityRolePermission;
@@ -28,7 +28,7 @@ use Leevel\Database\Ddd\IUnitOfWork;
  *
  * @version 1.0
  */
-class RolePermission
+class Permission
 {
     /**
      * 事务工作单元.

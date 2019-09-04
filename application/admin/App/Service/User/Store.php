@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\User;
 
-use Common\Domain\Service\User\UserRoleStore;
+use Common\Domain\Service\User\User\Store as Service;
 
 /**
  * 用户保存.
@@ -28,18 +28,18 @@ use Common\Domain\Service\User\UserRoleStore;
 class Store
 {
     /**
-     * 用户保存授权服务.
+     * 用户保存服务.
      *
-     * @var \Common\Domain\Service\User\UserRoleStore
+     * @var \Common\Domain\Service\User\User\Store
      */
     protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Common\Domain\Service\User\UserRoleStore $service
+     * @param \Common\Domain\Service\User\User\Store $service
      */
-    public function __construct(UserRoleStore $service)
+    public function __construct(Service $service)
     {
         $this->service = $service;
     }

@@ -12,22 +12,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Service\User;
+namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
 use Common\Domain\Entity\User\UserRole as EntityUserRole;
-use Common\Domain\Service\User\User\PrepareForUser;
 
-/**
- * 更新授权.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.11.21
- *
- * @version 1.0
- */
-trait UserRole
+trait BaseStoreUpdate
 {
     /**
      * 准备数据.

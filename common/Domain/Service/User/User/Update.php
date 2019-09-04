@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Service\User;
+namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
 use Common\Domain\Entity\User\UserRole as EntityUserRole;
@@ -21,7 +21,7 @@ use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\IUnitOfWork;
 
 /**
- * 用户更新授权.
+ * 用户更新.
  *
  * @author Name Your <your@mail.com>
  *
@@ -29,9 +29,9 @@ use Leevel\Database\Ddd\IUnitOfWork;
  *
  * @version 1.0
  */
-class UserRoleUpdate
+class Update
 {
-    use UserRole;
+    use BaseStoreUpdate;
 
     /**
      * 事务工作单元.

@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Service\User;
+namespace Common\Domain\Service\User\Permission;
 
 use Common\Domain\Entity\User\Permission;
 use Common\Domain\Entity\User\PermissionResource as EntityPermissionResource;
@@ -28,7 +28,7 @@ use Leevel\Database\Ddd\IUnitOfWork;
  *
  * @version 1.0
  */
-class PermissionResource
+class Resource
 {
     /**
      * 事务工作单元.

@@ -12,14 +12,14 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Service\User;
+namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\IUnitOfWork;
 
 /**
- * 用户保存授权.
+ * 用户保存.
  *
  * @author Name Your <your@mail.com>
  *
@@ -27,9 +27,9 @@ use Leevel\Database\Ddd\IUnitOfWork;
  *
  * @version 1.0
  */
-class UserRoleStore
+class Store
 {
-    use UserRole;
+    use BaseStoreUpdate;
 
     /**
      * 事务工作单元.
