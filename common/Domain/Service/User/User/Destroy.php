@@ -35,7 +35,7 @@ class Destroy
      *
      * @return string
      */
-    protected function entity(): string
+    private function entity(): string
     {
         return User::class;
     }
