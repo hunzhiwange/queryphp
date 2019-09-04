@@ -137,11 +137,19 @@ class UpdateInfo
      */
     protected function validateArgs()
     {
+        if (empty($this->input['email'])) {
+            $this->input['email'] = null;
+        }
+
+        if (empty($this->input['mobile'])) {
+            $this->input['mobile'] = null;
+        }
+
         $validator = Validates::make(
             $this->input,
             [
-                'email'       => 'email|'.IValidator::CONDITION_VALUE,
-                'mobile'      => 'mobile|'.IValidator::CONDITION_VALUE,
+                'email'       => 'email|'.IValidator::OPTIONAL,
+                'mobile'      => 'mobile|'.IValidator::OPTIONAL,
             ],
             [
                 'email'       => __('邮件'),
