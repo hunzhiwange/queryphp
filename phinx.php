@@ -46,9 +46,17 @@ $app = new App($container, realpath(__DIR__));
  *
  * 读取 phinx 运行环境
  */
-if (($input = new ArgvInput())->hasParameterOption('-e')) {
-    putenv('RUNTIME_ENVIRONMENT='.$input->getParameterOption('-e'));
+$input = new ArgvInput();
+
+if ($input->hasParameterOption('-e')) {
+    $env = $input->getParameterOption('-e');
+} elseif ($input->hasParameterOption('--environment')) {
+    $env = $input->getParameterOption('--environment');
+} else {
+    $env = 'env.phpunit';
 }
+
+putenv('RUNTIME_ENVIRONMENT='.$env);
 
 /**
  * 载入配置.

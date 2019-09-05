@@ -18,6 +18,6 @@ www/public
 www/storage
 www/apis
 www/debugbar
-/.testing
+/.env.phpunit
 .vscode
 .phpunit.result.cache
