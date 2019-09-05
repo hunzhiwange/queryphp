@@ -71,7 +71,6 @@ class UserPermission
     protected function normalizePermission(array $data): array
     {
         $permission = ['static' => [], 'dynamic' => []];
-
         foreach ($data as $v) {
             if ('*' !== $v && false !== strpos($v, '*')) {
                 $permission['dynamic'][] = $v;
@@ -94,15 +93,12 @@ class UserPermission
     {
         $data = [];
         $roles = $user->role;
-
         if (\count($roles) > 0) {
             foreach ($roles as $r) {
                 $permissions = $r->permission;
-
                 if (\count($permissions) > 0) {
                     foreach ($permissions as $p) {
                         $resources = $p->resource;
-
                         if (\count($resources) > 0) {
                             $resourceData = array_unique(array_column($resources->toArray(), 'num'));
                             $data = array_merge($data, $resourceData);
@@ -124,6 +120,9 @@ class UserPermission
      */
     protected function findUser(int $id): User
     {
-        return $this->w->repository(User::class)->findOrFail($id);
+        return $this->w
+            ->repository(User::class)
+            ->eager(['role.permission.resource'])
+            ->findOrFail($id);
     }
 }
