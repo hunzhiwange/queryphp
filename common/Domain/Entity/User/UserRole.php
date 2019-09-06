@@ -76,6 +76,13 @@ class UserRole extends Entity
     ];
 
     /**
+     * soft delete column.
+     *
+     * @var string
+     */
+    const DELETE_AT = 'delete_at';
+
+    /**
      * id.
      *
      * @var int

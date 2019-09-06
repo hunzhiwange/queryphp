@@ -92,6 +92,13 @@ class User extends Entity
     ];
 
     /**
+     * soft delete column.
+     *
+     * @var string
+     */
+    const DELETE_AT = 'delete_at';
+
+    /**
      * 状态值.
      *
      * @var array
