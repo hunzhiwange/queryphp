@@ -78,6 +78,13 @@ class App extends Entity
     ];
 
     /**
+     * soft delete column.
+     *
+     * @var string
+     */
+    const DELETE_AT = 'delete_at';
+
+    /**
      * 状态值.
      *
      * @var array
@@ -86,6 +93,13 @@ class App extends Entity
         'disable' => [0, '禁用'],
         'enable'  => [1, '启用'],
     ];
+
+    /**
+     * database connect.
+     *
+     * @var mixed
+     */
+    private static $leevelConnect;
 
     /**
      * id.
@@ -182,5 +196,25 @@ class App extends Entity
     public function getter(string $prop)
     {
         return $this->{$this->realProp($prop)};
+    }
+
+    /**
+     * set database connect.
+     *
+     * @param mixed $connect
+     */
+    public static function withConnect($connect): void
+    {
+        static::$leevelConnect = $connect;
+    }
+
+    /**
+     * get database connect.
+     *
+     * @param mixed $connect
+     */
+    public static function connect()
+    {
+        return static::$leevelConnect;
     }
 }

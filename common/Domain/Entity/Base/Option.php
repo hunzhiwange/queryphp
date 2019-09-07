@@ -85,6 +85,13 @@ class Option extends Entity
     const DELETE_AT = 'delete_at';
 
     /**
+     * database connect.
+     *
+     * @var mixed
+     */
+    private static $leevelConnect;
+
+    /**
      * id.
      *
      * @var int
@@ -165,5 +172,25 @@ class Option extends Entity
     public function getter(string $prop)
     {
         return $this->{$this->realProp($prop)};
+    }
+
+    /**
+     * set database connect.
+     *
+     * @param mixed $connect
+     */
+    public static function withConnect($connect): void
+    {
+        static::$leevelConnect = $connect;
+    }
+
+    /**
+     * get database connect.
+     *
+     * @param mixed $connect
+     */
+    public static function connect()
+    {
+        return static::$leevelConnect;
     }
 }
