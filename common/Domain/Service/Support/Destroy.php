@@ -72,12 +72,9 @@ trait Destroy
      */
     private function remove(IEntity $entity)
     {
-        $entity
-            ->selectForEntity()
-            ->softDelete(false);
-
         $this->w
-            ->update($entity)
+            ->persist($entity)
+            ->remove($entity)
             ->flush();
     }
 
