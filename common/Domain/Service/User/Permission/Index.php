@@ -56,7 +56,6 @@ class Index
     {
         $repository = $this->w->repository(Permission::class);
         $permission = $repository
-            ->withoutSoftDeleted()
             ->setColumns('id,pid,name,num,status,create_at')
             ->findAll();
 

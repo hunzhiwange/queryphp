@@ -261,7 +261,6 @@ class User extends Entity
     protected function relationScopeRole(Relation $relation): void
     {
         $relation
-            ->withoutSoftDeleted()
             ->where('user_role.delete_at', 0)
             ->setColumns(['id', 'name']);
     }

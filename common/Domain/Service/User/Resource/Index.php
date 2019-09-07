@@ -112,7 +112,6 @@ class Index
     protected function condition(array $input): Closure
     {
         return function (Select $select) use ($input) {
-            $select->withoutSoftDeleted();
             $this->spec($select, $input);
         };
     }

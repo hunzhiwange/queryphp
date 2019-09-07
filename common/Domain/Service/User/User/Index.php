@@ -116,7 +116,6 @@ class Index
     {
         return function (Select $select) use ($input) {
             $select->eager(['role']);
-            $select->withoutSoftDeleted();
             $this->spec($select, $input);
         };
     }
