@@ -39,8 +39,8 @@ if (!function_exists('sql')) {
     function sql(Closure $call): void
     {
         \App::make('event')
-            ->register(IDatabase::SQL_EVENT, function (string $event, string $sql, array $bindParams = []) use ($call): void {
-                $call($event, $sql, $bindParams);
+            ->register(IDatabase::SQL_EVENT, function (string $event, string $sql) use ($call): void {
+                $call($event, $sql);
             });
     }
 }
