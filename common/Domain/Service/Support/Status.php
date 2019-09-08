@@ -53,6 +53,9 @@ trait Status
     public function handle(array $input): array
     {
         $this->validateArgs($input);
+        $input['ids'] = array_map(function ($item) {
+            return (int) $item;
+        }, $input['ids']);
         $this->save($this->findAll($input), (int) $input['status']);
 
         return [];
