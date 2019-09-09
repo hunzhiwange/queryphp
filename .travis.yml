@@ -10,11 +10,11 @@ matrix:
     - php: 7.3.2
       env: test_coverage=true swoole_version="master"
     - php: 7.3.2
-      env: setup=lowest swoole_version="v4.4.2"
+      env: setup=lowest swoole_version="v4.4.5"
     - php: 7.4snapshot
       env: swoole_version="master"
     - php: 7.4snapshot
-      env: setup=lowest swoole_version="v4.4.2"
+      env: setup=lowest swoole_version="v4.4.5"
 
   fast_finish: true
 
