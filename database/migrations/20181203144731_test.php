@@ -50,8 +50,8 @@ class Test extends AbstractMigration
     {
         $sql = <<<'EOT'
             CREATE TABLE `test` (
-              `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-              `name` varchar(200) NOT NULL COMMENT '测试名',
+              `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+              `name` varchar(200) NOT NULL DEFAULT '' COMMENT '测试名',
               `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
               `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
               `delete_at` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间 0=未删除;大于0=删除时间;',

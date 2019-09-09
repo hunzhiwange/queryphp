@@ -50,10 +50,10 @@ class Apps extends AbstractMigration
     {
         $sql = <<<'EOT'
             CREATE TABLE `app` (
-                `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-                `num` varchar(64) NOT NULL COMMENT '应用 ID',
-                `key` varchar(64) NOT NULL COMMENT '应用 KEY',
-                `secret` varchar(64) NOT NULL COMMENT '应用秘钥',
+                `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                `num` varchar(64) NOT NULL DEFAULT '' COMMENT '应用 ID',
+                `key` varchar(64) NOT NULL DEFAULT '' COMMENT '应用 KEY',
+                `secret` varchar(64) NOT NULL DEFAULT '' COMMENT '应用秘钥',
                 `status` tinyint(4) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
                 `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                 `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

@@ -50,9 +50,9 @@ class PermissionResource extends AbstractMigration
     {
         $sql = <<<'EOT'
             CREATE TABLE `permission_resource` (
-                `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-                `permission_id` int(11) unsigned NOT NULL COMMENT '权限 ID',
-                `resource_id` int(11) unsigned NOT NULL COMMENT '资源 ID',
+                `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                `permission_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '权限 ID',
+                `resource_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '资源 ID',
                 `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                 `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                 `delete_at` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间 0=未删除;大于0=删除时间;',

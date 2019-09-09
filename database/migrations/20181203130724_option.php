@@ -50,8 +50,8 @@ class Option extends AbstractMigration
     {
         $sql = <<<'EOT'
             CREATE TABLE `option` (
-                `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-                `name` varchar(200) NOT NULL COMMENT '配置名',
+                `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                `name` varchar(200) NOT NULL DEFAULT '' COMMENT '配置名',
                 `value` text NOT NULL COMMENT '配置值',
                 `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                 `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

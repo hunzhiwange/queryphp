@@ -50,12 +50,12 @@ class User extends AbstractMigration
     {
         $sql = <<<'EOT'
             CREATE TABLE `user` (
-                `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-                `name` varchar(64) NOT NULL COMMENT '用户名字',
-                `num` varchar(64) NOT NULL COMMENT '编号',
-                `password` varchar(255) NOT NULL COMMENT '密码',
-                `email` varchar(100) NOT NULL COMMENT 'Email',
-                `mobile` char(11) NOT NULL COMMENT '手机',
+                `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                `name` varchar(64) NOT NULL DEFAULT '' COMMENT '用户名字',
+                `num` varchar(64) NOT NULL DEFAULT '' COMMENT '编号',
+                `password` varchar(255) NOT NULL DEFAULT '' COMMENT '密码',
+                `email` varchar(100) NOT NULL DEFAULT '' COMMENT 'Email',
+                `mobile` char(11) NOT NULL DEFAULT '' COMMENT '手机',
                 `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
                 `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                 `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

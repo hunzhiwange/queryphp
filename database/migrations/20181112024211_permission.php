@@ -50,10 +50,10 @@ class Permission extends AbstractMigration
     {
         $sql = <<<'EOT'
             CREATE TABLE `permission` (
-                `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-                `pid` int(11) unsigned NOT NULL COMMENT '父级 ID',
-                `name` varchar(64) NOT NULL COMMENT '权限名字',
-                `num` varchar(64) NOT NULL COMMENT '编号',
+                `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '父级 ID',
+                `name` varchar(64) NOT NULL DEFAULT '' COMMENT '权限名字',
+                `num` varchar(64) NOT NULL DEFAULT '' COMMENT '编号',
                 `status` tinyint(4) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
                 `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                 `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
