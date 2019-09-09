@@ -2,6 +2,7 @@
 
 <p align="center">
   <a href="https://php.net"><img src="https://img.shields.io/badge/php-%3E%3D%207.3.2-8892BF.svg" alt="Minimum PHP Version"></a>
+  <a href="https://www.swoole.com/"><img src="https://img.shields.io/badge/swoole-%3E%3D%204.4.5-008de0.svg" alt="Minimum Swoole Version"></a>
   <a href="https://github.styleci.io/repos/78216574"><img src="https://github.styleci.io/repos/78216574/shield?branch=master" alt="StyleCI"></a>
   <a href="https://travis-ci.org/hunzhiwange/queryphp">
     <img alt="Build Status" src="https://img.shields.io/travis/hunzhiwange/queryphp.svg" /></a>
