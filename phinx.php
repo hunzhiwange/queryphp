@@ -168,7 +168,7 @@ return [
             'port'      => Leevel::env('DATABASE_PORT', 3306),
             'charset'   => 'utf8',
         ],
-        'testing'   => [
+        'env.phpunit'   => [
             'adapter'   => 'mysql',
             'host'      => Leevel::env('DATABASE_HOST', 'localhost'),
             'name'      => Leevel::env('DATABASE_NAME', ''),
