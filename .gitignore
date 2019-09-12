@@ -6,7 +6,6 @@
 .settings/
 composer.lock
 node_modules/
-.settings/
 .DS_Store
 vendor/
 frontend/node_modules/
@@ -21,3 +20,4 @@ www/debugbar
 /.env.phpunit
 .vscode
 .phpunit.result.cache
+.idea/
