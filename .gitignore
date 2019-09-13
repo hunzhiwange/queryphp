@@ -21,3 +21,4 @@ www/debugbar
 .vscode
 .phpunit.result.cache
 .idea/
+/debugbar
