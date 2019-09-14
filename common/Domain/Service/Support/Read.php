@@ -159,13 +159,15 @@ trait Read
      */
     private function findPage(array $input, IRepository $repository): array
     {
-        list($page, $entitys) = $repository->findPage(
+        $page = $repository->findPage(
             $input['page'],
             $input['size'],
             $this->condition($input),
         );
+        $page = $page->toArray();
 
-        $data['page'] = $page;
+        $data['page'] = $page['page'];
+        $entitys = $page['data'];
         $lists = $this->prepareToArray($entitys);
         $this->prepare($lists, $input);
         $data['data'] = $lists;
