@@ -16,7 +16,7 @@ namespace Common\Domain\Entity\User;
 
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\IEntity;
-use Leevel\Database\Ddd\Relation\Relation;
+use Leevel\Database\Ddd\Relation\ManyMany;
 
 /**
  * User.
@@ -256,12 +256,10 @@ class User extends Entity
     /**
      * 角色关联查询作用域.
      *
-     * @param \Leevel\Database\Ddd\Relation\Relation $relation
+     * @param \Leevel\Database\Ddd\Relation\ManyMany $relation
      */
-    protected function relationScopeRole(Relation $relation): void
+    protected function relationScopeRole(ManyMany $relation): void
     {
-        $relation
-            ->where('user_role.delete_at', 0)
-            ->setColumns(['id', 'name']);
+        $relation->setColumns(['id', 'name']);
     }
 }
