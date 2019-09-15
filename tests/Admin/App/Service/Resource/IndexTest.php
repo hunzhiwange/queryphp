@@ -58,8 +58,11 @@ class IndexTest extends TestCase
             {
                 "per_page": 10,
                 "current_page": 1,
+                "total_page": null,
                 "total_record": 0,
-                "from": 0
+                "total_macro": false,
+                "from": 0,
+                "to": 0
             }
             eot;
 
@@ -90,8 +93,11 @@ class IndexTest extends TestCase
             {
                 "per_page": 10,
                 "current_page": 1,
+                "total_page": 1,
                 "total_record": 1,
-                "from": 0
+                "total_macro": false,
+                "from": 0,
+                "to": 1
             }
             eot;
 
