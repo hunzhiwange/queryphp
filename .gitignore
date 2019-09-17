@@ -20,5 +20,5 @@ www/debugbar
 /.env.phpunit
 .vscode
 .phpunit.result.cache
-.idea/
+/.idea
 /debugbar
