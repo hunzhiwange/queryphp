@@ -58,7 +58,7 @@ QueryPHP 基于一款成立于 2010 年的 PHP 框架 [DoYouHaoBaby](https://raw
     <tr>
       <td align="center" valign="middle">
         <a href="https://www.jetbrains.com/?from=queryphp" target="_blank">
-          <img width="100px" src="./jetbrains-training-partner.svg" />
+          <img width="100px" src="./jetbrains.svg" />
         </a>
       </td>
     </tr>
