@@ -59,7 +59,7 @@ QueryPHP was based on the [DoYouHaoBaby](https://raw.githubusercontent.com/hunzh
     <tr>
       <td align="center" valign="middle">
         <a href="https://www.jetbrains.com/?from=queryphp" target="_blank">
-          <img width="100px" src="./jetbrains-training-partner.svg" />
+          <img width="100px" src="./jetbrains.svg" />
         </a>
       </td>
     </tr>
