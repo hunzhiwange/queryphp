@@ -50,29 +50,17 @@ QueryPHP was based on the [DoYouHaoBaby](https://raw.githubusercontent.com/hunzh
  * Packages From Leevel: <https://packagist.org/packages/leevel/>
 
 
-<h3 align="center">Sponsor</h3>
+## Sponsor
+
+<h3 align="center">Gold Sponsors</h3>
 
 <table>
   <tbody>
     <tr>
       <td align="center" valign="middle">
         <a href="https://www.jetbrains.com/?from=queryphp" target="_blank">
-          <img width="148px" src="./jetbrains-training-partner.svg">
+          <img width="148px" src="./jetbrains-training-partner.svg" />
         </a>
-      </td>
-      <td align="center" valign="middle">
-        
-      </td>
-      <td align="center" valign="middle">
-        
-      </td>
-      <td align="center" valign="middle">
-      </td>
-      <td align="center" valign="middle">
-        
-      </td>
-      <td align="center" valign="middle">
-
       </td>
     </tr>
     <tr></tr>
