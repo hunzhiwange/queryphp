@@ -49,6 +49,23 @@ QueryPHP 基于一款成立于 2010 年的 PHP 框架 [DoYouHaoBaby](https://raw
  * Packages From Hunzhiwange: <https://packagist.org/packages/hunzhiwange/>
  * Packages From Leevel: <https://packagist.org/packages/leevel/>
 
+## 赞助商
+
+<h3 align="center">金牌赞助商</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="middle">
+        <a href="https://www.jetbrains.com/?from=queryphp" target="_blank">
+          <img width="100px" src="./jetbrains-training-partner.svg" />
+        </a>
+      </td>
+    </tr>
+    <tr></tr>
+  </tbody>
+</table>
+
 ## QueryPHP 框架 PHP 工程化实践
 
 <img src="./engineering-zh-CN.jpg" />

@@ -49,6 +49,24 @@ QueryPHP was based on the [DoYouHaoBaby](https://raw.githubusercontent.com/hunzh
  * Packages From Hunzhiwange: <https://packagist.org/packages/hunzhiwange/>
  * Packages From Leevel: <https://packagist.org/packages/leevel/>
 
+
+## Sponsor
+
+<h3 align="center">Gold Sponsors</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="middle">
+        <a href="https://www.jetbrains.com/?from=queryphp" target="_blank">
+          <img width="100px" src="./jetbrains-training-partner.svg" />
+        </a>
+      </td>
+    </tr>
+    <tr></tr>
+  </tbody>
+</table>
+
 ## PHP Engineering Practice Of QueryPHP
 
 <img src="./engineering.jpg" />
