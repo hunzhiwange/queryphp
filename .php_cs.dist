@@ -86,6 +86,7 @@ return PhpCsFixer\Config::create()
         'increment_style'                       => ['style' => 'post'], // 自增自减操作符位置
         'native_function_invocation'            => false, // 在函数调用之前添加前导 “\” 以加速解析。
         'heredoc_indentation'                   => true, // Heredoc / nowdoc 内容必须正确缩进。
+        'single_line_comment_style'             => 'hash',
     ])
     ->setRiskyAllowed(true)
     ->setFinder(
