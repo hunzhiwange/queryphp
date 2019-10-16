@@ -186,10 +186,10 @@ password: 123456
 CREATE DATABASE IF NOT EXISTS test DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 ```
 
-### 修改 .testing
+### 修改 .env.phpunit
 
 ```
-vim .testing
+vim .env.phpunit
 
 ...
 // Database
@@ -218,7 +218,7 @@ DATABASE_PASSWORD = 123456
 ### 执行数据库迁移命令
 
 ```
-php leevel migrate:migrate -e testing
+php leevel migrate:migrate -e env.phpunit
 ```
 
 ### 运行
@@ -232,8 +232,8 @@ _____________                           _______________
         \_\                /_/_/         /_/
 
 $cd /data/codes/queryphp/
-$vim .testing # modify database redis and other
-$php leevel migrate:migrate -e testing
+$vim .env.phpunit # modify database redis and other
+$php leevel migrate:migrate -e env.phpunit
 - $php vendor/bin/phpunit
 + $php ./build/phpunit
 ```

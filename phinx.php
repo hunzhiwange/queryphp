@@ -53,7 +53,7 @@ if ($input->hasParameterOption('-e')) {
 } elseif ($input->hasParameterOption('--environment')) {
     $env = $input->getParameterOption('--environment');
 } else {
-    $env = 'env.phpunit';
+    $env = 'env';
 }
 
 putenv('RUNTIME_ENVIRONMENT='.$env);
