@@ -308,36 +308,6 @@ Or
 php leevel development
 ```
 
-## 安装 Leevel 扩展让性能更好
-
-### Windows
-
-后续会提供 dll 扩展.
-
-### Linux
-
-从下面的仓库下载源代码.
-
-```
-git clone git@github.com:hunzhiwange/leevel.git
-cd ext
-```
-
-
-GCC 编译源码.
-
-```
-$/path/to/phpize
-$./configure --with-php-config=/path/to/php-config
-$make && make install
-```
-
-将扩展添加到你的 php.ini, 使用 php -m 查看扩展是否被安装.
-
-```
-extension = leevel.so
-```
-
 ## 使用 swoole 提升性能
 
 ### Http 服务
