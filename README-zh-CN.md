@@ -335,7 +335,7 @@ Http Server Version 1.0.0
 | Item                  | Value                           |
 +-----------------------+---------------------------------+
 | host                  | 0.0.0.0                         |
-| port                  | 9501                            |
+| port                  | 9527                            |
 | process_name          | leevel.http                     |
 | pid_path              | @path/runtime/protocol/http.pid |
 | worker_num            | 8                               |
@@ -346,16 +346,16 @@ Http Server Version 1.0.0
 +-----------------------+---------------------------------+
 ```
 
- * 首页 <http://127.0.0.1:9501/>
- * Mvc 路由 <http://127.0.0.1:9501/api/test>
- * Mvc restful 路由 http://127.0.0.1:9501/restful/123
- * 指定方法的 Mvc restful 路由 http://127.0.0.1:9501/restful/123/show
- * 注解路由 http://127.0.0.1:9501/api/v1/petLeevelForApi/helloworld
- * 带有绑定的注解路由 http://127.0.0.1:9501/api/v2/withBind/foobar
- * php leevel link:public <http://127.0.0.1:9501/public/css/page.css>
- * php leevel link:storage <http://127.0.0.1:9501/storage/logo.png>
- * php leevel link:apis <http://127.0.0.1:9501/apis/>
- * php leevel link:debugbar <http://127.0.0.1:9501/debugbar/debugbar.css>
+ * 首页 <http://127.0.0.1:9527/>
+ * Mvc 路由 <http://127.0.0.1:9527/api/test>
+ * Mvc restful 路由 http://127.0.0.1:9527/restful/123
+ * 指定方法的 Mvc restful 路由 http://127.0.0.1:9527/restful/123/show
+ * 注解路由 http://127.0.0.1:9527/api/v1/petLeevelForApi/helloworld
+ * 带有绑定的注解路由 http://127.0.0.1:9527/api/v2/withBind/foobar
+ * php leevel link:public <http://127.0.0.1:9527/public/css/page.css>
+ * php leevel link:storage <http://127.0.0.1:9527/storage/logo.png>
+ * php leevel link:apis <http://127.0.0.1:9527/apis/>
+ * php leevel link:debugbar <http://127.0.0.1:9527/debugbar/debugbar.css>
 
 ### Websocket 服务
 
