@@ -308,36 +308,6 @@ Or
 php leevel development
 ```
 
-## 安装 Leevel 扩展让性能更好
-
-### Windows
-
-后续会提供 dll 扩展.
-
-### Linux
-
-从下面的仓库下载源代码.
-
-```
-git clone git@github.com:hunzhiwange/leevel.git
-cd ext
-```
-
-
-GCC 编译源码.
-
-```
-$/path/to/phpize
-$./configure --with-php-config=/path/to/php-config
-$make && make install
-```
-
-将扩展添加到你的 php.ini, 使用 php -m 查看扩展是否被安装.
-
-```
-extension = leevel.so
-```
-
 ## 使用 swoole 提升性能
 
 ### Http 服务
@@ -365,7 +335,7 @@ Http Server Version 1.0.0
 | Item                  | Value                           |
 +-----------------------+---------------------------------+
 | host                  | 0.0.0.0                         |
-| port                  | 9501                            |
+| port                  | 9527                            |
 | process_name          | leevel.http                     |
 | pid_path              | @path/runtime/protocol/http.pid |
 | worker_num            | 8                               |
@@ -376,16 +346,16 @@ Http Server Version 1.0.0
 +-----------------------+---------------------------------+
 ```
 
- * 首页 <http://127.0.0.1:9501/>
- * Mvc 路由 <http://127.0.0.1:9501/api/test>
- * Mvc restful 路由 http://127.0.0.1:9501/restful/123
- * 指定方法的 Mvc restful 路由 http://127.0.0.1:9501/restful/123/show
- * 注解路由 http://127.0.0.1:9501/api/v1/petLeevelForApi/helloworld
- * 带有绑定的注解路由 http://127.0.0.1:9501/api/v2/withBind/foobar
- * php leevel link:public <http://127.0.0.1:9501/public/css/page.css>
- * php leevel link:storage <http://127.0.0.1:9501/storage/logo.png>
- * php leevel link:apis <http://127.0.0.1:9501/apis/>
- * php leevel link:debugbar <http://127.0.0.1:9501/debugbar/debugbar.css>
+ * 首页 <http://127.0.0.1:9527/>
+ * Mvc 路由 <http://127.0.0.1:9527/api/test>
+ * Mvc restful 路由 http://127.0.0.1:9527/restful/123
+ * 指定方法的 Mvc restful 路由 http://127.0.0.1:9527/restful/123/show
+ * 注解路由 http://127.0.0.1:9527/api/v1/petLeevelForApi/helloworld
+ * 带有绑定的注解路由 http://127.0.0.1:9527/api/v2/withBind/foobar
+ * php leevel link:public <http://127.0.0.1:9527/public/css/page.css>
+ * php leevel link:storage <http://127.0.0.1:9527/storage/logo.png>
+ * php leevel link:apis <http://127.0.0.1:9527/apis/>
+ * php leevel link:debugbar <http://127.0.0.1:9527/debugbar/debugbar.css>
 
 ### Websocket 服务
 

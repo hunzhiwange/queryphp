@@ -309,36 +309,6 @@ Or
 php leevel development
 ```
 
-## USE LEEVEL DO BETTER
-
-### Windows
-
-Need to tests.
-
-### Linux
-
-You can download the source code.
-
-```
-git clone git@github.com:hunzhiwange/leevel.git
-cd ext
-```
-
-
-Then compile it.
-
-```
-$/path/to/phpize
-$./configure --with-php-config=/path/to/php-config
-$make && make install
-```
-
-Then add extension to your php.ini,you can see if installation is successful by command php -m.
-
-```
-extension = leevel.so
-```
-
 ## Use Swoole With Ultra High Performance
 
 ### Http server
@@ -366,7 +336,7 @@ Http Server Version 1.0.0
 | Item                  | Value                           |
 +-----------------------+---------------------------------+
 | host                  | 0.0.0.0                         |
-| port                  | 9501                            |
+| port                  | 9527                            |
 | process_name          | leevel.http                     |
 | pid_path              | @path/runtime/protocol/http.pid |
 | worker_num            | 8                               |
@@ -377,16 +347,16 @@ Http Server Version 1.0.0
 +-----------------------+---------------------------------+
 ```
 
- * Home http://127.0.0.1:9501/
- * Mvc router http://127.0.0.1:9501/api/test
- * Mvc restful router http://127.0.0.1:9501/restful/123
- * Mvc restful router with method http://127.0.0.1:9501/restful/123/show
- * Annotation router http://127.0.0.1:9501/api/v1/petLeevelForApi/helloworld
- * Annotation router with bind http://127.0.0.1:9501/api/v2/withBind/foobar
- * php leevel link:public http://127.0.0.1:9501/public/css/page.css
- * php leevel link:storage http://127.0.0.1:9501/storage/logo.png
- * php leevel link:apis http://127.0.0.1:9501/apis/
- * php leevel link:debugbar http://127.0.0.1:9501/debugbar/debugbar.css
+ * Home http://127.0.0.1:9527/
+ * Mvc router http://127.0.0.1:9527/api/test
+ * Mvc restful router http://127.0.0.1:9527/restful/123
+ * Mvc restful router with method http://127.0.0.1:9527/restful/123/show
+ * Annotation router http://127.0.0.1:9527/api/v1/petLeevelForApi/helloworld
+ * Annotation router with bind http://127.0.0.1:9527/api/v2/withBind/foobar
+ * php leevel link:public http://127.0.0.1:9527/public/css/page.css
+ * php leevel link:storage http://127.0.0.1:9527/storage/logo.png
+ * php leevel link:apis http://127.0.0.1:9527/apis/
+ * php leevel link:debugbar http://127.0.0.1:9527/debugbar/debugbar.css
 
 ### Websocket server
 
