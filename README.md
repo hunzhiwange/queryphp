@@ -24,7 +24,7 @@
 
 QueryPHP is a modern, high performance PHP progressive coroutine framework, we still focus on traditional PHP-FPM scenarios,with engineer user experience as its historical mission, let every PHP application have a good framework.
 
-A hundred percent coverage of the unit tests to facing the bug,based on Zephir implemented framework core resident,with Swoole coroutine to improving business performance,now or in the future step by step. Our vision is **<span style="color:#e82e7d;">USE LEEVEL WITH SWOOLE DO BETTER</span>**, let your business to support more user services.
+A hundred percent coverage of the unit tests to facing the bug,with our continuous commitment to level level leevel,with Swoole coroutine to improving business performance,now or in the future step by step. Our vision is **<span style="color:#e82e7d;">USE LEEVEL WITH SWOOLE DO BETTER</span>**, let your business to support more user services.
 
 *The PHP Framework For Code Poem As Free As Wind, Starts From This Moment With QueryPHP.*
 
@@ -42,9 +42,6 @@ QueryPHP was based on the [DoYouHaoBaby](https://raw.githubusercontent.com/hunzh
  * QueryPHP On Gitee: <https://gitee.com/dyhb/queryphp/>
  * Framework On Github: <https://github.com/hunzhiwange/framework/>
  * Framework On Gitee: <https://gitee.com/dyhb/framework/>
- * Leevel On Github: <https://github.com/hunzhiwange/leevel/>
- * Leevel On Gitee: <https://gitee.com/dyhb/leevel>
- * Tests: <https://github.com/leevels/tests/>
  * Packages: <https://github.com/leevels/>
  * Packages From Hunzhiwange: <https://packagist.org/packages/hunzhiwange/>
  * Packages From Leevel: <https://packagist.org/packages/leevel/>
