@@ -85,9 +85,9 @@ php leevel server <Visite http://127.0.0.1:9527/>
 ```
 
  * Home <http://127.0.0.1:9527/>
- * Mvc router <http://127.0.0.1:9527/api/test>
- * Mvc restful router http://127.0.0.1:9527/restful/123
- * Mvc restful router with method http://127.0.0.1:9527/restful/123/show
+ * MVC router <http://127.0.0.1:9527/api/test>
+ * MVC restful router http://127.0.0.1:9527/restful/123
+ * MVC restful router with method http://127.0.0.1:9527/restful/123/show
  * Annotation router http://127.0.0.1:9527/api/v1/petLeevelForApi/helloworld
  * Annotation router with bind http://127.0.0.1:9527/api/v2/withBind/foobar
  * php leevel link:public <http://127.0.0.1:9527/public/css/page.css>
@@ -345,9 +345,9 @@ Http Server Version 1.0.0
 ```
 
  * Home http://127.0.0.1:9527/
- * Mvc router http://127.0.0.1:9527/api/test
- * Mvc restful router http://127.0.0.1:9527/restful/123
- * Mvc restful router with method http://127.0.0.1:9527/restful/123/show
+ * MVC router http://127.0.0.1:9527/api/test
+ * MVC restful router http://127.0.0.1:9527/restful/123
+ * MVC restful router with method http://127.0.0.1:9527/restful/123/show
  * Annotation router http://127.0.0.1:9527/api/v1/petLeevelForApi/helloworld
  * Annotation router with bind http://127.0.0.1:9527/api/v2/withBind/foobar
  * php leevel link:public http://127.0.0.1:9527/public/css/page.css
@@ -427,9 +427,9 @@ INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9601/api/test
 ```
 
  * Home http://127.0.0.1:9601/
- * Mvc router http://127.0.0.1:9601/api/test
- * Mvc restful router http://127.0.0.1:9601/restful/123
- * Mvc restful router with method http://127.0.0.1:9601/restful/123/show
+ * MVC router http://127.0.0.1:9601/api/test
+ * MVC restful router http://127.0.0.1:9601/restful/123
+ * MVC restful router with method http://127.0.0.1:9601/restful/123/show
  * Annotation router http://127.0.0.1:9601/api/v1/petLeevelForApi/helloworld
  * Annotation router with bind http://127.0.0.1:9601/api/v2/withBind/foobar
  * php leevel link:public http://127.0.0.1:9601/public/css/page.css
