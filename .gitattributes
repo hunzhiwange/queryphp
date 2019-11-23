@@ -1,7 +1,0 @@
-* text=auto
-
-.gitattributes export-ignore
-/README.md export-ignore
-/README-zh-CN.md export-ignore
-/CHANGELOG-1.0.md export-ignore
-/websocket.jpg export-ignore
