@@ -388,8 +388,6 @@ Websocket Server Version 1.0.0
 
 访问 <http://127.0.0.1:9527/websocket/chat>
 
-![](websocket.jpg)
-
 ## RoadRunner 支持
 
 RoadRunner 是一个开源的高性能 PHP 应用服务器、负载均衡器和流程管理器。它支持作为一个服务运行，能够在每个项目的基础上扩展其功能。

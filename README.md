@@ -389,8 +389,6 @@ Websocket Server Version 1.0.0
 
 Visite <http://127.0.0.1:9527/websocket/chat>
 
-![](websocket.jpg)
-
 ## RoadRunner Supported
 
 RoadRunner is an open source high-performance PHP application server, load balancer and process manager. It supports running as a service with the ability to extend its functionality on a per-project basis.
