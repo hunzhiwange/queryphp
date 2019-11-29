@@ -63,10 +63,6 @@ QueryPHP 基于一款成立于 2010 年的 PHP 框架 [DoYouHaoBaby](https://raw
   </tbody>
 </table>
 
-## QueryPHP 框架 PHP 工程化实践
-
-<img src="./engineering-zh-CN.jpg" />
-
 ## 如何安装
 
 ## 基本使用

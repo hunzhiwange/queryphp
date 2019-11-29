@@ -64,10 +64,6 @@ QueryPHP was based on the [DoYouHaoBaby](https://raw.githubusercontent.com/hunzh
   </tbody>
 </table>
 
-## PHP Engineering Practice Of QueryPHP
-
-<img src="./engineering.jpg" />
-
 ## How to install
 
 ## Base use
