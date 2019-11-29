@@ -15,8 +15,8 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\Resource;
 
 use Common\Domain\Entity\User\Resource;
+use Common\Infra\Exception\BusinessException;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\Exception\HandleException;
 use Leevel\Validate\Proxy\Validate;
 use Leevel\Validate\UniqueRule;
 
@@ -65,7 +65,6 @@ class Store
     public function handle(array $input): array
     {
         $this->input = $input;
-
         $this->validateArgs();
 
         return $this->save($input)->toArray();
@@ -83,7 +82,6 @@ class Store
         $this->w
             ->persist($entity = $this->entity($input))
             ->flush();
-
         $entity->refresh();
 
         return $entity;
@@ -112,13 +110,15 @@ class Store
     {
         return [
             'name'       => trim($input['name']),
-            'identity'   => trim($input['identity']),
+            'num'        => trim($input['num']),
             'status'     => $input['status'],
         ];
     }
 
     /**
      * 校验基本参数.
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
     protected function validateArgs()
     {
@@ -126,16 +126,16 @@ class Store
             $this->input,
             [
                 'name'          => 'required|chinese_alpha_num|max_length:50',
-                'identity'      => 'required|'.UniqueRule::rule(Resource::class),
+                'num'           => 'required|'.UniqueRule::rule(Resource::class, null, null, null, 'delete_at', 0),
             ],
             [
                 'name'          => __('名字'),
-                'identity'      => __('标识符'),
+                'num'           => __('编号'),
             ]
         );
 
         if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
+            throw new BusinessException(json_encode($validator->error()));
         }
     }
 }

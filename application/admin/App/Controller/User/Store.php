@@ -26,6 +26,7 @@ use Leevel\Http\IRequest;
  * @since 2017.12.19
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Store
 {
@@ -38,7 +39,7 @@ class Store
      */
     private $allowedInput = [
         'name',
-        'identity',
+        'num',
         'status',
         'userRole',
         'password',

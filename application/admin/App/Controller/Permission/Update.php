@@ -26,6 +26,7 @@ use Leevel\Http\IRequest;
  * @since 2017.10.23
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Update
 {
@@ -39,7 +40,7 @@ class Update
     private $allowedInput = [
         'id',
         'name',
-        'identity',
+        'num',
         'status',
         'pid',
     ];

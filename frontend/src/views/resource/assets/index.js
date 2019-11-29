@@ -4,8 +4,8 @@ import search from './../search/index'
 const resetForm = {
     id: null,
     name: '',
-    identity: '',
-    status: '1',
+    num: '',
+    status: 1,
 }
 
 export default {
@@ -32,8 +32,8 @@ export default {
                     key: 'name',
                 },
                 {
-                    title: this.__('标识符'),
-                    key: 'identity',
+                    title: this.__('编号'),
+                    key: 'num',
                 },
                 {
                     title: this.__('状态'),
@@ -41,7 +41,7 @@ export default {
                     width: 120,
                     render: (h, params) => {
                         const row = params.row
-                        return <tag color={row.status === '1' ? 'green' : 'red'}>{row.status_enum}</tag>
+                        return <tag color={1 === row.status ? 'green' : 'red'}>{row.status_enum}</tag>
                     },
                 },
                 {
@@ -80,10 +80,10 @@ export default {
                         message: this.__('请输入资源名字'),
                     },
                 ],
-                identity: [
+                num: [
                     {
                         required: true,
-                        message: this.__('请输入资源标识符'),
+                        message: this.__('请输入资源编号'),
                     },
                 ],
             },
@@ -140,7 +140,7 @@ export default {
                 this.data.forEach((item, index) => {
                     if (selected.includes(item.id)) {
                         this.$set(this.data[index], 'status', type)
-                        this.$set(this.data[index], 'status_enum', type === '1' ? this.__('启用') : this.__('禁用'))
+                        this.$set(this.data[index], 'status_enum', 1 === type ? this.__('启用') : this.__('禁用'))
                     }
                 })
 

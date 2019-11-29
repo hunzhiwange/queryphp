@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\Role;
 
 use Common\Domain\Entity\User\Role;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Common\Domain\Service\Support\Destroy as CommonDestroy;
 
 /**
  * 角色删除.
@@ -28,59 +28,15 @@ use Leevel\Database\Ddd\IUnitOfWork;
  */
 class Destroy
 {
-    /**
-     * 事务工作单元.
-     *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
-     */
-    protected $w;
+    use CommonDestroy;
 
     /**
-     * 构造函数.
+     * 返回实体.
      *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
+     * @return string
      */
-    public function __construct(IUnitOfWork $w)
+    private function entity(): string
     {
-        $this->w = $w;
-    }
-
-    /**
-     * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
-     */
-    public function handle(array $input): array
-    {
-        $this->remove($this->find($input['id']));
-
-        return [];
-    }
-
-    /**
-     * 删除实体.
-     *
-     * @param \Common\Domain\Entity\User\Role $entity
-     */
-    protected function remove(Role $entity)
-    {
-        $this->w
-            ->persist($entity)
-            ->remove($entity)
-            ->flush();
-    }
-
-    /**
-     * 查找实体.
-     *
-     * @param int $intId
-     *
-     * @return \Common\Domain\Entity\User\Role
-     */
-    protected function find(int $id): Role
-    {
-        return $this->w->repository(Role::class)->findOrFail($id);
+        return Role::class;
     }
 }

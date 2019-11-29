@@ -42,10 +42,6 @@ class Update
     /**
      * 工作流.
      *
-     * allowedInput:输入数据白名单
-     * filterInput:过滤输入数据
-     * validateInput:校验输入数据
-     *
      * @var array
      */
     private $workflow = [
@@ -62,7 +58,7 @@ class Update
     private $allowedInput = [
         'id',
         'name',
-        'identity',
+        'num',
         'status',
     ];
 
@@ -86,6 +82,80 @@ class Update
     public function handle(array $input): array
     {
         return $this->workflow($input);
+    }
+
+    /**
+     * 过滤输入数据.
+     *
+     * @param array $input
+     *
+     * @return array
+     */
+    private function main(array &$input): array
+    {
+        return $this->save($input)->toArray();
+    }
+
+    /**
+     * 验证参数.
+     *
+     * @param array $input
+     *
+     * @return \Common\Domain\Entity\User\Role
+     */
+    private function entity(array $input): Role
+    {
+        $entity = $this->find($input['id']);
+        $entity->withProps($this->data($input));
+
+        return $entity;
+    }
+
+    /**
+     * 查找实体.
+     *
+     * @param int $id
+     *
+     * @return \Common\Domain\Entity\User\Role
+     */
+    private function find(int $id): Role
+    {
+        return $this->w
+            ->repository(Role::class)
+            ->findOrFail($id);
+    }
+
+    /**
+     * 组装实体数据.
+     *
+     * @param array $input
+     *
+     * @return array
+     */
+    private function data(array $input): array
+    {
+        return [
+            'name'       => $input['name'],
+            'num'        => $input['num'],
+            'status'     => $input['status'],
+        ];
+    }
+
+    /**
+     * 保存.
+     *
+     * @param array $input
+     *
+     * @return \Common\Domain\Entity\User\Role
+     */
+    private function save(array $input): Role
+    {
+        $this->w
+            ->persist($entity = $this->entity($input))
+            ->flush();
+        $entity->refresh();
+
+        return $entity;
     }
 
     /**
@@ -119,95 +189,19 @@ class Update
                 'chinese_alpha_num',
                 'max_length:50',
             ],
-            'identity' => [
+            'num' => [
                 'required',
                 'alpha_dash',
-                UniqueRule::rule(Role::class, null, $input['id']),
+                UniqueRule::rule(Role::class, null, $input['id'], null, 'delete_at', 0),
             ],
         ];
 
         $names = [
             'id'            => 'ID',
             'name'          => __('名字'),
-            'identity'      => __('标识符'),
+            'num'           => __('编号'),
         ];
 
         return [$rules, $names];
-    }
-
-    /**
-     * 过滤输入数据.
-     *
-     * @param array $input
-     *
-     * @return array
-     */
-    private function main(array &$input): array
-    {
-        return $this->save($input)->toArray();
-    }
-
-    /**
-     * 验证参数.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\Role
-     */
-    private function entity(array $input): Role
-    {
-        $entity = $this->find($input['id']);
-
-        $entity->withProps($this->data($input));
-
-        return $entity;
-    }
-
-    /**
-     * 查找实体.
-     *
-     * @param int $id
-     *
-     * @return \Common\Domain\Entity\User\Role
-     */
-    private function find(int $id): Role
-    {
-        return $this->w
-            ->repository(Role::class)
-            ->findOrFail($id);
-    }
-
-    /**
-     * 组装实体数据.
-     *
-     * @param array $input
-     *
-     * @return array
-     */
-    private function data(array $input): array
-    {
-        return [
-            'name'       => $input['name'],
-            'identity'   => $input['identity'],
-            'status'     => $input['status'],
-        ];
-    }
-
-    /**
-     * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\Role
-     */
-    private function save(array $input): Role
-    {
-        $this->w
-            ->persist($entity = $this->entity($input))
-            ->flush();
-
-        $entity->refresh();
-
-        return $entity;
     }
 }

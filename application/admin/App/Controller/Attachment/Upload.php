@@ -26,6 +26,7 @@ use Leevel\Http\IRequest;
  * @since 2019.01.11
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Upload
 {

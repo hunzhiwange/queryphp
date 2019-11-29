@@ -18,11 +18,11 @@ use Admin\Infra\Code;
 use Admin\Infra\Permission;
 use Common\Domain\Entity\Base\App;
 use Common\Domain\Entity\User\User;
-use Common\Infra\Repository\User\User\UserPermission;
+use Common\Domain\Service\User\User\UserPermission;
+use Common\Infra\Exception\BusinessException;
 use Leevel\Auth\Hash;
 use Leevel\Auth\Proxy\Auth;
 use Leevel\Http\IRequest;
-use Leevel\Kernel\Exception\HandleException;
 use Leevel\Support\Str;
 use Leevel\Validate\Proxy\Validate as Validates;
 
@@ -68,17 +68,17 @@ class Validate
     /**
      * 获取用户权限.
      *
-     * @var \Common\Infra\Repository\User\User\UserPermission
+     * @var \Common\Domain\Service\User\User\UserPermission
      */
     protected $permission;
 
     /**
      * 构造函数.
      *
-     * @param \Leevel\Http\IRequest                             $request
-     * @param \Admin\Infra\Code                                 $code
-     * @param \Admin\Infra\Permission                           $permissionCache
-     * @param \Common\Infra\Repository\User\User\UserPermission $permission
+     * @param \Leevel\Http\IRequest                           $request
+     * @param \Admin\Infra\Code                               $code
+     * @param \Admin\Infra\Permission                         $permissionCache
+     * @param \Common\Domain\Service\User\User\UserPermission $permission
      */
     public function __construct(IRequest $request, Code $code, Permission $permissionCache, UserPermission $permission)
     {
@@ -109,9 +109,7 @@ class Validate
         $this->validateApp();
 
         $user = $this->validateUser();
-
         Auth::setTokenName($token = $this->createToken());
-
         Auth::login($user->toArray());
 
         return ['token' => $token];
@@ -141,37 +139,43 @@ class Validate
 
     /**
      * 校验应用.
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateApp()
+    protected function validateApp(): void
     {
-        $app = App::where('identity', $this->input['app_id'])
+        $app = App::select()
+            ->where('num', $this->input['app_id'])
             ->where('key', $this->input['app_key'])
             ->findOne();
 
         $this->secret = $app->secret;
 
         if (!$app->id) {
-            throw new HandleException(__('应用无法找到'));
+            throw new BusinessException(__('应用无法找到'));
         }
     }
 
     /**
      * 校验用户.
      *
+     * @throws \Common\Infra\Exception\BusinessException
+     *
      * @return \Common\Domain\Entity\User\User
      */
     protected function validateUser(): User
     {
-        $user = User::Where('status', '1')
+        $user = User::select()
+            ->where('status', '1')
             ->where('name', $this->input['name'])
             ->findOne();
 
         if (!$user->id) {
-            throw new HandleException(__('账号不存在或者已禁用'));
+            throw new BusinessException(__('账号不存在或者已禁用'));
         }
 
         if (!$this->verifyPassword($this->input['password'], $user->password)) {
-            throw new HandleException(__('账户密码错误'));
+            throw new BusinessException(__('账户密码错误'));
         }
 
         return $user;
@@ -191,7 +195,9 @@ class Validate
     }
 
     /**
-     * 校验验证码
+     * 校验验证码.
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
     protected function validateCode()
     {
@@ -202,12 +208,14 @@ class Validate
         }
 
         if (strtoupper($this->input['code']) !== strtoupper($codeFromCache)) {
-            throw new HandleException(__('验证码错误'));
+            throw new BusinessException(__('验证码错误'));
         }
     }
 
     /**
      * 校验基本参数.
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
     protected function validateArgs()
     {
@@ -230,7 +238,7 @@ class Validate
         );
 
         if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
+            throw new BusinessException(json_encode($validator->error()));
         }
     }
 }

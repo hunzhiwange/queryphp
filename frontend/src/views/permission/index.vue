@@ -12,15 +12,15 @@
                                         <Cascader v-model="formItem.pid" :data="pidOptions" :disabled="pidDisabled" filterable change-on-select></Cascader>
                                     </FormItem>
                                     <FormItem :label="__('状态')">
-                                        <i-switch v-model="formItem.status" size="large" true-value="1" false-value="0">
+                                        <i-switch v-model="formItem.status" size="large" :true-value="1" :false-value="0">
                                             <span slot="open">{{ __('启用') }}</span> <span slot="close">{{ __('禁用') }}</span>
                                         </i-switch>
                                     </FormItem>
                                 </i-col>
                                 <i-col span="12">
                                     <FormItem :label="__('名字')" prop="name"> <i-input v-model.trim="formItem.name" placeholder=""></i-input> </FormItem>
-                                    <FormItem :label="__('标识符')" prop="identity">
-                                        <i-input v-model.trim="formItem.identity" placeholder=""> </i-input>
+                                    <FormItem :label="__('编号')" prop="num">
+                                        <i-input v-model.trim="formItem.num" placeholder=""> </i-input>
                                     </FormItem>
                                 </i-col>
                             </Row>
@@ -70,9 +70,9 @@
                                 @on-change="changeResource"
                                 :loading="loadingResource"
                             >
-                                <i-option v-for="r in resources" :value="r.id + '``' + r.name + '|' + r.identity" :key="r.id" :label="r.name">
+                                <i-option v-for="r in resources" :value="r.id + '``' + r.name + '|' + r.num" :key="r.id" :label="r.name">
                                     <span>{{ r.name }}</span>
-                                    <span class="resource-text">{{ r.identity }}</span>
+                                    <span class="resource-text">{{ r.num }}</span>
                                 </i-option>
                             </i-select>
                         </FormItem>

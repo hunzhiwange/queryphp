@@ -81,38 +81,17 @@ export default {
 
             let path = ''
             let themeLink = document.querySelector('link[name="theme"]')
-            let userName = JSON.parse(localStorage.getItem('userInfo')).name
 
             if (localStorage.theme) {
-                let themeList = JSON.parse(localStorage.theme)
-                let index = 0
-                let hasThisUser = themeList.some((item, i) => {
-                    if (item.userName === userName) {
-                        index = i
-                        return true
-                    } else {
-                        return false
-                    }
-                })
-                if (hasThisUser) {
-                    themeList[index].mainTheme = mainTheme
-                    themeList[index].menuTheme = menuTheme
-                } else {
-                    themeList.push({
-                        userName: userName,
-                        mainTheme: mainTheme,
-                        menuTheme: menuTheme,
-                    })
-                }
-                localStorage.theme = JSON.stringify(themeList)
+                let theme = JSON.parse(localStorage.theme)
+                theme.mainTheme = mainTheme
+                theme.menuTheme = menuTheme
+                localStorage.theme = JSON.stringify(theme)
             } else {
-                localStorage.theme = JSON.stringify([
-                    {
-                        userName: userName,
-                        mainTheme: mainTheme,
-                        menuTheme: menuTheme,
-                    },
-                ])
+                localStorage.theme = JSON.stringify({
+                    mainTheme: mainTheme,
+                    menuTheme: menuTheme,
+                })
             }
             let stylePath = '/'
             if (mainTheme !== 'b') {
@@ -121,7 +100,6 @@ export default {
                 path = ''
             }
             themeLink.setAttribute('href', path)
-
             this.themeSelect = false
 
             utils.success(this.__('主题切换成功'))
@@ -129,21 +107,10 @@ export default {
     },
     created() {
         let stylePath = '/'
-        let name = this.$store.state.user.users.name
         if (localStorage.theme) {
-            let hasThisUser = JSON.parse(localStorage.theme).some(item => {
-                if (item.userName === name) {
-                    this.$store.commit('changeMenuTheme', item.menuTheme)
-                    this.$store.commit('changeMainTheme', item.mainTheme)
-                    return true
-                } else {
-                    return false
-                }
-            })
-            if (!hasThisUser) {
-                this.$store.commit('changeMenuTheme', 'light')
-                this.$store.commit('changeMainTheme', 'b')
-            }
+            let theme = JSON.parse(localStorage.theme)
+            this.$store.commit('changeMenuTheme', theme.menuTheme)
+            this.$store.commit('changeMainTheme', theme.mainTheme)
         } else {
             this.$store.commit('changeMenuTheme', 'light')
             this.$store.commit('changeMainTheme', 'b')

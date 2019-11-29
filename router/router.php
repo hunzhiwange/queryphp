@@ -78,7 +78,10 @@ class _
  *             "middlewares": "api"
  *         },
  *         ":admin/*": {
- *             "middlewares": "admin_auth"
+ *             "middlewares": "admin_auth,cors"
+ *         },
+ *         "options/index": {
+ *             "middlewares": "cors"
  *         },
  *         "admin/show": {
  *             "middlewares": "auth"

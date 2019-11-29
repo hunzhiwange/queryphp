@@ -16,7 +16,9 @@ namespace Admin\App\Controller\Login;
 
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Login\Code as Service;
+use Common\Infra\Helper\force_close_debug;
 use Leevel\Http\IRequest;
+use Leevel\Http\Response;
 
 /**
  * 验证码.
@@ -26,6 +28,7 @@ use Leevel\Http\IRequest;
  * @since 2017.11.22
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Code
 {
@@ -36,10 +39,15 @@ class Code
      *
      * @param \Leevel\Http\IRequest         $request
      * @param \Admin\App\Service\Login\Code $service
+     *
+     * @return \Leevel\Http\Response
      */
-    public function handle(IRequest $request, Service $service): void
+    public function handle(IRequest $request, Service $service): Response
     {
-        $this->main($request, $service);
+        $code = $service->handle($this->input($request));
+        $this->forceCloseDebug();
+
+        return new Response($code, 200, ['Content-type' => 'image/png']);
     }
 
     /**
@@ -54,5 +62,13 @@ class Code
         return [
             'id' => $request->query->get('id'),
         ];
+    }
+
+    /**
+     * 关闭 debug.
+     */
+    private function forceCloseDebug(): void
+    {
+        f(force_close_debug::class);
     }
 }

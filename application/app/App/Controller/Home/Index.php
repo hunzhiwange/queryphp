@@ -24,6 +24,7 @@ use Leevel\Router\Proxy\View;
  * @since 2017.10.12
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Index
 {

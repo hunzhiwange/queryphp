@@ -24,6 +24,7 @@ use Leevel\Router\Proxy\View;
  * @since 2018.12.20
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Chat
 {

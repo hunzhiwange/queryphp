@@ -80,7 +80,7 @@ return [
             'host' => Leevel::env('SESSION_REDIS_HOST', '127.0.0.1'),
 
             // 默认缓存服务器端口
-            'port' => Leevel::env('SESSION_REDIS_PORT', 6379),
+            'port' => (int) Leevel::env('SESSION_REDIS_PORT', 6379),
 
             // 认证密码
             'password' => Leevel::env('SESSION_REDIS_PASSWORD', ''),
@@ -101,9 +101,9 @@ return [
             'expire' => null,
         ],
 
-        'nulls' => [
+        'test' => [
             // driver
-            'driver' => 'nulls',
+            'driver' => 'test',
         ],
     ],
 ];

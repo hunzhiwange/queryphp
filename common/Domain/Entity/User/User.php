@@ -16,6 +16,7 @@ namespace Common\Domain\Entity\User;
 
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\IEntity;
+use Leevel\Database\Ddd\Relation\ManyMany;
 
 /**
  * User.
@@ -56,26 +57,46 @@ class User extends Entity
      */
     const STRUCT = [
         'id' => [
-            'readonly' => true,
+            self::READONLY => true,
         ],
         'name'      => [],
-        'identity'  => [],
+        'num'       => [],
         'password'  => [
-            'show_prop_black' => true,
+            self::SHOW_PROP_BLACK => true,
         ],
         'email'     => [],
         'mobile'    => [],
         'status'    => [],
         'create_at' => [],
+        'update_at' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'delete_at' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'create_account' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'update_account' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
         'role'      => [
-            self::MANY_MANY     => Role::class,
-            'middle_entity'     => UserRole::class,
-            'source_key'        => 'id',
-            'target_key'        => 'id',
-            'middle_source_key' => 'user_id',
-            'middle_target_key' => 'role_id',
+            self::MANY_MANY              => Role::class,
+            self::MIDDLE_ENTITY          => UserRole::class,
+            self::SOURCE_KEY             => 'id',
+            self::TARGET_KEY             => 'id',
+            self::MIDDLE_SOURCE_KEY      => 'user_id',
+            self::MIDDLE_TARGET_KEY      => 'role_id',
+            self::RELATION_SCOPE         => 'role',
         ],
     ];
+
+    /**
+     * soft delete column.
+     *
+     * @var string
+     */
+    const DELETE_AT = 'delete_at';
 
     /**
      * 状态值.
@@ -86,6 +107,13 @@ class User extends Entity
         'disable' => [0, '禁用'],
         'enable'  => [1, '启用'],
     ];
+
+    /**
+     * database connect.
+     *
+     * @var mixed
+     */
+    private static $leevelConnect;
 
     /**
      * id.
@@ -102,11 +130,11 @@ class User extends Entity
     private $name;
 
     /**
-     * 唯一标识符.
+     * 编号.
      *
      * @var string
      */
-    private $identity;
+    private $num;
 
     /**
      * 密码.
@@ -144,6 +172,34 @@ class User extends Entity
     private $createAt;
 
     /**
+     * 更新时间.
+     *
+     * @var string
+     */
+    private $updateAt;
+
+    /**
+     * 删除时间 0=未删除;大于0=删除时间;.
+     *
+     * @var int
+     */
+    private $deleteAt;
+
+    /**
+     * 创建账号.
+     *
+     * @var int
+     */
+    private $createAccount;
+
+    /**
+     * 更新账号.
+     *
+     * @var int
+     */
+    private $updateAccount;
+
+    /**
      * 角色.
      *
      * @var string
@@ -160,7 +216,7 @@ class User extends Entity
      */
     public function setter(string $prop, $value): IEntity
     {
-        $this->{$this->prop($prop)} = $value;
+        $this->{$this->realProp($prop)} = $value;
 
         return $this;
     }
@@ -174,6 +230,36 @@ class User extends Entity
      */
     public function getter(string $prop)
     {
-        return $this->{$this->prop($prop)};
+        return $this->{$this->realProp($prop)};
+    }
+
+    /**
+     * set database connect.
+     *
+     * @param mixed $connect
+     */
+    public static function withConnect($connect): void
+    {
+        static::$leevelConnect = $connect;
+    }
+
+    /**
+     * get database connect.
+     *
+     * @param mixed $connect
+     */
+    public static function connect()
+    {
+        return static::$leevelConnect;
+    }
+
+    /**
+     * 角色关联查询作用域.
+     *
+     * @param \Leevel\Database\Ddd\Relation\ManyMany $relation
+     */
+    protected function relationScopeRole(ManyMany $relation): void
+    {
+        $relation->setColumns(['id', 'name']);
     }
 }

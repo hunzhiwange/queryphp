@@ -17,8 +17,8 @@ namespace App\App\Controller\Petstore;
 /**
  * Class User.
  *
- *
  * @author  Donii Sergii <doniysa@gmail.com>
+ * @codeCoverageIgnore
  */
 class User
 {

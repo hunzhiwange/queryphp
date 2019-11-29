@@ -5,7 +5,7 @@
 you can define yous at Common\Infra\Provider\Event.
 
 ``` php
-Leevel\Event\EventProvider;
+use Leevel\Event\EventProvider;
 
 class Event extends EventProvider
 {
@@ -58,12 +58,12 @@ class Test extends Listener
 This is a easy way to trigger the event.
 
 ``` php
-$event = \Leevel::app('event');
-$event->run(new \Common\Domain\Event\Test('hello blog'), 1, 2, 3, 4);
+$event = \Leevel::make('event');
+$event->handle(new \Common\Domain\Event\Test('hello blog'), 1, 2, 3, 4);
 ```
 
 or 
 
 ``` php
-\Leevel\Event::run(new \Common\Domain\Event\Test('hello blog'), 1, 2, 3, 4);
+\Leevel\Event\Proxy\Event::handle(new \Common\Domain\Event\Test('hello blog'), 1, 2, 3, 4);
 ```

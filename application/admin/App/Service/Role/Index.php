@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Role;
 
-use Common\Infra\Repository\User\Role\Index as Repository;
+use Common\Domain\Service\User\Role\Index as Service;
 
 /**
  * 角色列表.
@@ -30,18 +30,18 @@ class Index
     /**
      * 角色查询服务.
      *
-     * @var \Common\Infra\Repository\User\Role\Index
+     * @var \Common\Domain\Service\User\Role\Index
      */
-    protected $repository;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Common\Infra\Repository\User\Role\Index $repository
+     * @param \Common\Domain\Service\User\Role\Index $service
      */
-    public function __construct(Repository $repository)
+    public function __construct(Service $service)
     {
-        $this->repository = $repository;
+        $this->service = $service;
     }
 
     /**
@@ -53,6 +53,6 @@ class Index
      */
     public function handle(array $input): array
     {
-        return $this->repository->handle($input);
+        return $this->service->handle($input);
     }
 }

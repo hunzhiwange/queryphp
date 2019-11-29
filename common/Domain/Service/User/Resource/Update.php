@@ -15,8 +15,8 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\Resource;
 
 use Common\Domain\Entity\User\Resource;
+use Common\Infra\Exception\BusinessException;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\Exception\HandleException;
 use Leevel\Validate\Proxy\Validate;
 use Leevel\Validate\UniqueRule;
 
@@ -65,7 +65,6 @@ class Update
     public function handle(array $input): array
     {
         $this->input = $input;
-
         $this->validateArgs();
 
         return $this->save($input)->toArray();
@@ -83,7 +82,6 @@ class Update
         $this->w
             ->persist($entity = $this->entity($input))
             ->flush();
-
         $entity->refresh();
 
         return $entity;
@@ -99,7 +97,6 @@ class Update
     protected function entity(array $input): Resource
     {
         $entity = $this->find((int) $input['id']);
-
         $entity->withProps($this->data($input));
 
         return $entity;
@@ -130,13 +127,15 @@ class Update
     {
         return [
             'name'       => trim($input['name']),
-            'identity'   => trim($input['identity']),
+            'num'        => trim($input['num']),
             'status'     => $input['status'],
         ];
     }
 
     /**
      * 校验基本参数.
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
     protected function validateArgs()
     {
@@ -145,17 +144,17 @@ class Update
             [
                 'id'            => 'required',
                 'name'          => 'required|chinese_alpha_num|max_length:50',
-                'identity'      => 'required|'.UniqueRule::rule(Resource::class, null, $this->input['id']),
+                'num'           => 'required|'.UniqueRule::rule(Resource::class, null, $this->input['id']),
             ],
             [
                 'id'            => 'ID',
                 'name'          => __('名字'),
-                'identity'      => __('标识符'),
+                'num'           => __('编号'),
             ]
         );
 
         if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
+            throw new BusinessException(json_encode($validator->error()));
         }
     }
 }

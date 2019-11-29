@@ -99,9 +99,7 @@ trait Helper
     protected function seedClear(string $test, bool $debug = false): void
     {
         putenv('RUNTIME_SEED_CLEAR=clear');
-
         $this->seedRun($test, $debug);
-
         putenv('RUNTIME_SEED_CLEAR');
     }
 }

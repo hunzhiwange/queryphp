@@ -1,0 +1,94 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{namespace}}\Domain\Entity;
+
+use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\IEntity;
+
+{{file_comment}}
+class {{file_name}} extends Entity
+{
+    /**
+     * database table.
+     *
+     * @var string
+     */
+    const TABLE = '{{table_name}}';
+
+    /**
+     * primary key.
+     *
+     * @var {{primary_key_type}}
+     */
+    const ID = {{primary_key}};
+
+    /**
+     * auto increment.
+     *
+     * @var string
+     */
+    const AUTO = {{auto_increment}};
+
+    /**
+     * entity struct.
+     *
+     * @var array
+     */
+    const STRUCT = {{struct}};
+    
+    /**
+     * database connect.
+     *
+     * @var mixed
+     */
+    private static $leevelConnect;
+    {{props}}
+    /**
+     * setter.
+     *
+     * @param string $prop
+     * @param mixed  $value
+     *
+     * @return \Leevel\Database\Ddd\IEntity
+     */
+    public function setter(string $prop, $value): IEntity
+    {
+        $this->{$this->realProp($prop)} = $value;
+
+        return $this;
+    }
+
+    /**
+     * getter.
+     *
+     * @param string $prop
+     *
+     * @return mixed
+     */
+    public function getter(string $prop)
+    {
+        return $this->{$this->realProp($prop)};
+    }
+
+    /**
+     * set database connect.
+     *
+     * @param mixed $connect
+     */
+    public static function withConnect($connect): void
+    {
+        static::$leevelConnect = $connect;
+    }
+
+    /**
+     * get database connect.
+     *
+     * @param mixed $connect
+     */
+    public static function connect()
+    {
+        return static::$leevelConnect;
+    }
+}

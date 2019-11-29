@@ -116,12 +116,14 @@ export default {
         },
         // 刷新权限，防止需要重新登录才刷新权限
         refreshPermission() {
-            this.apiGet('user/permission', {refresh: '1'}).then(res => {
+            let apiToken = this.$store.state.user.token
+            this.apiGet('user/permission', {refresh: '1', token: apiToken}).then(res => {
                 this.$store.dispatch('setRules', res)
             })
         },
         userInfo(token) {
-            this.apiGet('user/info', {refresh: '1'}).then(res => {
+            let apiToken = this.$store.state.user.token
+            this.apiGet('user/info', {refresh: '1', token: apiToken}).then(res => {
                 this.$store.dispatch('setUsers', res)
             })
         },
@@ -139,7 +141,8 @@ export default {
             })
         },
         changePasswordLogout() {
-            let data = {}
+            let apiToken = this.$store.state.user.token
+            let data = {token: apiToken}
             this.apiPost('login/logout', data).then(() => {
                 this.$store.dispatch('logout')
                 utils.success(this.__('登出成功'))

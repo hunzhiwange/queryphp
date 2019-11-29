@@ -22,6 +22,7 @@ namespace App\App\Controller\Admin;
  * @since 2018.11.05
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Show
 {

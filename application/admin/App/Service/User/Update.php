@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\User;
 
-use Common\Domain\Service\User\UserRoleUpdate;
+use Common\Domain\Service\User\User\Update as Service;
 
 /**
  * 用户更新.
@@ -30,16 +30,16 @@ class Update
     /**
      * 用户更新服务.
      *
-     * @var \Common\Domain\Service\User\UserRoleUpdate
+     * @var \Common\Domain\Service\User\User\Update
      */
     protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Common\Domain\Service\User\UserRoleUpdate $service
+     * @param \Common\Domain\Service\User\User\Update $service
      */
-    public function __construct(UserRoleUpdate $service)
+    public function __construct(Service $service)
     {
         $this->service = $service;
     }

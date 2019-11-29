@@ -5,8 +5,8 @@ import search from './../search/index'
 const resetForm = {
     id: null,
     name: '',
-    identity: '',
-    status: '1',
+    num: '',
+    status: 1,
 }
 
 const resetFormPermission = {}
@@ -35,8 +35,8 @@ export default {
                     key: 'name',
                 },
                 {
-                    title: this.__('标识符'),
-                    key: 'identity',
+                    title: this.__('编号'),
+                    key: 'num',
                 },
                 {
                     title: this.__('状态'),
@@ -44,7 +44,7 @@ export default {
                     width: 120,
                     render: (h, params) => {
                         const row = params.row
-                        return <tag color={row.status === '1' ? 'green' : 'red'}>{row.status_enum}</tag>
+                        return <tag color={1 === row.status ? 'green' : 'red'}>{row.status_enum}</tag>
                     },
                 },
                 {
@@ -88,10 +88,10 @@ export default {
                         message: this.__('请输入角色名字'),
                     },
                 ],
-                identity: [
+                num: [
                     {
                         required: true,
-                        message: this.__('请输入角色标识符'),
+                        message: this.__('请输入角色编号'),
                     },
                     {
                         validator: validateAlphaDash,
@@ -302,7 +302,7 @@ export default {
                         }}>
                         {data.name}
                     </span>
-                    <span class="tree-item-text">{data.identity}</span>
+                    <span class="tree-item-text">{data.num}</span>
                 </span>
             )
         },

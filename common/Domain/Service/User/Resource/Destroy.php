@@ -15,9 +15,7 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\Resource;
 
 use Common\Domain\Entity\User\Resource;
-use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\Exception\HandleException;
-use Leevel\Validate\Proxy\Validate;
+use Common\Domain\Service\Support\Destroy as CommonDestroy;
 
 /**
  * 资源删除.
@@ -30,90 +28,15 @@ use Leevel\Validate\Proxy\Validate;
  */
 class Destroy
 {
-    /**
-     * 事务工作单元.
-     *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
-     */
-    protected $w;
+    use CommonDestroy;
 
     /**
-     * 输入数据.
+     * 返回实体.
      *
-     * @var array
+     * @return string
      */
-    protected $input;
-
-    /**
-     * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
-     */
-    public function __construct(IUnitOfWork $w)
+    private function entity(): string
     {
-        $this->w = $w;
-    }
-
-    /**
-     * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
-     */
-    public function handle(array $input): array
-    {
-        $this->input = $input;
-
-        $this->validateArgs();
-
-        $this->remove($this->find($input['id']));
-
-        return [];
-    }
-
-    /**
-     * 删除实体.
-     *
-     * @param \Common\Domain\Entity\User\Resource $entity
-     */
-    protected function remove(Resource $entity)
-    {
-        $this->w
-            ->persist($entity)
-            ->remove($entity)
-            ->flush();
-    }
-
-    /**
-     * 查找实体.
-     *
-     * @param int $intId
-     *
-     * @return \Common\Domain\Entity\User\Resource
-     */
-    protected function find(int $id): Resource
-    {
-        return $this->w->repository(Resource::class)->findOrFail($id);
-    }
-
-    /**
-     * 校验基本参数.
-     */
-    protected function validateArgs()
-    {
-        $validator = Validate::make(
-            $this->input,
-            [
-                'id'          => 'required',
-            ],
-            [
-                'id'          => 'ID',
-            ]
-        );
-
-        if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
-        }
+        return Resource::class;
     }
 }

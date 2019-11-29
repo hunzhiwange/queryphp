@@ -24,6 +24,7 @@ use Common\Domain\Entity\Demo\Test;
  * @since 2018.11.08
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Entity
 {
@@ -34,6 +35,6 @@ class Entity
      */
     public function handle(): array
     {
-        return ['count' => Test::findCount()];
+        return ['count' => Test::select()->findCount()];
     }
 }

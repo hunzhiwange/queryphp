@@ -9,11 +9,11 @@
                             <Row :gutter="16">
                                 <i-col span="12">
                                     <FormItem :label="__('名字')" prop="name"> <i-input v-model.trim="formItem.name" placeholder=""></i-input> </FormItem>
-                                    <FormItem :label="__('标识符')" prop="identity">
-                                        <i-input v-model.trim="formItem.identity" placeholder=""> </i-input>
+                                    <FormItem :label="__('编号')" prop="num">
+                                        <i-input v-model.trim="formItem.num" placeholder=""> </i-input>
                                     </FormItem>
                                     <FormItem :label="__('状态')">
-                                        <i-switch v-model="formItem.status" size="large" true-value="1" false-value="0">
+                                        <i-switch v-model="formItem.status" size="large" :true-value="1" :false-value="0">
                                             <span slot="open">{{ __('启用') }}</span> <span slot="close">{{ __('禁用') }}</span>
                                         </i-switch>
                                     </FormItem>
@@ -54,10 +54,10 @@
             <Row justify="end">
                 <i-col span="8">
                     <ButtonGroup shape="circle">
-                        <i-button type="primary" icon="md-eye" @click="statusMany('1')" :disabled="!utils.permission('resource_status_button')">{{
+                        <i-button type="primary" icon="md-eye" @click="statusMany(1)" :disabled="!utils.permission('resource_status_button')">{{
                             __('启用')
                         }}</i-button>
-                        <i-button type="primary" icon="md-eye-off" @click="statusMany('0')" :disabled="!utils.permission('resource_status_button')">{{
+                        <i-button type="primary" icon="md-eye-off" @click="statusMany(0)" :disabled="!utils.permission('resource_status_button')">{{
                             __('禁用')
                         }}</i-button>
                     </ButtonGroup>

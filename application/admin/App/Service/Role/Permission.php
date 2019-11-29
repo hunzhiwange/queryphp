@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Role;
 
-use Common\Domain\Service\User\RolePermission;
+use Common\Domain\Service\User\Role\Permission as Service;
 
 /**
  * 角色授权.
@@ -30,16 +30,16 @@ class Permission
     /**
      * 权限资源授权服务.
      *
-     * @var \Common\Domain\Service\User\RolePermission
+     * @var \Common\Domain\Service\User\Role\Permission
      */
     protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Common\Domain\Service\User\RolePermission $service
+     * @param \Common\Domain\Service\User\Role\Permission $service
      */
-    public function __construct(RolePermission $service)
+    public function __construct(Service $service)
     {
         $this->service = $service;
     }

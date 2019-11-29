@@ -28,9 +28,11 @@ use InvalidArgumentException;
 trait Workflow
 {
     /**
-     * 执行工作流
+     * 执行工作流.
      *
      * @param array $input
+     *
+     * @throws \InvalidArgumentException
      *
      * @return array
      */
@@ -45,18 +47,20 @@ trait Workflow
                 throw new InvalidArgumentException($e);
             }
 
-            if (null !== ($_ = $this->{$wf}($input, $args))) {
-                $result = $_;
+            if (null !== ($tmp = $this->{$wf}($input, $args))) {
+                $result = $tmp;
             }
 
-            $args[$wf] = $_;
+            $args[$wf] = $tmp;
         }
 
         return $result;
     }
 
     /**
-     * 整理工作流
+     * 整理工作流.
+     *
+     * @throws \InvalidArgumentException
      *
      * @return array
      */

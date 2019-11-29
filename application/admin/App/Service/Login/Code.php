@@ -48,9 +48,11 @@ class Code
      * 响应方法.
      *
      * @param array $input
+     *
+     * @return string
      */
-    public function handle(array $input): void
+    public function handle(array $input): string
     {
-        $this->service->handle($input);
+        return $this->service->handle($input);
     }
 }

@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Permission;
 
-use Common\Domain\Service\User\PermissionResource;
+use Common\Domain\Service\User\Permission\Resource as Service;
 
 /**
  * 权限资源授权.
@@ -30,16 +30,16 @@ class Resource
     /**
      * 权限资源授权服务.
      *
-     * @var \Common\Domain\Service\User\PermissionResource
+     * @var \Common\Domain\Service\User\Permission\Resource
      */
     protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Common\Domain\Service\User\PermissionResource $service
+     * @param \Common\Domain\Service\User\Permission\Resource $service
      */
-    public function __construct(PermissionResource $service)
+    public function __construct(Service $service)
     {
         $this->service = $service;
     }

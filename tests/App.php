@@ -17,7 +17,6 @@ namespace Tests;
 use Common\App\Exception\Runtime;
 use Common\App\Kernel;
 use Common\App\KernelConsole;
-use Composer\Autoload\ClassLoader;
 use Leevel\Di\Container;
 use Leevel\Di\IContainer;
 use Leevel\Http\IRequest;
@@ -46,13 +45,10 @@ trait App
      */
     protected function createApp(): KernelApp
     {
-        $composer = require __DIR__.'/../vendor/autoload.php';
+        require __DIR__.'/../vendor/autoload.php';
 
         $container = Container::singletons();
         $container->singleton(IContainer::class, $container);
-
-        $container->singleton('composer', $composer);
-        $container->alias('composer', ClassLoader::class);
 
         $container->singleton('app', $app = new KernelApp($container, realpath(__DIR__.'/..')));
         $container->alias('app', [IApp::class, KernelApp::class]);
@@ -63,7 +59,6 @@ trait App
 
         $container->instance('request', Request::createFromGlobals());
         $container->alias('request', [IRequest::class, Request::class]);
-
         $container->make(IKernelConsole::class)->bootstrap();
 
         return $app;

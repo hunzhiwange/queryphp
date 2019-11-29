@@ -103,7 +103,7 @@ class WorkflowServiceTest extends TestCase
 
     public function testValidateFailed(): void
     {
-        $this->expectException(\Leevel\Kernel\Exception\HandleException::class);
+        $this->expectException(\Common\Infra\Exception\BusinessException::class);
         $this->expectExceptionMessage(
             '{"foo":["nikeFoo 必须是数字"]}'
         );
@@ -188,6 +188,11 @@ class WorkflowService2
 
     private function filterInput(array &$input)
     {
+        $this->filterInputBase($input);
+    }
+
+    private function filterInputRules(): array
+    {
         $rule = [
             'foo'   => ['intval'],
             'hello' => [
@@ -197,7 +202,7 @@ class WorkflowService2
             ],
         ];
 
-        $this->filterInputBase($input, $rule);
+        return $rule;
     }
 }
 
@@ -224,6 +229,11 @@ class WorkflowService3
 
     private function validateInput(array &$input)
     {
+        $this->validateInputBase($input);
+    }
+
+    private function validateInputRules(): array
+    {
         $rules = [
             'foo' => ['required', 'alpha_dash'],
         ];
@@ -232,7 +242,7 @@ class WorkflowService3
         ];
         $messages = [];
 
-        $this->validateInputBase($input, $rules, $names, $messages);
+        return [$rules, $names, $messages];
     }
 }
 
@@ -259,6 +269,11 @@ class WorkflowService4
 
     private function validateInput(array &$input)
     {
+        $this->validateInputBase($input);
+    }
+
+    private function validateInputRules(): array
+    {
         $rules = [
             'foo' => ['number'],
         ];
@@ -267,7 +282,7 @@ class WorkflowService4
         ];
         $messages = [];
 
-        $this->validateInputBase($input, $rules, $names, $messages);
+        return [$rules, $names, $messages];
     }
 }
 

@@ -67,7 +67,7 @@ class Option
     protected function save(array $input): void
     {
         foreach ($input as $k => $v) {
-            $this->w->replace($this->entity($k, $v));
+            $this->w->update($this->entity($k, $v));
         }
 
         $this->w->flush();
@@ -83,6 +83,13 @@ class Option
      */
     protected function entity(string $name, string $value): Options
     {
-        return new Options(['name' => $name, 'value' => $value]);
+        $option = Options::select()
+            ->where(['name' => $name])
+            ->setColumns('id,name')
+            ->findOne();
+
+        $option->value = $value;
+
+        return $option;
     }
 }

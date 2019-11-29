@@ -50,14 +50,16 @@ class Code
      * 响应方法.
      *
      * @param array $input
+     *
+     * @return string
      */
-    public function handle(array $input)
+    public function handle(array $input): string
     {
         // Mac 自带 PHP 有问题
         if (!function_exists('imagettftext')) {
             header('Content-Type: image/png;text/html; charset=utf-8');
-            echo file_get_contents(Leevel::publicPath('images/code.png'));
-            die;
+
+            return file_get_contents(Leevel::publicPath('images/code.png'));
         }
 
         $seccode = new Seccode([
@@ -67,10 +69,12 @@ class Code
             'height'          => 36,
         ]);
 
+        ob_start();
         $seccode->display(4);
-
         $this->code->set($input['id'], $seccode->getCode());
+        $content = ob_get_contents();
+        ob_end_clean();
 
-        die;
+        return $content;
     }
 }

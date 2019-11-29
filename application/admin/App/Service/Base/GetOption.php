@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Service\Base;
 
-use Common\Infra\Repository\Base\GetOption as Repository;
+use Common\Domain\Service\Base\GetOption as Service;
 
 /**
  * 获取配置服务.
@@ -30,18 +30,18 @@ class GetOption
     /**
      * 获取配置服务.
      *
-     * @var \Common\Infra\Repository\Base\GetOption
+     * @var \Common\Domain\Service\Base\GetOption
      */
-    protected $repository;
+    protected $service;
 
     /**
      * 构造函数.
      *
-     * @param \Common\Infra\Repository\Base\GetOption $repository
+     * @param \Common\Domain\Service\Base\GetOption $service
      */
-    public function __construct(Repository $repository)
+    public function __construct(Service $service)
     {
-        $this->repository = $repository;
+        $this->service = $service;
     }
 
     /**
@@ -51,6 +51,6 @@ class GetOption
      */
     public function handle(): array
     {
-        return $this->repository->handle();
+        return $this->service->handle();
     }
 }

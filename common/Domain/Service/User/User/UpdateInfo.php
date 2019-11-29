@@ -15,8 +15,9 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
+use Common\Infra\Exception\BusinessException;
+use Common\Infra\Support\WorkflowService;
 use Leevel\Database\Ddd\IUnitOfWork;
-use Leevel\Kernel\Exception\HandleException;
 use Leevel\Validate\IValidator;
 use Leevel\Validate\Proxy\Validate as Validates;
 
@@ -31,6 +32,8 @@ use Leevel\Validate\Proxy\Validate as Validates;
  */
 class UpdateInfo
 {
+    use WorkflowService;
+
     /**
      * 事务工作单元.
      *
@@ -65,9 +68,7 @@ class UpdateInfo
     public function handle(array $input): array
     {
         $this->input = $input;
-
         $this->validateArgs();
-
         $this->save($input)->toArray();
 
         return [];
@@ -83,7 +84,6 @@ class UpdateInfo
     protected function save(array $input): User
     {
         $this->w->persist($entity = $this->entity($input));
-
         $this->w->flush();
 
         return $entity;
@@ -99,7 +99,6 @@ class UpdateInfo
     protected function entity(array $input): User
     {
         $entity = $this->find((int) $input['id']);
-
         $entity->withProps($this->data($input));
 
         return $entity;
@@ -136,14 +135,18 @@ class UpdateInfo
 
     /**
      * 校验基本参数.
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
     protected function validateArgs()
     {
+        $input = $this->filterEmptyStringInput($this->input);
+
         $validator = Validates::make(
-            $this->input,
+            $input,
             [
-                'email'       => 'email|'.IValidator::CONDITION_VALUE,
-                'mobile'      => 'mobile|'.IValidator::CONDITION_VALUE,
+                'email'       => 'email|'.IValidator::OPTIONAL,
+                'mobile'      => 'mobile|'.IValidator::OPTIONAL,
             ],
             [
                 'email'       => __('邮件'),
@@ -152,7 +155,7 @@ class UpdateInfo
         );
 
         if ($validator->fail()) {
-            throw new HandleException(json_encode($validator->error()));
+            throw new BusinessException(json_encode($validator->error()));
         }
     }
 }

@@ -13,6 +13,7 @@ declare(strict_types=1);
  */
 
 use Common\Infra\Proxy\Permission;
+use Leevel\Database\IDatabase;
 
 if (!function_exists('permission')) {
     /**
@@ -26,5 +27,20 @@ if (!function_exists('permission')) {
     function permission(string $resource, ?string $method = null): bool
     {
         return Permission::handle($resource, $method);
+    }
+}
+
+if (!function_exists('sql')) {
+    /**
+     * SQL 监听器.
+     *
+     * @param \Closure $call
+     */
+    function sql(Closure $call): void
+    {
+        \App::make('event')
+            ->register(IDatabase::SQL_EVENT, function (string $event, string $sql) use ($call): void {
+                $call($event, $sql);
+            });
     }
 }

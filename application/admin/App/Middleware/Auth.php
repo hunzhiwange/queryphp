@@ -17,12 +17,12 @@ namespace Admin\App\Middleware;
 use Admin\App\Exception\LockException;
 use Admin\Infra\Lock;
 use Closure;
+use Common\Infra\Exception\BusinessException;
+use Common\Infra\Exception\UnauthorizedHttpException;
 use Common\Infra\Proxy\Permission;
 use Leevel\Auth\AuthException;
 use Leevel\Auth\Middleware\Auth as BaseAuth;
 use Leevel\Http\IRequest;
-use Leevel\Kernel\Exception\HandleException;
-use Leevel\Kernel\Exception\UnauthorizedHttpException;
 
 /**
  * auth 中间件.
@@ -77,12 +77,12 @@ class Auth extends BaseAuth
      *
      * @param \Closure              $next
      * @param \Leevel\Http\IRequest $request
+     *
+     * @throws \Common\Infra\Exception\UnauthorizedHttpException
      */
     public function handle(Closure $next, IRequest $request): void
     {
-        $this->prepareCors($request);
-
-        if ($this->isIgnoreRouter($request)) {
+        if ($request->isOptions() || $this->isIgnoreRouter($request)) {
             $next($request);
 
             return;
@@ -102,25 +102,6 @@ class Auth extends BaseAuth
             parent::handle($next, $request);
         } catch (AuthException $e) {
             throw new UnauthorizedHttpException($e->getMessage());
-        }
-    }
-
-    /**
-     * 准备跨域数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     */
-    private function prepareCors(IRequest $request): void
-    {
-        header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Credentials: true');
-        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-        header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, token');
-
-        // 跨域校验
-        if ($request->isOptions()) {
-            echo 'Die because of CORS';
-            die;
         }
     }
 
@@ -160,6 +141,8 @@ class Auth extends BaseAuth
      *
      * @param \Leevel\Http\IRequest $request
      * @param string                $token
+     *
+     * @throws \Admin\App\Exception\LockException
      */
     private function validateLock(IRequest $request, string $token): void
     {
@@ -185,6 +168,8 @@ class Auth extends BaseAuth
      * 权限校验.
      *
      * @param \Leevel\Http\IRequest $request
+     *
+     * @throws \Common\Infra\Exception\BusinessException
      */
     private function validatePermission(IRequest $request): void
     {
@@ -192,7 +177,7 @@ class Auth extends BaseAuth
         $method = strtolower($request->getMethod());
 
         if (!Permission::handle($pathInfo, $method)) {
-            throw new HandleException('你没有权限执行操作');
+            throw new BusinessException(__('你没有权限执行操作'));
         }
     }
 }

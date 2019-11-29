@@ -63,10 +63,7 @@ export default {
     },
     methods: {
         refreshSeccode() {
-            this.codeUrl = ''
-            setTimeout(() => {
-                this.codeUrl = this.codeImg + '?id=' + this.form.name + '&time=' + moment().unix()
-            }, 300)
+            this.codeUrl = this.codeImg + '?id=' + this.form.name + '&time=' + moment().unix()
         },
         handleSubmit(form) {
             if (this.loading) return
@@ -92,14 +89,16 @@ export default {
                             utils.success(this.__('登陆成功'))
 
                             res.keepLogin = this.isKeepLogin()
-                            this.refreshPermission(res.token)
-                            this.userInfo(res.token)
                             this.$store.dispatch('login', res)
 
                             setTimeout(() => {
+                                this.refreshPermission(res.token)
+                                this.userInfo(res.token)
+                            }, 0)
+
+                            setTimeout(() => {
                                 window.location.href = '/'
-                                //router.replace('/')
-                            }, 1000)
+                            }, 500)
                         },
                         () => {
                             this.loading = !this.loading
@@ -131,10 +130,27 @@ export default {
                 this.$store.dispatch('setUsers', res)
             })
         },
+        setTheme() {
+            let stylePath = '/'
+            if (localStorage.theme) {
+                let theme = JSON.parse(localStorage.theme)
+                this.$store.commit('changeMenuTheme', theme.menuTheme)
+                this.$store.commit('changeMainTheme', theme.mainTheme)
+            } else {
+                this.$store.commit('changeMenuTheme', 'light')
+                this.$store.commit('changeMainTheme', 'b')
+            }
+            // 根据用户设置主题
+            if (this.$store.state.app.themeColor !== 'b') {
+                let stylesheetPath = stylePath + this.$store.state.app.themeColor + '.css'
+                let themeLink = document.querySelector('link[name="theme"]')
+                themeLink.setAttribute('href', stylesheetPath)
+            }
+        },
     },
     created() {
-        this.codeUrl = this.codeImg
         this.checkKeepLogin()
+        this.setTheme()
     },
     mounted() {
         window.addEventListener('keyup', e => {

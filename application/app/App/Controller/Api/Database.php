@@ -24,6 +24,7 @@ use Leevel\Database\Proxy\Db;
  * @since 2018.11.08
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Database
 {

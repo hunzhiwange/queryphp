@@ -27,6 +27,7 @@ use Leevel\Http\IRequest;
  * @since 2017.11.21
  *
  * @version 1.0
+ * @codeCoverageIgnore
  */
 class Lock
 {

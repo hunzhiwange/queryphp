@@ -56,10 +56,37 @@ class Test extends Entity
      */
     const STRUCT = [
         'id' => [
-            'readonly' => true,
+            self::READONLY => true,
         ],
-        'name' => [],
+        'name'      => [],
+        'create_at' => [],
+        'update_at' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'delete_at' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'create_account' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
+        'update_account' => [
+            self::SHOW_PROP_BLACK => true,
+        ],
     ];
+
+    /**
+     * soft delete column.
+     *
+     * @var string
+     */
+    const DELETE_AT = 'delete_at';
+
+    /**
+     * database connect.
+     *
+     * @var mixed
+     */
+    private static $leevelConnect;
 
     /**
      * id.
@@ -76,6 +103,27 @@ class Test extends Entity
     private $name;
 
     /**
+     * 删除时间 0=未删除;大于0=删除时间;.
+     *
+     * @var int
+     */
+    private $deleteAt;
+
+    /**
+     * 创建账号.
+     *
+     * @var int
+     */
+    private $createAccount;
+
+    /**
+     * 更新账号.
+     *
+     * @var int
+     */
+    private $updateAccount;
+
+    /**
      * setter.
      *
      * @param string $prop
@@ -85,7 +133,7 @@ class Test extends Entity
      */
     public function setter(string $prop, $value): IEntity
     {
-        $this->{$this->prop($prop)} = $value;
+        $this->{$this->realProp($prop)} = $value;
 
         return $this;
     }
@@ -99,6 +147,26 @@ class Test extends Entity
      */
     public function getter(string $prop)
     {
-        return $this->{$this->prop($prop)};
+        return $this->{$this->realProp($prop)};
+    }
+
+    /**
+     * set database connect.
+     *
+     * @param mixed $connect
+     */
+    public static function withConnect($connect): void
+    {
+        static::$leevelConnect = $connect;
+    }
+
+    /**
+     * get database connect.
+     *
+     * @param mixed $connect
+     */
+    public static function connect()
+    {
+        return static::$leevelConnect;
     }
 }

@@ -65,6 +65,8 @@ class Index
      *
      * @param array $input
      *
+     * @throws \Common\Infra\Exception\SearchItemNotFoundException
+     *
      * @return array
      */
     public function handle(array $input): array
