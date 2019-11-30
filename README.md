@@ -407,7 +407,7 @@ unzip roadrunner-1.3.5-darwin-amd64.zip
 cd /data/codes/queryphp
 ```
 
-### Roadrunner server
+### RoadRunner server
 
 ```
 /data/server/roadrunner-1.3.5-darwin-amd64/rr serve -d -v # -d = debug

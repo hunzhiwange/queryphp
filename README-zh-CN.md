@@ -406,7 +406,7 @@ unzip roadrunner-1.3.5-darwin-amd64.zip
 cd /data/codes/queryphp
 ```
 
-### Roadrunner 服务
+### RoadRunner 服务
 
 ```
 /data/server/roadrunner-1.3.5-darwin-amd64/rr serve -d -v # -d = debug
@@ -414,7 +414,7 @@ cd /data/codes/queryphp
 /data/server/roadrunner-1.3.5-darwin-amd64/rr http:workers -i
 ```
 
-Roadrunner 和 php-fpm 保持一致
+RoadRunner 和 php-fpm 保持一致
 
 ```
 root@vagrant-ubuntu-10-0-2-5:/data/codes/queryphp# /data/server/roadrunner-1.3.5-darwin-amd64/rr serve -d -v
