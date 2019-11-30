@@ -38,7 +38,7 @@ QueryPHP 是一款现代化的高性能 PHP 渐进式协程框架, 我们还是�
 
 ![](doyouhaobaby.png)
 
-QueryPHP 基于一款成立于 2010 年的 PHP 框架 [DoYouHaoBaby](https://raw.githubusercontent.com/hunzhiwange/framework/master/doyouhaobaby-googlecode.jpg) 开发，继承了上一代产品的优秀之处，彻底革新并进行了长达 2 年重构.
+QueryPHP 基于一款成立于 2010 年的 PHP 框架 [DoYouHaoBaby](https://github.com/hunzhiwange/dyhb.blog-x/tree/master/Upload/DoYouHaoBaby) 开发，最新版本 DoYouHaoBaby 更名为 [QeePHP](https://github.com/hunzhiwange/windsforce/tree/master/upload/System/include/QeePHP)，继承了上一代产品的优秀之处，彻底革新并进行了长达 3 年重构.
 
 ## 核心包
 

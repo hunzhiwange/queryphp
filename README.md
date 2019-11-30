@@ -38,7 +38,7 @@ A hundred percent coverage of the unit tests to facing the bug,with our continuo
 
 ![](doyouhaobaby.png)
 
-QueryPHP was based on the [DoYouHaoBaby](https://raw.githubusercontent.com/hunzhiwange/framework/master/doyouhaobaby-googlecode.jpg) framework which released 0.0.1 version at 2010.10.03.
+QueryPHP was based on the [DoYouHaoBaby](https://github.com/hunzhiwange/dyhb.blog-x/tree/master/Upload/DoYouHaoBaby) framework which released 0.0.1 version at 2010.10.03,the latest version of DoYouHaoBaby is renamed as [QeePHP](https://github.com/hunzhiwange/windsforce/tree/master/upload/System/include/QeePHP).
 
 ## The core packages
 
