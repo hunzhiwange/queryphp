@@ -39,8 +39,6 @@ trait Destroy
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -49,10 +47,6 @@ trait Destroy
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -67,8 +61,6 @@ trait Destroy
 
     /**
      * 删除实体.
-     *
-     * @param \Leevel\Database\Ddd\IEntity $entity
      */
     private function remove(IEntity $entity)
     {
@@ -80,10 +72,6 @@ trait Destroy
 
     /**
      * 查找实体.
-     *
-     * @param int $intId
-     *
-     * @return \Leevel\Database\Ddd\IEntity
      */
     private function find(int $id): IEntity
     {
@@ -92,8 +80,6 @@ trait Destroy
 
     /**
      * 校验基本参数.
-     *
-     * @param array $input
      *
      * @throws \Common\Infra\Exception\BusinessException
      */

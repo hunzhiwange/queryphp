@@ -64,8 +64,6 @@ class Update
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -74,10 +72,6 @@ class Update
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -86,10 +80,6 @@ class Update
 
     /**
      * 过滤输入数据.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     private function main(array &$input): array
     {
@@ -98,10 +88,6 @@ class Update
 
     /**
      * 验证参数.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\Role
      */
     private function entity(array $input): Role
     {
@@ -113,10 +99,6 @@ class Update
 
     /**
      * 查找实体.
-     *
-     * @param int $id
-     *
-     * @return \Common\Domain\Entity\User\Role
      */
     private function find(int $id): Role
     {
@@ -127,10 +109,6 @@ class Update
 
     /**
      * 组装实体数据.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     private function data(array $input): array
     {
@@ -143,10 +121,6 @@ class Update
 
     /**
      * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\Role
      */
     private function save(array $input): Role
     {
@@ -160,8 +134,6 @@ class Update
 
     /**
      * 过滤数据规则.
-     *
-     * @param array $input
      */
     private function filterInputRules(): array
     {
@@ -173,10 +145,6 @@ class Update
 
     /**
      * 校验数据规则.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     private function validateInputRules(array $input): array
     {

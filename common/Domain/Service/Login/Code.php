@@ -38,8 +38,6 @@ class Code
 
     /**
      * 构造函数.
-     *
-     * @param \Admin\Infra\Code $code
      */
     public function __construct(Codes $code)
     {
@@ -48,10 +46,6 @@ class Code
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return string
      */
     public function handle(array $input): string
     {

@@ -33,10 +33,6 @@ class Upload
 {
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -56,11 +52,7 @@ class Upload
     /**
      * 保存文件.
      *
-     * @param \Leevel\Http\UploadedFile $file
-     *
      * @throws \Common\Infra\Exception\BusinessException
-     *
-     * @return array
      */
     protected function save(UploadedFile $file): array
     {
@@ -76,10 +68,6 @@ class Upload
 
     /**
      * 获取文件保存路径.
-     *
-     * @param \Leevel\Http\UploadedFile $file
-     *
-     * @return string
      */
     protected function getSavePath(UploadedFile $file): string
     {
@@ -89,9 +77,6 @@ class Upload
 
     /**
      * 保存文件到服务器.
-     *
-     * @param string $sourcePath
-     * @param string $savePath
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
@@ -104,10 +89,6 @@ class Upload
 
     /**
      * 获取文件上传路径 URL.
-     *
-     * @param string $savePath
-     *
-     * @return string
      */
     protected function savePathForUrl(string $savePath): string
     {

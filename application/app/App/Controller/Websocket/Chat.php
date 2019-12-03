@@ -30,8 +30,6 @@ class Chat
 {
     /**
      * 默认方法.
-     *
-     * @return string
      */
     public function handle(): string
     {

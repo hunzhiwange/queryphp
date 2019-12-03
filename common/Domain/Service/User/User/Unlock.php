@@ -62,10 +62,6 @@ class Unlock
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
-     * @param \Leevel\Auth\Hash                $hash
-     * @param \Admin\Infra\Lock                $lock
      */
     public function __construct(IUnitOfWork $w, Hash $hash, Lock $lock)
     {
@@ -76,10 +72,6 @@ class Unlock
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -103,8 +95,6 @@ class Unlock
      * 校验用户.
      *
      * @throws \Common\Infra\Exception\BusinessException
-     *
-     * @return \Common\Domain\Entity\User\User
      */
     protected function validateUser(): User
     {
@@ -125,11 +115,6 @@ class Unlock
 
     /**
      * 对比验证码
-     *
-     * @param string $password
-     * @param string $hash
-     *
-     * @return bool
      */
     protected function verifyPassword(string $password, string $hash): bool
     {

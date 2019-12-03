@@ -37,8 +37,6 @@ class UserPermission
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -47,10 +45,6 @@ class UserPermission
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -63,10 +57,6 @@ class UserPermission
 
     /**
      * 格式化权限数据.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     protected function normalizePermission(array $data): array
     {
@@ -84,10 +74,6 @@ class UserPermission
 
     /**
      * 查询权限数据.
-     *
-     * @param \Common\Domain\Entity\User\User $user
-     *
-     * @return array
      */
     protected function parsePermission(User $user): array
     {
@@ -113,10 +99,6 @@ class UserPermission
 
     /**
      * 查找用户实体.
-     *
-     * @param int $id
-     *
-     * @return \Common\Domain\Entity\User\User
      */
     protected function findUser(int $id): User
     {

@@ -49,10 +49,6 @@ class Runtime extends Runtimes
 
     /**
      * 获取 HTTP 状态的异常模板
-     *
-     * @param Exception $e
-     *
-     * @return string
      */
     public function getHttpExceptionView(Exception $e): string
     {
@@ -61,8 +57,6 @@ class Runtime extends Runtimes
 
     /**
      * 获取 HTTP 状态的默认异常模板
-     *
-     * @return string
      */
     public function getDefaultHttpExceptionView(): string
     {

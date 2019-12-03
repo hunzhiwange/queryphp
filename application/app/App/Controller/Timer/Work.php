@@ -35,8 +35,6 @@ class Work
      * 执行入口.
      *
      * @throws \Exception
-     *
-     * @return string
      */
     public function handle(): string
     {
@@ -55,10 +53,6 @@ class Work
 
     /**
      * 执行任务
-     *
-     * @param \Closure $work
-     * @param int      $perMillisecond
-     * @param int      $maxCount
      */
     private function work(Closure $work, int $perMillisecond, int $maxCount): void
     {
@@ -85,8 +79,6 @@ class Work
 
     /**
      * 输出消息.
-     *
-     * @param string $message
      */
     private function message(string $message): void
     {

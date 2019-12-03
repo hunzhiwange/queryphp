@@ -32,9 +32,6 @@ trait Read
 {
     /**
      * 预处理.
-     *
-     * @param array $data
-     * @param array $input
      */
     private function prepare(array &$data, array $input)
     {
@@ -53,9 +50,6 @@ trait Read
 
     /**
      * 查询规约条件.
-     *
-     * @param \Leevel\Database\Ddd\Select $select
-     * @param array                       $input
      */
     private function spec(Select $select, array $input)
     {
@@ -73,9 +67,7 @@ trait Read
     /**
      * 关键字条件.
      *
-     * @param \Leevel\Database\Ddd\Select $select
-     * @param mixed                       $value
-     * @param array                       $meta
+     * @param mixed $value
      */
     private function keySpec(Select $select, $value, array $meta = []): void
     {
@@ -91,9 +83,7 @@ trait Read
     /**
      * 状态条件.
      *
-     * @param \Leevel\Database\Ddd\Select $select
-     * @param mixed                       $value
-     * @param array                       $meta
+     * @param mixed $value
      */
     private function statusSpec(Select $select, $value, array $meta = []): void
     {
@@ -103,9 +93,7 @@ trait Read
     /**
      * 字段查询条件.
      *
-     * @param \Leevel\Database\Ddd\Select $select
-     * @param mixed                       $value
-     * @param array                       $meta
+     * @param mixed $value
      */
     private function columnSpec(Select $select, $value, array $meta = []): void
     {
@@ -115,9 +103,7 @@ trait Read
     /**
      * 查询条数限制.
      *
-     * @param \Leevel\Database\Ddd\Select $select
-     * @param mixed                       $value
-     * @param array                       $meta
+     * @param mixed $value
      */
     private function limitSpec(Select $select, $value, array $meta = []): void
     {
@@ -130,9 +116,7 @@ trait Read
     /**
      * 排序.
      *
-     * @param \Leevel\Database\Ddd\Select $select
-     * @param mixed                       $value
-     * @param array                       $meta
+     * @param mixed $value
      */
     private function orderBySpec(Select $select, $value, array $meta = []): void
     {
@@ -141,8 +125,6 @@ trait Read
 
     /**
      * 过滤搜索空字符串值.
-     *
-     * @param array $input
      */
     private function filterSearchInput(array &$input): void
     {
@@ -151,11 +133,6 @@ trait Read
 
     /**
      * 分页查询.
-     *
-     * @param array                            $input
-     * @param \Leevel\Database\Ddd\IRepository $repository
-     *
-     * @return array
      */
     private function findPage(array $input, IRepository $repository): array
     {
@@ -177,10 +154,6 @@ trait Read
 
     /**
      * 转换集合为数组.
-     *
-     * @param \Leevel\Collection\Collection $data
-     *
-     * @return array
      */
     private function prepareToArray(Collection $data): array
     {

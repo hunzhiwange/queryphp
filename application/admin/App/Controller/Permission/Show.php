@@ -34,11 +34,6 @@ class Show
 
     /**
      * 响应方法.
-     *
-     * @param \Leevel\Http\IRequest              $request
-     * @param \Admin\App\Service\Permission\Show $service
-     *
-     * @return array
      */
     public function handle(IRequest $request, Service $service): array
     {
@@ -47,10 +42,6 @@ class Show
 
     /**
      * 输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
      */
     private function input(IRequest $request): array
     {

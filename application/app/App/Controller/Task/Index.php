@@ -32,10 +32,6 @@ class Index
 {
     /**
      * 执行入口.
-     *
-     * @param \Leevel\Protocol\ITask $task
-     *
-     * @return string
      */
     public function handle(ITask $task): string
     {
@@ -47,8 +43,6 @@ class Index
 
     /**
      * 输出消息.
-     *
-     * @param string $message
      */
     private function message(string $message): void
     {

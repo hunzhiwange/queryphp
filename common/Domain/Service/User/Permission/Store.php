@@ -47,8 +47,6 @@ class Store
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -57,10 +55,6 @@ class Store
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -72,10 +66,6 @@ class Store
 
     /**
      * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\Permission
      */
     protected function save(array $input): Permission
     {
@@ -89,10 +79,6 @@ class Store
 
     /**
      * 创建实体.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\Permission
      */
     protected function entity(array $input): Permission
     {
@@ -101,10 +87,6 @@ class Store
 
     /**
      * 组装实体数据.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     protected function data(array $input): array
     {
@@ -120,10 +102,6 @@ class Store
 
     /**
      * 分析父级数据.
-     *
-     * @param array $pid
-     *
-     * @return int
      */
     protected function parseParentId(array $pid): int
     {

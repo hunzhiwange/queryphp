@@ -39,8 +39,6 @@ class Index
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -49,8 +47,6 @@ class Index
 
     /**
      * 响应方法.
-     *
-     * @return array
      */
     public function handle(): array
     {
@@ -64,10 +60,6 @@ class Index
 
     /**
      * 将节点载入节点树并返回树结构.
-     *
-     * @param \Leevel\Collection\Collection $entitys
-     *
-     * @return array
      */
     protected function normalizeTree(Collection $entitys): array
     {
@@ -80,10 +72,6 @@ class Index
 
     /**
      * 生成节点树.
-     *
-     * @param \Leevel\Collection\Collection $entitys
-     *
-     * @return \Leevel\Tree\Tree
      */
     protected function createTree(Collection $entitys): Tree
     {
@@ -92,10 +80,6 @@ class Index
 
     /**
      * 转换为节点数组.
-     *
-     * @param \Leevel\Collection\Collection $entitys
-     *
-     * @return array
      */
     protected function parseToNode(Collection $entitys): array
     {

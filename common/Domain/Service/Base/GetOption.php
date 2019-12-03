@@ -37,8 +37,6 @@ class GetOption
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -47,8 +45,6 @@ class GetOption
 
     /**
      * 响应方法.
-     *
-     * @return array
      */
     public function handle(): array
     {

@@ -44,11 +44,6 @@ class Resource
 
     /**
      * 响应方法.
-     *
-     * @param \Leevel\Http\IRequest                  $request
-     * @param \Admin\App\Service\Permission\Resource $service
-     *
-     * @return array
      */
     public function handle(IRequest $request, Service $service): array
     {

@@ -33,8 +33,6 @@ class Entity
      * 响应.
      *
      * - 设置 .env DATABASE_DRIVER = mysql 或者 mysqlPool.
-     *
-     * @return string
      */
     public function handle(): string
     {
@@ -58,8 +56,6 @@ class Entity
 
     /**
      * 输出消息.
-     *
-     * @param string $message
      */
     private function message(string $message): void
     {

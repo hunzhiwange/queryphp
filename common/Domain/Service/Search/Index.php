@@ -52,8 +52,6 @@ class Index
      * 构造函数.
      *
      * 加入顶层命名空间以便于做单元测试
-     *
-     * @param string $topNamespace
      */
     public function __construct(string $topNamespace = 'Admin')
     {
@@ -63,11 +61,7 @@ class Index
     /**
      * 响应方法.
      *
-     * @param array $input
-     *
      * @throws \Common\Infra\Exception\SearchItemNotFoundException
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -113,10 +107,6 @@ class Index
 
     /**
      * 转换搜索服务.
-     *
-     * @param string $service
-     *
-     * @return string
      */
     protected function convertService(string $service): string
     {

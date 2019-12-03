@@ -33,8 +33,6 @@ class Demo4
 {
     /**
      * 多个协程性能提升.
-     *
-     * @return string
      */
     public function handle(): string
     {
@@ -61,8 +59,6 @@ class Demo4
 
     /**
      * 输出消息.
-     *
-     * @param string $message
      */
     private function message(string $message): void
     {

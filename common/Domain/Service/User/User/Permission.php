@@ -44,7 +44,6 @@ class Permission
     /**
      * 构造函数.
      *
-     * @param \Admin\Infra\Permission                         $permissionCache
      * @param \Common\Domain\Service\User\User\UserPermission $permission
      */
     public function __construct(PermissionCache $permissionCache, UserPermission $permission)
@@ -55,10 +54,6 @@ class Permission
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -72,11 +67,6 @@ class Permission
 
     /**
      * 获取权限.
-     *
-     * @param string $token
-     * @param int    $userId
-     *
-     * @return array
      */
     protected function getPermission(string $token, int $userId): array
     {

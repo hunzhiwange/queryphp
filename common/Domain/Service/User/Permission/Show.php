@@ -37,8 +37,6 @@ class Show
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -47,10 +45,6 @@ class Show
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -63,10 +57,6 @@ class Show
 
     /**
      * 查找实体.
-     *
-     * @param int $intId
-     *
-     * @return \Common\Domain\Entity\User\Permission
      */
     protected function find(int $id): Permission
     {

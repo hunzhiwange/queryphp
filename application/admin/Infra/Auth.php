@@ -36,7 +36,6 @@ class Auth
      * 构造函数.
      *
      * @param \Admin\Infra\Permission $permission
-     * @param string                  $token
      */
     public function __construct(Permission $permission, string $token)
     {
@@ -53,11 +52,6 @@ class Auth
 
     /**
      * 校验权限.
-     *
-     * @param string      $resource
-     * @param null|string $method
-     *
-     * @return bool
      */
     public function handle(string $resource, ?string $method = null): bool
     {
@@ -96,10 +90,6 @@ class Auth
 
     /**
      * 通配符正则.
-     *
-     * @param string $regex
-     *
-     * @return string
      */
     protected function prepareRegexForWildcard(string $regex): string
     {

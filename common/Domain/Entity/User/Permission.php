@@ -197,8 +197,7 @@ class Permission extends Entity
     /**
      * setter.
      *
-     * @param string $prop
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return $this
      */
@@ -211,8 +210,6 @@ class Permission extends Entity
 
     /**
      * getter.
-     *
-     * @param string $prop
      *
      * @return mixed
      */
@@ -233,8 +230,6 @@ class Permission extends Entity
 
     /**
      * get database connect.
-     *
-     * @param mixed $connect
      */
     public static function connect()
     {

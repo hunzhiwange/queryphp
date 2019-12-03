@@ -31,10 +31,6 @@ class Cors
 {
     /**
      * 响应.
-     *
-     * @param \Closure               $next
-     * @param \Leevel\Http\IRequest  $request
-     * @param \Leevel\Http\IResponse $response
      */
     public function terminate(Closure $next, IRequest $request, IResponse $response): void
     {

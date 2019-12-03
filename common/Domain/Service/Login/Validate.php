@@ -74,11 +74,6 @@ class Validate
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Http\IRequest                           $request
-     * @param \Admin\Infra\Code                               $code
-     * @param \Admin\Infra\Permission                         $permissionCache
-     * @param \Common\Domain\Service\User\User\UserPermission $permission
      */
     public function __construct(IRequest $request, Code $code, Permission $permissionCache, UserPermission $permission)
     {
@@ -90,10 +85,6 @@ class Validate
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -160,8 +151,6 @@ class Validate
      * 校验用户.
      *
      * @throws \Common\Infra\Exception\BusinessException
-     *
-     * @return \Common\Domain\Entity\User\User
      */
     protected function validateUser(): User
     {
@@ -183,11 +172,6 @@ class Validate
 
     /**
      * 校验密码
-     *
-     * @param string $password
-     * @param string $hash
-     *
-     * @return bool
      */
     protected function verifyPassword(string $password, string $hash): bool
     {

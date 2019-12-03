@@ -16,8 +16,7 @@ if (!function_exists('__')) {
     /**
      * lang.
      *
-     * @param string $text
-     * @param array  $arr
+     * @param array $arr
      *
      * @return string
      */

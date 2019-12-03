@@ -209,8 +209,7 @@ class User extends Entity
     /**
      * setter.
      *
-     * @param string $prop
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return $this
      */
@@ -223,8 +222,6 @@ class User extends Entity
 
     /**
      * getter.
-     *
-     * @param string $prop
      *
      * @return mixed
      */
@@ -245,8 +242,6 @@ class User extends Entity
 
     /**
      * get database connect.
-     *
-     * @param mixed $connect
      */
     public static function connect()
     {
@@ -255,8 +250,6 @@ class User extends Entity
 
     /**
      * 角色关联查询作用域.
-     *
-     * @param \Leevel\Database\Ddd\Relation\ManyMany $relation
      */
     protected function relationScopeRole(ManyMany $relation): void
     {

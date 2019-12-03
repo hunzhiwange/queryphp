@@ -31,10 +31,6 @@ class PerWorkWithTimer
 {
     /**
      * 执行入口.
-     *
-     * @param \Leevel\Protocol\ITimer $timer
-     *
-     * @return string
      */
     public function handle(ITimer $timer): string
     {
@@ -49,8 +45,6 @@ class PerWorkWithTimer
 
     /**
      * 输出消息.
-     *
-     * @param string $message
      */
     private function message(string $message): void
     {

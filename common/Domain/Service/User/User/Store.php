@@ -47,9 +47,6 @@ class Store
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
-     * @param \Leevel\Auth\Hash                $hash
      */
     public function __construct(IUnitOfWork $w, Hash $hash)
     {
@@ -59,10 +56,6 @@ class Store
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -71,10 +64,6 @@ class Store
 
     /**
      * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\User
      */
     protected function save(array $input): User
     {
@@ -90,10 +79,6 @@ class Store
 
     /**
      * 查找存在角色.
-     *
-     * @param int $userId
-     *
-     * @return array
      */
     protected function findRoles(int $userId): array
     {
@@ -102,10 +87,6 @@ class Store
 
     /**
      * 创建实体.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\User
      */
     protected function entity(array $input): User
     {
@@ -114,10 +95,6 @@ class Store
 
     /**
      * 创建密码
-     *
-     * @param string $password
-     *
-     * @return string
      */
     protected function createPassword(string $password): string
     {
@@ -126,10 +103,6 @@ class Store
 
     /**
      * 组装实体数据.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     protected function data(array $input): array
     {

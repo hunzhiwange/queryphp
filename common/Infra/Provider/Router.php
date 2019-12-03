@@ -78,8 +78,6 @@ class Router extends RouterProvider
 
     /**
      * 创建一个服务容器提供者实例.
-     *
-     * @param \Leevel\Di\IContainer $container
      */
     public function __construct(IContainer $container)
     {
@@ -100,8 +98,6 @@ class Router extends RouterProvider
 
     /**
      * 返回路由.
-     *
-     * @return array
      */
     public function getRouters(): array
     {

@@ -46,11 +46,6 @@ class Index
 
     /**
      * 响应方法.
-     *
-     * @param \Leevel\Http\IRequest         $request
-     * @param \Admin\App\Service\Role\Index $service
-     *
-     * @return array
      */
     public function handle(IRequest $request, Service $service): array
     {

@@ -29,8 +29,6 @@ class Info
 {
     /**
      * 响应方法.
-     *
-     * @return array
      */
     public function handle(): array
     {

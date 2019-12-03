@@ -33,8 +33,6 @@ class Redis2
      * 响应.
      *
      * - 设置 .env CACHE_DRIVER = redis 或者 redisPool.
-     *
-     * @return string
      */
     public function handle(): string
     {
@@ -62,8 +60,6 @@ class Redis2
 
     /**
      * 输出消息.
-     *
-     * @param string $message
      */
     private function message(string $message): void
     {

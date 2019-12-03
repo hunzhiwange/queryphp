@@ -40,8 +40,6 @@ class App extends Provider
 
     /**
      * 可用服务提供者.
-     *
-     * @return array
      */
     public static function providers(): array
     {

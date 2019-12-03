@@ -30,10 +30,6 @@ class Info
 {
     /**
      * 响应方法.
-     *
-     * @param \Admin\App\Service\User\Info $service
-     *
-     * @return array
      */
     public function handle(Service $service): array
     {

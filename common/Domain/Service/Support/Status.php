@@ -35,8 +35,6 @@ trait Status
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -45,10 +43,6 @@ trait Status
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -63,9 +57,6 @@ trait Status
 
     /**
      * 保存状态
-     *
-     * @param \Leevel\Collection\Collection $entitys
-     * @param int                           $status
      */
     private function save(Collection $entitys, int $status): void
     {
@@ -80,11 +71,7 @@ trait Status
     /**
      * 查询符合条件的数据.
      *
-     * @param array $input
-     *
      * @throws \Common\Infra\Exception\BusinessException
-     *
-     * @return \Leevel\Collection\Collection
      */
     private function findAll(array $input): Collection
     {
@@ -104,8 +91,6 @@ trait Status
 
     /**
      * 校验基本参数.
-     *
-     * @param array $input
      *
      * @throws \Common\Infra\Exception\BusinessException
      */

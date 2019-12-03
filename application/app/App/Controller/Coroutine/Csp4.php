@@ -32,8 +32,6 @@ class Csp4
 {
     /**
      * 改变顺序.
-     *
-     * @return string
      */
     public function handle(): string
     {
@@ -59,8 +57,6 @@ class Csp4
 
     /**
      * 输出消息.
-     *
-     * @param string $message
      */
     private function message(string $message): void
     {

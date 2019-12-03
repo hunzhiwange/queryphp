@@ -36,11 +36,6 @@ class Code
 
     /**
      * 响应方法.
-     *
-     * @param \Leevel\Http\IRequest         $request
-     * @param \Admin\App\Service\Login\Code $service
-     *
-     * @return \Leevel\Http\Response
      */
     public function handle(IRequest $request, Service $service): Response
     {
@@ -52,10 +47,6 @@ class Code
 
     /**
      * 输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
      */
     private function input(IRequest $request): array
     {

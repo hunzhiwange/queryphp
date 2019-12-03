@@ -40,8 +40,6 @@ trait App
 {
     /**
      * 初始化应用.
-     *
-     * @return \Leevel\Kernel\App
      */
     protected function createApp(): KernelApp
     {

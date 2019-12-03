@@ -28,8 +28,6 @@ class Test
 {
     /**
      * 默认方法.
-     *
-     * @return array
      */
     public function handle(): array
     {

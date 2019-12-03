@@ -36,8 +36,6 @@ class Permission
 
     /**
      * 构造函数.
-     *
-     * @param \Common\Domain\Service\User\User\Permission $service
      */
     public function __construct(Service $service)
     {
@@ -46,10 +44,6 @@ class Permission
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {

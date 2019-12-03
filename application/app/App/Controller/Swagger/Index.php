@@ -32,8 +32,6 @@ class Index
 {
     /**
      * 响应.
-     *
-     * @return string
      */
     public function handle(): string
     {
@@ -52,8 +50,6 @@ class Index
 
     /**
      * 扫描路径.
-     *
-     * @return array
      */
     protected function path(): array
     {
@@ -64,8 +60,6 @@ class Index
 
     /**
      * 基本路径.
-     *
-     * @return array
      */
     protected function basePath(): array
     {

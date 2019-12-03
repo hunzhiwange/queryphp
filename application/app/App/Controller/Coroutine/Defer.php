@@ -34,8 +34,6 @@ class Defer
      * 改变顺序.
      *
      * - 函数结束时，对象自动析构，defer 任务自动执行
-     *
-     * @return string
      */
     public function handle(): string
     {
@@ -60,8 +58,6 @@ class Defer
 
     /**
      * 输出消息.
-     *
-     * @param string $message
      */
     private function message(string $message): void
     {
@@ -92,8 +88,6 @@ class DeferTask
 
     /**
      * 添加任务.
-     *
-     * @param callable $fn
      */
     public function add(callable $fn): void
     {

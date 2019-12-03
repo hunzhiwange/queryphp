@@ -29,10 +29,6 @@ class PrepareForUser
 {
     /**
      * 响应方法.
-     *
-     * @param \Common\Domain\Entity\User\User $user
-     *
-     * @return array
      */
     public function handle(User $user): array
     {
@@ -44,8 +40,6 @@ class PrepareForUser
      * 支持 array|\Leevel\Collection\Collection 等支持循环遍历的数据.
      *
      * @param mixed $data
-     *
-     * @return array
      */
     public function handleMulti($data): array
     {
@@ -59,10 +53,6 @@ class PrepareForUser
 
     /**
      * 准备用户数据.
-     *
-     * @param \Common\Domain\Entity\User\User $user
-     *
-     * @return array
      */
     protected function prepareUser(User &$user): array
     {

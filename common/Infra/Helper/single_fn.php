@@ -20,8 +20,6 @@ namespace Common\Infra\Helper;
  * ``` php
  * echo f('Common\\Infra\\Helper\\single_fn');
  * ```
- *
- * @return string
  */
 function single_fn(): string
 {

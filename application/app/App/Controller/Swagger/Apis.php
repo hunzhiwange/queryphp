@@ -28,8 +28,6 @@ class Apis
 {
     /**
      * 响应.
-     *
-     * @return array
      */
     public function handle(): array
     {

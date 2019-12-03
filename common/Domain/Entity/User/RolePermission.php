@@ -148,8 +148,7 @@ class RolePermission extends Entity
     /**
      * setter.
      *
-     * @param string $prop
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return $this
      */
@@ -162,8 +161,6 @@ class RolePermission extends Entity
 
     /**
      * getter.
-     *
-     * @param string $prop
      *
      * @return mixed
      */
@@ -184,8 +181,6 @@ class RolePermission extends Entity
 
     /**
      * get database connect.
-     *
-     * @param mixed $connect
      */
     public static function connect()
     {

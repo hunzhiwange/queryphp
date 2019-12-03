@@ -54,9 +54,6 @@ class ChangePassword
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
-     * @param \Leevel\Auth\Hash                $hash
      */
     public function __construct(IUnitOfWork $w, Hash $hash)
     {
@@ -66,10 +63,6 @@ class ChangePassword
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -85,8 +78,6 @@ class ChangePassword
      * 校验用户.
      *
      * @throws \Common\Infra\Exception\BusinessException
-     *
-     * @return \Common\Domain\Entity\User\User
      */
     protected function validateUser(): User
     {
@@ -108,10 +99,6 @@ class ChangePassword
 
     /**
      * 创建密码
-     *
-     * @param string $password
-     *
-     * @return string
      */
     protected function createPassword(string $password): string
     {
@@ -120,11 +107,6 @@ class ChangePassword
 
     /**
      * 校验旧密码
-     *
-     * @param string $password
-     * @param string $hash
-     *
-     * @return bool
      */
     protected function verifyPassword(string $password, string $hash): bool
     {
@@ -133,10 +115,6 @@ class ChangePassword
 
     /**
      * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\User
      */
     protected function save(array $input): User
     {
@@ -148,10 +126,6 @@ class ChangePassword
 
     /**
      * 验证参数.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\User
      */
     protected function entity(array $input): User
     {
@@ -163,10 +137,6 @@ class ChangePassword
 
     /**
      * 查找实体.
-     *
-     * @param int $id
-     *
-     * @return \Common\Domain\Entity\User\User
      */
     protected function find(int $id): User
     {
@@ -177,10 +147,6 @@ class ChangePassword
 
     /**
      * 组装实体数据.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     protected function data(array $input): array
     {

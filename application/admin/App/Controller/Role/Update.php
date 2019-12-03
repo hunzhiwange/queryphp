@@ -46,11 +46,6 @@ class Update
 
     /**
      * 响应方法.
-     *
-     * @param \Leevel\Http\IRequest          $request
-     * @param \Admin\App\Service\Role\Update $service
-     *
-     * @return array
      */
     public function handle(IRequest $request, Service $service): array
     {
@@ -59,10 +54,6 @@ class Update
 
     /**
      * 输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
      */
     private function extendInput(IRequest $request): array
     {

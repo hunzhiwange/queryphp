@@ -21,10 +21,6 @@ trait BaseStoreUpdate
 {
     /**
      * 准备数据.
-     *
-     * @param \Common\Domain\Entity\User\User $user
-     *
-     * @return array
      */
     protected function prepareData(User $user): array
     {
@@ -33,9 +29,6 @@ trait BaseStoreUpdate
 
     /**
      * 设置用户授权.
-     *
-     * @param int   $userId
-     * @param array $roleId
      */
     protected function setUserRole(int $userId, array $roleId): void
     {
@@ -56,11 +49,6 @@ trait BaseStoreUpdate
 
     /**
      * 创建授权实体.
-     *
-     * @param int $userId
-     * @param int $roleId
-     *
-     * @return \Common\Domain\Entity\User\UserRole
      */
     protected function entityUserRole(int $userId, int $roleId): EntityUserRole
     {

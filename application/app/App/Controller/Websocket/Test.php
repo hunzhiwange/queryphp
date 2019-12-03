@@ -33,9 +33,7 @@ class Test
     /**
      * WebSocket 客户端与服务器建立连接并完成握手后.
      *
-     * @param \Swoole\Websocket\Server $server
-     * @param \Swoole\Http\IRequest    $request
-     * @param int                      $fd
+     * @param \Swoole\Http\IRequest $request
      *
      * @see https://wiki.swoole.com/wiki/page/401.html
      */
@@ -56,10 +54,6 @@ class Test
      * 处理消息.
      * 监听服务器收到来自客户端的数据帧.
      *
-     * @param \Swoole\Websocket\Server $server
-     * @param \Swoole\Websocket\Frame  $frame
-     * @param int                      $fd
-     *
      * @see https://wiki.swoole.com/wiki/page/397.html
      */
     public function message(Server $server, Frame $frame, int $fd): void
@@ -75,10 +69,6 @@ class Test
     /**
      * 监听连接关闭事件
      * 每个浏览器连接关闭时执行一次, reload 时连接不会断开, 也就不会触发该事件.
-     *
-     * @param \Swoole\Websocket\Server $server
-     * @param int                      $fd
-     * @param int                      $reactorId
      *
      * @see https://wiki.swoole.com/wiki/page/p-event/onClose.html
      */

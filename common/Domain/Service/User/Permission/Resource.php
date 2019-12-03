@@ -39,8 +39,6 @@ class Resource
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -49,10 +47,6 @@ class Resource
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -66,10 +60,6 @@ class Resource
 
     /**
      * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\Permission
      */
     protected function save(array $input): Permission
     {
@@ -82,10 +72,6 @@ class Resource
 
     /**
      * 查找存在资源.
-     *
-     * @param int $permissionId
-     *
-     * @return \Leevel\Collection\Collection
      */
     protected function findResources(int $permissionId): Collection
     {
@@ -98,10 +84,6 @@ class Resource
 
     /**
      * 验证参数.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\Permission
      */
     protected function entity(array $input): Permission
     {
@@ -110,10 +92,6 @@ class Resource
 
     /**
      * 查找实体.
-     *
-     * @param int $id
-     *
-     * @return \Common\Domain\Entity\User\Permission
      */
     protected function find(int $id): Permission
     {
@@ -122,9 +100,6 @@ class Resource
 
     /**
      * 设置权限资源授权.
-     *
-     * @param int   $permissionId
-     * @param array $resourceId
      */
     protected function setPermissionResource(int $permissionId, array $resourceId): void
     {
@@ -147,9 +122,6 @@ class Resource
 
     /**
      * 创建授权实体.
-     *
-     * @param int $permissionId
-     * @param int $resourceId
      *
      * @return \Common\Domain\Entity\EntityPermissionResource
      */

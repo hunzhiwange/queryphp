@@ -20,9 +20,6 @@ namespace Common\Infra\Helper;
  * ``` php
  * f('Common\\Infra\\Helper\\message_with_time');
  * ```
- *
- * @param string $message
- * @param string $format
  */
 function message_with_time(string $message, string $format = 'Y-m-d H:i:s'): string
 {

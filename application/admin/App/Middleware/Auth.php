@@ -75,9 +75,6 @@ class Auth extends BaseAuth
     /**
      * 请求
      *
-     * @param \Closure              $next
-     * @param \Leevel\Http\IRequest $request
-     *
      * @throws \Common\Infra\Exception\UnauthorizedHttpException
      */
     public function handle(Closure $next, IRequest $request): void
@@ -107,10 +104,6 @@ class Auth extends BaseAuth
 
     /**
      * 是否为忽略路由.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return bool
      */
     private function isIgnoreRouter(IRequest $request): bool
     {
@@ -119,10 +112,6 @@ class Auth extends BaseAuth
 
     /**
      * 整理 token 数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return string
      */
     private function normalizeToken(IRequest $request): string
     {
@@ -139,9 +128,6 @@ class Auth extends BaseAuth
     /**
      * 验证是否锁定.
      *
-     * @param \Leevel\Http\IRequest $request
-     * @param string                $token
-     *
      * @throws \Admin\App\Exception\LockException
      */
     private function validateLock(IRequest $request, string $token): void
@@ -154,10 +140,6 @@ class Auth extends BaseAuth
 
     /**
      * 是否为忽略权限.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return bool
      */
     private function isIgnorePermission(IRequest $request): bool
     {
@@ -166,8 +148,6 @@ class Auth extends BaseAuth
 
     /**
      * 权限校验.
-     *
-     * @param \Leevel\Http\IRequest $request
      *
      * @throws \Common\Infra\Exception\BusinessException
      */

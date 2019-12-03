@@ -36,8 +36,6 @@ class Code
 
     /**
      * 构造函数.
-     *
-     * @param \Common\Domain\Service\Login\Code $service
      */
     public function __construct(Service $service)
     {
@@ -46,10 +44,6 @@ class Code
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return string
      */
     public function handle(array $input): string
     {

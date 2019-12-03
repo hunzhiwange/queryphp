@@ -49,9 +49,6 @@ class Update
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
-     * @param \Leevel\Auth\Hash                $hash
      */
     public function __construct(IUnitOfWork $w, Hash $hash)
     {
@@ -61,10 +58,6 @@ class Update
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -77,10 +70,6 @@ class Update
 
     /**
      * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\User
      */
     protected function save(array $input): User
     {
@@ -94,10 +83,6 @@ class Update
 
     /**
      * 查找存在角色.
-     *
-     * @param int $userId
-     *
-     * @return \Leevel\Collection\Collection
      */
     protected function findRoles(int $userId): Collection
     {
@@ -110,10 +95,6 @@ class Update
 
     /**
      * 验证参数.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\User
      */
     protected function entity(array $input): User
     {
@@ -125,10 +106,6 @@ class Update
 
     /**
      * 查找实体.
-     *
-     * @param int $id
-     *
-     * @return \Common\Domain\Entity\User\User
      */
     protected function find(int $id): User
     {
@@ -139,10 +116,6 @@ class Update
 
     /**
      * 创建密码
-     *
-     * @param string $password
-     *
-     * @return string
      */
     protected function createPassword(string $password): string
     {
@@ -151,10 +124,6 @@ class Update
 
     /**
      * 组装实体数据.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     protected function data(array $input): array
     {

@@ -32,8 +32,6 @@ class Destroy
 
     /**
      * 返回实体.
-     *
-     * @return string
      */
     private function entity(): string
     {

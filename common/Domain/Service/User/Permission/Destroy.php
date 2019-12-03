@@ -33,8 +33,6 @@ class Destroy
 
     /**
      * 返回实体.
-     *
-     * @return string
      */
     private function entity(): string
     {
@@ -43,8 +41,6 @@ class Destroy
 
     /**
      * 校验.
-     *
-     * @param array $input
      */
     private function validate(array $input): void
     {
@@ -53,8 +49,6 @@ class Destroy
 
     /**
      * 判断是否存在子项.
-     *
-     * @param int $id
      *
      * @throws \Common\Infra\Exception\BusinessException
      */

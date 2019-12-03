@@ -30,9 +30,6 @@ class Permission
     /**
      * call.
      *
-     * @param string $method
-     * @param array  $args
-     *
      * @return mixed
      */
     public static function __callStatic(string $method, array $args)

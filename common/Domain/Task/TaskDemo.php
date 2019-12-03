@@ -29,12 +29,6 @@ class TaskDemo
 {
     /**
      * 响应.
-     *
-     * @param int            $arg1
-     * @param int            $arg2
-     * @param \Swoole\Server $server
-     * @param int            $taskId
-     * @param int            $fromId
      */
     public function handle(int $arg1, int $arg2, SwooleServer $server, int $taskId, int $fromId): void
     {

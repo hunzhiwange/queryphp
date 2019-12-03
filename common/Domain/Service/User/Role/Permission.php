@@ -39,8 +39,6 @@ class Permission
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -49,10 +47,6 @@ class Permission
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -63,10 +57,6 @@ class Permission
 
     /**
      * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\Role
      */
     protected function save(array $input): Role
     {
@@ -79,10 +69,6 @@ class Permission
 
     /**
      * 查找存在权限.
-     *
-     * @param int $roleId
-     *
-     * @return \Leevel\Collection\Collection
      */
     protected function findPermissions(int $roleId): Collection
     {
@@ -95,10 +81,6 @@ class Permission
 
     /**
      * 验证参数.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\Role
      */
     protected function entity(array $input): Role
     {
@@ -107,10 +89,6 @@ class Permission
 
     /**
      * 查找实体.
-     *
-     * @param int $id
-     *
-     * @return \Common\Domain\Entity\User\Role
      */
     protected function find(int $id): Role
     {
@@ -119,9 +97,6 @@ class Permission
 
     /**
      * 设置权限授权.
-     *
-     * @param int   $roleId
-     * @param array $permissionId
      */
     protected function setRolePermission(int $roleId, array $permissionId): void
     {
@@ -143,9 +118,6 @@ class Permission
 
     /**
      * 创建授权实体.
-     *
-     * @param int $roleId
-     * @param int $permissionId
      *
      * @return \Common\Domain\Entity\EntityRolePermission
      */

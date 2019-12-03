@@ -29,9 +29,6 @@ class Code
 {
     /**
      * 设置验证码
-     *
-     * @param string $id
-     * @param string $code
      */
     public function set(string $id, string $code): void
     {
@@ -40,10 +37,6 @@ class Code
 
     /**
      * 获取验证码
-     *
-     * @param string $id
-     *
-     * @return string
      */
     public function get(string $id): string
     {

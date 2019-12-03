@@ -33,8 +33,6 @@ class User extends Index
 {
     /**
      * 扫描路径.
-     *
-     * @return array
      */
     protected function path(): array
     {

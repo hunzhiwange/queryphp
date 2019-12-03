@@ -29,8 +29,6 @@ class Lock
 {
     /**
      * 锁屏.
-     *
-     * @param string $id
      */
     public function set(string $id): void
     {
@@ -39,8 +37,6 @@ class Lock
 
     /**
      * 解锁
-     *
-     * @param string $id
      */
     public function delete(string $id): void
     {
@@ -49,10 +45,6 @@ class Lock
 
     /**
      * 是否锁定.
-     *
-     * @param string $id
-     *
-     * @return bool
      */
     public function has(string $id): bool
     {

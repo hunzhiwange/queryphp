@@ -44,11 +44,6 @@ class Unlock
 
     /**
      * 响应方法.
-     *
-     * @param \Leevel\Http\IRequest          $request
-     * @param \Admin\App\Service\User\Unlock $service
-     *
-     * @return array
      */
     public function handle(IRequest $request, Service $service): array
     {
@@ -57,10 +52,6 @@ class Unlock
 
     /**
      * 扩展输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
      */
     private function extendInput(IRequest $request): array
     {
@@ -72,8 +63,6 @@ class Unlock
 
     /**
      * 获取 Token.
-     *
-     * @return string
      */
     private function token(): string
     {
@@ -82,8 +71,6 @@ class Unlock
 
     /**
      * 获取用户 ID.
-     *
-     * @return int
      */
     private function id(): int
     {

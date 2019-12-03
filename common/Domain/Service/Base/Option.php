@@ -37,8 +37,6 @@ class Option
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -47,10 +45,6 @@ class Option
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -61,8 +55,6 @@ class Option
 
     /**
      * 保存.
-     *
-     * @param array $input
      */
     protected function save(array $input): void
     {
@@ -75,11 +67,6 @@ class Option
 
     /**
      * 组成实体.
-     *
-     * @param string $name
-     * @param string $value
-     *
-     * @return \Common\Domain\Entity\Base\Option
      */
     protected function entity(string $name, string $value): Options
     {

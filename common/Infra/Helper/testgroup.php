@@ -20,8 +20,6 @@ namespace Common\Infra\Helper;
  * ``` php
  * echo f('Common\\Infra\\Helper\\testgroup_fn1');
  * ```
- *
- * @return string
  */
 function testgroup_fn1(): string
 {
@@ -34,8 +32,6 @@ function testgroup_fn1(): string
  * ``` php
  * echo f('Common\\Infra\\Helper\\testgroup_fn2');
  * ```
- *
- * @return string
  */
 function testgroup_fn2(): string
 {

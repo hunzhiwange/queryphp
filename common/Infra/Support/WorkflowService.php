@@ -34,8 +34,6 @@ trait WorkflowService
 
     /**
      * 输入数据白名单.
-     *
-     * @param array $input
      */
     private function allowedInput(array &$input): void
     {
@@ -44,8 +42,6 @@ trait WorkflowService
 
     /**
      * 过滤输入数据.
-     *
-     * @param array $input
      */
     private function filterInput(array &$input): void
     {
@@ -54,8 +50,6 @@ trait WorkflowService
 
     /**
      * 校验输入数据.
-     *
-     * @param array $input
      */
     private function validateInput(array $input): void
     {
@@ -64,8 +58,6 @@ trait WorkflowService
 
     /**
      * 输入数据白名单基础方法.
-     *
-     * @param array $input
      */
     private function allowedInputBase(array &$input): void
     {
@@ -74,8 +66,6 @@ trait WorkflowService
 
     /**
      * 过滤输入数据基础方法.
-     *
-     * @param array $input
      */
     private function filterInputBase(array &$input): void
     {
@@ -85,8 +75,6 @@ trait WorkflowService
 
     /**
      * 校验输入数据基础方法.
-     *
-     * @param array $input
      *
      * @throws \Common\Infra\Exception\BusinessException
      * @throws \InvalidArgumentException
@@ -113,9 +101,6 @@ trait WorkflowService
 
     /**
      * 填充输入数据.
-     *
-     * @param array $input
-     * @param array $defaultInput
      */
     private function fillDefaultInput(array &$input, array $defaultInput): void
     {
@@ -128,10 +113,6 @@ trait WorkflowService
 
     /**
      * 过滤空字符串值.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     private function filterEmptyStringInput(array $input): array
     {

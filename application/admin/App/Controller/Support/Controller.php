@@ -31,10 +31,7 @@ trait Controller
     /**
      * 调用服务.
      *
-     * @param \Leevel\Http\IRequest $request
-     * @param object                $service
-     *
-     * @return array
+     * @param object $service
      */
     private function main(IRequest $request, $service): array
     {
@@ -43,10 +40,6 @@ trait Controller
 
     /**
      * 输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
      */
     private function input(IRequest $request): array
     {
@@ -61,10 +54,6 @@ trait Controller
 
     /**
      * Restful 输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
      */
     private function restfulInput(IRequest $request): array
     {

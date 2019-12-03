@@ -32,8 +32,6 @@ class Status
 
     /**
      * 返回实体.
-     *
-     * @return string
      */
     private function entity(): string
     {

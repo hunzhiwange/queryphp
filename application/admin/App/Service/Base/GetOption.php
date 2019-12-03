@@ -36,8 +36,6 @@ class GetOption
 
     /**
      * 构造函数.
-     *
-     * @param \Common\Domain\Service\Base\GetOption $service
      */
     public function __construct(Service $service)
     {
@@ -46,8 +44,6 @@ class GetOption
 
     /**
      * 响应方法.
-     *
-     * @return array
      */
     public function handle(): array
     {

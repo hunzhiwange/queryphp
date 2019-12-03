@@ -18,11 +18,6 @@ use Leevel\Database\IDatabase;
 if (!function_exists('permission')) {
     /**
      * 校验权限.
-     *
-     * @param string      $resource
-     * @param null|string $method
-     *
-     * @return bool
      */
     function permission(string $resource, ?string $method = null): bool
     {

@@ -48,9 +48,6 @@ trait Helper
 
     /**
      * 执行数据填充.
-     *
-     * @param string $test
-     * @param bool   $debug
      */
     protected function seedRun(string $test, bool $debug = false): void
     {
@@ -92,9 +89,6 @@ trait Helper
 
     /**
      * 执行数据填充清理.
-     *
-     * @param string $test
-     * @param bool   $debug
      */
     protected function seedClear(string $test, bool $debug = false): void
     {

@@ -44,11 +44,6 @@ class Status
 
     /**
      * 响应方法.
-     *
-     * @param \Leevel\Http\IRequest                $request
-     * @param \Admin\App\Service\Permission\Status $service
-     *
-     * @return array
      */
     public function handle(IRequest $request, Service $service): array
     {

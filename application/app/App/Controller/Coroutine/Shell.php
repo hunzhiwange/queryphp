@@ -33,8 +33,6 @@ class Shell
 {
     /**
      * 改变顺序.
-     *
-     * @return string
      */
     public function handle(): string
     {
@@ -56,8 +54,6 @@ class Shell
 
     /**
      * 输出消息.
-     *
-     * @param string $message
      */
     private function message(string $message): void
     {

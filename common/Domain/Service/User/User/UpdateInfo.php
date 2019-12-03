@@ -50,8 +50,6 @@ class UpdateInfo
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -60,10 +58,6 @@ class UpdateInfo
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -76,10 +70,6 @@ class UpdateInfo
 
     /**
      * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\User
      */
     protected function save(array $input): User
     {
@@ -91,10 +81,6 @@ class UpdateInfo
 
     /**
      * 验证参数.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\User
      */
     protected function entity(array $input): User
     {
@@ -106,10 +92,6 @@ class UpdateInfo
 
     /**
      * 查找实体.
-     *
-     * @param int $id
-     *
-     * @return \Common\Domain\Entity\User\User
      */
     protected function find(int $id): User
     {
@@ -120,10 +102,6 @@ class UpdateInfo
 
     /**
      * 组装实体数据.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     protected function data(array $input): array
     {

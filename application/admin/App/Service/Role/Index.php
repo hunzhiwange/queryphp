@@ -36,8 +36,6 @@ class Index
 
     /**
      * 构造函数.
-     *
-     * @param \Common\Domain\Service\User\Role\Index $service
      */
     public function __construct(Service $service)
     {
@@ -46,10 +44,6 @@ class Index
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {

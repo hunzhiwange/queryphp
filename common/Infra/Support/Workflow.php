@@ -30,11 +30,7 @@ trait Workflow
     /**
      * 执行工作流.
      *
-     * @param array $input
-     *
      * @throws \InvalidArgumentException
-     *
-     * @return array
      */
     private function workflow(array &$input): array
     {
@@ -61,8 +57,6 @@ trait Workflow
      * 整理工作流.
      *
      * @throws \InvalidArgumentException
-     *
-     * @return array
      */
     private function normalizeWorkflow(): array
     {

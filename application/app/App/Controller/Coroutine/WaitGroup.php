@@ -34,8 +34,6 @@ class WaitGroup
 {
     /**
      * 改变顺序.
-     *
-     * @return string
      */
     public function handle(): string
     {
@@ -103,8 +101,6 @@ class WaitGroup
 
     /**
      * 输出消息.
-     *
-     * @param string $message
      */
     private function message(string $message): void
     {

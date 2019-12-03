@@ -70,8 +70,6 @@ class Index
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -80,10 +78,6 @@ class Index
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -92,10 +86,6 @@ class Index
 
     /**
      * 准备用户数据.
-     *
-     * @param \Common\Domain\Entity\User\User $user
-     *
-     * @return array
      */
     protected function prepareItem(User $user): array
     {
@@ -107,10 +97,6 @@ class Index
 
     /**
      * 查询条件.
-     *
-     * @param array $input
-     *
-     * @return \Closure
      */
     protected function condition(array $input): Closure
     {
@@ -122,10 +108,6 @@ class Index
 
     /**
      * 过滤输入数据.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     private function main(array &$input): array
     {
@@ -137,8 +119,6 @@ class Index
 
     /**
      * 默认数据填充.
-     *
-     * @param array $input
      */
     private function defaultInput(array &$input): void
     {
@@ -155,8 +135,6 @@ class Index
 
     /**
      * 过滤数据规则.
-     *
-     * @param array $input
      */
     private function filterInputRules(): array
     {

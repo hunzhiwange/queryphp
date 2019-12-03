@@ -45,11 +45,6 @@ class UpdateInfo
 
     /**
      * 响应方法.
-     *
-     * @param \Leevel\Http\IRequest              $request
-     * @param \Admin\App\Service\User\UpdateInfo $service
-     *
-     * @return array
      */
     public function handle(IRequest $request, Service $service): array
     {
@@ -58,10 +53,6 @@ class UpdateInfo
 
     /**
      * 扩展输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
      */
     private function extendInput(IRequest $request): array
     {
@@ -70,8 +61,6 @@ class UpdateInfo
 
     /**
      * 获取用户 ID.
-     *
-     * @return int
      */
     private function id(): int
     {

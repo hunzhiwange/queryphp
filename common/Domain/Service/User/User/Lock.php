@@ -44,8 +44,6 @@ class Lock
 
     /**
      * 构造函数.
-     *
-     * @param \Admin\Infra\Lock $lock
      */
     public function __construct(CacheLock $lock)
     {
@@ -54,10 +52,6 @@ class Lock
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {

@@ -28,8 +28,6 @@ class Show
 {
     /**
      * 响应.
-     *
-     * @return string
      */
     public function handle(): string
     {

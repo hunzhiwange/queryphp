@@ -33,8 +33,6 @@ class Demo3
 {
     /**
      * 单个协程并不能提升性能.
-     *
-     * @return string
      */
     public function handle(): string
     {
@@ -61,8 +59,6 @@ class Demo3
 
     /**
      * 输出消息.
-     *
-     * @param string $message
      */
     private function message(string $message): void
     {

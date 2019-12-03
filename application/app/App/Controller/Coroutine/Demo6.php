@@ -35,8 +35,6 @@ class Demo6
 {
     /**
      * Redis 测试.
-     *
-     * @return string
      */
     public function handle(): string
     {
@@ -114,8 +112,6 @@ class Demo6
 
     /**
      * 输出消息.
-     *
-     * @param string $message
      */
     private function message(string $message): void
     {

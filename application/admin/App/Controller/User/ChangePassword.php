@@ -46,11 +46,6 @@ class ChangePassword
 
     /**
      * 响应方法.
-     *
-     * @param \Leevel\Http\IRequest                  $request
-     * @param \Admin\App\Service\User\ChangePassword $service
-     *
-     * @return array
      */
     public function handle(IRequest $request, Service $service): array
     {
@@ -59,10 +54,6 @@ class ChangePassword
 
     /**
      * 扩展输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
      */
     private function extendInput(IRequest $request): array
     {
@@ -71,8 +62,6 @@ class ChangePassword
 
     /**
      * 获取用户 ID.
-     *
-     * @return int
      */
     private function id(): int
     {

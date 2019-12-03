@@ -24,10 +24,6 @@ namespace Common\Infra\Helper;
  * ```
  * echo f('Common\\Infra\\Helper\\array_to_form', ['foo' => 'bar']);
  * ```
- *
- * @param array $data
- *
- * @return string
  */
 function array_to_form(array $data): string
 {

@@ -30,10 +30,6 @@ class Permission extends Repository
 {
     /**
      * 是否存在子项.
-     *
-     * @param int $id
-     *
-     * @return bool
      */
     public function hasChildren(int $id): bool
     {

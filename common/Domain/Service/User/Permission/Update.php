@@ -47,8 +47,6 @@ class Update
 
     /**
      * 构造函数.
-     *
-     * @param \Leevel\Database\Ddd\IUnitOfWork $w
      */
     public function __construct(IUnitOfWork $w)
     {
@@ -57,10 +55,6 @@ class Update
 
     /**
      * 响应方法.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     public function handle(array $input): array
     {
@@ -72,10 +66,6 @@ class Update
 
     /**
      * 保存.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\Permission
      */
     protected function save(array $input): Permission
     {
@@ -88,10 +78,6 @@ class Update
 
     /**
      * 验证参数.
-     *
-     * @param array $input
-     *
-     * @return \Common\Domain\Entity\User\Permission
      */
     protected function entity(array $input): Permission
     {
@@ -103,10 +89,6 @@ class Update
 
     /**
      * 查找实体.
-     *
-     * @param int $id
-     *
-     * @return \Common\Domain\Entity\User\Permission
      */
     protected function find(int $id): Permission
     {
@@ -117,10 +99,6 @@ class Update
 
     /**
      * 组装实体数据.
-     *
-     * @param array $input
-     *
-     * @return array
      */
     protected function data(array $input): array
     {
@@ -136,10 +114,6 @@ class Update
 
     /**
      * 分析父级数据.
-     *
-     * @param array $pid
-     *
-     * @return int
      */
     protected function parseParentId(array $pid): int
     {

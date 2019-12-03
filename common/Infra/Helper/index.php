@@ -20,10 +20,6 @@ namespace Common\Infra\Helper;
  * ``` php
  * echo f('Common\\Infra\\Helper\\foo_bar');
  * ```
- *
- * @param string $extend
- *
- * @return string
  */
 function foo_bar(string $extend = ''): string
 {

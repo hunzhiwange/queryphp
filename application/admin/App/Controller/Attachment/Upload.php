@@ -44,10 +44,7 @@ class Upload
     /**
      * 响应方法.
      *
-     * @param \Leevel\Http\IRequest               $request
      * @param \Admin\App\Service\Attachment\Index $service
-     *
-     * @return string
      */
     public function handle(IRequest $request, Service $service): string
     {

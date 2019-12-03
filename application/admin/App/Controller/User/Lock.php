@@ -35,11 +35,6 @@ class Lock
 
     /**
      * 响应方法.
-     *
-     * @param \Leevel\Http\IRequest        $request
-     * @param \Admin\App\Service\User\Lock $service
-     *
-     * @return array
      */
     public function handle(IRequest $request, Service $service): array
     {
@@ -48,10 +43,6 @@ class Lock
 
     /**
      * 输入数据.
-     *
-     * @param \Leevel\Http\IRequest $request
-     *
-     * @return array
      */
     private function input(IRequest $request): array
     {
@@ -60,8 +51,6 @@ class Lock
 
     /**
      * 获取 Token.
-     *
-     * @return string
      */
     private function token(): string
     {

@@ -30,7 +30,6 @@ class Permission
     /**
      * 设置权限.
      *
-     * @param string $id
      * @param string $permission
      */
     public function set(string $id, array $permission): void
@@ -40,8 +39,6 @@ class Permission
 
     /**
      * 获取权限.
-     *
-     * @param string $id
      *
      * @return string
      */

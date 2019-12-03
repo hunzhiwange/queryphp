@@ -30,10 +30,6 @@ class Index
 {
     /**
      * 响应方法.
-     *
-     * @param \Admin\App\Service\Permission\Index $service
-     *
-     * @return array
      */
     public function handle(Service $service): array
     {
