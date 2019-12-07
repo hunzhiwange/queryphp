@@ -68,8 +68,9 @@ trait Workflow
 
         /*
          * 工作流初始化.
-         * 与 __construct 唯一不同的是会传入输入值.
-         * 这是一个可选的值.
+         *
+         * - 与 __construct 唯一不同的是会传入输入值.
+         * - 这是一个可选的值.
          */
         if (method_exists($this, 'init')) {
             array_unshift($workflow, 'init');
@@ -83,8 +84,9 @@ trait Workflow
 
         /*
          * 工作流清理.
-         * 与 __destruct 唯一不同的是会传入输入值.
-         * 这是一个可选的值.
+         *
+         * - 与 __destruct 唯一不同的是会传入输入值.
+         * - 这是一个可选的值.
          */
         if (method_exists($this, 'drop')) {
             $workflow[] = 'drop';
