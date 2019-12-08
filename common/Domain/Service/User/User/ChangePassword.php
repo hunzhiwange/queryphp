@@ -98,7 +98,7 @@ class ChangePassword
     }
 
     /**
-     * 创建密码
+     * 创建密码.
      */
     protected function createPassword(string $password): string
     {
@@ -106,7 +106,7 @@ class ChangePassword
     }
 
     /**
-     * 校验旧密码
+     * 校验旧密码.
      */
     protected function verifyPassword(string $password, string $hash): bool
     {

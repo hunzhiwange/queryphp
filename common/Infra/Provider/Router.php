@@ -36,8 +36,9 @@ class Router extends RouterProvider
     protected string $controllerDir = 'App\\Controller';
 
     /**
-     * 中间件分组
-     * 分组可以很方便地批量调用组件.
+     * 中间件分组.
+     *
+     * - 分组可以很方便地批量调用组件.
      *
      * @var array
      */
@@ -60,9 +61,10 @@ class Router extends RouterProvider
     ];
 
     /**
-     * 中间件别名
-     * HTTP 中间件提供一个方便的机制来过滤进入应用程序的 HTTP 请求
-     * 例外在应用执行结束后响应环节也会调用 HTTP 中间件.
+     * 中间件别名.
+     *
+     * - HTTP 中间件提供一个方便的机制来过滤进入应用程序的 HTTP 请求
+     * - 例外在应用执行结束后响应环节也会调用 HTTP 中间件.
      *
      * @var array
      */

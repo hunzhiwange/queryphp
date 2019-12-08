@@ -99,7 +99,7 @@ trait Status
         $validator = Validate::make(
             $input,
             [
-                'ids'          => 'required|array',
+                'ids'          => 'required|is_array',
             ],
             [
                 'ids'          => 'ID',
