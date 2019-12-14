@@ -20,12 +20,6 @@ use Leevel\Http\IResponse;
 
 /**
  * Cors 中间件.
- *
- * @author Xiangmin Liu <635750556@qq.com>
- *
- * @since 2019.08.07
- *
- * @version 1.0
  */
 class Cors
 {

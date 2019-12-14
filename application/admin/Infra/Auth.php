@@ -16,12 +16,6 @@ namespace Admin\Infra;
 
 /**
  * 校验权限.
- *
- * @author Xiangmin Liu <635750556@qq.com>
- *
- * @since 2018.11.18
- *
- * @version 1.0
  */
 class Auth
 {

@@ -22,11 +22,6 @@ use Leevel\Http\IRequest;
 /**
  * 解锁.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.21
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Unlock

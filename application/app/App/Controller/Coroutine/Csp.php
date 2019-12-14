@@ -19,12 +19,6 @@ use Common\Infra\Helper\message_with_time;
 /**
  * 协程：Go + Chan + Defer.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.07.26
- *
- * @version 1.0
- *
  * @see https://wiki.swoole.com/wiki/page/p-csp.html
  * @codeCoverageIgnore
  */

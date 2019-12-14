@@ -22,11 +22,6 @@ use Leevel\Http\IRequest;
 /**
  * 用户权限获取.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.22
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Permission

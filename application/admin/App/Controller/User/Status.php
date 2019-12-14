@@ -21,11 +21,6 @@ use Leevel\Http\IRequest;
 /**
  * 批量修改用户状态.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Status

@@ -17,11 +17,6 @@ namespace App\App\Controller\Api;
 /**
  * api tests.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.08.31
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Test

@@ -19,12 +19,6 @@ use Common\Infra\Helper\message_with_time;
 /**
  * 协程：实现 Go 语言风格的 defer.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.07.27
- *
- * @version 1.0
- *
  * @see https://wiki.swoole.com/wiki/page/p-go_defer.html
  * @codeCoverageIgnore
  */

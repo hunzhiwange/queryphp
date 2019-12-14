@@ -18,14 +18,7 @@ use Exception;
 use Leevel\Kernel\Exception\HttpException;
 
 /**
- * 锁定
- * 锁定异常 : 424.
- *
- * @author Xiangmin Liu <635750556@qq.com>
- *
- * @since 2018.12.01
- *
- * @version 1.0
+ * 锁定异常.
  */
 class LockException extends HttpException
 {

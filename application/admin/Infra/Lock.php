@@ -18,12 +18,6 @@ use Leevel\Cache\Proxy\Cache;
 
 /**
  * 锁屏存储.
- *
- * @author Xiangmin Liu <635750556@qq.com>
- *
- * @since 2018.11.18
- *
- * @version 1.0
  */
 class Lock
 {

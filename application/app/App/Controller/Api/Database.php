@@ -19,11 +19,6 @@ use Leevel\Database\Proxy\Db;
 /**
  * 查询数据库.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.11.08
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Database

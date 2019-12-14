@@ -21,11 +21,6 @@ use Swoole\Coroutine\Channel;
 /**
  * 数据库.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.07.27
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Database3
