@@ -43,9 +43,6 @@ trait Controller
         return $input;
     }
 
-    /**
-     * Restful 输入数据.
-     */
     private function restfulInput(IRequest $request): array
     {
         return [
