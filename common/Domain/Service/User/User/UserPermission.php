@@ -22,12 +22,7 @@ use Leevel\Database\Ddd\IUnitOfWork;
  */
 class UserPermission
 {
-    /**
-     * 事务工作单元.
-     *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
-     */
-    protected $w;
+    private IUnitOfWork $w;
 
     /**
      * 构造函数.

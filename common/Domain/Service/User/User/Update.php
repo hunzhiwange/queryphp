@@ -28,18 +28,13 @@ class Update
     use BaseStoreUpdate;
 
     /**
-     * 事务工作单元.
-     *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
-     */
-    protected $w;
-
-    /**
      * Hash 组件.
      *
      * @var \Leevel\Auth\Hash
      */
     protected $hash;
+
+    private IUnitOfWork $w;
 
     /**
      * 构造函数.

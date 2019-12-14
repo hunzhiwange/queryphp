@@ -26,13 +26,6 @@ use Leevel\Validate\Proxy\Validate as Validates;
 class ChangePassword
 {
     /**
-     * 事务工作单元.
-     *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
-     */
-    protected $w;
-
-    /**
      * Hash 组件.
      *
      * @var \Leevel\Auth\Hash
@@ -45,6 +38,7 @@ class ChangePassword
      * @var array
      */
     protected $input;
+    private IUnitOfWork $w;
 
     /**
      * 构造函数.

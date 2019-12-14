@@ -27,13 +27,6 @@ use Leevel\Validate\Proxy\Validate as Validates;
 class Unlock
 {
     /**
-     * 事务工作单元.
-     *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
-     */
-    protected $w;
-
-    /**
      * Hash 组件.
      *
      * @var \Leevel\Auth\Hash
@@ -53,6 +46,7 @@ class Unlock
      * @var array
      */
     protected $input;
+    private IUnitOfWork $w;
 
     /**
      * 构造函数.

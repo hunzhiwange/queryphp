@@ -24,12 +24,7 @@ use Leevel\Validate\Proxy\Validate;
  */
 trait Destroy
 {
-    /**
-     * 事务工作单元.
-     *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
-     */
-    protected $w;
+    private IUnitOfWork $w;
 
     /**
      * 构造函数.

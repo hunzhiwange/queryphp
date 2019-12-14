@@ -26,18 +26,12 @@ use Leevel\Validate\UniqueRule;
 class Update
 {
     /**
-     * 事务工作单元.
-     *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
-     */
-    protected $w;
-
-    /**
      * 输入数据.
      *
      * @var array
      */
     protected $input;
+    private IUnitOfWork $w;
 
     /**
      * 构造函数.
