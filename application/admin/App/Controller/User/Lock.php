@@ -22,11 +22,6 @@ use Leevel\Http\IRequest;
 /**
  * 锁定管理面板.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.21
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Lock

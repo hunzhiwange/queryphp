@@ -21,11 +21,6 @@ use Leevel\Http\IRequest;
 /**
  * 用户删除.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Destroy

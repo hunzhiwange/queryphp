@@ -21,11 +21,6 @@ use Leevel\Http\IRequest;
 /**
  * 公共搜索列表.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.01.14
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Index

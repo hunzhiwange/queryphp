@@ -19,12 +19,6 @@ use Leevel\Router\IRouter;
 
 /**
  * 控制器.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.03.17
- *
- * @version 1.0
  */
 trait Controller
 {

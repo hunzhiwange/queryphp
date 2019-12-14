@@ -21,11 +21,6 @@ use Leevel\Http\IRequest;
 /**
  * 资源保存.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.12.19
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Store

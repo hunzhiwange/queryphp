@@ -21,11 +21,6 @@ use Leevel\Http\IRequest;
 /**
  * 角色更新.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Update
