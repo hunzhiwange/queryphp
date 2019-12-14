@@ -32,9 +32,6 @@ trait Controller
         return $service->handle($this->input($request));
     }
 
-    /**
-     * 输入数据.
-     */
     private function input(IRequest $request): array
     {
         $input = $request->only($this->allowedInput);

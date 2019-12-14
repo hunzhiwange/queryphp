@@ -32,9 +32,6 @@ class Show
         return $this->main($request, $service);
     }
 
-    /**
-     * 输入数据.
-     */
     private function input(IRequest $request): array
     {
         return $this->restfulInput($request);

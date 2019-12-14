@@ -37,9 +37,6 @@ class Code
         return new Response($code, 200, ['Content-type' => 'image/png']);
     }
 
-    /**
-     * 输入数据.
-     */
     private function input(IRequest $request): array
     {
         return [
