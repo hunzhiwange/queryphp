@@ -37,7 +37,7 @@ class Upload
      *
      * @var array
      */
-    private $allowedInput = [
+    private array $allowedInput = [
         'file',
     ];
 

@@ -37,7 +37,7 @@ class Status
      *
      * @var array
      */
-    private $allowedInput = [
+    private array $allowedInput = [
         'ids',
         'status',
     ];

@@ -37,7 +37,7 @@ class Option
      *
      * @var array
      */
-    private $allowedInput = [
+    private array $allowedInput = [
         'site_name',
         'site_close',
     ];

@@ -37,7 +37,7 @@ class Resource
      *
      * @var array
      */
-    private $allowedInput = [
+    private array $allowedInput = [
         'id',
         'resource_id',
     ];

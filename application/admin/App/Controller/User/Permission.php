@@ -38,7 +38,7 @@ class Permission
      *
      * @var array
      */
-    private $allowedInput = [
+    private array $allowedInput = [
         'token',
         'refresh',
     ];

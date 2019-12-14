@@ -37,7 +37,7 @@ class Validate
      *
      * @var array
      */
-    private $allowedInput = [
+    private array $allowedInput = [
         'app_id',
         'app_key',
         'name',

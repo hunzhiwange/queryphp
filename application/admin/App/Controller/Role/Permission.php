@@ -37,7 +37,7 @@ class Permission
      *
      * @var array
      */
-    private $allowedInput = [
+    private array $allowedInput = [
         'id',
         'permission_id',
     ];

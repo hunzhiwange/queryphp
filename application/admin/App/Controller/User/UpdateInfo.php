@@ -38,7 +38,7 @@ class UpdateInfo
      *
      * @var array
      */
-    private $allowedInput = [
+    private array $allowedInput = [
         'email',
         'mobile',
     ];

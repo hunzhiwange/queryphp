@@ -37,7 +37,7 @@ class Index
      *
      * @var array
      */
-    private $allowedInput = [
+    private array $allowedInput = [
         'key',
         'status',
         'page',

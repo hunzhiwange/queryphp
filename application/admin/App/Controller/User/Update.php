@@ -37,7 +37,7 @@ class Update
      *
      * @var array
      */
-    private $allowedInput = [
+    private array $allowedInput = [
         'id',
         'num',
         'status',

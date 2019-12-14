@@ -38,7 +38,7 @@ class ChangePassword
      *
      * @var array
      */
-    private $allowedInput = [
+    private array $allowedInput = [
         'old_pwd',
         'new_pwd',
         'confirm_pwd',

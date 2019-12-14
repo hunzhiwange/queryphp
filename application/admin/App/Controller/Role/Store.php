@@ -37,7 +37,7 @@ class Store
      *
      * @var array
      */
-    private $allowedInput = [
+    private array $allowedInput = [
         'name',
         'num',
         'status',

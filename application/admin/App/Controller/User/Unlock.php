@@ -38,7 +38,7 @@ class Unlock
      *
      * @var array
      */
-    private $allowedInput = [
+    private array $allowedInput = [
         'password',
     ];
 
