@@ -30,7 +30,7 @@ class Update
      *
      * @var array
      */
-    protected $input;
+    private $input;
     private IUnitOfWork $w;
 
     /**
@@ -55,7 +55,7 @@ class Update
     /**
      * 保存.
      */
-    protected function save(array $input): Resource
+    private function save(array $input): Resource
     {
         $this->w
             ->persist($entity = $this->entity($input))
@@ -68,7 +68,7 @@ class Update
     /**
      * 验证参数.
      */
-    protected function entity(array $input): Resource
+    private function entity(array $input): Resource
     {
         $entity = $this->find((int) $input['id']);
         $entity->withProps($this->data($input));
@@ -79,7 +79,7 @@ class Update
     /**
      * 查找实体.
      */
-    protected function find(int $id): Resource
+    private function find(int $id): Resource
     {
         return $this->w
             ->repository(Resource::class)
@@ -89,7 +89,7 @@ class Update
     /**
      * 组装实体数据.
      */
-    protected function data(array $input): array
+    private function data(array $input): array
     {
         return [
             'name'       => trim($input['name']),
@@ -103,7 +103,7 @@ class Update
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateArgs()
+    private function validateArgs()
     {
         $validator = Validate::make(
             $this->input,

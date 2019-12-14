@@ -27,7 +27,7 @@ class Index
      *
      * @var string
      */
-    private $topNamespace;
+    private string $topNamespace;
 
     /**
      * 特殊的语言保留关键字.
@@ -36,7 +36,7 @@ class Index
      *
      * @var array
      */
-    private $keyMap = [
+    private array $keyMap = [
         'return' => 'returns',
         'list'   => 'lists',
         'new'    => 'news',
@@ -102,7 +102,7 @@ class Index
     /**
      * 转换搜索服务.
      */
-    protected function convertService(string $service): string
+    private function convertService(string $service): string
     {
         if (false !== strpos($service, '-')) {
             $service = str_replace('-', '_', $service);

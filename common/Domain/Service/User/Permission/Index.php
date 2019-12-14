@@ -50,7 +50,7 @@ class Index
     /**
      * 将节点载入节点树并返回树结构.
      */
-    protected function normalizeTree(Collection $entitys): array
+    private function normalizeTree(Collection $entitys): array
     {
         return $this
             ->createTree($entitys)
@@ -62,7 +62,7 @@ class Index
     /**
      * 生成节点树.
      */
-    protected function createTree(Collection $entitys): Tree
+    private function createTree(Collection $entitys): Tree
     {
         return new Tree($this->parseToNode($entitys));
     }
@@ -70,7 +70,7 @@ class Index
     /**
      * 转换为节点数组.
      */
-    protected function parseToNode(Collection $entitys): array
+    private function parseToNode(Collection $entitys): array
     {
         $node = [];
         foreach ($entitys as $e) {

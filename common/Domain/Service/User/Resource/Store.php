@@ -30,7 +30,7 @@ class Store
      *
      * @var array
      */
-    protected $input;
+    private $input;
     private IUnitOfWork $w;
 
     /**
@@ -55,7 +55,7 @@ class Store
     /**
      * 保存.
      */
-    protected function save(array $input): Resource
+    private function save(array $input): Resource
     {
         $this->w
             ->persist($entity = $this->entity($input))
@@ -68,7 +68,7 @@ class Store
     /**
      * 创建实体.
      */
-    protected function entity(array $input): Resource
+    private function entity(array $input): Resource
     {
         return new Resource($this->data($input));
     }
@@ -76,7 +76,7 @@ class Store
     /**
      * 组装实体数据.
      */
-    protected function data(array $input): array
+    private function data(array $input): array
     {
         return [
             'name'       => trim($input['name']),
@@ -90,7 +90,7 @@ class Store
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateArgs()
+    private function validateArgs()
     {
         $validator = Validate::make(
             $this->input,

@@ -47,7 +47,7 @@ class Show
     /**
      * 查找实体.
      */
-    protected function find(int $id): Permission
+    private function find(int $id): Permission
     {
         return $this->w->repository(Permission::class)->findOrFail($id);
     }

@@ -53,7 +53,7 @@ class App extends Provider
     /**
      * 注册 permission 服务.
      */
-    protected function permission(): void
+    private function permission(): void
     {
         $this->container->singleton('permission', function (IContainer $container) {
             $token = $container->make('request')->query->get('token', '');

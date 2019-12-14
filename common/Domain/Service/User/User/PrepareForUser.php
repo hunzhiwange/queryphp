@@ -49,7 +49,7 @@ class PrepareForUser
     /**
      * 准备用户数据.
      */
-    protected function prepareUser(User &$user): array
+    private function prepareUser(User &$user): array
     {
         $tmp = $user->toArray();
         $tmp['role'] = $user->role->toArray();

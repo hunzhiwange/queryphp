@@ -22,7 +22,7 @@ trait BaseStoreUpdate
     /**
      * 准备数据.
      */
-    protected function prepareData(User $user): array
+    private function prepareData(User $user): array
     {
         return (new PrepareForUser())->handle($user);
     }
@@ -30,7 +30,7 @@ trait BaseStoreUpdate
     /**
      * 设置用户授权.
      */
-    protected function setUserRole(int $userId, array $roleId): void
+    private function setUserRole(int $userId, array $roleId): void
     {
         $existRole = [];
         foreach ($roleId as $rid) {
@@ -50,7 +50,7 @@ trait BaseStoreUpdate
     /**
      * 创建授权实体.
      */
-    protected function entityUserRole(int $userId, int $roleId): EntityUserRole
+    private function entityUserRole(int $userId, int $roleId): EntityUserRole
     {
         return new EntityUserRole([
             'user_id' => $userId,

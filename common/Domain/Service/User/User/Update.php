@@ -32,7 +32,7 @@ class Update
      *
      * @var \Leevel\Auth\Hash
      */
-    protected $hash;
+    private $hash;
 
     private IUnitOfWork $w;
 
@@ -60,7 +60,7 @@ class Update
     /**
      * 保存.
      */
-    protected function save(array $input): User
+    private function save(array $input): User
     {
         $this->w->persist($entity = $this->entity($input));
         $this->setUserRole((int) $input['id'], $input['userRole']);
@@ -73,7 +73,7 @@ class Update
     /**
      * 查找存在角色.
      */
-    protected function findRoles(int $userId): Collection
+    private function findRoles(int $userId): Collection
     {
         return $this->w
             ->repository(EntityUserRole::class)
@@ -85,7 +85,7 @@ class Update
     /**
      * 验证参数.
      */
-    protected function entity(array $input): User
+    private function entity(array $input): User
     {
         $entity = $this->find((int) $input['id']);
         $entity->withProps($this->data($input));
@@ -96,7 +96,7 @@ class Update
     /**
      * 查找实体.
      */
-    protected function find(int $id): User
+    private function find(int $id): User
     {
         return $this->w
             ->repository(User::class)
@@ -106,7 +106,7 @@ class Update
     /**
      * 创建密码
      */
-    protected function createPassword(string $password): string
+    private function createPassword(string $password): string
     {
         return $this->hash->password($password);
     }
@@ -114,7 +114,7 @@ class Update
     /**
      * 组装实体数据.
      */
-    protected function data(array $input): array
+    private function data(array $input): array
     {
         $data = [
             'num'        => trim($input['num']),

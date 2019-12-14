@@ -47,7 +47,7 @@ class Permission
     /**
      * 保存.
      */
-    protected function save(array $input): Role
+    private function save(array $input): Role
     {
         $entity = $this->entity($input);
         $this->setRolePermission((int) $input['id'], $input['permission_id'] ?? []);
@@ -59,7 +59,7 @@ class Permission
     /**
      * 查找存在权限.
      */
-    protected function findPermissions(int $roleId): Collection
+    private function findPermissions(int $roleId): Collection
     {
         return $this->w
             ->repository(EntityRolePermission::class)
@@ -71,7 +71,7 @@ class Permission
     /**
      * 验证参数.
      */
-    protected function entity(array $input): Role
+    private function entity(array $input): Role
     {
         return $this->find((int) $input['id']);
     }
@@ -79,7 +79,7 @@ class Permission
     /**
      * 查找实体.
      */
-    protected function find(int $id): Role
+    private function find(int $id): Role
     {
         return $this->w->repository(Role::class)->findOrFail($id);
     }
@@ -87,7 +87,7 @@ class Permission
     /**
      * 设置权限授权.
      */
-    protected function setRolePermission(int $roleId, array $permissionId): void
+    private function setRolePermission(int $roleId, array $permissionId): void
     {
         $existPermission = [];
         foreach ($permissionId as $pid) {
@@ -110,7 +110,7 @@ class Permission
      *
      * @return \Common\Domain\Entity\EntityRolePermission
      */
-    protected function entityRolePermission(int $roleId, int $permissionId): EntityRolePermission
+    private function entityRolePermission(int $roleId, int $permissionId): EntityRolePermission
     {
         return new EntityRolePermission([
             'role_id'         => $roleId,

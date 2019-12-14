@@ -30,7 +30,7 @@ class Store
      *
      * @var \Leevel\Auth\Hash
      */
-    protected $hash;
+    private $hash;
 
     private IUnitOfWork $w;
 
@@ -54,7 +54,7 @@ class Store
     /**
      * 保存.
      */
-    protected function save(array $input): User
+    private function save(array $input): User
     {
         $this->w->persist($entity = $this->entity($input));
         $this->w->on($entity, function (User $user) use ($input) {
@@ -69,7 +69,7 @@ class Store
     /**
      * 查找存在角色.
      */
-    protected function findRoles(int $userId): array
+    private function findRoles(int $userId): array
     {
         return [];
     }
@@ -77,7 +77,7 @@ class Store
     /**
      * 创建实体.
      */
-    protected function entity(array $input): User
+    private function entity(array $input): User
     {
         return new User($this->data($input));
     }
@@ -85,7 +85,7 @@ class Store
     /**
      * 创建密码
      */
-    protected function createPassword(string $password): string
+    private function createPassword(string $password): string
     {
         return $this->hash->password($password);
     }
@@ -93,7 +93,7 @@ class Store
     /**
      * 组装实体数据.
      */
-    protected function data(array $input): array
+    private function data(array $input): array
     {
         return [
             'name'       => trim($input['name']),

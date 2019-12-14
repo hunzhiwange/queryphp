@@ -38,7 +38,7 @@ class Upload
     /**
      * 关闭调试.
      */
-    protected function closeDebug(): void
+    private function closeDebug(): void
     {
         Option::set('debug', false);
     }
@@ -48,7 +48,7 @@ class Upload
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function save(UploadedFile $file): array
+    private function save(UploadedFile $file): array
     {
         if (!$file->isValid()) {
             throw new BusinessException($file->getErrorMessage());
@@ -63,7 +63,7 @@ class Upload
     /**
      * 获取文件保存路径.
      */
-    protected function getSavePath(UploadedFile $file): string
+    private function getSavePath(UploadedFile $file): string
     {
         return date('Y-m-d').'/'.date('H').'/'.
             md5(uniqid().Str::randAlpha(32)).'.'.$file->getOriginalExtension();
@@ -74,7 +74,7 @@ class Upload
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function saveFile(string $sourcePath, string $savePath): void
+    private function saveFile(string $sourcePath, string $savePath): void
     {
         if (false === Filesystem::put($savePath, file_get_contents($sourcePath))) {
             throw new BusinessException(__('文件上传失败'));
@@ -84,7 +84,7 @@ class Upload
     /**
      * 获取文件上传路径 URL.
      */
-    protected function savePathForUrl(string $savePath): string
+    private function savePathForUrl(string $savePath): string
     {
         return Option::get('storage').'/'.$savePath;
     }

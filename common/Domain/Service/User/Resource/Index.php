@@ -76,7 +76,7 @@ class Index
     /**
      * 准备资源数据.
      */
-    protected function prepareItem(Resource $resource): array
+    private function prepareItem(Resource $resource): array
     {
         return $resource->toArray();
     }
@@ -84,7 +84,7 @@ class Index
     /**
      * 查询条件.
      */
-    protected function condition(array $input): Closure
+    private function condition(array $input): Closure
     {
         return function (Select $select) use ($input) {
             $this->spec($select, $input);

@@ -27,14 +27,14 @@ class Lock
      *
      * @var \Admin\Infra\Lock
      */
-    protected $lock;
+    private $lock;
 
     /**
      * 输入数据.
      *
      * @var array
      */
-    protected $input;
+    private $input;
 
     /**
      * 构造函数.
@@ -59,7 +59,7 @@ class Lock
     /**
      * 锁定.
      */
-    protected function lock()
+    private function lock()
     {
         $this->lock->set($this->input['token']);
     }
@@ -69,7 +69,7 @@ class Lock
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateArgs()
+    private function validateArgs()
     {
         $validator = Validates::make(
             $this->input,

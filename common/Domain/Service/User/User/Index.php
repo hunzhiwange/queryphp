@@ -76,7 +76,7 @@ class Index
     /**
      * 准备用户数据.
      */
-    protected function prepareItem(User $user): array
+    private function prepareItem(User $user): array
     {
         $data = $user->toArray();
         $data['role'] = $user->role->toArray();
@@ -87,7 +87,7 @@ class Index
     /**
      * 查询条件.
      */
-    protected function condition(array $input): Closure
+    private function condition(array $input): Closure
     {
         return function (Select $select) use ($input) {
             $select->eager(['role']);

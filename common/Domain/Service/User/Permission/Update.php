@@ -30,7 +30,7 @@ class Update
      *
      * @var array
      */
-    protected $input;
+    private $input;
     private IUnitOfWork $w;
 
     /**
@@ -55,7 +55,7 @@ class Update
     /**
      * 保存.
      */
-    protected function save(array $input): Permission
+    private function save(array $input): Permission
     {
         $this->w
             ->persist($entity = $this->entity($input))
@@ -67,7 +67,7 @@ class Update
     /**
      * 验证参数.
      */
-    protected function entity(array $input): Permission
+    private function entity(array $input): Permission
     {
         $entity = $this->find((int) $input['id']);
         $entity->withProps($this->data($input));
@@ -78,7 +78,7 @@ class Update
     /**
      * 查找实体.
      */
-    protected function find(int $id): Permission
+    private function find(int $id): Permission
     {
         return $this->w
             ->repository(Permission::class)
@@ -88,7 +88,7 @@ class Update
     /**
      * 组装实体数据.
      */
-    protected function data(array $input): array
+    private function data(array $input): array
     {
         $input['pid'] = $this->parseParentId($input['pid']);
 
@@ -103,7 +103,7 @@ class Update
     /**
      * 分析父级数据.
      */
-    protected function parseParentId(array $pid): int
+    private function parseParentId(array $pid): int
     {
         $p = (int) (array_pop($pid));
         if ($p < 0) {
@@ -118,7 +118,7 @@ class Update
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateArgs()
+    private function validateArgs()
     {
         $validator = Validate::make(
             $this->input,

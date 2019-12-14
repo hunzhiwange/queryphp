@@ -45,7 +45,7 @@ class Option
     /**
      * 保存.
      */
-    protected function save(array $input): void
+    private function save(array $input): void
     {
         foreach ($input as $k => $v) {
             $this->w->update($this->entity($k, $v));
@@ -57,7 +57,7 @@ class Option
     /**
      * 组成实体.
      */
-    protected function entity(string $name, string $value): Options
+    private function entity(string $name, string $value): Options
     {
         $option = Options::select()
             ->where(['name' => $name])

@@ -26,14 +26,14 @@ class Permission
      *
      * @var \Admin\Infra\Permission
      */
-    protected $permissionCache;
+    private $permissionCache;
 
     /**
      * 获取用户权限.
      *
      * @var \Common\Domain\Service\User\User\UserPermission
      */
-    protected $permission;
+    private $permission;
 
     /**
      * 构造函数.
@@ -62,7 +62,7 @@ class Permission
     /**
      * 获取权限.
      */
-    protected function getPermission(string $token, int $userId): array
+    private function getPermission(string $token, int $userId): array
     {
         $permission = $this->permission->handle(['user_id' => $userId]);
         $this->permissionCache->set($token, $permission);

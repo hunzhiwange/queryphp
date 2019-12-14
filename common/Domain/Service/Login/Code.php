@@ -23,12 +23,7 @@ use Leevel\Seccode\Seccode;
  */
 class Code
 {
-    /**
-     * 验证码存储.
-     *
-     * @var \Admin\Infra\Code
-     */
-    protected $code;
+    private Codes $code;
 
     /**
      * 构造函数.

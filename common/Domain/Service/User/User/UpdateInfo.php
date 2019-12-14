@@ -33,7 +33,7 @@ class UpdateInfo
      *
      * @var array
      */
-    protected $input;
+    private $input;
 
     private IUnitOfWork $w;
 
@@ -60,7 +60,7 @@ class UpdateInfo
     /**
      * 保存.
      */
-    protected function save(array $input): User
+    private function save(array $input): User
     {
         $this->w->persist($entity = $this->entity($input));
         $this->w->flush();
@@ -71,7 +71,7 @@ class UpdateInfo
     /**
      * 验证参数.
      */
-    protected function entity(array $input): User
+    private function entity(array $input): User
     {
         $entity = $this->find((int) $input['id']);
         $entity->withProps($this->data($input));
@@ -82,7 +82,7 @@ class UpdateInfo
     /**
      * 查找实体.
      */
-    protected function find(int $id): User
+    private function find(int $id): User
     {
         return $this->w
             ->repository(User::class)
@@ -92,7 +92,7 @@ class UpdateInfo
     /**
      * 组装实体数据.
      */
-    protected function data(array $input): array
+    private function data(array $input): array
     {
         return [
             'email'        => $input['email'] ?: '',
@@ -105,7 +105,7 @@ class UpdateInfo
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateArgs()
+    private function validateArgs()
     {
         $input = $this->filterEmptyStringInput($this->input);
 

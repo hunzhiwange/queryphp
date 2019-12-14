@@ -30,14 +30,14 @@ class ChangePassword
      *
      * @var \Leevel\Auth\Hash
      */
-    protected $hash;
+    private $hash;
 
     /**
      * 输入数据.
      *
      * @var array
      */
-    protected $input;
+    private $input;
     private IUnitOfWork $w;
 
     /**
@@ -67,7 +67,7 @@ class ChangePassword
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateUser(): User
+    private function validateUser(): User
     {
         $user = User::select()
             ->where('status', '1')
@@ -88,7 +88,7 @@ class ChangePassword
     /**
      * 创建密码.
      */
-    protected function createPassword(string $password): string
+    private function createPassword(string $password): string
     {
         return $this->hash->password($password);
     }
@@ -96,7 +96,7 @@ class ChangePassword
     /**
      * 校验旧密码.
      */
-    protected function verifyPassword(string $password, string $hash): bool
+    private function verifyPassword(string $password, string $hash): bool
     {
         return $this->hash->verify($password, $hash);
     }
@@ -104,7 +104,7 @@ class ChangePassword
     /**
      * 保存.
      */
-    protected function save(array $input): User
+    private function save(array $input): User
     {
         $this->w->persist($entity = $this->entity($input));
         $this->w->flush();
@@ -115,7 +115,7 @@ class ChangePassword
     /**
      * 验证参数.
      */
-    protected function entity(array $input): User
+    private function entity(array $input): User
     {
         $entity = $this->find((int) $input['id']);
         $entity->withProps($this->data($input));
@@ -126,7 +126,7 @@ class ChangePassword
     /**
      * 查找实体.
      */
-    protected function find(int $id): User
+    private function find(int $id): User
     {
         return $this->w
             ->repository(User::class)
@@ -136,7 +136,7 @@ class ChangePassword
     /**
      * 组装实体数据.
      */
-    protected function data(array $input): array
+    private function data(array $input): array
     {
         return [
             'password'       => $this->createPassword(trim($input['new_pwd'])),
@@ -148,7 +148,7 @@ class ChangePassword
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateArgs()
+    private function validateArgs()
     {
         $validator = Validates::make(
             $this->input,

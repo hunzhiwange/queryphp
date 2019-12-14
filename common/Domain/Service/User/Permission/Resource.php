@@ -50,7 +50,7 @@ class Resource
     /**
      * 保存.
      */
-    protected function save(array $input): Permission
+    private function save(array $input): Permission
     {
         $entity = $this->entity($input);
         $this->setPermissionResource((int) $input['id'], $input['resource_id']);
@@ -62,7 +62,7 @@ class Resource
     /**
      * 查找存在资源.
      */
-    protected function findResources(int $permissionId): Collection
+    private function findResources(int $permissionId): Collection
     {
         return $this->w
             ->repository(EntityPermissionResource::class)
@@ -74,7 +74,7 @@ class Resource
     /**
      * 验证参数.
      */
-    protected function entity(array $input): Permission
+    private function entity(array $input): Permission
     {
         return $this->find((int) $input['id']);
     }
@@ -82,7 +82,7 @@ class Resource
     /**
      * 查找实体.
      */
-    protected function find(int $id): Permission
+    private function find(int $id): Permission
     {
         return $this->w->repository(Permission::class)->findOrFail($id);
     }
@@ -90,7 +90,7 @@ class Resource
     /**
      * 设置权限资源授权.
      */
-    protected function setPermissionResource(int $permissionId, array $resourceId): void
+    private function setPermissionResource(int $permissionId, array $resourceId): void
     {
         $existResource = [];
 
@@ -114,7 +114,7 @@ class Resource
      *
      * @return \Common\Domain\Entity\EntityPermissionResource
      */
-    protected function entityPermissionResource(int $permissionId, int $resourceId): EntityPermissionResource
+    private function entityPermissionResource(int $permissionId, int $resourceId): EntityPermissionResource
     {
         return new EntityPermissionResource([
             'permission_id' => $permissionId,

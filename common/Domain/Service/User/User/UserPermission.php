@@ -47,7 +47,7 @@ class UserPermission
     /**
      * 格式化权限数据.
      */
-    protected function normalizePermission(array $data): array
+    private function normalizePermission(array $data): array
     {
         $permission = ['static' => [], 'dynamic' => []];
         foreach ($data as $v) {
@@ -64,7 +64,7 @@ class UserPermission
     /**
      * 查询权限数据.
      */
-    protected function parsePermission(User $user): array
+    private function parsePermission(User $user): array
     {
         $data = [];
         $roles = $user->role;
@@ -89,7 +89,7 @@ class UserPermission
     /**
      * 查找用户实体.
      */
-    protected function findUser(int $id): User
+    private function findUser(int $id): User
     {
         return $this->w
             ->repository(User::class)

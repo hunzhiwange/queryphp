@@ -31,21 +31,21 @@ class Unlock
      *
      * @var \Leevel\Auth\Hash
      */
-    protected $hash;
+    private $hash;
 
     /**
      * 锁定缓存.
      *
      * @var \Admin\Infra\Lock
      */
-    protected $lock;
+    private $lock;
 
     /**
      * 输入数据.
      *
      * @var array
      */
-    protected $input;
+    private $input;
     private IUnitOfWork $w;
 
     /**
@@ -74,7 +74,7 @@ class Unlock
     /**
      * 解锁.
      */
-    protected function unlock()
+    private function unlock()
     {
         $this->lock->delete($this->input['token']);
     }
@@ -84,7 +84,7 @@ class Unlock
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateUser(): User
+    private function validateUser(): User
     {
         $user = User::Where('status', '1')
             ->where('id', $this->input['id'])
@@ -104,7 +104,7 @@ class Unlock
     /**
      * 对比验证码
      */
-    protected function verifyPassword(string $password, string $hash): bool
+    private function verifyPassword(string $password, string $hash): bool
     {
         return $this->hash->verify($password, $hash);
     }
@@ -114,7 +114,7 @@ class Unlock
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateArgs()
+    private function validateArgs()
     {
         $validator = Validates::make(
             $this->input,

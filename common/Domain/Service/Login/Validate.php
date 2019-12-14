@@ -36,35 +36,35 @@ class Validate
      *
      * @var \Admin\Infra\Code
      */
-    protected $code;
+    private $code;
 
     /**
      * 输入数据.
      *
      * @var array
      */
-    protected $input;
+    private $input;
 
     /**
      * 秘钥.
      *
      * @var string
      */
-    protected $secret;
+    private $secret;
 
     /**
      * 权限缓存.
      *
      * @var \Admin\Infra\Permission
      */
-    protected $permissionCache;
+    private $permissionCache;
 
     /**
      * 获取用户权限.
      *
      * @var \Common\Domain\Service\User\User\UserPermission
      */
-    protected $permission;
+    private $permission;
 
     /**
      * 构造函数.
@@ -103,7 +103,7 @@ class Validate
     /**
      * 生成 token.
      */
-    protected function createToken(): string
+    private function createToken(): string
     {
         $token = substr(
             md5(
@@ -127,7 +127,7 @@ class Validate
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateApp(): void
+    private function validateApp(): void
     {
         $app = App::select()
             ->where('num', $this->input['app_id'])
@@ -146,7 +146,7 @@ class Validate
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateUser(): User
+    private function validateUser(): User
     {
         $user = User::select()
             ->where('status', '1')
@@ -167,7 +167,7 @@ class Validate
     /**
      * 校验密码
      */
-    protected function verifyPassword(string $password, string $hash): bool
+    private function verifyPassword(string $password, string $hash): bool
     {
         return (new Hash())->verify($password, $hash);
     }
@@ -177,7 +177,7 @@ class Validate
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateCode()
+    private function validateCode()
     {
         $codeFromCache = $this->code->get($this->input['name']);
 
@@ -195,7 +195,7 @@ class Validate
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateArgs()
+    private function validateArgs()
     {
         $validator = Validates::make(
             $this->input,

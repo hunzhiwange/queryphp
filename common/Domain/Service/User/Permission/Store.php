@@ -30,7 +30,7 @@ class Store
      *
      * @var array
      */
-    protected $input;
+    private array $input;
     private IUnitOfWork $w;
 
     /**
@@ -55,7 +55,7 @@ class Store
     /**
      * 保存.
      */
-    protected function save(array $input): Permission
+    private function save(array $input): Permission
     {
         $this->w
             ->persist($entity = $this->entity($input))
@@ -68,7 +68,7 @@ class Store
     /**
      * 创建实体.
      */
-    protected function entity(array $input): Permission
+    private function entity(array $input): Permission
     {
         return new Permission($this->data($input));
     }
@@ -76,7 +76,7 @@ class Store
     /**
      * 组装实体数据.
      */
-    protected function data(array $input): array
+    private function data(array $input): array
     {
         $input['pid'] = $this->parseParentId($input['pid']);
 
@@ -91,7 +91,7 @@ class Store
     /**
      * 分析父级数据.
      */
-    protected function parseParentId(array $pid): int
+    private function parseParentId(array $pid): int
     {
         $p = (int) (array_pop($pid));
         if ($p < 0) {
@@ -106,7 +106,7 @@ class Store
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    protected function validateArgs()
+    private function validateArgs()
     {
         $validator = Validate::make(
             $this->input,

@@ -47,7 +47,7 @@ class Show
     /**
      * 查找实体.
      */
-    protected function find(int $id): Role
+    private function find(int $id): Role
     {
         return $this->w->repository(Role::class)->findOrFail($id);
     }
