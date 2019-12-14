@@ -27,11 +27,6 @@ class Update
 {
     use Controller;
 
-    /**
-     * 允许的输入字段.
-     *
-     * @var array
-     */
     private array $allowedInput = [
         'id',
         'name',

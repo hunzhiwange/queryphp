@@ -28,11 +28,6 @@ class ChangePassword
 {
     use Controller;
 
-    /**
-     * 允许的输入字段.
-     *
-     * @var array
-     */
     private array $allowedInput = [
         'old_pwd',
         'new_pwd',

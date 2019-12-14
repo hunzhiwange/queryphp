@@ -27,11 +27,6 @@ class Status
 {
     use Controller;
 
-    /**
-     * 允许的输入字段.
-     *
-     * @var array
-     */
     private array $allowedInput = [
         'ids',
         'status',
