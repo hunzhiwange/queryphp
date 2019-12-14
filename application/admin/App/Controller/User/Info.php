@@ -19,11 +19,6 @@ use Admin\App\Service\User\Info as Service;
 /**
  * 当前登陆用户查询.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.04.24
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Info
