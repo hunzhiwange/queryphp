@@ -34,7 +34,7 @@ class Auth extends BaseAuth
      *
      * @return array
      */
-    private $ignoreLockPathInfo = [
+    private array $ignoreLockPathInfo = [
         '/:admin/user/lock',
         '/:admin/user/unlock',
         '/:admin/login/logout',
@@ -45,7 +45,7 @@ class Auth extends BaseAuth
      *
      * @return array
      */
-    private $ignorePathInfo = [
+    private array $ignorePathInfo = [
         '/:admin/login/code',
         '/:admin/login/validate',
     ];
@@ -55,7 +55,7 @@ class Auth extends BaseAuth
      *
      * @return array
      */
-    private $ignorePermissionPathInfo = [
+    private array $ignorePermissionPathInfo = [
         '/:admin/login/logout',
         '/:admin/user/update-info',
         '/:admin/user/lock',
@@ -67,7 +67,7 @@ class Auth extends BaseAuth
     ];
 
     /**
-     * 请求
+     * 请求.
      *
      * @throws \Common\Infra\Exception\UnauthorizedHttpException
      */

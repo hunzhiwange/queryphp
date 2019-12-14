@@ -24,12 +24,7 @@ use Leevel\Validate\Proxy\Validate;
  */
 trait Status
 {
-    /**
-     * 事务工作单元.
-     *
-     * @var \Leevel\Database\Ddd\IUnitOfWork
-     */
-    private $w;
+    private IUnitOfWork $w;
 
     public function __construct(IUnitOfWork $w)
     {

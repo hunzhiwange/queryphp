@@ -25,8 +25,8 @@ use Leevel\Validate\UniqueRule;
  */
 class Update
 {
-    private array $input;
     private IUnitOfWork $w;
+    private array $input;
 
     public function __construct(IUnitOfWork $w)
     {
