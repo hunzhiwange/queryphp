@@ -24,7 +24,7 @@ class Auth
      *
      * @var array
      */
-    protected $permission = [];
+    private array $permission = [];
 
     /**
      * 构造函数.
@@ -85,7 +85,7 @@ class Auth
     /**
      * 通配符正则.
      */
-    protected function prepareRegexForWildcard(string $regex): string
+    private function prepareRegexForWildcard(string $regex): string
     {
         $regex = preg_quote($regex, '/');
         $regex = '/^'.str_replace('\*', '(\S*)', $regex).'$/';

@@ -66,7 +66,7 @@ class Index
     /**
      * 关闭 debug.
      */
-    protected function forceCloseDebug(): void
+    private function forceCloseDebug(): void
     {
         f(force_close_debug::class);
     }
