@@ -39,9 +39,6 @@ class ChangePassword
         return $this->main($request, $service);
     }
 
-    /**
-     * 扩展输入数据.
-     */
     private function extendInput(IRequest $request): array
     {
         return ['id' => $this->id()];
