@@ -23,17 +23,8 @@ return [
     'template' => [
         'file_comment' => '/**
  * {{file_name}}
- *
- * @author {{file_author}}
- *
- * @since {{file_since}}
- *
- * @version {{file_version}}
  */',
         'file_name'    => '',
-        'file_since'   => date('Y.m.d'),
-        'file_version' => '1.0',
-        'file_author'  => 'Name Your <your@mail.com>',
     ],
 
     /*
