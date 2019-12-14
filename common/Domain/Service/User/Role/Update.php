@@ -28,7 +28,7 @@ class Update
 
     private IUnitOfWork $w;
 
-    private $workflow = [
+    private array $workflow = [
         'allowedInput',
         'filterInput',
         'validateInput',

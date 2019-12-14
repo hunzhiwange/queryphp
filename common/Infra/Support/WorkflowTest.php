@@ -167,7 +167,7 @@ class Workflow1
 {
     use Workflow;
 
-    private $workflow = [];
+    private array $workflow = [];
 
     public function handle(array $input): array
     {
@@ -187,7 +187,7 @@ class Workflow2
 {
     use Workflow;
 
-    private $workflow = [
+    private array $workflow = [
         'foo',
         'bar',
     ];
@@ -220,7 +220,7 @@ class Workflow3
 {
     use Workflow;
 
-    private $workflow = [
+    private array $workflow = [
         'notfound',
     ];
 
@@ -262,7 +262,7 @@ class Workflow5
 {
     use Workflow;
 
-    private $workflow = [];
+    private array $workflow = [];
 
     public function handle(array $input): array
     {

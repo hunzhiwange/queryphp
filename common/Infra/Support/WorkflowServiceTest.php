@@ -141,7 +141,7 @@ class WorkflowService1
 {
     use WorkflowService;
 
-    private $workflow = [
+    private array $workflow = [
         'allowedInput',
     ];
 
@@ -172,7 +172,7 @@ class WorkflowService2
 {
     use WorkflowService;
 
-    private $workflow = [
+    private array $workflow = [
         'filterInput',
     ];
 
@@ -213,7 +213,7 @@ class WorkflowService3
 {
     use WorkflowService;
 
-    private $workflow = [
+    private array $workflow = [
         'validateInput',
     ];
 
@@ -253,7 +253,7 @@ class WorkflowService4
 {
     use WorkflowService;
 
-    private $workflow = [
+    private array $workflow = [
         'validateInput',
     ];
 
@@ -293,7 +293,7 @@ class WorkflowService5
 {
     use WorkflowService;
 
-    private $workflow = [
+    private array $workflow = [
         'validateInput',
     ];
 

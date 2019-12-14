@@ -31,7 +31,7 @@ class Index
 
     private IUnitOfWork $w;
 
-    private $workflow = [
+    private array $workflow = [
         'filterSearchInput',
         'allowedInput',
         'defaultInput',
