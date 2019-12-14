@@ -36,7 +36,7 @@ A hundred percent coverage of the unit tests to facing the bug,with our continuo
 
 * Site: <https://www.queryphp.com/>
 * API: <https://api.queryphp.com>
-* Document: <https://www.queryphp.com/docs/>
+* Documentation: <https://www.queryphp.com/docs/>
 
 ![](doyouhaobaby.png)
 
