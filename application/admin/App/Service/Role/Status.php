@@ -18,21 +18,10 @@ use Common\Domain\Service\User\Role\Status as Service;
 
 /**
  * 批量设置角色状态.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class Status
 {
-    /**
-     * 批量设置角色状态服务.
-     *
-     * @var \Common\Domain\Service\User\Role\Status
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

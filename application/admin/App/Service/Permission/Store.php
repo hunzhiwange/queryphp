@@ -18,21 +18,10 @@ use Common\Domain\Service\User\Permission\Store as Service;
 
 /**
  * 权限保存状态.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class Store
 {
-    /**
-     * 权限保存服务.
-     *
-     * @var \Common\Domain\Service\User\Permission\Store
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

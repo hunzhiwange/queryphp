@@ -18,21 +18,10 @@ use Common\Domain\Service\User\Permission\Resource as Service;
 
 /**
  * 权限资源授权.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class Resource
 {
-    /**
-     * 权限资源授权服务.
-     *
-     * @var \Common\Domain\Service\User\Permission\Resource
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

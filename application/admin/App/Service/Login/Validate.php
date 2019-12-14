@@ -18,21 +18,10 @@ use Common\Domain\Service\Login\Validate as Service;
 
 /**
  * 验证登陆服务.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class Validate
 {
-    /**
-     * 验证登陆服务.
-     *
-     * @var \Common\Domain\Service\Login\Validate
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

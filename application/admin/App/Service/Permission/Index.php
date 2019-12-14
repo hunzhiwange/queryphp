@@ -18,21 +18,10 @@ use Common\Domain\Service\User\Permission\Index as Service;
 
 /**
  * 权限列表.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.23
- *
- * @version 1.0
  */
 class Index
 {
-    /**
-     * 权限查询服务.
-     *
-     * @var \Common\Domain\Service\User\Permission\Index
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

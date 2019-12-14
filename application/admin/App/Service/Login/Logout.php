@@ -18,12 +18,6 @@ use Leevel\Auth\Proxy\Auth;
 
 /**
  * 用户登出.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.23
- *
- * @version 1.0
  */
 class Logout
 {

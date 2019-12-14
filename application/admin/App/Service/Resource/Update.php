@@ -18,21 +18,10 @@ use Common\Domain\Service\User\Resource\Update as Service;
 
 /**
  * 资源更新状态.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class Update
 {
-    /**
-     * 资源更新服务.
-     *
-     * @var \Common\Domain\Service\User\Resource\Update
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

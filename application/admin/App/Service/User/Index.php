@@ -18,12 +18,6 @@ use Common\Domain\Service\User\User\Index as Service;
 
 /**
  * 用户列表服务.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.23
- *
- * @version 1.0
  */
 class Index
 {
@@ -32,7 +26,7 @@ class Index
      *
      * @var \Common\Domain\Service\User\User\Index
      */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

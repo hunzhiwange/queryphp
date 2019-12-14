@@ -18,12 +18,6 @@ use Leevel\Auth\Proxy\Auth;
 
 /**
  * 当前登陆用户查询.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.04.27
- *
- * @version 1.0
  */
 class Info
 {

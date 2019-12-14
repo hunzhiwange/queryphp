@@ -18,21 +18,10 @@ use Common\Domain\Service\User\User\Store as Service;
 
 /**
  * 用户保存.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class Store
 {
-    /**
-     * 用户保存服务.
-     *
-     * @var \Common\Domain\Service\User\User\Store
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

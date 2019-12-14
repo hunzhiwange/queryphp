@@ -18,21 +18,10 @@ use Common\Domain\Service\Search\Index as Service;
 
 /**
  * 搜索服务.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class Index
 {
-    /**
-     * 搜索服务.
-     *
-     * @var \Common\Domain\Service\Search\Index
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

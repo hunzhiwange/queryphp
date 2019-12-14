@@ -18,21 +18,10 @@ use Common\Domain\Service\Base\GetOption as Service;
 
 /**
  * 获取配置服务.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.23
- *
- * @version 1.0
  */
 class GetOption
 {
-    /**
-     * 获取配置服务.
-     *
-     * @var \Common\Domain\Service\Base\GetOption
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

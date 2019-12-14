@@ -18,21 +18,10 @@ use Common\Domain\Service\Login\Code as Service;
 
 /**
  * 验证生成服务.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class Code
 {
-    /**
-     * 验证生成服务.
-     *
-     * @var \Common\Domain\Service\Login\Code
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

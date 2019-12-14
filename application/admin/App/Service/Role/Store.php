@@ -18,21 +18,10 @@ use Common\Domain\Service\User\Role\Store as Service;
 
 /**
  * 角色保存状态.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class Store
 {
-    /**
-     * 角色保存服务.
-     *
-     * @var \Common\Domain\Service\User\Role\Store
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

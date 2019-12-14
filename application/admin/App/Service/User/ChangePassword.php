@@ -18,21 +18,10 @@ use Common\Domain\Service\User\User\ChangePassword as Service;
 
 /**
  * 用户修改密码服务.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class ChangePassword
 {
-    /**
-     * 用户修改密码服务.
-     *
-     * @var \Common\Domain\Service\User\User\ChangePassword
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

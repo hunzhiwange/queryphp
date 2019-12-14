@@ -18,21 +18,10 @@ use Common\Domain\Service\User\Permission\Show as Service;
 
 /**
  * 权限查询.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.23
- *
- * @version 1.0
  */
 class Show
 {
-    /**
-     * 权限查询服务.
-     *
-     * @var \Common\Domain\Service\User\Permission\Show
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

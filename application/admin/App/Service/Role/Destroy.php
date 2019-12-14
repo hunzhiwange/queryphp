@@ -18,21 +18,10 @@ use Common\Domain\Service\User\Role\Destroy as Service;
 
 /**
  * 角色删除状态.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class Destroy
 {
-    /**
-     * 角色删除服务.
-     *
-     * @var \Common\Domain\Service\User\Role\Destroy
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

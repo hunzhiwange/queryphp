@@ -18,21 +18,10 @@ use Common\Domain\Service\Attachment\Upload as Service;
 
 /**
  * 上传服务.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class Upload
 {
-    /**
-     * 上传服务.
-     *
-     * @var \Common\Domain\Service\Attachment\Upload
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

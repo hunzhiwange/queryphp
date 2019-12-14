@@ -18,21 +18,10 @@ use Common\Domain\Service\User\Role\Index as Service;
 
 /**
  * 角色列表.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.23
- *
- * @version 1.0
  */
 class Index
 {
-    /**
-     * 角色查询服务.
-     *
-     * @var \Common\Domain\Service\User\Role\Index
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

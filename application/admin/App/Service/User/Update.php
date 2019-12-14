@@ -18,21 +18,10 @@ use Common\Domain\Service\User\User\Update as Service;
 
 /**
  * 用户更新.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class Update
 {
-    /**
-     * 用户更新服务.
-     *
-     * @var \Common\Domain\Service\User\User\Update
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

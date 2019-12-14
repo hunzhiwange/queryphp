@@ -18,21 +18,10 @@ use Common\Domain\Service\User\User\Unlock as Service;
 
 /**
  * 面板解锁服务.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.23
- *
- * @version 1.0
  */
 class Unlock
 {
-    /**
-     * 面板解锁服务.
-     *
-     * @var \Common\Domain\Service\User\User\Unlock
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

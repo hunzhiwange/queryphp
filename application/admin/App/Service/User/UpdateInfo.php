@@ -18,21 +18,10 @@ use Common\Domain\Service\User\User\UpdateInfo as Service;
 
 /**
  * 用户修改资料.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class UpdateInfo
 {
-    /**
-     * 用户修改资料.
-     *
-     * @var \Common\Domain\Service\User\User\UpdateInfo
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

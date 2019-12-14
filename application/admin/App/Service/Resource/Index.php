@@ -18,21 +18,10 @@ use Common\Domain\Service\User\Resource\Index as Service;
 
 /**
  * 资源列表.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.23
- *
- * @version 1.0
  */
 class Index
 {
-    /**
-     * 资源查询服务.
-     *
-     * @var \Common\Domain\Service\User\Resource\Index
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

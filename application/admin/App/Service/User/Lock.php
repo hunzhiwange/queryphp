@@ -18,21 +18,10 @@ use Common\Domain\Service\User\User\Lock as Service;
 
 /**
  * 面板锁定服务.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.23
- *
- * @version 1.0
  */
 class Lock
 {
-    /**
-     * 面板锁定服务.
-     *
-     * @var \Common\Domain\Service\User\User\Lock
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

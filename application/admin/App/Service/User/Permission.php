@@ -18,21 +18,10 @@ use Common\Domain\Service\User\User\Permission as Service;
 
 /**
  * 用户权限数据服务.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.23
- *
- * @version 1.0
  */
 class Permission
 {
-    /**
-     * 用户权限数据服务.
-     *
-     * @var \Common\Domain\Service\User\User\Permission
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.

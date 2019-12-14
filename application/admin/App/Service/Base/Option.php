@@ -18,21 +18,10 @@ use Common\Domain\Service\Base\Option as Service;
 
 /**
  * 配置更新服务.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class Option
 {
-    /**
-     * 配置更新服务.
-     *
-     * @var \Common\Domain\Service\Base\Option
-     */
-    protected $service;
+    private Service $service;
 
     /**
      * 构造函数.
