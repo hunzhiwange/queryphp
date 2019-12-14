@@ -30,7 +30,7 @@
 
 QueryPHP is a modern, high performance PHP progressive coroutine framework, we still focus on traditional PHP-FPM scenarios,with engineer user experience as its historical mission, let every PHP application have a good framework.
 
-A hundred percent coverage of the unit tests to facing the bug,with our continuous commitment to creating high quality products for level level leevel,with Swoole coroutine to improving business performance,now or in the future step by step. Our vision is **<span style="color:#e82e7d;">USE LEEVEL WITH SWOOLE DO BETTER</span>**, let your business to support more user services.
+A hundred percent coverage of the unit tests to facing the bug,with commitment to creating high quality products for level level leevel,with Swoole coroutine to improving business performance,now or in the future step by step. Our vision is **<span style="color:#e82e7d;">USE LEEVEL WITH SWOOLE DO BETTER</span>**, let your business to support more user services.
 
 *The PHP Framework For Code Poem As Free As Wind, Starts From This Moment With QueryPHP.*
 
