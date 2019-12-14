@@ -24,7 +24,7 @@ class Test extends Event
      *
      * @var string
      */
-    protected $blog;
+    private string $blog;
 
     /**
      * 构造函数.
