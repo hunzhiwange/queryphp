@@ -19,11 +19,6 @@ use Leevel\Router\Proxy\View;
 /**
  * Websocket tests.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.12.20
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Chat

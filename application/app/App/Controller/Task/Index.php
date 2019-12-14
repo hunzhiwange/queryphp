@@ -21,11 +21,6 @@ use Leevel\Protocol\ITask;
 /**
  * 任务基本使用.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.07.02
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Index

@@ -19,11 +19,6 @@ use Common\Infra\Helper\message_with_time;
 /**
  * 使用 Swoole 原生每隔一段时间执行同一任务.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.07.01
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Index

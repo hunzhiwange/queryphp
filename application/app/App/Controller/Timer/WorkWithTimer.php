@@ -21,11 +21,6 @@ use Leevel\Protocol\ITimer;
 /**
  * 定时器工作任务.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.07.03
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class WorkWithTimer

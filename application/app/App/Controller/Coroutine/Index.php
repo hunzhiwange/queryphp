@@ -19,12 +19,6 @@ use Common\Infra\Helper\message_with_time;
 /**
  * 协程.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.07.04
- *
- * @version 1.0
- *
  * @see https://www.jianshu.com/p/745b0b3ffae7
  * @codeCoverageIgnore
  */

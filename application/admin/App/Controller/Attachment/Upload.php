@@ -21,11 +21,6 @@ use Leevel\Http\IRequest;
 /**
  * 文件上传.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.01.11
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Upload

@@ -23,11 +23,6 @@ use Leevel\Http\Response;
 /**
  * 验证码.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.22
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Code

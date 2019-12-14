@@ -20,11 +20,6 @@ use Leevel\Http\IRequest;
 /**
  * 获取配置.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.12.03
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class GetOption

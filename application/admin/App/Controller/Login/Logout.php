@@ -19,11 +19,6 @@ use Admin\App\Service\Login\Logout as Service;
 /**
  * 用户登出.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.22
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Logout

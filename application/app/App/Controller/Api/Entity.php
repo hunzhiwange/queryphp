@@ -19,11 +19,6 @@ use Common\Domain\Entity\Demo\Test;
 /**
  * 实体使用.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.11.08
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Entity

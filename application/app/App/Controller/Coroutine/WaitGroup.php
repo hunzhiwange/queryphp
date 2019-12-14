@@ -21,12 +21,6 @@ use Swoole\Coroutine\Http\Client;
 /**
  * 协程：实现 sync.WaitGroup 功能.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.07.27
- *
- * @version 1.0
- *
  * @see https://wiki.swoole.com/wiki/page/p-waitgroup.html
  * @codeCoverageIgnore
  */
