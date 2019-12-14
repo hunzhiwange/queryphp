@@ -28,12 +28,7 @@ class UpdateInfo
 {
     use WorkflowService;
 
-    /**
-     * 输入数据.
-     *
-     * @var array
-     */
-    private $input;
+    private array $input;
 
     private IUnitOfWork $w;
 

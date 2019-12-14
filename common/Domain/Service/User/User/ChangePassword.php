@@ -32,12 +32,7 @@ class ChangePassword
      */
     private $hash;
 
-    /**
-     * 输入数据.
-     *
-     * @var array
-     */
-    private $input;
+    private array $input;
     private IUnitOfWork $w;
 
     /**

@@ -25,12 +25,7 @@ use Leevel\Validate\UniqueRule;
  */
 class Store
 {
-    /**
-     * 输入数据.
-     *
-     * @var array
-     */
-    private $input;
+    private array $input;
     private IUnitOfWork $w;
 
     /**

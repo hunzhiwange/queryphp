@@ -38,12 +38,7 @@ class Validate
      */
     private $code;
 
-    /**
-     * 输入数据.
-     *
-     * @var array
-     */
-    private $input;
+    private array $input;
 
     /**
      * 秘钥.
