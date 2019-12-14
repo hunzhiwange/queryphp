@@ -22,11 +22,6 @@ use Leevel;
  * - 文档太多加载速度就很慢，可以针对不同的服务加入不同的路径
  * - 访问地址 http://127.0.0.1:9527/apis/#/swagger/user
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.07.29
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class User extends Index

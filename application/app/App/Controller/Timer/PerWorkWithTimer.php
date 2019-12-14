@@ -20,11 +20,6 @@ use Leevel\Protocol\ITimer;
 /**
  * 每隔一段时间执行同一任务.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.07.03
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class PerWorkWithTimer

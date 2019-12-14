@@ -22,12 +22,6 @@ use Swoole\Coroutine\WaitGroup;
  *
  * - Swoole 新版本自带 WaitGroup
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.07.27
- *
- * @version 1.0
- *
  * @see https://wiki.swoole.com/wiki/page/p-waitgroup.html
  * @see https://github.com/swoole/swoole-src/blob/master/library/core/Coroutine/WaitGroup.php
  * @codeCoverageIgnore

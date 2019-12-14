@@ -19,11 +19,6 @@ use Leevel\Router\IRouter;
 /**
  * index.
  *
- * @author Xiangmin Liu <635750556@qq.com>
- *
- * @since 2019.08.05
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Index

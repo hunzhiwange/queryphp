@@ -20,11 +20,6 @@ use Common\Infra\Helper\message_with_time;
 /**
  * 实体查询.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.07.27
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Entity

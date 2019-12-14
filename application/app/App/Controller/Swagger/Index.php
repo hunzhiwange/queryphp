@@ -21,11 +21,6 @@ use function OpenApi\scan;
 /**
  * api 文档入口.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.12
- *
- * @version 1.0
  * @codeCoverageIgnore
  */
 class Index

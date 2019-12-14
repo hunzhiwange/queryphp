@@ -20,12 +20,6 @@ use Swoole\Runtime;
 /**
  * 协程：并发 shell_exec.
  *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.07.27
- *
- * @version 1.0
- *
  * @see https://wiki.swoole.com/wiki/page/1017.html
  * @codeCoverageIgnore
  */
