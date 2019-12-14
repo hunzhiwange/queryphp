@@ -17,7 +17,7 @@ namespace Common\Infra\Helper;
 /**
  * PHP 数组转 form 格式化.
  *
- * 主要用于 postman 粘贴单元测试中的输入数据为 postman form-data 格式
+ * - 主要用于 postman 粘贴单元测试中的输入数据为 postman form-data 格式
  *
  * 使用方法.
  *
