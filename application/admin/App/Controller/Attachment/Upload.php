@@ -38,8 +38,6 @@ class Upload
 
     /**
      * 响应方法.
-     *
-     * @param \Admin\App\Service\Attachment\Index $service
      */
     public function handle(IRequest $request, Service $service): string
     {
