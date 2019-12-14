@@ -43,11 +43,6 @@ class Index
         'filterInput',
     ];
 
-    /**
-     * 允许的输入字段.
-     *
-     * @var array
-     */
     private $allowedInput = [
         'key',
         'status',
@@ -57,17 +52,11 @@ class Index
         'order_by',
     ];
 
-    /**
-     * 构造函数.
-     */
     public function __construct(IUnitOfWork $w)
     {
         $this->w = $w;
     }
 
-    /**
-     * 响应方法.
-     */
     public function handle(array $input): array
     {
         return $this->workflow($input);

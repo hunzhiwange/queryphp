@@ -25,17 +25,11 @@ class Code
 {
     private Codes $code;
 
-    /**
-     * 构造函数.
-     */
     public function __construct(Codes $code)
     {
         $this->code = $code;
     }
 
-    /**
-     * 响应方法.
-     */
     public function handle(array $input): string
     {
         // Mac 自带 PHP 有问题

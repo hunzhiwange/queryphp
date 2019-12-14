@@ -23,9 +23,6 @@ use Admin\App\Service\User\Info as Service;
  */
 class Info
 {
-    /**
-     * 响应方法.
-     */
     public function handle(Service $service): array
     {
         return $service->handle();

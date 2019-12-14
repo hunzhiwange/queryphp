@@ -21,9 +21,6 @@ use Common\Domain\Entity\User\User;
  */
 class PrepareForUser
 {
-    /**
-     * 响应方法.
-     */
     public function handle(User $user): array
     {
         return $this->prepareUser($user);

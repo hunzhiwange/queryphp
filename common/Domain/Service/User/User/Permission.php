@@ -46,9 +46,6 @@ class Permission
         $this->permission = $permission;
     }
 
-    /**
-     * 响应方法.
-     */
     public function handle(array $input): array
     {
         // 刷线缓存

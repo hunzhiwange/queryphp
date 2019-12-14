@@ -32,9 +32,6 @@ class Status
         'status',
     ];
 
-    /**
-     * 响应方法.
-     */
     public function handle(IRequest $request, Service $service): array
     {
         return $this->main($request, $service);

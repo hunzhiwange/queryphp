@@ -21,9 +21,6 @@ use Leevel\Auth\Proxy\Auth;
  */
 class Info
 {
-    /**
-     * 响应方法.
-     */
     public function handle(): array
     {
         return Auth::getLogin();

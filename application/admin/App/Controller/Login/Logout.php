@@ -23,9 +23,6 @@ use Admin\App\Service\Login\Logout as Service;
  */
 class Logout
 {
-    /**
-     * 响应方法.
-     */
     public function handle(Service $service): array
     {
         $service->handle();

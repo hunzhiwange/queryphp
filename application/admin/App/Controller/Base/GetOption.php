@@ -24,9 +24,6 @@ use Leevel\Http\IRequest;
  */
 class GetOption
 {
-    /**
-     * 响应方法.
-     */
     public function handle(IRequest $request, Service $service): array
     {
         return $service->handle();

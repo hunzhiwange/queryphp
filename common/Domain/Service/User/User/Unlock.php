@@ -43,9 +43,6 @@ class Unlock
     private array $input;
     private IUnitOfWork $w;
 
-    /**
-     * 构造函数.
-     */
     public function __construct(IUnitOfWork $w, Hash $hash, Lock $lock)
     {
         $this->w = $w;
@@ -53,9 +50,6 @@ class Unlock
         $this->lock = $lock;
     }
 
-    /**
-     * 响应方法.
-     */
     public function handle(array $input): array
     {
         $this->input = $input;

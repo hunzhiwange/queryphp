@@ -23,9 +23,6 @@ use Admin\App\Service\Permission\Index as Service;
  */
 class Index
 {
-    /**
-     * 响应方法.
-     */
     public function handle(Service $service): array
     {
         return $service->handle();

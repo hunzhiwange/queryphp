@@ -26,17 +26,11 @@ class Index
 {
     private IUnitOfWork $w;
 
-    /**
-     * 构造函数.
-     */
     public function __construct(IUnitOfWork $w)
     {
         $this->w = $w;
     }
 
-    /**
-     * 响应方法.
-     */
     public function handle(): array
     {
         $repository = $this->w->repository(Permission::class);

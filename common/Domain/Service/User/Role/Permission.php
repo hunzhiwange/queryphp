@@ -26,17 +26,11 @@ class Permission
 {
     private IUnitOfWork $w;
 
-    /**
-     * 构造函数.
-     */
     public function __construct(IUnitOfWork $w)
     {
         $this->w = $w;
     }
 
-    /**
-     * 响应方法.
-     */
     public function handle(array $input): array
     {
         $this->save($input);

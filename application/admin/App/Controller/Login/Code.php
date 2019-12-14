@@ -29,9 +29,6 @@ class Code
 {
     use Controller;
 
-    /**
-     * 响应方法.
-     */
     public function handle(IRequest $request, Service $service): Response
     {
         $code = $service->handle($this->input($request));

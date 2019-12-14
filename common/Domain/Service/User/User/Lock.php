@@ -31,17 +31,11 @@ class Lock
 
     private array $input;
 
-    /**
-     * 构造函数.
-     */
     public function __construct(CacheLock $lock)
     {
         $this->lock = $lock;
     }
 
-    /**
-     * 响应方法.
-     */
     public function handle(array $input): array
     {
         $this->input = $input;

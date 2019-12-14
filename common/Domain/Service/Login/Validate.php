@@ -61,9 +61,6 @@ class Validate
      */
     private $permission;
 
-    /**
-     * 构造函数.
-     */
     public function __construct(IRequest $request, Code $code, Permission $permissionCache, UserPermission $permission)
     {
         $this->request = $request;
@@ -72,9 +69,6 @@ class Validate
         $this->permission = $permission;
     }
 
-    /**
-     * 响应方法.
-     */
     public function handle(array $input): array
     {
         $this->input = $input;

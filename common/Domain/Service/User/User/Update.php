@@ -36,18 +36,12 @@ class Update
 
     private IUnitOfWork $w;
 
-    /**
-     * 构造函数.
-     */
     public function __construct(IUnitOfWork $w, Hash $hash)
     {
         $this->w = $w;
         $this->hash = $hash;
     }
 
-    /**
-     * 响应方法.
-     */
     public function handle(array $input): array
     {
         if (!isset($input['userRole'])) {

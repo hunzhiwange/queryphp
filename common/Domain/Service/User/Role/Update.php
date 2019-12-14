@@ -39,11 +39,6 @@ class Update
         'validateInput',
     ];
 
-    /**
-     * 允许的输入字段.
-     *
-     * @var array
-     */
     private $allowedInput = [
         'id',
         'name',
@@ -51,17 +46,11 @@ class Update
         'status',
     ];
 
-    /**
-     * 构造函数.
-     */
     public function __construct(IUnitOfWork $w)
     {
         $this->w = $w;
     }
 
-    /**
-     * 响应方法.
-     */
     public function handle(array $input): array
     {
         return $this->workflow($input);

@@ -118,9 +118,6 @@ class BaseWaitGroup
      */
     private $chan;
 
-    /**
-     * 构造函数.
-     */
     public function __construct()
     {
         $this->chan = new Channel();

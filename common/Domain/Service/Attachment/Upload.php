@@ -25,9 +25,6 @@ use Leevel\Support\Str;
  */
 class Upload
 {
-    /**
-     * 响应方法.
-     */
     public function handle(array $input): array
     {
         $this->closeDebug();

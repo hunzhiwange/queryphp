@@ -31,9 +31,6 @@ class Upload
         'file',
     ];
 
-    /**
-     * 响应方法.
-     */
     public function handle(IRequest $request, Service $service): string
     {
         return $this->main($request, $service)[0];
