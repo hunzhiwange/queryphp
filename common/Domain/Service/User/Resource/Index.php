@@ -31,11 +31,6 @@ class Index
 
     private IUnitOfWork $w;
 
-    /**
-     * 工作流.
-     *
-     * @var array
-     */
     private $workflow = [
         'filterSearchInput',
         'allowedInput',

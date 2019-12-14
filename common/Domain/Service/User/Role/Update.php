@@ -28,11 +28,6 @@ class Update
 
     private IUnitOfWork $w;
 
-    /**
-     * 工作流.
-     *
-     * @var array
-     */
     private $workflow = [
         'allowedInput',
         'filterInput',
