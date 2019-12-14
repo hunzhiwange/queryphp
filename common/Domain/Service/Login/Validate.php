@@ -28,12 +28,6 @@ use Leevel\Validate\Proxy\Validate as Validates;
 
 /**
  * 验证登录.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.23
- *
- * @version 1.0
  */
 class Validate
 {

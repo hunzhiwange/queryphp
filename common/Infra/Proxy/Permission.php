@@ -18,12 +18,6 @@ use Leevel\Di\Container;
 
 /**
  * 代理 Permission.
- *
- * @author Xiangmin Liu <635750556@qq.com>
- *
- * @since 2017.08.29
- *
- * @version 1.0
  */
 class Permission
 {

@@ -22,12 +22,6 @@ use Leevel\Validate\UniqueRule;
 
 /**
  * 权限保存.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.12.19
- *
- * @version 1.0
  */
 class Store
 {

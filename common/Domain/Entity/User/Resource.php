@@ -19,12 +19,6 @@ use Leevel\Database\Ddd\IEntity;
 
 /**
  * Resource.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.11.20
- *
- * @version 1.0
  */
 class Resource extends Entity
 {

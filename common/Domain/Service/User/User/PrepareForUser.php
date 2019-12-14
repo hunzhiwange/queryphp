@@ -18,12 +18,6 @@ use Common\Domain\Entity\User\User;
 
 /**
  * 准备用户基础数据.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.01.15
- *
- * @version 1.0
  */
 class PrepareForUser
 {
@@ -37,7 +31,8 @@ class PrepareForUser
 
     /**
      * 批量处理.
-     * 支持 array|\Leevel\Collection\Collection 等支持循环遍历的数据.
+     *
+     * - 支持 array|\Leevel\Collection\Collection 等支持循环遍历的数据.
      *
      * @param mixed $data
      */

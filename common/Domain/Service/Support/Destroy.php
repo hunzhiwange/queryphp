@@ -21,12 +21,6 @@ use Leevel\Validate\Proxy\Validate;
 
 /**
  * 删除数据.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.09.04
- *
- * @version 1.0
  */
 trait Destroy
 {

@@ -16,12 +16,6 @@ namespace Common\Domain\Event;
 
 /**
  * WildcardsTest 事件.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.01.29
- *
- * @version 1.0
  */
 class WildcardsTest extends Event
 {

@@ -29,12 +29,6 @@ use Leevel\Kernel\IRuntime;
 
 /**
  * 初始化应用.
- *
- * @author Xiangmin Liu <635750556@qq.com>
- *
- * @since 2018.11.24
- *
- * @version 1.0
  */
 trait App
 {

@@ -60,21 +60,11 @@ putenv('RUNTIME_ENVIRONMENT='.$env);
 
 /**
  * 载入配置.
- *
- * @author Xiangmin Liu <635750556@qq.com>
- *
- * @since 2018.12.03
- *
- * @version 1.0
  */
 class PhinxLoad
 {
     /**
      * 执行入口.
-     *
-     * @param \Leevel\Kernel\IApp $app
-     *
-     * @return array
      */
     public function handle(IApp $app): array
     {
@@ -85,10 +75,6 @@ class PhinxLoad
 
     /**
      * 载入环境变量数据.
-     *
-     * @param \Leevel\Kernel\IApp $app
-     *
-     * @return array
      */
     private function loadEnvData(IApp $app): array
     {
@@ -111,8 +97,6 @@ class PhinxLoad
 
     /**
      * 载入运行时环境变量.
-     *
-     * @param \Leevel\Kernel\IApp $appy
      */
     private function checkRuntimeEnv(IApp $app)
     {

@@ -19,12 +19,6 @@ use Leevel\Database\Ddd\IEntity;
 
 /**
  * 应用实体.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.11.09
- *
- * @version 1.0
  */
 class App extends Entity
 {

@@ -22,12 +22,6 @@ use Leevel\Kernel\Runtime as Runtimes;
 
 /**
  * 异常处理.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.04.24
- *
- * @version 1.0
  */
 class Runtime extends Runtimes
 {

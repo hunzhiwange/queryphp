@@ -18,12 +18,6 @@ use Leevel\Console\Command;
 
 /**
  * 测试命令.
- *
- * @author Xiangmin Liu<635750556@qq.com>
- *
- * @since 2017.04.28
- *
- * @version 1.0
  */
 class Test extends Command
 {

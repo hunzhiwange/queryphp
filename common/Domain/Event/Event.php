@@ -16,12 +16,6 @@ namespace Common\Domain\Event;
 
 /**
  * 事件抽象
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.01.29
- *
- * @version 1.0
  */
 abstract class Event
 {

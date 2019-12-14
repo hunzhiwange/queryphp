@@ -21,12 +21,6 @@ use Leevel\Database\Ddd\IUnitOfWork;
 
 /**
  * 权限资源授权.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.11.21
- *
- * @version 1.0
  */
 class Resource
 {

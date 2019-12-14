@@ -21,12 +21,6 @@ use Leevel\Tree\Tree;
 
 /**
  * 权限列表.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.23
- *
- * @version 1.0
  */
 class Index
 {

@@ -21,12 +21,6 @@ use Leevel\Validate\Proxy\Validate;
 
 /**
  * 工作流.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.03.13
- *
- * @version 1.0
  */
 trait WorkflowService
 {

@@ -18,12 +18,6 @@ use Leevel\Kernel\KernelConsole as KernelConsoles;
 
 /**
  * Kernel Console.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.05.04
- *
- * @version 1.0
  */
 class KernelConsole extends KernelConsoles
 {

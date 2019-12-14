@@ -20,12 +20,6 @@ use Common\Infra\Exception\BusinessException;
 
 /**
  * 权限删除.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.23
- *
- * @version 1.0
  */
 class Destroy
 {

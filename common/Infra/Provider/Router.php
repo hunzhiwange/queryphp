@@ -19,12 +19,6 @@ use Leevel\Router\RouterProvider;
 
 /**
  * 路由服务提供者.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.04.17
- *
- * @version 1.0
  */
 class Router extends RouterProvider
 {

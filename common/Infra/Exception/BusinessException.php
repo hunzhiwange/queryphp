@@ -22,12 +22,6 @@ use Leevel\Kernel\Exception\BusinessException as BaseBusinessException;
  *
  * - 业务异常与系统异常不同，一般不需要捕捉写入日志.
  * - 核心业务异常可以记录日志.
- *
- * @author Xiangmin Liu <635750556@qq.com>
- *
- * @since 2019.08.14
- *
- * @version 1.0
  */
 class BusinessException extends BaseBusinessException
 {

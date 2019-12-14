@@ -19,12 +19,6 @@ use Leevel\Database\Ddd\IEntity;
 
 /**
  * UserRole.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.01.31
- *
- * @version 1.0
  */
 class UserRole extends Entity
 {

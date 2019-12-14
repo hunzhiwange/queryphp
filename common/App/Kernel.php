@@ -18,12 +18,6 @@ use Leevel\Kernel\Kernel as Kernels;
 
 /**
  * Kernel.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.04.24
- *
- * @version 1.0
  */
 class Kernel extends Kernels
 {

@@ -18,12 +18,6 @@ use Leevel\Event\EventProvider;
 
 /**
  * 事件服务提供者.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.01.29
- *
- * @version 1.0
  */
 class Event extends EventProvider
 {

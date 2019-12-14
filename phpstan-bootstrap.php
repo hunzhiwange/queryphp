@@ -14,12 +14,6 @@ declare(strict_types=1);
 
 /**
  * phpstan 静态检查启动文件.
- *
- * @author Xiangmin Liu <635750556@qq.com>
- *
- * @since 2019.05.30
- *
- * @version 1.0
  */
 include __DIR__.'/tests/bootstrap.php'; /** @codeCoverageIgnore */
 

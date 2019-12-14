@@ -18,12 +18,6 @@ use Swoole\Server as SwooleServer;
 
 /**
  * 演示任务.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.07.02
- *
- * @version 1.0
  */
 class TaskDemo
 {

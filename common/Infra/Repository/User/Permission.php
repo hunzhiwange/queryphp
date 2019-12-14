@@ -19,12 +19,6 @@ use Leevel\Database\Ddd\Select;
 
 /**
  * 权限仓储.
- *
- * @author Xiangmin Liu <635750556@qq.com>
- *
- * @since 2018.10.27
- *
- * @version 1.0
  */
 class Permission extends Repository
 {

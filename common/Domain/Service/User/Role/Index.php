@@ -23,12 +23,6 @@ use Leevel\Database\Ddd\Select;
 
 /**
  * 角色列表.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.23
- *
- * @version 1.0
  */
 class Index
 {

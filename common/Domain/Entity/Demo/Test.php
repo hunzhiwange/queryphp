@@ -19,12 +19,6 @@ use Leevel\Database\Ddd\IEntity;
 
 /**
  * 测试实体.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.01.29
- *
- * @version 1.0
  */
 class Test extends Entity
 {

@@ -18,12 +18,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * 原生 PHPUnit 示例.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.10.12
- *
- * @version 1.0
  */
 class PHPUnitTest extends TestCase
 {

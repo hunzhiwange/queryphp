@@ -16,12 +16,6 @@ namespace Common\Domain\Event;
 
 /**
  * test 事件.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.01.29
- *
- * @version 1.0
  */
 class Test extends Event
 {
@@ -33,8 +27,9 @@ class Test extends Event
     protected $blog;
 
     /**
-     * 构造函数
-     * 支持依赖注入.
+     * 构造函数.
+     *
+     * - 支持依赖注入.
      *
      * @param string $blog
      */

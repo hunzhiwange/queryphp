@@ -19,12 +19,6 @@ use Leevel\Database\Ddd\IEntity;
 
 /**
  * PermissionResource.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.01.13
- *
- * @version 1.0
  */
 class PermissionResource extends Entity
 {

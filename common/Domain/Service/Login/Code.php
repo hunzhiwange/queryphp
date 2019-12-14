@@ -20,12 +20,6 @@ use Leevel\Seccode\Seccode;
 
 /**
  * 验证码生成.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.23
- *
- * @version 1.0
  */
 class Code
 {

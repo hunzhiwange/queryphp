@@ -16,18 +16,13 @@ namespace Common\Domain\Listener;
 
 /**
  * test3 监听器.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.01.29
- *
- * @version 1.0
  */
 class Test3 extends Listener
 {
     /**
-     * 构造函数
-     * 支持依赖注入.
+     * 构造函数.
+     *
+     * - 支持依赖注入.
      */
     public function __construct()
     {

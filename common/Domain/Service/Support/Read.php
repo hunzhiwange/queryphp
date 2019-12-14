@@ -21,12 +21,6 @@ use Leevel\Support\Str\camelize;
 
 /**
  * 查询.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2019.08.19
- *
- * @version 1.0
  */
 trait Read
 {

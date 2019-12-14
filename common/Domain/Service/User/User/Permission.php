@@ -18,12 +18,6 @@ use Admin\Infra\Permission as PermissionCache;
 
 /**
  * 用户权限数据.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2017.11.23
- *
- * @version 1.0
  */
 class Permission
 {

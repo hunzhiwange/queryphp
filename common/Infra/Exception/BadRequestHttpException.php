@@ -20,12 +20,6 @@ use Leevel\Kernel\Exception\BadRequestHttpException as BaseBadRequestHttpExcepti
  * 错误请求.
  *
  * - 服务器不理解请求的语法: 400.
- *
- * @author Xiangmin Liu <635750556@qq.com>
- *
- * @since 2018.04.29
- *
- * @version 1.0
  */
 class BadRequestHttpException extends BaseBadRequestHttpException
 {

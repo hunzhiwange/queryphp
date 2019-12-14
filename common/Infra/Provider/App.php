@@ -21,12 +21,6 @@ use Leevel\Di\Provider;
 
 /**
  * 应用服务提供者.
- *
- * @author Name Your <your@mail.com>
- *
- * @since 2018.01.29
- *
- * @version 1.0
  */
 class App extends Provider
 {

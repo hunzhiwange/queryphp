@@ -21,8 +21,6 @@ use Leevel\Validate\Proxy\Validate;
 
 /**
  * 批量修改状态.
- *
- * @version 1.0
  */
 trait Status
 {
