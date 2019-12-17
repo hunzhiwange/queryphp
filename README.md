@@ -234,6 +234,8 @@ $vim .env.phpunit # modify database redis and other
 $php leevel migrate:migrate -e env.phpunit
 - $php vendor/bin/phpunit
 + $php ./build/phpunit 
+composer test
+composer test-coverage
 ```
 
 ## Production optimization
@@ -452,6 +454,7 @@ It can be used without installation,we download a version for you.
 $cd /data/codes/queryphp
 - $php-cs-fixer fix --config=.php_cs.dist
 + $php ./build/php-cs-fixer fix --config=.php_cs.dist
+composer php-cs-fixer
 ```
 
 ### With Git hooks
@@ -474,6 +477,7 @@ Pass hook
 
 ```
 php ./build/phpstan analyse
+composer phpstan
 ```
 
 ## Thanks

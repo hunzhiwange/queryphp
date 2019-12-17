@@ -233,6 +233,8 @@ $vim .env.phpunit # modify database redis and other
 $php leevel migrate:migrate -e env.phpunit
 - $php vendor/bin/phpunit
 + $php ./build/phpunit
+composer test
+composer test-coverage
 ```
 
 ## 生产环境优化
@@ -451,6 +453,7 @@ INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9601/api/test
 $cd /data/codes/queryphp
 - $php-cs-fixer fix --config=.php_cs.dist
 + $php ./build/php-cs-fixer fix --config=.php_cs.dist
+composer php-cs-fixer
 ```
 
 ### 使用 Git 钩子
@@ -473,6 +476,7 @@ chmod 777 ./.git/hooks/pre-commit
 
 ```
 php ./build/phpstan analyse
+composer phpstan
 ```
 
 ## 致谢
