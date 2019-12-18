@@ -135,9 +135,10 @@ DATABASE_PASSWORD = 123456
 
 ### 执行数据库迁移命令
 
-```
-php leevel migrate:migrate
-php leevel server
+```diff
+- $php leevel migrate:migrate
++ $composer migrate
+$php leevel server
 ```
 
 ### 测试连接数据库
@@ -214,8 +215,9 @@ DATABASE_PASSWORD = 123456
 
 ### 执行数据库迁移命令
 
-```
-php leevel migrate:migrate -e env.phpunit
+```diff
+- php leevel migrate:migrate -e env.phpunit
++ $composer migrate-phpunit
 ```
 
 ### 运行
@@ -230,11 +232,12 @@ _____________                           _______________
 
 $cd /data/codes/queryphp/
 $vim .env.phpunit # modify database redis and other
-$php leevel migrate:migrate -e env.phpunit
+- $php leevel migrate:migrate -e env.phpunit
++ $composer migrate-phpunit
 - $php vendor/bin/phpunit
 + $php ./build/phpunit
-composer test
-composer test-coverage
++ $composer test
++ $composer test-coverage
 ```
 
 ## 生产环境优化
@@ -453,7 +456,7 @@ INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9601/api/test
 $cd /data/codes/queryphp
 - $php-cs-fixer fix --config=.php_cs.dist
 + $php ./build/php-cs-fixer fix --config=.php_cs.dist
-composer php-cs-fixer
++ $composer php-cs-fixer
 ```
 
 ### 使用 Git 钩子
@@ -474,9 +477,9 @@ chmod 777 ./.git/hooks/pre-commit
 
 ## PHPStan 静态分析
 
-```
-php ./build/phpstan analyse
-composer phpstan
+```diff
+- $php ./build/phpstan analyse
++ $composer phpstan
 ```
 
 ## 致谢
