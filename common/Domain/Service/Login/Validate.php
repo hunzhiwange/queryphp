@@ -36,7 +36,7 @@ class Validate
      *
      * @var \Admin\Infra\Code
      */
-    private $code;
+    private Code $code;
 
     private array $input;
 
@@ -45,21 +45,21 @@ class Validate
      *
      * @var string
      */
-    private $secret;
+    private string $secret;
 
     /**
      * 权限缓存.
      *
      * @var \Admin\Infra\Permission
      */
-    private $permissionCache;
+    private Permission $permissionCache;
 
     /**
      * 获取用户权限.
      *
      * @var \Common\Domain\Service\User\User\UserPermission
      */
-    private $permission;
+    private UserPermission $permission;
 
     public function __construct(IRequest $request, Code $code, Permission $permissionCache, UserPermission $permission)
     {
@@ -72,7 +72,6 @@ class Validate
     public function handle(array $input): array
     {
         $this->input = $input;
-
         $this->validateArgs();
 
         // Mac 自带 PHP 有问题
@@ -154,7 +153,7 @@ class Validate
     }
 
     /**
-     * 校验密码
+     * 校验密码.
      */
     private function verifyPassword(string $password, string $hash): bool
     {
