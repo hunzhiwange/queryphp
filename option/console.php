@@ -21,9 +21,22 @@ return [
       * 模板中支持 {{var}} 变量替换
       */
     'template' => [
-        'file_comment' => '/**
- * {{file_name}}
- */',
+        'header_comment' => <<<'EOT'
+            /*
+             * This file is part of the your app package.
+             *
+             * The PHP Application For Code Poem For You.
+             * (c) 2018-2099 http://yourdomian.com All rights reserved.
+             *
+             * For the full copyright and license information, please view the LICENSE
+             * file that was distributed with this source code.
+             */
+            EOT,
+        'file_comment' => <<<'EOT'
+            /**
+             * {{file_name}}.
+             */
+            EOT,
         'file_name'    => '',
     ],
 

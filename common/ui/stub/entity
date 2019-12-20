@@ -2,93 +2,100 @@
 
 declare(strict_types=1);
 
+{{header_comment}}
+
 namespace {{namespace}}\Domain\Entity;
 
 use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\IEntity;
 
 {{file_comment}}
 class {{file_name}} extends Entity
 {
     /**
-     * database table.
+     * Database table.
      *
      * @var string
      */
     const TABLE = '{{table_name}}';
 
     /**
-     * primary key.
+     * Primary key.
      *
      * @var {{primary_key_type}}
      */
     const ID = {{primary_key}};
 
     /**
-     * auto increment.
+     * Auto increment.
      *
      * @var string
      */
     const AUTO = {{auto_increment}};
 
     /**
-     * entity struct.
+     * Entity struct.
+     *
+{{struct_comment}}
+     * 
+     * @var array
+     */
+    const STRUCT = [
+{{struct}}
+    ];
+
+    /**
+     * Prop data.
      *
      * @var array
      */
-    const STRUCT = {{struct}};
+    private array $data = [];
     
     /**
-     * database connect.
+     * Database connect.
      *
      * @var mixed
      */
-    private static $leevelConnect;
-    {{props}}
+    private static $connect;
+
     /**
-     * setter.
+     * Setter.
      *
-     * @param string $prop
      * @param mixed  $value
-     *
-     * @return \Leevel\Database\Ddd\IEntity
      */
-    public function setter(string $prop, $value): IEntity
+    public function setter(string $prop, $value): self
     {
-        $this->{$this->realProp($prop)} = $value;
+        $this->data[$this->realProp($prop)] = $value;
 
         return $this;
     }
 
     /**
-     * getter.
-     *
-     * @param string $prop
+     * Getter.
      *
      * @return mixed
      */
     public function getter(string $prop)
     {
-        return $this->{$this->realProp($prop)};
+        return $this->data[$this->realProp($prop)] ?? null;
     }
 
     /**
-     * set database connect.
+     * Set database connect.
      *
      * @param mixed $connect
      */
     public static function withConnect($connect): void
     {
-        static::$leevelConnect = $connect;
+        static::$connect = $connect;
     }
 
     /**
-     * get database connect.
+     * Get database connect.
      *
      * @param mixed $connect
      */
     public static function connect()
     {
-        return static::$leevelConnect;
+        return static::$connect;
     }
 }
