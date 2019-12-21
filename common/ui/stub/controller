@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 {{header_comment}}
 
-namespace {{namespace}}\{{controller_dir}};
+namespace {{namespace}}\{{controller_dir}}{{sub_dir}};
 
 {{file_comment}}
 class {{file_name}}

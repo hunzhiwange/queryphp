@@ -43,13 +43,8 @@ class {{file_name}} extends Entity
 {{struct}}
     ];
 
-    /**
-     * Prop data.
-     *
-     * @var array
-     */
-    private array $data = [];
-    
+{{props}}
+
     /**
      * Database connect.
      *
@@ -64,7 +59,7 @@ class {{file_name}} extends Entity
      */
     public function setter(string $prop, $value): self
     {
-        $this->data[$this->realProp($prop)] = $value;
+        $this->_{$this->realProp($prop)} = $value;
 
         return $this;
     }
@@ -76,7 +71,7 @@ class {{file_name}} extends Entity
      */
     public function getter(string $prop)
     {
-        return $this->data[$this->realProp($prop)] ?? null;
+        return $this->_{$this->realProp($prop)};
     }
 
     /**
