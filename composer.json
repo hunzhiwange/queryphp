@@ -129,7 +129,8 @@
                     "delete_at",
                     "create_account",
                     "update_account"
-                ]
+                ],
+                "delete_at": "delete_at"
             }
         }
     },
