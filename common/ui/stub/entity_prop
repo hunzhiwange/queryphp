@@ -55,7 +55,7 @@ class {{file_name}} extends Entity
     /**
      * Setter.
      *
-     * @param mixed  $value
+     * @param mixed $value
      */
     public function setter(string $prop, $value): self
     {
@@ -86,8 +86,6 @@ class {{file_name}} extends Entity
 
     /**
      * Get database connect.
-     *
-     * @param mixed $connect
      */
     public static function connect()
     {
