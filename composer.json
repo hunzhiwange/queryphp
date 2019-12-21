@@ -122,6 +122,14 @@
                     "common",
                     "application"
                 ]
+            },
+            "database-entity": {
+                "show_prop_black": [
+                    "update_at",
+                    "delete_at",
+                    "create_account",
+                    "update_account"
+                ]
             }
         }
     },
