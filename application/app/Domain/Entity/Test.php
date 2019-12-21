@@ -17,7 +17,7 @@ namespace App\Domain\Entity;
 use Leevel\Database\Ddd\Entity;
 
 /**
- * Test.
+ * 测试.
  */
 class Test extends Entity
 {
