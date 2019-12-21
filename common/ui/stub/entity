@@ -42,7 +42,7 @@ class {{file_name}} extends Entity
     const STRUCT = [
 {{struct}}
     ];
-
+{{const_extend}}
     /**
      * Prop data.
      *
@@ -56,7 +56,7 @@ class {{file_name}} extends Entity
      * @var mixed
      */
     private static $connect;
-
+{{prop_extend}}
     /**
      * Setter.
      *
