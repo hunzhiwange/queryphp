@@ -60,7 +60,7 @@ class UserRole extends AbstractMigration
                 `update_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `user_role` (`user_id`,`role_id`,`delete_at`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色';
             EOT;
 
         $this->execute($sql);

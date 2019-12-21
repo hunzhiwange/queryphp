@@ -63,7 +63,7 @@ class Permission extends AbstractMigration
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `num` (`num`,`delete_at`),
                 KEY `pid` (`pid`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限';
             EOT;
 
         $this->execute($sql);

@@ -60,7 +60,7 @@ class RolePermission extends AbstractMigration
                 `update_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `role_permission` (`role_id`,`permission_id`,`delete_at`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限关联';
             EOT;
 
         $this->execute($sql);

@@ -61,7 +61,7 @@ class Resource extends AbstractMigration
                 `update_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `num` (`num`,`delete_at`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资源';
             EOT;
 
         $this->execute($sql);

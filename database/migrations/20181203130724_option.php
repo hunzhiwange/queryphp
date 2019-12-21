@@ -60,7 +60,7 @@ class Option extends AbstractMigration
                 `update_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `name` (`name`,`delete_at`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置';
             EOT;
 
         $this->execute($sql);
