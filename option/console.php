@@ -34,7 +34,7 @@ return [
             EOT,
         'file_comment' => <<<'EOT'
             /**
-             * {{file_name}}.
+             * {{file_title}}.
              */
             EOT,
         'file_name'    => '',
