@@ -17,7 +17,7 @@ namespace Common\Domain\Entity\User;
 use Leevel\Database\Ddd\Entity;
 
 /**
- * Users and global privileges.
+ * 用户.
  */
 class User extends Entity
 {
