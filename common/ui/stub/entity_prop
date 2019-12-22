@@ -59,7 +59,7 @@ class {{file_name}} extends Entity
      */
     public function setter(string $prop, $value): self
     {
-        $this->_{$this->realProp($prop)} = $value;
+        $this->{'_'.$this->realProp($prop)} = $value;
 
         return $this;
     }
@@ -71,7 +71,7 @@ class {{file_name}} extends Entity
      */
     public function getter(string $prop)
     {
-        return $this->_{$this->realProp($prop)};
+        return $this->{'_'.$this->realProp($prop)};
     }
 
     /**
