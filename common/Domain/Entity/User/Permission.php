@@ -48,7 +48,7 @@ class Permission extends Entity
      *
      * - id
      *                   comment: ID  type: int(11) unsigned  null: false
-     *                   key: PRI  default: NULL  extra: auto_increment
+     *                   key: PRI  default: null  extra: auto_increment
      * - pid
      *                   comment: 父级 ID  type: int(11) unsigned  null: false
      *                   key: MUL  default: 0  extra:

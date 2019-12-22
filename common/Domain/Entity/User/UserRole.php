@@ -47,7 +47,7 @@ class UserRole extends Entity
      *
      * - id
      *                   comment: ID  type: int(11) unsigned  null: false
-     *                   key: PRI  default: NULL  extra: auto_increment
+     *                   key: PRI  default: null  extra: auto_increment
      * - user_id
      *                   comment: 用户 ID  type: int(11) unsigned  null: false
      *                   key: MUL  default: 0  extra:

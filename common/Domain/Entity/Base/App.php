@@ -47,7 +47,7 @@ class App extends Entity
      *
      * - id
      *                   comment: ID  type: int(11) unsigned  null: false
-     *                   key: PRI  default: NULL  extra: auto_increment
+     *                   key: PRI  default: null  extra: auto_increment
      * - num
      *                   comment: 应用 ID  type: varchar(64)  null: false
      *                   key: MUL  default:   extra:

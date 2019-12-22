@@ -47,13 +47,13 @@ class Option extends Entity
      *
      * - id
      *                   comment: ID  type: int(11) unsigned  null: false
-     *                   key: PRI  default: NULL  extra: auto_increment
+     *                   key: PRI  default: null  extra: auto_increment
      * - name
      *                   comment: 配置名  type: varchar(200)  null: false
      *                   key: MUL  default:   extra:
      * - value
      *                   comment: 配置值  type: text  null: false
-     *                   key:   default: NULL  extra:
+     *                   key:   default: null  extra:
      * - create_at
      *                   comment: 创建时间  type: datetime  null: false
      *                   key:   default: CURRENT_TIMESTAMP  extra:

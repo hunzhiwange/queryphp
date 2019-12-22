@@ -47,7 +47,7 @@ class Test extends Entity
      *
      * - id
      *                   comment: ID  type: int(11) unsigned  null: false
-     *                   key: PRI  default: NULL  extra: auto_increment
+     *                   key: PRI  default: null  extra: auto_increment
      * - name
      *                   comment: 测试名  type: varchar(200)  null: false
      *                   key:   default:   extra:

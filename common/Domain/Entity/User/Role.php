@@ -47,7 +47,7 @@ class Role extends Entity
      *
      * - id
      *                   comment: ID  type: int(11) unsigned  null: false
-     *                   key: PRI  default: NULL  extra: auto_increment
+     *                   key: PRI  default: null  extra: auto_increment
      * - name
      *                   comment: 角色名字  type: varchar(64)  null: false
      *                   key:   default:   extra:
