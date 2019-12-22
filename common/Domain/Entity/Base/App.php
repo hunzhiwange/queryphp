@@ -38,9 +38,9 @@ class App extends Entity
     /**
      * Auto increment.
      *
-     * @var null
+     * @var string
      */
-    const AUTO = null;
+    const AUTO = 'id';
 
     /**
      * Entity struct.
