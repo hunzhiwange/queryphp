@@ -16,43 +16,66 @@ namespace Common\Domain\Entity\User;
 
 use Common\Infra\Repository\User\Permission as RepositoryPermission;
 use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\IEntity;
 
 /**
- * Permission.
+ * 权限.
  */
 class Permission extends Entity
 {
     /**
-     * 仓储.
-     *
-     * @var string
-     */
-    const REPOSITORY = RepositoryPermission::class;
-
-    /**
-     * database table.
+     * Database table.
      *
      * @var string
      */
     const TABLE = 'permission';
 
     /**
-     * primary key.
+     * Primary key.
      *
      * @var string
      */
     const ID = 'id';
 
     /**
-     * auto increment.
+     * Auto increment.
      *
-     * @var string
+     * @var null
      */
-    const AUTO = 'id';
+    const AUTO = null;
 
     /**
-     * entity struct.
+     * Entity struct.
+     *
+     * - id
+     *                   comment: ID  type: int(11) unsigned  null: false
+     *                   key: PRI  default: NULL  extra: auto_increment
+     * - pid
+     *                   comment: 父级 ID  type: int(11) unsigned  null: false
+     *                   key: MUL  default: 0  extra:
+     * - name
+     *                   comment: 权限名字  type: varchar(64)  null: false
+     *                   key:   default:   extra:
+     * - num
+     *                   comment: 编号  type: varchar(64)  null: false
+     *                   key: MUL  default:   extra:
+     * - status
+     *                   comment: 状态 0=禁用;1=启用;  type: tinyint(4) unsigned  null: false
+     *                   key:   default: 1  extra:
+     * - create_at
+     *                   comment: 创建时间  type: datetime  null: false
+     *                   key:   default: CURRENT_TIMESTAMP  extra:
+     * - update_at
+     *                   comment: 更新时间  type: datetime  null: false
+     *                   key:   default: CURRENT_TIMESTAMP  extra: on update CURRENT_TIMESTAMP
+     * - delete_at
+     *                   comment: 删除时间 0=未删除;大于0=删除时间;  type: bigint(20) unsigned  null: false
+     *                   key:   default: 0  extra:
+     * - create_account
+     *                   comment: 创建账号  type: int(11) unsigned  null: false
+     *                   key:   default: 0  extra:
+     * - update_account
+     *                   comment: 更新账号  type: int(11) unsigned  null: false
+     *                   key:   default: 0  extra:
      *
      * @var array
      */
@@ -60,12 +83,17 @@ class Permission extends Entity
         'id' => [
             self::READONLY => true,
         ],
-        'pid'           => [],
-        'name'          => [],
-        'num'           => [],
-        'status'        => [],
-        'create_at'     => [],
-        'update_at'     => [
+        'pid' => [
+        ],
+        'name' => [
+        ],
+        'num' => [
+        ],
+        'status' => [
+        ],
+        'create_at' => [
+        ],
+        'update_at' => [
             self::SHOW_PROP_BLACK => true,
         ],
         'delete_at' => [
@@ -88,11 +116,18 @@ class Permission extends Entity
     ];
 
     /**
-     * soft delete column.
+     * Soft delete column.
      *
      * @var string
      */
     const DELETE_AT = 'delete_at';
+
+    /**
+     * 仓储.
+     *
+     * @var string
+     */
+    const REPOSITORY = RepositoryPermission::class;
 
     /**
      * 状态值.
@@ -105,128 +140,56 @@ class Permission extends Entity
     ];
 
     /**
-     * database connect.
+     * Prop data.
+     *
+     * @var array
+     */
+    private array $data = [];
+
+    /**
+     * Database connect.
      *
      * @var mixed
      */
-    private static $leevelConnect;
+    private static $connect;
 
     /**
-     * id.
-     *
-     * @var int
-     */
-    private $id;
-
-    /**
-     * 父级 ID.
-     *
-     * @var int
-     */
-    private $pid;
-
-    /**
-     * 权限名字.
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
-     * 编号.
-     *
-     * @var string
-     */
-    private $num;
-
-    /**
-     * 状态 0=禁用;1=启用;.
-     *
-     * @var int
-     */
-    private $status;
-
-    /**
-     * 创建时间.
-     *
-     * @var string
-     */
-    private $createAt;
-
-    /**
-     * 更新时间.
-     *
-     * @var string
-     */
-    private $updateAt;
-
-    /**
-     * 删除时间 0=未删除;大于0=删除时间;.
-     *
-     * @var int
-     */
-    private $deleteAt;
-
-    /**
-     * 创建账号.
-     *
-     * @var int
-     */
-    private $createAccount;
-
-    /**
-     * 更新账号.
-     *
-     * @var int
-     */
-    private $updateAccount;
-
-    /**
-     * 资源.
-     *
-     * @var \Leevel\Collection\Collection
-     */
-    private $resource;
-
-    /**
-     * setter.
+     * Setter.
      *
      * @param mixed $value
-     *
-     * @return $this
      */
-    public function setter(string $prop, $value): IEntity
+    public function setter(string $prop, $value): self
     {
-        $this->{$this->realProp($prop)} = $value;
+        $this->data[$this->realProp($prop)] = $value;
 
         return $this;
     }
 
     /**
-     * getter.
+     * Getter.
      *
      * @return mixed
      */
     public function getter(string $prop)
     {
-        return $this->{$this->realProp($prop)};
+        return $this->data[$this->realProp($prop)] ?? null;
     }
 
     /**
-     * set database connect.
+     * Set database connect.
      *
      * @param mixed $connect
      */
     public static function withConnect($connect): void
     {
-        static::$leevelConnect = $connect;
+        static::$connect = $connect;
     }
 
     /**
-     * get database connect.
+     * Get database connect.
      */
     public static function connect()
     {
-        return static::$leevelConnect;
+        return static::$connect;
     }
 }

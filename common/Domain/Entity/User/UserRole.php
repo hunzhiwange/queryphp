@@ -15,36 +15,60 @@ declare(strict_types=1);
 namespace Common\Domain\Entity\User;
 
 use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\IEntity;
 
 /**
- * UserRole.
+ * 用户角色.
  */
 class UserRole extends Entity
 {
     /**
-     * database table.
+     * Database table.
      *
      * @var string
      */
     const TABLE = 'user_role';
 
     /**
-     * primary key.
+     * Primary key.
      *
      * @var string
      */
     const ID = 'id';
 
     /**
-     * auto increment.
+     * Auto increment.
      *
-     * @var string
+     * @var null
      */
-    const AUTO = 'id';
+    const AUTO = null;
 
     /**
-     * entity struct.
+     * Entity struct.
+     *
+     * - id
+     *                   comment: ID  type: int(11) unsigned  null: false
+     *                   key: PRI  default: NULL  extra: auto_increment
+     * - user_id
+     *                   comment: 用户 ID  type: int(11) unsigned  null: false
+     *                   key: MUL  default: 0  extra:
+     * - role_id
+     *                   comment: 角色 ID  type: int(11) unsigned  null: false
+     *                   key:   default: 0  extra:
+     * - create_at
+     *                   comment: 创建时间  type: datetime  null: false
+     *                   key:   default: CURRENT_TIMESTAMP  extra:
+     * - update_at
+     *                   comment: 更新时间  type: datetime  null: false
+     *                   key:   default: CURRENT_TIMESTAMP  extra: on update CURRENT_TIMESTAMP
+     * - delete_at
+     *                   comment: 删除时间 0=未删除;大于0=删除时间;  type: bigint(20) unsigned  null: false
+     *                   key:   default: 0  extra:
+     * - create_account
+     *                   comment: 创建账号  type: int(11) unsigned  null: false
+     *                   key:   default: 0  extra:
+     * - update_account
+     *                   comment: 更新账号  type: int(11) unsigned  null: false
+     *                   key:   default: 0  extra:
      *
      * @var array
      */
@@ -52,9 +76,12 @@ class UserRole extends Entity
         'id' => [
             self::READONLY => true,
         ],
-        'user_id'   => [],
-        'role_id'   => [],
-        'create_at' => [],
+        'user_id' => [
+        ],
+        'role_id' => [
+        ],
+        'create_at' => [
+        ],
         'update_at' => [
             self::SHOW_PROP_BLACK => true,
         ],
@@ -70,114 +97,63 @@ class UserRole extends Entity
     ];
 
     /**
-     * soft delete column.
+     * Soft delete column.
      *
      * @var string
      */
     const DELETE_AT = 'delete_at';
 
     /**
-     * database connect.
+     * Prop data.
+     *
+     * @var array
+     */
+    private array $data = [];
+
+    /**
+     * Database connect.
      *
      * @var mixed
      */
-    private static $leevelConnect;
+    private static $connect;
 
     /**
-     * id.
-     *
-     * @var int
-     */
-    private $id;
-
-    /**
-     * 用户 ID.
-     *
-     * @var int
-     */
-    private $userId;
-
-    /**
-     * 角色 ID.
-     *
-     * @var int
-     */
-    private $roleId;
-
-    /**
-     * 创建时间.
-     *
-     * @var string
-     */
-    private $createAt;
-
-    /**
-     * 更新时间.
-     *
-     * @var string
-     */
-    private $updateAt;
-
-    /**
-     * 删除时间 0=未删除;大于0=删除时间;.
-     *
-     * @var int
-     */
-    private $deleteAt;
-
-    /**
-     * 创建账号.
-     *
-     * @var int
-     */
-    private $createAccount;
-
-    /**
-     * 更新账号.
-     *
-     * @var int
-     */
-    private $updateAccount;
-
-    /**
-     * setter.
+     * Setter.
      *
      * @param mixed $value
-     *
-     * @return $this
      */
-    public function setter(string $prop, $value): IEntity
+    public function setter(string $prop, $value): self
     {
-        $this->{$this->realProp($prop)} = $value;
+        $this->data[$this->realProp($prop)] = $value;
 
         return $this;
     }
 
     /**
-     * getter.
+     * Getter.
      *
      * @return mixed
      */
     public function getter(string $prop)
     {
-        return $this->{$this->realProp($prop)};
+        return $this->data[$this->realProp($prop)] ?? null;
     }
 
     /**
-     * set database connect.
+     * Set database connect.
      *
      * @param mixed $connect
      */
     public static function withConnect($connect): void
     {
-        static::$leevelConnect = $connect;
+        static::$connect = $connect;
     }
 
     /**
-     * get database connect.
+     * Get database connect.
      */
     public static function connect()
     {
-        return static::$leevelConnect;
+        return static::$connect;
     }
 }
