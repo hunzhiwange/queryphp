@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Infra\Helper;
 
-use Leevel\Option\Helper\option_set;
+use Leevel\Option\Helper\set;
 
 /**
  * 使用方法.
@@ -25,7 +25,7 @@ use Leevel\Option\Helper\option_set;
  */
 function force_close_debug(): void
 {
-    f(option_set::class, 'debug', false);
+    f(set::class, 'debug', false);
 }
 
 class force_close_debug
