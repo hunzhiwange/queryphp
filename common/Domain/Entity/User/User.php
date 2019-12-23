@@ -135,6 +135,16 @@ class User extends Entity
     const DELETE_AT = 'delete_at';
 
     /**
+     * 状态值.
+     *
+     * @var array
+     */
+    const STATUS_ENUM = [
+        'disable' => [0, '禁用'],
+        'enable'  => [1, '启用'],
+    ];
+
+    /**
      * Prop data.
      *
      * @var array
