@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Common\Domain\Entity\User;
 
 use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\Relation\ManyMany;
 
 /**
  * 用户.
@@ -185,5 +186,13 @@ class User extends Entity
     public static function connect()
     {
         return static::$connect;
+    }
+
+    /**
+     * 角色关联查询作用域.
+     */
+    protected function relationScopeRole(ManyMany $relation): void
+    {
+        $relation->setColumns(['id', 'name']);
     }
 }
