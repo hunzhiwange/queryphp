@@ -32,7 +32,7 @@ class Update
      *
      * @var \Leevel\Auth\Hash
      */
-    private $hash;
+    private Hash $hash;
 
     private IUnitOfWork $w;
 

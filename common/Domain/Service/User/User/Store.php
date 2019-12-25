@@ -30,7 +30,7 @@ class Store
      *
      * @var \Leevel\Auth\Hash
      */
-    private $hash;
+    private Hash $hash;
 
     private IUnitOfWork $w;
 
