@@ -49,7 +49,7 @@ trait Destroy
     {
         $this->w
             ->persist($entity)
-            ->remove($entity)
+            ->delete($entity)
             ->flush();
     }
 
