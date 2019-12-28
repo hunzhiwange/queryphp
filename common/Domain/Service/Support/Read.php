@@ -35,7 +35,6 @@ trait Read
 
         foreach (array_keys($data[0]) as $field) {
             $prepare = f(camelize::class, (string) $field).'Prepare';
-
             if (method_exists($this, $prepare)) {
                 $this->{$prepare}($data, $field, $input);
             }
@@ -50,7 +49,6 @@ trait Read
         foreach ($input as $k => $v) {
             if (null !== $v) {
                 $method = f(camelize::class, (string) $k).'Spec';
-
                 if (method_exists($this, $method)) {
                     $this->{$method}($select, $v, $input);
                 }
