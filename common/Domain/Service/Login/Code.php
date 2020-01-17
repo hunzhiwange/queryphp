@@ -40,10 +40,9 @@ class Code
         }
 
         $seccode = new Seccode([
-            'background_path' => Leevel::commonPath('ui/seccode/background'),
-            'font_path'       => Leevel::commonPath('ui/seccode/font'),
-            'width'           => 120,
-            'height'          => 36,
+            'font_path' => Leevel::commonPath('ui/seccode/font'),
+            'width'     => 120,
+            'height'    => 36,
         ]);
 
         ob_start();
