@@ -497,6 +497,7 @@ Thanks for these excellent projects, we have absorbed a lot of excellent design 
  * Symfony: <https://github.com/symfony/>
  * Doctrine: <https://github.com/doctrine/>
  * Phalcon: <https://github.com/phalcon/>
+ * Swoft: <https://github.com/swoft-cloud/>
 
 ## License
 

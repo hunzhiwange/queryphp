@@ -496,6 +496,7 @@ chmod 777 ./.git/hooks/pre-commit
  * Symfony: <https://github.com/symfony/>
  * Doctrine: <https://github.com/doctrine/>
  * Phalcon: <https://github.com/phalcon/>
+ * Swoft: <https://github.com/swoft-cloud/>
 
 ## 版权协议
 
