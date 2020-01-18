@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Infra\Helper;
 
-use Leevel\Option\Helper\set;
+use Leevel\Option\Proxy\Option;
 
 /**
  * 使用方法.
@@ -25,7 +25,7 @@ use Leevel\Option\Helper\set;
  */
 function force_close_debug(): void
 {
-    f(set::class, 'debug', false);
+    Option::set('debug', false);
 }
 
 class force_close_debug
