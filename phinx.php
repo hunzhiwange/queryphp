@@ -78,9 +78,6 @@ class PhinxLoad
      */
     private function loadEnvData(IApp $app): array
     {
-        $oldEnv = $_ENV;
-        $_ENV = [];
-
         try {
             (new Dotenv($app->envPath(), $app->envFile()))->overload();
         } catch (InvalidPathException $e) {
@@ -88,9 +85,6 @@ class PhinxLoad
         } catch (InvalidFileException $e) {
             throw new RuntimeException($e->getMessage());
         }
-
-        $result = $_ENV;
-        $_ENV = array_merge($oldEnv, $_ENV);
 
         return $result;
     }
