@@ -12,18 +12,18 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\App\Exception;
+namespace Common\App;
 
 use Exception;
 use Leevel;
 use Leevel\Http\Request;
 use Leevel\Http\Response;
-use Leevel\Kernel\Runtime as Runtimes;
+use Leevel\Kernel\ExceptionRuntime as BaseExceptionRuntime;
 
 /**
  * 异常处理.
  */
-class Runtime extends Runtimes
+class ExceptionRuntime extends BaseExceptionRuntime
 {
     /**
      * {@inheritdoc}
@@ -42,7 +42,7 @@ class Runtime extends Runtimes
     }
 
     /**
-     * 获取 HTTP 状态的异常模板
+     * 获取 HTTP 状态的异常模板.
      */
     public function getHttpExceptionView(Exception $e): string
     {
@@ -50,7 +50,7 @@ class Runtime extends Runtimes
     }
 
     /**
-     * 获取 HTTP 状态的默认异常模板
+     * 获取 HTTP 状态的默认异常模板.
      */
     public function getDefaultHttpExceptionView(): string
     {

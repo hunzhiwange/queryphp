@@ -13,16 +13,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Common\App\Exception\Runtime;
+use Common\App\ExceptionRuntime;
 use Common\App\Kernel;
 use Common\App\KernelConsole;
 use Leevel\Di\Container;
 use Leevel\Di\IContainer;
 use Leevel\Kernel\App;
 use Leevel\Kernel\IApp;
+use Leevel\Kernel\IExceptionRuntime;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
-use Leevel\Kernel\IRuntime;
 
 /**
  * ---------------------------------------------------------------
@@ -48,7 +48,7 @@ $container->alias('app', [IApp::class, App::class]);
 
 $container->singleton(IKernel::class, Kernel::class);
 $container->singleton(IKernelConsole::class, KernelConsole::class);
-$container->singleton(IRuntime::class, Runtime::class);
+$container->singleton(IExceptionRuntime::class, ExceptionRuntime::class);
 
 /**
  * ---------------------------------------------------------------
