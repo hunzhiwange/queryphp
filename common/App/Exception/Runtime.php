@@ -16,8 +16,8 @@ namespace Common\App\Exception;
 
 use Exception;
 use Leevel;
-use Leevel\Http\IRequest;
-use Leevel\Http\IResponse;
+use Leevel\Http\Request;
+use Leevel\Http\Response;
 use Leevel\Kernel\Runtime as Runtimes;
 
 /**
@@ -36,7 +36,7 @@ class Runtime extends Runtimes
     /**
      * {@inheritdoc}
      */
-    public function render(IRequest $request, Exception $e): IResponse
+    public function render(Request $request, Exception $e): Response
     {
         return parent::render($request, $e);
     }

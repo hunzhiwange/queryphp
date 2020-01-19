@@ -16,7 +16,7 @@ namespace Admin\App\Controller\Base;
 
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Base\Option as Service;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 
 /**
  * 配置更新.
@@ -32,7 +32,7 @@ class Option
         'site_close',
     ];
 
-    public function handle(IRequest $request, Service $service): array
+    public function handle(Request $request, Service $service): array
     {
         return $this->main($request, $service);
     }

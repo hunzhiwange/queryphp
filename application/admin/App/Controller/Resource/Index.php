@@ -16,7 +16,7 @@ namespace Admin\App\Controller\Resource;
 
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Resource\Index as Service;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 
 /**
  * 资源列表.
@@ -34,7 +34,7 @@ class Index
         'size',
     ];
 
-    public function handle(IRequest $request, Service $service): array
+    public function handle(Request $request, Service $service): array
     {
         return $this->main($request, $service);
     }

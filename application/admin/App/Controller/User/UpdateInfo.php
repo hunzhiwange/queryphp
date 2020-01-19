@@ -17,7 +17,7 @@ namespace Admin\App\Controller\User;
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\User\UpdateInfo as Service;
 use Leevel\Auth\Proxy\Auth;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 
 /**
  * 用户修改资料.
@@ -33,12 +33,12 @@ class UpdateInfo
         'mobile',
     ];
 
-    public function handle(IRequest $request, Service $service): array
+    public function handle(Request $request, Service $service): array
     {
         return $this->main($request, $service);
     }
 
-    private function extendInput(IRequest $request): array
+    private function extendInput(Request $request): array
     {
         return ['id' => $this->id()];
     }

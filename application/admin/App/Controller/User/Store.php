@@ -16,7 +16,7 @@ namespace Admin\App\Controller\User;
 
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\User\Store as Service;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 
 /**
  * 用户保存.
@@ -35,7 +35,7 @@ class Store
         'password',
     ];
 
-    public function handle(IRequest $request, Service $service): array
+    public function handle(Request $request, Service $service): array
     {
         return $this->main($request, $service);
     }

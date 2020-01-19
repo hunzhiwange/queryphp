@@ -22,7 +22,7 @@ use Common\Infra\Exception\UnauthorizedHttpException;
 use Common\Infra\Proxy\Permission;
 use Leevel\Auth\AuthException;
 use Leevel\Auth\Middleware\Auth as BaseAuth;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 
 /**
  * auth 中间件.
@@ -71,7 +71,7 @@ class Auth extends BaseAuth
      *
      * @throws \Common\Infra\Exception\UnauthorizedHttpException
      */
-    public function handle(Closure $next, IRequest $request): void
+    public function handle(Closure $next, Request $request): void
     {
         if ($request->isOptions() || $this->isIgnoreRouter($request)) {
             $next($request);
@@ -99,7 +99,7 @@ class Auth extends BaseAuth
     /**
      * 是否为忽略路由.
      */
-    private function isIgnoreRouter(IRequest $request): bool
+    private function isIgnoreRouter(Request $request): bool
     {
         return \in_array($request->getPathInfo(), $this->ignorePathInfo, true);
     }
@@ -107,7 +107,7 @@ class Auth extends BaseAuth
     /**
      * 整理 token 数据.
      */
-    private function normalizeToken(IRequest $request): string
+    private function normalizeToken(Request $request): string
     {
         // 兼容 header，也可以通过 get 或者 post 来设置 token
         if ($token = $request->headers->get('token')) {
@@ -124,7 +124,7 @@ class Auth extends BaseAuth
      *
      * @throws \Admin\App\Exception\LockException
      */
-    private function validateLock(IRequest $request, string $token): void
+    private function validateLock(Request $request, string $token): void
     {
         if (!\in_array($request->getPathInfo(), $this->ignoreLockPathInfo, true) &&
             $token && (new Lock())->has($token)) {
@@ -135,7 +135,7 @@ class Auth extends BaseAuth
     /**
      * 是否为忽略权限.
      */
-    private function isIgnorePermission(IRequest $request): bool
+    private function isIgnorePermission(Request $request): bool
     {
         return \in_array($request->getPathInfo(), $this->ignorePermissionPathInfo, true);
     }
@@ -145,7 +145,7 @@ class Auth extends BaseAuth
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    private function validatePermission(IRequest $request): void
+    private function validatePermission(Request $request): void
     {
         $pathInfo = str_replace('/:admin/', '', $request->getPathInfo());
         $method = strtolower($request->getMethod());

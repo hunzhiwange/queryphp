@@ -16,7 +16,7 @@ namespace Admin\App\Controller\Permission;
 
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Permission\Update as Service;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 
 /**
  * 权限更新.
@@ -35,12 +35,12 @@ class Update
         'pid',
     ];
 
-    public function handle(IRequest $request, Service $service): array
+    public function handle(Request $request, Service $service): array
     {
         return $this->main($request, $service);
     }
 
-    private function extendInput(IRequest $request): array
+    private function extendInput(Request $request): array
     {
         return $this->restfulInput($request);
     }

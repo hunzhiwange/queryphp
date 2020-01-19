@@ -13,8 +13,6 @@ declare(strict_types=1);
  */
 
 use Dotenv\Dotenv;
-use Dotenv\Exception\InvalidFileException;
-use Dotenv\Exception\InvalidPathException;
 use Leevel\Di\Container;
 use Leevel\Kernel\App;
 use Leevel\Kernel\IApp;
@@ -78,15 +76,9 @@ class PhinxLoad
      */
     private function loadEnvData(IApp $app): array
     {
-        try {
-            (new Dotenv($app->envPath(), $app->envFile()))->overload();
-        } catch (InvalidPathException $e) {
-            throw new RuntimeException($e->getMessage());
-        } catch (InvalidFileException $e) {
-            throw new RuntimeException($e->getMessage());
-        }
+        $dotenv = Dotenv::createMutable($app->envPath(), $app->envFile());
 
-        return $result;
+        return $dotenv->load();
     }
 
     /**

@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Admin\App\Controller\Support;
 
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 use Leevel\Router\IRouter;
 
 /**
@@ -27,12 +27,12 @@ trait Controller
      *
      * @param object $service
      */
-    private function main(IRequest $request, $service): array
+    private function main(Request $request, $service): array
     {
         return $service->handle($this->input($request));
     }
 
-    private function input(IRequest $request): array
+    private function input(Request $request): array
     {
         $input = $request->only($this->allowedInput);
 
@@ -43,7 +43,7 @@ trait Controller
         return $input;
     }
 
-    private function restfulInput(IRequest $request): array
+    private function restfulInput(Request $request): array
     {
         return [
             'id' => (int) ($request->params->get(IRouter::RESTFUL_ID)),

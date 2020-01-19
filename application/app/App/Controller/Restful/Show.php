@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Restful;
 
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 use Leevel\Router\IRouter;
 
 /**
@@ -24,7 +24,7 @@ use Leevel\Router\IRouter;
  */
 class Show
 {
-    public function handle(IRequest $request)
+    public function handle(Request $request)
     {
         return 'hello for restful '.IRouter::RESTFUL_SHOW.
             ' and id is '.$request->params->get('_param0');
