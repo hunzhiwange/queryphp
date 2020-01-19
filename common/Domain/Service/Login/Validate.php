@@ -22,7 +22,7 @@ use Common\Domain\Service\User\User\UserPermission;
 use Common\Infra\Exception\BusinessException;
 use Leevel\Auth\Hash;
 use Leevel\Auth\Proxy\Auth;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 use Leevel\Support\Str;
 use Leevel\Validate\Proxy\Validate as Validates;
 
@@ -61,7 +61,7 @@ class Validate
      */
     private UserPermission $permission;
 
-    public function __construct(IRequest $request, Code $code, Permission $permissionCache, UserPermission $permission)
+    public function __construct(Request $request, Code $code, Permission $permissionCache, UserPermission $permission)
     {
         $this->request = $request;
         $this->code = $code;

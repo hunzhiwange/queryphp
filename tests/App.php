@@ -19,7 +19,6 @@ use Common\App\Kernel;
 use Common\App\KernelConsole;
 use Leevel\Di\Container;
 use Leevel\Di\IContainer;
-use Leevel\Http\IRequest;
 use Leevel\Http\Request;
 use Leevel\Kernel\App as KernelApp;
 use Leevel\Kernel\IApp;
@@ -50,7 +49,7 @@ trait App
         $container->singleton(IRuntime::class, Runtime::class);
 
         $container->instance('request', Request::createFromGlobals());
-        $container->alias('request', [IRequest::class, Request::class]);
+        $container->alias('request', [Request::class, Request::class]);
         $container->make(IKernelConsole::class)->bootstrap();
 
         return $app;

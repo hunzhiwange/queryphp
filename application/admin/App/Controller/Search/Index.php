@@ -16,7 +16,7 @@ namespace Admin\App\Controller\Search;
 
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Search\Index as Service;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 
 /**
  * 公共搜索列表.
@@ -27,12 +27,12 @@ class Index
 {
     use Controller;
 
-    public function handle(IRequest $request, Service $service): array
+    public function handle(Request $request, Service $service): array
     {
         return $this->main($request, $service);
     }
 
-    private function input(IRequest $request): array
+    private function input(Request $request): array
     {
         return $request->all();
     }

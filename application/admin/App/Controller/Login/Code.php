@@ -17,7 +17,7 @@ namespace Admin\App\Controller\Login;
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Login\Code as Service;
 use Common\Infra\Helper\force_close_debug;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 use Leevel\Http\Response;
 
 /**
@@ -29,7 +29,7 @@ class Code
 {
     use Controller;
 
-    public function handle(IRequest $request, Service $service): Response
+    public function handle(Request $request, Service $service): Response
     {
         $code = $service->handle($this->input($request));
         $this->forceCloseDebug();
@@ -37,7 +37,7 @@ class Code
         return new Response($code, 200, ['Content-type' => 'image/png']);
     }
 
-    private function input(IRequest $request): array
+    private function input(Request $request): array
     {
         return [
             'id' => $request->query->get('id'),

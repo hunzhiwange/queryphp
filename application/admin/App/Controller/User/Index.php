@@ -16,7 +16,7 @@ namespace Admin\App\Controller\User;
 
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\User\Index as Service;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 
 /**
  * 用户列表.
@@ -36,7 +36,7 @@ class Index
         'order_by',
     ];
 
-    public function handle(IRequest $request, Service $service): array
+    public function handle(Request $request, Service $service): array
     {
         return $this->main($request, $service);
     }

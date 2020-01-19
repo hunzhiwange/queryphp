@@ -16,7 +16,7 @@ namespace Admin\App\Controller\Login;
 
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Login\Validate as Service;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 
 /**
  * 验证登录.
@@ -36,7 +36,7 @@ class Validate
         'code',
     ];
 
-    public function handle(IRequest $request, Service $service): array
+    public function handle(Request $request, Service $service): array
     {
         return $this->main($request, $service);
     }

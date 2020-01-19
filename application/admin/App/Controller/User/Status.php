@@ -16,7 +16,7 @@ namespace Admin\App\Controller\User;
 
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\User\Status as Service;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 
 /**
  * 批量修改用户状态.
@@ -32,7 +32,7 @@ class Status
         'status',
     ];
 
-    public function handle(IRequest $request, Service $service): array
+    public function handle(Request $request, Service $service): array
     {
         return $this->main($request, $service);
     }

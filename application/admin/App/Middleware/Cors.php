@@ -15,8 +15,8 @@ declare(strict_types=1);
 namespace Admin\App\Middleware;
 
 use Closure;
-use Leevel\Http\IRequest;
-use Leevel\Http\IResponse;
+use Leevel\Http\Request;
+use Leevel\Http\Response;
 
 /**
  * Cors 中间件.
@@ -26,7 +26,7 @@ class Cors
     /**
      * 响应.
      */
-    public function terminate(Closure $next, IRequest $request, IResponse $response): void
+    public function terminate(Closure $next, Request $request, Response $response): void
     {
         $headers = [
             'Access-Control-Allow-Origin'      => '*',

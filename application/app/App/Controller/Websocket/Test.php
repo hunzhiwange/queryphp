@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Websocket;
 
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 use Swoole\WebSocket\Frame;
 use Swoole\WebSocket\Server;
 
@@ -28,11 +28,11 @@ class Test
     /**
      * WebSocket 客户端与服务器建立连接并完成握手后.
      *
-     * @param \Swoole\Http\IRequest $request
+     * @param \Swoole\Http\Request $request
      *
      * @see https://wiki.swoole.com/wiki/page/401.html
      */
-    public function open(Server $server, IRequest $request, int $fd)
+    public function open(Server $server, Request $request, int $fd)
     {
         //每一次客户端连接 最大连接数将增加
         $message = "欢迎 `用户{$fd}` 进入聊天室";

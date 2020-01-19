@@ -16,7 +16,7 @@ namespace Admin\App\Controller\Resource;
 
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Resource\Destroy as Service;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 
 /**
  * 资源删除.
@@ -27,12 +27,12 @@ class Destroy
 {
     use Controller;
 
-    public function handle(IRequest $request, Service $service): array
+    public function handle(Request $request, Service $service): array
     {
         return $this->main($request, $service);
     }
 
-    private function input(IRequest $request): array
+    private function input(Request $request): array
     {
         return $this->restfulInput($request);
     }

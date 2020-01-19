@@ -16,7 +16,7 @@ namespace Admin\App\Controller\Role;
 
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Role\Index as Service;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 
 /**
  * 角色列表.
@@ -34,7 +34,7 @@ class Index
         'size',
     ];
 
-    public function handle(IRequest $request, Service $service): array
+    public function handle(Request $request, Service $service): array
     {
         return $this->main($request, $service);
     }

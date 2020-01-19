@@ -16,7 +16,7 @@ namespace Admin\App\Controller\Attachment;
 
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Attachment\Upload as Service;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 
 /**
  * 文件上传.
@@ -31,7 +31,7 @@ class Upload
         'file',
     ];
 
-    public function handle(IRequest $request, Service $service): string
+    public function handle(Request $request, Service $service): string
     {
         return $this->main($request, $service)[0];
     }

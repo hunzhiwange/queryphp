@@ -16,7 +16,7 @@ namespace Admin\App\Controller\Resource;
 
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Resource\Update as Service;
-use Leevel\Http\IRequest;
+use Leevel\Http\Request;
 
 /**
  * 资源更新.
@@ -34,12 +34,12 @@ class Update
         'status',
     ];
 
-    public function handle(IRequest $request, Service $service): array
+    public function handle(Request $request, Service $service): array
     {
         return $this->main($request, $service);
     }
 
-    private function extendInput(IRequest $request): array
+    private function extendInput(Request $request): array
     {
         return $this->restfulInput($request);
     }
