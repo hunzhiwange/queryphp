@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Common\App\Exception\Runtime;
+use Common\App\ExceptionRuntime;
 use Common\App\Kernel;
 use Common\App\KernelConsole;
 use Leevel\Di\Container;
@@ -22,9 +22,9 @@ use Leevel\Di\IContainer;
 use Leevel\Http\Request;
 use Leevel\Kernel\App as KernelApp;
 use Leevel\Kernel\IApp;
+use Leevel\Kernel\IExceptionRuntime;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
-use Leevel\Kernel\IRuntime;
 
 /**
  * 初始化应用.
@@ -46,7 +46,7 @@ trait App
 
         $container->singleton(IKernel::class, Kernel::class);
         $container->singleton(IKernelConsole::class, KernelConsole::class);
-        $container->singleton(IRuntime::class, Runtime::class);
+        $container->singleton(IExceptionRuntime::class, ExceptionRuntime::class);
 
         $container->instance('request', Request::createFromGlobals());
         $container->alias('request', [Request::class, Request::class]);
