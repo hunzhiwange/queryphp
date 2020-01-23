@@ -70,4 +70,16 @@ return [
      * 相关技术文档：http://php.net/manual/zh/function.setcookie.php
      */
     'httponly' => false,
+
+    /*
+     * ---------------------------------------------------------------
+     * cookie 跨域发送设置
+     * ---------------------------------------------------------------
+     *
+     * 允许服务器设定一则 cookie 不随着跨域请求一起发送，这样可以在一定程度上防范跨站请求伪造攻击（CSRF）。
+     * Strict 或 Lax
+     * 相关技术文档：https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Set-Cookie
+     * 例外 php 7.3 支持 https://www.php.net/manual/en/function.setcookie.php
+     */
+    'samesite' => null,
 ];
