@@ -17,8 +17,8 @@ namespace Common\App;
 use Exception;
 use Leevel;
 use Leevel\Http\Request;
-use Leevel\Http\Response;
 use Leevel\Kernel\ExceptionRuntime as BaseExceptionRuntime;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * 异常处理.
