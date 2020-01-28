@@ -27,6 +27,6 @@ class Show
     public function handle(Request $request)
     {
         return 'hello for restful '.IRouter::RESTFUL_SHOW.
-            ' and id is '.$request->params->get('_param0');
+            ' and id is '.$request->attributes->get(IRouter::RESTFUL_ID);
     }
 }
