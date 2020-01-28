@@ -83,7 +83,7 @@ class Pet
      *     requestBody={"$ref": "#/components/requestBodies/Pet"},
      *     leevelScheme="https",
      *     leevelDomain="{subdomain:[A-Za-z]+}-vip.{domain}",
-     *     leevelParams={"args1": "hello", "args2": "world"},
+     *     leevelAttributes={"args1": "hello", "args2": "world"},
      *     leevelMiddlewares="api"
      * )
      */

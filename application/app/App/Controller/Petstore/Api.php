@@ -45,7 +45,7 @@ class Api
      *     security={
      *         {"petstore_auth": {"write:pets", "read:pets"}}
      *     },
-     *     leevelParams={"args1": "hello", "args2": "world"}
+     *     leevelAttributes={"args1": "hello", "args2": "world"}
      * )
      *
      * @param mixed $petId
