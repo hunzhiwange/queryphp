@@ -46,7 +46,7 @@ trait Controller
     private function restfulInput(Request $request): array
     {
         return [
-            'id' => (int) ($request->attributes->get(IRouter::RESTFUL_ID)),
+            'id' => (int) $request->attributes->get(IRouter::RESTFUL_ID),
         ];
     }
 }
