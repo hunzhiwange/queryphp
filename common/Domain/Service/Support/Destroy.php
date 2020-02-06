@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Common\Domain\Service\Support;
 
 use Common\Infra\Exception\BusinessException;
-use Leevel\Database\Ddd\IEntity;
+use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate;
 
@@ -45,7 +45,7 @@ trait Destroy
     /**
      * 删除实体.
      */
-    private function remove(IEntity $entity)
+    private function remove(Entity $entity)
     {
         $this->w
             ->persist($entity)
@@ -56,7 +56,7 @@ trait Destroy
     /**
      * 查找实体.
      */
-    private function find(int $id): IEntity
+    private function find(int $id): Entity
     {
         return $this->w->repository($this->entity())->findOrFail($id);
     }
