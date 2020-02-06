@@ -15,16 +15,16 @@ declare(strict_types=1);
 namespace Common\Domain\Service\Base;
 
 use Common\Domain\Entity\Base\Option as Options;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Database\Ddd\UnitOfWork;
 
 /**
  * 配置更新.
  */
 class Option
 {
-    private IUnitOfWork $w;
+    private UnitOfWork $w;
 
-    public function __construct(IUnitOfWork $w)
+    public function __construct(UnitOfWork $w)
     {
         $this->w = $w;
     }

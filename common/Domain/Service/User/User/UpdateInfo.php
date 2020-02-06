@@ -17,7 +17,7 @@ namespace Common\Domain\Service\User\User;
 use Common\Domain\Entity\User\User;
 use Common\Infra\Exception\BusinessException;
 use Common\Infra\Support\WorkflowService;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\IValidator;
 use Leevel\Validate\Proxy\Validate as Validates;
 
@@ -30,9 +30,9 @@ class UpdateInfo
 
     private array $input;
 
-    private IUnitOfWork $w;
+    private UnitOfWork $w;
 
-    public function __construct(IUnitOfWork $w)
+    public function __construct(UnitOfWork $w)
     {
         $this->w = $w;
     }

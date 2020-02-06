@@ -17,7 +17,7 @@ namespace Common\Domain\Service\User\User;
 use Common\Domain\Entity\User\User;
 use Common\Infra\Exception\BusinessException;
 use Leevel\Auth\Hash;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate as Validates;
 
 /**
@@ -33,9 +33,9 @@ class ChangePassword
     private $hash;
 
     private array $input;
-    private IUnitOfWork $w;
+    private UnitOfWork $w;
 
-    public function __construct(IUnitOfWork $w, Hash $hash)
+    public function __construct(UnitOfWork $w, Hash $hash)
     {
         $this->w = $w;
         $this->hash = $hash;

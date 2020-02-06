@@ -18,7 +18,7 @@ use Common\Domain\Entity\User\User;
 use Common\Domain\Entity\User\UserRole as EntityUserRole;
 use Leevel\Auth\Hash;
 use Leevel\Collection\Collection;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Database\Ddd\UnitOfWork;
 
 /**
  * 用户更新.
@@ -34,9 +34,9 @@ class Update
      */
     private Hash $hash;
 
-    private IUnitOfWork $w;
+    private UnitOfWork $w;
 
-    public function __construct(IUnitOfWork $w, Hash $hash)
+    public function __construct(UnitOfWork $w, Hash $hash)
     {
         $this->w = $w;
         $this->hash = $hash;

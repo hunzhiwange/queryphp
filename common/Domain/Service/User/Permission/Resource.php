@@ -17,16 +17,16 @@ namespace Common\Domain\Service\User\Permission;
 use Common\Domain\Entity\User\Permission;
 use Common\Domain\Entity\User\PermissionResource as EntityPermissionResource;
 use Leevel\Collection\Collection;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Database\Ddd\UnitOfWork;
 
 /**
  * 权限资源授权.
  */
 class Resource
 {
-    private IUnitOfWork $w;
+    private UnitOfWork $w;
 
-    public function __construct(IUnitOfWork $w)
+    public function __construct(UnitOfWork $w)
     {
         $this->w = $w;
     }

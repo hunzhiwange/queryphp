@@ -18,8 +18,8 @@ use Closure;
 use Common\Domain\Entity\User\Role;
 use Common\Domain\Service\Support\Read;
 use Common\Infra\Support\WorkflowService;
-use Leevel\Database\Ddd\IUnitOfWork;
 use Leevel\Database\Ddd\Select;
+use Leevel\Database\Ddd\UnitOfWork;
 
 /**
  * 角色列表.
@@ -29,7 +29,7 @@ class Index
     use Read;
     use WorkflowService;
 
-    private IUnitOfWork $w;
+    private UnitOfWork $w;
 
     private array $workflow = [
         'filterSearchInput',
@@ -47,7 +47,7 @@ class Index
         'order_by',
     ];
 
-    public function __construct(IUnitOfWork $w)
+    public function __construct(UnitOfWork $w)
     {
         $this->w = $w;
     }
