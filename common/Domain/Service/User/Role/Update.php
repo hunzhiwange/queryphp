@@ -16,7 +16,7 @@ namespace Common\Domain\Service\User\Role;
 
 use Common\Domain\Entity\User\Role;
 use Common\Infra\Support\WorkflowService;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\UniqueRule;
 
 /**
@@ -26,7 +26,7 @@ class Update
 {
     use WorkflowService;
 
-    private IUnitOfWork $w;
+    private UnitOfWork $w;
 
     private array $workflow = [
         'allowedInput',
@@ -41,7 +41,7 @@ class Update
         'status',
     ];
 
-    public function __construct(IUnitOfWork $w)
+    public function __construct(UnitOfWork $w)
     {
         $this->w = $w;
     }

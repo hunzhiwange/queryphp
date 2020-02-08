@@ -73,7 +73,7 @@ class Auth extends BaseAuth
      */
     public function handle(Closure $next, Request $request): void
     {
-        if ($request->isOptions() || $this->isIgnoreRouter($request)) {
+        if ($request::METHOD_OPTIONS === $request->getMethod() || $this->isIgnoreRouter($request)) {
             $next($request);
 
             return;

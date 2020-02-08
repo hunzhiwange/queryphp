@@ -17,16 +17,16 @@ namespace Common\Domain\Service\User\Role;
 use Common\Domain\Entity\User\Role;
 use Common\Domain\Entity\User\RolePermission as EntityRolePermission;
 use Leevel\Collection\Collection;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Database\Ddd\UnitOfWork;
 
 /**
  * 角色授权.
  */
 class Permission
 {
-    private IUnitOfWork $w;
+    private UnitOfWork $w;
 
-    public function __construct(IUnitOfWork $w)
+    public function __construct(UnitOfWork $w)
     {
         $this->w = $w;
     }

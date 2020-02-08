@@ -16,7 +16,7 @@ namespace Common\Domain\Service\User\Permission;
 
 use Common\Domain\Entity\User\Permission;
 use Leevel\Collection\Collection;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Tree\Tree;
 
 /**
@@ -24,9 +24,9 @@ use Leevel\Tree\Tree;
  */
 class Index
 {
-    private IUnitOfWork $w;
+    private UnitOfWork $w;
 
-    public function __construct(IUnitOfWork $w)
+    public function __construct(UnitOfWork $w)
     {
         $this->w = $w;
     }

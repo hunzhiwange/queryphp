@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Common\Domain\Service\Support;
 
 use Leevel\Collection\Collection;
-use Leevel\Database\Ddd\IRepository;
+use Leevel\Database\Ddd\Repository;
 use Leevel\Database\Ddd\Select;
 use Leevel\Support\Str\camelize;
 
@@ -126,7 +126,7 @@ trait Read
     /**
      * 分页查询.
      */
-    private function findPage(array $input, IRepository $repository): array
+    private function findPage(array $input, Repository $repository): array
     {
         $page = $repository->findPage(
             $input['page'],

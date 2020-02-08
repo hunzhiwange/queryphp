@@ -18,7 +18,7 @@ use Admin\Infra\Lock;
 use Common\Domain\Entity\User\User;
 use Common\Infra\Exception\BusinessException;
 use Leevel\Auth\Hash;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate as Validates;
 
 /**
@@ -41,9 +41,9 @@ class Unlock
     private $lock;
 
     private array $input;
-    private IUnitOfWork $w;
+    private UnitOfWork $w;
 
-    public function __construct(IUnitOfWork $w, Hash $hash, Lock $lock)
+    public function __construct(UnitOfWork $w, Hash $hash, Lock $lock)
     {
         $this->w = $w;
         $this->hash = $hash;

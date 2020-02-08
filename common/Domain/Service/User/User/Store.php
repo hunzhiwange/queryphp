@@ -16,7 +16,7 @@ namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
 use Leevel\Auth\Hash;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Database\Ddd\UnitOfWork;
 
 /**
  * 用户保存.
@@ -32,9 +32,9 @@ class Store
      */
     private Hash $hash;
 
-    private IUnitOfWork $w;
+    private UnitOfWork $w;
 
-    public function __construct(IUnitOfWork $w, Hash $hash)
+    public function __construct(UnitOfWork $w, Hash $hash)
     {
         $this->w = $w;
         $this->hash = $hash;

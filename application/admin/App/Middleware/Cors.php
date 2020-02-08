@@ -16,7 +16,7 @@ namespace Admin\App\Middleware;
 
 use Closure;
 use Leevel\Http\Request;
-use Leevel\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Cors 中间件.
@@ -34,8 +34,7 @@ class Cors
             'Access-Control-Allow-Headers'     => 'Origin, X-Requested-With, Content-Type, Accept, token',
             'Access-Control-Allow-Credentials' => 'true',
         ];
-        $response->withHeaders($headers);
-
+        $response->headers->add($headers);
         $next($request, $response);
     }
 }

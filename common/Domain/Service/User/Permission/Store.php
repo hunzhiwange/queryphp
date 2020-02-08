@@ -16,7 +16,7 @@ namespace Common\Domain\Service\User\Permission;
 
 use Common\Domain\Entity\User\Permission;
 use Common\Infra\Exception\BusinessException;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate;
 use Leevel\Validate\UniqueRule;
 
@@ -31,9 +31,9 @@ class Store
      * @var array
      */
     private array $input;
-    private IUnitOfWork $w;
+    private UnitOfWork $w;
 
-    public function __construct(IUnitOfWork $w)
+    public function __construct(UnitOfWork $w)
     {
         $this->w = $w;
     }

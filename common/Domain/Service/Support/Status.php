@@ -16,7 +16,7 @@ namespace Common\Domain\Service\Support;
 
 use Common\Infra\Exception\BusinessException;
 use Leevel\Collection\Collection;
-use Leevel\Database\Ddd\IUnitOfWork;
+use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate;
 
 /**
@@ -24,9 +24,9 @@ use Leevel\Validate\Proxy\Validate;
  */
 trait Status
 {
-    private IUnitOfWork $w;
+    private UnitOfWork $w;
 
-    public function __construct(IUnitOfWork $w)
+    public function __construct(UnitOfWork $w)
     {
         $this->w = $w;
     }
