@@ -48,9 +48,9 @@ class {{file_name}} extends Entity
     /**
      * Database connect.
      *
-     * @var mixed
+     * @var string
      */
-    private static $connect;
+    private static ?string $connect = null;
 {{prop_extend}}
     /**
      * Setter.
