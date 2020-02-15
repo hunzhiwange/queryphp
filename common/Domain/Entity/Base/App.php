@@ -132,10 +132,8 @@ class App extends Entity
 
     /**
      * Database connect.
-     *
-     * @var mixed
      */
-    private static $connect;
+    private static ?string $connect = null;
 
     /**
      * Setter.
@@ -161,10 +159,8 @@ class App extends Entity
 
     /**
      * Set database connect.
-     *
-     * @param mixed $connect
      */
-    public static function withConnect($connect): void
+    public static function withConnect(?string $connect = null): void
     {
         static::$connect = $connect;
     }
@@ -172,7 +168,7 @@ class App extends Entity
     /**
      * Get database connect.
      */
-    public static function connect()
+    public static function connect(): ?string
     {
         return static::$connect;
     }

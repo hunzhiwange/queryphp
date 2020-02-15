@@ -107,10 +107,8 @@ class Test extends Entity
 
     /**
      * Database connect.
-     *
-     * @var mixed
      */
-    private static $connect;
+    private static ?string $connect = null;
 
     /**
      * Setter.
@@ -136,10 +134,8 @@ class Test extends Entity
 
     /**
      * Set database connect.
-     *
-     * @param mixed $connect
      */
-    public static function withConnect($connect): void
+    public static function withConnect(?string $connect = null): void
     {
         static::$connect = $connect;
     }
@@ -147,7 +143,7 @@ class Test extends Entity
     /**
      * Get database connect.
      */
-    public static function connect()
+    public static function connect(): ?string
     {
         return static::$connect;
     }
