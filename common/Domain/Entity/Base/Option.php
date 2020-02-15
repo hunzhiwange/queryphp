@@ -142,10 +142,8 @@ class Option extends Entity
 
     /**
      * Set database connect.
-     *
-     * @param mixed $connect
      */
-    public static function withConnect($connect): void
+    public static function withConnect(?string $connect = null): void
     {
         static::$connect = $connect;
     }
@@ -153,7 +151,7 @@ class Option extends Entity
     /**
      * Get database connect.
      */
-    public static function connect()
+    public static function connect(): ?string
     {
         return static::$connect;
     }
