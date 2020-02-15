@@ -112,10 +112,8 @@ class PermissionResource extends Entity
 
     /**
      * Database connect.
-     *
-     * @var mixed
      */
-    private static $connect;
+    private static ?string $connect = null;
 
     /**
      * Setter.
