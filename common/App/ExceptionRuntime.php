@@ -21,7 +21,7 @@ use Leevel\Kernel\ExceptionRuntime as BaseExceptionRuntime;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * 异常处理.
+ * 异常运行时.
  */
 class ExceptionRuntime extends BaseExceptionRuntime
 {
