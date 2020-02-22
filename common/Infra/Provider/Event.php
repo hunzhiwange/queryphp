@@ -14,6 +14,9 @@ declare(strict_types=1);
 
 namespace Common\Infra\Provider;
 
+use Common\Domain\Listener\Test;
+use Common\Domain\Listener\Test2;
+use Common\Domain\Listener\Test3;
 use Leevel\Event\EventProvider;
 
 /**
@@ -24,18 +27,18 @@ class Event extends EventProvider
     protected array $listeners = [
         'Common\\Domain\\Event\\Test' => [
             // 优先级支持写法，数字越小越早执行，默认为 500
-            // 'Common\\Domain\\Listener\\Test' => 6
-            'Common\\Domain\\Listener\\Test',
-            'Common\\Domain\\Listener\\Test2' => 5,
-            'Common\\Domain\\Listener\\Test3' => 2,
+            // Test::class => 6
+            Test::class,
+            Test2::class => 5,
+            Test3::class => 2,
         ],
 
         'Common\\Domain\\Event\\Wildcards*' => [
-            'Common\\Domain\\Listener\\Test',
+            Test::class,
         ],
 
         'Common\\Domain\\Event\\WildcardsTest' => [
-            'Common\\Domain\\Listener\\Test2',
+            Test2::class,
         ],
     ];
 }
