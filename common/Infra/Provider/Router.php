@@ -95,18 +95,6 @@ class Router extends RouterProvider
         'admin/show' => [
             'middlewares' => 'auth',
         ],
-        '/api/v1*' => [
-            'middlewares' => 'api',
-        ],
-        'api/v2*' => [
-            'middlewares' => 'api',
-        ],
-        '/web/v1*' => [
-            'middlewares' => 'web',
-        ],
-        'web/v2*' => [
-            'middlewares' => 'web',
-        ],
     ];
 
     /**
@@ -115,9 +103,21 @@ class Router extends RouterProvider
      * @var array
      */
     protected array $groups = [
-        'pet',
-        'store',
-        'user',
+        'pet'     => [],
+        'store'   => [],
+        'user'    => [],
+        '/api/v1' => [
+            'middlewares' => 'api',
+        ],
+        'api/v2' => [
+            'middlewares' => 'api',
+        ],
+        '/web/v1' => [
+            'middlewares' => 'web',
+        ],
+        'web/v2' => [
+            'middlewares' => 'web',
+        ],
     ];
 
     /**
