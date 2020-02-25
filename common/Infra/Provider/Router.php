@@ -73,6 +73,54 @@ class Router extends RouterProvider
     ];
 
     /**
+     * 基础路径.
+     *
+     * @var array
+     */
+    protected array $basePaths = [
+        '*' => [
+            'middlewares' => 'common',
+        ],
+        'foo/*world' => [
+        ],
+        'api/test' => [
+            'middlewares' => 'api',
+        ],
+        ':admin/*' => [
+            'middlewares' => 'admin_auth,cors',
+        ],
+        'options/index' => [
+            'middlewares' => 'cors',
+        ],
+        'admin/show' => [
+            'middlewares' => 'auth',
+        ],
+        '/api/v1*' => [
+            'middlewares' => 'api',
+        ],
+        'api/v2*' => [
+            'middlewares' => 'api',
+        ],
+        '/web/v1*' => [
+            'middlewares' => 'web',
+        ],
+        'web/v2*' => [
+            'middlewares' => 'web',
+        ],
+    ];
+
+    /**
+     * 分组.
+     *
+     * @var array
+     */
+    protected array $groups = [
+        'pet',
+        'store',
+        'user',
+    ];
+
+    /**
      * 创建一个服务容器提供者实例.
      */
     public function __construct(IContainer $container)
