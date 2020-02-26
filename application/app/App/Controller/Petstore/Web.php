@@ -47,8 +47,9 @@ class Web
      *     }
      * )
      */
-    public function petLeevelForWeb()
+    public function petLeevelForWeb(): string
     {
+        return 'petLeevelForWeb';
     }
 
     /**
@@ -76,8 +77,9 @@ class Web
      *     }
      * )
      */
-    public function petLeevelV2ForWeb()
+    public function petLeevelV2ForWeb(): string
     {
+        return 'petLeevelV2ForWeb';
     }
 
     /**
