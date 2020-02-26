@@ -19,7 +19,7 @@ use Leevel\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Cors 中间件.
+ * CORS 中间件.
  */
 class Cors
 {

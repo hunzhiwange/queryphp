@@ -73,13 +73,61 @@ class Router extends RouterProvider
     ];
 
     /**
+     * 基础路径.
+     *
+     * @var array
+     */
+    protected array $basePaths = [
+        '*' => [
+            'middlewares' => 'common',
+        ],
+        'foo/*world' => [
+        ],
+        'api/test' => [
+            'middlewares' => 'api',
+        ],
+        ':admin/*' => [
+            'middlewares' => 'admin_auth,cors',
+        ],
+        'options/index' => [
+            'middlewares' => 'cors',
+        ],
+        'admin/show' => [
+            'middlewares' => 'auth',
+        ],
+    ];
+
+    /**
+     * 分组.
+     *
+     * @var array
+     */
+    protected array $groups = [
+        'pet'     => [],
+        'store'   => [],
+        'user'    => [],
+        '/api/v1' => [
+            'middlewares' => 'api',
+        ],
+        'api/v2' => [
+            'middlewares' => 'api',
+        ],
+        '/web/v1' => [
+            'middlewares' => 'web',
+        ],
+        'web/v2' => [
+            'middlewares' => 'web',
+        ],
+    ];
+
+    /**
      * 创建一个服务容器提供者实例.
      */
     public function __construct(IContainer $container)
     {
         parent::__construct($container);
 
-        if ($container->make('app')->debug()) {
+        if ($container->make('app')->isDebug()) {
             $this->middlewareGroups['common'][] = 'debug';
         }
     }

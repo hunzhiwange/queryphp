@@ -13,6 +13,15 @@ declare(strict_types=1);
  */
 
 /**
+ * 路由.
+ *
+ * - 路由相关主要由路由服务提供者进行设置。
+ * - 大部分场景只需要使用基于路径的默认路由，不需要配置路由。
+ * - 其他定制路由都是基于 OpenAPI 的路由。
+ *
+ * @see 路由服务提供者 \Common\Infra\ProviderRouter
+ * @see 基于 OpenAPI 的路由 \App\App\Controller\Petstore\Store
+ *
  * @OA\Info(
  *     description="This is a sample Petstore server.  You can find
  * out more about Swagger at
@@ -36,11 +45,8 @@ class _
 }
 
 /**
- * leevels 为路由全局设置.
- *
  * @OA\Tag(
  *     name="pet",
- *     leevelGroup="pet",
  *     description="Everything about your Pets",
  *     @OA\ExternalDocumentation(
  *         description="Find out more",
@@ -49,12 +55,10 @@ class _
  * )
  * @OA\Tag(
  *     name="store",
- *     leevelGroup="store",
  *     description="Access to Petstore orders",
  * )
  * @OA\Tag(
  *     name="user",
- *     leevelGroup="user",
  *     description="Operations about user",
  *     @OA\ExternalDocumentation(
  *         description="Find out more about store",
@@ -68,44 +72,9 @@ class _
  * @OA\ExternalDocumentation(
  *     description="Find out more about Swagger",
  *     url="http://swagger.io",
- *     leevels={
- *         "*": {
- *             "middlewares": "common"
- *         },
- *         "foo/*world": {
- *         },
- *         "api/test": {
- *             "middlewares": "api"
- *         },
- *         ":admin/*": {
- *             "middlewares": "admin_auth,cors"
- *         },
- *         "options/index": {
- *             "middlewares": "cors"
- *         },
- *         "admin/show": {
- *             "middlewares": "auth"
- *         },
- *         "/api/v1": {
- *             "middlewares": "api",
- *             "group": true
- *         },
- *         "api/v2": {
- *             "middlewares": "api",
- *             "group": true
- *         },
- *         "/web/v1": {
- *             "middlewares": "web",
- *             "group": true
- *         },
- *         "web/v2": {
- *             "middlewares": "web",
- *             "group": true
- *         }
- *     }
  * )
  */
-class _
+class __
 {
     // 占位防止代码格式化工具将注释破坏
 }
