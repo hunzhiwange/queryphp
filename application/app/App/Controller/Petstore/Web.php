@@ -84,6 +84,37 @@ class Web
 
     /**
      * @OA\Get(
+     *     path="/web/v3/petLeevelV3WithPortForWeb/",
+     *     tags={"pet"},
+     *     summary="Just test ignore the router",
+     *     operationId="petLeevelV2Web",
+     *     @OA\Parameter(
+     *         name="petId",
+     *         in="path",
+     *         description="ID of pet to return",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=405,
+     *         description="Invalid input"
+     *     ),
+     *     security={
+     *         {"petstore_auth": {"write:pets", "read:pets"}}
+     *     },
+     *     leevelPort=9527,
+     * )
+     */
+    public function petLeevelV3WithPortForWeb(): string
+    {
+        return 'petLeevelV3WithPortForWeb';
+    }
+
+    /**
+     * @OA\Get(
      *     path="/web/v1/petLeevelIgnoreForWeb/",
      *     tags={"pet"},
      *     summary="Just test ignore the router",
