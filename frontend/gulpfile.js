@@ -173,16 +173,14 @@ function readDir(filePath) {
 function readLang(file) {
     fs.readFile(file, 'utf-8', function(error, data) {
         if (error) return console.log('error' + error.message)
-        var reg = /__\([\'\"\s](.*?)[\'\"\s]\)/g
+        var reg = /__\([\s]*[\'\"]([\s\S]*?)[\'\"][\s]*\)/g
         var result = data.match(reg)
-
         if (!result) {
             return
         }
 
         var tmpFile = file + '.tmp.i18n.js'
         tmpFile = tmpFile.replace(/\//g, '_')
-
         fs.writeFile(tmpDir + '/' + tmpFile, result.join('\n'), function(err) {
             if (err) {
                 throw err
