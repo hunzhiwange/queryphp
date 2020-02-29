@@ -99,7 +99,7 @@
             <div class="login-inner">
                 <div>
                     © 2019
-                    <a href="https://www.dhb168.com">DHB168.COM</a> All rights reserved.
+                    <a href="https://www.queryphp.com">QueryPHP.COM</a> All rights reserved.
                 </div>
             </div>
         </div>
