@@ -16,9 +16,9 @@ namespace Common\Domain\Service\Attachment;
 
 use Common\Infra\Exception\BusinessException;
 use Leevel\Filesystem\Proxy\Filesystem;
-use Leevel\Http\UploadedFile;
 use Leevel\Option\Proxy\Option;
 use Leevel\Support\Str;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * 文件上传.
@@ -63,7 +63,7 @@ class Upload
     private function getSavePath(UploadedFile $file): string
     {
         return date('Y-m-d').'/'.date('H').'/'.
-            md5(uniqid().Str::randAlpha(32)).'.'.$file->getOriginalExtension();
+            md5(uniqid().Str::randAlpha(32)).'.'.$file->getClientOriginalExtension();
     }
 
     /**

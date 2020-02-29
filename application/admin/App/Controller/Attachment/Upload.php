@@ -27,12 +27,13 @@ class Upload
 {
     use Controller;
 
-    private array $allowedInput = [
-        'file',
-    ];
-
     public function handle(Request $request, Service $service): string
     {
         return $this->main($request, $service)[0];
+    }
+
+    private function input(Request $request): array
+    {
+        return ['file' => $request->files->get('file')];
     }
 }
