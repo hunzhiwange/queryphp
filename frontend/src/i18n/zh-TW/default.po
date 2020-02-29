@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-29 14:38+0800\n"
-"PO-Revision-Date: 2020-02-29 16:46+0800\n"
+"POT-Creation-Date: 2020-02-29 17:27+0800\n"
+"PO-Revision-Date: 2020-02-29 17:30+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh_CN\n"
@@ -85,8 +85,8 @@ msgid "二级菜单"
 msgstr "二級選單"
 
 #: src_router_router.js.tmp.i18n.js:20 src_router_router.js.tmp.i18n.js:21
-msgid "三级菜单"
-msgstr "三級選單"
+msgid "下级菜单"
+msgstr "下級選單"
 
 #: src_utils_index.js.tmp.i18n.js:1 src_utils_index.js.tmp.i18n.js:2
 msgid "操作成功"
@@ -269,53 +269,78 @@ msgid "个人资料"
 msgstr "個人資料"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:1
-#: src_views_dashboard_index.vue.tmp.i18n.js:12
+#: src_views_dashboard_index.vue.tmp.i18n.js:18
 msgid "官方网站"
 msgstr "官方網站"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:2
+#: src_views_dashboard_index.vue.tmp.i18n.js:3
+msgid ""
+"欢迎使用 QueryVue 单页面通用极速后台开发框架，本框架包含了基本认证、权限和"
+"账号管理功能，开发者可以在此基础上快速构建自己的应用。"
+msgstr ""
+"歡迎使用 QueryVue 單頁面通用極速後臺開發框架，本框架包含了基本認證、許可權"
+"和帳號管理功能，開發者可以在此基礎上快速構建自己的應用。"
+
+#: src_views_dashboard_index.vue.tmp.i18n.js:5
 msgid "二次开发说明"
 msgstr "二次開發說明"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:3
+#: src_views_dashboard_index.vue.tmp.i18n.js:6
 msgid "已完成"
 msgstr "已完成"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:4
+#: src_views_dashboard_index.vue.tmp.i18n.js:7
 msgid "搭建开发环境"
 msgstr "搭建開發環境"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:5
+#: src_views_dashboard_index.vue.tmp.i18n.js:8
 msgid "创新"
 msgstr "創新"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:6
+#: src_views_dashboard_index.vue.tmp.i18n.js:9
 msgid "阅读 Vue & QueryPHP 开发文档"
 msgstr "閱讀 Vue & QueryPHP 開發檔案"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:7
+#: src_views_dashboard_index.vue.tmp.i18n.js:10
 msgid "专注"
 msgstr "專注"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:8
+#: src_views_dashboard_index.vue.tmp.i18n.js:11
 msgid "学习基础功能示例"
 msgstr "學習基礎功能示例"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:9
+#: src_views_dashboard_index.vue.tmp.i18n.js:12
 msgid "分享"
 msgstr "分享"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:10
+#: src_views_dashboard_index.vue.tmp.i18n.js:13
 msgid "根据业务改造基础框架"
 msgstr "根據業務改造基礎框架"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:11
+#: src_views_dashboard_index.vue.tmp.i18n.js:14
 msgid "综合说明"
 msgstr "綜合說明"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:13
+#: src_views_dashboard_index.vue.tmp.i18n.js:16
+msgid ""
+"QueryVue　希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框架，"
+"以满足用户快速地理解并使用我们的产品。"
+msgstr ""
+"QueryVue 希望為大家提供了基於 Vue 與 QueryPHP 綜合的超級後臺開發基礎框架，"
+"以滿足用戶快速地理解並使用我們的產品。"
+
+#: src_views_dashboard_index.vue.tmp.i18n.js:19
 msgid "感谢信"
 msgstr "感謝信"
+
+#: src_views_dashboard_index.vue.tmp.i18n.js:21
+#, javascript-format
+msgid ""
+"在这里特别鸣谢 %s、%s 和 %s 等开源的基础框架，使得我们才能够站在巨人的肩膀"
+"上腾飞。"
+msgstr ""
+"在這裡特別鳴謝 %s、%s 和 %s 等開源的基礎框架，使得我們才能够站在巨人的肩膀"
+"上騰飛。"
 
 #: src_views_error-page_403.vue.tmp.i18n.js:1
 #: src_views_error-page_404.vue.tmp.i18n.js:1
@@ -500,10 +525,18 @@ msgid "请输入旧密码"
 msgstr "請輸入舊密碼"
 
 #: src_views_layout_user_assets_change_password.js.tmp.i18n.js:4
+#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:12
+#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:25
+#: src_views_login_assets_index.js.tmp.i18n.js:3
+#, javascript-format
+msgid "长度在 %d 到 %d 个字符"
+msgstr "長度在 %d 到 %d 個字元"
+
+#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:11
 msgid "请输入新密码"
 msgstr "請輸入新密碼"
 
-#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:5
+#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:42
 msgid "修改密码后你需要从新登陆"
 msgstr "修改密碼後你需要從新登入"
 
@@ -540,11 +573,16 @@ msgstr "手機號"
 msgid "请输入账号"
 msgstr "請輸入帳號"
 
-#: src_views_login_assets_index.js.tmp.i18n.js:3
+#: src_views_login_assets_index.js.tmp.i18n.js:10
 msgid "请输入验证码"
 msgstr "請輸入驗證碼"
 
-#: src_views_login_assets_index.js.tmp.i18n.js:4
+#: src_views_login_assets_index.js.tmp.i18n.js:11
+#, javascript-format
+msgid "长度为 %d 个字符"
+msgstr "長度為 %d 個字元"
+
+#: src_views_login_assets_index.js.tmp.i18n.js:49
 msgid "登陆成功"
 msgstr "登入成功"
 
@@ -850,3 +888,6 @@ msgstr "新增用戶"
 #: src_views_user_index.vue.tmp.i18n.js:6
 msgid "所属角色"
 msgstr "所屬角色"
+
+#~ msgid "三级菜单"
+#~ msgstr "三級選單"

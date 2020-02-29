@@ -1,4 +1,4 @@
-/* 2020-02-29 16:57:39 */
+/* 2020-02-29 17:31:28 */
 export default {
     登录: 'Login',
     系统已锁定: 'System has locked',
@@ -59,6 +59,8 @@ export default {
     确定: 'Ok',
     个人资料: 'Profile',
     官方网站: 'Official website',
+    '欢迎使用 QueryVue 单页面通用极速后台开发框架，本框架包含了基本认证、权限和账号管理功能，开发者可以在此基础上快速构建自己的应用。':
+        'Welcome to QueryVue single page universal extreme speed background development framework. This framework includes basic authentication, permissions and account management functions. Developers can quickly build their applications on this basis.',
     二次开发说明: 'Development instructions',
     已完成: 'Done',
     搭建开发环境: 'Setting development environment',
@@ -69,7 +71,11 @@ export default {
     分享: 'Share',
     根据业务改造基础框架: 'Based on the basic framework of business transformation',
     综合说明: 'Comprehensive description',
+    'QueryVue　希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框架，以满足用户快速地理解并使用我们的产品。':
+        "QueryVue hopes to provide you with a super backstage development infrastructure based on integration of Vue and QueryPHP to meet users' quick understanding and use of our products.",
     感谢信: 'Letter of thanks',
+    '在这里特别鸣谢 %s、%s 和 %s 等开源的基础框架，使得我们才能够站在巨人的肩膀上腾飞。':
+        'The basic framework here special thanks to %s,%s and %s open source, so that we can stand on the shoulders of giants off.',
     返回首页: 'Back home',
     返回上一页: 'Back previous page',
     提示: 'Prompt',
@@ -106,6 +112,7 @@ export default {
     请再次输入密码: 'Please enter the password again',
     '两次输入密码不一致!': 'The two input password is not consistent!',
     请输入旧密码: 'Please enter the old password',
+    '长度在 %d 到 %d 个字符': 'Length from %d to %d characters',
     请输入新密码: 'Please enter a new password',
     修改密码后你需要从新登陆: 'After you change your password, you need to log in again',
     旧密码: 'Old password',
@@ -117,6 +124,7 @@ export default {
     手机号: 'Mobile',
     请输入账号: 'Please enter account',
     请输入验证码: 'Please enter the verification code',
+    '长度为 %d 个字符': 'The length is %d characters',
     登陆成功: 'Login successfully',
     用户登陆: 'User login',
     账号登录: 'Account',
