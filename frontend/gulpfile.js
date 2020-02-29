@@ -18,6 +18,7 @@ gulp.task('default', function() {
         })
     }
 
+    clearDir(tmpDir)
     readDir('./src')
 })
 
@@ -189,5 +190,35 @@ function readLang(file) {
 
             console.log('Saved ' + tmpFile)
         })
+    })
+}
+
+function clearDir(filePath) {
+    fs.readdir(filePath, function(err, files) {
+        if (err) {
+            console.warn(err)
+        } else {
+            files.forEach(function(filename) {
+                var filedir = path.join(filePath, filename)
+
+                fs.stat(filedir, function(eror, stats) {
+                    if (eror) {
+                        console.warn(err)
+                    } else {
+                        var isFile = stats.isFile()
+                        var isDir = stats.isDirectory()
+
+                        if (isFile) {
+                            fs.unlinkSync(filedir)
+                            console.log('File `' + filedir + '` has deleted.')
+                        }
+
+                        if (isDir) {
+                            removeDir(filedir)
+                        }
+                    }
+                })
+            })
+        }
     })
 }
