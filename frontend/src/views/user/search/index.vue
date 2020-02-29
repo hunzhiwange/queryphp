@@ -15,7 +15,7 @@
                         <i-button type="text" icon="md-refresh" @click.native.prevent="reset()" class="m-r-5">{{ __('重置') }}</i-button>
                         <a @click="toggleShow()" style="display:none;">
                             {{ searchShow ? __('收起') : __('展开') }}
-                            <Icon :type="searchShow ? __('chevron-up') : __('chevron-down')"></Icon>
+                            <Icon :type="searchShow ? 'chevron-up' : 'chevron-down'"></Icon>
                         </a>
                     </i-col>
                     <i-col span="2"></i-col>

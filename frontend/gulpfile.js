@@ -18,6 +18,7 @@ gulp.task('default', function() {
         })
     }
 
+    clearDir(tmpDir)
     readDir('./src')
 })
 
@@ -172,16 +173,14 @@ function readDir(filePath) {
 function readLang(file) {
     fs.readFile(file, 'utf-8', function(error, data) {
         if (error) return console.log('error' + error.message)
-        var reg = /__\([\'\"\s](.*?)[\'\"\s]\)/g
+        var reg = /__\([\s]*[\'\"]([\s\S]*?)[\'\"][\s]*\)/g
         var result = data.match(reg)
-
         if (!result) {
             return
         }
 
         var tmpFile = file + '.tmp.i18n.js'
         tmpFile = tmpFile.replace(/\//g, '_')
-
         fs.writeFile(tmpDir + '/' + tmpFile, result.join('\n'), function(err) {
             if (err) {
                 throw err
@@ -189,5 +188,35 @@ function readLang(file) {
 
             console.log('Saved ' + tmpFile)
         })
+    })
+}
+
+function clearDir(filePath) {
+    fs.readdir(filePath, function(err, files) {
+        if (err) {
+            console.warn(err)
+        } else {
+            files.forEach(function(filename) {
+                var filedir = path.join(filePath, filename)
+
+                fs.stat(filedir, function(eror, stats) {
+                    if (eror) {
+                        console.warn(err)
+                    } else {
+                        var isFile = stats.isFile()
+                        var isDir = stats.isDirectory()
+
+                        if (isFile) {
+                            fs.unlinkSync(filedir)
+                            console.log('File `' + filedir + '` has deleted.')
+                        }
+
+                        if (isDir) {
+                            removeDir(filedir)
+                        }
+                    }
+                })
+            })
+        }
     })
 }

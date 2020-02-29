@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-11-12 21:41+0800\n"
-"PO-Revision-Date: 2018-11-21 15:10+0800\n"
+"POT-Creation-Date: 2020-02-29 17:27+0800\n"
+"PO-Revision-Date: 2020-02-29 17:30+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh_CN\n"
@@ -17,884 +17,877 @@ msgstr ""
 
 #: src_router_router.js.tmp.i18n.js:1 src_views_login_index.vue.tmp.i18n.js:7
 msgid "登录"
-msgstr ""
+msgstr "登入"
 
 #: src_router_router.js.tmp.i18n.js:2
 msgid "系统已锁定"
-msgstr ""
+msgstr "系統已鎖定"
 
 #: src_router_router.js.tmp.i18n.js:3
 msgid "权限不足"
-msgstr ""
+msgstr "許可權不足"
 
 #: src_router_router.js.tmp.i18n.js:4
 msgid "页面不存在"
-msgstr ""
+msgstr "頁面不存在"
 
 #: src_router_router.js.tmp.i18n.js:5
 msgid "服务端错误"
-msgstr ""
+msgstr "服務端錯誤"
 
 #: src_router_router.js.tmp.i18n.js:6 src_store_modules_app.js.tmp.i18n.js:1
 #: src_store_modules_app.js.tmp.i18n.js:2
 msgid "首页"
-msgstr ""
+msgstr "首頁"
 
 #: src_router_router.js.tmp.i18n.js:7
-msgid "刷新页面"
-msgstr ""
+msgid "消息中心"
+msgstr "消息中心"
 
 #: src_router_router.js.tmp.i18n.js:8
-msgid "消息中心"
-msgstr ""
+msgid "基础配置"
+msgstr "基礎配寘"
 
 #: src_router_router.js.tmp.i18n.js:9
-msgid "基础设置"
-msgstr ""
+msgid "系统配置"
+msgstr "系統配寘"
 
 #: src_router_router.js.tmp.i18n.js:10
-msgid "菜单管理"
-msgstr ""
+msgid "个人中心"
+msgstr "個人中心"
 
-#: src_router_router.js.tmp.i18n.js:11
-msgid "职位分类"
-msgstr ""
+#: src_router_router.js.tmp.i18n.js:11 src_router_router.js.tmp.i18n.js:14
+msgid "权限管理"
+msgstr "許可權管理"
 
 #: src_router_router.js.tmp.i18n.js:12
-msgid "组织管理"
-msgstr ""
+msgid "用户管理"
+msgstr "用戶管理"
 
-#: src_router_router.js.tmp.i18n.js:13 src_router_router.js.tmp.i18n.js:15
-msgid "权限管理"
-msgstr ""
-
-#: src_router_router.js.tmp.i18n.js:14
+#: src_router_router.js.tmp.i18n.js:13
 msgid "角色管理"
-msgstr ""
+msgstr "角色管理"
 
-#: src_router_router.js.tmp.i18n.js:16
+#: src_router_router.js.tmp.i18n.js:15
 msgid "资源管理"
-msgstr ""
+msgstr "資源管理"
 
-#: src_utils_request.js.tmp.i18n.js:1
-msgid "默认响应消息"
-msgstr ""
+#: src_router_router.js.tmp.i18n.js:16 src_router_router.js.tmp.i18n.js:17
+msgid "测试页面"
+msgstr "測試頁面"
+
+#: src_router_router.js.tmp.i18n.js:18
+msgid "一级菜单"
+msgstr "一級選單"
+
+#: src_router_router.js.tmp.i18n.js:19
+msgid "二级菜单"
+msgstr "二級選單"
+
+#: src_router_router.js.tmp.i18n.js:20 src_router_router.js.tmp.i18n.js:21
+msgid "下级菜单"
+msgstr "下級選單"
+
+#: src_utils_index.js.tmp.i18n.js:1 src_utils_index.js.tmp.i18n.js:2
+msgid "操作成功"
+msgstr "操作成功"
+
+#: src_utils_index.js.tmp.i18n.js:3 src_utils_index.js.tmp.i18n.js:4
+msgid "操作失败"
+msgstr "操作失敗"
 
 #: src_utils_validate.js.tmp.i18n.js:1
 msgid "只能是英文字母"
-msgstr ""
+msgstr "只能是英文字母"
 
 #: src_utils_validate.js.tmp.i18n.js:2
 msgid "只能是大写字母"
-msgstr ""
+msgstr "只能是大寫字母"
 
 #: src_utils_validate.js.tmp.i18n.js:3
 msgid "只能是小写字母"
-msgstr ""
+msgstr "只能是小寫字母"
 
 #: src_utils_validate.js.tmp.i18n.js:4
 msgid "只能包括英文字母和数字"
-msgstr ""
+msgstr "只能包括英文字母和數位"
 
 #: src_utils_validate.js.tmp.i18n.js:5
 msgid "只能包括英文字母、数字、短横线和下划线"
-msgstr ""
+msgstr "只能包括英文字母、數位、短橫線和底線"
 
 #: src_utils_validate.js.tmp.i18n.js:6
 msgid "只能是中文字符"
-msgstr ""
+msgstr "只能是中文字元"
 
 #: src_utils_validate.js.tmp.i18n.js:7
 msgid "只能包括中文字符、英文字母和数字"
-msgstr ""
+msgstr "只能包括中文字元、英文字母和數位"
 
 #: src_utils_validate.js.tmp.i18n.js:8
 msgid "只能包括中文字符、英文字母、数字、短横线和下划线"
-msgstr ""
+msgstr "只能包括中文字元、英文字母、數位、短橫線和底線"
 
 #: src_utils_validate.js.tmp.i18n.js:9
 msgid "请输入有效的身份证号码"
-msgstr ""
+msgstr "請輸入有效的身份證號碼"
 
 #: src_utils_validate.js.tmp.i18n.js:10
 msgid "请输入有效的手机号码"
-msgstr ""
+msgstr "請輸入有效的手機號碼"
 
 #: src_utils_validate.js.tmp.i18n.js:11
 msgid "请输入有效的电话号码"
-msgstr ""
+msgstr "請輸入有效的電話號碼"
 
 #: src_utils_validate.js.tmp.i18n.js:12
 msgid "请输入有效的电话或者手机号码"
-msgstr ""
+msgstr "請輸入有效的電話或者手機號碼"
 
 #: src_utils_validate.js.tmp.i18n.js:13
 msgid "请输入有效的邮政编码"
-msgstr ""
+msgstr "請輸入有效的電話號碼"
 
 #: src_utils_validate.js.tmp.i18n.js:14
 msgid "请输入有效的 QQ 号码"
-msgstr ""
+msgstr "請輸入有效的 QQ 號碼"
 
 #: src_utils_validate.js.tmp.i18n.js:15
 msgid "请输入有效的邮箱地址"
-msgstr ""
+msgstr "請輸入有效的郵箱地址"
 
 #: src_utils_validate.js.tmp.i18n.js:16
 msgid "请输入有效的整数"
-msgstr ""
+msgstr "請輸入有效的整數"
 
 #: src_utils_validate.js.tmp.i18n.js:17
 msgid "请输入有效的正整数"
-msgstr ""
+msgstr "請輸入有效的正整數"
 
 #: src_utils_validate.js.tmp.i18n.js:18
 msgid "请输入有效的负整数"
-msgstr ""
+msgstr "請輸入有效的負整數"
 
 #: src_utils_validate.js.tmp.i18n.js:19
 msgid "请输入有效的数字"
-msgstr ""
+msgstr "請輸入有效的數位"
 
 #: src_utils_validate.js.tmp.i18n.js:20
 msgid "请输入有效的正数"
-msgstr ""
+msgstr "請輸入有效的正數"
 
 #: src_utils_validate.js.tmp.i18n.js:21
 msgid "请输入有效的负数"
-msgstr ""
+msgstr "請輸入有效的負數"
 
 #: src_utils_validate.js.tmp.i18n.js:22
 msgid "请输入有效的 IP 地址"
-msgstr ""
+msgstr "請輸入有效的 IP 地址"
 
 #: src_utils_validate.js.tmp.i18n.js:23
 msgid "请输入有效的 RGB 颜色"
-msgstr ""
+msgstr "請輸入有效的 RGB 顏色"
 
 #: src_utils_validate.js.tmp.i18n.js:24
 msgid "请输入有效的日期"
-msgstr ""
+msgstr "請輸入有效的日期"
 
 #: src_utils_validate.js.tmp.i18n.js:25
 msgid "请输入有效的微信号"
-msgstr ""
+msgstr "請輸入有效的微訊號"
 
 #: src_utils_validate.js.tmp.i18n.js:26
 msgid "请输入有效的中国车牌号"
-msgstr ""
+msgstr "請輸入有效的中國車牌號"
 
 #: src_utils_validate.js.tmp.i18n.js:27 src_utils_validate.js.tmp.i18n.js:28
 msgid "请输入有效的月份"
-msgstr ""
+msgstr "請輸入有效的月份"
 
 #: src_utils_validate.js.tmp.i18n.js:29
 msgid "请输入有效的网址"
-msgstr ""
+msgstr "請輸入有效的網址"
+
+#: src_views_base_asserts_option.js.tmp.i18n.js:1
+msgid "请输入站点名字"
+msgstr "請輸入網站名字"
+
+#: src_views_base_asserts_profile.js.tmp.i18n.js:1
+msgid "邮件未设置"
+msgstr "郵件未設定"
+
+#: src_views_base_asserts_profile.js.tmp.i18n.js:2
+msgid "手机号未设置"
+msgstr "手機號未設定"
+
+#: src_views_base_option.vue.tmp.i18n.js:1
+msgid "基本配置"
+msgstr "基本配置"
+
+#: src_views_base_option.vue.tmp.i18n.js:2
+msgid "站点名字"
+msgstr "網站名字"
+
+#: src_views_base_option.vue.tmp.i18n.js:3
+msgid "站点状态"
+msgstr "網站狀態"
+
+#: src_views_base_option.vue.tmp.i18n.js:4
+#: src_views_permission_index.vue.tmp.i18n.js:5
+#: src_views_permission_index.vue.tmp.i18n.js:12
+#: src_views_resource_assets_index.js.tmp.i18n.js:12
+#: src_views_resource_index.vue.tmp.i18n.js:6
+#: src_views_resource_index.vue.tmp.i18n.js:10
+#: src_views_resource_search_assets_index.js.tmp.i18n.js:1
+#: src_views_role_assets_index.js.tmp.i18n.js:13
+#: src_views_role_index.vue.tmp.i18n.js:6
+#: src_views_role_index.vue.tmp.i18n.js:10
+#: src_views_role_search_assets_index.js.tmp.i18n.js:1
+#: src_views_user_assets_index.js.tmp.i18n.js:13
+#: src_views_user_index.vue.tmp.i18n.js:8
+#: src_views_user_index.vue.tmp.i18n.js:12
+#: src_views_user_search_assets_index.js.tmp.i18n.js:1
+msgid "启用"
+msgstr "啟用"
+
+#: src_views_base_option.vue.tmp.i18n.js:5
+msgid "关闭"
+msgstr "關閉"
+
+#: src_views_base_option.vue.tmp.i18n.js:6
+#: src_views_layout_i18n-switch_index.vue.tmp.i18n.js:2
+#: src_views_layout_theme-switch_index.vue.tmp.i18n.js:2
+#: src_views_permission_index.vue.tmp.i18n.js:9
+#: src_views_resource_index.vue.tmp.i18n.js:8
+#: src_views_role_index.vue.tmp.i18n.js:8
+#: src_views_user_index.vue.tmp.i18n.js:10
+msgid "确定"
+msgstr "確定"
+
+#: src_views_base_profile.vue.tmp.i18n.js:1
+msgid "个人资料"
+msgstr "個人資料"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:1
-#: src_views_dashboard_index.vue.tmp.i18n.js:3
+#: src_views_dashboard_index.vue.tmp.i18n.js:18
 msgid "官方网站"
-msgstr ""
+msgstr "官方網站"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:2
+#: src_views_dashboard_index.vue.tmp.i18n.js:3
 msgid ""
-"欢迎使用 QueryPHP Vue 单页面通用极速后台开发框架，本框架包含了基本认证、权"
-"限和账号管理功能，开发者可以在此基础上快速构建自己的应用。"
+"欢迎使用 QueryVue 单页面通用极速后台开发框架，本框架包含了基本认证、权限和"
+"账号管理功能，开发者可以在此基础上快速构建自己的应用。"
 msgstr ""
-
-#: src_views_dashboard_index.vue.tmp.i18n.js:4
-msgid "捐赠"
-msgstr ""
+"歡迎使用 QueryVue 單頁面通用極速後臺開發框架，本框架包含了基本認證、許可權"
+"和帳號管理功能，開發者可以在此基礎上快速構建自己的應用。"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:5
 msgid "二次开发说明"
-msgstr ""
+msgstr "二次開發說明"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:6
 msgid "已完成"
-msgstr ""
+msgstr "已完成"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:7
 msgid "搭建开发环境"
-msgstr ""
+msgstr "搭建開發環境"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:8
 msgid "创新"
-msgstr ""
+msgstr "創新"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:9
 msgid "阅读 Vue & QueryPHP 开发文档"
-msgstr ""
+msgstr "閱讀 Vue & QueryPHP 開發檔案"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:10
 msgid "专注"
-msgstr ""
+msgstr "專注"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:11
 msgid "学习基础功能示例"
-msgstr ""
+msgstr "學習基礎功能示例"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:12
 msgid "分享"
-msgstr ""
+msgstr "分享"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:13
 msgid "根据业务改造基础框架"
-msgstr ""
+msgstr "根據業務改造基礎框架"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:14
 msgid "综合说明"
-msgstr ""
-
-#: src_views_dashboard_index.vue.tmp.i18n.js:15
-msgid ""
-"QueryPHP-Vue　希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框"
-"架，以满足用户快速地理解并使用我们的产品。"
-msgstr ""
+msgstr "綜合說明"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:16
-msgid "感谢信"
+msgid ""
+"QueryVue　希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框架，"
+"以满足用户快速地理解并使用我们的产品。"
 msgstr ""
+"QueryVue 希望為大家提供了基於 Vue 與 QueryPHP 綜合的超級後臺開發基礎框架，"
+"以滿足用戶快速地理解並使用我們的產品。"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:17
+#: src_views_dashboard_index.vue.tmp.i18n.js:19
+msgid "感谢信"
+msgstr "感謝信"
+
+#: src_views_dashboard_index.vue.tmp.i18n.js:21
 #, javascript-format
 msgid ""
 "在这里特别鸣谢 %s、%s 和 %s 等开源的基础框架，使得我们才能够站在巨人的肩膀"
 "上腾飞。"
 msgstr ""
+"在這裡特別鳴謝 %s、%s 和 %s 等開源的基礎框架，使得我們才能够站在巨人的肩膀"
+"上騰飛。"
 
 #: src_views_error-page_403.vue.tmp.i18n.js:1
 #: src_views_error-page_404.vue.tmp.i18n.js:1
 #: src_views_error-page_500.vue.tmp.i18n.js:1
-#: src_views_error-page_assets_403.i18n.js.tmp.i18n.js:1
 msgid "返回首页"
-msgstr ""
+msgstr "返回首頁"
 
 #: src_views_error-page_403.vue.tmp.i18n.js:2
 #: src_views_error-page_404.vue.tmp.i18n.js:2
 #: src_views_error-page_500.vue.tmp.i18n.js:2
-#: src_views_error-page_assets_403.i18n.js.tmp.i18n.js:2
 msgid "返回上一页"
-msgstr ""
+msgstr "返回上一頁"
 
 #: src_views_layout_assets_layout.js.tmp.i18n.js:1
-#: src_views_menu_assets_index.js.tmp.i18n.js:19
-#: src_views_position_category_assets_index.js.tmp.i18n.js:15
-#: src_views_resource_assets_index.js.tmp.i18n.js:12
-#: src_views_structure_assets_index.js.tmp.i18n.js:13
+#: src_views_layout_lockscreen_components_assets_unlock.js.tmp.i18n.js:2
+#: src_views_permission_assets_index.js.tmp.i18n.js:10
+#: src_views_resource_assets_index.js.tmp.i18n.js:9
+#: src_views_role_assets_index.js.tmp.i18n.js:10
+#: src_views_user_assets_index.js.tmp.i18n.js:10
 msgid "提示"
-msgstr ""
+msgstr "提示"
 
 #: src_views_layout_assets_layout.js.tmp.i18n.js:2
+#: src_views_layout_lockscreen_components_assets_unlock.js.tmp.i18n.js:3
 msgid "确认退出吗?"
-msgstr ""
+msgstr "確認退出嗎？"
 
-#: src_views_layout_fullscreen_assets_index.i18n.js.i18n.js.tmp.i18n.js:1
-#: src_views_layout_fullscreen_assets_index.i18n.js.tmp.i18n.js:1
+#: src_views_layout_assets_layout.js.tmp.i18n.js:3
+#: src_views_layout_lockscreen_components_assets_unlock.js.tmp.i18n.js:4
+msgid "登出成功"
+msgstr "登出成功"
+
 #: src_views_layout_fullscreen_index.vue.tmp.i18n.js:1
 msgid "退出全屏"
-msgstr ""
+msgstr "退出全屏"
 
-#: src_views_layout_fullscreen_assets_index.i18n.js.i18n.js.tmp.i18n.js:2
-#: src_views_layout_fullscreen_assets_index.i18n.js.tmp.i18n.js:2
 #: src_views_layout_fullscreen_index.vue.tmp.i18n.js:2
 msgid "全屏"
-msgstr ""
-
-#: src_views_layout_i18n-switch_assets_index.i18n.js.tmp.i18n.js:1
-#: src_views_layout_i18n-switch_index.vue.tmp.i18n.js:1
-msgid "国际化"
-msgstr ""
-
-#: src_views_layout_i18n-switch_assets_index.i18n.js.tmp.i18n.js:2
-#: src_views_layout_i18n-switch_index.vue.tmp.i18n.js:2
-#: src_views_layout_theme-switch_index.vue.tmp.i18n.js:1
-#: src_views_menu_index.vue.tmp.i18n.js:24
-#: src_views_position_category_index.vue.tmp.i18n.js:8
-#: src_views_resource_index.vue.tmp.i18n.js:8
-#: src_views_rule_index.vue.tmp.i18n.js:15
-#: src_views_structure_index.vue.tmp.i18n.js:8
-msgid "确定"
-msgstr ""
+msgstr "全屏"
 
 #: src_views_layout_i18n-switch_assets_index.js.tmp.i18n.js:1
 msgid "切换语言成功"
-msgstr ""
+msgstr "切換語言成功"
+
+#: src_views_layout_i18n-switch_index.vue.tmp.i18n.js:1
+msgid "国际化"
+msgstr "國際化"
 
 #: src_views_layout_layout.vue.tmp.i18n.js:1
-#: src_views_layout_user_information.vue.tmp.i18n.js:1
-msgid "账号设置"
-msgstr ""
-
-#: src_views_layout_layout.vue.tmp.i18n.js:2
 #: src_views_layout_user_change_password.vue.tmp.i18n.js:1
 msgid "修改密码"
-msgstr ""
+msgstr "修改密碼"
 
-#: src_views_layout_layout.vue.tmp.i18n.js:3
+#: src_views_layout_layout.vue.tmp.i18n.js:2
+#: src_views_layout_lockscreen_components_unlock.vue.tmp.i18n.js:7
 msgid "退出"
-msgstr ""
+msgstr "退出"
 
 #: src_views_layout_lockscreen_components_assets_unlock.js.tmp.i18n.js:1
 #: src_views_login_assets_index.js.tmp.i18n.js:2
 msgid "请输入密码"
-msgstr ""
+msgstr "請輸入密碼"
 
 #: src_views_layout_lockscreen_components_unlock.vue.tmp.i18n.js:1
+#: src_views_layout_lockscreen_components_unlock.vue.tmp.i18n.js:5
 msgid "解锁"
-msgstr ""
+msgstr "解鎖"
 
 #: src_views_layout_lockscreen_components_unlock.vue.tmp.i18n.js:2
-msgid "密码同登录密码"
-msgstr ""
+#: src_views_layout_lockscreen_components_unlock.vue.tmp.i18n.js:6
+#: src_views_layout_user_change_password.vue.tmp.i18n.js:5
+#: src_views_layout_user_information.vue.tmp.i18n.js:4
+#: src_views_permission_index.vue.tmp.i18n.js:10
+#: src_views_resource_index.vue.tmp.i18n.js:9
+#: src_views_role_index.vue.tmp.i18n.js:9
+#: src_views_user_index.vue.tmp.i18n.js:11
+msgid "取消"
+msgstr "取消"
 
 #: src_views_layout_lockscreen_components_unlock.vue.tmp.i18n.js:3
+msgid "密码同登录密码"
+msgstr "密碼同登入密碼"
+
+#: src_views_layout_lockscreen_components_unlock.vue.tmp.i18n.js:4
 msgid "已锁定"
-msgstr ""
+msgstr "已鎖定"
 
 #: src_views_layout_lockscreen_index.vue.tmp.i18n.js:1
 msgid "锁屏"
-msgstr ""
+msgstr "鎖屏"
 
-#: src_views_layout_message-tip_assets_index.i18n.js.tmp.i18n.js:1
 #: src_views_layout_message-tip_index.vue.tmp.i18n.js:1
 msgid "条新消息"
-msgstr ""
+msgstr "條新消息"
 
-#: src_views_layout_message-tip_assets_index.i18n.js.tmp.i18n.js:2
 #: src_views_layout_message-tip_index.vue.tmp.i18n.js:2
 msgid "无新消息"
-msgstr ""
+msgstr "無新消息"
 
 #: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:1
-#: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:6
-msgid "关闭标签"
-msgstr ""
+#: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:7
+msgid "刷新"
+msgstr "重繪"
 
 #: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:2
-#: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:7
-msgid "关闭其他"
-msgstr ""
+#: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:8
+msgid "关闭标签"
+msgstr "關閉標籤"
 
 #: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:3
-#: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:8
-msgid "关闭右侧"
-msgstr ""
+#: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:9
+msgid "关闭其他"
+msgstr "關閉其他"
 
 #: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:4
-#: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:9
-msgid "关闭左侧"
-msgstr ""
+#: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:10
+msgid "关闭右侧"
+msgstr "關閉右側"
 
 #: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:5
-#: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:10
+#: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:11
+msgid "关闭左侧"
+msgstr "關閉左側"
+
+#: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:6
+#: src_views_layout_tags-page-opened_index.vue.tmp.i18n.js:12
 msgid "关闭所有"
-msgstr ""
+msgstr "關閉所有"
 
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:1
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:9
 msgid "青蓝冰水"
-msgstr ""
+msgstr "青藍冰水"
 
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:2
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:4
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:6
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:8
 msgid "暗夜"
-msgstr ""
+msgstr "暗夜"
 
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:3
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:11
 msgid "千山一碧"
-msgstr ""
+msgstr "千山一碧"
 
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:5
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:13
 msgid "灿若云霞"
-msgstr ""
+msgstr "燦若雲霞"
 
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:7
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:15
 msgid "红尘有你"
-msgstr ""
+msgstr "紅塵有你"
 
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:10
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:12
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:14
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:16
 msgid "光天"
-msgstr ""
+msgstr "光天"
 
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:17
 msgid "主题切换成功"
-msgstr ""
+msgstr "主題切換成功"
+
+#: src_views_layout_theme-switch_index.vue.tmp.i18n.js:1
+msgid "主题"
+msgstr "主題"
 
 #: src_views_layout_user_assets_change_password.js.tmp.i18n.js:1
 msgid "请再次输入密码"
-msgstr ""
+msgstr "請再次輸入密碼"
 
 #: src_views_layout_user_assets_change_password.js.tmp.i18n.js:2
 msgid "两次输入密码不一致!"
-msgstr ""
+msgstr "兩次輸入密碼不一致！"
 
 #: src_views_layout_user_assets_change_password.js.tmp.i18n.js:3
 msgid "请输入旧密码"
-msgstr ""
+msgstr "請輸入舊密碼"
 
 #: src_views_layout_user_assets_change_password.js.tmp.i18n.js:4
+#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:12
+#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:25
+#: src_views_login_assets_index.js.tmp.i18n.js:3
+#, javascript-format
+msgid "长度在 %d 到 %d 个字符"
+msgstr "長度在 %d 到 %d 個字元"
+
+#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:11
 msgid "请输入新密码"
-msgstr ""
+msgstr "請輸入新密碼"
 
-#: src_views_layout_user_assets_information.js.tmp.i18n.js:1
-msgid "请输入有效的邮箱"
-msgstr ""
-
-#: src_views_layout_user_assets_information.js.tmp.i18n.js:2
-msgid "请输入有效的手机号"
-msgstr ""
+#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:42
+msgid "修改密码后你需要从新登陆"
+msgstr "修改密碼後你需要從新登入"
 
 #: src_views_layout_user_change_password.vue.tmp.i18n.js:2
 msgid "旧密码"
-msgstr ""
+msgstr "舊密碼"
 
 #: src_views_layout_user_change_password.vue.tmp.i18n.js:3
 msgid "新密码"
-msgstr ""
+msgstr "新密碼"
 
 #: src_views_layout_user_change_password.vue.tmp.i18n.js:4
 msgid "确认密码"
-msgstr ""
-
-#: src_views_layout_user_change_password.vue.tmp.i18n.js:5
-#: src_views_layout_user_information.vue.tmp.i18n.js:5
-#: src_views_menu_index.vue.tmp.i18n.js:25
-#: src_views_position_category_index.vue.tmp.i18n.js:9
-#: src_views_resource_index.vue.tmp.i18n.js:9
-#: src_views_rule_index.vue.tmp.i18n.js:16
-#: src_views_structure_index.vue.tmp.i18n.js:9
-msgid "取消"
-msgstr ""
+msgstr "確認密碼"
 
 #: src_views_layout_user_change_password.vue.tmp.i18n.js:6
-#: src_views_layout_user_information.vue.tmp.i18n.js:6
+#: src_views_layout_user_information.vue.tmp.i18n.js:5
 msgid "确认"
-msgstr ""
+msgstr "確認"
+
+#: src_views_layout_user_information.vue.tmp.i18n.js:1
+msgid "账号设置"
+msgstr "帳號設定"
 
 #: src_views_layout_user_information.vue.tmp.i18n.js:2
-msgid "用户昵称"
-msgstr ""
+msgid "邮箱"
+msgstr "郵箱"
 
 #: src_views_layout_user_information.vue.tmp.i18n.js:3
-msgid "邮箱"
-msgstr ""
-
-#: src_views_layout_user_information.vue.tmp.i18n.js:4
 msgid "手机号"
-msgstr ""
+msgstr "手機號"
 
 #: src_views_login_assets_index.js.tmp.i18n.js:1
 msgid "请输入账号"
-msgstr ""
+msgstr "請輸入帳號"
 
-#: src_views_login_assets_index.js.tmp.i18n.js:3
+#: src_views_login_assets_index.js.tmp.i18n.js:10
 msgid "请输入验证码"
-msgstr ""
+msgstr "請輸入驗證碼"
+
+#: src_views_login_assets_index.js.tmp.i18n.js:11
+#, javascript-format
+msgid "长度为 %d 个字符"
+msgstr "長度為 %d 個字元"
+
+#: src_views_login_assets_index.js.tmp.i18n.js:49
+msgid "登陆成功"
+msgstr "登入成功"
 
 #: src_views_login_index.vue.tmp.i18n.js:1
-msgid "用户登录"
-msgstr ""
+msgid "用户登陆"
+msgstr "用戶登陸"
 
 #: src_views_login_index.vue.tmp.i18n.js:2
 msgid "账号登录"
-msgstr ""
+msgstr "帳號登入"
 
 #: src_views_login_index.vue.tmp.i18n.js:3
 msgid "账号"
-msgstr ""
+msgstr "帳號"
 
 #: src_views_login_index.vue.tmp.i18n.js:4
+#: src_views_user_index.vue.tmp.i18n.js:5
 msgid "密码"
-msgstr ""
+msgstr "密碼"
 
 #: src_views_login_index.vue.tmp.i18n.js:5
 msgid "验证码"
-msgstr ""
+msgstr "驗證碼"
 
 #: src_views_login_index.vue.tmp.i18n.js:6
 msgid "保持登录"
-msgstr ""
+msgstr "保持登入"
 
 #: src_views_login_index.vue.tmp.i18n.js:8
 msgid "找回密码"
-msgstr ""
+msgstr "找回密碼"
 
 #: src_views_login_index.vue.tmp.i18n.js:9
 msgid "新用户注册"
-msgstr ""
+msgstr "新用戶註冊"
 
 #: src_views_login_index.vue.tmp.i18n.js:10
 msgid "微信扫一扫"
-msgstr ""
+msgstr "微信掃一掃"
 
 #: src_views_login_index.vue.tmp.i18n.js:11
 msgid "手机登录"
-msgstr ""
+msgstr "手機登入"
 
-#: src_views_menu_assets_index.js.tmp.i18n.js:1
-msgid "请输入菜单方法名称"
-msgstr ""
+#: src_views_message_assets_message.js.tmp.i18n.js:1
+msgid "标为已读"
+msgstr "標為已讀"
 
-#: src_views_menu_assets_index.js.tmp.i18n.js:2
-msgid "请输入菜单控制器名称"
-msgstr ""
-
-#: src_views_menu_assets_index.js.tmp.i18n.js:3
-msgid "请输入菜单路由名称"
-msgstr ""
-
-#: src_views_menu_assets_index.js.tmp.i18n.js:4
-msgid "请输入菜单路由路径"
-msgstr ""
-
-#: src_views_menu_assets_index.js.tmp.i18n.js:5
-msgid "请输入菜单路由组件"
-msgstr ""
-
-#: src_views_menu_assets_index.js.tmp.i18n.js:6
-msgid "请输入菜单标题"
-msgstr ""
-
-#: src_views_menu_assets_index.js.tmp.i18n.js:7
-msgid "请输入菜单应用名称"
-msgstr ""
-
-#: src_views_menu_assets_index.js.tmp.i18n.js:8
-msgid "子菜单"
-msgstr ""
-
-#: src_views_menu_assets_index.js.tmp.i18n.js:9
-#: src_views_position_category_assets_index.js.tmp.i18n.js:8
-#: src_views_resource_assets_index.js.tmp.i18n.js:5
-#: src_views_structure_assets_index.js.tmp.i18n.js:3
-msgid "修改"
-msgstr ""
-
-#: src_views_menu_assets_index.js.tmp.i18n.js:10
-#: src_views_menu_index.vue.tmp.i18n.js:18
-#: src_views_menu_index.vue.tmp.i18n.js:34
-#: src_views_position_category_assets_index.js.tmp.i18n.js:9
-#: src_views_position_category_index.vue.tmp.i18n.js:7
-#: src_views_position_category_index.vue.tmp.i18n.js:11
-#: src_views_position_category_search_assets_index.js.tmp.i18n.js:2
+#: src_views_message_assets_message.js.tmp.i18n.js:2
+#: src_views_permission_assets_index.js.tmp.i18n.js:6
 #: src_views_resource_assets_index.js.tmp.i18n.js:6
+#: src_views_role_assets_index.js.tmp.i18n.js:7
+#: src_views_user_assets_index.js.tmp.i18n.js:7
+msgid "删除"
+msgstr "删除"
+
+#: src_views_message_assets_message.js.tmp.i18n.js:3
+msgid "还原"
+msgstr "還原"
+
+#: src_views_message_assets_message.js.tmp.i18n.js:4
+#: src_views_message_assets_message.js.tmp.i18n.js:5
+msgid "暂无未读消息"
+msgstr "暫無未讀消息"
+
+#: src_views_message_assets_message.js.tmp.i18n.js:6
+msgid "暂无已读消息"
+msgstr "暫無已讀消息"
+
+#: src_views_message_assets_message.js.tmp.i18n.js:7
+msgid "回收站无消息"
+msgstr "回收站無消息"
+
+#: src_views_message_message.vue.tmp.i18n.js:1
+msgid "未读消息"
+msgstr "未讀消息"
+
+#: src_views_message_message.vue.tmp.i18n.js:2
+msgid "已读消息"
+msgstr "已讀消息"
+
+#: src_views_message_message.vue.tmp.i18n.js:3
+msgid "回收站"
+msgstr "回收站"
+
+#: src_views_message_message.vue.tmp.i18n.js:4
+msgid "返回"
+msgstr "返回"
+
+#: src_views_permission_assets_index.js.tmp.i18n.js:1
+msgid "请输入权限名字"
+msgstr "請輸入許可權名字"
+
+#: src_views_permission_assets_index.js.tmp.i18n.js:2
+msgid "请输入权限编号"
+msgstr "請輸入許可權編號"
+
+#: src_views_permission_assets_index.js.tmp.i18n.js:3
+#: src_views_permission_index.vue.tmp.i18n.js:11
+#: src_views_resource_search_index.vue.tmp.i18n.js:9
+#: src_views_role_search_index.vue.tmp.i18n.js:9
+#: src_views_user_search_index.vue.tmp.i18n.js:9
+msgid "新增"
+msgstr "新增"
+
+#: src_views_permission_assets_index.js.tmp.i18n.js:4
+#: src_views_resource_assets_index.js.tmp.i18n.js:5
+#: src_views_role_assets_index.js.tmp.i18n.js:5
+#: src_views_user_assets_index.js.tmp.i18n.js:6
+msgid "编辑"
+msgstr "編輯"
+
+#: src_views_permission_assets_index.js.tmp.i18n.js:5
+#: src_views_role_assets_index.js.tmp.i18n.js:6
+msgid "授权"
+msgstr "授權"
+
+#: src_views_permission_assets_index.js.tmp.i18n.js:7
+#: src_views_permission_assets_index.js.tmp.i18n.js:8
+#: src_views_permission_assets_index.js.tmp.i18n.js:9
+msgid "根权限"
+msgstr "根許可權"
+
+#: src_views_permission_assets_index.js.tmp.i18n.js:11
+msgid "确认删除该权限?"
+msgstr "確認删除該許可權？"
+
+#: src_views_permission_assets_index.js.tmp.i18n.js:12
+#: src_views_resource_assets_index.js.tmp.i18n.js:11
+#: src_views_role_assets_index.js.tmp.i18n.js:12
+#: src_views_user_assets_index.js.tmp.i18n.js:12
+msgid "请勾选数据"
+msgstr "請勾選數據"
+
+#: src_views_permission_index.vue.tmp.i18n.js:1
+msgid "编辑权限"
+msgstr "編輯許可權"
+
+#: src_views_permission_index.vue.tmp.i18n.js:2
+msgid "新增权限"
+msgstr "新增許可權"
+
+#: src_views_permission_index.vue.tmp.i18n.js:3
+msgid "上级权限"
+msgstr "上級許可權"
+
+#: src_views_permission_index.vue.tmp.i18n.js:4
+#: src_views_resource_assets_index.js.tmp.i18n.js:3
+#: src_views_resource_index.vue.tmp.i18n.js:5
+#: src_views_role_assets_index.js.tmp.i18n.js:3
+#: src_views_role_index.vue.tmp.i18n.js:5
+#: src_views_user_assets_index.js.tmp.i18n.js:4
+#: src_views_user_index.vue.tmp.i18n.js:7
+msgid "状态"
+msgstr "狀態"
+
+#: src_views_permission_index.vue.tmp.i18n.js:6
+#: src_views_permission_index.vue.tmp.i18n.js:13
+#: src_views_resource_assets_index.js.tmp.i18n.js:13
 #: src_views_resource_index.vue.tmp.i18n.js:7
 #: src_views_resource_index.vue.tmp.i18n.js:11
 #: src_views_resource_search_assets_index.js.tmp.i18n.js:2
-#: src_views_rule_index.vue.tmp.i18n.js:13
-#: src_views_rule_index.vue.tmp.i18n.js:25
-#: src_views_structure_assets_index.js.tmp.i18n.js:4
-#: src_views_structure_index.vue.tmp.i18n.js:7
-#: src_views_structure_index.vue.tmp.i18n.js:14
+#: src_views_role_assets_index.js.tmp.i18n.js:14
+#: src_views_role_index.vue.tmp.i18n.js:7
+#: src_views_role_index.vue.tmp.i18n.js:11
+#: src_views_role_search_assets_index.js.tmp.i18n.js:2
+#: src_views_user_assets_index.js.tmp.i18n.js:14
+#: src_views_user_index.vue.tmp.i18n.js:9
+#: src_views_user_index.vue.tmp.i18n.js:13
+#: src_views_user_search_assets_index.js.tmp.i18n.js:2
 msgid "禁用"
-msgstr ""
+msgstr "禁用"
 
-#: src_views_menu_assets_index.js.tmp.i18n.js:11
-#: src_views_menu_index.vue.tmp.i18n.js:17
-#: src_views_menu_index.vue.tmp.i18n.js:33
-#: src_views_position_category_assets_index.js.tmp.i18n.js:10
-#: src_views_position_category_index.vue.tmp.i18n.js:6
-#: src_views_position_category_index.vue.tmp.i18n.js:10
-#: src_views_position_category_search_assets_index.js.tmp.i18n.js:1
-#: src_views_resource_assets_index.js.tmp.i18n.js:7
-#: src_views_resource_index.vue.tmp.i18n.js:6
-#: src_views_resource_index.vue.tmp.i18n.js:10
-#: src_views_resource_search_assets_index.js.tmp.i18n.js:1
-#: src_views_rule_index.vue.tmp.i18n.js:12
-#: src_views_rule_index.vue.tmp.i18n.js:24
-#: src_views_structure_assets_index.js.tmp.i18n.js:5
-#: src_views_structure_index.vue.tmp.i18n.js:6
-#: src_views_structure_index.vue.tmp.i18n.js:13
-msgid "启用"
-msgstr ""
-
-#: src_views_menu_assets_index.js.tmp.i18n.js:12
-#: src_views_position_category_assets_index.js.tmp.i18n.js:2
-#: src_views_position_category_assets_index.js.tmp.i18n.js:11
-#: src_views_resource_assets_index.js.tmp.i18n.js:8
-#: src_views_structure_assets_index.js.tmp.i18n.js:6
-msgid "置顶"
-msgstr ""
-
-#: src_views_menu_assets_index.js.tmp.i18n.js:13
-#: src_views_position_category_assets_index.js.tmp.i18n.js:3
-#: src_views_position_category_assets_index.js.tmp.i18n.js:12
-#: src_views_resource_assets_index.js.tmp.i18n.js:9
-#: src_views_structure_assets_index.js.tmp.i18n.js:7
-msgid "上移"
-msgstr ""
-
-#: src_views_menu_assets_index.js.tmp.i18n.js:14
-#: src_views_position_category_assets_index.js.tmp.i18n.js:4
-#: src_views_position_category_assets_index.js.tmp.i18n.js:13
-#: src_views_resource_assets_index.js.tmp.i18n.js:10
-#: src_views_structure_assets_index.js.tmp.i18n.js:8
-msgid "下移"
-msgstr ""
-
-#: src_views_menu_assets_index.js.tmp.i18n.js:15
-#: src_views_position_category_assets_index.js.tmp.i18n.js:5
-#: src_views_position_category_assets_index.js.tmp.i18n.js:14
-#: src_views_resource_assets_index.js.tmp.i18n.js:2
-#: src_views_resource_assets_index.js.tmp.i18n.js:11
-#: src_views_structure_assets_index.js.tmp.i18n.js:9
-msgid "删除"
-msgstr ""
-
-#: src_views_menu_assets_index.js.tmp.i18n.js:16
-#: src_views_menu_assets_index.js.tmp.i18n.js:17
-#: src_views_menu_assets_index.js.tmp.i18n.js:18
-msgid "根菜单"
-msgstr ""
-
-#: src_views_menu_assets_index.js.tmp.i18n.js:20
-msgid "确认删除该菜单?"
-msgstr ""
-
-#: src_views_menu_assets_index.js.tmp.i18n.js:21
-#: src_views_position_category_assets_index.js.tmp.i18n.js:17
-#: src_views_resource_assets_index.js.tmp.i18n.js:14
-#: src_views_structure_assets_index.js.tmp.i18n.js:15
-msgid "请勾选数据"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:1
-#: src_views_rule_index.vue.tmp.i18n.js:1
-msgid "编辑菜单"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:2
-#: src_views_rule_index.vue.tmp.i18n.js:2
-msgid "新增菜单"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:3
-msgid "上级菜单"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:4
-msgid "菜单类型"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:5
-#: src_views_menu_index.vue.tmp.i18n.js:9
-#: src_views_rule_index.vue.tmp.i18n.js:5
-#: src_views_rule_index.vue.tmp.i18n.js:8
-msgid "应用"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:6
-msgid "控制器分组"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:7
-#: src_views_menu_index.vue.tmp.i18n.js:10
-msgid "控制器"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:8
-#: src_views_menu_index.vue.tmp.i18n.js:11
-msgid "方法"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:12
-msgid "兄弟方法"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:13
-msgid "方法权限"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:14
-msgid "是"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:15
-msgid "否"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:16
-#: src_views_position_category_index.vue.tmp.i18n.js:5
-#: src_views_resource_index.vue.tmp.i18n.js:5
-#: src_views_rule_index.vue.tmp.i18n.js:11
-#: src_views_structure_index.vue.tmp.i18n.js:5
-msgid "状态"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:19
-msgid "路由标题"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:20
-msgid "路由名称"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:21
-msgid "路由路径"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:22
-msgid "路由组件"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:23
-msgid "路由图标"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:26
-#: src_views_rule_index.vue.tmp.i18n.js:17
-msgid "你确认同步菜单数据吗？"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:27
-#: src_views_rule_index.vue.tmp.i18n.js:18
-msgid "菜单数据同步"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:28
-#: src_views_rule_index.vue.tmp.i18n.js:19
-msgid "菜单数据同步中，请稍后"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:29
-#: src_views_rule_index.vue.tmp.i18n.js:20
-msgid "覆盖"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:30
-#: src_views_rule_index.vue.tmp.i18n.js:21
-#: src_views_structure_index.vue.tmp.i18n.js:10
-msgid "帮助说明"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:31
-#: src_views_rule_index.vue.tmp.i18n.js:22
-msgid "系统将会自动从控制器注释中读取菜单信息并同步"
-msgstr ""
-
-#: src_views_menu_index.vue.tmp.i18n.js:32
-#: src_views_position_category_search_index.vue.tmp.i18n.js:4
-#: src_views_resource_search_index.vue.tmp.i18n.js:4
-#: src_views_rule_index.vue.tmp.i18n.js:23
-#: src_views_structure_index.vue.tmp.i18n.js:12
-msgid "新增"
-msgstr ""
-
-#: src_views_position_category_assets_index.js.tmp.i18n.js:1
+#: src_views_permission_index.vue.tmp.i18n.js:7
 #: src_views_resource_assets_index.js.tmp.i18n.js:1
-msgid "编辑"
-msgstr ""
-
-#: src_views_position_category_assets_index.js.tmp.i18n.js:6
-#: src_views_resource_assets_index.js.tmp.i18n.js:3
-msgid "请输入职位分类名字"
-msgstr ""
-
-#: src_views_position_category_assets_index.js.tmp.i18n.js:7
-#: src_views_resource_assets_index.js.tmp.i18n.js:4
-#: src_views_structure_assets_index.js.tmp.i18n.js:2
-msgid "子部门"
-msgstr ""
-
-#: src_views_position_category_assets_index.js.tmp.i18n.js:16
-#: src_views_resource_assets_index.js.tmp.i18n.js:13
-msgid "确认删除该职业分类?"
-msgstr ""
-
-#: src_views_position_category_index.vue.tmp.i18n.js:1
-#: src_views_resource_index.vue.tmp.i18n.js:1
-msgid "编辑职位分类"
-msgstr ""
-
-#: src_views_position_category_index.vue.tmp.i18n.js:2
-#: src_views_resource_index.vue.tmp.i18n.js:2
-msgid "新增职位分类"
-msgstr ""
-
-#: src_views_position_category_index.vue.tmp.i18n.js:3
-#: src_views_position_category_search_index.vue.tmp.i18n.js:3
 #: src_views_resource_index.vue.tmp.i18n.js:3
-#: src_views_resource_search_index.vue.tmp.i18n.js:3
-msgid "名字"
-msgstr ""
-
-#: src_views_position_category_index.vue.tmp.i18n.js:4
-#: src_views_resource_index.vue.tmp.i18n.js:4
-msgid "备注"
-msgstr ""
-
-#: src_views_position_category_search_index.vue.tmp.i18n.js:1
-#: src_views_position_category_search_index.vue.tmp.i18n.js:2
 #: src_views_resource_search_index.vue.tmp.i18n.js:1
+#: src_views_role_assets_index.js.tmp.i18n.js:1
+#: src_views_role_index.vue.tmp.i18n.js:3
+#: src_views_role_search_index.vue.tmp.i18n.js:1
+#: src_views_user_assets_index.js.tmp.i18n.js:2
+#: src_views_user_index.vue.tmp.i18n.js:3
+#: src_views_user_search_index.vue.tmp.i18n.js:1
+msgid "名字"
+msgstr "名字"
+
+#: src_views_permission_index.vue.tmp.i18n.js:8
+#: src_views_resource_assets_index.js.tmp.i18n.js:2
+#: src_views_resource_index.vue.tmp.i18n.js:4
 #: src_views_resource_search_index.vue.tmp.i18n.js:2
+#: src_views_role_assets_index.js.tmp.i18n.js:2
+#: src_views_role_index.vue.tmp.i18n.js:4
+#: src_views_role_search_index.vue.tmp.i18n.js:2
+#: src_views_user_assets_index.js.tmp.i18n.js:3
+#: src_views_user_index.vue.tmp.i18n.js:4
+#: src_views_user_search_index.vue.tmp.i18n.js:2
+msgid "编号"
+msgstr "編號"
+
+#: src_views_resource_assets_index.js.tmp.i18n.js:4
+#: src_views_role_assets_index.js.tmp.i18n.js:4
+#: src_views_user_assets_index.js.tmp.i18n.js:5
+msgid "操作"
+msgstr "操作"
+
+#: src_views_resource_assets_index.js.tmp.i18n.js:7
+msgid "请输入资源名字"
+msgstr "請輸入資源名字"
+
+#: src_views_resource_assets_index.js.tmp.i18n.js:8
+msgid "请输入资源编号"
+msgstr "請輸入資源編號"
+
+#: src_views_resource_assets_index.js.tmp.i18n.js:10
+msgid "确认删除该资源?"
+msgstr "確認删除該資源？"
+
+#: src_views_resource_index.vue.tmp.i18n.js:1
+msgid "编辑资源"
+msgstr "編輯資源"
+
+#: src_views_resource_index.vue.tmp.i18n.js:2
+msgid "新增资源"
+msgstr "新增資源"
+
+#: src_views_resource_search_index.vue.tmp.i18n.js:3
+#: src_views_resource_search_index.vue.tmp.i18n.js:4
+#: src_views_role_search_index.vue.tmp.i18n.js:3
+#: src_views_role_search_index.vue.tmp.i18n.js:4
+#: src_views_user_search_index.vue.tmp.i18n.js:3
+#: src_views_user_search_index.vue.tmp.i18n.js:4
 msgid "选择状态"
-msgstr ""
+msgstr "選擇狀態"
 
-#: src_views_rule_index.vue.tmp.i18n.js:3
-msgid "上级权限"
-msgstr ""
+#: src_views_resource_search_index.vue.tmp.i18n.js:5
+#: src_views_role_search_index.vue.tmp.i18n.js:5
+#: src_views_user_search_index.vue.tmp.i18n.js:5
+msgid "搜索"
+msgstr "蒐索"
 
-#: src_views_rule_index.vue.tmp.i18n.js:4
-msgid "权限类型"
-msgstr ""
+#: src_views_resource_search_index.vue.tmp.i18n.js:6
+#: src_views_role_search_index.vue.tmp.i18n.js:6
+#: src_views_user_search_index.vue.tmp.i18n.js:6
+msgid "重置"
+msgstr "重置"
 
-#: src_views_rule_index.vue.tmp.i18n.js:6
-msgid "权限分组"
-msgstr ""
+#: src_views_resource_search_index.vue.tmp.i18n.js:7
+#: src_views_role_search_index.vue.tmp.i18n.js:7
+#: src_views_user_search_index.vue.tmp.i18n.js:7
+msgid "收起"
+msgstr "收起"
 
-#: src_views_rule_index.vue.tmp.i18n.js:7
-#: src_views_rule_index.vue.tmp.i18n.js:14
-msgid "权限"
-msgstr ""
+#: src_views_resource_search_index.vue.tmp.i18n.js:8
+#: src_views_role_search_index.vue.tmp.i18n.js:8
+#: src_views_user_search_index.vue.tmp.i18n.js:8
+msgid "展开"
+msgstr "展開"
 
-#: src_views_rule_index.vue.tmp.i18n.js:9
-msgid "标题"
-msgstr ""
+#: src_views_role_assets_index.js.tmp.i18n.js:8
+msgid "请输入角色名字"
+msgstr "請輸入角色名字"
 
-#: src_views_rule_index.vue.tmp.i18n.js:10
-msgid "名称"
-msgstr ""
+#: src_views_role_assets_index.js.tmp.i18n.js:9
+msgid "请输入角色编号"
+msgstr "請輸入角色編號"
 
-#: src_views_structure_assets_index.js.tmp.i18n.js:1
-msgid "请输入组织名字"
-msgstr ""
+#: src_views_role_assets_index.js.tmp.i18n.js:11
+msgid "确认删除该角色?"
+msgstr "確認删除該角色？"
 
-#: src_views_structure_assets_index.js.tmp.i18n.js:10
-#: src_views_structure_assets_index.js.tmp.i18n.js:11
-#: src_views_structure_assets_index.js.tmp.i18n.js:12
-msgid "根组织"
-msgstr ""
+#: src_views_role_index.vue.tmp.i18n.js:1
+msgid "编辑角色"
+msgstr "編輯角色"
 
-#: src_views_structure_assets_index.js.tmp.i18n.js:14
-msgid "确认删除该组织?"
-msgstr ""
+#: src_views_role_index.vue.tmp.i18n.js:2
+msgid "新增角色"
+msgstr "新增角色"
 
-#: src_views_structure_index.vue.tmp.i18n.js:1
-msgid "编辑组织"
-msgstr ""
+#: src_views_user_assets_index.js.tmp.i18n.js:1
+msgid "请输入用户密码"
+msgstr "請輸入使用者密碼"
 
-#: src_views_structure_index.vue.tmp.i18n.js:2
-msgid "新增组织"
-msgstr ""
+#: src_views_user_assets_index.js.tmp.i18n.js:8
+msgid "请输入用户名字"
+msgstr "請輸入用戶名字"
 
-#: src_views_structure_index.vue.tmp.i18n.js:3
-msgid "上级组织"
-msgstr ""
+#: src_views_user_assets_index.js.tmp.i18n.js:9
+msgid "请输入用户编号"
+msgstr "請輸入用戶編號"
 
-#: src_views_structure_index.vue.tmp.i18n.js:4
-msgid "组织名字"
-msgstr ""
+#: src_views_user_assets_index.js.tmp.i18n.js:11
+msgid "确认删除该用户?"
+msgstr "確認删除該用戶？"
 
-#: src_views_structure_index.vue.tmp.i18n.js:11
-msgid "公司整个部门的组织结构"
-msgstr ""
+#: src_views_user_index.vue.tmp.i18n.js:1
+msgid "编辑用户"
+msgstr "編輯用戶"
+
+#: src_views_user_index.vue.tmp.i18n.js:2
+msgid "新增用户"
+msgstr "新增用戶"
+
+#: src_views_user_index.vue.tmp.i18n.js:6
+msgid "所属角色"
+msgstr "所屬角色"
+
+#~ msgid "三级菜单"
+#~ msgstr "三級選單"
