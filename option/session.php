@@ -65,9 +65,6 @@ return [
             // 文件缓存路径
             'path' => Leevel::runtimePath('session'),
 
-            // 是否 serialize 格式化
-            'serialize' => true,
-
             // 默认过期时间
             'expire' => null,
         ],
@@ -93,9 +90,6 @@ return [
 
             // 是否使用持久连接
             'persistent' => false,
-
-            // 是否使用 serialize 编码
-            'serialize' => true,
 
             // 默认过期时间
             'expire' => null,
