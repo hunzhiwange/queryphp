@@ -70,11 +70,11 @@
             </Row>
         </div>
 
-        <Drawer :title="viewDetail.name + ' 授权'" v-model="rightForm" width="800" :mask-closable="false" :styles="styles">
+        <Drawer :title="viewDetail.name + ' ' + __('授权')" v-model="rightForm" width="800" :mask-closable="false" :styles="styles">
             <i-form ref="formPermission" :model="formPermission">
                 <Row :gutter="32">
                     <i-col span="24">
-                        <FormItem label="请选择权限" label-position="top">
+                        <FormItem :label="__('请选择权限')" label-position="top">
                             <div class="tree-for-role">
                                 <Tree :data="dataTree" ref="tree" show-checkbox multiple :render="renderContent"></Tree>
                             </div>
@@ -83,8 +83,8 @@
                 </Row>
             </i-form>
             <div class="demo-drawer-footer">
-                <i-button style="margin-right: 8px" @click="rightForm = false">取消</i-button>
-                <i-button type="primary" :loading="loading" @click.native.prevent="handlePermissionSubmit('formPermission')">确定</i-button>
+                <i-button style="margin-right: 8px" @click="rightForm = false">{{ __('取消') }}</i-button>
+                <i-button type="primary" :loading="loading" @click.native.prevent="handlePermissionSubmit('formPermission')">{{ __('确定') }}</i-button>
             </div>
         </Drawer>
     </div>

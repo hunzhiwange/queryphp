@@ -55,12 +55,11 @@
             </ButtonGroup>
         </Row>-->
 
-        <Drawer :title="viewDetail.name + ' 资源授权'" v-model="rightForm" width="800" :mask-closable="false" :styles="styles">
+        <Drawer :title="viewDetail.name + ' ' + __('资源授权')" v-model="rightForm" width="800" :mask-closable="false" :styles="styles">
             <i-form ref="formResource" :model="formResource">
                 <Row :gutter="32">
                     <i-col span="24">
-                        <FormItem label="请输入资源关键字" label-position="top">
-                            <!--<div class="resource-page"><Page :total="resourceTotal" size="small" @on-change="changeResourcePage" /></div>-->
+                        <FormItem :label="__('请输入资源关键字')" label-position="top">
                             <i-select
                                 v-model="selectResource"
                                 multiple
@@ -81,8 +80,8 @@
                 </Row>
             </i-form>
             <div class="demo-drawer-footer">
-                <i-button style="margin-right: 8px" @click="rightForm = false">取消</i-button>
-                <i-button type="primary" :loading="loading" @click.native.prevent="handleResourceSubmit('formResource')">确定</i-button>
+                <i-button style="margin-right: 8px" @click="rightForm = false">{{ __('取消') }}</i-button>
+                <i-button type="primary" :loading="loading" @click.native.prevent="handleResourceSubmit('formResource')">{{ __('确定') }}</i-button>
             </div>
         </Drawer>
     </div>

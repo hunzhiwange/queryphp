@@ -15,7 +15,7 @@
                                         <i-input v-model="formItem.num" placeholder=""></i-input>
                                     </FormItem>
                                     <FormItem :label="__('密码')" prop="password">
-                                        <i-input v-model="formItem.password" :placeholder="formItem.id ? '不修改密码请留空' : '密码不能为空'"></i-input>
+                                        <i-input v-model="formItem.password" :placeholder="formItem.id ? __('不修改密码请留空') : __('密码不能为空')"></i-input>
                                     </FormItem>
                                 </i-col>
                                 <i-col span="12">
