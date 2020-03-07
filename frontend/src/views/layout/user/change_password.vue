@@ -9,7 +9,12 @@
                     <i-input type="password" v-model.trim="form.new_pwd" placeholder="" auto-complete="off"></i-input>
                 </FormItem>
                 <FormItem :label="__('确认密码')" prop="confirm_pwd">
-                    <i-input type="password" v-model.trim="form.confirm_pwd" placeholder="" auto-complete="off"></i-input>
+                    <i-input
+                        type="password"
+                        v-model.trim="form.confirm_pwd"
+                        placeholder=""
+                        auto-complete="off"
+                    ></i-input>
                 </FormItem>
             </i-form>
         </div>

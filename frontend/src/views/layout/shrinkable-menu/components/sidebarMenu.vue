@@ -1,5 +1,13 @@
 <template>
-    <i-menu ref="sideMenu" :active-name="$route.name" :open-names="openNames" :theme="menuTheme" width="auto" @on-select="changeMenu" accordion>
+    <i-menu
+        ref="sideMenu"
+        :active-name="$route.name"
+        :open-names="openNames"
+        :theme="menuTheme"
+        width="auto"
+        @on-select="changeMenu"
+        accordion
+    >
         <template v-for="item in menuList">
             <!-- prettier-ignore -->
             <MenuItem v-if="item.children.length<=1 && (!item.children[0].children || item.children[0].children.length<1)" :name="item.children[0].name" :key="item.path">
@@ -14,8 +22,15 @@
                 :key="item.path + '_path_sub'"
             >
                 <template slot="title">
-                    <Icon :v-if="item.icon" :type="item.icon" :size="iconSize" :style="!item.permission ? 'color:#c5c8ce;' : ''"></Icon>
-                    <div class="layout-text" :style="!item.permission ? 'color:#c5c8ce;' : ''">{{ itemTitle(item) }}</div>
+                    <Icon
+                        :v-if="item.icon"
+                        :type="item.icon"
+                        :size="iconSize"
+                        :style="!item.permission ? 'color:#c5c8ce;' : ''"
+                    ></Icon>
+                    <div class="layout-text" :style="!item.permission ? 'color:#c5c8ce;' : ''">
+                        {{ itemTitle(item) }}
+                    </div>
                 </template>
                 <template v-for="child in item.children">
                     <!-- prettier-ignore -->
@@ -31,7 +46,11 @@
                     <!-- prettier-ignore -->
                     </MenuItem>
 
-                    <Submenu v-if="child.children && child.children.length > 0" :name="child.name" :key="child.name + '_sub'">
+                    <Submenu
+                        v-if="child.children && child.children.length > 0"
+                        :name="child.name"
+                        :key="child.name + '_sub'"
+                    >
                         <template slot="title">
                             <Icon
                                 :v-if="child.icon"
@@ -40,7 +59,9 @@
                                 :key="child.name + '_icon_sub'"
                                 :style="!child.permission ? 'color:#c5c8ce;' : ''"
                             ></Icon>
-                            <div class="layout-text" :style="!child.permission ? 'color:#c5c8ce;' : ''">{{ itemTitle(child) }}</div>
+                            <div class="layout-text" :style="!child.permission ? 'color:#c5c8ce;' : ''">
+                                {{ itemTitle(child) }}
+                            </div>
                         </template>
                         <template v-for="childsub in child.children">
                             <!-- prettier-ignore -->

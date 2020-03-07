@@ -278,7 +278,9 @@ export function validateIp(rule, value, callback) {
         return callback()
     }
     setTimeout(() => {
-        if (!/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(value)) {
+        if (
+            !/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(value)
+        ) {
             callback(new Error(__('请输入有效的 IP 地址')))
         } else {
             return callback()
@@ -334,7 +336,11 @@ export function validateChinesePlateNumber(rule, value, callback) {
         return callback()
     }
     setTimeout(() => {
-        if (!/^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/.test(value)) {
+        if (
+            !/^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/.test(
+                value
+            )
+        ) {
             callback(new Error(__('请输入有效的中国车牌号')))
         } else {
             return callback()

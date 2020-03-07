@@ -107,7 +107,10 @@ util.setCurrentPath = function(vm, name) {
     if (name === 'dashboard') {
         currentPathArr = [curRouter]
     } else if (name && isOtherRouter) {
-        currentPathArr = [util.handleItem(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'dashboard')), curRouter]
+        currentPathArr = [
+            util.handleItem(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'dashboard')),
+            curRouter,
+        ]
     } else {
         let currentPathObj = vm.$store.state.app.routers.filter(item => {
             if (item.children.length <= 1) {
@@ -159,7 +162,10 @@ util.setCurrentPath = function(vm, name) {
         if (currentPathObj === undefined) {
             throw 'Can not find children router'
         } else if (currentPathObj.children.length <= 1) {
-            currentPathArr = [util.handleItem(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'dashboard')), util.handleItem(vm, currentPathObj)]
+            currentPathArr = [
+                util.handleItem(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'dashboard')),
+                util.handleItem(vm, currentPathObj),
+            ]
         } else {
             let childObj = currentPathObj.children.filter(child => {
                 return child.name === name
@@ -170,7 +176,10 @@ util.setCurrentPath = function(vm, name) {
             parent.name = childFirst.name
             parent.path = childFirst.path
 
-            currentPathArr = [util.handleItem(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'dashboard')), parent]
+            currentPathArr = [
+                util.handleItem(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'dashboard')),
+                parent,
+            ]
 
             if (currentSubPathObj) {
                 currentPathArr.push(util.handleItem(vm, currentPathObj))
@@ -286,7 +295,10 @@ util.warning = function(message, title) {
 }
 
 util.error = function(message) {
-    bus.$Message.error({content: message ? message : __('操作失败'), duration: 5})
+    bus.$Message.error({
+        content: message ? message : __('操作失败'),
+        duration: 5,
+    })
 }
 
 util.clearVuex = function(cate) {

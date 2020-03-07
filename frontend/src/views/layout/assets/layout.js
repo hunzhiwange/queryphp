@@ -117,7 +117,10 @@ export default {
         // 刷新权限，防止需要重新登录才刷新权限
         refreshPermission() {
             let apiToken = this.$store.state.user.token
-            this.apiGet('user/permission', {refresh: '1', token: apiToken}).then(res => {
+            this.apiGet('user/permission', {
+                refresh: '1',
+                token: apiToken,
+            }).then(res => {
                 this.$store.dispatch('setRules', res)
             })
         },

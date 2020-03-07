@@ -2,9 +2,13 @@
     <div ref="scrollCon" @DOMMouseScroll="handlescroll" @mousewheel="handlescroll" class="tags-outer-scroll-con">
         <div ref="leftmoveTagCon" class="leftmove-tag-con">
             <Dropdown transfer @on-click="handleTagsOption">
-                <i-button size="small" type="primary" @click="seeLeftTag()"> <Icon type="md-more" :size="22"></Icon> </i-button>
+                <i-button size="small" type="primary" @click="seeLeftTag()">
+                    <Icon type="md-more" :size="22"></Icon>
+                </i-button>
                 <DropdownMenu slot="list">
-                    <DropdownItem name="refreshTag"> <Icon type="md-refresh" size="22" /> {{ __('刷新') }} </DropdownItem>
+                    <DropdownItem name="refreshTag">
+                        <Icon type="md-refresh" size="22" /> {{ __('刷新') }}
+                    </DropdownItem>
                     <DropdownItem name="clearTag"><Icon type="md-close" /> {{ __('关闭标签') }}</DropdownItem>
                     <DropdownItem name="clearOthers"><Icon type="md-trash" /> {{ __('关闭其他') }}</DropdownItem>
                     <DropdownItem name="clearRights"><Icon type="md-return-right" /> {{ __('关闭右侧') }}</DropdownItem>
@@ -15,9 +19,13 @@
         </div>
         <div ref="closeAllTagCon" class="close-all-tag-con">
             <Dropdown transfer @on-click="handleTagsOption">
-                <i-button size="small" type="primary" @click="seeRightTag()"> <Icon type="md-more" :size="22"></Icon> </i-button>
+                <i-button size="small" type="primary" @click="seeRightTag()">
+                    <Icon type="md-more" :size="22"></Icon>
+                </i-button>
                 <DropdownMenu slot="list">
-                    <DropdownItem name="refreshTag"> <Icon type="md-refresh" size="22" /> {{ __('刷新') }} </DropdownItem>
+                    <DropdownItem name="refreshTag">
+                        <Icon type="md-refresh" size="22" /> {{ __('刷新') }}
+                    </DropdownItem>
                     <DropdownItem name="clearTag"><Icon type="md-close" /> {{ __('关闭标签') }}</DropdownItem>
                     <DropdownItem name="clearOthers"><Icon type="md-trash" /> {{ __('关闭其他') }}</DropdownItem>
                     <DropdownItem name="clearRights"><Icon type="md-return-right" /> {{ __('关闭右侧') }}</DropdownItem>
@@ -27,8 +35,14 @@
             </Dropdown>
         </div>
         <div ref="tagDashboardCon" class="tag-dashboard">
-            <Tag type="dot" @click.native="linkTo(pageOpenedDashboard)" :color="pageOpenedDashboard.name === currentPageName ? 'blue' : 'default'">
-                <Tooltip :content="itemTitle(pageOpenedDashboard)" placement="bottom"> {{ itemTitle(pageOpenedDashboard) }} </Tooltip>
+            <Tag
+                type="dot"
+                @click.native="linkTo(pageOpenedDashboard)"
+                :color="pageOpenedDashboard.name === currentPageName ? 'blue' : 'default'"
+            >
+                <Tooltip :content="itemTitle(pageOpenedDashboard)" placement="bottom">
+                    {{ itemTitle(pageOpenedDashboard) }}
+                </Tooltip>
             </Tag>
         </div>
         <div ref="scrollBody" class="tags-inner-scroll-body" :style="{left: tagBodyLeft + 'px'}">

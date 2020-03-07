@@ -63,7 +63,14 @@ function poToJson(i18n) {
                 }
             })
 
-            let result = '/* ' + moment().format('YYYY-MM-DD HH:mm:ss') + ' */' + '\n' + 'export default ' + JSON.stringify(items) + ';'
+            let result =
+                '/* ' +
+                moment().format('YYYY-MM-DD HH:mm:ss') +
+                ' */' +
+                '\n' +
+                'export default ' +
+                JSON.stringify(items) +
+                ';'
 
             let saveFile = 'src/i18n/' + i18n + '/index.js'
 
@@ -112,13 +119,29 @@ function readDirIView(filePath) {
                             var ext = filedir.split('.').pop()
                             if (supportExt.contains(ext)) {
                                 fs.readFile(filedir, 'utf8', function(err, files) {
-                                    var h5Ele = ['input', 'col', 'button', 'form', 'select', 'option', 'progress', 'menu', 'table']
+                                    var h5Ele = [
+                                        'input',
+                                        'col',
+                                        'button',
+                                        'form',
+                                        'select',
+                                        'option',
+                                        'progress',
+                                        'menu',
+                                        'table',
+                                    ]
                                     var result = files
 
                                     h5Ele.forEach(v => {
                                         var upperV = firstWordUpperCase(v)
-                                        result = result.replace(new RegExp('\\<' + upperV + '(\\s){1}', 'g'), '<i-' + v + ' ')
-                                        result = result.replace(new RegExp('\\<\\/' + upperV + '\\>', 'g'), '</i-' + v + '>')
+                                        result = result.replace(
+                                            new RegExp('\\<' + upperV + '(\\s){1}', 'g'),
+                                            '<i-' + v + ' '
+                                        )
+                                        result = result.replace(
+                                            new RegExp('\\<\\/' + upperV + '\\>', 'g'),
+                                            '</i-' + v + '>'
+                                        )
                                     })
 
                                     fs.writeFile(filedir, result, 'utf8', function(err) {

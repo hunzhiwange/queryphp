@@ -1,6 +1,7 @@
 <template>
     <div @click="handleSelect" class="switch-theme-con">
-        <Icon :style="{verticalAlign: 'middle'}" type="ios-color-palette" size="22"></Icon> {{ __('主题') }}
+        <Icon :style="{verticalAlign: 'middle'}" type="ios-color-palette" size="22"></Icon>
+        {{ __('主题') }}
         <Modal v-model="themeSelect" width="360" class="switch-theme-select">
             <p>
                 <Row type="flex" justify="center" align="middle">
@@ -12,7 +13,11 @@
                                         'background-color': item.element,
                                         color: item.menu,
                                     }"
-                                    :icon="item.name.substr(0, 1) !== 'b' ? 'ios-color-palette' : 'ios-color-palette-outline'"
+                                    :icon="
+                                        item.name.substr(0, 1) !== 'b'
+                                            ? 'ios-color-palette'
+                                            : 'ios-color-palette-outline'
+                                    "
                                     class="pointer"
                                     @on-click="setTheme(item.name)"
                                 ></Avatar>

@@ -24,7 +24,9 @@
                                 <Card :bordered="false">
                                     <div style="text-align:center">
                                         <img :src="logo" class="home-logo" alt="QueryPHP" />
-                                        <h3>The PHP Framework For Code Poem As Free As Wind</h3>
+                                        <h3>
+                                            The PHP Framework For Code Poem As Free As Wind
+                                        </h3>
                                     </div>
                                 </Card>
                             </i-col>
@@ -58,9 +60,15 @@
                                             )
                                         }}
                                     </TabPane>
-                                    <TabPane label="IView" icon="social-javascript"> IView </TabPane>
-                                    <TabPane label="Vue" icon="social-javascript"> Vue </TabPane>
-                                    <TabPane label="QueryPHP" icon="social-codepen"> QueryPHP </TabPane>
+                                    <TabPane label="IView" icon="social-javascript">
+                                        IView
+                                    </TabPane>
+                                    <TabPane label="Vue" icon="social-javascript">
+                                        Vue
+                                    </TabPane>
+                                    <TabPane label="QueryPHP" icon="social-codepen">
+                                        QueryPHP
+                                    </TabPane>
                                 </Tabs>
                             </i-col>
                         </Row>
@@ -77,7 +85,9 @@
                                     <TabPane label="Link" icon="md-link" :key="0">
                                         <Row>
                                             <i-col span="4">
-                                                <i-button type="text" @click="officeSite()">{{ __('官方网站') }}</i-button>
+                                                <i-button type="text" @click="officeSite()">{{
+                                                    __('官方网站')
+                                                }}</i-button>
                                             </i-col>
                                             <i-col span="4">
                                                 <i-button type="text" @click="githubSite()">Github</i-button>

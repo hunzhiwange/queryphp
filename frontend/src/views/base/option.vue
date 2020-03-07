@@ -12,12 +12,23 @@
                                         <i-input v-model="formItem.site_name" placeholder=""></i-input>
                                     </FormItem>
                                     <FormItem :label="__('站点状态')" prop="site_close">
-                                        <i-switch v-model="formItem.site_close" size="large" true-value="1" false-value="0">
-                                            <span slot="open">{{ __('启用') }}</span> <span slot="close">{{ __('关闭') }}</span>
+                                        <i-switch
+                                            v-model="formItem.site_close"
+                                            size="large"
+                                            true-value="1"
+                                            false-value="0"
+                                        >
+                                            <span slot="open">{{ __('启用') }}</span>
+                                            <span slot="close">{{ __('关闭') }}</span>
                                         </i-switch>
                                     </FormItem>
                                     <FormItem>
-                                        <i-button type="primary" :loading="loading" @click.native.prevent="handleSubmit('form')">{{ __('确定') }}</i-button>
+                                        <i-button
+                                            type="primary"
+                                            :loading="loading"
+                                            @click.native.prevent="handleSubmit('form')"
+                                            >{{ __('确定') }}</i-button
+                                        >
                                     </FormItem>
                                 </i-form>
                             </i-col>
