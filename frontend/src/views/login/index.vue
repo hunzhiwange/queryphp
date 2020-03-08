@@ -20,12 +20,29 @@
                         <div class="login-box">
                             <Tabs>
                                 <TabPane :label="__('账号登录')" icon="android-person">
-                                    <i-form ref="form" :model="form" :rules="rules" :label-width="0" label-position="left" class="login-form">
+                                    <i-form
+                                        ref="form"
+                                        :model="form"
+                                        :rules="rules"
+                                        :label-width="0"
+                                        label-position="left"
+                                        class="login-form"
+                                    >
                                         <FormItem prop="name">
-                                            <i-input type="text" v-model.trim="form.name" :placeholder="__('账号')" size="large"></i-input>
+                                            <i-input
+                                                type="text"
+                                                v-model.trim="form.name"
+                                                :placeholder="__('账号')"
+                                                size="large"
+                                            ></i-input>
                                         </FormItem>
                                         <FormItem prop="password">
-                                            <i-input type="password" v-model.trim="form.password" :placeholder="__('密码')" size="large"></i-input>
+                                            <i-input
+                                                type="password"
+                                                v-model.trim="form.password"
+                                                :placeholder="__('密码')"
+                                                size="large"
+                                            ></i-input>
                                         </FormItem>
                                         <FormItem prop="code">
                                             <Row>
@@ -40,17 +57,29 @@
                                                     ></i-input>
                                                 </i-col>
                                                 <i-col span="12" v-if="form.name">
-                                                    <img :src="codeUrl" @click="refreshSeccode()" class="code" style="cursor:pointer;" />
+                                                    <img
+                                                        :src="codeUrl"
+                                                        @click="refreshSeccode()"
+                                                        class="code"
+                                                        style="cursor:pointer;"
+                                                    />
                                                 </i-col>
                                             </Row>
                                         </FormItem>
                                         <FormItem>
-                                            <Checkbox v-model="checked" @on-change="keepLogin">{{ __('保持登录') }}</Checkbox>
+                                            <Checkbox v-model="checked" @on-change="keepLogin">{{
+                                                __('保持登录')
+                                            }}</Checkbox>
                                         </FormItem>
                                         <FormItem>
-                                            <i-button type="primary" :loading="loading" @click.native.prevent="handleSubmit('form')" size="large" long>{{
-                                                __('登录')
-                                            }}</i-button>
+                                            <i-button
+                                                type="primary"
+                                                :loading="loading"
+                                                @click.native.prevent="handleSubmit('form')"
+                                                size="large"
+                                                long
+                                                >{{ __('登录') }}</i-button
+                                            >
                                         </FormItem>
                                         <!--
                                             <FormItem>
@@ -99,7 +128,7 @@
             <div class="login-inner">
                 <div>
                     © 2019
-                    <a href="https://www.dhb168.com">DHB168.COM</a> All rights reserved.
+                    <a href="https://www.queryphp.com">QueryPHP.COM</a> All rights reserved.
                 </div>
             </div>
         </div>

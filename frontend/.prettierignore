@@ -4,6 +4,6 @@ src/i18n/zh-CN/index.js
 src/i18n/en-US/index.js
 src/assets/css/font-awesome.css
 src/assets/css/font-awesome.min.css
-src/views/layout/theme-switch/theme/g/iview.css
-src/views/layout/theme-switch/theme/r/iview.css
-src/views/layout/theme-switch/theme/y/iview.css
+src/views/layout/theme-switch/theme/g/
+src/views/layout/theme-switch/theme/r/
+src/views/layout/theme-switch/theme/y/

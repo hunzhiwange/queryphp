@@ -1,7 +1,8 @@
 <template>
     <div class="main" :class="{'main-hide-text': shrink}">
         <div slot="top" class="logo-con" :style="{width: shrink ? '60px' : '200px'}">
-            <img v-show="!shrink" :src="img_logo" key="max-logo" /> <img v-show="shrink" :src="img_mini_logo" key="min-logo" />
+            <img v-show="!shrink" :src="img_logo" key="max-logo" />
+            <img v-show="shrink" :src="img_mini_logo" key="min-logo" />
         </div>
         <div
             class="sidebar-menu-con"
@@ -34,7 +35,9 @@
                     </i-button>
                 </div>
                 <div class="header-middle-con">
-                    <div class="tags-con"><tags-page-opened :pageTagsList="pageTagsList"></tags-page-opened></div>
+                    <div class="tags-con">
+                        <tags-page-opened :pageTagsList="pageTagsList"></tags-page-opened>
+                    </div>
                 </div>
                 <div class="header-avator-con">
                     <i-menu mode="horizontal" theme="primary" class="pull-right">
@@ -90,12 +93,17 @@
         <div class="single-page-con" :style="{left: shrink ? '60px' : '200px'}">
             <div class="single-page">
                 <Row>
-                    <div class="main-breadcrumb"><breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav></div>
+                    <div class="main-breadcrumb">
+                        <breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>
+                    </div>
                 </Row>
-                <keep-alive :include="cachePage"> <router-view></router-view> </keep-alive>
+                <keep-alive :include="cachePage">
+                    <router-view></router-view>
+                </keep-alive>
             </div>
         </div>
-        <changePassword ref="changePassword" @logout="changePasswordLogout"></changePassword> <information ref="information"></information>
+        <changePassword ref="changePassword" @logout="changePasswordLogout"></changePassword>
+        <information ref="information"></information>
     </div>
 </template>
 

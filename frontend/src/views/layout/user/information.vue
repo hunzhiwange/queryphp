@@ -2,8 +2,12 @@
     <Modal v-model="dialogVisible" :title="__('账号设置')" width="500">
         <div>
             <i-form ref="form" :model="form" :rules="rules" :label-width="80">
-                <FormItem :label="__('邮箱')" prop="email"> <i-input v-model.trim="form.email" placeholder=""></i-input> </FormItem>
-                <FormItem :label="__('手机号')" prop="mobile"> <i-input v-model.number="form.mobile" placeholder=""></i-input> </FormItem>
+                <FormItem :label="__('邮箱')" prop="email">
+                    <i-input v-model.trim="form.email" placeholder=""></i-input>
+                </FormItem>
+                <FormItem :label="__('手机号')" prop="mobile">
+                    <i-input v-model.number="form.mobile" placeholder=""></i-input>
+                </FormItem>
             </i-form>
         </div>
         <div slot="footer">

@@ -1,5 +1,7 @@
 <template>
-    <div id="main" class="app-main"><router-view v-if="isRouterAlive"></router-view></div>
+    <div id="main" class="app-main">
+        <router-view v-if="isRouterAlive"></router-view>
+    </div>
 </template>
 
 <script>

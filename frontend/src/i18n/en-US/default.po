@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: QueryPHP-Vue default\n"
-"POT-Creation-Date: 2020-02-29 17:30+0800\n"
-"PO-Revision-Date: 2020-02-29 17:31+0800\n"
+"POT-Creation-Date: 2020-03-07 17:17+0800\n"
+"PO-Revision-Date: 2020-03-07 17:40+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -131,124 +131,84 @@ msgstr ""
 "Can only be chinese characters,alpha, numbers, short lines and underscores"
 
 #: src_utils_validate.js.tmp.i18n.js:9
-#, fuzzy
-#| msgid "请输入有效的手机号"
 msgid "请输入有效的身份证号码"
-msgstr "Please enter a valid cell phone number"
+msgstr "Please enter a valid ID card number"
 
 #: src_utils_validate.js.tmp.i18n.js:10
-#, fuzzy
-#| msgid "请输入有效的手机号"
 msgid "请输入有效的手机号码"
-msgstr "Please enter a valid cell phone number"
+msgstr "Please enter a valid phone number"
 
 #: src_utils_validate.js.tmp.i18n.js:11
-#, fuzzy
-#| msgid "请输入有效的手机号"
 msgid "请输入有效的电话号码"
-msgstr "Please enter a valid cell phone number"
+msgstr "Please enter a valid telephone number"
 
 #: src_utils_validate.js.tmp.i18n.js:12
-#, fuzzy
-#| msgid "请输入有效的手机号"
 msgid "请输入有效的电话或者手机号码"
-msgstr "Please enter a valid cell phone number"
+msgstr "Please enter a valid phone or telephone number"
 
 #: src_utils_validate.js.tmp.i18n.js:13
-#, fuzzy
-#| msgid "请输入有效的邮箱"
 msgid "请输入有效的邮政编码"
-msgstr "Please enter a valid mailbox"
+msgstr "Please enter a valid postal code"
 
 #: src_utils_validate.js.tmp.i18n.js:14
-#, fuzzy
-#| msgid "请输入有效的手机号"
 msgid "请输入有效的 QQ 号码"
-msgstr "Please enter a valid cell phone number"
+msgstr "Please enter a valid QQ number"
 
 #: src_utils_validate.js.tmp.i18n.js:15
-#, fuzzy
-#| msgid "请输入有效的邮箱"
 msgid "请输入有效的邮箱地址"
-msgstr "Please enter a valid mailbox"
+msgstr "Please enter a valid E-mail address"
 
 #: src_utils_validate.js.tmp.i18n.js:16
-#, fuzzy
-#| msgid "请输入有效的手机号"
 msgid "请输入有效的整数"
-msgstr "Please enter a valid cell phone number"
+msgstr "Please enter a valid integer"
 
 #: src_utils_validate.js.tmp.i18n.js:17
-#, fuzzy
-#| msgid "请输入有效的手机号"
 msgid "请输入有效的正整数"
-msgstr "Please enter a valid cell phone number"
+msgstr "Please enter a valid positive integer"
 
 #: src_utils_validate.js.tmp.i18n.js:18
-#, fuzzy
-#| msgid "请输入有效的手机号"
 msgid "请输入有效的负整数"
-msgstr "Please enter a valid cell phone number"
+msgstr "Please enter a valid negtive integer"
 
 #: src_utils_validate.js.tmp.i18n.js:19
-#, fuzzy
-#| msgid "请输入有效的手机号"
 msgid "请输入有效的数字"
-msgstr "Please enter a valid cell phone number"
+msgstr "Please enter a valid number"
 
 #: src_utils_validate.js.tmp.i18n.js:20
-#, fuzzy
-#| msgid "请输入有效的手机号"
 msgid "请输入有效的正数"
-msgstr "Please enter a valid cell phone number"
+msgstr "Please enter a valid positive number"
 
 #: src_utils_validate.js.tmp.i18n.js:21
-#, fuzzy
-#| msgid "请输入有效的邮箱"
 msgid "请输入有效的负数"
-msgstr "Please enter a valid mailbox"
+msgstr "Please enter a valid negative"
 
 #: src_utils_validate.js.tmp.i18n.js:22
-#, fuzzy
-#| msgid "请输入有效的手机号"
 msgid "请输入有效的 IP 地址"
-msgstr "Please enter a valid cell phone number"
+msgstr "Please enter a valid IP address"
 
 #: src_utils_validate.js.tmp.i18n.js:23
-#, fuzzy
-#| msgid "请输入有效的邮箱"
 msgid "请输入有效的 RGB 颜色"
-msgstr "Please enter a valid mailbox"
+msgstr "Please enter a valid RGB color"
 
 #: src_utils_validate.js.tmp.i18n.js:24
-#, fuzzy
-#| msgid "请输入有效的手机号"
 msgid "请输入有效的日期"
-msgstr "Please enter a valid cell phone number"
+msgstr "Please enter a valid date number"
 
 #: src_utils_validate.js.tmp.i18n.js:25
-#, fuzzy
-#| msgid "请输入有效的手机号"
 msgid "请输入有效的微信号"
-msgstr "Please enter a valid cell phone number"
+msgstr "Please enter a valid wechat number"
 
 #: src_utils_validate.js.tmp.i18n.js:26
-#, fuzzy
-#| msgid "请输入有效的手机号"
 msgid "请输入有效的中国车牌号"
-msgstr "Please enter a valid cell phone number"
+msgstr "Please enter a valid china license plate number"
 
 #: src_utils_validate.js.tmp.i18n.js:27 src_utils_validate.js.tmp.i18n.js:28
-#, fuzzy
-#| msgid "请输入有效的手机号"
 msgid "请输入有效的月份"
-msgstr "Please enter a valid cell phone number"
+msgstr "Please enter a valid month"
 
 #: src_utils_validate.js.tmp.i18n.js:29
-#, fuzzy
-#| msgid "请输入有效的邮箱"
 msgid "请输入有效的网址"
-msgstr "Please enter a valid mailbox"
+msgstr "Please enter a valid url"
 
 #: src_views_base_asserts_option.js.tmp.i18n.js:1
 msgid "请输入站点名字"
@@ -286,8 +246,8 @@ msgstr "Site status"
 #: src_views_role_index.vue.tmp.i18n.js:10
 #: src_views_role_search_assets_index.js.tmp.i18n.js:1
 #: src_views_user_assets_index.js.tmp.i18n.js:13
-#: src_views_user_index.vue.tmp.i18n.js:8
-#: src_views_user_index.vue.tmp.i18n.js:12
+#: src_views_user_index.vue.tmp.i18n.js:10
+#: src_views_user_index.vue.tmp.i18n.js:14
 #: src_views_user_search_assets_index.js.tmp.i18n.js:1
 msgid "启用"
 msgstr "Enabled"
@@ -300,9 +260,11 @@ msgstr "Close"
 #: src_views_layout_i18n-switch_index.vue.tmp.i18n.js:2
 #: src_views_layout_theme-switch_index.vue.tmp.i18n.js:2
 #: src_views_permission_index.vue.tmp.i18n.js:9
+#: src_views_permission_index.vue.tmp.i18n.js:17
 #: src_views_resource_index.vue.tmp.i18n.js:8
 #: src_views_role_index.vue.tmp.i18n.js:8
-#: src_views_user_index.vue.tmp.i18n.js:10
+#: src_views_role_index.vue.tmp.i18n.js:15
+#: src_views_user_index.vue.tmp.i18n.js:12
 msgid "确定"
 msgstr "Ok"
 
@@ -323,7 +285,7 @@ msgstr ""
 "Welcome to QueryVue single page universal extreme speed background "
 "development framework. This framework includes basic authentication, "
 "permissions and account management functions. Developers can quickly build "
-"their applications on this basis."
+"their applications on this basis。"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:5
 msgid "二次开发说明"
@@ -372,7 +334,7 @@ msgid ""
 msgstr ""
 "QueryVue hopes to provide you with a super backstage development "
 "infrastructure based on integration of Vue and QueryPHP to meet users' quick "
-"understanding and use of our products."
+"understanding and use of our products。"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:19
 msgid "感谢信"
@@ -385,7 +347,7 @@ msgid ""
 "腾飞。"
 msgstr ""
 "The basic framework here special thanks to %s,%s and %s open source, so that "
-"we can stand on the shoulders of giants off."
+"we can stand on the shoulders of giants off。"
 
 #: src_views_error-page_403.vue.tmp.i18n.js:1
 #: src_views_error-page_404.vue.tmp.i18n.js:1
@@ -459,9 +421,11 @@ msgstr "Unlock"
 #: src_views_layout_user_change_password.vue.tmp.i18n.js:5
 #: src_views_layout_user_information.vue.tmp.i18n.js:4
 #: src_views_permission_index.vue.tmp.i18n.js:10
+#: src_views_permission_index.vue.tmp.i18n.js:16
 #: src_views_resource_index.vue.tmp.i18n.js:9
 #: src_views_role_index.vue.tmp.i18n.js:9
-#: src_views_user_index.vue.tmp.i18n.js:11
+#: src_views_role_index.vue.tmp.i18n.js:14
+#: src_views_user_index.vue.tmp.i18n.js:13
 msgid "取消"
 msgstr "Cancel"
 
@@ -722,10 +686,8 @@ msgid "请输入权限名字"
 msgstr "Please enter a permission name"
 
 #: src_views_permission_assets_index.js.tmp.i18n.js:2
-#, fuzzy
-#| msgid "请输入权限名字"
 msgid "请输入权限编号"
-msgstr "Please enter a permission name"
+msgstr "Please enter a permission code"
 
 #: src_views_permission_assets_index.js.tmp.i18n.js:3
 #: src_views_permission_index.vue.tmp.i18n.js:11
@@ -744,16 +706,15 @@ msgstr "Edit"
 
 #: src_views_permission_assets_index.js.tmp.i18n.js:5
 #: src_views_role_assets_index.js.tmp.i18n.js:6
+#: src_views_role_index.vue.tmp.i18n.js:12
 msgid "授权"
 msgstr "Grant permission"
 
 #: src_views_permission_assets_index.js.tmp.i18n.js:7
 #: src_views_permission_assets_index.js.tmp.i18n.js:8
 #: src_views_permission_assets_index.js.tmp.i18n.js:9
-#, fuzzy
-#| msgid "新增权限"
 msgid "根权限"
-msgstr "Add permission"
+msgstr "Root permission"
 
 #: src_views_permission_assets_index.js.tmp.i18n.js:11
 msgid "确认删除该权限?"
@@ -784,7 +745,7 @@ msgstr "Parent permission"
 #: src_views_role_assets_index.js.tmp.i18n.js:3
 #: src_views_role_index.vue.tmp.i18n.js:5
 #: src_views_user_assets_index.js.tmp.i18n.js:4
-#: src_views_user_index.vue.tmp.i18n.js:7
+#: src_views_user_index.vue.tmp.i18n.js:9
 msgid "状态"
 msgstr "Status"
 
@@ -799,8 +760,8 @@ msgstr "Status"
 #: src_views_role_index.vue.tmp.i18n.js:11
 #: src_views_role_search_assets_index.js.tmp.i18n.js:2
 #: src_views_user_assets_index.js.tmp.i18n.js:14
-#: src_views_user_index.vue.tmp.i18n.js:9
-#: src_views_user_index.vue.tmp.i18n.js:13
+#: src_views_user_index.vue.tmp.i18n.js:11
+#: src_views_user_index.vue.tmp.i18n.js:15
 #: src_views_user_search_assets_index.js.tmp.i18n.js:2
 msgid "禁用"
 msgstr "Disabled"
@@ -831,6 +792,14 @@ msgstr "Name"
 msgid "编号"
 msgstr "Indentify"
 
+#: src_views_permission_index.vue.tmp.i18n.js:14
+msgid "资源授权"
+msgstr "Resource grant permission"
+
+#: src_views_permission_index.vue.tmp.i18n.js:15
+msgid "请输入资源关键字"
+msgstr "Please enter the resource keywords"
+
 #: src_views_resource_assets_index.js.tmp.i18n.js:4
 #: src_views_role_assets_index.js.tmp.i18n.js:4
 #: src_views_user_assets_index.js.tmp.i18n.js:5
@@ -842,10 +811,8 @@ msgid "请输入资源名字"
 msgstr "Please enter the resource name"
 
 #: src_views_resource_assets_index.js.tmp.i18n.js:8
-#, fuzzy
-#| msgid "请输入资源名字"
 msgid "请输入资源编号"
-msgstr "Please enter the resource name"
+msgstr "Please enter the resource code"
 
 #: src_views_resource_assets_index.js.tmp.i18n.js:10
 msgid "确认删除该资源?"
@@ -897,10 +864,8 @@ msgid "请输入角色名字"
 msgstr "Please enter the role name"
 
 #: src_views_role_assets_index.js.tmp.i18n.js:9
-#, fuzzy
-#| msgid "请输入角色名字"
 msgid "请输入角色编号"
-msgstr "Please enter the role name"
+msgstr "Please enter the role code"
 
 #: src_views_role_assets_index.js.tmp.i18n.js:11
 msgid "确认删除该角色?"
@@ -914,21 +879,21 @@ msgstr "Edit role"
 msgid "新增角色"
 msgstr "Add role"
 
+#: src_views_role_index.vue.tmp.i18n.js:13
+msgid "请选择权限"
+msgstr "Please select permission"
+
 #: src_views_user_assets_index.js.tmp.i18n.js:1
-#, fuzzy
-#| msgid "请输入用户名字"
 msgid "请输入用户密码"
-msgstr "Please enter user name"
+msgstr "Please enter user password"
 
 #: src_views_user_assets_index.js.tmp.i18n.js:8
 msgid "请输入用户名字"
 msgstr "Please enter user name"
 
 #: src_views_user_assets_index.js.tmp.i18n.js:9
-#, fuzzy
-#| msgid "请输入用户名字"
 msgid "请输入用户编号"
-msgstr "Please enter user name"
+msgstr "Please enter user code"
 
 #: src_views_user_assets_index.js.tmp.i18n.js:11
 msgid "确认删除该用户?"
@@ -943,6 +908,14 @@ msgid "新增用户"
 msgstr "Add user"
 
 #: src_views_user_index.vue.tmp.i18n.js:6
+msgid "不修改密码请留空"
+msgstr "Leave blank if you don’t change the password"
+
+#: src_views_user_index.vue.tmp.i18n.js:7
+msgid "密码不能为空"
+msgstr "Password cannot be empty"
+
+#: src_views_user_index.vue.tmp.i18n.js:8
 msgid "所属角色"
 msgstr "The role"
 

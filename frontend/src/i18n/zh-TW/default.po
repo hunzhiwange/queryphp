@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-29 17:27+0800\n"
-"PO-Revision-Date: 2020-02-29 17:30+0800\n"
+"POT-Creation-Date: 2020-03-07 17:11+0800\n"
+"PO-Revision-Date: 2020-03-07 17:14+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh_CN\n"
@@ -244,8 +244,8 @@ msgstr "網站狀態"
 #: src_views_role_index.vue.tmp.i18n.js:10
 #: src_views_role_search_assets_index.js.tmp.i18n.js:1
 #: src_views_user_assets_index.js.tmp.i18n.js:13
-#: src_views_user_index.vue.tmp.i18n.js:8
-#: src_views_user_index.vue.tmp.i18n.js:12
+#: src_views_user_index.vue.tmp.i18n.js:10
+#: src_views_user_index.vue.tmp.i18n.js:14
 #: src_views_user_search_assets_index.js.tmp.i18n.js:1
 msgid "启用"
 msgstr "啟用"
@@ -258,9 +258,11 @@ msgstr "關閉"
 #: src_views_layout_i18n-switch_index.vue.tmp.i18n.js:2
 #: src_views_layout_theme-switch_index.vue.tmp.i18n.js:2
 #: src_views_permission_index.vue.tmp.i18n.js:9
+#: src_views_permission_index.vue.tmp.i18n.js:17
 #: src_views_resource_index.vue.tmp.i18n.js:8
 #: src_views_role_index.vue.tmp.i18n.js:8
-#: src_views_user_index.vue.tmp.i18n.js:10
+#: src_views_role_index.vue.tmp.i18n.js:15
+#: src_views_user_index.vue.tmp.i18n.js:12
 msgid "确定"
 msgstr "確定"
 
@@ -414,9 +416,11 @@ msgstr "解鎖"
 #: src_views_layout_user_change_password.vue.tmp.i18n.js:5
 #: src_views_layout_user_information.vue.tmp.i18n.js:4
 #: src_views_permission_index.vue.tmp.i18n.js:10
+#: src_views_permission_index.vue.tmp.i18n.js:16
 #: src_views_resource_index.vue.tmp.i18n.js:9
 #: src_views_role_index.vue.tmp.i18n.js:9
-#: src_views_user_index.vue.tmp.i18n.js:11
+#: src_views_role_index.vue.tmp.i18n.js:14
+#: src_views_user_index.vue.tmp.i18n.js:13
 msgid "取消"
 msgstr "取消"
 
@@ -697,6 +701,7 @@ msgstr "編輯"
 
 #: src_views_permission_assets_index.js.tmp.i18n.js:5
 #: src_views_role_assets_index.js.tmp.i18n.js:6
+#: src_views_role_index.vue.tmp.i18n.js:12
 msgid "授权"
 msgstr "授權"
 
@@ -735,7 +740,7 @@ msgstr "上級許可權"
 #: src_views_role_assets_index.js.tmp.i18n.js:3
 #: src_views_role_index.vue.tmp.i18n.js:5
 #: src_views_user_assets_index.js.tmp.i18n.js:4
-#: src_views_user_index.vue.tmp.i18n.js:7
+#: src_views_user_index.vue.tmp.i18n.js:9
 msgid "状态"
 msgstr "狀態"
 
@@ -750,8 +755,8 @@ msgstr "狀態"
 #: src_views_role_index.vue.tmp.i18n.js:11
 #: src_views_role_search_assets_index.js.tmp.i18n.js:2
 #: src_views_user_assets_index.js.tmp.i18n.js:14
-#: src_views_user_index.vue.tmp.i18n.js:9
-#: src_views_user_index.vue.tmp.i18n.js:13
+#: src_views_user_index.vue.tmp.i18n.js:11
+#: src_views_user_index.vue.tmp.i18n.js:15
 #: src_views_user_search_assets_index.js.tmp.i18n.js:2
 msgid "禁用"
 msgstr "禁用"
@@ -781,6 +786,14 @@ msgstr "名字"
 #: src_views_user_search_index.vue.tmp.i18n.js:2
 msgid "编号"
 msgstr "編號"
+
+#: src_views_permission_index.vue.tmp.i18n.js:14
+msgid "资源授权"
+msgstr "資源授權"
+
+#: src_views_permission_index.vue.tmp.i18n.js:15
+msgid "请输入资源关键字"
+msgstr "請輸入資源關鍵字"
 
 #: src_views_resource_assets_index.js.tmp.i18n.js:4
 #: src_views_role_assets_index.js.tmp.i18n.js:4
@@ -861,6 +874,10 @@ msgstr "編輯角色"
 msgid "新增角色"
 msgstr "新增角色"
 
+#: src_views_role_index.vue.tmp.i18n.js:13
+msgid "请选择权限"
+msgstr "請選擇許可權"
+
 #: src_views_user_assets_index.js.tmp.i18n.js:1
 msgid "请输入用户密码"
 msgstr "請輸入使用者密碼"
@@ -886,6 +903,14 @@ msgid "新增用户"
 msgstr "新增用戶"
 
 #: src_views_user_index.vue.tmp.i18n.js:6
+msgid "不修改密码请留空"
+msgstr "不修改密碼請留空"
+
+#: src_views_user_index.vue.tmp.i18n.js:7
+msgid "密码不能为空"
+msgstr "密碼不能為空"
+
+#: src_views_user_index.vue.tmp.i18n.js:8
 msgid "所属角色"
 msgstr "所屬角色"
 

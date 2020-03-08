@@ -77,19 +77,31 @@ export default {
                     </span>
                     <span class="tree-item-operate">
                         <buttonGroup size="small" shape="circle">
-                            <i-button type="text" on-click={() => this.append(root, node, data)} disabled={!utils.permission('permission_add_button')}>
+                            <i-button
+                                type="text"
+                                on-click={() => this.append(root, node, data)}
+                                disabled={!utils.permission('permission_add_button')}>
                                 {this.__('新增')}
                             </i-button>
-                            <i-button type="text" on-click={() => this.edit(root, node, data)} disabled={!utils.permission('permission_edit_button')}>
+                            <i-button
+                                type="text"
+                                on-click={() => this.edit(root, node, data)}
+                                disabled={!utils.permission('permission_edit_button')}>
                                 {this.__('编辑')}
                             </i-button>
-                            <i-button type="text" onClick={() => this.resource(root, node, data)} disabled={!utils.permission('permission_resource_button')}>
+                            <i-button
+                                type="text"
+                                onClick={() => this.resource(root, node, data)}
+                                disabled={!utils.permission('permission_resource_button')}>
                                 {this.__('授权')}
                             </i-button>
                             <i-button
                                 type="text"
                                 onClick={() => this.remove(root, node, data)}
-                                disabled={(data.children && data.children.length > 0) || !utils.permission('permission_delete_button')}>
+                                disabled={
+                                    (data.children && data.children.length > 0) ||
+                                    !utils.permission('permission_delete_button')
+                                }>
                                 {this.__('删除')}
                             </i-button>
                         </buttonGroup>
@@ -218,7 +230,9 @@ export default {
             })
         },
         status(nodeData, status) {
-            this.apiPut('permission/enable/', nodeData.id, {status: status}).then(res => {
+            this.apiPut('permission/enable/', nodeData.id, {
+                status: status,
+            }).then(res => {
                 this.$set(nodeData, 'status', status)
                 utils.success(res.message)
             })

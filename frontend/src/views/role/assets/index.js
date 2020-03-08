@@ -57,13 +57,22 @@ export default {
                         return (
                             <div>
                                 <buttonGroup size="small" shape="circle">
-                                    <i-button type="text" onClick={() => this.edit(params)} disabled={!utils.permission('role_edit_button')}>
+                                    <i-button
+                                        type="text"
+                                        onClick={() => this.edit(params)}
+                                        disabled={!utils.permission('role_edit_button')}>
                                         {this.__('编辑')}
                                     </i-button>
-                                    <i-button type="text" onClick={() => this.permission(params)} disabled={!utils.permission('role_permission_button')}>
+                                    <i-button
+                                        type="text"
+                                        onClick={() => this.permission(params)}
+                                        disabled={!utils.permission('role_permission_button')}>
                                         {this.__('授权')}
                                     </i-button>
-                                    <i-button type="text" onClick={() => this.remove(params)} disabled={!utils.permission('role_delete_button')}>
+                                    <i-button
+                                        type="text"
+                                        onClick={() => this.remove(params)}
+                                        disabled={!utils.permission('role_delete_button')}>
                                         {this.__('删除')}
                                     </i-button>
                                 </buttonGroup>

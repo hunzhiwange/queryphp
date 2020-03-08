@@ -12,8 +12,20 @@
             <div class="unlock-input-con">
                 <div class="unlock-input-overflow-con">
                     <div class="unlock-overflow-body" :style="{right: inputLeft}">
-                        <input ref="inputEle" v-model="password" class="unlock-input" type="password" :placeholder="__('密码同登录密码')" />
-                        <i-button ref="unlockBtn" @mousedown="unlockMousedown" @mouseup="unlockMouseup" @click="handleUnlock" class="unlock-btn">
+                        <input
+                            ref="inputEle"
+                            v-model="password"
+                            class="unlock-input"
+                            type="password"
+                            :placeholder="__('密码同登录密码')"
+                        />
+                        <i-button
+                            ref="unlockBtn"
+                            @mousedown="unlockMousedown"
+                            @mouseup="unlockMouseup"
+                            @click="handleUnlock"
+                            class="unlock-btn"
+                        >
                             <Icon color="white" type="md-key"></Icon>
                         </i-button>
                     </div>
@@ -30,7 +42,10 @@
                             <Icon :type="inputLeft !== '0px' ? 'md-unlock' : 'md-lock'"></Icon>
                             {{ inputLeft !== '0px' ? __('解锁') : __('取消') }}</DropdownItem
                         >
-                        <DropdownItem name="logout"> <Icon type="md-log-out"></Icon> {{ __('退出') }}</DropdownItem>
+                        <DropdownItem name="logout">
+                            <Icon type="md-log-out"></Icon>
+                            {{ __('退出') }}</DropdownItem
+                        >
                     </DropdownMenu>
                 </Dropdown>
             </div>
