@@ -15,10 +15,8 @@ declare(strict_types=1);
 namespace Common\Domain\Service\Login;
 
 use Admin\Infra\Code;
-use Admin\Infra\Permission;
 use Common\Domain\Entity\Base\App;
 use Common\Domain\Entity\User\User;
-use Common\Domain\Service\User\User\UserPermission;
 use Common\Infra\Exception\BusinessException;
 use Leevel\Auth\Hash;
 use Leevel\Auth\Proxy\Auth;
@@ -47,26 +45,10 @@ class Validate
      */
     private string $secret;
 
-    /**
-     * 权限缓存.
-     *
-     * @var \Admin\Infra\Permission
-     */
-    private Permission $permissionCache;
-
-    /**
-     * 获取用户权限.
-     *
-     * @var \Common\Domain\Service\User\User\UserPermission
-     */
-    private UserPermission $permission;
-
-    public function __construct(Request $request, Code $code, Permission $permissionCache, UserPermission $permission)
+    public function __construct(Request $request, Code $code)
     {
         $this->request = $request;
         $this->code = $code;
-        $this->permissionCache = $permissionCache;
-        $this->permission = $permission;
     }
 
     public function handle(array $input): array
