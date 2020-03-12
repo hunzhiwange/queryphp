@@ -14,8 +14,15 @@ declare(strict_types=1);
 
 namespace Common\Infra\Provider;
 
+use Admin\App\Middleware\Auth as AdminAuth;
+use Admin\App\Middleware\Cors;
+use Leevel\Auth\Middleware\Auth;
+use Leevel\Debug\Middleware\Debug;
 use Leevel\Di\IContainer;
+use Leevel\Log\Middleware\Log;
 use Leevel\Router\RouterProvider;
+use Leevel\Session\Middleware\Session;
+use Leevel\Throttler\Middleware\Throttler;
 
 /**
  * 路由服务提供者.
@@ -63,13 +70,13 @@ class Router extends RouterProvider
      * @var array
      */
     protected array $middlewareAlias = [
-        'auth'              => 'Leevel\\Auth\\Middleware\\Auth',
-        'cors'              => 'Admin\\App\\Middleware\\Cors',
-        'admin_auth'        => 'Admin\\App\\Middleware\\Auth',
-        'debug'             => 'Leevel\\Debug\\Middleware\\Debug',
-        'log'               => 'Leevel\\Log\\Middleware\\Log',
-        'session'           => 'Leevel\\Session\\Middleware\\Session',
-        'throttler'         => 'Leevel\\Throttler\\Middleware\\Throttler',
+        'auth'              => Auth::class,
+        'cors'              => Cors::class,
+        'admin_auth'        => AdminAuth::class,
+        'debug'             => Debug::class,
+        'log'               => Log::class,
+        'session'           => Session::class,
+        'throttler'         => Throttler::class,
     ];
 
     /**
