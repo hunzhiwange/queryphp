@@ -52,7 +52,7 @@ class Router extends RouterProvider
         // api 请求中间件
         'api' => [
             // API 限流，可以通过网关来做限流更高效，如果需要去掉注释即可
-            // 'throttler:60,1',
+            // 'throttler:60,60',
         ],
 
         // 公共请求中间件
