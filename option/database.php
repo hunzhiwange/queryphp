@@ -74,6 +74,7 @@ return [
             // 分布式服务部署模式中，附属服务器列表
             'slave' => [],
         ],
+
         'mysqlPool' => [
             // driver
             'driver' => 'mysqlPool',

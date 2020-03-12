@@ -63,6 +63,7 @@ return [
             // 默认过期时间
             'expire' => null,
         ],
+
         'redis' => [
             // driver
             'driver' => 'redis',
@@ -88,6 +89,7 @@ return [
             // 默认过期时间
             'expire' => null,
         ],
+
         'redisPool' => [
             // driver
             'driver' => 'redisPool',
@@ -113,6 +115,7 @@ return [
             // 最大尝试次数
             'retry_times' => 3,
         ],
+
         'file_throttler' => [
             // driver
             'driver' => 'file',
@@ -123,6 +126,7 @@ return [
             // 默认过期时间
             'expire' => null,
         ],
+
         'redis_throttler' => [
             // driver
             'driver' => 'redis',
