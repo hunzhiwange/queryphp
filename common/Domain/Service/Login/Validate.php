@@ -122,7 +122,6 @@ class Validate
             ->where('status', '1')
             ->where('name', $this->input['name'])
             ->findOne();
-
         if (!$user->id) {
             throw new BusinessException(__('账号不存在或者已禁用'));
         }
@@ -150,7 +149,6 @@ class Validate
     private function validateCode()
     {
         $codeFromCache = $this->code->get($this->input['name']);
-
         if (false === $codeFromCache) {
             return false;
         }
