@@ -63,7 +63,6 @@ return [
             // 默认过期时间
             'expire' => null,
         ],
-
         'redis' => [
             // driver
             'driver' => 'redis',
@@ -113,6 +112,41 @@ return [
 
             // 最大尝试次数
             'retry_times' => 3,
+        ],
+        'file_throttler' => [
+            // driver
+            'driver' => 'file',
+
+            // 文件缓存路径
+            'path' => Leevel::runtimePath('throttler'),
+
+            // 默认过期时间
+            'expire' => null,
+        ],
+        'redis_throttler' => [
+            // driver
+            'driver' => 'redis',
+
+            // 默认缓存服务器
+            'host' => Leevel::env('THROTTLER_REDIS_HOST', '127.0.0.1'),
+
+            // 默认缓存服务器端口
+            'port' => (int) Leevel::env('THROTTLER_REDIS_PORT', 6379),
+
+            // 认证密码
+            'password' => Leevel::env('THROTTLER_REDIS_PASSWORD', ''),
+
+            // redis 数据库索引
+            'select' => 0,
+
+            // 超时设置
+            'timeout' => 0,
+
+            // 是否使用持久连接
+            'persistent' => false,
+
+            // 默认过期时间
+            'expire' => null,
         ],
     ],
 ];
