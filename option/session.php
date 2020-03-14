@@ -42,15 +42,6 @@ return [
 
     /*
      * ---------------------------------------------------------------
-     * expire
-     * ---------------------------------------------------------------
-     *
-     * 默认过期时间
-     */
-    'expire' => 86400,
-
-    /*
-     * ---------------------------------------------------------------
      * session 驱动连接参数
      * ---------------------------------------------------------------
      *
@@ -62,37 +53,16 @@ return [
             // driver
             'driver' => 'file',
 
-            // 文件缓存路径
-            'path' => Leevel::runtimePath('session'),
-
-            // 默认过期时间
-            'expire' => null,
+            // 文件缓存驱动
+            'file_driver' => Leevel::env('SESSION_FILE_DRIVER', 'file_session'),
         ],
 
         'redis' => [
             // driver
             'driver' => 'redis',
 
-            // 默认缓存服务器
-            'host' => Leevel::env('SESSION_REDIS_HOST', '127.0.0.1'),
-
-            // 默认缓存服务器端口
-            'port' => (int) Leevel::env('SESSION_REDIS_PORT', 6379),
-
-            // 认证密码
-            'password' => Leevel::env('SESSION_REDIS_PASSWORD', ''),
-
-            // redis 数据库索引
-            'select' => 0,
-
-            // 超时设置
-            'timeout' => 0,
-
-            // 是否使用持久连接
-            'persistent' => false,
-
-            // 默认过期时间
-            'expire' => null,
+            // Redis 缓存驱动
+            'redis_driver' => Leevel::env('SESSION_REDIS_DRIVER', 'redis_session'),
         ],
 
         'test' => [
