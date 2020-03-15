@@ -127,7 +127,7 @@
         <div class="login-footer">
             <div class="login-inner">
                 <div>
-                    © 2019
+                    © 2020
                     <a href="https://www.queryphp.com">QueryPHP.COM</a> All rights reserved.
                 </div>
             </div>
