@@ -61,14 +61,11 @@ class UserPermission
     private function parsePermission(User $user): array
     {
         $data = [];
-        $roles = $user->role;
-        if (\count($roles) > 0) {
+        if (\count($roles = $user->role) > 0) {
             foreach ($roles as $r) {
-                $permissions = $r->permission;
-                if (\count($permissions) > 0) {
+                if (\count($permissions = $r->permission) > 0) {
                     foreach ($permissions as $p) {
-                        $resources = $p->resource;
-                        if (\count($resources) > 0) {
+                        if (\count($resources = $p->resource) > 0) {
                             $resourceData = array_unique(array_column($resources->toArray(), 'num'));
                             $data = array_merge($data, $resourceData);
                         }
