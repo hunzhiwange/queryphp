@@ -83,6 +83,8 @@ class PhinxLoad
 
     /**
      * 载入运行时环境变量.
+     *
+     * @throws \RuntimeException
      */
     private function checkRuntimeEnv(IApp $app)
     {
