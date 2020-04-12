@@ -1,9 +1,8 @@
 parameters:
-    level: 0
+    level: 8
     paths:
         - application 
         - common
-        - tests
     autoload_files:
     excludes_analyse:
     bootstrap: %currentWorkingDirectory%/phpstan-bootstrap.php

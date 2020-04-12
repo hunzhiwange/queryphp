@@ -71,7 +71,8 @@ export default {
                     <span
                         class="tree-item-title"
                         style={{
-                            textDecoration: 'T' === data.rule ? 'none' : '',
+                            textDecoration: data.status ? 'none' : 'line-through',
+                            color: data.status ? '' : '#c5c8ce',
                         }}>
                         {data.name}
                     </span>

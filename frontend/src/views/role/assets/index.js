@@ -301,13 +301,13 @@ export default {
             })
         },
         renderContent(h, {root, node, data}) {
-            const status = data.status == 'enable'
             return (
                 <span class="tree-item" style="display: inline-block; width: 100%;">
                     <span
                         class="tree-item-title"
                         style={{
-                            textDecoration: data.rule == 'T' ? 'none' : '2line-through',
+                            textDecoration: data.status ? 'none' : 'line-through',
+                            color: data.status ? '' : '#c5c8ce',
                         }}>
                         {data.name}
                     </span>

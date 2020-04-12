@@ -104,7 +104,7 @@
                                     :key="r.id"
                                     :label="r.name"
                                 >
-                                    <span>{{ r.name }}</span>
+                                    <span :class="r.status ? '' : 'item-removed'">{{ r.name }}</span>
                                     <span class="resource-text">{{ r.num }}</span>
                                 </i-option>
                             </i-select>
