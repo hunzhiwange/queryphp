@@ -33,9 +33,8 @@ class UserPermission
     {
         $user = $this->findUser((int) $input['user_id']);
         $data = $this->parsePermission($user);
-        $data = $this->normalizePermission($data);
 
-        return $data;
+        return $this->normalizePermission($data);
     }
 
     /**
@@ -85,6 +84,7 @@ class UserPermission
         return $this->w
             ->repository(User::class)
             ->eager(['role.permission.resource'])
+            ->where('status', 1)
             ->findOrFail($id);
     }
 }

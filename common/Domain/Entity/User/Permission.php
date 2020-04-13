@@ -16,6 +16,7 @@ namespace Common\Domain\Entity\User;
 
 use Common\Infra\Repository\User\Permission as RepositoryPermission;
 use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\Relation\ManyMany;
 
 /**
  * 权限.
@@ -106,12 +107,13 @@ class Permission extends Entity
             self::SHOW_PROP_BLACK => true,
         ],
         'resource'      => [
-            self::MANY_MANY         => Resource::class,
-            self::MIDDLE_ENTITY     => PermissionResource::class,
-            self::SOURCE_KEY        => 'id',
-            self::TARGET_KEY        => 'id',
-            self::MIDDLE_SOURCE_KEY => 'permission_id',
-            self::MIDDLE_TARGET_KEY => 'resource_id',
+            self::MANY_MANY              => Resource::class,
+            self::MIDDLE_ENTITY          => PermissionResource::class,
+            self::SOURCE_KEY             => 'id',
+            self::TARGET_KEY             => 'id',
+            self::MIDDLE_SOURCE_KEY      => 'permission_id',
+            self::MIDDLE_TARGET_KEY      => 'resource_id',
+            self::RELATION_SCOPE         => 'resource',
         ],
     ];
 
@@ -187,5 +189,15 @@ class Permission extends Entity
     public static function connect(): ?string
     {
         return static::$connect;
+    }
+
+    /**
+     * 资源关联查询作用域.
+     */
+    protected function relationScopeResource(ManyMany $relation): void
+    {
+        $relation
+            ->where('status', 1)
+            ->setColumns(['id', 'name', 'num']);
     }
 }

@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Common\Domain\Entity\User;
 
 use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\Relation\ManyMany;
 
 /**
  * 角色.
@@ -100,12 +101,13 @@ class Role extends Entity
             self::SHOW_PROP_BLACK => true,
         ],
         'permission'      => [
-            self::MANY_MANY         => Permission::class,
-            self::MIDDLE_ENTITY     => RolePermission::class,
-            self::SOURCE_KEY        => 'id',
-            self::TARGET_KEY        => 'id',
-            self::MIDDLE_SOURCE_KEY => 'role_id',
-            self::MIDDLE_TARGET_KEY => 'permission_id',
+            self::MANY_MANY              => Permission::class,
+            self::MIDDLE_ENTITY          => RolePermission::class,
+            self::SOURCE_KEY             => 'id',
+            self::TARGET_KEY             => 'id',
+            self::MIDDLE_SOURCE_KEY      => 'role_id',
+            self::MIDDLE_TARGET_KEY      => 'permission_id',
+            self::RELATION_SCOPE         => 'permission',
         ],
     ];
 
@@ -174,5 +176,15 @@ class Role extends Entity
     public static function connect(): ?string
     {
         return static::$connect;
+    }
+
+    /**
+     * 权限关联查询作用域.
+     */
+    protected function relationScopePermission(ManyMany $relation): void
+    {
+        $relation
+            ->where('status', 1)
+            ->setColumns(['id', 'name']);
     }
 }
