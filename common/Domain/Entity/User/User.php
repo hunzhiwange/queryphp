@@ -199,6 +199,8 @@ class User extends Entity
      */
     protected function relationScopeRole(ManyMany $relation): void
     {
-        $relation->setColumns(['id', 'name']);
+        $relation
+            ->where('status', 1)
+            ->setColumns(['id', 'name']);
     }
 }
