@@ -130,6 +130,7 @@ util.setCurrentPath = function(vm, name) {
         })[0]
 
         let currentSubPathObj
+        let currentFirstLevelPathObj
 
         if (!currentPathObj) {
             let i = 0
@@ -148,6 +149,7 @@ util.setCurrentPath = function(vm, name) {
                             if (subChildArr[n].name === name) {
                                 currentPathObj = childArr[m]
                                 currentSubPathObj = subChildArr[n]
+                                currentFirstLevelPathObj = routerArr[i]
                                 break outer
                             }
                             n++
@@ -167,24 +169,25 @@ util.setCurrentPath = function(vm, name) {
                 util.handleItem(vm, currentPathObj),
             ]
         } else {
-            let childObj = currentPathObj.children.filter(child => {
-                return child.name === name
-            })[0]
+            currentPathArr = [util.handleItem(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'dashboard'))]
 
-            let parent = util.handleItem(vm, currentPathObj)
-            let childFirst = util.handleItem(vm, currentPathObj.children[0])
-            parent.name = childFirst.name
-            parent.path = childFirst.path
-
-            currentPathArr = [
-                util.handleItem(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'dashboard')),
-                parent,
-            ]
+            if (currentFirstLevelPathObj) {
+                currentPathArr.push(util.handleItem(vm, currentFirstLevelPathObj))
+            } else {
+                let parent = util.handleItem(vm, currentPathObj)
+                let childFirst = util.handleItem(vm, currentPathObj.children[0])
+                parent.name = childFirst.name
+                parent.path = childFirst.path
+                currentPathArr.push(parent)
+            }
 
             if (currentSubPathObj) {
                 currentPathArr.push(util.handleItem(vm, currentPathObj))
                 currentPathArr.push(util.handleItem(vm, currentSubPathObj))
             } else {
+                let childObj = currentPathObj.children.filter(child => {
+                    return child.name === name
+                })[0]
                 currentPathArr.push(util.handleItem(vm, childObj))
             }
         }
