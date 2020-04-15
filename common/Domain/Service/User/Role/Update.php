@@ -34,7 +34,7 @@ class Update
         'validateInput',
     ];
 
-    private $allowedInput = [
+    private array $allowedInput = [
         'id',
         'name',
         'num',

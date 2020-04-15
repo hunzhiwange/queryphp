@@ -38,7 +38,7 @@ class Index
         'filterInput',
     ];
 
-    private $allowedInput = [
+    private array $allowedInput = [
         'key',
         'status',
         'page',

@@ -63,7 +63,7 @@ class Unlock
     /**
      * 解锁.
      */
-    private function unlock()
+    private function unlock(): void
     {
         $this->lock->delete($this->input['token']);
     }
@@ -103,7 +103,7 @@ class Unlock
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    private function validateArgs()
+    private function validateArgs(): void
     {
         $validator = Validates::make(
             $this->input,

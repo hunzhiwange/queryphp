@@ -105,8 +105,6 @@ class Resource
 
     /**
      * 创建授权实体.
-     *
-     * @return \Common\Domain\Entity\EntityPermissionResource
      */
     private function entityPermissionResource(int $permissionId, int $resourceId): EntityPermissionResource
     {

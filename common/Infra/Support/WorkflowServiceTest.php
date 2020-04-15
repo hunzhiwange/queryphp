@@ -145,7 +145,7 @@ class WorkflowService1
         'allowedInput',
     ];
 
-    private $allowedInput = [
+    private array $allowedInput = [
         'foo',
     ];
 
