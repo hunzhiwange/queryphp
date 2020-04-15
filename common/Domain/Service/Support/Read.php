@@ -27,7 +27,7 @@ trait Read
     /**
      * 预处理.
      */
-    private function prepare(array &$data, array $input)
+    private function prepare(array &$data, array $input): void
     {
         if (!$data) {
             return;
@@ -44,7 +44,7 @@ trait Read
     /**
      * 查询规约条件.
      */
-    private function spec(Select $select, array $input)
+    private function spec(Select $select, array $input): void
     {
         foreach ($input as $k => $v) {
             if (null !== $v) {

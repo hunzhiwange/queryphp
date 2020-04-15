@@ -137,7 +137,7 @@ class ChangePassword
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    private function validateArgs()
+    private function validateArgs(): void
     {
         $validator = Validates::make(
             $this->input,

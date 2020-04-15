@@ -45,7 +45,7 @@ trait Destroy
     /**
      * 删除实体.
      */
-    private function remove(Entity $entity)
+    private function remove(Entity $entity): void
     {
         $this->w
             ->persist($entity)

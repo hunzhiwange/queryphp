@@ -115,7 +115,6 @@ export default {
             this.currentParentData = nodeData
             this.formItem.id = nodeData.id
             this.nodeRoot = root
-
             let data = {}
             Object.keys(this.formItem).forEach(item => {
                 if (item == 'pid') {
@@ -396,6 +395,9 @@ export default {
                 res => {
                     const parentKey = this.formItem.pid[this.formItem.pid.length - 1]
                     const oldParentKey = this.oldEditPid[this.oldEditPid.length - 1]
+
+                    this.$set(this.currentParentData, 'status', this.formItem.status)
+                    this.$set(this.currentParentData, 'num', this.formItem.status)
 
                     if (parentKey === oldParentKey) {
                         this.$set(this.currentParentData, 'name', this.formItem.name)

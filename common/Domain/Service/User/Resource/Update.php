@@ -92,7 +92,7 @@ class Update
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    private function validateArgs()
+    private function validateArgs(): void
     {
         $validator = Validate::make(
             $this->input,

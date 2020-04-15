@@ -1,10 +1,25 @@
 parameters:
     level: 8
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
     paths:
         - application 
         - common
     autoload_files:
     excludes_analyse:
+        - %currentWorkingDirectory%/common/ui/exception/layout.php
+        - %currentWorkingDirectory%/*Test.php
     bootstrap: %currentWorkingDirectory%/phpstan-bootstrap.php
     ignoreErrors:
-        - '#[a-zA-Z0-9_]+::__construct\(\) does not call parent constructor from [a-zA-Z0-9_]+.#'
+        - '#Call to an undefined method [\S\s]+::validateInputRules\(\)\.#'
+        - '#Parameter \#1 \$message of class Common\\Infra\\Exception\\BusinessException constructor expects string|null, string|false given\.#'
+        - '#Call to an undefined static method [\S\s]+::Where\(\)\.#'
+        - '#Call to an undefined method [\S\s]+::filterInputRules\(\)\.#'
+        - '#Access to an undefined property [\S\s]+::\$allowedInput\.#'
+        - '#Access to an undefined property [\S\s]+::\$workflow\.#'
+        - '#but returns Leevel\\Database\\Ddd\\Entity\.#'
+        - '#Access to an undefined property Common\\Domain\\Entity\\[\S\s]+::\$[a-zA-Z]+\.#'
+        - 
+            message: '#Call to an undefined static method Common\\Infra\\Proxy\\Permission::handle\(\)\.#'
+            paths:
+                - common/Infra/functions.php

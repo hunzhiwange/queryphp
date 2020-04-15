@@ -29,6 +29,8 @@ use Leevel\Validate\Proxy\Validate as Validates;
  */
 class Validate
 {
+    private Request $request;
+
     /**
      * 验证码存储.
      *
@@ -163,7 +165,7 @@ class Validate
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    private function validateArgs()
+    private function validateArgs(): void
     {
         $validator = Validates::make(
             $this->input,

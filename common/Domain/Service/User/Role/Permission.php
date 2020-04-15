@@ -101,8 +101,6 @@ class Permission
 
     /**
      * 创建授权实体.
-     *
-     * @return \Common\Domain\Entity\EntityRolePermission
      */
     private function entityRolePermission(int $roleId, int $permissionId): EntityRolePermission
     {

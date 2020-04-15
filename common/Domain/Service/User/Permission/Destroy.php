@@ -48,7 +48,9 @@ class Destroy
      */
     private function checkChildren(int $id): void
     {
-        if ($this->w->repository(Permission::class)->hasChildren($id)) {
+        /** @var \Common\Infra\Repository\User\Permission $permissionRepository */
+        $permissionRepository = $this->w->repository(Permission::class);
+        if ($permissionRepository->hasChildren($id)) {
             $e = __('权限包含子项，请先删除子项.');
 
             throw new BusinessException($e);

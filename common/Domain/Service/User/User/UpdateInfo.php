@@ -94,7 +94,7 @@ class UpdateInfo
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    private function validateArgs()
+    private function validateArgs(): void
     {
         $input = $this->filterEmptyStringInput($this->input);
 

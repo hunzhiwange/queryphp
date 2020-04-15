@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\User;
 
 use Admin\Infra\Lock as CacheLock;
+use Common\Infra\Exception\BusinessException;
 use Leevel\Validate\Proxy\Validate as Validates;
 
 /**
@@ -48,7 +49,7 @@ class Lock
     /**
      * 锁定.
      */
-    private function lock()
+    private function lock(): void
     {
         $this->lock->set($this->input['token']);
     }
@@ -58,7 +59,7 @@ class Lock
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    private function validateArgs()
+    private function validateArgs(): void
     {
         $validator = Validates::make(
             $this->input,
