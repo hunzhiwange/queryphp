@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Infra\Proxy;
 
-use Admin\Infra\Permission as AuthPermisson;
+use Admin\Infra\Permission as AdminPermisson;
 use Leevel\Di\Container;
 
 /**
@@ -35,7 +35,7 @@ class Permission
     /**
      * 代理服务.
      */
-    public static function proxy(): AuthPermisson
+    public static function proxy(): AdminPermisson
     {
         return Container::singletons()->make('permission');
     }
