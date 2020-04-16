@@ -12,27 +12,28 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Listener;
+namespace Admin\Infra;
+
+use Leevel\Cache\Proxy\Cache;
 
 /**
- * test2 监听器.
+ * 权限缓存.
  */
-class Test2 extends Listener
+class PermissionCache
 {
     /**
-     * 构造函数.
-     *
-     * - 支持依赖注入.
+     * 设置权限.
      */
-    public function __construct()
+    public function set(string $id, array $permission): void
     {
+        Cache::set('permission_'.$id, $permission);
     }
 
     /**
-     * 监听器响应.
+     * 获取权限.
      */
-    public function handle(): void
+    public function get(string $id): array
     {
-        echo 'test2';
+        return Cache::get('permission_'.$id) ?: ['static' => [], 'dynamic' => []];
     }
 }

@@ -45,7 +45,7 @@ class User
      *     )
      * )
      */
-    public function createUser()
+    public function createUser(): void
     {
     }
 
@@ -64,7 +64,7 @@ class User
      *     )
      * )
      */
-    public function createUsersWithListInput()
+    public function createUsersWithListInput(): void
     {
     }
 
@@ -129,7 +129,7 @@ class User
      *     )
      * )
      */
-    public function loginUser()
+    public function loginUser(): void
     {
     }
 
@@ -145,7 +145,7 @@ class User
      *     )
      * )
      */
-    public function logoutUser()
+    public function logoutUser(): void
     {
     }
 
@@ -188,7 +188,7 @@ class User
      *     ),
      * )
      */
-    public function getUserByName()
+    public function getUserByName(): void
     {
     }
 
@@ -227,7 +227,7 @@ class User
      *     )
      * )
      */
-    public function updateUser()
+    public function updateUser(): void
     {
     }
 
@@ -256,7 +256,7 @@ class User
      *     )
      * )
      */
-    public function deleteUser()
+    public function deleteUser(): void
     {
     }
 }

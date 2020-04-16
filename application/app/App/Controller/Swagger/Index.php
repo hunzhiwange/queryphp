@@ -40,7 +40,7 @@ class Index
         // 关闭警告
         $this->forceCloseDebug();
 
-        return json_encode($openApi);
+        return json_encode($openApi) ?: '';
     }
 
     /**

@@ -17,6 +17,7 @@ namespace Common\App;
 use Exception;
 use Leevel;
 use Leevel\Http\Request;
+use Leevel\Kernel\Exception\HttpException;
 use Leevel\Kernel\ExceptionRuntime as BaseExceptionRuntime;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -44,7 +45,7 @@ class ExceptionRuntime extends BaseExceptionRuntime
     /**
      * 获取 HTTP 状态的异常模板.
      */
-    public function getHttpExceptionView(Exception $e): string
+    public function getHttpExceptionView(HttpException $e): string
     {
         return Leevel::commonPath('ui/exception/'.$e->getStatusCode().'.php');
     }

@@ -19,7 +19,5 @@ parameters:
         - '#Access to an undefined property [\S\s]+::\$workflow\.#'
         - '#but returns Leevel\\Database\\Ddd\\Entity\.#'
         - '#Access to an undefined property Common\\Domain\\Entity\\[\S\s]+::\$[a-zA-Z]+\.#'
-        - 
-            message: '#Call to an undefined static method Common\\Infra\\Proxy\\Permission::handle\(\)\.#'
-            paths:
-                - common/Infra/functions.php
+        - '#Call to an undefined static method Common\\Infra\\Proxy\\Permission::handle\(\)\.#'
+        - '#Call to an undefined method object::handle\(\)\.#'

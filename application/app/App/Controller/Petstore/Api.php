@@ -50,7 +50,7 @@ class Api
      *
      * @param mixed $petId
      */
-    public function petLeevelForApi($petId)
+    public function petLeevelForApi($petId): string
     {
         return sprintf('Hi you,i am petLeevelForApi and it petId is %s', $petId);
     }
@@ -80,7 +80,7 @@ class Api
      *     }
      * )
      */
-    public function petLeevelV2ForApi()
+    public function petLeevelV2ForApi(): void
     {
     }
 
@@ -110,7 +110,7 @@ class Api
      *     leevelIgnore=true
      * )
      */
-    public function petLeevelIgnoreForApi()
+    public function petLeevelIgnoreForApi(): void
     {
     }
 }

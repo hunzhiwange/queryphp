@@ -36,7 +36,7 @@ class Code
         if (!function_exists('imagettftext')) {
             header('Content-Type: image/png;text/html; charset=utf-8');
 
-            return file_get_contents(Leevel::publicPath('images/code.png'));
+            return file_get_contents(Leevel::publicPath('images/code.png')) ?: '';
         }
 
         $seccode = new Seccode([
@@ -47,8 +47,8 @@ class Code
 
         ob_start();
         $seccode->display(4);
-        $this->code->set($input['id'], $seccode->getCode());
-        $content = ob_get_contents();
+        $this->code->set($input['id'], (string) $seccode->getCode());
+        $content = ob_get_contents() ?: '';
         ob_end_clean();
 
         return $content;

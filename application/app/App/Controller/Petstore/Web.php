@@ -139,7 +139,7 @@ class Web
      *     leevelIgnore=true
      * )
      */
-    public function petLeevelIgnoreForWeb()
+    public function petLeevelIgnoreForWeb(): void
     {
     }
 }

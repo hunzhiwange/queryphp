@@ -23,7 +23,7 @@ use Leevel\Router\IRouter;
  */
 class Store
 {
-    public function handle()
+    public function handle(): string
     {
         return 'hello for restful '.IRouter::RESTFUL_STORE;
     }
