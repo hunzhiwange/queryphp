@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Domain\Service\User\User;
 
-use Admin\Infra\Permission as PermissionCache;
+use Admin\Infra\PermissionCache;
 
 /**
  * 用户权限数据.
@@ -24,16 +24,16 @@ class Permission
     /**
      * 权限缓存.
      *
-     * @var \Admin\Infra\Permission
+     * @var \Admin\Infra\PermissionCache
      */
-    private $permissionCache;
+    private PermissionCache $permissionCache;
 
     /**
      * 获取用户权限.
      *
      * @var \Common\Domain\Service\User\User\UserPermission
      */
-    private $permission;
+    private UserPermission $permission;
 
     /**
      * 构造函数.

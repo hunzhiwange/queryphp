@@ -114,9 +114,9 @@ class BaseWaitGroup
     /**
      * 通道.
      *
-     * @var \Swoole\Coroutine\Channel[]
+     * @var \Swoole\Coroutine\Channel
      */
-    private $chan;
+    private Channel $chan;
 
     public function __construct()
     {

@@ -23,7 +23,7 @@ use Leevel\Router\IRouter;
  */
 class Index
 {
-    public function handle()
+    public function handle(): string
     {
         return 'hello for restful '.IRouter::RESTFUL_INDEX;
     }

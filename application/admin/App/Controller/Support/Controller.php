@@ -24,10 +24,8 @@ trait Controller
 {
     /**
      * 调用服务.
-     *
-     * @param object $service
      */
-    private function main(Request $request, $service): array
+    private function main(Request $request, object $service): array
     {
         return $service->handle($this->input($request));
     }

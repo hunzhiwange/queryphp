@@ -48,7 +48,7 @@ class Store
      *     }
      * )
      */
-    public function getInventory()
+    public function getInventory(): void
     {
     }
 
@@ -86,7 +86,7 @@ class Store
      *     )
      * )
      */
-    public function placeOrder()
+    public function placeOrder(): void
     {
     }
 
@@ -136,7 +136,7 @@ class Store
      *     )
      * )
      */
-    public function getOrderById()
+    public function getOrderById(): void
     {
     }
 
@@ -170,7 +170,7 @@ class Store
      *     )
      * ),
      */
-    public function deleteOrder()
+    public function deleteOrder(): void
     {
     }
 }

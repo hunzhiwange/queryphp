@@ -31,7 +31,7 @@ class Test3 extends Listener
     /**
      * 监听器响应.
      */
-    public function handle()
+    public function handle(): void
     {
         echo 'test3';
     }

@@ -21,7 +21,7 @@ use Leevel\Auth\Proxy\Auth;
  */
 class Logout
 {
-    public function handle()
+    public function handle(): void
     {
         Auth::logout();
     }

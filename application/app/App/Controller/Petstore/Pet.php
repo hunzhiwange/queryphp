@@ -52,7 +52,7 @@ class Pet
      *
      * @param mixed $petId
      */
-    public function withBind($petId)
+    public function withBind($petId): string
     {
         return sprintf('Hi you,i am withBind and it petId is %s', $petId);
     }
@@ -87,7 +87,7 @@ class Pet
      *     leevelMiddlewares="api"
      * )
      */
-    public function petLeevel()
+    public function petLeevel(): void
     {
     }
 
@@ -117,7 +117,7 @@ class Pet
      *     leevelIgnore=true
      * )
      */
-    public function petLeevelIgnore()
+    public function petLeevelIgnore(): void
     {
     }
 
@@ -137,7 +137,7 @@ class Pet
      *     requestBody={"$ref": "#/components/requestBodies/Pet"}
      * )
      */
-    public function addPet()
+    public function addPet(): void
     {
     }
 
@@ -165,7 +165,7 @@ class Pet
      *     requestBody={"$ref": "#/components/requestBodies/Pet"}
      * )
      */
-    public function updatePet()
+    public function updatePet(): void
     {
     }
 
@@ -223,7 +223,7 @@ class Pet
      *     }
      * )
      */
-    public function findPetsByStatus()
+    public function findPetsByStatus(): void
     {
     }
 
@@ -280,7 +280,7 @@ class Pet
      *     }
      * )
      */
-    public function findByTags()
+    public function findByTags(): void
     {
     }
 
@@ -332,7 +332,7 @@ class Pet
      *
      * @param int $id
      */
-    public function getPetById($id)
+    public function getPetById($id): void
     {
     }
 
@@ -380,7 +380,7 @@ class Pet
      *     )
      * )
      */
-    public function updatePetWithForm()
+    public function updatePetWithForm(): void
     {
     }
 
@@ -421,7 +421,7 @@ class Pet
      *     },
      * )
      */
-    public function deletePet()
+    public function deletePet(): void
     {
     }
 
@@ -467,7 +467,7 @@ class Pet
      *     )
      * )
      */
-    public function uploadFile()
+    public function uploadFile(): void
     {
     }
 }

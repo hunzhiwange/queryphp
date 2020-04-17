@@ -24,7 +24,7 @@ use Leevel\Router\IRouter;
  */
 class Show
 {
-    public function handle(Request $request)
+    public function handle(Request $request): string
     {
         return 'hello for restful '.IRouter::RESTFUL_SHOW.
             ' and id is '.$request->attributes->get(IRouter::RESTFUL_ID);

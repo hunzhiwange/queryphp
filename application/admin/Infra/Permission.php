@@ -14,30 +14,82 @@ declare(strict_types=1);
 
 namespace Admin\Infra;
 
-use Leevel\Cache\Proxy\Cache;
-
 /**
- * 权限存储.
+ * 校验权限.
  */
 class Permission
 {
     /**
-     * 设置权限.
+     * 权限数据.
      *
-     * @param string $permission
+     * @var array
      */
-    public function set(string $id, array $permission): void
+    private array $permission = [];
+
+    /**
+     * 构造函数.
+     *
+     * @param \Admin\Infra\PermissionCache $permission
+     */
+    public function __construct(PermissionCache $permission, string $token)
     {
-        Cache::set('permission_'.$id, $permission);
+        $this->permission = $permission->get($token);
+
+        if (!\is_array($this->permission['static'])) {
+            $this->permission['static'] = [];
+        }
+
+        if (!\is_array($this->permission['dynamic'])) {
+            $this->permission['dynamic'] = [];
+        }
     }
 
     /**
-     * 获取权限.
-     *
-     * @return string
+     * 校验权限.
      */
-    public function get(string $id): array
+    public function handle(string $resource, ?string $method = null): bool
     {
-        return Cache::get('permission_'.$id) ?: ['static' => [], 'dynamic' => []];
+        // 超级管理员
+        if (\in_array('*', $this->permission['static'], true)) {
+            return true;
+        }
+
+        // 所有请求
+        if (\in_array($resource, $this->permission['static'], true)) {
+            return true;
+        }
+
+        // 带有请求类型
+        if ($method && \in_array($method.':'.$resource, $this->permission['static'], true)) {
+            return true;
+        }
+
+        // 动态权限
+        foreach ($this->permission['dynamic'] as $p) {
+            $p = $this->prepareRegexForWildcard($p);
+
+            // 无请求类型
+            if (preg_match($p, $resource, $res)) {
+                return true;
+            }
+
+            // 带有请求类型
+            if ($method && preg_match($p, $method.':'.$resource, $res)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * 通配符正则.
+     */
+    private function prepareRegexForWildcard(string $regex): string
+    {
+        $regex = preg_quote($regex, '/');
+        $regex = '/^'.str_replace('\*', '(\S*)', $regex).'$/';
+
+        return $regex;
     }
 }

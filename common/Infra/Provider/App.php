@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Common\Infra\Provider;
 
-use Admin\Infra\Auth;
 use Admin\Infra\Permission;
+use Admin\Infra\PermissionCache;
 use Leevel\Di\IContainer;
 use Leevel\Di\Provider;
 
@@ -55,10 +55,12 @@ class App extends Provider
      */
     private function permission(): void
     {
-        $this->container->singleton('permission', function (IContainer $container) {
-            $token = $container->make('request')->query->get('token', '');
+        $this->container->singleton('permission', function (IContainer $container): Permission {
+            /** @var \Leevel\Http\Request $request */
+            $request = $container->make('request');
+            $token = $request->query->get('token', '');
 
-            return new Auth($container->make(Permission::class), $token);
+            return new Permission($container->make(PermissionCache::class), $token);
         });
     }
 }

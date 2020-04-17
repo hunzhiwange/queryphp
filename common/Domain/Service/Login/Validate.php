@@ -148,11 +148,11 @@ class Validate
      *
      * @throws \Common\Infra\Exception\BusinessException
      */
-    private function validateCode()
+    private function validateCode(): void
     {
         $codeFromCache = $this->code->get($this->input['name']);
-        if (false === $codeFromCache) {
-            return false;
+        if ('' === $codeFromCache) {
+            return;
         }
 
         if (strtoupper($this->input['code']) !== strtoupper($codeFromCache)) {
