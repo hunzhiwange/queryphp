@@ -244,7 +244,7 @@ $vim .env.phpunit # modify database redis and other
 
 ### 关闭调试
 
-修改 .env 或者 runtime/bootstrap/option.php.
+修改 .env 或者 bootstrap/option.php.
 
 ```
 // Environment production、testing and development
@@ -279,7 +279,7 @@ php leevel production
 
 ### 打开调试
 
-修改 .env 或者 runtime/bootstrap/option.php.
+修改 .env 或者 bootstrap/option.php.
 
 ```
 // Environment production、testing and development
