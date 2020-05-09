@@ -75,6 +75,9 @@ class App extends Entity
      * - update_account
      *                   comment: 更新账号  type: int(11) unsigned  null: false
      *                   key:   default: 0  extra:
+     * - version
+     *                   comment: 操作版本号  type: bigint(20) unsigned  null: false
+     *                   key:   default: 0  extra:
      *
      * @var array
      */
@@ -103,6 +106,8 @@ class App extends Entity
         ],
         'update_account' => [
             self::SHOW_PROP_BLACK => true,
+        ],
+        'version' => [
         ],
     ];
 

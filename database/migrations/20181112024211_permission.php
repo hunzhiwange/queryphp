@@ -60,6 +60,7 @@ class Permission extends AbstractMigration
                 `delete_at` bigint(20)  unsigned NOT NULL DEFAULT '0' COMMENT '删除时间 0=未删除;大于0=删除时间;',
                 `create_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建账号',
                 `update_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
+                `version` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '操作版本号',
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `num` (`num`,`delete_at`),
                 KEY `pid` (`pid`)
