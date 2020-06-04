@@ -50,16 +50,16 @@ class Permission extends AbstractMigration
     {
         $sql = <<<'EOT'
             CREATE TABLE `permission` (
-                `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-                `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '父级 ID',
+                `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                `pid` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '父级 ID',
                 `name` varchar(64) NOT NULL DEFAULT '' COMMENT '权限名字',
                 `num` varchar(64) NOT NULL DEFAULT '' COMMENT '编号',
                 `status` tinyint(4) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
                 `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                 `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                 `delete_at` bigint(20)  unsigned NOT NULL DEFAULT '0' COMMENT '删除时间 0=未删除;大于0=删除时间;',
-                `create_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建账号',
-                `update_account` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
+                `create_account` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '创建账号',
+                `update_account` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 `version` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '操作版本号',
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `num` (`num`,`delete_at`),
