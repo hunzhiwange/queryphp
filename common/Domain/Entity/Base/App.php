@@ -46,7 +46,7 @@ class App extends Entity
      * Entity struct.
      *
      * - id
-     *                   comment: ID  type: int(11) unsigned  null: false
+     *                   comment: ID  type: bigint(20) unsigned  null: false
      *                   key: PRI  default: null  extra: auto_increment
      * - num
      *                   comment: 应用 ID  type: varchar(64)  null: false
@@ -70,10 +70,10 @@ class App extends Entity
      *                   comment: 删除时间 0=未删除;大于0=删除时间;  type: bigint(20) unsigned  null: false
      *                   key:   default: 0  extra:
      * - create_account
-     *                   comment: 创建账号  type: int(11) unsigned  null: false
+     *                   comment: 创建账号  type: bigint(20) unsigned  null: false
      *                   key:   default: 0  extra:
      * - update_account
-     *                   comment: 更新账号  type: int(11) unsigned  null: false
+     *                   comment: 更新账号  type: bigint(20) unsigned  null: false
      *                   key:   default: 0  extra:
      * - version
      *                   comment: 操作版本号  type: bigint(20) unsigned  null: false
