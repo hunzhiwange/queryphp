@@ -133,7 +133,6 @@ class Router extends RouterProvider
     public function __construct(IContainer $container)
     {
         parent::__construct($container);
-
         if ($container->make('app')->isDebug()) {
             $this->middlewareGroups['common'][] = 'debug';
         }
