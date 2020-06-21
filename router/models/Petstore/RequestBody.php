@@ -53,6 +53,6 @@ class _
  *     )
  * )
  */
-class _
+class __
 {
 }
