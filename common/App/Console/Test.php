@@ -49,9 +49,11 @@ class Test extends Command
     /**
      * 响应命令.
      */
-    public function handle(): void
+    public function handle(): int
     {
         $this->info('Hello my test command.');
+
+        return 0;
     }
 
     /**
