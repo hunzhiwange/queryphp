@@ -11,7 +11,7 @@
     printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer"
     stopOnFailure="false">
     <listeners>
-        <listener class="NunoMaduro\Collision\Adapters\Phpunit\Listener" />
+        <listener class="NunoMaduro\Collision\Adapters\Phpunit\Printer" />
     </listeners>
     <testsuites>
         <testsuite name="Application Test Suite">
