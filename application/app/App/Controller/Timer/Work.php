@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace App\App\Controller\Timer;
 
 use Closure;
-use Common\Infra\Helper\message_with_time;
+use function Common\Infra\Helper\message_with_time;
 use Exception;
 use Throwable;
 
@@ -77,6 +77,6 @@ class Work
      */
     private function message(string $message): void
     {
-        dump(f(message_with_time::class, $message));
+        dump(func(fn () => message_with_time($message)));
     }
 }

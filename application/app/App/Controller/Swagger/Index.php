@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Swagger;
 
-use Common\Infra\Helper\force_close_debug;
+use function Common\Infra\Helper\force_close_debug;
 use Leevel;
 use function OpenApi\scan;
 
@@ -68,6 +68,6 @@ class Index
      */
     private function forceCloseDebug(): void
     {
-        f(force_close_debug::class);
+        func(fn () => force_close_debug());
     }
 }
