@@ -64,7 +64,6 @@ trait Read
     private function keySpec(Select $select, $value, array $meta = []): void
     {
         $value = str_replace(' ', '%', $value);
-
         $select->where(function ($select) use ($value, $meta) {
             foreach ($meta['key_column'] as $v) {
                 $select->orWhere($v, 'like', '%'.$value.'%');
