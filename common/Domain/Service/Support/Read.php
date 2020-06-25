@@ -17,7 +17,7 @@ namespace Common\Domain\Service\Support;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\Repository;
 use Leevel\Database\Ddd\Select;
-use Leevel\Support\Str\camelize;
+use function Leevel\Support\Str\camelize;
 
 /**
  * 查询.
@@ -34,7 +34,7 @@ trait Read
         }
 
         foreach (array_keys($data[0]) as $field) {
-            $prepare = f(camelize::class, (string) $field).'Prepare';
+            $prepare = func(fn () => camelize((string) $field)).'Prepare';
             if (method_exists($this, $prepare)) {
                 $this->{$prepare}($data, $field, $input);
             }
@@ -48,7 +48,7 @@ trait Read
     {
         foreach ($input as $k => $v) {
             if (null !== $v) {
-                $method = f(camelize::class, (string) $k).'Spec';
+                $method = func(fn () => camelize((string) $k)).'Spec';
                 if (method_exists($this, $method)) {
                     $this->{$method}($select, $v, $input);
                 }
