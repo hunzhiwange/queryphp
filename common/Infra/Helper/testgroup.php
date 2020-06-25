@@ -15,11 +15,9 @@ declare(strict_types=1);
 namespace Common\Infra\Helper;
 
 /**
- * 使用方法.
+ * 分组函数例子.
  *
- * ``` php
- * echo f('Common\\Infra\\Helper\\testgroup_fn1');
- * ```
+ * - 使用方法 func(fn() => \Common\Infra\Helper\testgroup_fn1())
  */
 function testgroup_fn1(): string
 {
@@ -27,11 +25,9 @@ function testgroup_fn1(): string
 }
 
 /**
- * 使用方法.
+ * 分组函数例子.
  *
- * ``` php
- * echo f('Common\\Infra\\Helper\\testgroup_fn2');
- * ```
+ * - 使用方法 func(fn() => \Common\Infra\Helper\testgroup_fn2())`
  */
 function testgroup_fn2(): string
 {

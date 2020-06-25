@@ -17,11 +17,7 @@ namespace Common\Infra\Helper;
 use Leevel\Option\Proxy\Option;
 
 /**
- * 使用方法.
- *
- * ``` php
- * f('Common\\Infra\\Helper\\force_close_debug');
- * ```
+ * 强制关闭调试模式.
  */
 function force_close_debug(): void
 {
