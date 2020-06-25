@@ -45,7 +45,7 @@ class Code
     }
 
     /**
-     * 关闭 debug.
+     * 关闭调试模式.
      */
     private function forceCloseDebug(): void
     {

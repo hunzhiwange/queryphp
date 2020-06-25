@@ -31,14 +31,17 @@ class Index
     public function handle(): string
     {
         // 关闭路由自定义标签警告
+        $oldErrorReporting = error_reporting();
         error_reporting(E_ERROR | E_PARSE | E_STRICT);
 
         // 扫描路径
         $path = array_merge($this->basePath(), $this->path());
         $openApi = scan($path);
 
-        // 关闭警告
+        // 关闭调试模式
         $this->forceCloseDebug();
+
+        error_reporting($oldErrorReporting);
 
         return json_encode($openApi) ?: '';
     }
@@ -64,7 +67,7 @@ class Index
     }
 
     /**
-     * 关闭 debug.
+     * 关闭调试模式.
      */
     private function forceCloseDebug(): void
     {
