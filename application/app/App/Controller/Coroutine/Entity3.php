@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace App\App\Controller\Coroutine;
 
 use Common\Domain\Entity\Demo\Test;
-use Common\Infra\Helper\message_with_time;
+use function Common\Infra\Helper\message_with_time;
 use Swoole\Coroutine\Channel;
 
 /**
@@ -63,6 +63,6 @@ class Entity3
      */
     private function message(string $message): void
     {
-        dump(f(message_with_time::class, $message));
+        dump(func(fn () => message_with_time($message)));
     }
 }

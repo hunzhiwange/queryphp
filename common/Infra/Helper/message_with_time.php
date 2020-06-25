@@ -16,10 +16,6 @@ namespace Common\Infra\Helper;
 
 /**
  * 带有时间的消息.
- *
- * ``` php
- * f('Common\\Infra\\Helper\\message_with_time');
- * ```
  */
 function message_with_time(string $message, string $format = 'Y-m-d H:i:s'): string
 {

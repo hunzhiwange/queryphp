@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Coroutine;
 
-use Common\Infra\Helper\message_with_time;
+use function Common\Infra\Helper\message_with_time;
 
 /**
  * 协程：Go + Chan + Defer.
@@ -60,6 +60,6 @@ class Csp2
      */
     private function message(string $message): void
     {
-        dump(f(message_with_time::class, $message));
+        dump(func(fn () => message_with_time($message)));
     }
 }

@@ -16,7 +16,7 @@ namespace Admin\App\Controller\Login;
 
 use Admin\App\Controller\Support\Controller;
 use Admin\App\Service\Login\Code as Service;
-use Common\Infra\Helper\force_close_debug;
+use function Common\Infra\Helper\force_close_debug;
 use Leevel\Http\Request;
 use Leevel\Http\Response;
 
@@ -45,10 +45,10 @@ class Code
     }
 
     /**
-     * 关闭 debug.
+     * 关闭调试模式.
      */
     private function forceCloseDebug(): void
     {
-        f(force_close_debug::class);
+        func(fn () => force_close_debug());
     }
 }
