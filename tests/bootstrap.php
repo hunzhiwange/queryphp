@@ -12,7 +12,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-error_reporting(-1);
+error_reporting(E_ALL);
 
 ini_set('xdebug.max_nesting_level', '200');
 ini_set('memory_limit', '512M');
