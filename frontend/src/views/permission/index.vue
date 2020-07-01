@@ -1,5 +1,5 @@
 <template>
-    <div class="body" id="permission-page">
+    <div class="body">
         <div class="min-form" v-show="minForm">
             <Card :bordered="false">
                 <p slot="title">
@@ -51,7 +51,7 @@
                 </div>
             </Card>
         </div>
-        <Card shadow>
+        <Card shadow id="permission-page">
             <div slot="title">
                 <i-button
                     size="small"
