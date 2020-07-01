@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import iView from 'iview'
+import ViewUI from 'view-design'
 import {routers} from './router'
 import {getToken, isLock} from '../utils/auth'
 
@@ -14,7 +14,7 @@ let router = new Router({
 
 export default router
 
-iView.LoadingBar.config({
+ViewUI.LoadingBar.config({
     color: '#08fa34',
     //failedColor: '#f0ad4e',
     //height: 5
@@ -23,7 +23,7 @@ iView.LoadingBar.config({
 let ignoreRouter = ['404', '403', '500', 'locking', 'login', 'dashboard', 'profile_index', 'message_index']
 
 router.beforeEach((to, from, next) => {
-    iView.LoadingBar.start()
+    ViewUI.LoadingBar.start()
 
     setTimeout(() => utils.title(to.meta.title), 0)
 
@@ -60,6 +60,6 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach(to => {
     utils.openNewPage(router.app, to.name, to.params, to.query)
-    iView.LoadingBar.finish()
+    ViewUI.LoadingBar.finish()
     window.scrollTo(0, 0)
 })
