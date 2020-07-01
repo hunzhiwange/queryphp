@@ -501,7 +501,8 @@ html {
                     margin-top: -53px;
                     padding: 10px 16px 10px 14px;
                     background-color: #fff;
-                    border: 1px solid #d7dde4;
+                    border-top: 1px solid #f0f0f0;
+                    border-bottom: 1px solid #d7dde4;
                 }
             }
         }
@@ -575,13 +576,13 @@ html {
     padding: 8px 10px;
     background: #fff;
     border-top: 1px solid #d7dde4;
-    border-left: 1px solid #d7dde4;
-    border-right: 1px solid #d7dde4;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .search-table {
     background: #fff;
     min-height: 300px;
+    overflow-x: hidden;
 }
 
 @media screen and (min-width: 1680px) {
@@ -592,8 +593,9 @@ html {
 
 .search-wrap {
     .add-extra {
+        position: absolute;
         top: 4px;
-        position: relative;
+        right: -220px;
     }
 }
 

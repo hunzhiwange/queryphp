@@ -7,7 +7,7 @@
                     <div>
                         <Row :gutter="16">
                             <i-col span="12">
-                                <i-form :model="formItem" :label-width="80" :rules="rules" ref="form">
+                                <i-form :model="formItem" :label-width="130" :rules="rules" ref="form">
                                     <FormItem :label="__('站点名字')" prop="site_name">
                                         <i-input v-model="formItem.site_name" placeholder=""></i-input>
                                     </FormItem>
