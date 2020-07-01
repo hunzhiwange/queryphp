@@ -1,7 +1,7 @@
 <template>
     <Modal v-model="dialogVisible" :title="__('修改密码')" width="500">
         <div>
-            <i-form ref="form" :model="form" :rules="rules" :label-width="80">
+            <i-form ref="form" :model="form" :rules="rules" :label-width="140">
                 <FormItem :label="__('旧密码')" prop="old_pwd">
                     <i-input type="password" v-model.trim="form.old_pwd" placeholder="" auto-complete="off"></i-input>
                 </FormItem>

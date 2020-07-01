@@ -7,7 +7,7 @@
                 </p>
                 <div class="min-form-inner">
                     <div class="min-form-body">
-                        <i-form ref="form" :rules="rules" :model="formItem" :label-width="110" class="w-1000">
+                        <i-form ref="form" :rules="rules" :model="formItem" :label-width="130" class="w-1000">
                             <Row :gutter="16">
                                 <i-col span="12">
                                     <FormItem :label="__('上级权限')" prop="pid">
