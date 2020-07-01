@@ -2,9 +2,9 @@ import Vue from 'vue'
 import zhCnApp from './zh-CN'
 import enUsApp from './en-US'
 import zhTwApp from './zh-TW'
-import zhCnLocale from 'iview/src/locale/lang/zh-CN'
-import enUsLocale from 'iview/src/locale/lang/en-US'
-import zhTwLocale from 'iview/src/locale/lang/zh-TW'
+import zhCnLocale from 'view-design/src/locale/lang/zh-CN'
+import enUsLocale from 'view-design/src/locale/lang/en-US'
+import zhTwLocale from 'view-design/src/locale/lang/zh-TW'
 import VueI18n from 'vue-i18n'
 
 Vue.use(VueI18n)

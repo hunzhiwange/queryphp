@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import iView from 'iview'
-import 'iview/dist/styles/iview.css'
+import ViewUI from 'view-design'
+import 'view-design/dist/styles/iview.css'
 import App from './App'
 import '@/i18n'
 import router from './router'
@@ -14,7 +14,7 @@ import extend from './utils/extend'
 import './errorLog' // error log
 import 'assets/css/global.css'
 
-Vue.use(iView)
+Vue.use(ViewUI)
 Vue.use(extend)
 
 window.axios = axios

@@ -708,7 +708,7 @@ msgstr "Edit"
 #: src_views_role_assets_index.js.tmp.i18n.js:6
 #: src_views_role_index.vue.tmp.i18n.js:12
 msgid "授权"
-msgstr "Grant permission"
+msgstr "Grant"
 
 #: src_views_permission_assets_index.js.tmp.i18n.js:7
 #: src_views_permission_assets_index.js.tmp.i18n.js:8

@@ -1,5 +1,5 @@
 <template>
-    <div class="body" id="permission-page">
+    <div class="body">
         <div class="min-form" v-show="minForm">
             <Card :bordered="false">
                 <p slot="title">
@@ -7,7 +7,7 @@
                 </p>
                 <div class="min-form-inner">
                     <div class="min-form-body">
-                        <i-form ref="form" :rules="rules" :model="formItem" :label-width="110" class="w-1000">
+                        <i-form ref="form" :rules="rules" :model="formItem" :label-width="130" class="w-1000">
                             <Row :gutter="16">
                                 <i-col span="12">
                                     <FormItem :label="__('上级权限')" prop="pid">
@@ -51,7 +51,7 @@
                 </div>
             </Card>
         </div>
-        <Card shadow>
+        <Card shadow id="permission-page">
             <div slot="title">
                 <i-button
                     size="small"
