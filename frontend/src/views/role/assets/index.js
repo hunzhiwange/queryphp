@@ -50,7 +50,7 @@ export default {
                 {
                     title: this.__('操作'),
                     key: 'action',
-                    width: 160,
+                    width: 185,
                     fixed: 'right',
                     align: 'left',
                     render: (h, params) => {
