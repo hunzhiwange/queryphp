@@ -76,7 +76,7 @@ class Unlock
     private function validateUser(): User
     {
         $user = User::select()
-            ->where('status', '1')
+            ->where('status', 1)
             ->where('id', $this->input['id'])
             ->findOne();
 
