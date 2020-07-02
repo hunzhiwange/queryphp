@@ -47,7 +47,9 @@ class Code
 
         ob_start();
         $seccode->display(4);
-        $this->code->set($input['id'], (string) $seccode->getCode());
+        if (!empty($input['id'])) {
+            $this->code->set($input['id'], (string) $seccode->getCode());
+        }
         $content = ob_get_contents() ?: '';
         ob_end_clean();
 

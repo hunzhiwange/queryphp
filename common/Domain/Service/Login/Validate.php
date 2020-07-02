@@ -91,7 +91,7 @@ class Validate
         ).
         Str::randAlphaNum(10);
 
-        return hash_hmac('sha256', $token, $this->secret);
+        return 'token:admin:'.hash_hmac('sha256', $token, $this->secret);
     }
 
     /**
