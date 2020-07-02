@@ -22,18 +22,18 @@ use Leevel\Cache\Proxy\Cache;
 class Code
 {
     /**
-     * 设置验证码
+     * 设置验证码.
      */
     public function set(string $id, string $code): void
     {
-        Cache::set('code_'.$id, $code);
+        Cache::set('seccode:admin:'.$id, $code);
     }
 
     /**
-     * 获取验证码
+     * 获取验证码.
      */
     public function get(string $id): string
     {
-        return Cache::get('code_'.$id) ?: '';
+        return Cache::get('seccode:admin:'.$id) ?: '';
     }
 }

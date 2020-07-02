@@ -26,7 +26,7 @@ class PermissionCache
      */
     public function set(string $id, array $permission): void
     {
-        Cache::set('permission_'.$id, $permission);
+        Cache::set('permission:admin:'.$id, $permission);
     }
 
     /**
@@ -34,6 +34,6 @@ class PermissionCache
      */
     public function get(string $id): array
     {
-        return Cache::get('permission_'.$id) ?: ['static' => [], 'dynamic' => []];
+        return Cache::get('permission:admin:'.$id) ?: ['static' => [], 'dynamic' => []];
     }
 }
