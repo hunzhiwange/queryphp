@@ -15,12 +15,15 @@ declare(strict_types=1);
 namespace Common\Domain\Entity\Base;
 
 use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\GetterSetter;
 
 /**
  * 应用.
  */
 class App extends Entity
 {
+    use GetterSetter;
+
     /**
      * Database table.
      *
@@ -127,54 +130,4 @@ class App extends Entity
         'disable' => [0, '禁用'],
         'enable'  => [1, '启用'],
     ];
-
-    /**
-     * Prop data.
-     *
-     * @var array
-     */
-    private array $data = [];
-
-    /**
-     * Database connect.
-     */
-    private static ?string $connect = null;
-
-    /**
-     * Setter.
-     *
-     * @param mixed $value
-     */
-    public function setter(string $prop, $value): self
-    {
-        $this->data[$this->realProp($prop)] = $value;
-
-        return $this;
-    }
-
-    /**
-     * Getter.
-     *
-     * @return mixed
-     */
-    public function getter(string $prop)
-    {
-        return $this->data[$this->realProp($prop)] ?? null;
-    }
-
-    /**
-     * Set database connect.
-     */
-    public static function withConnect(?string $connect = null): void
-    {
-        static::$connect = $connect;
-    }
-
-    /**
-     * Get database connect.
-     */
-    public static function connect(): ?string
-    {
-        return static::$connect;
-    }
 }
