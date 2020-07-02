@@ -7,10 +7,13 @@ declare(strict_types=1);
 namespace {{namespace}}\Domain\Entity{{sub_dir}};
 
 use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\GetterSetterProp;
 
 {{file_comment}}
 class {{file_name}} extends Entity
 {
+    use GetterSetterProp;
+    
     /**
      * Database table.
      *
@@ -44,49 +47,4 @@ class {{file_name}} extends Entity
     ];
 {{const_extend}}
 {{props}}
-
-    /**
-     * Database connect.
-     *
-     * @var string
-     */
-    private static ?string $connect = null;
-{{prop_extend}}
-    /**
-     * Setter.
-     *
-     * @param mixed $value
-     */
-    public function setter(string $prop, $value): self
-    {
-        $this->{'_'.$this->realProp($prop)} = $value;
-
-        return $this;
-    }
-
-    /**
-     * Getter.
-     *
-     * @return mixed
-     */
-    public function getter(string $prop)
-    {
-        return $this->{'_'.$this->realProp($prop)};
-    }
-
-    /**
-     * Set database connect.
-     */
-    public static function withConnect(?string $connect = null): void
-    {
-        static::$connect = $connect;
-    }
-
-    /**
-     * Get database connect.
-     */
-    public static function connect(): ?string
-    {
-        return static::$connect;
-    }
 }
