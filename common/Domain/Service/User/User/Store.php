@@ -15,7 +15,9 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
+use Common\Domain\Entity\User\UserRole;
 use Leevel\Auth\Hash;
+use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\UnitOfWork;
 
 /**
@@ -63,9 +65,9 @@ class Store
     /**
      * 查找存在角色.
      */
-    private function findRoles(int $userId): array
+    private function findRoles(): Collection
     {
-        return [];
+        return UserRole::make()->collection();
     }
 
     /**

@@ -43,7 +43,7 @@ class Permission
      */
     private function save(array $input): Role
     {
-        $entity = $this->entity($input);
+        $entity = $this->entity((int) $input['id']);
         $this->setRolePermission((int) $input['id'], $input['permission_id'] ?? []);
         $this->w->flush();
 
@@ -65,9 +65,9 @@ class Permission
     /**
      * 验证参数.
      */
-    private function entity(array $input): Role
+    private function entity(int $roleId): Role
     {
-        return $this->find((int) $input['id']);
+        return $this->find($roleId);
     }
 
     /**
@@ -83,18 +83,19 @@ class Permission
      */
     private function setRolePermission(int $roleId, array $permissionId): void
     {
-        $existPermission = [];
-        foreach ($permissionId as $pid) {
+        $permissions = $this->findPermissions($roleId);
+        $existPermissionId = array_column($permissions->toArray(), 'permission_id');
+        foreach ($permissionId as &$pid) {
             $pid = (int) $pid;
-            $this->w->replace($this->entityRolePermission($roleId, $pid));
-            $existPermission[] = $pid;
+            if (!\in_array($pid, $existPermissionId, true)) {
+                $this->w->create($this->entityRolePermission($roleId, $pid));
+            }
         }
 
-        foreach ($this->findPermissions($roleId) as $p) {
-            if (\in_array($p['permission_id'], $existPermission, true)) {
+        foreach ($permissions as $p) {
+            if (\in_array($p['permission_id'], $permissionId, true)) {
                 continue;
             }
-
             $this->w->delete($p);
         }
     }

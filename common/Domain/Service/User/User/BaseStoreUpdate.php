@@ -32,15 +32,17 @@ trait BaseStoreUpdate
      */
     private function setUserRole(int $userId, array $roleId): void
     {
-        $existRole = [];
-        foreach ($roleId as $rid) {
+        $roles = $this->findRoles($userId);
+        $existRoleId = array_column($roles->toArray(), 'role_id');
+        foreach ($roleId as &$rid) {
             $rid = (int) $rid;
-            $this->w->replace($this->entityUserRole($userId, $rid));
-            $existRole[] = $rid;
+            if (!\in_array($rid, $existRoleId, true)) {
+                $this->w->create($this->entityUserRole($userId, $rid));
+            }
         }
 
-        foreach ($this->findRoles($userId) as $r) {
-            if (\in_array($r['role_id'], $existRole, true)) {
+        foreach ($roles as $r) {
+            if (\in_array($r['role_id'], $roleId, true)) {
                 continue;
             }
             $this->w->delete($r);

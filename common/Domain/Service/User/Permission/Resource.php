@@ -86,19 +86,19 @@ class Resource
      */
     private function setPermissionResource(int $permissionId, array $resourceId): void
     {
-        $existResource = [];
-
-        foreach ($resourceId as $rid) {
+        $resources = $this->findResources($permissionId);
+        $existResourceId = array_column($resources->toArray(), 'resource_id');
+        foreach ($resourceId as &$rid) {
             $rid = (int) $rid;
-            $this->w->replace($this->entityPermissionResource($permissionId, $rid));
-            $existResource[] = $rid;
+            if (!\in_array($rid, $existResourceId, true)) {
+                $this->w->create($this->entityPermissionResource($permissionId, $rid));
+            }
         }
 
-        foreach ($this->findResources($permissionId) as $r) {
-            if (\in_array($r['resource_id'], $existResource, true)) {
+        foreach ($resources as $r) {
+            if (\in_array($r['resource_id'], $resourceId, true)) {
                 continue;
             }
-
             $this->w->delete($r);
         }
     }
