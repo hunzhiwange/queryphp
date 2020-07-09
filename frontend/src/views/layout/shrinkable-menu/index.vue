@@ -1,5 +1,5 @@
 <template>
-    <div :style="{background: bgColor}" class="ivu-shrinkable-menu">
+    <div class="ivu-shrinkable-menu">
         <slot name="top"></slot>
         <sidebar-menu
             v-show="!shrink"

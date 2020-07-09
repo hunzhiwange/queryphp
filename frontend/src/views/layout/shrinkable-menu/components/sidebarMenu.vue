@@ -3,7 +3,6 @@
         ref="sideMenu"
         :active-name="$route.name"
         :open-names="openNames"
-        :theme="menuTheme"
         width="auto"
         @on-select="changeMenu"
         accordion
