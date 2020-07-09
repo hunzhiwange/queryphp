@@ -83,6 +83,13 @@ export default {
                     placement: 'top',
                 },
                 {
+                    name: 'black_github',
+                    title: this.__('Github 经典') + '.' + this.__('暗夜'),
+                    menu: '#71400b',
+                    element: '#24292e',
+                    placement: 'top',
+                },
+                {
                     name: 'light_jirablue',
                     title: this.__('JIRA 经典蓝') + '.' + this.__('青天'),
                     menu: '#fff',
@@ -101,6 +108,13 @@ export default {
                     title: this.__('VIP 尊贵') + '.' + this.__('青天'),
                     menu: '#fff',
                     element: '#fbd54e',
+                    placement: 'bottom',
+                },
+                {
+                    name: 'light_github',
+                    title: this.__('Github 经典') + '.' + this.__('青天'),
+                    menu: '#fff',
+                    element: '#24292e',
                     placement: 'bottom',
                 },
             ],
