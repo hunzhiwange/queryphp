@@ -131,21 +131,23 @@ export default {
             })
         },
         setTheme() {
-            let stylePath = '/'
             if (localStorage.theme) {
                 let theme = JSON.parse(localStorage.theme)
                 this.$store.commit('changeMenuTheme', theme.menuTheme)
                 this.$store.commit('changeMainTheme', theme.mainTheme)
             } else {
                 this.$store.commit('changeMenuTheme', 'light')
-                this.$store.commit('changeMainTheme', 'b')
+                this.$store.commit('changeMainTheme', 'blue')
             }
             // 根据用户设置主题
-            if (this.$store.state.app.themeColor !== 'b') {
-                let stylesheetPath = stylePath + this.$store.state.app.themeColor + '.css'
-                let themeLink = document.querySelector('link[name="theme"]')
-                themeLink.setAttribute('href', stylesheetPath)
-            }
+            let stylesheetPath = '/' + this.$store.state.app.themeColor + '.css'
+            let themeLink = document.querySelector('link[name="theme"]')
+            themeLink.setAttribute('href', stylesheetPath)
+
+            let stylesheetMenuPath =
+                stylePath + this.$store.state.app.themeColor + '_' + this.$store.state.app.menuTheme + '.css'
+            let menuThemeLink = document.querySelector('link[name="menuTheme"]')
+            menuThemeLink.setAttribute('href', stylesheetMenuPath)
         },
     },
     created() {

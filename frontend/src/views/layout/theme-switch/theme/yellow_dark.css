@@ -1,0 +1,36 @@
+/** extended css */
+.main .sidebar-menu-con .ivu-shrinkable-menu {
+    background: #1d1e23;
+}
+
+.main .sidebar-menu-con .ivu-shrinkable-menu .ivu-menu-light {
+    background: #1d1e23;
+}
+
+.main .sidebar-menu-con .ivu-menu-vertical .ivu-menu-item:hover,
+.main .sidebar-menu-con .ivu-menu-vertical .ivu-menu-submenu-title:hover {
+    background: #1d1e23;
+    color: white;
+}
+
+.main
+    .sidebar-menu-con
+    .ivu-shrinkable-menu
+    .ivu-menu-light.ivu-menu-vertical
+    .ivu-menu-item-active:not(.ivu-menu-submenu) {
+    color: white;
+    background: rgba(63, 64, 69, 0.75);
+    font-weight: bold;
+}
+
+.main
+    .sidebar-menu-con
+    .ivu-shrinkable-menu
+    .ivu-menu-light.ivu-menu-vertical
+    .ivu-menu-item-active:not(.ivu-menu-submenu):after {
+    background: rgba(63, 64, 69, 0.75);
+}
+
+.main .sidebar-menu-con .ivu-shrinkable-menu .ivu-menu {
+    color: hsla(0, 0%, 100%, 0.7);
+}

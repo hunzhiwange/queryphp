@@ -31,9 +31,9 @@ export default {
         },
     },
     computed: {
-        bgColor() {
-            return this.theme === 'dark' ? 'rgb(81, 90, 110)' : '#fff'
-        },
+        // bgColor() {
+        //     return this.theme === 'dark' ? 'rgb(81, 90, 110)' : '#fff'
+        // },
         shrinkIconColor() {
             return this.theme === 'dark' ? '#fff' : '#495060'
         },
