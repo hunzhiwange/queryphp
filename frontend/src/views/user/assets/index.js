@@ -15,19 +15,22 @@ export default {
         search,
     },
     data() {
-        var validatePassword = (rule, value, callback) => {
-            if (this.formItem.id) {
-                return callback()
-            }
-
-            setTimeout(() => {
-                if (!value) {
-                    callback(new Error(this.__('请输入用户密码')))
-                } else {
-                    return callback()
-                }
-            }, 50)
-        }
+        var passwordRule = [
+            {
+                required: true,
+                message: this.__('请输入密码'),
+                trigger: 'blur',
+            },
+            {
+                min: 6,
+                max: 30,
+                message: this.__('长度在 %d 到 %d 个字符', 6, 30),
+                trigger: 'blur',
+            },
+            {
+                validator: validateAlphaDash,
+            },
+        ]
 
         return {
             columns: [
@@ -111,14 +114,8 @@ export default {
                         validator: validateAlphaDash,
                     },
                 ],
-                password: [
-                    {
-                        validator: validatePassword,
-                    },
-                    {
-                        validator: validateAlphaDash,
-                    },
-                ],
+                password: passwordRule,
+                passwordBackup: passwordRule,
             },
             loading: false,
             selectedData: [],
@@ -279,6 +276,17 @@ export default {
         },
         reset() {
             this.formItem = resetForm
+        },
+        passwordValidate(id) {
+            if (id) {
+                this.liveNode = false
+                if (this.formItem.password) {
+                    this.rules.password = this.rules.passwordBackup
+                } else {
+                    this.rules.password = {}
+                }
+                this.liveNode = true
+            }
         },
     },
     computed: {},
