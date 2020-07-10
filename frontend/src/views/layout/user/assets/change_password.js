@@ -29,8 +29,8 @@ export default {
                     },
                     {
                         min: 6,
-                        max: 12,
-                        message: this.__('长度在 %d 到 %d 个字符', 6, 12),
+                        max: 30,
+                        message: this.__('长度在 %d 到 %d 个字符', 6, 30),
                         trigger: 'blur',
                     },
                 ],
@@ -42,8 +42,8 @@ export default {
                     },
                     {
                         min: 6,
-                        max: 12,
-                        message: this.__('长度在 %d 到 %d 个字符', 6, 12),
+                        max: 30,
+                        message: this.__('长度在 %d 到 %d 个字符', 6, 30),
                         trigger: 'blur',
                     },
                 ],
@@ -55,8 +55,8 @@ export default {
                     },
                     {
                         min: 6,
-                        max: 12,
-                        message: this.__('长度在 %d 到 %d 个字符', 6, 12),
+                        max: 30,
+                        message: this.__('长度在 %d 到 %d 个字符', 6, 30),
                         trigger: 'blur',
                     },
                 ],

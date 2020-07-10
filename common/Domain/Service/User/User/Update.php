@@ -16,9 +16,13 @@ namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
 use Common\Domain\Entity\User\UserRole as EntityUserRole;
+use Common\Infra\Exception\BusinessException;
 use Leevel\Auth\Hash;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\UnitOfWork;
+use Leevel\Validate\IValidator;
+use Leevel\Validate\Proxy\Validate;
+use Leevel\Validate\UniqueRule;
 
 /**
  * 用户更新.
@@ -36,6 +40,8 @@ class Update
 
     private UnitOfWork $w;
 
+    private array $input;
+
     public function __construct(UnitOfWork $w, Hash $hash)
     {
         $this->w = $w;
@@ -44,6 +50,12 @@ class Update
 
     public function handle(array $input): array
     {
+        if (empty($input['password'])) {
+            unset($input['password']);
+        }
+        $this->input = $input;
+        $this->validateArgs();
+
         if (!isset($input['userRole'])) {
             $input['userRole'] = [];
         }
@@ -115,11 +127,34 @@ class Update
             'status'     => $input['status'],
         ];
 
-        $password = trim($input['password']);
-        if ($password) {
+        if (isset($input['password']) && $password = trim($input['password'])) {
             $data['password'] = $this->createPassword($password);
         }
 
         return $data;
+    }
+
+    /**
+     * 校验基本参数.
+     *
+     * @throws \Common\Infra\Exception\BusinessException
+     */
+    private function validateArgs(): void
+    {
+        $validator = Validate::make(
+            $this->input,
+            [
+                'num'      => 'required|alpha_dash|'.UniqueRule::rule(User::class, null, (int) $this->input['id'], null, 'delete_at', 0),
+                'password' => 'required|min_length:6,max_length:30'.'|'.IValidator::OPTIONAL,
+            ],
+            [
+                'num'      => __('编号'),
+                'password' => __('密码'),
+            ]
+        );
+
+        if ($validator->fail()) {
+            throw new BusinessException(json_encode($validator->error()));
+        }
     }
 }
