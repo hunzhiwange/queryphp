@@ -16,9 +16,12 @@ namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
 use Common\Domain\Entity\User\UserRole;
+use Common\Infra\Exception\BusinessException;
 use Leevel\Auth\Hash;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\UnitOfWork;
+use Leevel\Validate\Proxy\Validate;
+use Leevel\Validate\UniqueRule;
 
 /**
  * 用户保存.
@@ -36,6 +39,8 @@ class Store
 
     private UnitOfWork $w;
 
+    private array $input;
+
     public function __construct(UnitOfWork $w, Hash $hash)
     {
         $this->w = $w;
@@ -44,6 +49,9 @@ class Store
 
     public function handle(array $input): array
     {
+        $this->input = $input;
+        $this->validateArgs();
+
         return $this->prepareData($this->save($input));
     }
 
@@ -97,5 +105,31 @@ class Store
             'status'     => $input['status'],
             'password'   => $this->createPassword(trim($input['password'])),
         ];
+    }
+
+    /**
+     * 校验基本参数.
+     *
+     * @throws \Common\Infra\Exception\BusinessException
+     */
+    private function validateArgs(): void
+    {
+        $validator = Validate::make(
+            $this->input,
+            [
+                'name'     => 'required|chinese_alpha_num|max_length:64',
+                'num'      => 'required|alpha_dash|'.UniqueRule::rule(User::class, null, null, null, 'delete_at', 0),
+                'password' => 'required|min_length:6,max_length:30',
+            ],
+            [
+                'name'     => __('名字'),
+                'num'      => __('编号'),
+                'password' => __('密码'),
+            ]
+        );
+
+        if ($validator->fail()) {
+            throw new BusinessException(json_encode($validator->error()));
+        }
     }
 }
