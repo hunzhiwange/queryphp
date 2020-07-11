@@ -6,7 +6,7 @@ const resetForm = {
     pid: [-1],
     name: '',
     num: '',
-    status: '1',
+    status: 1,
 }
 
 const resetFormResource = {}
