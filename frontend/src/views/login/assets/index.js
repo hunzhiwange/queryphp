@@ -13,6 +13,7 @@ export default {
             loading: false,
             form: {
                 name: '',
+                nameBackup: '',
                 password: '',
                 code: '',
             },
@@ -62,8 +63,13 @@ export default {
         }
     },
     methods: {
-        refreshSeccode() {
-            this.codeUrl = this.codeImg + '?id=' + this.form.name + '&time=' + moment().unix()
+        refreshSeccode(force) {
+            if (force || this.form.name != this.form.nameBackup) {
+                this.form.nameBackup = this.form.name
+                if (this.form.name) {
+                    this.codeUrl = this.codeImg + '?id=' + this.form.name + '&time=' + moment().unix()
+                }
+            }
         },
         handleSubmit(form) {
             if (this.loading) return
@@ -145,7 +151,7 @@ export default {
             themeLink.setAttribute('href', stylesheetPath)
 
             let stylesheetMenuPath =
-                stylePath + this.$store.state.app.themeColor + '_' + this.$store.state.app.menuTheme + '.css'
+                '/' + this.$store.state.app.themeColor + '_' + this.$store.state.app.menuTheme + '.css'
             let menuThemeLink = document.querySelector('link[name="menuTheme"]')
             menuThemeLink.setAttribute('href', stylesheetMenuPath)
         },
