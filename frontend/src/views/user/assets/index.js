@@ -237,9 +237,6 @@ export default {
         updateUser(form) {
             var formData = this.formItem
             formData.userRole = this.userRole
-
-            delete formData.name
-
             this.apiPut('user', this.formItem.id, formData).then(
                 res => {
                     this.data.forEach((item, index) => {
