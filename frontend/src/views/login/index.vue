@@ -30,10 +30,12 @@
                                     >
                                         <FormItem prop="name">
                                             <i-input
+                                                ref="name"
                                                 type="text"
                                                 v-model.trim="form.name"
                                                 :placeholder="__('账号')"
                                                 size="large"
+                                                @on-blur="refreshSeccode()"
                                             ></i-input>
                                         </FormItem>
                                         <FormItem prop="password">
@@ -53,13 +55,12 @@
                                                         :placeholder="__('验证码')"
                                                         class="w-150"
                                                         size="large"
-                                                        @on-focus="refreshSeccode()"
                                                     ></i-input>
                                                 </i-col>
                                                 <i-col span="12" v-if="form.name">
                                                     <img
                                                         :src="codeUrl"
-                                                        @click="refreshSeccode()"
+                                                        @click="refreshSeccode(true)"
                                                         class="code"
                                                         style="cursor:pointer;"
                                                     />

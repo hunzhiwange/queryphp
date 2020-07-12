@@ -6,7 +6,7 @@ const resetForm = {
     pid: [-1],
     name: '',
     num: '',
-    status: '1',
+    status: 1,
 }
 
 const resetFormResource = {}
@@ -397,7 +397,7 @@ export default {
                     const oldParentKey = this.oldEditPid[this.oldEditPid.length - 1]
 
                     this.$set(this.currentParentData, 'status', this.formItem.status)
-                    this.$set(this.currentParentData, 'num', this.formItem.status)
+                    this.$set(this.currentParentData, 'num', this.formItem.num)
 
                     if (parentKey === oldParentKey) {
                         this.$set(this.currentParentData, 'name', this.formItem.name)

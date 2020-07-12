@@ -5,7 +5,7 @@
                 <i-button size="small" type="primary" @click="seeLeftTag()">
                     <Icon type="md-more" :size="22"></Icon>
                 </i-button>
-                <DropdownMenu slot="list">
+                <DropdownMenu slot="list" class="header-tag-select">
                     <DropdownItem name="refreshTag">
                         <Icon type="md-refresh" size="22" /> {{ __('刷新') }}
                     </DropdownItem>
@@ -22,7 +22,7 @@
                 <i-button size="small" type="primary" @click="seeRightTag()">
                     <Icon type="md-more" :size="22"></Icon>
                 </i-button>
-                <DropdownMenu slot="list">
+                <DropdownMenu slot="list" class="header-tag-select">
                     <DropdownItem name="refreshTag">
                         <Icon type="md-refresh" size="22" /> {{ __('刷新') }}
                     </DropdownItem>

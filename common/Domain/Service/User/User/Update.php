@@ -123,8 +123,8 @@ class Update
     private function data(array $input): array
     {
         $data = [
-            'num'        => trim($input['num']),
-            'status'     => $input['status'],
+            'num'    => trim($input['num']),
+            'status' => $input['status'],
         ];
 
         if (isset($input['password']) && $password = trim($input['password'])) {
