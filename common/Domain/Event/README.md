@@ -11,7 +11,7 @@ class Event extends EventProvider
 {
     protected $listeners = [
         'Common\Domain\Event\Test' => [
-            'Common\Domain\Listener\Test'
+            'Common\\Domain\\Listener\\Test'
         ]
     ];
 }
@@ -26,8 +26,9 @@ class Test extends Listener
 {
 
     /**
-     * 构造函数
-     * 支持依赖注入
+     * 构造函数.
+     * 
+     * - 支持依赖注入.
      * 
      * @return void
      */
@@ -36,7 +37,7 @@ class Test extends Listener
     }
 
     /**
-     * 监听器响应
+     * 监听器响应.
      * 
      * @return void
      */
