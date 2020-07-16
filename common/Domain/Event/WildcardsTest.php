@@ -20,8 +20,9 @@ namespace Common\Domain\Event;
 class WildcardsTest extends Event
 {
     /**
-     * 构造函数
-     * 支持依赖注入.
+     * 构造函数.
+     *
+     * - 支持依赖注入.
      */
     public function __construct()
     {
