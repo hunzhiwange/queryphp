@@ -1,6 +1,36 @@
+# RoadRunner Server
+# more https://roadrunner.dev/docs/intro-config
+
 http:
   address: 0.0.0.0:9527
   workers:
     command: "php leevel rr:server"
     pool:
       numWorkers: 4
+
+static:
+  # root directory for static file (HTTP would not serve .php and .htaccess files).
+  dir:   "."
+
+  # list of extensions for forbid for serving.
+  forbid: [".php", ".htaccess"]
+
+reload:
+  # enable or disable file watcher
+  enabled: true
+  # sync interval
+  interval: 1s
+  # global patterns to sync
+  patterns: [".php"]
+  # list of included for sync services
+  services:
+    http:
+      # recursive search for file patterns to add
+      recursive: true
+      # ignored folders
+      ignore: ["vendor"]
+      # service specific file pattens to sync
+      patterns: [".php"]
+      # directories to sync. If recursive is set to true, 
+      # recursive sync will be applied only to the directories in `dirs` section
+      dirs:     ["."]
