@@ -16,6 +16,7 @@ namespace Common\Infra\Exception;
 
 use App;
 use Leevel\Kernel\Exception\BusinessException as BaseBusinessException;
+use Throwable;
 
 /**
  * 业务操作异常.
@@ -30,13 +31,28 @@ class BusinessException extends BaseBusinessException
      */
     public function report(): void
     {
-        if ($this->getImportance() < 1) {
-            return;
-        }
+        $this->reportToLog();
+    }
 
-        /** @var \Leevel\Log\ILog $log */
-        $log = App::make('log');
-        $log->error($this->getMessage(), ['exception' => (string) $this]);
-        $log->flush();
+    /**
+     * 异常是否需要上报.
+     */
+    public function reportable(): bool
+    {
+        return $this->getImportance() > self::DEFAULT_LEVEL;
+    }
+
+    /**
+     * 记录异常到日志.
+     */
+    protected function reportToLog(): void
+    {
+        try {
+            /** @var \Leevel\Log\ILog $log */
+            $log = App::make('log');
+            $log->error($this->getMessage(), ['exception' => (string) $this]);
+            $log->flush();
+        } catch (Throwable $e) {
+        }
     }
 }

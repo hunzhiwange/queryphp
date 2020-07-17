@@ -121,7 +121,9 @@ class Unlock
         );
 
         if ($validator->fail()) {
-            throw new BusinessException(json_encode($validator->error()));
+            $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
+
+            throw new BusinessException($e);
         }
     }
 }
