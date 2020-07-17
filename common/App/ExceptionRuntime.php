@@ -14,12 +14,12 @@ declare(strict_types=1);
 
 namespace Common\App;
 
-use Exception;
 use Leevel;
 use Leevel\Http\Request;
 use Leevel\Kernel\Exception\HttpException;
 use Leevel\Kernel\ExceptionRuntime as BaseExceptionRuntime;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 /**
  * 异常运行时.
@@ -29,7 +29,7 @@ class ExceptionRuntime extends BaseExceptionRuntime
     /**
      * {@inheritdoc}
      */
-    public function report(Exception $e)
+    public function report(Throwable $e)
     {
         parent::report($e);
     }
@@ -37,7 +37,7 @@ class ExceptionRuntime extends BaseExceptionRuntime
     /**
      * {@inheritdoc}
      */
-    public function render(Request $request, Exception $e): Response
+    public function render(Request $request, Throwable $e): Response
     {
         return parent::render($request, $e);
     }
