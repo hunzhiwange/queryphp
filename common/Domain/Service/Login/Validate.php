@@ -87,7 +87,8 @@ class Validate
                 $this->input['password'].
                 substr((string) time(), 0, 6)
             ),
-            8, 6
+            8,
+            6
         ).
         Str::randAlphaNum(10);
 
