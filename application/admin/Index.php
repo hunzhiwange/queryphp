@@ -12,8 +12,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common;
+namespace Admin;
 
-class _Index
+class Index
 {
 }
