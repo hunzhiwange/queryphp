@@ -79,12 +79,10 @@ class Auth extends BaseAuth
             return;
         }
 
-        $token = $this->normalizeToken($request);
-
         try {
+            $token = $this->normalizeToken($request);
             if ($this->manager->isLogin()) {
                 $this->validateLock($request, $token);
-
                 if (!$this->isIgnorePermission($request)) {
                     $this->validatePermission($request);
                 }
@@ -92,7 +90,7 @@ class Auth extends BaseAuth
 
             parent::handle($next, $request);
         } catch (AuthException $e) {
-            throw new UnauthorizedHttpException($e->getMessage());
+            throw new UnauthorizedHttpException(__('权限认证失败'));
         }
     }
 
