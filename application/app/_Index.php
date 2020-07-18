@@ -14,6 +14,6 @@ declare(strict_types=1);
 
 namespace App;
 
-class index
+class _Index
 {
 }

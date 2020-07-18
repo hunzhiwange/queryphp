@@ -12,8 +12,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\App\Console;
+namespace Admin;
 
-class index
+class _Index
 {
 }
