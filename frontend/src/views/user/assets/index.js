@@ -280,7 +280,7 @@ export default {
                 if (this.formItem.password) {
                     this.rules.password = this.rules.passwordBackup
                 } else {
-                    this.rules.password = {}
+                    this.rules.password = []
                 }
                 this.liveNode = true
             }
