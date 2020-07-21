@@ -16,8 +16,7 @@
         "php": "^7.4.0 || ^8.0",
         "ext-mbstring": "*",
         "ext-openssl": "*",
-        "hunzhiwange/framework": "~1.0.0",
-        "swoole/ide-helper": "dev-master"
+        "hunzhiwange/framework": "~1.0.0"
     },
     "require-dev": {
         "php-coveralls/php-coveralls": "^2.1",
