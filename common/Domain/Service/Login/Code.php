@@ -34,9 +34,7 @@ class Code
     {
         // Mac 自带 PHP 有问题
         if (!function_exists('imagettftext')) {
-            header('Content-Type: image/png;text/html; charset=utf-8');
-
-            return file_get_contents(Leevel::publicPath('images/code.png')) ?: '';
+            return file_get_contents(Leevel::commonPath('ui/seccode/code.png')) ?: '';
         }
 
         $seccode = new Seccode([
