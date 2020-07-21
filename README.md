@@ -75,7 +75,7 @@ QueryPHP was based on the [DoYouHaoBaby](https://github.com/hunzhiwange/dyhb.blo
 ## Base use
 
 ```
-composer create-project hunzhiwange/queryphp myapp dev-master
+composer create-project hunzhiwange/queryphp myapp
 ```
 
 ## Visite it
