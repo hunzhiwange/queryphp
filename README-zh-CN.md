@@ -74,7 +74,7 @@ QueryPHP 基于一款成立于 2010 年的 PHP 框架 [DoYouHaoBaby](https://git
 ## 基本使用
 
 ```
-composer create-project hunzhiwange/queryphp myapp dev-master
+composer create-project hunzhiwange/queryphp myapp
 ```
 
 ## 打开浏览器访问
