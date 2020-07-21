@@ -106,12 +106,11 @@ class Validate
             ->where('num', $this->input['app_id'])
             ->where('key', $this->input['app_key'])
             ->findOne();
-
-        $this->secret = $app->secret;
-
         if (!$app->id) {
             throw new BusinessException(__('应用无法找到'));
         }
+
+        $this->secret = $app->secret;
     }
 
     /**
