@@ -77,7 +77,6 @@ class Index
 
                 $convertMethod = $this->convertService($v);
                 $serviceHandle = $serviceClass.$convertMethod;
-
                 if (!class_exists($serviceHandle)) {
                     $e = sprintf('Service `%s` was not found.', $serviceHandle);
 
@@ -85,7 +84,6 @@ class Index
                 }
 
                 $serviceObj = Leevel::make($serviceHandle);
-
                 if (!is_object($serviceObj) || !is_callable([$serviceObj, 'handle'])) {
                     $e = sprintf('Service `%s:%s` was invalid.', $serviceHandle, 'handle');
 

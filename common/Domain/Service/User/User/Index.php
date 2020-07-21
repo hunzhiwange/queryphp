@@ -85,9 +85,8 @@ class Index
     private function main(array &$input): array
     {
         $repository = $this->w->repository(User::class);
-        $data = $this->findPage($input, $repository);
 
-        return $data;
+        return $this->findPage($input, $repository);
     }
 
     /**
