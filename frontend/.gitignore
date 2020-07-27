@@ -3,6 +3,7 @@ node_modules
 /dist
 /styles
 *.tmp.i18n.js
+package-lock.json
 
 # env files
 .env.local
