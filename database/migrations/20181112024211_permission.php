@@ -62,8 +62,8 @@ class Permission extends AbstractMigration
                 `update_account` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 `version` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '操作版本号',
                 PRIMARY KEY (`id`),
-                UNIQUE KEY `num` (`num`,`delete_at`),
-                KEY `pid` (`pid`)
+                UNIQUE KEY `uniq_num` (`num`,`delete_at`),
+                KEY `idx_pid` (`pid`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限';
             EOT;
 
