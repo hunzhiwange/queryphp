@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-class RolePermission extends AbstractMigration
+final class RolePermission extends AbstractMigration
 {
     /**
      * Change Method.

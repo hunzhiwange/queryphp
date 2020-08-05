@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-class PermissionResource extends AbstractMigration
+final class PermissionResource extends AbstractMigration
 {
     /**
      * Change Method.

@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-class Test extends AbstractMigration
+final class Test extends AbstractMigration
 {
     /**
      * Change Method.
