@@ -1,5 +1,9 @@
 # v1.0.2 - TBD
 
+## 更新
+
+- [#a797676](https://github.com/hunzhiwange/framework/commit/a797676013be725da603e012fcb35fe229ec48d3) refactor: 更新成功和失败消息模板.
+
 # v1.0.1
 
 ## 新增
