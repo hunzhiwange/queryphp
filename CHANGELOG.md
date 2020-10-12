@@ -2,7 +2,7 @@
 
 ## Changed
 
-- [#a797676](https://github.com/hunzhiwange/framework/commit/a797676013be725da603e012fcb35fe229ec48d3) refactor: update success & fail template.
+- [#a797676](https://github.com/hunzhiwange/queryphp/commit/a797676013be725da603e012fcb35fe229ec48d3) refactor: update success & fail template.
 
 # v1.0.1
 
