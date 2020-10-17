@@ -17,7 +17,7 @@ use Phinx\Migration\AbstractMigration;
 final class Role extends AbstractMigration
 {
     /**
-     * Change Method.
+     * Down Method.
      *
      * Write your reversible migrations using this method.
      *
@@ -37,10 +37,18 @@ final class Role extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change(): void
+    public function down(): void
     {
         $this->struct();
         $this->seed();
+    }
+
+    /**
+     * Up Method.
+     */
+    public function up(): void
+    {
+        $this->table('role')->drop()->save();
     }
 
     /**
@@ -64,7 +72,6 @@ final class Role extends AbstractMigration
                 UNIQUE KEY `uniq_num` (`num`,`delete_at`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色';
             EOT;
-
         $this->execute($sql);
     }
 
@@ -78,7 +85,6 @@ final class Role extends AbstractMigration
             INSERT INTO `role`(`id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (2, '管理员', 'admin', 1, '2019-01-31 01:49:49', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `role`(`id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (3, '会员', 'vip', 1, '2019-01-31 01:49:56', '2019-08-25 21:19:23', 0, 0, 0);
             EOT;
-
         $this->execute($sql);
     }
 }
