@@ -17,7 +17,7 @@ use Phinx\Migration\AbstractMigration;
 final class Option extends AbstractMigration
 {
     /**
-     * Change Method.
+     * Down Method.
      *
      * Write your reversible migrations using this method.
      *
@@ -37,10 +37,18 @@ final class Option extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change(): void
+    public function down(): void
     {
         $this->struct();
         $this->seed();
+    }
+
+    /**
+     * Up Method.
+     */
+    public function up(): void
+    {
+        $this->table('option')->drop()->save();
     }
 
     /**
@@ -63,7 +71,6 @@ final class Option extends AbstractMigration
                 UNIQUE KEY `uniq_name` (`name`,`delete_at`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置';
             EOT;
-
         $this->execute($sql);
     }
 
@@ -76,7 +83,6 @@ final class Option extends AbstractMigration
             INSERT INTO `option`(`id`, `name`, `value`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, 'site_close', '1', '2019-04-14 22:26:25', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `option`(`id`, `name`, `value`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (2, 'site_name', 'QueryPHP', '2019-04-14 22:26:25', '2019-08-25 21:19:23', 0, 0, 0);
             EOT;
-
         $this->execute($sql);
     }
 }

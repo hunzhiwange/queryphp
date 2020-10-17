@@ -17,7 +17,7 @@ use Phinx\Migration\AbstractMigration;
 final class Test extends AbstractMigration
 {
     /**
-     * Change Method.
+     * Down Method.
      *
      * Write your reversible migrations using this method.
      *
@@ -37,10 +37,18 @@ final class Test extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change(): void
+    public function down(): void
     {
         $this->struct();
         $this->seed();
+    }
+
+    /**
+     * Up Method.
+     */
+    public function up(): void
+    {
+        $this->table('test')->drop()->save();
     }
 
     /**
@@ -62,7 +70,6 @@ final class Test extends AbstractMigration
               KEY `idx_delete_at` (`delete_at`) USING BTREE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='测试';
             EOT;
-
         $this->execute($sql);
     }
 
@@ -75,7 +82,6 @@ final class Test extends AbstractMigration
             INSERT INTO `test`(`id`, `name`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, 'foo', '2019-08-25 21:19:23', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `test`(`id`, `name`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (2, 'bar', '2019-08-25 21:19:23', '2019-08-25 21:19:23', 0, 0, 0);
             EOT;
-
         $this->execute($sql);
     }
 }

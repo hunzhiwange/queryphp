@@ -17,7 +17,7 @@ use Phinx\Migration\AbstractMigration;
 final class Apps extends AbstractMigration
 {
     /**
-     * Change Method.
+     * Down Method.
      *
      * Write your reversible migrations using this method.
      *
@@ -37,10 +37,18 @@ final class Apps extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change(): void
+    public function down(): void
     {
         $this->struct();
         $this->seed();
+    }
+
+    /**
+     * Up Method.
+     */
+    public function up(): void
+    {
+        $this->table('app')->drop()->save();
     }
 
     /**
@@ -65,7 +73,6 @@ final class Apps extends AbstractMigration
                 UNIQUE KEY `uniq_num` (`num`,`delete_at`) USING BTREE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='应用';
             EOT;
-
         $this->execute($sql);
     }
 
@@ -77,7 +84,6 @@ final class Apps extends AbstractMigration
         $sql = <<<'EOT'
             INSERT INTO `app`(`id`, `num`, `key`, `secret`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, 'admin', 'B1DA4485-B49D-D8E3-0F9E-168D7605A797', '4282222', 1, '2019-04-14 22:26:25', '2019-08-25 21:19:23', 0, 0, 0);
             EOT;
-
         $this->execute($sql);
     }
 }

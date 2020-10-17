@@ -17,7 +17,7 @@ use Phinx\Migration\AbstractMigration;
 final class RolePermission extends AbstractMigration
 {
     /**
-     * Change Method.
+     * Down Method.
      *
      * Write your reversible migrations using this method.
      *
@@ -37,10 +37,18 @@ final class RolePermission extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change(): void
+    public function down(): void
     {
         $this->struct();
         $this->seed();
+    }
+
+    /**
+     * Up Method.
+     */
+    public function up(): void
+    {
+        $this->table('role_permission')->drop()->save();
     }
 
     /**
@@ -63,7 +71,6 @@ final class RolePermission extends AbstractMigration
                 UNIQUE KEY `uniq_role_permission` (`role_id`,`permission_id`,`delete_at`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限关联';
             EOT;
-
         $this->execute($sql);
     }
 
@@ -84,7 +91,6 @@ final class RolePermission extends AbstractMigration
             INSERT INTO `role_permission`(`id`, `role_id`, `permission_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (9, 2, 9, '2019-01-31 09:27:04', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `role_permission`(`id`, `role_id`, `permission_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (10, 3, 7, '2019-01-31 09:27:42', '2019-08-25 21:19:23', 0, 0, 0);
             EOT;
-
         $this->execute($sql);
     }
 }

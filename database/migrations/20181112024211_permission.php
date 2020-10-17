@@ -17,7 +17,7 @@ use Phinx\Migration\AbstractMigration;
 final class Permission extends AbstractMigration
 {
     /**
-     * Change Method.
+     * Down Method.
      *
      * Write your reversible migrations using this method.
      *
@@ -37,10 +37,18 @@ final class Permission extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change(): void
+    public function down(): void
     {
         $this->struct();
         $this->seed();
+    }
+
+    /**
+     * Up Method.
+     */
+    public function up(): void
+    {
+        $this->table('permission')->drop()->save();
     }
 
     /**
@@ -66,7 +74,6 @@ final class Permission extends AbstractMigration
                 KEY `idx_pid` (`pid`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限';
             EOT;
-
         $this->execute($sql);
     }
 
@@ -86,7 +93,6 @@ final class Permission extends AbstractMigration
             INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (8, 0, '基本配置', 'base', 1, '2019-01-31 09:19:38', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (9, 8, '系统配置', 'option', 1, '2019-01-31 09:20:08', '2019-08-25 21:19:23', 0, 0, 0);
             EOT;
-
         $this->execute($sql);
     }
 }

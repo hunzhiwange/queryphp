@@ -17,7 +17,7 @@ use Phinx\Migration\AbstractMigration;
 final class PermissionResource extends AbstractMigration
 {
     /**
-     * Change Method.
+     * Down Method.
      *
      * Write your reversible migrations using this method.
      *
@@ -37,10 +37,18 @@ final class PermissionResource extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change(): void
+    public function down(): void
     {
         $this->struct();
         $this->seed();
+    }
+
+    /**
+     * Up Method.
+     */
+    public function up(): void
+    {
+        $this->table('permission_resource')->drop()->save();
     }
 
     /**
@@ -63,7 +71,6 @@ final class PermissionResource extends AbstractMigration
                 UNIQUE KEY `uniq_permission_resource` (`permission_id`,`resource_id`,`delete_at`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限资源关联';
             EOT;
-
         $this->execute($sql);
     }
 
@@ -130,7 +137,6 @@ final class PermissionResource extends AbstractMigration
             INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (55, 9, 28, '2019-01-31 09:21:55', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (56, 9, 33, '2019-01-31 09:21:55', '2019-08-25 21:19:23', 0, 0, 0);
             EOT;
-
         $this->execute($sql);
     }
 }
