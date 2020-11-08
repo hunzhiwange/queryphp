@@ -29,6 +29,11 @@
             <directory suffix=".php">common</directory>
         </whitelist>
     </filter>
+    <groups>
+        <exclude>
+            <group>ignoredGroup</group>
+        </exclude>
+    </groups>
     <logging>
         <log type="coverage-html" target="runtime/tests/report"/>
     </logging>
