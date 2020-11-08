@@ -29,6 +29,11 @@
             <directory suffix=".php">common</directory>
         </whitelist>
     </filter>
+    <groups>
+        <exclude>
+            <group>ignoredGroup</group>
+        </exclude>
+    </groups>
     <php>
         <env name="RUNTIME_ENVIRONMENT" value="env.phpunit"/>
     </php>
