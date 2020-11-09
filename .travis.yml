@@ -33,8 +33,8 @@ before_install:
   - if [[ $test_coverage != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
 
 install:
-  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
-  - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable --no-suggest; fi
+  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable; fi
+  - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable; fi
   # Some debug info is located here
   - ls -al `$(phpenv which php-config) --extension-dir`
   - $(phpenv which php) -v
@@ -47,7 +47,7 @@ script:
   - cp .env.phpunit.example .env.phpunit
   - cp .env.example .env
   - php leevel migrate:migrate -e env.phpunit
-  - php vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
+  - php build/phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
 
 after_success:
   - if [[ $test_coverage == 'true' ]]; then travis_retry php vendor/bin/php-coveralls -v; fi
