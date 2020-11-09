@@ -234,7 +234,6 @@ $cd /data/codes/queryphp/
 $vim .env.phpunit # modify database redis and other
 - $php leevel migrate:migrate -e env.phpunit
 + $composer migrate-phpunit
-- $php vendor/bin/phpunit
 + $php ./build/phpunit
 + $composer test
 + $composer test-coverage
