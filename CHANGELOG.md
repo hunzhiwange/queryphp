@@ -7,6 +7,8 @@
 ## Optimized
 
 - [#29cad36](https://github.com/hunzhiwange/queryphp/commit/29cad36fbb73721e666834ed144d5db521eade0a) refactor: fix database migrate
+- [#eaae086](https://github.com/hunzhiwange/queryphp/commit/eaae08649d153347d9ed2aaed727ebdaeef98824) chore: update composer and phpunit version
+- [#8379676](https://github.com/hunzhiwange/queryphp/commit/8379676d96f345c84322a1667e0f0ceb9e951fe7) chore: remove phpunit/phpunit,fzaninotto/faker and phpunit/php-token-stream from composer.json
 
 # v1.0.1
 

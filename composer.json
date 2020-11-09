@@ -20,11 +20,8 @@
     },
     "require-dev": {
         "php-coveralls/php-coveralls": "^2.1",
-        "phpunit/phpunit": "^8.2.5",
-        "phpunit/php-token-stream": "~3.1.1",
         "codedungeon/php-cli-colors": "~1.11.0",
-        "fzaninotto/faker": "^1.6",
-        "robmorgan/phinx": "^0.12.1"
+        "robmorgan/phinx": "^0.12.4"
     },
     "autoload": {
         "files": [
