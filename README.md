@@ -35,7 +35,7 @@ A hundred percent coverage of the unit tests to facing the bug,with commitment t
 *The PHP Framework For Code Poem As Free As Wind, Starts From This Moment With QueryPHP.*
 
 * Site: <https://www.queryphp.com/>
-* API: <https://api.queryphp.com>
+* China Mirror Site: <https://queryphp.gitee.io/>
 * Documentation: <https://www.queryphp.com/docs/>
 
 ![](doyouhaobaby.png)
