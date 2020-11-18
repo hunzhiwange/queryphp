@@ -29,7 +29,7 @@ class ExceptionRuntime extends BaseExceptionRuntime
     /**
      * {@inheritdoc}
      */
-    public function report(Throwable $e)
+    public function report(Throwable $e): void
     {
         parent::report($e);
     }
