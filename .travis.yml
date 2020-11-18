@@ -4,6 +4,7 @@ env:
   global:
     - MIN_PHP=7.4snapshot
     - setup=stable
+    - swoole_enable=false
 
 matrix:
   include:
@@ -11,6 +12,8 @@ matrix:
       env: swoole_version="master"
     - php: 7.4
       env: test_coverage=true setup=lowest swoole_version="v4.5.2"
+    - php: nightly
+      env: swoole_version="master" setup=ignore-platform
 
   fast_finish: true
 
@@ -27,14 +30,15 @@ services:
 before_install:
   - mysql -e "create database IF NOT EXISTS test;" -uroot
   - phpenv config-add build/redis.ini
-  - wget https://github.com/swoole/swoole-src/archive/$swoole_version.tar.gz -O swoole.tar.gz && mkdir -p swoole && tar -xf swoole.tar.gz -C swoole --strip-components=1 && rm swoole.tar.gz && cd swoole && phpize && ./configure && make -j$(nproc) && make install && cd - && rm -rf swoole
-  - echo "extension = swoole.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - travis_retry composer self-update
+  - if [[ $swoole_enable == 'true' ]]; then wget https://github.com/swoole/swoole-src/archive/$swoole_version.tar.gz -O swoole.tar.gz && mkdir -p swoole && tar -xf swoole.tar.gz -C swoole --strip-components=1 && rm swoole.tar.gz && cd swoole && phpize && ./configure && make -j$(nproc) && make install && cd - && rm -rf swoole; fi
+  - if [[ $swoole_enable == 'true' ]]; then echo "extension = swoole.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
+  # - travis_retry composer self-update
   - if [[ $test_coverage != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
 
 install:
-  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable; fi
-  - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable; fi
+  - if [[ $setup = 'stable' ]]; then travis_retry build/composer update --prefer-dist --no-interaction --prefer-stable; fi
+  - if [[ $setup = 'lowest' ]]; then travis_retry build/composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable; fi
+  - if [[ $setup = 'ignore-platform' ]]; then travis_retry build/composer update --prefer-dist --no-interaction --prefer-stable --ignore-platform-reqs; fi
   # Some debug info is located here
   - ls -al `$(phpenv which php-config) --extension-dir`
   - $(phpenv which php) -v
