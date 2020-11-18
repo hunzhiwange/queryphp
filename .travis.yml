@@ -8,10 +8,6 @@ env:
 
 matrix:
   include:
-    - php: 7.4
-      env: swoole_version="master"
-    - php: 7.4
-      env: test_coverage=true setup=lowest swoole_version="v4.5.2"
     - php: nightly
       env: swoole_version="master" setup=ignore-platform
 
