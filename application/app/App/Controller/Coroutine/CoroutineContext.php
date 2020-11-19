@@ -52,12 +52,12 @@ class CoroutineContext
             dump($request); // string `request`
 
             $request = $container->make('request', [], $pid);
-            dump(get_class($request)); // string `\Leevel\Http\Request`
+            dump($request::class); // string `\Leevel\Http\Request`
 
             $request = $container->make('request', [], $rootCid);
-            dump(get_class($request)); // string `\Leevel\Http\Request`
+            dump($request:class); // string `\Leevel\Http\Request`
 
-            dump(get_class($rightRequest)); // string `\Leevel\Http\Request`
+            dump($rightRequest::class); // string `\Leevel\Http\Request`
 
             go(function () use ($container, $rightRequest, $rootCid) {
                 dump('child 2 cid');
@@ -72,9 +72,9 @@ class CoroutineContext
                 dump($request); // string `request
 
                 $request = $container->make('request', [], $rootCid);
-                dump(get_class($request)); // string `\Leevel\Http\Request`
+                dump($request::class); // string `\Leevel\Http\Request`
 
-                dump(get_class($rightRequest)); // string `\Leevel\Http\Request`
+                dump($rightRequest::class); // string `\Leevel\Http\Request`
             });
         });
 

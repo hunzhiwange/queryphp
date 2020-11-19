@@ -89,7 +89,7 @@ class Auth extends BaseAuth
             }
 
             parent::handle($next, $request);
-        } catch (AuthException $e) {
+        } catch (AuthException) {
             throw new UnauthorizedHttpException(__('权限认证失败'));
         }
     }

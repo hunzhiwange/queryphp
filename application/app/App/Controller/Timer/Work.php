@@ -61,7 +61,7 @@ class Work
                 $work();
                 swoole_timer_clear($timerId);
                 $this->message(sprintf('Work successed at `%d` try', $count));
-            } catch (Throwable $th) {
+            } catch (Throwable) {
                 if ($count >= $maxCount) {
                     swoole_timer_clear($timerId);
                     $this->message(sprintf('Work faield after `%d` tries', $maxCount));
