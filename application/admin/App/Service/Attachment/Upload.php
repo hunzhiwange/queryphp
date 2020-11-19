@@ -21,9 +21,7 @@ use Common\Domain\Service\Attachment\Upload as Service;
  */
 class Upload
 {
-    private Service $service;
-
-    public function __construct(Service $service)
+    public function __construct(private Service $service)
     {
         $this->service = $service;
     }

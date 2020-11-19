@@ -21,9 +21,7 @@ use Common\Domain\Service\User\Permission\Destroy as Service;
  */
 class Destroy
 {
-    private Service $service;
-
-    public function __construct(Service $service)
+    public function __construct(private Service $service)
     {
         $this->service = $service;
     }

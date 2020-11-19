@@ -21,9 +21,7 @@ use Common\Domain\Service\User\User\ChangePassword as Service;
  */
 class ChangePassword
 {
-    private Service $service;
-
-    public function __construct(Service $service)
+    public function __construct(private Service $service)
     {
         $this->service = $service;
     }

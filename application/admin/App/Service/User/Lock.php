@@ -21,9 +21,7 @@ use Common\Domain\Service\User\User\Lock as Service;
  */
 class Lock
 {
-    private Service $service;
-
-    public function __construct(Service $service)
+    public function __construct(private Service $service)
     {
         $this->service = $service;
     }

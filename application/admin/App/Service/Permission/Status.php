@@ -21,9 +21,7 @@ use Common\Domain\Service\User\Permission\Status as Service;
  */
 class Status
 {
-    private Service $service;
-
-    public function __construct(Service $service)
+    public function __construct(private Service $service)
     {
         $this->service = $service;
     }

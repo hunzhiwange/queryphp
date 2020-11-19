@@ -21,9 +21,7 @@ use Common\Domain\Service\User\Resource\Update as Service;
  */
 class Update
 {
-    private Service $service;
-
-    public function __construct(Service $service)
+    public function __construct(private Service $service)
     {
         $this->service = $service;
     }

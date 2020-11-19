@@ -21,9 +21,7 @@ use Common\Domain\Service\Login\Code as Service;
  */
 class Code
 {
-    private Service $service;
-
-    public function __construct(Service $service)
+    public function __construct(private Service $service)
     {
         $this->service = $service;
     }
