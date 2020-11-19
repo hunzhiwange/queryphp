@@ -23,7 +23,6 @@ class Lock
 {
     public function __construct(private Service $service)
     {
-        $this->service = $service;
     }
 
     public function handle(array $input): array
