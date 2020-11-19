@@ -2,7 +2,7 @@ language: php
 
 env:
   global:
-    - MIN_PHP=7.4snapshot
+    - MIN_PHP=8.0
     - setup=stable
     - swoole_enable=false
 
