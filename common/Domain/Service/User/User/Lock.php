@@ -23,13 +23,7 @@ use Leevel\Validate\Proxy\Validate as Validates;
  */
 class Lock
 {
-    /**
-     * 锁定缓存.
-     *
-     * @var \Admin\Infra\Lock
-     */
-    private $lock;
-
+    private Lock $lock;
     private array $input;
 
     public function __construct(CacheLock $lock)

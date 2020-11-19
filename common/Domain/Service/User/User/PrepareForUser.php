@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Common\Domain\Service\User\User;
 
 use Common\Domain\Entity\User\User;
+use Traversable;
 
 /**
  * 准备用户基础数据.
@@ -30,10 +31,8 @@ class PrepareForUser
      * 批量处理.
      *
      * - 支持 array|\Leevel\Collection\Collection 等支持循环遍历的数据.
-     *
-     * @param mixed $data
      */
-    public function handleMulti($data): array
+    public function handleMulti(array|Traversable $data): array
     {
         $result = [];
         foreach ($data as $v) {

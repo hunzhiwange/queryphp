@@ -27,22 +27,16 @@ class User extends Entity
 
     /**
      * Database table.
-     *
-     * @var string
      */
     const TABLE = 'user';
 
     /**
      * Primary key.
-     *
-     * @var string
      */
     const ID = 'id';
 
     /**
      * Auto increment.
-     *
-     * @var string
      */
     const AUTO = 'id';
 
@@ -88,8 +82,6 @@ class User extends Entity
      * - version
      *                   comment: 操作版本号  type: bigint(20) unsigned  null: false
      *                   key:   default: 0  extra:
-     *
-     * @var array
      */
     const STRUCT = [
         'id' => [
@@ -137,15 +129,11 @@ class User extends Entity
 
     /**
      * Soft delete column.
-     *
-     * @var string
      */
     const DELETE_AT = 'delete_at';
 
     /**
      * 状态值.
-     *
-     * @var array
      */
     const STATUS_ENUM = [
         'disable' => [0, '禁用'],

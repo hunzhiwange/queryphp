@@ -28,22 +28,16 @@ class Permission extends Entity
 
     /**
      * Database table.
-     *
-     * @var string
      */
     const TABLE = 'permission';
 
     /**
      * Primary key.
-     *
-     * @var string
      */
     const ID = 'id';
 
     /**
      * Auto increment.
-     *
-     * @var string
      */
     const AUTO = 'id';
 
@@ -83,8 +77,6 @@ class Permission extends Entity
      * - version
      *                   comment: 操作版本号  type: bigint(20) unsigned  null: false
      *                   key:   default: 0  extra:
-     *
-     * @var array
      */
     const STRUCT = [
         'id' => [
@@ -127,22 +119,16 @@ class Permission extends Entity
 
     /**
      * Soft delete column.
-     *
-     * @var string
      */
     const DELETE_AT = 'delete_at';
 
     /**
      * 仓储.
-     *
-     * @var string
      */
     const REPOSITORY = RepositoryPermission::class;
 
     /**
      * 状态值.
-     *
-     * @var array
      */
     const STATUS_ENUM = [
         'disable' => [0, '禁用'],

@@ -24,8 +24,6 @@ class Index
 {
     /**
      * 顶级命名空间.
-     *
-     * @var string
      */
     private string $topNamespace;
 
@@ -33,8 +31,6 @@ class Index
      * 特殊的语言保留关键字.
      *
      * 遇到一个新增加即可，不需要全部添加.
-     *
-     * @var array
      */
     private array $keyMap = [
         'return' => 'returns',

@@ -25,13 +25,7 @@ use Leevel\Validate\Proxy\Validate as Validates;
  */
 class ChangePassword
 {
-    /**
-     * Hash 组件.
-     *
-     * @var \Leevel\Auth\Hash
-     */
-    private $hash;
-
+    private Hash $hash;
     private array $input;
     private UnitOfWork $w;
 

@@ -28,8 +28,6 @@ class Test
     /**
      * WebSocket 客户端与服务器建立连接并完成握手后.
      *
-     * @param \Swoole\Http\Request $request
-     *
      * @see https://wiki.swoole.com/wiki/page/401.html
      */
     public function open(Server $server, Request $request, int $fd)

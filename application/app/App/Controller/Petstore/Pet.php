@@ -49,10 +49,8 @@ class Pet
      *     leevelBind="\App\App\Controller\Petstore\Pet@withBind",
      *     leevelMiddlewares="api"
      * )
-     *
-     * @param mixed $petId
      */
-    public function withBind($petId): string
+    public function withBind(string|int $petId): string
     {
         return sprintf('Hi you,i am withBind and it petId is %s', $petId);
     }
@@ -329,10 +327,8 @@ class Pet
      *         {"api_key": {}}
      *     }
      * )
-     *
-     * @param int $id
      */
-    public function getPetById($id): void
+    public function getPetById(int $id): void
     {
     }
 

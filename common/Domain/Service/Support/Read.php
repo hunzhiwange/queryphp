@@ -58,10 +58,8 @@ trait Read
 
     /**
      * 关键字条件.
-     *
-     * @param mixed $value
      */
-    private function keySpec(Select $select, $value, array $meta = []): void
+    private function keySpec(Select $select, mixed $value, array $meta = []): void
     {
         $value = str_replace(' ', '%', $value);
         $select->where(function ($select) use ($value, $meta) {
@@ -73,30 +71,24 @@ trait Read
 
     /**
      * 状态条件.
-     *
-     * @param mixed $value
      */
-    private function statusSpec(Select $select, $value, array $meta = []): void
+    private function statusSpec(Select $select, mixed $value, array $meta = []): void
     {
         $select->where('status', (int) $value);
     }
 
     /**
      * 字段查询条件.
-     *
-     * @param mixed $value
      */
-    private function columnSpec(Select $select, $value, array $meta = []): void
+    private function columnSpec(Select $select, mixed $value, array $meta = []): void
     {
         $select->setColumns($value);
     }
 
     /**
      * 查询条数限制.
-     *
-     * @param mixed $value
      */
-    private function limitSpec(Select $select, $value, array $meta = []): void
+    private function limitSpec(Select $select, mixed $value, array $meta = []): void
     {
         $value = array_map(function ($v) {
             return (int) $v;
@@ -106,10 +98,8 @@ trait Read
 
     /**
      * 排序.
-     *
-     * @param mixed $value
      */
-    private function orderBySpec(Select $select, $value, array $meta = []): void
+    private function orderBySpec(Select $select, mixed $value, array $meta = []): void
     {
         $select->orderBy($value);
     }

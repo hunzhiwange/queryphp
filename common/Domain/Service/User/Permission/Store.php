@@ -27,8 +27,6 @@ class Store
 {
     /**
      * 输入数据.
-     *
-     * @var array
      */
     private array $input;
     private UnitOfWork $w;

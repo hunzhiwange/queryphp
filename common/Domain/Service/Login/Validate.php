@@ -30,20 +30,11 @@ use Leevel\Validate\Proxy\Validate as Validates;
 class Validate
 {
     private Request $request;
-
-    /**
-     * 验证码存储.
-     *
-     * @var \Admin\Infra\Code
-     */
     private Code $code;
-
     private array $input;
 
     /**
      * 秘钥.
-     *
-     * @var string
      */
     private string $secret;
 

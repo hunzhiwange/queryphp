@@ -15,12 +15,8 @@ declare(strict_types=1);
 if (!function_exists('__')) {
     /**
      * lang.
-     *
-     * @param array $arr
-     *
-     * @return string
      */
-    function __(string $text, ...$arr)
+    function __(string $text, ...$arr): string
     {
         return sprintf($text, ...$arr);
     }
