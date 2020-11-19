@@ -23,11 +23,6 @@ use Leevel;
 class Index
 {
     /**
-     * 顶级命名空间.
-     */
-    private string $topNamespace;
-
-    /**
      * 特殊的语言保留关键字.
      *
      * 遇到一个新增加即可，不需要全部添加.
@@ -43,9 +38,8 @@ class Index
      *
      * 加入顶层命名空间以便于做单元测试
      */
-    public function __construct(string $topNamespace = 'Admin')
+    public function __construct(private string $topNamespace = 'Admin')
     {
-        $this->topNamespace = $topNamespace;
     }
 
     /**

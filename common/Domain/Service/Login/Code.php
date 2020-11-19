@@ -23,11 +23,8 @@ use Leevel\Seccode\Seccode;
  */
 class Code
 {
-    private Codes $code;
-
-    public function __construct(Codes $code)
+    public function __construct(private Codes $code)
     {
-        $this->code = $code;
     }
 
     public function handle(array $input): string

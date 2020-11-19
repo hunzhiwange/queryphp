@@ -21,16 +21,11 @@ use Admin\Infra\PermissionCache;
  */
 class Permission
 {
-    private PermissionCache $permissionCache;
-    private UserPermission $permission;
-
     /**
      * 构造函数.
      */
-    public function __construct(PermissionCache $permissionCache, UserPermission $permission)
+    public function __construct(private PermissionCache $permissionCache, private UserPermission $permission)
     {
-        $this->permissionCache = $permissionCache;
-        $this->permission = $permission;
     }
 
     public function handle(array $input): array
