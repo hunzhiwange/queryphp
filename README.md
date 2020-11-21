@@ -9,8 +9,8 @@
   <a href="https://www.swoole.com/"><img src="https://img.shields.io/badge/Swoole-%3E%3D%204.5.2-008de0.svg" alt="Minimum Swoole Version"></a>
   <a href="https://github.com/spiral/roadrunner"><img alt="RoadRunner Version" src="https://img.shields.io/badge/RoadRunner-%3E=1.8.2-brightgreen.svg" /></a>
   <a href="https://github.styleci.io/repos/78216574"><img src="https://github.styleci.io/repos/78216574/shield?branch=master" alt="StyleCI"></a>
-  <a href='https://www.queryphp.com/docs/'><img src='https://img.shields.io/badge/docs-passing-green.svg?maxAge=2592000' alt='QueryPHP Doc' /></a>
   <br />
+  <a href='https://www.queryphp.com/docs/'><img src='https://img.shields.io/badge/docs-passing-green.svg?maxAge=2592000' alt='QueryPHP Doc' /></a>
   <a href="https://github.com/hunzhiwange/queryphp/actions">
     <img alt="Build Status" src="https://github.com/hunzhiwange/queryphp/workflows/tests/badge.svg" /></a>
   <a href="https://codecov.io/gh/hunzhiwange/queryphp">
@@ -22,7 +22,7 @@
 </p>
 
 <p align="center">
-  <h3>The Core Framework</h3>
+  <b>The Core Framework</b>
   <br />
   <a href="https://github.com/hunzhiwange/framework/actions">
     <img alt="Build Status" src="https://github.com/hunzhiwange/framework/workflows/tests/badge.svg" /></a>
