@@ -68,12 +68,12 @@ jobs:
           mkdir -p logs
           mkdir -p build/logs
           mkdir -p runtime/tests
-          cp .env.phpunit.example ./.env.phpunit
-          cp .env.example ./.env
+          cp .env.phpunit.example .env.phpunit
+          cp .env.example .env
           php leevel migrate:migrate -e env.phpunit
 
       - name: Migrate
-        run: php ./vendor/bin/phinx migrate -e testing
+        run: php vendor/bin/phinx migrate -e testing
 
       - name: Execute tests
         run: php build/phpunit --verbose -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
