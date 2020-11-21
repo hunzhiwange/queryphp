@@ -22,8 +22,8 @@
 </p>
 
 <p align="center">
-  ### The Core Framework
-
+  <h3>The Core Framework</h3>
+  <br />
   <a href="https://github.com/hunzhiwange/framework/actions">
     <img alt="Build Status" src="https://github.com/hunzhiwange/framework/workflows/tests/badge.svg" /></a>
   <a href="https://codecov.io/gh/hunzhiwange/framework">
