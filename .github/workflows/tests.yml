@@ -42,7 +42,7 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd
           tools: composer:v2
-          coverage: none
+          coverage: pcov
 
       - name: Setup problem matchers
         run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
@@ -74,7 +74,12 @@ jobs:
         run: php leevel migrate:migrate -e env.phpunit
 
       - name: Execute tests
-        run: php build/phpunit --verbose -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
+        run: php build/phpunit --verbose -c phpunit.xml.dist --coverage-clover=coverage.xml
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
           DB_USERNAME: root
+
+      - name: Send code coverage report to Codecov.io
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN_QUERYPHP }}
