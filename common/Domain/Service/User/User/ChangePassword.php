@@ -25,20 +25,10 @@ use Leevel\Validate\Proxy\Validate as Validates;
  */
 class ChangePassword
 {
-    /**
-     * Hash 组件.
-     *
-     * @var \Leevel\Auth\Hash
-     */
-    private $hash;
-
     private array $input;
-    private UnitOfWork $w;
 
-    public function __construct(UnitOfWork $w, Hash $hash)
+    public function __construct(private UnitOfWork $w, private Hash $hash)
     {
-        $this->w = $w;
-        $this->hash = $hash;
     }
 
     public function handle(array $input): array

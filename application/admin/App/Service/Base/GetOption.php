@@ -21,11 +21,8 @@ use Common\Domain\Service\Base\GetOption as Service;
  */
 class GetOption
 {
-    private Service $service;
-
-    public function __construct(Service $service)
+    public function __construct(private Service $service)
     {
-        $this->service = $service;
     }
 
     public function handle(): array

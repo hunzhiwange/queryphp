@@ -26,27 +26,10 @@ use Leevel\Validate\Proxy\Validate as Validates;
  */
 class Unlock
 {
-    /**
-     * Hash 组件.
-     *
-     * @var \Leevel\Auth\Hash
-     */
-    private $hash;
-
-    /**
-     * 锁定缓存.
-     *
-     * @var \Admin\Infra\Lock
-     */
-    private $lock;
-
     private array $input;
-    private UnitOfWork $w;
 
-    public function __construct(UnitOfWork $w, Hash $hash, Lock $lock)
+    public function __construct(private UnitOfWork $w, private Hash $hash, private Lock $lock)
     {
-        $this->w = $w;
-        $this->hash = $hash;
         $this->lock = $lock;
     }
 

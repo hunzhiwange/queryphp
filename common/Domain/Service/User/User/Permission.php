@@ -22,28 +22,10 @@ use Admin\Infra\PermissionCache;
 class Permission
 {
     /**
-     * 权限缓存.
-     *
-     * @var \Admin\Infra\PermissionCache
-     */
-    private PermissionCache $permissionCache;
-
-    /**
-     * 获取用户权限.
-     *
-     * @var \Common\Domain\Service\User\User\UserPermission
-     */
-    private UserPermission $permission;
-
-    /**
      * 构造函数.
-     *
-     * @param \Common\Domain\Service\User\User\UserPermission $permission
      */
-    public function __construct(PermissionCache $permissionCache, UserPermission $permission)
+    public function __construct(private PermissionCache $permissionCache, private UserPermission $permission)
     {
-        $this->permissionCache = $permissionCache;
-        $this->permission = $permission;
     }
 
     public function handle(array $input): array

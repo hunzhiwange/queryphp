@@ -28,12 +28,8 @@ class PrepareForUser
 
     /**
      * 批量处理.
-     *
-     * - 支持 array|\Leevel\Collection\Collection 等支持循环遍历的数据.
-     *
-     * @param mixed $data
      */
-    public function handleMulti($data): array
+    public function handleMulti(iterable $data): array
     {
         $result = [];
         foreach ($data as $v) {

@@ -46,7 +46,7 @@ QueryPHP 是一款现代化的高性能 PHP 渐进式协程框架, 我们还是�
 *代码如诗，自由如风, 此刻携手 QueryPHP 共创美好.*
 
 * 官方网站: <https://www.queryphp.com/>
-* API 文档: <https://api.queryphp.com>
+* 官方网站国内镜像: <https://queryphp.gitee.io/>
 * 开发文档: <https://www.queryphp.com/docs/>
 
 ![](doyouhaobaby.png)

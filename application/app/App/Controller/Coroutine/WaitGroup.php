@@ -106,15 +106,11 @@ class BaseWaitGroup
 {
     /**
      * 计数器.
-     *
-     * @var int
      */
-    private $count = 0;
+    private int $count = 0;
 
     /**
      * 通道.
-     *
-     * @var \Swoole\Coroutine\Channel
      */
     private Channel $chan;
 

@@ -21,8 +21,6 @@ class Test extends Event
 {
     /**
      * 博客内容.
-     *
-     * @var string
      */
     private string $blog;
 
@@ -30,20 +28,16 @@ class Test extends Event
      * 构造函数.
      *
      * - 支持依赖注入.
-     *
-     * @param string $blog
      */
-    public function __construct($blog)
+    public function __construct(string $blog)
     {
         $this->blog = $blog;
     }
 
     /**
      * 返回博客内容.
-     *
-     * @return string
      */
-    public function blog()
+    public function blog(): string
     {
         return $this->blog;
     }

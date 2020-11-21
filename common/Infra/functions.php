@@ -28,8 +28,6 @@ if (!function_exists('permission')) {
 if (!function_exists('sql')) {
     /**
      * SQL 监听器.
-     *
-     * @param \Closure $call
      */
     function sql(Closure $call): void
     {

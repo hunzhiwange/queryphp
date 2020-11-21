@@ -47,10 +47,8 @@ class Api
      *     },
      *     leevelAttributes={"args1": "hello", "args2": "world"}
      * )
-     *
-     * @param mixed $petId
      */
-    public function petLeevelForApi($petId): string
+    public function petLeevelForApi(string|int $petId): string
     {
         return sprintf('Hi you,i am petLeevelForApi and it petId is %s', $petId);
     }

@@ -21,15 +21,11 @@ class Permission
 {
     /**
      * 权限数据.
-     *
-     * @var array
      */
     private array $permission = [];
 
     /**
      * 构造函数.
-     *
-     * @param \Admin\Infra\PermissionCache $permission
      */
     public function __construct(PermissionCache $permission, string $token)
     {

@@ -16,22 +16,16 @@ class {{file_name}} extends Entity
     
     /**
      * Database table.
-     *
-     * @var string
      */
     const TABLE = '{{table_name}}';
 
     /**
      * Primary key.
-     *
-     * @var {{primary_key_type}}
      */
     const ID = {{primary_key}};
 
     /**
      * Auto increment.
-     *
-     * @var {{auto_increment_type}}
      */
     const AUTO = {{auto_increment}};
 
@@ -39,8 +33,6 @@ class {{file_name}} extends Entity
      * Entity struct.
      *
 {{struct_comment}}
-     * 
-     * @var array
      */
     const STRUCT = [
 {{struct}}

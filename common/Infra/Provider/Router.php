@@ -31,8 +31,6 @@ class Router extends RouterProvider
 {
     /**
      * 控制器相对目录.
-     *
-     * @var string
      */
     protected string $controllerDir = 'App\\Controller';
 
@@ -40,8 +38,6 @@ class Router extends RouterProvider
      * 中间件分组.
      *
      * - 分组可以很方便地批量调用组件.
-     *
-     * @var array
      */
     protected array $middlewareGroups = [
         // web 请求中间件
@@ -66,8 +62,6 @@ class Router extends RouterProvider
      *
      * - HTTP 中间件提供一个方便的机制来过滤进入应用程序的 HTTP 请求.
      * - 例外在应用执行结束后响应环节也会调用 HTTP 中间件.
-     *
-     * @var array
      */
     protected array $middlewareAlias = [
         'auth'              => Auth::class,
@@ -81,8 +75,6 @@ class Router extends RouterProvider
 
     /**
      * 基础路径.
-     *
-     * @var array
      */
     protected array $basePaths = [
         '*' => [
@@ -106,8 +98,6 @@ class Router extends RouterProvider
 
     /**
      * 分组.
-     *
-     * @var array
      */
     protected array $groups = [
         'pet'     => [],

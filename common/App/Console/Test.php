@@ -23,22 +23,16 @@ class Test extends Command
 {
     /**
      * 命令名字.
-     *
-     * @var string
      */
     protected string $name = 'common:test';
 
     /**
      * 命令行描述.
-     *
-     * @var string
      */
     protected string $description = 'This is a test command';
 
     /**
      * 命令帮助.
-     *
-     * @var string
      */
     protected string $help = <<<'EOF'
         The <info>%command.name%</info> command to show how to make a command:

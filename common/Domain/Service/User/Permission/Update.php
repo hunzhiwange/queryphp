@@ -25,12 +25,10 @@ use Leevel\Validate\UniqueRule;
  */
 class Update
 {
-    private UnitOfWork $w;
     private array $input;
 
-    public function __construct(UnitOfWork $w)
+    public function __construct(private UnitOfWork $w)
     {
-        $this->w = $w;
     }
 
     public function handle(array $input): array

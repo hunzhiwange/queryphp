@@ -21,16 +21,8 @@ use Common\Domain\Service\User\User\Index as Service;
  */
 class Index
 {
-    /**
-     * 用户列表服务.
-     *
-     * @var \Common\Domain\Service\User\User\Index
-     */
-    private Service $service;
-
-    public function __construct(Service $service)
+    public function __construct(private Service $service)
     {
-        $this->service = $service;
     }
 
     public function handle(array $input): array

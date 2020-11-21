@@ -63,10 +63,8 @@ class DeferTask
 {
     /**
      * 任务.
-     *
-     * @var callable[]
      */
-    private $tasks;
+    private array $tasks;
 
     /**
      * 析构函数.
@@ -74,7 +72,6 @@ class DeferTask
     public function __destruct()
     {
         $tasks = array_reverse($this->tasks);
-
         foreach ($tasks as $fn) {
             $fn();
         }

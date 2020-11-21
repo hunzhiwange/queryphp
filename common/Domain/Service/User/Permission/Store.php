@@ -27,15 +27,11 @@ class Store
 {
     /**
      * 输入数据.
-     *
-     * @var array
      */
     private array $input;
-    private UnitOfWork $w;
 
-    public function __construct(UnitOfWork $w)
+    public function __construct(private UnitOfWork $w)
     {
-        $this->w = $w;
     }
 
     public function handle(array $input): array

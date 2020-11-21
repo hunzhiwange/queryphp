@@ -24,11 +24,8 @@ use Leevel\Validate\Proxy\Validate;
  */
 trait Destroy
 {
-    private UnitOfWork $w;
-
-    public function __construct(UnitOfWork $w)
+    public function __construct(private UnitOfWork $w)
     {
-        $this->w = $w;
     }
 
     public function handle(array $input): array
