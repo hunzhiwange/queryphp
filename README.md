@@ -22,7 +22,7 @@
 </p>
 
 <p align="center">
-  <b>The Core Framework</b>
+  <a href="https://github.com/hunzhiwange/framework"><b>The Core Framework</b></a>
   <br />
   <a href="https://github.com/hunzhiwange/framework/actions">
     <img alt="Build Status" src="https://github.com/hunzhiwange/framework/workflows/tests/badge.svg" /></a>
