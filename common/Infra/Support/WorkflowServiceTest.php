@@ -16,9 +16,6 @@ namespace Common\Infra\Support;
 
 use Tests\TestCase;
 
-/**
- * @codeCoverageIgnore
- */
 class WorkflowServiceTest extends TestCase
 {
     public function testBaseUse(): void
