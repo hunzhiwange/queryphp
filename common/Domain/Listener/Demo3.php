@@ -12,12 +12,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Event;
+namespace Common\Domain\Listener;
 
-/**
- * WildcardsTest 事件.
- */
-class WildcardsTest extends Event
+class Demo3 extends Listener
 {
     /**
      * 构造函数.
@@ -26,5 +23,13 @@ class WildcardsTest extends Event
      */
     public function __construct()
     {
+    }
+
+    /**
+     * 监听器响应.
+     */
+    public function handle(): void
+    {
+        echo 'test3';
     }
 }

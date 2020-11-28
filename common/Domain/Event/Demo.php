@@ -12,29 +12,30 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Listener;
+namespace Common\Domain\Event;
 
-/**
- * test 监听器.
- */
-class Test extends Listener
+class Demo extends Event
 {
+    /**
+     * 博客内容.
+     */
+    private string $blog;
+
     /**
      * 构造函数.
      *
      * - 支持依赖注入.
      */
-    public function __construct()
+    public function __construct(string $blog)
     {
+        $this->blog = $blog;
     }
 
     /**
-     * 监听器响应.
+     * 返回博客内容.
      */
-    public function handle()
+    public function blog(): string
     {
-        $args = func_get_args();
-        $event = array_shift($args);
-        print_r($args);
+        return $this->blog;
     }
 }
