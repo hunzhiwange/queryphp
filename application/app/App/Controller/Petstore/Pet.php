@@ -50,7 +50,7 @@ class Pet
      *     leevelMiddlewares="api"
      * )
      */
-    public function withBind(string|int $petId): string
+    public function withBind(string $petId): string
     {
         return sprintf('Hi you,i am withBind and it petId is %s', $petId);
     }
