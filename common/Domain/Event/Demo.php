@@ -14,10 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Domain\Event;
 
-/**
- * test 事件.
- */
-class Test extends Event
+class Demo extends Event
 {
     /**
      * 博客内容.

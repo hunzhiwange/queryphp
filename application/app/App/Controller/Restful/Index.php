@@ -17,8 +17,6 @@ namespace App\App\Controller\Restful;
 use Leevel\Router\IRouter;
 
 /**
- * index.
- *
  * @codeCoverageIgnore
  */
 class Index

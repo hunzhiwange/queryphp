@@ -17,8 +17,6 @@ namespace App\App\Controller\Restful;
 use Leevel\Router\IRouter;
 
 /**
- * destroy.
- *
  * @codeCoverageIgnore
  */
 class Destroy

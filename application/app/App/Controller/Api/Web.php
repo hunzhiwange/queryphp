@@ -12,27 +12,26 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Listener;
+namespace App\App\Controller\Api;
 
 /**
- * test3 监听器.
+ * @codeCoverageIgnore
  */
-class Test3 extends Listener
+class Web
 {
-    /**
-     * 构造函数.
-     *
-     * - 支持依赖注入.
-     */
-    public function __construct()
+    #[Route(
+        path: "/web/v1/demo/{name:[A-Za-z]+}/",
+    )]
+    public function demo1(string $name): string
     {
+        return sprintf('web demo, your name is %s'. $name);
     }
 
-    /**
-     * 监听器响应.
-     */
-    public function handle(): void
+    #[Route(
+        path: "/web/v2/demo/",
+    )]
+    public function demo2(): string
     {
-        echo 'test3';
+        return 'web demo2';
     }
 }

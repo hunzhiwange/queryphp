@@ -19,7 +19,7 @@ use Leevel;
 use function OpenApi\scan;
 
 /**
- * api 文档入口.
+ * Api 文档入口.
  *
  * @codeCoverageIgnore
  */
@@ -30,18 +30,12 @@ class Index
      */
     public function handle(): string
     {
-        // 关闭路由自定义标签警告
-        $oldErrorReporting = error_reporting();
-        error_reporting(E_ERROR | E_PARSE | E_STRICT);
-
         // 扫描路径
         $path = array_merge($this->basePath(), $this->path());
         $openApi = scan($path);
 
         // 关闭调试模式
         $this->forceCloseDebug();
-
-        error_reporting($oldErrorReporting);
 
         return json_encode($openApi) ?: '';
     }

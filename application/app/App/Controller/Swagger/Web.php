@@ -17,14 +17,14 @@ namespace App\App\Controller\Swagger;
 use Leevel;
 
 /**
- * 用户文档测试.
+ * Web 文档测试.
  *
  * - 文档太多加载速度就很慢，可以针对不同的服务加入不同的路径
- * - 访问地址 http://127.0.0.1:9527/apis/#/swagger/user
+ * - 访问地址 http://127.0.0.1:9527/apis/#/swagger/web
  *
  * @codeCoverageIgnore
  */
-class User extends Index
+class Web extends Index
 {
     /**
      * 扫描路径.
@@ -32,7 +32,7 @@ class User extends Index
     protected function path(): array
     {
         return [
-            Leevel::appPath('app/App/Controller/Petstore/User.php'),
+            Leevel::appPath('app/App/Controller/Swagger/WebDemo.php'),
         ];
     }
 }

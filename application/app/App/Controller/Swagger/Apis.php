@@ -16,9 +16,6 @@ namespace App\App\Controller\Swagger;
 
 /**
  * 文档汇总.
- *
- * @author Name Your <your@mail.com>
- *
  * @codeCoverageIgnore
  */
 class Apis
@@ -30,8 +27,8 @@ class Apis
     {
         return [
             [
-                'name' => 'User Api',
-                'url'  => '/swagger/user',
+                'name' => 'Web Api',
+                'url'  => '/swagger/web',
             ],
             [
                 'name' => 'QueryPHP API',

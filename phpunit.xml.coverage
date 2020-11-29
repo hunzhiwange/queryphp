@@ -13,20 +13,24 @@
         <listener class="NunoMaduro\Collision\Adapters\Phpunit\Printer" />
     </listeners>
     <testsuites>
-        <testsuite name="Application Test Suite">
+        <testsuite name="Main Test Suite">
             <directory>./tests/</directory>
         </testsuite>
         <testsuite name="Application Test Suite">
             <directory>./application/</directory>
         </testsuite>
-        <testsuite name="Application Test Suite">
+        <testsuite name="Common Test Suite">
             <directory>./common/</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">application</directory>
-            <directory suffix=".php">common</directory>
+            <directory suffix=".php">./application/</directory>
+            <directory suffix=".php">./common/</directory>
+            <exclude>
+                <directory suffix="Test.php">./application/</directory>
+                <directory suffix="Test.php">./common/</directory>
+            </exclude>
         </whitelist>
     </filter>
     <groups>

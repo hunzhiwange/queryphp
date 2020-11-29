@@ -96,16 +96,16 @@ composer create-project hunzhiwange/queryphp myapp
 php leevel server <Visite http://127.0.0.1:9527/>
 ```
 
- * 首页 <http://127.0.0.1:9527/>
- * MVC 路由 <http://127.0.0.1:9527/api/test>
- * MVC restful 路由 http://127.0.0.1:9527/restful/123
- * 指定方法的 MVC restful 路由 http://127.0.0.1:9527/restful/123/show
- * 注解路由 http://127.0.0.1:9527/api/v1/petLeevelForApi/helloworld
- * 带有绑定的注解路由 http://127.0.0.1:9527/api/v2/withBind/foobar
- * php leevel link:public <http://127.0.0.1:9527/public/css/page.css>
- * php leevel link:storage <http://127.0.0.1:9527/storage/logo.png>
- * php leevel link:apis <http://127.0.0.1:9527/apis/>
- * php leevel link:debugbar <http://127.0.0.1:9527/debugbar/debugbar.css>
+ * Home http://127.0.0.1:9527/
+ * MVC router http://127.0.0.1:9527/api/test
+ * MVC restful router http://127.0.0.1:9527/restful/123
+ * MVC restful router with method http://127.0.0.1:9527/restful/123/show
+ * Annotation api router http://127.0.0.1:9527/api/v1/demo/liu
+ * Annotation web router http://127.0.0.1:9527/web/v2/demo
+ * php leevel link:public http://127.0.0.1:9527/public/css/page.css
+ * php leevel link:storage http://127.0.0.1:9527/storage/logo.png
+ * php leevel link:apis http://127.0.0.1:9527/apis/
+ * php leevel link:debugbar http://127.0.0.1:9527/debugbar/debugbar.css
 
 ## 连接数据库
 
@@ -359,16 +359,16 @@ _____________                           _______________
 +-----------------------+---------------------------------+
 ```
 
- * 首页 <http://127.0.0.1:9527/>
- * MVC 路由 <http://127.0.0.1:9527/api/test>
- * MVC restful 路由 http://127.0.0.1:9527/restful/123
- * 指定方法的 MVC restful 路由 http://127.0.0.1:9527/restful/123/show
- * 注解路由 http://127.0.0.1:9527/api/v1/petLeevelForApi/helloworld
- * 带有绑定的注解路由 http://127.0.0.1:9527/api/v2/withBind/foobar
- * php leevel link:public <http://127.0.0.1:9527/public/css/page.css>
- * php leevel link:storage <http://127.0.0.1:9527/storage/logo.png>
- * php leevel link:apis <http://127.0.0.1:9527/apis/>
- * php leevel link:debugbar <http://127.0.0.1:9527/debugbar/debugbar.css>
+ * Home http://127.0.0.1:9527/
+ * MVC router http://127.0.0.1:9527/api/test
+ * MVC restful router http://127.0.0.1:9527/restful/123
+ * MVC restful router with method http://127.0.0.1:9527/restful/123/show
+ * Annotation api router http://127.0.0.1:9527/api/v1/demo/liu
+ * Annotation web router http://127.0.0.1:9527/web/v2/demo
+ * php leevel link:public http://127.0.0.1:9527/public/css/page.css
+ * php leevel link:storage http://127.0.0.1:9527/storage/logo.png
+ * php leevel link:apis http://127.0.0.1:9527/apis/
+ * php leevel link:debugbar http://127.0.0.1:9527/debugbar/debugbar.css
 
 ### Websocket 服务
 
@@ -444,8 +444,8 @@ INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9527/api/test
  * MVC router http://127.0.0.1:9527/api/test
  * MVC restful router http://127.0.0.1:9527/restful/123
  * MVC restful router with method http://127.0.0.1:9527/restful/123/show
- * Annotation router http://127.0.0.1:9527/api/v1/petLeevelForApi/helloworld
- * Annotation router with bind http://127.0.0.1:9527/api/v2/withBind/foobar
+ * Annotation api router http://127.0.0.1:9527/api/v1/demo/liu
+ * Annotation web router http://127.0.0.1:9527/web/v2/demo
  * php leevel link:public http://127.0.0.1:9527/public/css/page.css
  * php leevel link:storage http://127.0.0.1:9527/storage/logo.png
  * php leevel link:apis http://127.0.0.1:9527/apis/

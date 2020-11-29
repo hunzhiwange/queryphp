@@ -14,10 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Domain\Listener;
 
-/**
- * test 监听器.
- */
-class Test extends Listener
+class Demo extends Listener
 {
     /**
      * 构造函数.
@@ -35,6 +32,7 @@ class Test extends Listener
     {
         $args = func_get_args();
         $event = array_shift($args);
+        print_r($event);
         print_r($args);
     }
 }

@@ -12,23 +12,24 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Common\Domain\Task;
+namespace Common\Domain\Listener;
 
-use Swoole\Server as SwooleServer;
-
-/**
- * 演示任务.
- */
-class TaskDemo
+class Demo2 extends Listener
 {
     /**
-     * 响应.
+     * 构造函数.
+     *
+     * - 支持依赖注入.
      */
-    public function handle(int $arg1, int $arg2, SwooleServer $server, int $taskId, int $fromId): void
+    public function __construct()
     {
-        dump('Demo task start.');
-        dump(4 === $arg1);
-        dump(5 === $arg2);
-        dump('Demo task end.');
+    }
+
+    /**
+     * 监听器响应.
+     */
+    public function handle(): void
+    {
+        echo 'test2';
     }
 }

@@ -18,8 +18,6 @@ use Leevel\Http\Request;
 use Leevel\Router\IRouter;
 
 /**
- * show.
- *
  * @codeCoverageIgnore
  */
 class Show

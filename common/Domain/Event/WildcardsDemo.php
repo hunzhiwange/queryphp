@@ -12,20 +12,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace App\App\Controller\Admin;
+namespace Common\Domain\Event;
 
-/**
- * admin 显示.
- *
- * @codeCoverageIgnore
- */
-class Show
+class WildcardsDemo extends Event
 {
     /**
-     * 响应.
+     * 构造函数.
+     *
+     * - 支持依赖注入.
      */
-    public function handle(): string
+    public function __construct()
     {
-        return 'hello';
     }
 }

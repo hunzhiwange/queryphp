@@ -14,10 +14,7 @@ declare(strict_types=1);
 
 namespace Common\Domain\Listener;
 
-/**
- * test2 监听器.
- */
-class Test2 extends Listener
+class Demo3 extends Listener
 {
     /**
      * 构造函数.
@@ -33,6 +30,6 @@ class Test2 extends Listener
      */
     public function handle(): void
     {
-        echo 'test2';
+        echo 'test3';
     }
 }
