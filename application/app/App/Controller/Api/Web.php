@@ -20,18 +20,18 @@ namespace App\App\Controller\Api;
 class Web
 {
     #[Route(
-        path: "/web/v1/petLeevelForWeb/{petId:[A-Za-z]+}/",
+        path: "/web/v1/demo/{name:[A-Za-z]+}/",
     )]
-    public function petLeevelForWeb(string $petId): string
+    public function demo1(string $name): string
     {
-        return 'petLeevelForWeb '. $petId;
+        return sprintf('web demo, your name is %s'. $name);
     }
 
     #[Route(
-        path: "/web/v2/petLeevelV2Web/",
+        path: "/web/v2/demo/",
     )]
-    public function petLeevelV2ForWeb(): string
+    public function demo2(): string
     {
-        return 'petLeevelV2ForWeb';
+        return 'web demo2';
     }
 }
