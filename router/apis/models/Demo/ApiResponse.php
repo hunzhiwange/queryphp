@@ -12,43 +12,45 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Petstore;
+namespace Demo;
 
 /**
- * Class Tag.
- *
- *
- * @author  Donii Sergii <doniysa@gmail.com>
- *
  * @OA\Schema(
  *     type="object",
- *     description="Tag",
- *     title="Tag",
- *     @OA\Xml(
- *         name="Tag"
- *     )
+ *     description="Api response",
+ *     title="Api response"
  * )
  */
-class Tag
+class ApiResponse
 {
     /**
      * @OA\Property(
-     *     format="int64",
-     *     description="ID",
-     *     title="ID"
+     *     description="Code",
+     *     title="Code",
+     *     format="int32"
      * )
      *
      * @var int
      */
-    private $id;
+    private $code;
+
+    /**
+     * OAS\Property(
+     *    description="Type",
+     *    title="Type",
+     * ).
+     *
+     * @var string
+     */
+    private $type;
 
     /**
      * @OA\Property(
-     *     description="Name",
-     *     title="Name"
+     *     description="Message",
+     *     title="Message"
      * )
      *
      * @var string
      */
-    private $name;
+    private $message;
 }
