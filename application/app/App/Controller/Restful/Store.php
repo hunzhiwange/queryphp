@@ -17,8 +17,6 @@ namespace App\App\Controller\Restful;
 use Leevel\Router\IRouter;
 
 /**
- * store.
- *
  * @codeCoverageIgnore
  */
 class Store
