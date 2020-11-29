@@ -54,13 +54,16 @@
           return response.json();
         })
         .then(function(apis) {
-          var url = '/swagger/user';
+          var url = '/swagger/web';
           if (window.location.hash) {
             url = window.location.hash.substr(1)
           }
 
           var primaryName = '';
           for (var i=0;i<apis.length;i++) {
+            if (!apis[i]['url']) {
+              continue;
+            }
             if (apis[i]['url'].indexOf(url) != -1) {
               primaryName = apis[i]['name'];
             }
