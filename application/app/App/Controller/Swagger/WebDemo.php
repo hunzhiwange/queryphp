@@ -39,7 +39,7 @@ class WebDemo
      * )
      */
     #[Route(
-        path: "/swagger/web/v1/demo/{name}/",
+        path: "/swagger/web/v1/demo/{name:[A-Za-z]+}/",
     )]
     public function index(string $name): string
     {
