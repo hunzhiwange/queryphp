@@ -61,6 +61,7 @@
 
           var primaryName = '';
           for (var i=0;i<apis.length;i++) {
+            // 排除掉接口调试追踪 :trace 项
             if (!apis[i]['url']) {
               continue;
             }
