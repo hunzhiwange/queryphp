@@ -129,7 +129,7 @@ class Router extends RouterProvider
     }
 
     /**
-     * bootstrap.
+     * {@inheritdoc}
      */
     public function bootstrap(): void
     {
@@ -137,7 +137,7 @@ class Router extends RouterProvider
     }
 
     /**
-     * 返回路由.
+     * {@inheritdoc}
      */
     public function getRouters(): array
     {

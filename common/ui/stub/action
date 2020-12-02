@@ -11,8 +11,6 @@ class {{action}}
 {
     /**
      * 构造函数.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -20,8 +18,6 @@ class {{action}}
 
     /**
      * 执行入口.
-     *
-     * @return array
      */
     public function handle(): array
     {
