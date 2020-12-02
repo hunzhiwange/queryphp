@@ -26,16 +26,16 @@
 <body>
     <div class="content">
         <h1>失败消息</h1>
-        <p>{$message}</p>
+        <p>{{ $message }}</p>
     </div>
 
-    {if $time && $url}
+    {% if "$time && $url" %}
     <script type="text/javascript">
         window.onload=function(){
-            setTimeout(function() { window.location.href = "{$url}"; }, {: 1000 * $time});
+            setTimeout(function() { window.location.href = "{{ $url }}"; }, {{: 1000 * $time}});
         };
     </script>
-    {/if}
+    {% :if %}
 </body>
 
 </html>
