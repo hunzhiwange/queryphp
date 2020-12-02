@@ -24,6 +24,9 @@ use Leevel\Event\EventProvider;
  */
 class Event extends EventProvider
 {
+    /**
+     * 事件监听器.
+     */
     protected array $listeners = [
         'Common\\Domain\\Event\\Test' => [
             // 优先级支持写法，数字越小越早执行，默认为 500

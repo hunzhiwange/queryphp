@@ -25,7 +25,7 @@ use Leevel\Di\Provider;
 class App extends Provider
 {
     /**
-     * 注册服务.
+     * {@inheritdoc}
      */
     public function register(): void
     {
@@ -33,7 +33,7 @@ class App extends Provider
     }
 
     /**
-     * 可用服务提供者.
+     * {@inheritdoc}
      */
     public static function providers(): array
     {

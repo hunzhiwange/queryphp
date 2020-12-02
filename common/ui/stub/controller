@@ -11,8 +11,6 @@ class {{file_name}}
 {
     /**
      * 构造函数.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -20,8 +18,6 @@ class {{file_name}}
 
     /**
      * 默认方法.
-     *
-     * @return array
      */
     public function {{action}}(): array
     {
