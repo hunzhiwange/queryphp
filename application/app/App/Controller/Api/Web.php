@@ -24,7 +24,7 @@ class Web
     )]
     public function demo1(string $name): string
     {
-        return sprintf('web demo, your name is %s'. $name);
+        return sprintf('web demo, your name is %s', $name);
     }
 
     #[Route(

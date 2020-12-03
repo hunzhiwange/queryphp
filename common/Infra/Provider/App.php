@@ -25,7 +25,7 @@ use Leevel\Di\Provider;
 class App extends Provider
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function register(): void
     {
@@ -33,7 +33,7 @@ class App extends Provider
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public static function providers(): array
     {
@@ -43,7 +43,7 @@ class App extends Provider
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public static function isDeferred(): bool
     {

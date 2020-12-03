@@ -27,7 +27,7 @@ use Throwable;
 class ExceptionRuntime extends BaseExceptionRuntime
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function report(Throwable $e): void
     {
@@ -35,7 +35,7 @@ class ExceptionRuntime extends BaseExceptionRuntime
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function render(Request $request, Throwable $e): Response
     {
