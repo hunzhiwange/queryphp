@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace App\App\Controller\Home;
 
-use Leevel\Router\Proxy\View;
+use Leevel\View\Proxy\View;
 
 /**
  * 首页.
