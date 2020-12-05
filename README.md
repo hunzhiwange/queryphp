@@ -476,22 +476,6 @@ Pass hook
 + $composer phpstan
 ```
 
-## Thanks
-
-Thanks for these excellent projects, we have absorbed a lot of excellent design and ideas, standing on the shoulders of giants for innovation.
-
-Thanks to my lover JiaoJiao Xiong's support in the development process of the project for several years, so that I have more creative time and worry free. Thanks to Fei Mao, SiGui Zhao and other technical personnel for their help.
-
- * QeePHP: <https://github.com/dualface/qeephp2_x/>
- * Swoole: <https://github.com/swoole/>
- * JeCat: <https://github.com/JeCat/>
- * ThinkPHP: <https://github.com/top-think/>
- * Laravel: <https://github.com/laravel/>
- * Symfony: <https://github.com/symfony/>
- * Doctrine: <https://github.com/doctrine/>
- * Phalcon: <https://github.com/phalcon/>
- * Swoft: <https://github.com/swoft-cloud/>
-
 ## License
 
 The QueryPHP framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).

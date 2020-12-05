@@ -475,22 +475,6 @@ chmod 777 .git/hooks/pre-commit
 + $composer phpstan
 ```
 
-## 致谢
-
-非常感谢下面的这些优秀的开源软件, 我们也参考了很多的设计与思想, 让我们可以站在巨人的肩膀上保持创新。
-
-感谢爱人熊娇娇在项目数年开发过程中给予的支持，让我有了更多的创作时间和无忧。感谢毛飞、赵思贵等等技术人员给予的帮助.
-
- * QeePHP: <https://github.com/dualface/qeephp2_x/>
- * Swoole: <https://github.com/swoole/>
- * JeCat: <https://github.com/JeCat/>
- * ThinkPHP: <https://github.com/top-think/>
- * Laravel: <https://github.com/laravel/>
- * Symfony: <https://github.com/symfony/>
- * Doctrine: <https://github.com/doctrine/>
- * Phalcon: <https://github.com/phalcon/>
- * Swoft: <https://github.com/swoft-cloud/>
-
 ## 版权协议
 
 QueryPHP 是一个基于 [MIT license](http://opensource.org/licenses/MIT) 授权许可协议的开源软件.
