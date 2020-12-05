@@ -35,15 +35,13 @@
     <a href="./README.md">English</a> | <a href="./README-zh-CN.md">中文</a>
 </p>
 
-# 高性能 PHP 渐进式协程框架引擎
+# QueryPHP 应用
 
 > 这是一个 QueryPHP 应用，其核心框架可以在这里找到 [Framework](https://github.com/hunzhiwange/framework)。
 
-QueryPHP 是一款现代化的高性能 PHP 渐进式协程框架, 我们还是主要面向传统 PHP-FPM 场景，以工程师用户体验为历史使命，让每一个 PHP 应用都有一个好框架。
+QueryPHP 是一款现代化的高性能 PHP 渐进式框架, 以提供稳定可靠的高品质企业级框架为历史使命。**<span style="color:#e82e7d;">USE LEEVEL DO BETTER</span>**
 
-百分之百单元测试覆盖直面 Bug，致力于创造高品质产品 Level Level Leevel，依托 Swoole 开启未来更多可能，此刻未来逐步渐进。我们的愿景是 **<span style="color:#e82e7d;">USE LEEVEL WITH SWOOLE DO BETTER</span>**, 让您的业务撑起更多的用户服务。
-
-*代码如诗，自由如风, 此刻携手 QueryPHP 共创美好.*
+*代码如诗，自由如风*
 
 * 官方网站: <https://www.queryphp.com/>
 * 官方网站国内镜像: <https://queryphp.gitee.io/>
@@ -494,9 +492,9 @@ chmod 777 ./.git/hooks/pre-commit
 
 ## 致谢
 
-感谢同事 [毛飞](https://github.com/maosea0125) 在开发这个项目过程中的无私帮助，让我有了很多新的认识, 这让 QueryPHP 变得更加的美好.
+非常感谢下面的这些优秀的开源软件, 我们也参考了很多的设计与思想, 让我们可以站在巨人的肩膀上保持创新。
 
-也非常感谢下面的这些优秀的开源软件, 我们也参考了很多的设计与思想, 让我们可以站在巨人的肩膀上保持创新.
+感谢爱人熊娇娇在项目数年开发过程中给予的支持，让我有了更多的创作时间和无忧。感谢毛飞、赵思贵等等技术人员给予的帮助.
 
  * QeePHP: <https://github.com/dualface/qeephp2_x/>
  * Swoole: <https://github.com/swoole/>
