@@ -46,46 +46,10 @@ QueryPHP is a modern, high performance PHP progressive framework, to provide a s
 ## Features
 
 - Production-ready
-- Framework Ideas (A sense of mission worth entrusting,to provide a stable and reliable high-quality enterprise level framework as its historical mission.)
-- Component System (The core of the framework is composed of independent high cohesion and low coupling components, which can easily access existing systems without intrusion.)
-- Router System (The framework provides MVC automatic routing and can intelligently parse Restful requests and annotated routing based on PHP 8 attributes.)
-- Overall Solution (The framework provides a large number of built-in functions from caching, Session, IOC container, template engine, Ddd ORM, and provides a Symfony Console command line toolkit.)
-- High Quality (High test coverage to face bugs,more than 3500 test cases ensure system reliability and sustainable maintenance.)
-- Business Coroutine (New coroutine programming mode based on Swoole 4 makes business performance better,our vision is a small amount of code modification or no modification,let your business to support more user services.)
-- PHP Strict Types (Every PHP script is strict_types=1, strict mode can avoid potential bugs caused by many weak types.）
-- PHP Type System (For each method, the determined parameter type and return value type, as well as the type support of class properties are provided.）
-- Dependency Injection (MVC, command script and event listener are all connected to IOC container.)
-- Domain Driven Design (It supports UnitOfWork, Repository, Query Specification, Domain Entity, etc.）
-- Connecting With The World (QueryPHP has been absorbing some excellent designs from Laravel, Symfony and other frameworks. At the same time, we have carried out a lot of innovative designs.)
-- More...
-
-## The core packages
-
- * QueryPHP On Github: <https://github.com/hunzhiwange/queryphp/>
- * QueryPHP On Gitee: <https://gitee.com/dyhb/queryphp/>
- * Framework On Github: <https://github.com/hunzhiwange/framework/>
- * Framework On Gitee: <https://gitee.com/dyhb/framework/>
- * Packages: <https://github.com/leevels/>
- * Packages From Hunzhiwange: <https://packagist.org/packages/hunzhiwange/>
- * Packages From Leevel: <https://packagist.org/packages/leevel/>
-
-
-## Sponsor
-
-<h3 align="center">Gold Sponsors</h3>
-
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="middle">
-        <a href="https://www.jetbrains.com/?from=queryphp" target="_blank">
-          <img width="100px" src="./jetbrains.svg" />
-        </a>
-      </td>
-    </tr>
-    <tr></tr>
-  </tbody>
-</table>
+- [Simple high performance routing](https://www.queryphp.com/docs/router/)
+- [Expressive template engine](https://www.queryphp.com/docs/template/)
+- [Powerful ORM based on domain driven design](https://www.queryphp.com/docs/database/)
+- High quality code and high coverage[unit testing](https://github.com/hunzhiwange/framework/tree/master/tests)
 
 ## How to install
 
@@ -103,16 +67,16 @@ composer create-project hunzhiwange/queryphp myapp
 php leevel server <Visite http://127.0.0.1:9527/>
 ```
 
- * Home <http://127.0.0.1:9527/>
- * MVC router <http://127.0.0.1:9527/api/test>
- * MVC restful router http://127.0.0.1:9527/restful/123
- * MVC restful router with method http://127.0.0.1:9527/restful/123/show
- * Annotation api router http://127.0.0.1:9527/api/v1/demo/liu
- * Annotation web router http://127.0.0.1:9527/web/v2/demo
- * php leevel link:public <http://127.0.0.1:9527/public/css/page.css>
- * php leevel link:storage <http://127.0.0.1:9527/storage/logo.png>
- * php leevel link:apis <http://127.0.0.1:9527/apis/>
- * php leevel link:debugbar <http://127.0.0.1:9527/debugbar/debugbar.css>
+- Home http://127.0.0.1:9527/
+- MVC router http://127.0.0.1:9527/api/test
+- MVC restful router http://127.0.0.1:9527/restful/123
+- MVC restful router with method http://127.0.0.1:9527/restful/123/show
+-  Annotation api router http://127.0.0.1:9527/api/v1/demo/liu
+- Annotation web router http://127.0.0.1:9527/web/v2/demo
+- php leevel link:public http://127.0.0.1:9527/public/css/page.css
+- php leevel link:storage http://127.0.0.1:9527/storage/logo.png
+- php leevel link:apis http://127.0.0.1:9527/apis/
+- php leevel link:debugbar http://127.0.0.1:9527/debugbar/debugbar.css
 
 ## Connect database
 
