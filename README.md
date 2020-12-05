@@ -39,11 +39,9 @@
 
 > This is the QueryPHP application, the core framework can be found here [Framework](https://github.com/hunzhiwange/framework).
 
-QueryPHP is a modern, high performance PHP progressive coroutine framework, we still focus on traditional PHP-FPM scenarios, with engineer user experience as its historical mission, let every PHP application have a good framework.
+QueryPHP is a modern, high performance PHP progressive framework, to provide a stable and reliable high-quality enterprise level framework as its historical mission. **<span style="color:#e82e7d;">USE LEEVEL DO BETTER</span>**
 
-A hundred percent coverage of the unit tests to facing the bug,with commitment to creating high quality products for Level Level Leevel,with Swoole to open more possibilities in the future,now or in the future step by step. Our vision is **<span style="color:#e82e7d;">USE LEEVEL WITH SWOOLE DO BETTER</span>**, let your business to support more user services.
-
-*The PHP Framework For Code Poem As Free As Wind, Starts From This Moment With QueryPHP.*
+*The PHP Framework For Code Poem As Free As Wind*
 
 * Site: <https://www.queryphp.com/>
 * China Mirror Site: <https://queryphp.gitee.io/>
@@ -495,9 +493,9 @@ Pass hook
 
 ## Thanks
 
-Thanks my colleague [John.mao](https://github.com/maosea0125) for your selfless help in the development of this project and and let me have a new understanding, it makes QueryPHP more beautiful.
-
 Thanks for these excellent projects, we have absorbed a lot of excellent design and ideas, standing on the shoulders of giants for innovation.
+
+Thanks to my lover JiaoJiao Xiong's support in the development process of the project for several years, so that I have more creative time and worry free. Thanks to Fei Mao, SiGui Zhao and other technical personnel for their help.
 
  * QeePHP: <https://github.com/dualface/qeephp2_x/>
  * Swoole: <https://github.com/swoole/>
