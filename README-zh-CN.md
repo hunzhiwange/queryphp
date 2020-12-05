@@ -39,6 +39,8 @@
 
 QueryPHP 是一款现代化的高性能 PHP 渐进式框架, 以提供稳定可靠的高品质企业级框架为历史使命。**<span style="color:#e82e7d;">USE LEEVEL DO BETTER</span>**
 
+**[More Infomation...](MORE-zh-CN.md)**
+
 * 官方网站: <https://www.queryphp.com/>
 * 官方网站国内镜像: <https://queryphp.gitee.io/>
 * 开发文档: <https://www.queryphp.com/docs/>
