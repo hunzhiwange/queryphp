@@ -51,6 +51,22 @@ QueryPHP is a modern, high performance PHP progressive framework, to provide a s
 
 QueryPHP was based on the [DoYouHaoBaby](https://github.com/hunzhiwange/dyhb.blog-x/tree/master/Upload/DoYouHaoBaby) framework which released 0.0.1 version at 2010.10.03,the latest version of DoYouHaoBaby is renamed as [QeePHP](https://github.com/hunzhiwange/windsforce/tree/master/upload/System/include/QeePHP).
 
+## Features
+
+- Production-ready
+- Framework Ideas (A sense of mission worth entrusting,to provide a stable and reliable high-quality enterprise level framework as its historical mission.)
+- Component System (The core of the framework is composed of independent high cohesion and low coupling components, which can easily access existing systems without intrusion.)
+- Router System (The framework provides MVC automatic routing and can intelligently parse Restful requests and annotated routing based on PHP 8 attributes.)
+- Overall Solution (The framework provides a large number of built-in functions from caching, Session, IOC container, template engine, Ddd ORM, and provides a Symfony Console command line toolkit.)
+- High Quality (High test coverage to face bugs,more than 3500 test cases ensure system reliability and sustainable maintenance.)
+- Business Coroutine (New coroutine programming mode based on Swoole 4 makes business performance better,our vision is a small amount of code modification or no modification,let your business to support more user services.)
+- PHP Strict Types (Every PHP script is strict_types=1, strict mode can avoid potential bugs caused by many weak types.）
+- PHP Type System (For each method, the determined parameter type and return value type, as well as the type support of class properties are provided.）
+- Dependency Injection (MVC, command script and event listener are all connected to IOC container.)
+- Domain Driven Design (It supports UnitOfWork, Repository, Query Specification, Domain Entity, etc.）
+- Connecting With The World (QueryPHP has been absorbing some excellent designs from Laravel, Symfony and other frameworks. At the same time, we have carried out a lot of innovative designs.)
+- More...
+
 ## The core packages
 
  * QueryPHP On Github: <https://github.com/hunzhiwange/queryphp/>
