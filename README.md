@@ -374,17 +374,6 @@ _____________                           _______________
 +-----------------------+---------------------------------+
 ```
 
- * Home http://127.0.0.1:9527/
- * MVC router http://127.0.0.1:9527/api/test
- * MVC restful router http://127.0.0.1:9527/restful/123
- * MVC restful router with method http://127.0.0.1:9527/restful/123/show
- * Annotation api router http://127.0.0.1:9527/api/v1/demo/liu
- * Annotation web router http://127.0.0.1:9527/web/v2/demo
- * php leevel link:public http://127.0.0.1:9527/public/css/page.css
- * php leevel link:storage http://127.0.0.1:9527/storage/logo.png
- * php leevel link:apis http://127.0.0.1:9527/apis/
- * php leevel link:debugbar http://127.0.0.1:9527/debugbar/debugbar.css
-
 ### Websocket server
 
 ```
@@ -454,18 +443,6 @@ DEBU[0000] [rpc]: started
 DEBU[0000] [http]: started
 INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9527/api/test
 ```
-
- * Home http://127.0.0.1:9527/
- * MVC router http://127.0.0.1:9527/api/test
- * MVC restful router http://127.0.0.1:9527/restful/123
- * MVC restful router with method http://127.0.0.1:9527/restful/123/show
- * Annotation api router http://127.0.0.1:9527/api/v1/demo/liu
- * Annotation web router http://127.0.0.1:9527/web/v2/demo
- * php leevel link:public http://127.0.0.1:9527/public/css/page.css
- * php leevel link:storage http://127.0.0.1:9527/storage/logo.png
- * php leevel link:apis http://127.0.0.1:9527/apis/
- * php leevel link:debugbar http://127.0.0.1:9527/debugbar/debugbar.css
-
 
 ## Unified Code Style
 
