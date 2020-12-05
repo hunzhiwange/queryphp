@@ -51,6 +51,22 @@ QueryPHP 是一款现代化的高性能 PHP 渐进式框架, 以提供稳定可�
 
 QueryPHP 基于一款成立于 2010 年的 PHP 框架 [DoYouHaoBaby](https://github.com/hunzhiwange/dyhb.blog-x/tree/master/Upload/DoYouHaoBaby) 开发，最新版本 DoYouHaoBaby 更名为 [QeePHP](https://github.com/hunzhiwange/windsforce/tree/master/upload/System/include/QeePHP)，继承了上一代产品的优秀之处，彻底革新并进行了长达 4 年重构.
 
+## 特性
+
+- 生产就绪 (Production-ready)
+- 框架理念 (值得托付的使命感，以提供稳定可靠的高品质企业级框架为历史使命。)
+- 组件系统 (框架底层由独立的高内聚低耦合组件构成，可以轻松无侵入接入现有系统。)
+- 路由系统 (框架提供 MVC 自动路由并能够智能解析 Restful 请求和基于 PHP 8 属性的注解路由。)
+- 整体解决方案 (框架提供了从缓存、Session、IOC 容器、模板引擎、Ddd ORM 等大量开箱即用的功能，提供了基于 Symfony Console 命令行工具集。)
+- 高品质 (高测试覆盖率直面 Bug，超过 3500 例测试用例保证系统可靠性和可持续维护。)
+- 业务协程化 (基于 Swoole 4 开发，我们的愿景是少量代码或者无修改，让你的业务撑起更多的用户服务。)
+- PHP 严格模式 （每一个 PHP 脚本都是 strict_types=1，严格模式可以避免很多弱类型带来潜在 BUG。）
+- PHP 类型系统 (为每一个方法提供确定的参数类型和返回值类型，以及类属性的类型支持。）
+- 依赖注入（完整实现，关键 MVC、命令行脚本、事件监听器全部接入 IOC 容器。）
+- 领域驱动设计（支持 UnitOfWork 事务工作单元、Repository 仓储、Specification 查询规约，领域实体等。）
+- 与世界接轨 (QueryPHP 一直从 Laravel、Symfony 等框架吸收一些优秀的设计，同时我们自身也进行了大量的创新设计。)
+- 更多...
+
 ## 核心包
 
  * QueryPHP On Github: <https://github.com/hunzhiwange/queryphp/>
@@ -243,7 +259,7 @@ $cd /data/codes/queryphp/
 $vim .env.phpunit # modify database redis and other
 - $php leevel migrate:migrate -e env.phpunit
 + $composer migrate-phpunit
-+ $php ./build/phpunit
++ $php build/phpunit
 + $composer test
 + $composer test-coverage
 ```
@@ -463,7 +479,7 @@ INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9527/api/test
 ```diff
 $cd /data/codes/queryphp
 - $php-cs-fixer fix --config=.php_cs.dist
-+ $php ./build/php-cs-fixer fix --config=.php_cs.dist
++ $php build/php-cs-fixer fix --config=.php_cs.dist
 + $composer php-cs-fixer
 ```
 
@@ -472,8 +488,8 @@ $cd /data/codes/queryphp
 添加一个 pre-commit 钩子.
 
 ```
-cp ./build/pre-commit.sh ./.git/hooks/pre-commit
-chmod 777 ./.git/hooks/pre-commit
+cp build/pre-commit.sh .git/hooks/pre-commit
+chmod 777 .git/hooks/pre-commit
 ```
 
 跳过钩子
@@ -486,7 +502,7 @@ chmod 777 ./.git/hooks/pre-commit
 ## PHPStan 静态分析
 
 ```diff
-- $php ./build/phpstan analyse
+- $php build/phpstan analyse
 + $composer phpstan
 ```
 
