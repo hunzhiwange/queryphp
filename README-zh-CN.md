@@ -243,7 +243,7 @@ $cd /data/codes/queryphp/
 $vim .env.phpunit # modify database redis and other
 - $php leevel migrate:migrate -e env.phpunit
 + $composer migrate-phpunit
-+ $php ./build/phpunit
++ $php build/phpunit
 + $composer test
 + $composer test-coverage
 ```
@@ -463,7 +463,7 @@ INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9527/api/test
 ```diff
 $cd /data/codes/queryphp
 - $php-cs-fixer fix --config=.php_cs.dist
-+ $php ./build/php-cs-fixer fix --config=.php_cs.dist
++ $php build/php-cs-fixer fix --config=.php_cs.dist
 + $composer php-cs-fixer
 ```
 
@@ -472,8 +472,8 @@ $cd /data/codes/queryphp
 添加一个 pre-commit 钩子.
 
 ```
-cp ./build/pre-commit.sh ./.git/hooks/pre-commit
-chmod 777 ./.git/hooks/pre-commit
+cp build/pre-commit.sh .git/hooks/pre-commit
+chmod 777 .git/hooks/pre-commit
 ```
 
 跳过钩子
@@ -486,7 +486,7 @@ chmod 777 ./.git/hooks/pre-commit
 ## PHPStan 静态分析
 
 ```diff
-- $php ./build/phpstan analyse
+- $php build/phpstan analyse
 + $composer phpstan
 ```
 
