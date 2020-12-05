@@ -21,7 +21,9 @@
     "require-dev": {
         "php-coveralls/php-coveralls": "^2.1",
         "codedungeon/php-cli-colors": "~1.11.0",
-        "robmorgan/phinx": "^0.12.4"
+        "robmorgan/phinx": "^0.12.4",
+        "doctrine/annotations": "^1.11.1",
+        "zircote/swagger-php": "^3.1.0"
     },
     "autoload": {
         "files": [
@@ -121,12 +123,12 @@
         }
     },
     "scripts": {
-        "test": "@php ./build/phpunit --colors=always",
-        "test-coverage": "@php ./build/phpunit --colors=always -c phpunit.xml.coverage",
-        "php-cs-fixer": "@php ./build/php-cs-fixer fix",
-        "phpstan": "@php ./build/phpstan analyse",
-        "migrate": "@php ./leevel migrate:migrate",
-        "migrate-phpunit": "@php ./leevel migrate:migrate -e env.phpunit",
+        "test": "@php build/phpunit --colors=always",
+        "test-coverage": "@php build/phpunit --colors=always -c phpunit.xml.coverage",
+        "php-cs-fixer": "@php build/php-cs-fixer fix",
+        "phpstan": "@php build/phpstan analyse",
+        "migrate": "@php leevel migrate:migrate",
+        "migrate-phpunit": "@php leevel migrate:migrate -e env.phpunit",
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php -r \"file_exists('.env.phpunit') || copy('.env.phpunit.example', '.env.phpunit');\"",
