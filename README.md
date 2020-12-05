@@ -58,7 +58,7 @@ composer create-project hunzhiwange/queryphp myapp
 php leevel server <Visite http://127.0.0.1:9527/>
 ```
 
-### Swoole Http server
+### Swoole Http Server
 
 ```
 php leevel http:server # php leevel http:server -d
@@ -67,7 +67,7 @@ php leevel http:stop
 php leevel http:status
 ```
 
-### Swoole Websocket server
+### Swoole Websocket Server
 
 ```
 php leevel websocket:server # php leevel websocket:server -d
@@ -76,7 +76,7 @@ php leevel websocket:stop
 php leevel websocket:status
 ```
 
-### Go RoadRunner server
+### Go RoadRunner Server
 
 ```
 /data/server/roadrunner-1.8.2-darwin-amd64/rr serve -d -v # -d = debug
