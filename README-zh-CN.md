@@ -37,19 +37,11 @@
 
 # QueryPHP 应用
 
-> 这是一个 QueryPHP 应用，其核心框架可以在这里找到 [Framework](https://github.com/hunzhiwange/framework)。
-
 QueryPHP 是一款现代化的高性能 PHP 渐进式框架, 以提供稳定可靠的高品质企业级框架为历史使命。**<span style="color:#e82e7d;">USE LEEVEL DO BETTER</span>**
-
-*代码如诗，自由如风*
 
 * 官方网站: <https://www.queryphp.com/>
 * 官方网站国内镜像: <https://queryphp.gitee.io/>
 * 开发文档: <https://www.queryphp.com/docs/>
-
-![](doyouhaobaby.png)
-
-QueryPHP 基于一款成立于 2010 年的 PHP 框架 [DoYouHaoBaby](https://github.com/hunzhiwange/dyhb.blog-x/tree/master/Upload/DoYouHaoBaby) 开发，最新版本 DoYouHaoBaby 更名为 [QeePHP](https://github.com/hunzhiwange/windsforce/tree/master/upload/System/include/QeePHP)，继承了上一代产品的优秀之处，彻底革新并进行了长达 4 年重构.
 
 ## 特性
 

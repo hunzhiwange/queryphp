@@ -37,19 +37,11 @@
 
 # The QueryPHP Application
 
-> This is the QueryPHP application, the core framework can be found here [Framework](https://github.com/hunzhiwange/framework).
-
 QueryPHP is a modern, high performance PHP progressive framework, to provide a stable and reliable high-quality enterprise level framework as its historical mission. **<span style="color:#e82e7d;">USE LEEVEL DO BETTER</span>**
-
-*The PHP Framework For Code Poem As Free As Wind*
 
 * Site: <https://www.queryphp.com/>
 * China Mirror Site: <https://queryphp.gitee.io/>
 * Documentation: <https://www.queryphp.com/docs/>
-
-![](doyouhaobaby.png)
-
-QueryPHP was based on the [DoYouHaoBaby](https://github.com/hunzhiwange/dyhb.blog-x/tree/master/Upload/DoYouHaoBaby) framework which released 0.0.1 version at 2010.10.03,the latest version of DoYouHaoBaby is renamed as [QeePHP](https://github.com/hunzhiwange/windsforce/tree/master/upload/System/include/QeePHP).
 
 ## Features
 
