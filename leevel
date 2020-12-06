@@ -3,16 +3,6 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the forcodepoem package.
- *
- * The PHP Application Created By Code Poem. <Query Yet Simple>
- * (c) 2018-2099 http://forcodepoem.com All rights reserved.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 use Common\App\ExceptionRuntime;
 use Common\App\Kernel;
 use Common\App\KernelConsole;
@@ -24,41 +14,22 @@ use Leevel\Kernel\IExceptionRuntime;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
 
-/**
- * ---------------------------------------------------------------
- * Composer
- * ---------------------------------------------------------------.
- *
- * 用于管理 PHP 依赖包
- */
+// 加载 Composer
 require __DIR__.'/vendor/autoload.php';
 
-/**
- * ---------------------------------------------------------------
- * 创建应用
- * ---------------------------------------------------------------.
- *
- * 注册应用基础服务
- */
+// 创建应用
+// 注册应用基础服务
 $container = Container::singletons();
 $container->singleton(IContainer::class, $container);
-
 $container->singleton('app', new App($container, realpath(__DIR__)));
 $container->alias('app', [IApp::class, App::class]);
-
 $container->singleton(IKernel::class, Kernel::class);
 $container->singleton(IKernelConsole::class, KernelConsole::class);
 $container->singleton(IExceptionRuntime::class, ExceptionRuntime::class);
 
-/**
- * ---------------------------------------------------------------
- * 执行应用
- * ---------------------------------------------------------------.
- *
- * 根据内核调度请求返回响应
- */
+// 执行应用
+// 根据内核调度请求返回响应
 $kernel = $container->make(IKernelConsole::class);
 $status = $kernel->handle();
 $kernel->terminate($status);
-
 exit($status);
