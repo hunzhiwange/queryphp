@@ -2,50 +2,21 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the your app package.
- *
- * The PHP Application For Code Poem For You.
- * (c) 2018-2099 http://yourdomian.com All rights reserved.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 use Dotenv\Dotenv;
 use Leevel\Di\Container;
 use Leevel\Kernel\App;
 use Leevel\Kernel\IApp;
 use Symfony\Component\Console\Input\ArgvInput;
 
-/**
- * ---------------------------------------------------------------
- * Composer
- * ---------------------------------------------------------------.
- *
- * 用于管理 PHP 依赖包
- */
+// 加载 Composer
 require __DIR__.'/vendor/autoload.php';
 
-/**
- * ---------------------------------------------------------------
- * 创建应用
- * ---------------------------------------------------------------.
- *
- * 注册应用基础服务
- */
+// 创建应用
 $container = Container::singletons();
 $app = new App($container, realpath(__DIR__));
 
-/*
- * ---------------------------------------------------------------
- * 载入环境
- * ---------------------------------------------------------------.
- *
- * 读取 phinx 运行环境
- */
+// 载入环境
 $input = new ArgvInput();
-
 if ($input->hasParameterOption('-e')) {
     $env = $input->getParameterOption('-e');
 } elseif ($input->hasParameterOption('--environment')) {
@@ -53,7 +24,6 @@ if ($input->hasParameterOption('-e')) {
 } else {
     $env = 'env';
 }
-
 putenv('RUNTIME_ENVIRONMENT='.$env);
 
 /**
@@ -105,13 +75,7 @@ class PhinxLoad
     }
 }
 
-/*
- * ---------------------------------------------------------------
- * 读取配置
- * ---------------------------------------------------------------.
- *
- * 读取配置并且返回配置值
- */
+// 读取配置
 (new PhinxLoad())->handle($app);
 
 return [
