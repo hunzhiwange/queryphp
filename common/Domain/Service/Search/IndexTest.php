@@ -6,9 +6,6 @@ namespace Common\Domain\Service\Search;
 
 use Tests\TestCase;
 
-/**
- * @codeCoverageIgnore
- */
 class IndexTest extends TestCase
 {
     public function testBaseUse(): void
