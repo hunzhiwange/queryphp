@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// header disabled
+// header comment disabled
 $header = <<<'EOF'
     This file is part of the your app package.
     
