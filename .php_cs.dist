@@ -2,17 +2,6 @@
 
 declare(strict_types=1);
 
-// header comment disabled
-$header = <<<'EOF'
-    This file is part of the your app package.
-    
-    The PHP Application For Code Poem For You.
-    (c) 2018-2099 http://yourdomian.com All rights reserved.
-    
-    For the full copyright and license information, please view the LICENSE
-    file that was distributed with this source code.
-    EOF;
-
 // https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/2.12/.php_cs.dist
 return PhpCsFixer\Config::create()
     ->setRules([
@@ -42,7 +31,6 @@ return PhpCsFixer\Config::create()
         'final_internal_class'                          => true,
         'fully_qualified_strict_types'                  => true,
         'function_to_constant'                          => ['functions' => ['get_class', 'get_called_class', 'php_sapi_name', 'phpversion', 'pi']],
-        // 'header_comment'                                => ['header' => $header],
         'heredoc_to_nowdoc'                             => true,
         'list_syntax'                                   => ['syntax' => 'long'],
         'method_chaining_indentation'                   => true,

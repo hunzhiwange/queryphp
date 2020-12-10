@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-{{header_comment}}
-
 namespace {{namespace}}\Domain\Entity{{sub_dir}};
 
 use Leevel\Database\Ddd\Entity;
