@@ -19,10 +19,8 @@
         "hunzhiwange/framework": "dev-master"
     },
     "require-dev": {
-        "php-coveralls/php-coveralls": "^2.1",
-        "codedungeon/php-cli-colors": "~1.11.0",
+        "codedungeon/php-cli-colors": "^1.12.0",
         "robmorgan/phinx": "^0.12.4",
-        "doctrine/annotations": "^1.11.1",
         "zircote/swagger-php": "^3.1.0"
     },
     "autoload": {
