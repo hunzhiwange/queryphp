@@ -1,4 +1,10 @@
-# v1.1.0-alpha.2 - TBD
+# v1.1.0-alpha.3 - TBD
+
+## 优化
+
+- [#6c9c647](https://github.com/hunzhiwange/queryphp/commit/6c9c647) refactor: 删除所有 PHP 文件头部注释
+
+# v1.1.0-alpha.2
 
 ## 变更
 

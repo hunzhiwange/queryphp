@@ -6,9 +6,6 @@ namespace Common\Infra\Helper;
 
 use Tests\TestCase;
 
-/**
- * @codeCoverageIgnore
- */
 class ArrayToFormTest extends TestCase
 {
     public function testBaseUse(): void

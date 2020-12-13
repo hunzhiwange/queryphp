@@ -1,4 +1,10 @@
-# v1.1.0-alpha.2 - TBD
+# v1.1.0-alpha.3 - TBD
+
+## Optimized
+
+- [#6c9c647](https://github.com/hunzhiwange/queryphp/commit/6c9c647) refactor: remove header comment of all PHP files
+
+# v1.1.0-alpha.2
 
 ## Changed
 

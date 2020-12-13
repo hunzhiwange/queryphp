@@ -7,6 +7,7 @@ use Leevel\Di\Container;
 use Leevel\Kernel\App;
 use Leevel\Kernel\IApp;
 use Symfony\Component\Console\Input\ArgvInput;
+use Leevel\Option\Env;
 
 // 加载 Composer
 require __DIR__.'/vendor/autoload.php';
@@ -47,8 +48,9 @@ class PhinxLoad
     private function loadEnvData(IApp $app): array
     {
         $dotenv = Dotenv::createMutable($app->envPath(), $app->envFile());
+        $this->setEnvVars($envVars = $dotenv->load());
 
-        return $dotenv->load();
+        return $envVars;
     }
 
     /**
@@ -61,10 +63,8 @@ class PhinxLoad
         if (!getenv('RUNTIME_ENVIRONMENT')) {
             return;
         }
-
+        
         $file = '.'.getenv('RUNTIME_ENVIRONMENT');
-
-        // 校验运行时环境，防止测试用例清空非测试库的业务数据
         if (!is_file($fullFile = $app->envPath().'/'.$file)) {
             $e = sprintf('Env file `%s` was not found.', $fullFile);
 
