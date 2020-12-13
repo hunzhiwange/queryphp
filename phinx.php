@@ -32,6 +32,8 @@ putenv('RUNTIME_ENVIRONMENT='.$env);
  */
 class PhinxLoad
 {
+    use Env;
+    
     /**
      * 执行入口.
      */
