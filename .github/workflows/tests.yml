@@ -52,17 +52,8 @@ jobs:
         with:
           timeout_minutes: 5
           max_attempts: 5
-          command: composer update --prefer-stable --prefer-dist --no-interaction --no-progress --ignore-platform-reqs
-        if: matrix.php >= 8
+          command: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress 
 
-      - name: Install dependencies
-        uses: nick-invision/retry@v1
-        with:
-          timeout_minutes: 5
-          max_attempts: 5
-          command: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
-        if: matrix.php < 8
-      
       - name: Run Scripts Before Test
         run: |
           mkdir -p logs
