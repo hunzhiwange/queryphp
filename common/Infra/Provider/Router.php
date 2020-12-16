@@ -22,7 +22,7 @@ class Router extends RouterProvider
     /**
      * 控制器相对目录.
      */
-    protected string $controllerDir = 'App\\Controller';
+    protected ?string $controllerDir = 'App\\Controller';
 
     /**
      * 中间件分组.
