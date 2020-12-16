@@ -56,7 +56,7 @@ class Index
     protected function basePath(): array
     {
         return [
-            Leevel::path('router'),
+            Leevel::path('common/ui/apis'),
         ];
     }
 
