@@ -335,6 +335,14 @@ unzip roadrunner-1.8.2-darwin-amd64.zip
 cd /data/codes/queryphp
 ```
 
+Install dependency package
+
+```          
+composer require spiral/roadrunner ^1.9.0              
+composer require spiral/dumper ^2.6.3.                 
+composer require symfony/psr-http-message-bridge ^2.0  
+```
+
 ### RoadRunner server
 
 ```
