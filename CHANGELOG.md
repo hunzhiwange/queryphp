@@ -1,8 +1,14 @@
-# v1.1.0-alpha.3 - TBD
+# v1.1.0-beta.1 - TBD
+
+# v1.1.0-alpha.3
 
 ## Optimized
 
-- [#6c9c647](https://github.com/hunzhiwange/queryphp/commit/6c9c647) refactor: remove header comment of all PHP files
+- [#6c9c647](https://github.com/hunzhiwange/queryphp/commit/6c9c647),[#dcf4f46](https://github.com/hunzhiwange/queryphp/commit/dcf4f46) refactor: remove header comment of all PHP files
+- [#e4ac496](https://github.com/hunzhiwange/queryphp/commit/e4ac496) refactor: Throw new exception for zircote/swagger-php was not installed
+- [#9ac8715](https://github.com/hunzhiwange/queryphp/commit/9ac8715),[#4ec563c](https://github.com/hunzhiwange/queryphp/commit/4ec563c) fix: Fix phinx dotenv
+- [#9b9174d](https://github.com/hunzhiwange/queryphp/commit/9b9174d) refactor: Move router/apis to common/ui
+- [#7a3df01](https://github.com/hunzhiwange/queryphp/commit/7a3df01) refactor: Fix router provider
 
 # v1.1.0-alpha.2
 
