@@ -63,7 +63,7 @@ class Upload
      */
     private function saveFile(string $sourcePath, string $savePath): void
     {
-        if (false === Filesystem::put($savePath, file_get_contents($sourcePath))) {
+        if (false === Filesystem::write($savePath, file_get_contents($sourcePath))) {
             throw new BusinessException(__('文件上传失败'));
         }
     }
