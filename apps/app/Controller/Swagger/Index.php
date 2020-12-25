@@ -46,7 +46,8 @@ class Index
     protected function path(): array
     {
         return [
-            Leevel::appPath(),
+            Leevel::appPath('app/Controller'),
+            Leevel::appPath('admin/Controller'),
         ];
     }
 
@@ -56,7 +57,7 @@ class Index
     protected function basePath(): array
     {
         return [
-            Leevel::path('apps/app/ui/apis'),
+            Leevel::appPath('app/ui/apis'),
         ];
     }
 
