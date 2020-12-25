@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Common\App\ExceptionRuntime;
-use Common\App\Kernel;
+use App\ExceptionRuntime;
+use App\Kernel;
 use Leevel\Di\Container;
 use Leevel\Di\IContainer;
 use Leevel\Http\Request;

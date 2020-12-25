@@ -32,7 +32,8 @@ return [
      */
     'hotoverload_watch' => [
         Leevel::appPath(),
-        Leevel::commonPath(),
+        Leevel::optionPath(),
+        Leevel::path('bootstrap'),
     ],
 
     /*

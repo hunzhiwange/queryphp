@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Admin\Controller\Role;
+
+use  Admin\Controller\Support\Controller;
+use  Admin\Service\Role\Index as Service;
+use Leevel\Http\Request;
+
+/**
+ * 角色列表.
+ *
+ * @codeCoverageIgnore
+ */
+class Index
+{
+    use Controller;
+
+    private array $allowedInput = [
+        'key',
+        'status',
+        'page',
+        'size',
+    ];
+
+    public function handle(Request $request, Service $service): array
+    {
+        return $this->main($request, $service);
+    }
+}

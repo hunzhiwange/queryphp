@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Common\App\ExceptionRuntime;
-use Common\App\Kernel;
-use Common\App\KernelConsole;
+use App\ExceptionRuntime;
+use App\Kernel;
+use App\KernelConsole;
 use Leevel\Di\Container;
 use Leevel\Di\IContainer;
 use Leevel\Http\Request;

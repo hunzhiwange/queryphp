@@ -1,0 +1,29 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Admin\Controller\Role;
+
+use  Admin\Controller\Support\Controller;
+use  Admin\Service\Role\Status as Service;
+use Leevel\Http\Request;
+
+/**
+ * 批量修改角色状态.
+ *
+ * @codeCoverageIgnore
+ */
+class Status
+{
+    use Controller;
+
+    private array $allowedInput = [
+        'ids',
+        'status',
+    ];
+
+    public function handle(Request $request, Service $service): array
+    {
+        return $this->main($request, $service);
+    }
+}
