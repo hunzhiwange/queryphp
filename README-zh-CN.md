@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://queryphp.com">
-    <img src="./queryphp.png" />
+    <img src="./assets/images/queryphp.png" />
   </a>
 </p>
 

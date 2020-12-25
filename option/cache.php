@@ -37,7 +37,7 @@ return [
             'driver' => 'file',
 
             // 文件缓存路径
-            'path' => Leevel::runtimePath('file'),
+            'path' => Leevel::runtimePath('cache'),
 
             // 默认过期时间
             'expire' => null,

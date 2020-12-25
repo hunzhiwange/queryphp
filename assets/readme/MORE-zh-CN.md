@@ -21,7 +21,7 @@ composer create-project hunzhiwange/queryphp myapp
 
 ## 打开浏览器访问
 
-![](index.jpg)
+![](../images/index.jpg)
 
 ```
 php leevel server <Visite http://127.0.0.1:9527/>
