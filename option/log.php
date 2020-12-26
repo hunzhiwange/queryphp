@@ -77,7 +77,7 @@ return [
             'name' => 'Y-m-d H',
 
             // 默认的日志路径
-            'path' => Leevel::runtimePath('logs'),
+            'path' => Leevel::storagePath('logs'),
 
             // 日志行时间格式化，支持微秒
             'format' => 'Y-m-d H:i:s u',

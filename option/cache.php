@@ -37,7 +37,7 @@ return [
             'driver' => 'file',
 
             // 文件缓存路径
-            'path' => Leevel::runtimePath('app/cache'),
+            'path' => Leevel::storagePath('app/cache'),
 
             // 默认过期时间
             'expire' => null,
@@ -100,7 +100,7 @@ return [
             'driver' => 'file',
 
             // 文件缓存路径
-            'path' => Leevel::runtimePath('throttler'),
+            'path' => Leevel::storagePath('throttler'),
 
             // 默认过期时间
             'expire' => null,
@@ -137,7 +137,7 @@ return [
             'driver' => 'file',
 
             // 文件缓存路径
-            'path' => Leevel::runtimePath('app/sessions'),
+            'path' => Leevel::storagePath('app/sessions'),
 
             // 默认过期时间
             'expire' => null,
