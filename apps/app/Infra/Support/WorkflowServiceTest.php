@@ -90,7 +90,7 @@ class WorkflowServiceTest extends TestCase
 
     public function testValidateFailed(): void
     {
-        $this->expectException(\App\Infra\Exception\BusinessException::class);
+        $this->expectException(\App\Exceptions\BusinessException::class);
         $this->expectExceptionMessage(
             '{"foo":["nikeFoo 必须是数字"]}'
         );

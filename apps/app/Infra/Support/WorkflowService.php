@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infra\Support;
 
-use App\Infra\Exception\BusinessException;
+use App\Exceptions\BusinessException;
 use InvalidArgumentException;
 use Leevel\Support\Arr;
 use Leevel\Validate\Proxy\Validate;
@@ -60,7 +60,7 @@ trait WorkflowService
     /**
      * 校验输入数据基础方法.
      *
-     * @throws \App\Infra\Exception\BusinessException
+     * @throws \App\Exceptions\BusinessException
      * @throws \InvalidArgumentException
      */
     private function validateInputBase(array $input): void

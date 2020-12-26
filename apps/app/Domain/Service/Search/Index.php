@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Search;
 
-use App\Infra\Exception\SearchItemNotFoundException;
+use App\Exceptions\SearchItemNotFoundException;
 use Leevel;
 
 /**
@@ -35,7 +35,7 @@ class Index
     /**
      * 响应方法.
      *
-     * @throws \App\Infra\Exception\SearchItemNotFoundException
+     * @throws \App\Exceptions\SearchItemNotFoundException
      */
     public function handle(array $input): array
     {

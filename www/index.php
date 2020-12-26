@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Exception\Runtime;
+use App\Exceptions\Runtime;
 use App\Kernel;
 use Leevel\Di\Container;
 use Leevel\Di\IContainer;

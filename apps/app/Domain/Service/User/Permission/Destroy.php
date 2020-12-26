@@ -6,7 +6,7 @@ namespace App\Domain\Service\User\Permission;
 
 use App\Domain\Entity\User\Permission;
 use App\Domain\Service\Support\Destroy as CommonDestroy;
-use App\Infra\Exception\BusinessException;
+use App\Exceptions\BusinessException;
 
 /**
  * 权限删除.
@@ -34,7 +34,7 @@ class Destroy
     /**
      * 判断是否存在子项.
      *
-     * @throws \App\Infra\Exception\BusinessException
+     * @throws \App\Exceptions\BusinessException
      */
     private function checkChildren(int $id): void
     {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infra\Exception;
+namespace App\Exceptions;
 
 /**
  * 搜索项未找到.

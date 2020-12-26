@@ -6,7 +6,7 @@ namespace App\Domain\Service\User\User;
 
 use Admin\Infra\Lock;
 use App\Domain\Entity\User\User;
-use App\Infra\Exception\BusinessException;
+use App\Exceptions\BusinessException;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate as Validates;
@@ -44,7 +44,7 @@ class Unlock
     /**
      * 校验用户.
      *
-     * @throws \App\Infra\Exception\BusinessException
+     * @throws \App\Exceptions\BusinessException
      */
     private function validateUser(): User
     {
@@ -75,7 +75,7 @@ class Unlock
     /**
      * 校验基本参数.
      *
-     * @throws \App\Infra\Exception\BusinessException
+     * @throws \App\Exceptions\BusinessException
      */
     private function validateArgs(): void
     {

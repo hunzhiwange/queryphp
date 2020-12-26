@@ -7,8 +7,8 @@ namespace Admin\Middleware;
 use Admin\Infra\Exception\LockException;
 use Admin\Infra\Lock;
 use Closure;
-use App\Infra\Exception\BusinessException;
-use App\Infra\Exception\UnauthorizedHttpException;
+use App\Exceptions\BusinessException;
+use App\Exceptions\UnauthorizedHttpException;
 use App\Infra\Proxy\Permission;
 use Leevel\Auth\AuthException;
 use Leevel\Auth\Middleware\Auth as BaseAuth;
@@ -59,7 +59,7 @@ class Auth extends BaseAuth
     /**
      * 请求.
      *
-     * @throws \App\Infra\Exception\UnauthorizedHttpException
+     * @throws \App\Exceptions\UnauthorizedHttpException
      */
     public function handle(Closure $next, Request $request): void
     {
@@ -131,7 +131,7 @@ class Auth extends BaseAuth
     /**
      * 权限校验.
      *
-     * @throws \App\Infra\Exception\BusinessException
+     * @throws \App\Exceptions\BusinessException
      */
     private function validatePermission(Request $request): void
     {

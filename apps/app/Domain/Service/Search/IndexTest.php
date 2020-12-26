@@ -133,7 +133,7 @@ class IndexTest extends TestCase
 
     public function testSearchWasNotFound(): void
     {
-        $this->expectException(\App\Infra\Exception\SearchItemNotFoundException::class);
+        $this->expectException(\App\Exceptions\SearchItemNotFoundException::class);
         $this->expectExceptionMessage(
             'Service `\\Admin\\App\\Service\\Search\\SearchNotfound\\Notfound` was not found.'
         );
@@ -148,7 +148,7 @@ class IndexTest extends TestCase
 
     public function testSearchIsInvalidCallback(): void
     {
-        $this->expectException(\App\Infra\Exception\SearchItemNotFoundException::class);
+        $this->expectException(\App\Exceptions\SearchItemNotFoundException::class);
         $this->expectExceptionMessage(
             'Service `\\Admin\\App\\Service\\Search\\Test\\NotCallback:handle` was invalid.'
         );

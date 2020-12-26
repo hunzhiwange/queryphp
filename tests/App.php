@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use App\Exception\Runtime;
+use App\Exceptions\Runtime;
 use App\Kernel;
 use App\KernelConsole;
 use Leevel\Di\Container;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infra\Exception;
+namespace App\Exceptions;
 
 use App;
 use Leevel\Kernel\Exception\BusinessException as BaseBusinessException;

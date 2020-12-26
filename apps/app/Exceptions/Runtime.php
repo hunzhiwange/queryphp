@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Exception;
+namespace App\Exceptions;
 
 use Leevel;
 use Leevel\Http\Request;

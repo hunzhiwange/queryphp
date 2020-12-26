@@ -7,7 +7,7 @@ namespace App\Domain\Service\Login;
 use Admin\Infra\Code;
 use App\Domain\Entity\Base\App;
 use App\Domain\Entity\User\User;
-use App\Infra\Exception\BusinessException;
+use App\Exceptions\BusinessException;
 use Leevel\Auth\Hash;
 use Leevel\Auth\Proxy\Auth;
 use Leevel\Http\Request;
@@ -75,7 +75,7 @@ class Validate
     /**
      * 校验应用.
      *
-     * @throws \App\Infra\Exception\BusinessException
+     * @throws \App\Exceptions\BusinessException
      */
     private function validateApp(): void
     {
@@ -93,7 +93,7 @@ class Validate
     /**
      * 校验用户.
      *
-     * @throws \App\Infra\Exception\BusinessException
+     * @throws \App\Exceptions\BusinessException
      */
     private function validateUser(): User
     {
@@ -123,7 +123,7 @@ class Validate
     /**
      * 校验验证码.
      *
-     * @throws \App\Infra\Exception\BusinessException
+     * @throws \App\Exceptions\BusinessException
      */
     private function validateCode(): void
     {
@@ -140,7 +140,7 @@ class Validate
     /**
      * 校验基本参数.
      *
-     * @throws \App\Infra\Exception\BusinessException
+     * @throws \App\Exceptions\BusinessException
      */
     private function validateArgs(): void
     {

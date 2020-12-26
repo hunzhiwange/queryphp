@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Support;
 
-use App\Infra\Exception\BusinessException;
+use App\Exceptions\BusinessException;
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate;
@@ -51,7 +51,7 @@ trait Destroy
     /**
      * 校验基本参数.
      *
-     * @throws \App\Infra\Exception\BusinessException
+     * @throws \App\Exceptions\BusinessException
      */
     private function validateArgs(array $input): void
     {

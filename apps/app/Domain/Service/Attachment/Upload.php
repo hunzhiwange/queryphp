@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Attachment;
 
-use App\Infra\Exception\BusinessException;
+use App\Exceptions\BusinessException;
 use Leevel\Filesystem\Proxy\Filesystem;
 use Leevel\Option\Proxy\Option;
 use Leevel\Support\Str;
@@ -33,7 +33,7 @@ class Upload
     /**
      * 保存文件.
      *
-     * @throws \App\Infra\Exception\BusinessException
+     * @throws \App\Exceptions\BusinessException
      */
     private function save(UploadedFile $file): array
     {
@@ -59,7 +59,7 @@ class Upload
     /**
      * 保存文件到服务器.
      *
-     * @throws \App\Infra\Exception\BusinessException
+     * @throws \App\Exceptions\BusinessException
      */
     private function saveFile(string $sourcePath, string $savePath): void
     {
@@ -73,6 +73,6 @@ class Upload
      */
     private function savePathForUrl(string $savePath): string
     {
-        return Option::get('storage').'/'.$savePath;
+        return Option::get('attachments_url').'/'.$savePath;
     }
 }

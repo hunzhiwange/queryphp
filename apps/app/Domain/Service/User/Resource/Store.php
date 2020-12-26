@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\Resource;
 
 use App\Domain\Entity\User\Resource;
-use App\Infra\Exception\BusinessException;
+use App\Exceptions\BusinessException;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate;
 use Leevel\Validate\UniqueRule;
@@ -65,7 +65,7 @@ class Store
     /**
      * 校验基本参数.
      *
-     * @throws \App\Infra\Exception\BusinessException
+     * @throws \App\Exceptions\BusinessException
      */
     private function validateArgs(): void
     {

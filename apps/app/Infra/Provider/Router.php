@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Infra\Provider;
 
 use Admin\Middleware\Auth as AdminAuth;
-use Admin\Middleware\Cors;
+use App\Middleware\Cors;
 use Leevel\Auth\Middleware\Auth;
 use Leevel\Debug\Middleware\Debug;
 use Leevel\Di\IContainer;

@@ -107,21 +107,21 @@ return [
 
     /*
      * ---------------------------------------------------------------
-     * public　资源地址
+     * 静态资源地址
      * ---------------------------------------------------------------
      *
-     * 设置公共资源 url 地址
-     * php leevel link:public
+     * 设置静态资源 URL 地址
+     * php leevel link:static
      */
-    'public' => Leevel::env('PUBLIC', 'http://127.0.0.1:9527/public'),
+    'static_url' => Leevel::env('STATIC_URL', 'http://127.0.0.1:9527/static'),
 
     /*
      * ---------------------------------------------------------------
      * 附件地址
      * ---------------------------------------------------------------
      *
-     * 设置公共附件 url 地址
-     * php leevel link:storage
+     * 设置上传附件 URL 地址
+     * php leevel link:attachments
      */
-    'storage' => Leevel::env('STORAGE', 'http://127.0.0.1:9527/storage'),
+    'attachments_url' => Leevel::env('ATTACHMENTS_URL', 'http://127.0.0.1:9527/attachments'),
 ];

@@ -6,7 +6,7 @@ namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
 use App\Domain\Entity\User\UserRole as EntityUserRole;
-use App\Infra\Exception\BusinessException;
+use App\Exceptions\BusinessException;
 use Leevel\Auth\Hash;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\UnitOfWork;
@@ -116,7 +116,7 @@ class Update
     /**
      * 校验基本参数.
      *
-     * @throws \App\Infra\Exception\BusinessException
+     * @throws \App\Exceptions\BusinessException
      */
     private function validateArgs(): void
     {
