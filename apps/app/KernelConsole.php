@@ -6,9 +6,6 @@ namespace App;
 
 use Leevel\Kernel\KernelConsole as KernelConsoles;
 
-/**
- * Kernel Console.
- */
 class KernelConsole extends KernelConsoles
 {
 }
