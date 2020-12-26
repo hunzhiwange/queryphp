@@ -10,7 +10,7 @@ use Leevel\Di\Container;
 use Leevel\Di\IContainer;
 use Leevel\Kernel\App;
 use Leevel\Kernel\IApp;
-use Leevel\Kernel\Exception\IRuntime;
+use Leevel\Kernel\Exceptions\IRuntime;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
 

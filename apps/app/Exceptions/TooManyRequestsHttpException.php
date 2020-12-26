@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Leevel\Kernel\Exception\TooManyRequestsHttpException as BaseTooManyRequestsHttpException;
+use Leevel\Kernel\Exceptions\TooManyRequestsHttpException as BaseTooManyRequestsHttpException;
 
 /**
  * 请求过于频繁异常.

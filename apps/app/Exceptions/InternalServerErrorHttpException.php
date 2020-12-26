@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Leevel\Kernel\Exception\InternalServerErrorHttpException as BaseInternalServerErrorHttpException;
+use Leevel\Kernel\Exceptions\InternalServerErrorHttpException as BaseInternalServerErrorHttpException;
 
 /**
  * 服务器内部错误.

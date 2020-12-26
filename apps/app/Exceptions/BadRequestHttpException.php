@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Leevel\Kernel\Exception\BadRequestHttpException as BaseBadRequestHttpException;
+use Leevel\Kernel\Exceptions\BadRequestHttpException as BaseBadRequestHttpException;
 
 /**
  * 错误请求.

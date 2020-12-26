@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Admin\Infra\Exception;
 
 use Exception;
-use Leevel\Kernel\Exception\HttpException;
+use Leevel\Kernel\Exceptions\HttpException;
 
 /**
  * 锁定异常.

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Leevel\Kernel\Exception\UnprocessableEntityHttpException as BaseUnprocessableEntityHttpException;
+use Leevel\Kernel\Exceptions\UnprocessableEntityHttpException as BaseUnprocessableEntityHttpException;
 
 /**
  * 无法处理的实体.

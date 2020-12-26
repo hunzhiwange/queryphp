@@ -6,8 +6,8 @@ namespace App\Exceptions;
 
 use Leevel;
 use Leevel\Http\Request;
-use Leevel\Kernel\Exception\HttpException;
-use Leevel\Kernel\Exception\Runtime as ExceptionRuntime;
+use Leevel\Kernel\Exceptions\HttpException;
+use Leevel\Kernel\Exceptions\Runtime as ExceptionRuntime;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Exceptions;
 
 use App;
-use Leevel\Kernel\Exception\BusinessException as BaseBusinessException;
+use Leevel\Kernel\Exceptions\BusinessException as BaseBusinessException;
 use Throwable;
 
 /**

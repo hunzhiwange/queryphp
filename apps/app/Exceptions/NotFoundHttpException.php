@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Leevel\Kernel\Exception\NotFoundHttpException as BaseNotFoundHttpException;
+use Leevel\Kernel\Exceptions\NotFoundHttpException as BaseNotFoundHttpException;
 
 /**
  * 未找到.

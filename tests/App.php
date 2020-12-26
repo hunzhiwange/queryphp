@@ -12,7 +12,7 @@ use Leevel\Di\IContainer;
 use Leevel\Http\Request;
 use Leevel\Kernel\App as KernelApp;
 use Leevel\Kernel\IApp;
-use Leevel\Kernel\Exception\IRuntime;
+use Leevel\Kernel\Exceptions\IRuntime;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
 

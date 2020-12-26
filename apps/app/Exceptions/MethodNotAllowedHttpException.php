@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Leevel\Kernel\Exception\MethodNotAllowedHttpException as BaseMethodNotAllowedHttpException;
+use Leevel\Kernel\Exceptions\MethodNotAllowedHttpException as BaseMethodNotAllowedHttpException;
 
 /**
  * 方法禁用.

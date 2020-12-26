@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Leevel\Kernel\Exception\UnauthorizedHttpException as BaseUnauthorizedHttpException;
+use Leevel\Kernel\Exceptions\UnauthorizedHttpException as BaseUnauthorizedHttpException;
 
 /**
  * 未授权.
