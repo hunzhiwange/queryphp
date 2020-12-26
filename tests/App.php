@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use App\ExceptionRuntime;
+use App\Exception\Runtime;
 use App\Kernel;
 use App\KernelConsole;
 use Leevel\Di\Container;
@@ -12,7 +12,7 @@ use Leevel\Di\IContainer;
 use Leevel\Http\Request;
 use Leevel\Kernel\App as KernelApp;
 use Leevel\Kernel\IApp;
-use Leevel\Kernel\IExceptionRuntime;
+use Leevel\Kernel\Exception\IRuntime;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
 
@@ -36,7 +36,7 @@ trait App
 
         $container->singleton(IKernel::class, Kernel::class);
         $container->singleton(IKernelConsole::class, KernelConsole::class);
-        $container->singleton(IExceptionRuntime::class, ExceptionRuntime::class);
+        $container->singleton(IRuntime::class, Runtime::class);
 
         $container->instance('request', Request::createFromGlobals());
         $container->alias('request', [Request::class, Request::class]);

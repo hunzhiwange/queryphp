@@ -57,7 +57,7 @@ class Index
     protected function basePath(): array
     {
         return [
-            Leevel::appPath('app/ui/apis'),
+            Leevel::path('assets/swagger'),
         ];
     }
 

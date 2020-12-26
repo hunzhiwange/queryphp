@@ -21,11 +21,11 @@ class Code
     {
         // Mac 自带 PHP 有问题
         if (!function_exists('imagettftext')) {
-            return file_get_contents(Leevel::appPath('app/ui/seccode/code.png')) ?: '';
+            return file_get_contents(Leevel::path('assets/seccode/code.png')) ?: '';
         }
 
         $seccode = new Seccode([
-            'font_path' => Leevel::appPath('app/ui/seccode/font'),
+            'font_path' => Leevel::path('assets/seccode/font'),
             'width'     => 120,
             'height'    => 36,
         ]);

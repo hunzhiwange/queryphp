@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Exception;
 
 use Leevel;
 use Leevel\Http\Request;
 use Leevel\Kernel\Exception\HttpException;
-use Leevel\Kernel\ExceptionRuntime as BaseExceptionRuntime;
+use Leevel\Kernel\Exception\Runtime as ExceptionRuntime;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
  * 异常运行时.
  */
-class ExceptionRuntime extends BaseExceptionRuntime
+class Runtime extends ExceptionRuntime
 {
     /**
      * {@inheritDoc}
@@ -37,7 +37,7 @@ class ExceptionRuntime extends BaseExceptionRuntime
      */
     public function getHttpExceptionView(HttpException $e): string
     {
-        return Leevel::appPath(sprintf('app/ui/exception/%d.php', $e->getStatusCode()));
+        return Leevel::path(sprintf('assets/exceptions/%d.php', $e->getStatusCode()));
     }
 
     /**
@@ -45,6 +45,6 @@ class ExceptionRuntime extends BaseExceptionRuntime
      */
     public function getDefaultHttpExceptionView(): string
     {
-        return Leevel::appPath('app/ui/exception/default.php');
+        return Leevel::path('assets/exceptions/default.php');
     }
 }
