@@ -6,9 +6,9 @@ declare(strict_types=1);
  * API 定义.
  *
  * @OA\Info(
- *     description="The QueryPHP application Apis",
+ *     description="The application Apis",
  *     version="1.0.0",
- *     title="QueryPHP Apis",
+ *     title="Apis",
  * )
  */
 class _

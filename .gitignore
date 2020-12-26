@@ -12,8 +12,8 @@ assets/frontend/node_modules/
 *.log
 .php_cs.cache
 logs/
-www/public
-www/storage
+www/static
+www/attachments
 www/apis
 www/debugbar
 /.env.phpunit
@@ -21,3 +21,6 @@ www/debugbar
 .phpunit.result.cache
 /.idea
 /debugbar
+/static
+/apis
+/attachments

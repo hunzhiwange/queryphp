@@ -17,11 +17,11 @@ class Apis
     {
         return [
             [
-                'name' => 'Web Api',
+                'name' => 'Web',
                 'url'  => '/swagger/web',
             ],
             [
-                'name' => 'QueryPHP API',
+                'name' => 'API',
                 'url'  => '/swagger',
             ],
         ];
