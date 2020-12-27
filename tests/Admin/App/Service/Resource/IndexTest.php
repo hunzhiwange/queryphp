@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Admin\Service\Resource;
 
-use Admin\App\Service\Resource\Index;
-use Admin\App\Service\Resource\Store;
+use Admin\Service\Resource\Index;
+use Admin\Service\Resource\Store;
 use Tests\TestCase;
 
 /**
