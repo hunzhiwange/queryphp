@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://queryphp.com">
-    <img src="./queryphp.png" />
+    <img src="./assets/images/queryphp.png" />
   </a>
 </p>
 
@@ -37,7 +37,7 @@
 
 # The QueryPHP Application
 
-QueryPHP is a modern, high performance PHP progressive framework, to provide a stable and reliable high-quality enterprise level framework as its historical mission. **<span style="color:#e82e7d;">USE LEEVEL DO BETTER</span>** **[And More Information...](MORE.md)**
+QueryPHP is a modern, high performance PHP progressive framework, to provide a stable and reliable high-quality enterprise level framework as its historical mission. **<span style="color:#e82e7d;">USE LEEVEL DO BETTER</span>** **[And More Information...](assets/readme/MORE.md)**
 
 * Site: <https://www.queryphp.com/>
 * China Mirror Site: <https://queryphp.gitee.io/>

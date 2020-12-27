@@ -32,7 +32,8 @@ return [
      */
     'hotoverload_watch' => [
         Leevel::appPath(),
-        Leevel::commonPath(),
+        Leevel::optionPath(),
+        Leevel::storagePath('bootstrap'),
     ],
 
     /*
@@ -95,7 +96,7 @@ return [
         'process_name' => 'leevel.http',
 
         // Swoole 进程保存路径
-        'pid_path' => Leevel::runtimePath('protocol/http.pid'),
+        'pid_path' => Leevel::storagePath('protocol/http.pid'),
 
         // 开启静态路径
         // 配合 Nginx 可以设置这里为 false,nginx 解析静态路径,只将动态路由转发给 Swoole
@@ -134,6 +135,6 @@ return [
         'process_name' => 'leevel.websocket',
 
         // Swoole 进程保存路径
-        'pid_path' => Leevel::runtimePath('protocol/websocket.pid'),
+        'pid_path' => Leevel::storagePath('protocol/websocket.pid'),
     ],
 ];

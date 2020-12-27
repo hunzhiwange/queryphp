@@ -19,7 +19,7 @@ trait Helper
         $tmp = explode('\\', static::class);
         array_shift($tmp);
         $className = array_pop($tmp);
-        $traceDir = dirname(__DIR__).'/runtime/tests/'.implode('/', $tmp);
+        $traceDir = dirname(__DIR__).'/storage/app/tests/'.implode('/', $tmp);
 
         if (!is_dir($traceDir)) {
             mkdir($traceDir, 0777, true);

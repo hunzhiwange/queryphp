@@ -58,14 +58,14 @@ jobs:
         run: |
           mkdir -p logs
           mkdir -p build/logs
-          mkdir -p runtime/tests
+          mkdir -p storage/app/tests
           cp .env.phpunit.example .env.phpunit
 
       - name: Migrate
         run: php leevel migrate:migrate -e env.phpunit
 
       - name: Execute tests
-        run: php build/phpunit --verbose -c phpunit.xml.dist --coverage-clover=coverage.xml
+        run: php assets/build/phpunit --verbose -c phpunit.xml.dist --coverage-clover=coverage.xml
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
           DB_USERNAME: root

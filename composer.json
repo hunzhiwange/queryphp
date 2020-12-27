@@ -25,12 +25,11 @@
     },
     "autoload": {
         "files": [
-            "common/Infra/functions.php"
+            "apps/app/Infra/functions.php"
         ],
         "psr-4": {
-            "App\\" : "application/app",
-            "Admin\\" : "application/admin",
-            "Common\\" : "common"
+            "App\\" : "apps/app",
+            "Admin\\" : "apps/admin"
         },
         "exclude-from-classmap": [
             "/tests/",
@@ -77,36 +76,32 @@
         "leevel": {
             "@providers": "The prividers",
             "providers": [
-                "Common\\Infra\\Provider\\App",
-                "Common\\Infra\\Provider\\Event",
-                "Common\\Infra\\Provider\\Router"
+                "App\\Infra\\Provider\\App",
+                "App\\Infra\\Provider\\Event",
+                "App\\Infra\\Provider\\Router"
             ],
             "@ignores": "Ignore the automatic discovery prividers",
             "ignores": [
-                "Leevel\\Notexits\\Provider\\Register"
             ],
             "@commands": "The commands",
             "commands": [
-                "Common\\App\\Console"
+                "App\\Console"
             ],
             "@options": "The extend options",
             "options": {
-                "test": "common/ui/option/test.php"
             },
             "@i18ns": "The extend i18ns",
             "i18ns": [
-                "common/ui/i18n"
             ],
             "@metas": "The metas",
             "metas": {
-                "foo": "bar"
             }
         },
         "leevel-console" : {
             "view-cache": {
                 "paths": [
-                    "common",
-                    "application"
+                    "apps",
+                    "themes"
                 ]
             },
             "database-entity": {
@@ -121,10 +116,10 @@
         }
     },
     "scripts": {
-        "test": "@php build/phpunit --colors=always",
-        "test-coverage": "@php build/phpunit --colors=always -c phpunit.xml.coverage",
-        "php-cs-fixer": "@php build/php-cs-fixer fix",
-        "phpstan": "@php build/phpstan analyse",
+        "test": "@php assets/build/phpunit --colors=always",
+        "test-coverage": "@php assets/build/phpunit --colors=always -c phpunit.xml.coverage",
+        "php-cs-fixer": "@php assets/build/php-cs-fixer fix",
+        "phpstan": "@php assets/build/phpstan analyse",
         "migrate": "@php leevel migrate:migrate",
         "migrate-phpunit": "@php leevel migrate:migrate -e env.phpunit",
         "post-root-package-install": [
