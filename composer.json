@@ -116,10 +116,10 @@
         }
     },
     "scripts": {
-        "test": "@php build/phpunit --colors=always",
-        "test-coverage": "@php build/phpunit --colors=always -c phpunit.xml.coverage",
-        "php-cs-fixer": "@php build/php-cs-fixer fix",
-        "phpstan": "@php build/phpstan analyse",
+        "test": "@php assets/build/phpunit --colors=always",
+        "test-coverage": "@php assets/build/phpunit --colors=always -c phpunit.xml.coverage",
+        "php-cs-fixer": "@php assets/build/php-cs-fixer fix",
+        "phpstan": "@php assets/build/phpstan analyse",
         "migrate": "@php leevel migrate:migrate",
         "migrate-phpunit": "@php leevel migrate:migrate -e env.phpunit",
         "post-root-package-install": [
