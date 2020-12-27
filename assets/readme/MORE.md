@@ -33,8 +33,8 @@ php leevel server <Visite http://127.0.0.1:9527/>
 - MVC restful router with method http://127.0.0.1:9527/restful/123/show
 - Annotation api router http://127.0.0.1:9527/api/v1/demo/liu
 - Annotation web router http://127.0.0.1:9527/web/v2/demo
-- php leevel link:public http://127.0.0.1:9527/public/css/page.css
-- php leevel link:storage http://127.0.0.1:9527/storage/logo.png
+- php leevel link:static http://127.0.0.1:9527/static/css/page.css
+- php leevel link:attachments http://127.0.0.1:9527/attachments/.gitignore
 - php leevel link:apis http://127.0.0.1:9527/apis/
 - php leevel link:debugbar http://127.0.0.1:9527/debugbar/debugbar.css
 
