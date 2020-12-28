@@ -57,7 +57,6 @@ jobs:
       - name: Run Scripts Before Test
         run: |
           mkdir -p logs
-          mkdir -p build/logs
           mkdir -p storage/app/tests
           cp .env.phpunit.example .env.phpunit
 
