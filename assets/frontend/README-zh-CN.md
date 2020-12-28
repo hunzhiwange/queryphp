@@ -50,18 +50,18 @@ sh ./style.sh // All
 See `./../build/pre-commit.sh`
 
 ```
-gulp_path=$(cd `dirname $0`; pwd)"/../../frontend/node_modules/.bin/gulp"
-prettier_path=$(cd `dirname $0`; pwd)"/../../frontend/node_modules/.bin/prettier
+gulp_path=$(cd `dirname $0`; pwd)"/../../assets/frontend/node_modules/.bin/gulp"
+prettier_path=$(cd `dirname $0`; pwd)"/../../assets/frontend/node_modules/.bin/prettier
 
 # for js
 jsfiles=$(git diff --cached --name-only --diff-filter=ACM "*.js" "*.jsx" "*.vue" "*.css" "*.less" | tr '\n' ' ')
 [ -z "$jsfiles" ] && exit 0
 
 # format iview
-$gulp_path iview --gulpfile frontend/gulpfile.js
+$gulp_path iview --gulpfile assets/frontend/gulpfile.js
 
 # Prettify all staged .js files
-echo "$jsfiles" | xargs $prettier_path --config frontend/.prettierrc.js --ignore-path frontend/.prettierignore --write
+echo "$jsfiles" | xargs $prettier_path --config assets/frontend/.prettierrc.js --ignore-path assets/frontend/.prettierignore --write
 
 # Add back the modified/prettified files to staging
 echo "$jsfiles" | xargs git add
@@ -78,7 +78,7 @@ git update-index -g
 ./node_modules/.bin/gulp
 
 ...
-[18:57:50] Using gulpfile /data/codes/queryphp/frontend/gulpfile.js
+[18:57:50] Using gulpfile /data/codes/queryphp/assets/frontend/gulpfile.js
 [18:57:50] Starting 'default'...
 [18:57:50] Finished 'default' after 362 μs
 Saved src_router_router.js.tmp.i18n.js
@@ -105,7 +105,7 @@ src/i18n/zh-CN/default.po
 ```
 ./node_modules/.bin/gulp po
 
-[21:42:09] Using gulpfile /data/codes/queryphp/frontend/gulpfile.js
+[21:42:09] Using gulpfile /data/codes/queryphp/assets/frontend/gulpfile.js
 [21:42:09] Starting 'po'...
 [21:42:09] Finished 'po' after 733 μs
 Saved src/i18n/en-US/index.js
