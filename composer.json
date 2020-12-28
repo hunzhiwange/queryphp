@@ -65,7 +65,6 @@
             "/vendor/hunzhiwange/framework/src/**/Console/",
             "/vendor/monolog/",
             "/vendor/codedungeon/",
-            "/vendor/nesbot/carbon/src/JsonSerializable.php",
             "/vendor/league/"
         ]
     },
@@ -101,7 +100,7 @@
             "view-cache": {
                 "paths": [
                     "apps",
-                    "themes"
+                    "assets/themes"
                 ]
             },
             "database-entity": {
@@ -125,8 +124,8 @@
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php -r \"file_exists('.env.phpunit') || copy('.env.phpunit.example', '.env.phpunit');\"",
-            "@php -r \"file_exists('frontend/.env.local') || copy('frontend/.env.example', 'frontend/.env.local');\"",
-            "@php -r \"file_exists('frontend/.env.production') || copy('frontend/.env.example', 'frontend/.env.production');\""
+            "@php -r \"file_exists('assets/frontend/.env.local') || copy('assets/frontend/.env.example', 'assets/frontend/.env.local');\"",
+            "@php -r \"file_exists('assets/frontend/.env.production') || copy('assets/frontend/.env.example', 'assets/frontend/.env.production');\""
         ],
         "post-create-project-cmd": [
             "@php leevel links"
@@ -134,8 +133,8 @@
         "post-autoload-dump": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php -r \"file_exists('.env.phpunit') || copy('.env.phpunit.example', '.env.phpunit');\"",
-            "@php -r \"file_exists('frontend/.env.local') || copy('frontend/.env.example', 'frontend/.env.local');\"",
-            "@php -r \"file_exists('frontend/.env.production') || copy('frontend/.env.example', 'frontend/.env.production');\""
+            "@php -r \"file_exists('assets/frontend/.env.local') || copy('assets/frontend/.env.example', 'assets/frontend/.env.local');\"",
+            "@php -r \"file_exists('assets/frontend/.env.production') || copy('assets/frontend/.env.example', 'assets/frontend/.env.production');\""
         ]
     },
     "config": {

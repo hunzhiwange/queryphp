@@ -100,10 +100,10 @@ $php leevel server
 
 ### 安装前端
 
-第一步安装前端,细节信息可以在 `frontend/README.md` 查看.
+第一步安装前端,细节信息可以在 `assets/frontend/README.md` 查看.
 
 ```
-cd frontend
+cd assets/frontend
 npm install -g cnpm --registry=https://registry.npm.taobao.org // Just once
 cnpm install
 npm run serve # npm run dev
@@ -169,7 +169,7 @@ $cd /data/codes/queryphp/
 $vim .env.phpunit # modify database redis and other
 - $php leevel migrate:migrate -e env.phpunit
 + $composer migrate-phpunit
-+ $php build/phpunit
++ $php assets/build/phpunit
 + $composer test
 + $composer test-coverage
 ```
@@ -374,7 +374,7 @@ INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9527/api/test
 ```diff
 $cd /data/codes/queryphp
 - $php-cs-fixer fix --config=.php_cs.dist
-+ $php build/php-cs-fixer fix --config=.php_cs.dist
++ $php assets/build/php-cs-fixer fix --config=.php_cs.dist
 + $composer php-cs-fixer
 ```
 
@@ -383,7 +383,7 @@ $cd /data/codes/queryphp
 添加一个 pre-commit 钩子.
 
 ```
-cp build/pre-commit.sh .git/hooks/pre-commit
+cp assets/build/pre-commit.sh .git/hooks/pre-commit
 chmod 777 .git/hooks/pre-commit
 ```
 
@@ -397,7 +397,7 @@ chmod 777 .git/hooks/pre-commit
 ## PHPStan 静态分析
 
 ```diff
-- $php build/phpstan analyse
+- $php assets/build/phpstan analyse
 + $composer phpstan
 ```
 

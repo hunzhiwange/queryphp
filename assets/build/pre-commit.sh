@@ -33,9 +33,9 @@ do
     FILES="$FILES $PROJECT/$FILE"
 done
 
-phpcsfixer_path=$(cd `dirname $0`; pwd)"/../../build/php-cs-fixer"
-gulp_path=$(cd `dirname $0`; pwd)"/../../frontend/node_modules/.bin/gulp"
-prettier_path=$(cd `dirname $0`; pwd)"/../../frontend/node_modules/.bin/prettier"
+phpcsfixer_path=$(cd `dirname $0`; pwd)"/../../assets/build/php-cs-fixer"
+gulp_path=$(cd `dirname $0`; pwd)"/../../assets/frontend/node_modules/.bin/gulp"
+prettier_path=$(cd `dirname $0`; pwd)"/../../assets/frontend/node_modules/.bin/prettier"
 
 # format code style
 if [ "$FILES" != "" ]
@@ -83,10 +83,10 @@ jsfiles=$(git diff --cached --name-only --diff-filter=ACM "*.js" "*.jsx" "*.vue"
 [ -z "$jsfiles" ] && exit 0
 
 # format iview
-$gulp_path iview --gulpfile frontend/gulpfile.js
+$gulp_path iview --gulpfile assets/frontend/gulpfile.js
 
 # Prettify all staged .js files
-echo "$jsfiles" | xargs $prettier_path --config frontend/.prettierrc.js --ignore-path frontend/.prettierignore --write
+echo "$jsfiles" | xargs $prettier_path --config assets/frontend/.prettierrc.js --ignore-path assets/frontend/.prettierignore --write
 
 # Add back the modified/prettified files to staging
 echo "$jsfiles" | xargs git add
