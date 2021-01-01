@@ -32,7 +32,7 @@ abstract class ErrorCode extends Enum
     public static function getErrorMessage(int $errorCode): string
     {
         try {
-            return static::getDescription($errorCode);
+            return static::description($errorCode);
         } catch (OutOfBoundsException) {
             return '';
         }
