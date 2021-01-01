@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Middleware;
 
-use Admin\Infra\Exception\LockException;
+use Admin\Exceptions\LockException;
 use Admin\Infra\Lock;
 use Closure;
 use App\Exceptions\BusinessException;
@@ -110,7 +110,7 @@ class Auth extends BaseAuth
     /**
      * 验证是否锁定.
      *
-     * @throws \Admin\Infra\Exception\LockException
+     * @throws \Admin\Exceptions\LockException
      */
     private function validateLock(Request $request, string $token): void
     {
@@ -137,7 +137,6 @@ class Auth extends BaseAuth
     {
         $pathInfo = str_replace('/:admin/', '', $request->getPathInfo());
         $method = strtolower($request->getMethod());
-
         if (!Permission::handle($pathInfo, $method)) {
             throw new BusinessException(__('你没有权限执行操作'));
         }
