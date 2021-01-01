@@ -99,7 +99,6 @@ class UpdateInfo
 
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
             throw new BusinessException($e);
         }
     }
