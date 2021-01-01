@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
-use App\Exceptions\BusinessException;
+use App\Exceptions\UserBusinessException;
+use App\Exceptions\UserErrorCode;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate as Validates;
@@ -34,7 +35,7 @@ class ChangePassword
     /**
      * 校验用户.
      *
-     * @throws \App\Exceptions\BusinessException
+     * @throws \App\Exceptions\UserBusinessException
      */
     private function validateUser(): User
     {
@@ -42,13 +43,12 @@ class ChangePassword
             ->where('status', '1')
             ->where('id', $this->input['id'])
             ->findOne();
-
         if (!$user->id) {
-            throw new BusinessException(__('账号不存在或者已禁用'));
+            throw new UserBusinessException(UserErrorCode::CHANGE_PASSWORD_ACCOUNT_NOT_EXIST_OR_DISABLED);
         }
 
         if (!$this->verifyPassword($this->input['old_pwd'], $user->password)) {
-            throw new BusinessException(__('账户旧密码错误'));
+            throw new UserBusinessException(UserErrorCode::CHANGE_PASSWORD_ACCOUNT_OLD_PASSWORD_ERROR);
         }
 
         return $user;
@@ -108,7 +108,7 @@ class ChangePassword
     private function data(array $input): array
     {
         return [
-            'password'       => $this->createPassword(trim($input['new_pwd'])),
+            'password' => $this->createPassword(trim($input['new_pwd'])),
         ];
     }
 
@@ -125,7 +125,7 @@ class ChangePassword
                 'id'                  => 'required',
                 'old_pwd'             => 'required|alpha_dash|min_length:6',
                 'new_pwd'             => 'required|alpha_dash|min_length:6',
-                'confirm_pwd'         => 'required|alpha_dash|min_length:6|equal_to:new_pwd',
+                'confirm_pwd' => 'required|alpha_dash|min_length:6|equal_to:new_pwd',
             ],
             [
                 'id'                  => 'ID',
@@ -137,8 +137,7 @@ class ChangePassword
 
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
-            throw new BusinessException($e);
+            throw new UserBusinessException(UserErrorCode::CHANGE_PASSWORD_INVALID_ARGUMENT, $e, true);
         }
     }
 }

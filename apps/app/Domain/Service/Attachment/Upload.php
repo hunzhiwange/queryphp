@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Service\Attachment;
 
 use App\Exceptions\BusinessException;
+use App\Exceptions\UploadBusinessException;
+use App\Exceptions\UploadErrorCode;
 use Leevel\Filesystem\Proxy\Filesystem;
 use Leevel\Option\Proxy\Option;
 use Leevel\Support\Str;
@@ -59,12 +61,12 @@ class Upload
     /**
      * 保存文件到服务器.
      *
-     * @throws \App\Exceptions\BusinessException
+     * @throws \App\Exceptions\UploadBusinessException
      */
     private function saveFile(string $sourcePath, string $savePath): void
     {
         if (false === Filesystem::write($savePath, file_get_contents($sourcePath))) {
-            throw new BusinessException(__('文件上传失败'));
+            throw new UploadBusinessException(UploadErrorCode::FILE_UPLOAD_FAILED);
         }
     }
 
