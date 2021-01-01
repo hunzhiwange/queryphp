@@ -99,8 +99,10 @@ class Resource extends Entity
     /**
      * 状态值.
      */
-    const STATUS_ENUM = [
-        'disable' => [0, '禁用'],
-        'enable'  => [1, '启用'],
-    ];
+    
+    #[status('禁用')]
+    const STATUS_DISABLE = 0;
+
+    #[status('启用')]
+    const STATUS_ENABLE = 1;
 }
