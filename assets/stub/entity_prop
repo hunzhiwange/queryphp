@@ -15,24 +15,24 @@ class {{file_name}} extends Entity
     /**
      * Database table.
      */
-    const TABLE = '{{table_name}}';
+    public const TABLE = '{{table_name}}';
 
     /**
      * Primary key.
      */
-    const ID = {{primary_key}};
+    public const ID = {{primary_key}};
 
     /**
      * Auto increment.
      */
-    const AUTO = {{auto_increment}};
+    public const AUTO = {{auto_increment}};
 
     /**
      * Entity struct.
      *
 {{struct_comment}}
      */
-    const STRUCT = [
+    public const STRUCT = [
 {{struct}}
     ];
 {{const_extend}}
