@@ -20,7 +20,7 @@ abstract class BusinessException extends BaseBusinessException
         Throwable $previous = null
     ) {
         $message = $overrideMessage ? $message : 
-                    $this->getErrorMessage($code).': '.$message;
+                    $this->getErrorMessage($code).($message ? ': '.$message : '');
         parent::__construct($message, $code, $previous);
     }
 
