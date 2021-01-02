@@ -8,14 +8,22 @@ use App;
 use Leevel\Kernel\Exceptions\BusinessException as BaseBusinessException;
 use Throwable;
 
-/**
- * 业务操作异常.
- *
- * - 业务异常与系统异常不同，一般不需要捕捉写入日志.
- * - 核心业务异常可以记录日志.
- */
-class BusinessException extends BaseBusinessException
+abstract class BusinessException extends BaseBusinessException
 {
+    /**
+     * 构造函数.
+     */
+    public function __construct(
+        int $code = 0,
+        string $message = '',
+        bool $overrideMessage = false,
+        Throwable $previous = null
+    ) {
+        $message = $overrideMessage ? $message : 
+                    $this->getErrorMessage($code).': '.$message;
+        parent::__construct($message, $code, $previous);
+    }
+
     /**
      * 上报日志.
      */
@@ -31,6 +39,11 @@ class BusinessException extends BaseBusinessException
     {
         return $this->getImportance() > self::DEFAULT_LEVEL;
     }
+
+    /**
+     * 获取错误消息.
+     */
+    abstract protected function getErrorMessage(int $code): string;
 
     /**
      * 记录异常到日志.

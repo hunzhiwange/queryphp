@@ -82,8 +82,8 @@ class PhinxLoad
 
 return [
     'paths' => [
-        'migrations'    => 'database/migrations',
-        'seeds'         => 'database/seeds',
+        'migrations'    => 'assets/database/migrations',
+        'seeds'         => 'assets/database/seeds',
     ],
     'environments'   => [
         'defaut_migration_table'    => 'phinxlog',
