@@ -17,17 +17,17 @@ class RolePermission extends Entity
     /**
      * Database table.
      */
-    const TABLE = 'role_permission';
+    public const TABLE = 'role_permission';
 
     /**
      * Primary key.
      */
-    const ID = 'id';
+    public const ID = 'id';
 
     /**
      * Auto increment.
      */
-    const AUTO = 'id';
+    public const AUTO = 'id';
 
     /**
      * Entity struct.
@@ -60,7 +60,7 @@ class RolePermission extends Entity
      *                   comment: 操作版本号  type: bigint(20) unsigned  null: false
      *                   key:   default: 0  extra:
      */
-    const STRUCT = [
+    public const STRUCT = [
         'id' => [
             self::READONLY => true,
         ],
@@ -89,5 +89,5 @@ class RolePermission extends Entity
     /**
      * Soft delete column.
      */
-    const DELETE_AT = 'delete_at';
+    public const DELETE_AT = 'delete_at';
 }

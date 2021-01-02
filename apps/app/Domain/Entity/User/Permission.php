@@ -19,17 +19,17 @@ class Permission extends Entity
     /**
      * Database table.
      */
-    const TABLE = 'permission';
+    public const TABLE = 'permission';
 
     /**
      * Primary key.
      */
-    const ID = 'id';
+    public const ID = 'id';
 
     /**
      * Auto increment.
      */
-    const AUTO = 'id';
+    public const AUTO = 'id';
 
     /**
      * Entity struct.
@@ -68,7 +68,7 @@ class Permission extends Entity
      *                   comment: 操作版本号  type: bigint(20) unsigned  null: false
      *                   key:   default: 0  extra:
      */
-    const STRUCT = [
+    public const STRUCT = [
         'id' => [
             self::READONLY => true,
         ],
@@ -110,22 +110,22 @@ class Permission extends Entity
     /**
      * Soft delete column.
      */
-    const DELETE_AT = 'delete_at';
+    public const DELETE_AT = 'delete_at';
 
     /**
      * 仓储.
      */
-    const REPOSITORY = RepositoryPermission::class;
+    public const REPOSITORY = RepositoryPermission::class;
 
     /**
      * 状态值.
      */
     
     #[status('禁用')]
-    const STATUS_DISABLE = 0;
+    public const STATUS_DISABLE = 0;
 
     #[status('启用')]
-    const STATUS_ENABLE = 1;
+    public const STATUS_ENABLE = 1;
 
     /**
      * 资源关联查询作用域.

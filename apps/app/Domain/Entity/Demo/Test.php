@@ -17,17 +17,17 @@ class Test extends Entity
     /**
      * Database table.
      */
-    const TABLE = 'test';
+    public const TABLE = 'test';
 
     /**
      * Primary key.
      */
-    const ID = 'id';
+    public const ID = 'id';
 
     /**
      * Auto increment.
      */
-    const AUTO = 'id';
+    public const AUTO = 'id';
 
     /**
      * Entity struct.
@@ -57,7 +57,7 @@ class Test extends Entity
      *                   comment: 操作版本号  type: bigint(20) unsigned  null: false
      *                   key:   default: 0  extra:
      */
-    const STRUCT = [
+    public const STRUCT = [
         'id' => [
             self::READONLY => true,
         ],
@@ -84,5 +84,5 @@ class Test extends Entity
     /**
      * Soft delete column.
      */
-    const DELETE_AT = 'delete_at';
+    public const DELETE_AT = 'delete_at';
 }

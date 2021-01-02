@@ -18,17 +18,17 @@ class User extends Entity
     /**
      * Database table.
      */
-    const TABLE = 'user';
+    public const TABLE = 'user';
 
     /**
      * Primary key.
      */
-    const ID = 'id';
+    public const ID = 'id';
 
     /**
      * Auto increment.
      */
-    const AUTO = 'id';
+    public const AUTO = 'id';
 
     /**
      * Entity struct.
@@ -73,7 +73,7 @@ class User extends Entity
      *                   comment: 操作版本号  type: bigint(20) unsigned  null: false
      *                   key:   default: 0  extra:
      */
-    const STRUCT = [
+    public const STRUCT = [
         'id' => [
             self::READONLY => true,
         ],
@@ -120,17 +120,17 @@ class User extends Entity
     /**
      * Soft delete column.
      */
-    const DELETE_AT = 'delete_at';
+    public const DELETE_AT = 'delete_at';
 
     /**
      * 状态值.
      */
     
     #[status('禁用')]
-    const STATUS_DISABLE = 0;
+    public const STATUS_DISABLE = 0;
 
     #[status('启用')]
-    const STATUS_ENABLE = 1;
+    public const STATUS_ENABLE = 1;
 
     /**
      * 角色关联查询作用域.
