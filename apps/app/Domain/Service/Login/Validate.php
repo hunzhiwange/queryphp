@@ -7,7 +7,8 @@ namespace App\Domain\Service\Login;
 use Admin\Infra\Code;
 use App\Domain\Entity\Base\App;
 use App\Domain\Entity\User\User;
-use App\Exceptions\BusinessException;
+use App\Exceptions\AuthBusinessException;
+use App\Exceptions\AuthErrorCode;
 use Leevel\Auth\Hash;
 use Leevel\Auth\Proxy\Auth;
 use Leevel\Http\Request;
@@ -75,7 +76,7 @@ class Validate
     /**
      * 校验应用.
      *
-     * @throws \App\Exceptions\BusinessException
+     * @throws \App\Exceptions\AuthBusinessException
      */
     private function validateApp(): void
     {
@@ -84,7 +85,7 @@ class Validate
             ->where('key', $this->input['app_key'])
             ->findOne();
         if (!$app->id) {
-            throw new BusinessException(__('应用无法找到'));
+            throw new AuthBusinessException(AuthErrorCode::APP_NOT_FOUND);
         }
 
         $this->secret = $app->secret;
@@ -93,7 +94,7 @@ class Validate
     /**
      * 校验用户.
      *
-     * @throws \App\Exceptions\BusinessException
+     * @throws \App\Exceptions\AuthBusinessException
      */
     private function validateUser(): User
     {
@@ -102,11 +103,11 @@ class Validate
             ->where('name', $this->input['name'])
             ->findOne();
         if (!$user->id) {
-            throw new BusinessException(__('账号不存在或者已禁用'));
+            throw new AuthBusinessException(AuthErrorCode::ACCOUNT_NOT_EXIST_OR_DISABLED);
         }
 
         if (!$this->verifyPassword($this->input['password'], $user->password)) {
-            throw new BusinessException(__('账户密码错误'));
+            throw new AuthBusinessException(AuthErrorCode::ACCOUNT_PASSWORD_ERROR);
         }
 
         return $user;
@@ -123,7 +124,7 @@ class Validate
     /**
      * 校验验证码.
      *
-     * @throws \App\Exceptions\BusinessException
+     * @throws \App\Exceptions\AuthBusinessException
      */
     private function validateCode(): void
     {
@@ -133,14 +134,14 @@ class Validate
         }
 
         if (strtoupper($this->input['code']) !== strtoupper($codeFromCache)) {
-            throw new BusinessException(__('验证码错误'));
+            throw new AuthBusinessException(AuthErrorCode::VERIFICATION_CODE_ERROR);
         }
     }
 
     /**
      * 校验基本参数.
      *
-     * @throws \App\Exceptions\BusinessException
+     * @throws \App\Exceptions\AuthBusinessException
      */
     private function validateArgs(): void
     {
@@ -164,8 +165,7 @@ class Validate
 
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
-            throw new BusinessException($e);
+            throw new AuthBusinessException(AuthErrorCode::AUTH_INVALID_ARGUMENT, $e, true);
         }
     }
 }
