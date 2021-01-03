@@ -101,12 +101,12 @@ class Update
             $this->input,
             [
                 'id'            => 'required',
-                'name'          => 'required|chinese_alpha_num|max_length:50',
+                'name' => 'required|chinese_alpha_num|max_length:50',
                 'num'           => 'required|alpha_dash|'.UniqueRule::rule(Permission::class, null, $this->input['id']),
             ],
             [
                 'id'            => 'ID',
-                'name'          => __('名字'),
+                'name' => __('名字'),
                 'num'           => __('编号'),
             ]
         );

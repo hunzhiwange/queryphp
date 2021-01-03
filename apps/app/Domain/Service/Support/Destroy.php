@@ -58,10 +58,10 @@ trait Destroy
         $validator = Validate::make(
             $input,
             [
-                'id'          => 'required',
+                'id' => 'required',
             ],
             [
-                'id'          => 'ID',
+                'id' => 'ID',
             ]
         );
 

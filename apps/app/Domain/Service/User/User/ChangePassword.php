@@ -131,7 +131,7 @@ class ChangePassword
                 'id'                  => 'ID',
                 'old_pwd'             => __('旧密码'),
                 'new_pwd'             => __('新密码'),
-                'confirm_pwd'         => __('确认密码'),
+                'confirm_pwd' => __('确认密码'),
             ]
         );
 

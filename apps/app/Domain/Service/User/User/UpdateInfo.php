@@ -88,12 +88,12 @@ class UpdateInfo
         $validator = Validates::make(
             $input,
             [
-                'email'       => 'email|'.IValidator::OPTIONAL,
-                'mobile'      => 'mobile|'.IValidator::OPTIONAL,
+                'email'  => 'email|'.IValidator::OPTIONAL,
+                'mobile' => 'mobile|'.IValidator::OPTIONAL,
             ],
             [
-                'email'       => __('邮件'),
-                'mobile'      => __('手机'),
+                'email'  => __('邮件'),
+                'mobile' => __('手机'),
             ]
         );
 
