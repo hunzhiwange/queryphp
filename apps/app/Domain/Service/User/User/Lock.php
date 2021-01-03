@@ -46,10 +46,10 @@ class Lock
         $validator = Validates::make(
             $this->input,
             [
-                'token'       => 'required',
+                'token'  => 'required',
             ],
             [
-                'token'      => 'Token',
+                'token' => 'Token',
             ]
         );
 

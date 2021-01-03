@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\Permission;
 
 use App\Domain\Entity\User\Permission;
-use App\Exceptions\BusinessException;
+use App\Exceptions\UserBusinessException;
+use App\Exceptions\UserErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate;
 use Leevel\Validate\UniqueRule;
@@ -93,7 +94,7 @@ class Update
     /**
      * 校验基本参数.
      *
-     * @throws \App\Exceptions\BusinessException
+     * @throws \App\Exceptions\UserBusinessException
      */
     private function validateArgs(): void
     {
@@ -101,12 +102,12 @@ class Update
             $this->input,
             [
                 'id'            => 'required',
-                'name'          => 'required|chinese_alpha_num|max_length:50',
+                'name' => 'required|chinese_alpha_num|max_length:50',
                 'num'           => 'required|alpha_dash|'.UniqueRule::rule(Permission::class, null, $this->input['id']),
             ],
             [
                 'id'            => 'ID',
-                'name'          => __('名字'),
+                'name' => __('名字'),
                 'num'           => __('编号'),
             ]
         );
@@ -114,7 +115,7 @@ class Update
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
-            throw new BusinessException($e);
+            throw new UserBusinessException(UserErrorCode::PERMISSION_UPDATE_INVALID_ARGUMENT, $e, true);
         }
     }
 }

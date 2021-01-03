@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\Support;
 
 use App\Exceptions\BusinessException;
+use App\Exceptions\ErrorCode;
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate;
@@ -58,17 +59,17 @@ trait Destroy
         $validator = Validate::make(
             $input,
             [
-                'id'          => 'required',
+                'id' => 'required',
             ],
             [
-                'id'          => 'ID',
+                'id' => 'ID',
             ]
         );
 
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
-            throw new BusinessException($e);
+            throw new BusinessException(ErrorCode::DESTROY_DATA_INVALID_ARGUMENT, $e, true);
         }
     }
 }

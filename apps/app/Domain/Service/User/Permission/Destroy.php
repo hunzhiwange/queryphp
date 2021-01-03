@@ -6,7 +6,8 @@ namespace App\Domain\Service\User\Permission;
 
 use App\Domain\Entity\User\Permission;
 use App\Domain\Service\Support\Destroy as CommonDestroy;
-use App\Exceptions\BusinessException;
+use App\Exceptions\UserBusinessException;
+use App\Exceptions\UserErrorCode;
 
 /**
  * 权限删除.
@@ -34,16 +35,14 @@ class Destroy
     /**
      * 判断是否存在子项.
      *
-     * @throws \App\Exceptions\BusinessException
+     * @throws \App\Exceptions\UserBusinessException
      */
     private function checkChildren(int $id): void
     {
         /** @var \App\Infra\Repository\User\Permission $permissionRepository */
         $permissionRepository = $this->w->repository(Permission::class);
         if ($permissionRepository->hasChildren($id)) {
-            $e = __('权限包含子项，请先删除子项.');
-
-            throw new BusinessException($e);
+            throw new UserBusinessException(UserErrorCode::PERMISSION_CONTAINS_SUBKEY_AND_CANNOT_BE_DELETED);
         }
     }
 }

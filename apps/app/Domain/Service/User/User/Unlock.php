@@ -84,12 +84,12 @@ class Unlock
             [
                 'id'                   => 'required',
                 'token'                => 'required',
-                'password'             => 'required|alpha_dash|min_length:6',
+                'password' => 'required|alpha_dash|min_length:6',
             ],
             [
                 'id'                   => 'ID',
                 'token'                => 'Token',
-                'password'             => __('解锁密码'),
+                'password' => __('解锁密码'),
             ]
         );
 

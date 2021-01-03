@@ -148,17 +148,17 @@ class Validate
         $validator = Validates::make(
             $this->input,
             [
-                'app_id'       => 'required|alpha_dash',
-                'app_key'      => 'required|alpha_dash',
-                'name'         => 'required|chinese_alpha_num|max_length:50',
-                'password'     => 'required|chinese_alpha_dash|max_length:50',
-                'code'         => 'required|alpha|min_length:4|max_length:4',
+                'app_id'   => 'required|alpha_dash',
+                'app_key'  => 'required|alpha_dash',
+                'name'     => 'required|chinese_alpha_num|max_length:50',
+                'password' => 'required|chinese_alpha_dash|max_length:50',
+                'code'     => 'required|alpha|min_length:4|max_length:4',
             ],
             [
                 'app_id'       => __('应用 ID'),
                 'app_key'      => __('应用 KEY'),
                 'name'         => __('用户名'),
-                'password'     => __('密码'),
+                'password' => __('密码'),
                 'code'         => __('校验码'),
             ]
         );
