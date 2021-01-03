@@ -10,8 +10,8 @@ namespace App\Exceptions;
 final class UploadErrorCode extends ErrorCode
 {
     #[msg('文件上传失败')]
-    public const FILE_UPLOAD_FAILED = 1000010000;
+    public const FILE_UPLOAD_FAILED = 1000020000;
 
     #[msg('文件上传保存失败')]
-    public const FILE_UPLOAD_WRITE_FAILED = 1000010001;
+    public const FILE_UPLOAD_WRITE_FAILED = 1000020001;
 }

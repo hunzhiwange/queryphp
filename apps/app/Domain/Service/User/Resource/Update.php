@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\Resource;
 
 use App\Domain\Entity\User\Resource;
-use App\Exceptions\BusinessException;
+use App\Exceptions\UserBusinessException;
+use App\Exceptions\UserErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate;
 use Leevel\Validate\UniqueRule;
@@ -69,16 +70,16 @@ class Update
     private function data(array $input): array
     {
         return [
-            'name'       => trim($input['name']),
+            'name'  => trim($input['name']),
             'num'        => trim($input['num']),
-            'status'     => $input['status'],
+            'status' => $input['status'],
         ];
     }
 
     /**
      * 校验基本参数.
      *
-     * @throws \App\Exceptions\BusinessException
+     * @throws \App\Exceptions\UserBusinessException
      */
     private function validateArgs(): void
     {
@@ -99,7 +100,7 @@ class Update
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
-            throw new BusinessException($e);
+            throw new UserBusinessException(UserErrorCode::RESOURCE_UPDATE_INVALID_ARGUMENT, $e, true);
         }
     }
 }

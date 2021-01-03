@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\Support;
 
 use App\Exceptions\BusinessException;
+use App\Exceptions\ErrorCode;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate;
@@ -57,7 +58,7 @@ trait Status
             });
 
         if (0 === count($entitys)) {
-            throw new BusinessException(__('未发现数据'));
+            throw new BusinessException(ErrorCode::BATCH_MODIFICATION_STATUS_NO_DATA_FOUND);
         }
 
         return $entitys;
@@ -83,7 +84,7 @@ trait Status
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
-            throw new BusinessException($e);
+            throw new BusinessException(ErrorCode::BATCH_MODIFICATION_STATUS_INVALID_ARGUMENT, $e, true);
         }
     }
 }

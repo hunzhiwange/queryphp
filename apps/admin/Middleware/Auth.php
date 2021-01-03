@@ -6,8 +6,9 @@ namespace Admin\Middleware;
 
 use Admin\Exceptions\LockException;
 use Admin\Infra\Lock;
+use App\Exceptions\AuthBusinessException;
+use App\Exceptions\AuthErrorCode;
 use Closure;
-use App\Exceptions\BusinessException;
 use App\Exceptions\UnauthorizedHttpException;
 use App\Infra\Proxy\Permission;
 use Leevel\Auth\AuthException;
@@ -131,14 +132,14 @@ class Auth extends BaseAuth
     /**
      * 权限校验.
      *
-     * @throws \App\Exceptions\BusinessException
+     * @throws \App\Exceptions\AuthBusinessException
      */
     private function validatePermission(Request $request): void
     {
         $pathInfo = str_replace('/:admin/', '', $request->getPathInfo());
         $method = strtolower($request->getMethod());
         if (!Permission::handle($pathInfo, $method)) {
-            throw new BusinessException(__('你没有权限执行操作'));
+            throw new AuthBusinessException(AuthErrorCode::AUTH_NO_PERMISSION);
         }
     }
 }

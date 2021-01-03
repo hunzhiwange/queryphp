@@ -8,7 +8,10 @@ use App;
 use Leevel\Kernel\Exceptions\BusinessException as BaseBusinessException;
 use Throwable;
 
-abstract class BusinessException extends BaseBusinessException
+/**
+ * 通用业务操作异常.
+ */
+class BusinessException extends BaseBusinessException
 {
     /**
      * 构造函数.
@@ -43,7 +46,10 @@ abstract class BusinessException extends BaseBusinessException
     /**
      * 获取错误消息.
      */
-    abstract protected function getErrorMessage(int $code): string;
+    protected function getErrorMessage(int $code): string
+    {
+        return ErrorCode::getErrorMessage($code);
+    }
 
     /**
      * 记录异常到日志.
