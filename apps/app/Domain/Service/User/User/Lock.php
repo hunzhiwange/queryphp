@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\User;
 
 use Admin\Infra\Lock as CacheLock;
-use App\Exceptions\BusinessException;
+use App\Exceptions\UserBusinessException;
+use App\Exceptions\UserErrorCode;
 use Leevel\Validate\Proxy\Validate as Validates;
 
 /**
@@ -39,7 +40,7 @@ class Lock
     /**
      * 校验基本参数.
      *
-     * @throws \App\Exceptions\BusinessException
+     * @throws \App\Exceptions\UserBusinessException
      */
     private function validateArgs(): void
     {
@@ -56,7 +57,7 @@ class Lock
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
-            throw new BusinessException($e);
+            throw new UserBusinessException(UserErrorCode::LOCK_ANAGEMENT_PANEL_INVALID_ARGUMENT, $e, true);
         }
     }
 }

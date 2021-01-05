@@ -59,7 +59,7 @@ class Store
         return [
             'name'       => trim($input['name']),
             'num'        => trim($input['num']),
-            'status'     => $input['status'],
+            'status' => $input['status'],
         ];
     }
 

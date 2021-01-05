@@ -7,6 +7,7 @@ namespace App\Domain\Entity\User;
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\GetterSetter;
 use Leevel\Database\Ddd\Relation\ManyMany;
+use App\Infra\Repository\User\User as RepositoryUser;
 
 /**
  * 用户.
@@ -123,6 +124,11 @@ class User extends Entity
     public const DELETE_AT = 'delete_at';
 
     /**
+     * 仓储.
+     */
+    public const REPOSITORY = RepositoryUser::class;
+
+    /**
      * 状态值.
      */
     
@@ -138,7 +144,7 @@ class User extends Entity
     protected function relationScopeRole(ManyMany $relation): void
     {
         $relation
-            ->where('status', 1)
+            ->where('status', self::STATUS_ENABLE)
             ->setColumns(['id', 'name']);
     }
 }

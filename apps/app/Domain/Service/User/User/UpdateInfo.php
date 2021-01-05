@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
-use App\Exceptions\BusinessException;
+use App\Exceptions\UserBusinessException;
+use App\Exceptions\UserErrorCode;
 use App\Infra\Support\WorkflowService;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\IValidator;
@@ -79,7 +80,7 @@ class UpdateInfo
     /**
      * 校验基本参数.
      *
-     * @throws \App\Exceptions\BusinessException
+     * @throws \App\Exceptions\UserBusinessException
      */
     private function validateArgs(): void
     {
@@ -99,7 +100,7 @@ class UpdateInfo
 
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-            throw new BusinessException($e);
+            throw new UserBusinessException(UserErrorCode::USER_UPDATE_INFO_INVALID_ARGUMENT, $e, true);
         }
     }
 }

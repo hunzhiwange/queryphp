@@ -6,10 +6,11 @@ namespace App\Domain\Service\User\User;
 
 use Admin\Infra\Lock;
 use App\Domain\Entity\User\User;
-use App\Exceptions\BusinessException;
-use Leevel\Auth\Hash;
+use App\Exceptions\UserBusinessException;
+use App\Exceptions\UserErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate as Validates;
+use App\Infra\Repository\User\User as UserReposity;
 
 /**
  * 解锁.
@@ -18,7 +19,7 @@ class Unlock
 {
     private array $input;
 
-    public function __construct(private UnitOfWork $w, private Hash $hash, private Lock $lock)
+    public function __construct(private UnitOfWork $w, private Lock $lock)
     {
         $this->lock = $lock;
     }
@@ -43,39 +44,23 @@ class Unlock
 
     /**
      * 校验用户.
-     *
-     * @throws \App\Exceptions\BusinessException
      */
-    private function validateUser(): User
+    private function validateUser(): void 
     {
-        $user = User::select()
-            ->where('status', 1)
-            ->where('id', $this->input['id'])
-            ->findOne();
-
-        if (!$user->id) {
-            throw new BusinessException(__('账号不存在或者已禁用'));
-        }
-
-        if (!$this->verifyPassword($this->input['password'], $user->password)) {
-            throw new BusinessException(__('解锁密码错误'));
-        }
-
-        return $user;
+        $userReposity = $this->userReposity();
+        $user = $userReposity->findValidUserById($this->input['id'], 'id,password');
+        $userReposity->verifyPassword($this->input['password'], $user->password);
     }
 
-    /**
-     * 对比验证码
-     */
-    private function verifyPassword(string $password, string $hash): bool
+    private function userReposity(): UserReposity
     {
-        return $this->hash->verify($password, $hash);
+        return $this->w->repository(User::class);
     }
 
     /**
      * 校验基本参数.
      *
-     * @throws \App\Exceptions\BusinessException
+     * @throws \App\Exceptions\UserBusinessException
      */
     private function validateArgs(): void
     {
@@ -96,7 +81,7 @@ class Unlock
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
-            throw new BusinessException($e);
+            throw new UserBusinessException(UserErrorCode::UNLOCK_ANAGEMENT_PANEL_INVALID_ARGUMENT, $e, true);
         }
     }
 }

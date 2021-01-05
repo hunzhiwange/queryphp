@@ -6,7 +6,8 @@ namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
 use App\Domain\Entity\User\UserRole as EntityUserRole;
-use App\Exceptions\BusinessException;
+use App\Exceptions\UserBusinessException;
+use App\Exceptions\UserErrorCode;
 use Leevel\Auth\Hash;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\UnitOfWork;
@@ -116,7 +117,7 @@ class Update
     /**
      * 校验基本参数.
      *
-     * @throws \App\Exceptions\BusinessException
+     * @throws \App\Exceptions\UserBusinessException
      */
     private function validateArgs(): void
     {
@@ -135,7 +136,7 @@ class Update
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
-            throw new BusinessException($e);
+            throw new UserBusinessException(UserErrorCode::USER_UPDATE_INVALID_ARGUMENT, $e, true);
         }
     }
 }

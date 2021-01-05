@@ -9,11 +9,13 @@ use App\Domain\Entity\Base\App;
 use App\Domain\Entity\User\User;
 use App\Exceptions\AuthBusinessException;
 use App\Exceptions\AuthErrorCode;
-use Leevel\Auth\Hash;
 use Leevel\Auth\Proxy\Auth;
+use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Http\Request;
 use Leevel\Support\Str;
 use Leevel\Validate\Proxy\Validate as Validates;
+use App\Infra\Repository\User\User as UserReposity;
+use App\Infra\Repository\Base\App as AppReposity;
 
 /**
  * 验证登录.
@@ -22,12 +24,11 @@ class Validate
 {
     private array $input;
 
-    /**
-     * 秘钥.
-     */
-    private string $secret;
-
-    public function __construct(private Request $request, private Code $code)
+    public function __construct(
+        private Request $request, 
+        private Code $code, 
+        private UnitOfWork $w
+    ) 
     {
     }
 
@@ -41,10 +42,9 @@ class Validate
             $this->validateCode();
         }
 
-        $this->validateApp();
-
+        $appSecret = $this->findAppSecret();
         $user = $this->validateUser();
-        Auth::setTokenName($token = $this->createToken());
+        Auth::setTokenName($token = $this->createToken($appSecret));
         Auth::login($user->toArray());
 
         return ['token' => $token];
@@ -53,7 +53,7 @@ class Validate
     /**
      * 生成 token.
      */
-    private function createToken(): string
+    private function createToken(string $appSecret): string
     {
         $token = substr(
             md5(
@@ -70,55 +70,42 @@ class Validate
         ).
         Str::randAlphaNum(10);
 
-        return 'token:admin:'.hash_hmac('sha256', $token, $this->secret);
+        return 'token:admin:'.hash_hmac('sha256', $token, $appSecret);
     }
 
     /**
-     * 校验应用.
-     *
-     * @throws \App\Exceptions\AuthBusinessException
+     * 查找应用秘钥.
      */
-    private function validateApp(): void
+    private function findAppSecret(): string
     {
-        $app = App::select()
-            ->where('num', $this->input['app_id'])
-            ->where('key', $this->input['app_key'])
-            ->findOne();
-        if (!$app->id) {
-            throw new AuthBusinessException(AuthErrorCode::APP_NOT_FOUND);
-        }
+        return $this
+            ->appReposity()
+            ->findAppSecretByNumAndKey(
+                $this->input['app_id'],
+                $this->input['app_key'],
+            );
+    }
 
-        $this->secret = $app->secret;
+    private function appReposity(): AppReposity
+    {
+        return $this->w->repository(App::class);
     }
 
     /**
      * 校验用户.
-     *
-     * @throws \App\Exceptions\AuthBusinessException
      */
     private function validateUser(): User
     {
-        $user = User::select()
-            ->where('status', '1')
-            ->where('name', $this->input['name'])
-            ->findOne();
-        if (!$user->id) {
-            throw new AuthBusinessException(AuthErrorCode::ACCOUNT_NOT_EXIST_OR_DISABLED);
-        }
-
-        if (!$this->verifyPassword($this->input['password'], $user->password)) {
-            throw new AuthBusinessException(AuthErrorCode::ACCOUNT_PASSWORD_ERROR);
-        }
+        $userReposity = $this->userReposity();
+        $user = $userReposity->findValidUserByName($this->input['name']);
+        $userReposity->verifyPassword($this->input['password'], $user->password);
 
         return $user;
     }
 
-    /**
-     * 校验密码.
-     */
-    private function verifyPassword(string $password, string $hash): bool
+    private function userReposity(): UserReposity
     {
-        return (new Hash())->verify($password, $hash);
+        return $this->w->repository(User::class);
     }
 
     /**
