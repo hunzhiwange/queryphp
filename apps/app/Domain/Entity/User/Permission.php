@@ -133,7 +133,7 @@ class Permission extends Entity
     protected function relationScopeResource(ManyMany $relation): void
     {
         $relation
-            ->where('status', 1)
+            ->where('status', Resource::STATUS_ENABLE)
             ->setColumns(['id', 'name', 'num']);
     }
 }

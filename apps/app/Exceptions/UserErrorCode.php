@@ -12,11 +12,11 @@ final class UserErrorCode extends ErrorCode
     #[msg('修改密码参数错误')]
     public const CHANGE_PASSWORD_INVALID_ARGUMENT = 1000010000;
 
-    #[msg('账户旧密码错误')]
-    public const CHANGE_PASSWORD_ACCOUNT_OLD_PASSWORD_ERROR = 1000010001;
+    #[msg('账户密码错误')]
+    public const ACCOUNT_PASSWORD_ERROR = 1000010001;
 
     #[msg('账号不存在或者已禁用')]
-    public const CHANGE_PASSWORD_ACCOUNT_NOT_EXIST_OR_DISABLED = 1000010002;
+    public const ACCOUNT_NOT_EXIST_OR_DISABLED = 1000010002;
 
     #[msg('权限保存参数错误')]
     public const PERMISSION_STORE_INVALID_ARGUMENT = 1000010003;
@@ -35,4 +35,19 @@ final class UserErrorCode extends ErrorCode
 
     #[msg('角色保存参数错误')]
     public const ROLE_STORE_INVALID_ARGUMENT = 1000010008;
+
+    #[msg('用户保存参数错误')]
+    public const USER_STORE_INVALID_ARGUMENT = 1000010009;
+
+    #[msg('用户更新参数错误')]
+    public const USER_UPDATE_INVALID_ARGUMENT = 1000010010;
+
+    #[msg('用户更新资料参数错误')]
+    public const USER_UPDATE_INFO_INVALID_ARGUMENT = 1000010011;
+
+    #[msg('锁定管理面板参数错误')]
+    public const LOCK_ANAGEMENT_PANEL_INVALID_ARGUMENT = 1000010012;
+
+    #[msg('解锁管理面板参数错误')]
+    public const UNLOCK_ANAGEMENT_PANEL_INVALID_ARGUMENT = 1000010013;
 }

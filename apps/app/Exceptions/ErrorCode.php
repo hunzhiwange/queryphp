@@ -37,6 +37,9 @@ class ErrorCode extends Enum
     #[msg('未发现数据')]
     public const BATCH_MODIFICATION_STATUS_NO_DATA_FOUND = 1000000002; 
 
+    #[msg('应用无法找到')]
+    public const APP_NOT_FOUND = 1000000003;
+
     /**
      * 获取错误消息.
      */

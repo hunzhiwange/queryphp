@@ -6,6 +6,7 @@ namespace App\Domain\Entity\Base;
 
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\GetterSetter;
+use App\Infra\Repository\Base\App as RepositoryApp;
 
 /**
  * 应用.
@@ -100,6 +101,11 @@ class App extends Entity
      * Soft delete column.
      */
     public const DELETE_AT = 'delete_at';
+
+    /**
+     * 仓储.
+     */
+    public const REPOSITORY = RepositoryApp::class;
 
     /**
      * 状态值.

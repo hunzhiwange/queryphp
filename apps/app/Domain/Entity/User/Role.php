@@ -122,7 +122,7 @@ class Role extends Entity
     protected function relationScopePermission(ManyMany $relation): void
     {
         $relation
-            ->where('status', 1)
+            ->where('status', Permission::STATUS_ENABLE)
             ->setColumns(['id', 'name']);
     }
 }

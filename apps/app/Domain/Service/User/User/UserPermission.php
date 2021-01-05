@@ -71,7 +71,7 @@ class UserPermission
         return $this->w
             ->repository(User::class)
             ->eager(['role.permission.resource'])
-            ->where('status', 1)
+            ->where('status', User::STATUS_ENABLE)
             ->findOrFail($id);
     }
 }

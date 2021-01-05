@@ -94,7 +94,7 @@ class Index
     private function filterInputRules(): array
     {
         return [
-            'status'   => ['intval'],
+            'status' => ['intval'],
             'page'     => ['intval'],
             'size'     => ['intval'],
         ];

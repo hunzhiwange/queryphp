@@ -7,10 +7,10 @@ namespace App\Domain\Service\User\User;
 use App\Domain\Entity\User\User;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
-use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate as Validates;
-
+use App\Infra\Repository\User\User as UserReposity;
+ 
 /**
  * 用户修改密码.
  */
@@ -18,7 +18,7 @@ class ChangePassword
 {
     private array $input;
 
-    public function __construct(private UnitOfWork $w, private Hash $hash)
+    public function __construct(private UnitOfWork $w)
     {
     }
 
@@ -27,31 +27,19 @@ class ChangePassword
         $this->input = $input;
         $this->validateArgs();
         $this->validateUser();
-        $this->save($input)->toArray();
+        $this->save($input);
 
         return [];
     }
 
     /**
      * 校验用户.
-     *
-     * @throws \App\Exceptions\UserBusinessException
      */
-    private function validateUser(): User
+    private function validateUser(): void
     {
-        $user = User::select()
-            ->where('status', '1')
-            ->where('id', $this->input['id'])
-            ->findOne();
-        if (!$user->id) {
-            throw new UserBusinessException(UserErrorCode::CHANGE_PASSWORD_ACCOUNT_NOT_EXIST_OR_DISABLED);
-        }
-
-        if (!$this->verifyPassword($this->input['old_pwd'], $user->password)) {
-            throw new UserBusinessException(UserErrorCode::CHANGE_PASSWORD_ACCOUNT_OLD_PASSWORD_ERROR);
-        }
-
-        return $user;
+        $userReposity = $this->userReposity();
+        $user = $userReposity->findValidUserById($this->input['id'], 'id,password');
+        $userReposity->verifyPassword($this->input['old_pwd'], $user->password);
     }
 
     /**
@@ -59,15 +47,12 @@ class ChangePassword
      */
     private function createPassword(string $password): string
     {
-        return $this->hash->password($password);
+        return $this->userReposity()->createPassword($password);
     }
 
-    /**
-     * 校验旧密码.
-     */
-    private function verifyPassword(string $password, string $hash): bool
+    private function userReposity(): UserReposity
     {
-        return $this->hash->verify($password, $hash);
+        return $this->w->repository(User::class);
     }
 
     /**
