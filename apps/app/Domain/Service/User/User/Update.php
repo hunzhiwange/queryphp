@@ -22,34 +22,30 @@ class Update
 {
     use BaseStoreUpdate;
 
-    private array $input;
+    private UpdateParams $params;
 
-    public function __construct(private UnitOfWork $w, private Hash $hash)
+    public function __construct(
+        private UnitOfWork $w,
+        private Hash $hash
+    )
     {
     }
 
-    public function handle(array $input): array
+    public function handle(UpdateParams $params): array
     {
-        if (empty($input['password'])) {
-            unset($input['password']);
-        }
-        $this->input = $input;
+        $this->params = $params;
         $this->validateArgs();
 
-        if (!isset($input['userRole'])) {
-            $input['userRole'] = [];
-        }
-
-        return $this->prepareData($this->save($input));
+        return $this->prepareData($this->save($params));
     }
 
     /**
      * 保存.
      */
-    private function save(array $input): User
+    private function save(UpdateParams $params): User
     {
-        $this->w->persist($entity = $this->entity($input));
-        $this->setUserRole((int) $input['id'], $input['userRole']);
+        $this->w->persist($entity = $this->entity($params));
+        $this->setUserRole($params->id, $params->userRole);
         $this->w->flush();
         $entity->refresh();
 
@@ -68,13 +64,14 @@ class Update
             });
     }
 
-    /**
-     * 验证参数.
-     */
-    private function entity(array $input): User
+    private function entity(UpdateParams $params): User
     {
-        $entity = $this->find((int) $input['id']);
-        $entity->withProps($this->data($input));
+        $entity = $this->find($params->id);
+        $entity->num = $params->num;
+        $entity->status = $params->status;
+        if ($params->password) {
+            $entity->password = $this->createPassword($params->password);
+        }
 
         return $entity;
     }
@@ -98,38 +95,32 @@ class Update
     }
 
     /**
-     * 组装实体数据.
-     */
-    private function data(array $input): array
-    {
-        $data = [
-            'num'    => trim($input['num']),
-            'status' => $input['status'],
-        ];
-
-        if (isset($input['password']) && $password = trim($input['password'])) {
-            $data['password'] = $this->createPassword($password);
-        }
-
-        return $data;
-    }
-
-    /**
      * 校验基本参数.
      *
      * @throws \App\Exceptions\UserBusinessException
      */
     private function validateArgs(): void
     {
+        $params = $this->params
+            ->only(['num', 'password', 'status'])
+            ->toArray();
+        if (empty($params['password'])) {
+            $params['password'] = null;
+        }
+
         $validator = Validate::make(
-            $this->input,
+            $params,
             [
-                'num'      => 'required|alpha_dash|'.UniqueRule::rule(User::class, null, (int) $this->input['id'], null, 'delete_at', 0),
+                'num'      => 'required|alpha_dash|'.UniqueRule::rule(User::class, null, $this->params->id, null, 'delete_at', 0),
                 'password' => 'required|min_length:6,max_length:30'.'|'.IValidator::OPTIONAL,
+                'status' => [
+                    ['in', User::values('status')],
+                ],
             ],
             [
                 'num'      => __('编号'),
                 'password' => __('密码'),
+                'status'   => __('状态值'),
             ]
         );
 

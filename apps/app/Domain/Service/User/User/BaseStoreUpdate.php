@@ -25,7 +25,6 @@ trait BaseStoreUpdate
         $roles = $this->findRoles($userId);
         $existRoleId = array_column($roles->toArray(), 'role_id');
         foreach ($roleId as &$rid) {
-            $rid = (int) $rid;
             if (!\in_array($rid, $existRoleId, true)) {
                 $this->w->create($this->entityUserRole($userId, $rid));
             }
