@@ -23,26 +23,31 @@ class Store
 
     private array $input;
 
-    public function __construct(private UnitOfWork $w, private Hash $hash)
+    private StoreParams $params;
+
+    public function __construct(
+        private UnitOfWork $w,
+        private Hash $hash,
+    )
     {
     }
 
-    public function handle(array $input): array
+    public function handle(StoreParams $params): array
     {
-        $this->input = $input;
+        $this->params = $params;
         $this->validateArgs();
 
-        return $this->prepareData($this->save($input));
+        return $this->prepareData($this->save($params));
     }
 
     /**
      * 保存.
      */
-    private function save(array $input): User
+    private function save(StoreParams $params): User
     {
-        $this->w->persist($entity = $this->entity($input));
-        $this->w->on($entity, function (User $user) use ($input) {
-            $this->setUserRole((int) $user->id, $input['userRole'] ?? []);
+        $this->w->create($entity = $this->entity($params));
+        $this->w->on($entity, function (User $user) use ($params) {
+            $this->setUserRole($user->id, $params->userRole);
         });
         $this->w->flush();
         $entity->refresh();
@@ -61,9 +66,9 @@ class Store
     /**
      * 创建实体.
      */
-    private function entity(array $input): User
+    private function entity(StoreParams $params): User
     {
-        return new User($this->data($input));
+        return new User($this->data($params));
     }
 
     /**
@@ -77,13 +82,13 @@ class Store
     /**
      * 组装实体数据.
      */
-    private function data(array $input): array
+    private function data(StoreParams $params): array
     {
         return [
-            'name'       => trim($input['name']),
-            'num'        => trim($input['num']),
-            'status'     => $input['status'],
-            'password'   => $this->createPassword(trim($input['password'])),
+            'name'       => $params->name,
+            'num'        => $params->num,
+            'status'     => $params->status,
+            'password' => $this->createPassword($params->password),
         ];
     }
 
@@ -94,17 +99,25 @@ class Store
      */
     private function validateArgs(): void
     {
+        $params = $this->params
+            ->only(['name', 'num', 'password', 'status'])
+            ->toArray();
+
         $validator = Validate::make(
-            $this->input,
+            $params,
             [
-                'name'     => 'required|chinese_alpha_num|max_length:64',
-                'num'      => 'required|alpha_dash|'.UniqueRule::rule(User::class, null, null, null, 'delete_at', 0),
+                'name'     => 'required|chinese_alpha_num|max_length:64|'.($uniqueRule = UniqueRule::rule(User::class, null, null, null, 'delete_at', 0)),
                 'password' => 'required|min_length:6,max_length:30',
+                'status' => [
+                    ['in', User::values('status')],
+                ],
+                'num'      => 'required|alpha_dash|'.$uniqueRule,
             ],
             [
                 'name'     => __('名字'),
-                'num'      => __('编号'),
                 'password' => __('密码'),
+                'status'   => __('状态值'),
+                'num'      => __('编号'),
             ]
         );
 

@@ -6,6 +6,7 @@ namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
 use App\Domain\Entity\User\UserRole as EntityUserRole;
+use Leevel\Collection\TypedIntArray;
 
 trait BaseStoreUpdate
 {
@@ -20,17 +21,17 @@ trait BaseStoreUpdate
     /**
      * 设置用户授权.
      */
-    private function setUserRole(int $userId, array $roleId): void
+    private function setUserRole(int $userId, TypedIntArray $userRole): void
     {
         $roles = $this->findRoles($userId);
         $existRoleId = array_column($roles->toArray(), 'role_id');
-        foreach ($roleId as &$rid) {
-            $rid = (int) $rid;
+        foreach ($userRole as $rid) {
             if (!\in_array($rid, $existRoleId, true)) {
                 $this->w->create($this->entityUserRole($userId, $rid));
             }
         }
 
+        $roleId = $userRole->toArray();
         foreach ($roles as $r) {
             if (\in_array($r['role_id'], $roleId, true)) {
                 continue;
