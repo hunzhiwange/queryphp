@@ -8,11 +8,11 @@ use Leevel\Collection\TypedIntArray;
 use Leevel\Support\Dto;
 
 /**
- * 用户更新参数.
+ * 用户保存参数.
  */
-class UpdateParams extends Dto
+class StoreParams extends Dto
 {
-    public int $id;
+    public string $name;
 
     public string $num;
 
@@ -20,5 +20,5 @@ class UpdateParams extends Dto
 
     public TypedIntArray $userRole;
 
-    public string $password = '';
+    public string $password;
 }

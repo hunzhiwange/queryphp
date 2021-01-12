@@ -111,16 +111,16 @@ class Update
         $validator = Validate::make(
             $params,
             [
-                'num'      => 'required|alpha_dash|'.UniqueRule::rule(User::class, null, $this->params->id, null, 'delete_at', 0),
                 'password' => 'required|min_length:6,max_length:30'.'|'.IValidator::OPTIONAL,
                 'status' => [
                     ['in', User::values('status')],
                 ],
+                'num'      => 'required|alpha_dash|'.UniqueRule::rule(User::class, null, $this->params->id, null, 'delete_at', 0),
             ],
             [
-                'num'      => __('编号'),
                 'password' => __('密码'),
                 'status'   => __('状态值'),
+                'num'      => __('编号'),
             ]
         );
 
