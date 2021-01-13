@@ -78,7 +78,7 @@ class WorkflowTest extends TestCase
 
     public function testWorkflowWasNotFound(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage(
             'Workflow `notfound` was not found.'
         );
@@ -94,7 +94,7 @@ class WorkflowTest extends TestCase
 
     public function testWorkflowWasInvalid(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage(
             'Invalid workflow.'
         );

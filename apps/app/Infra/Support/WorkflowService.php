@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infra\Support;
 
 use App\Exceptions\BusinessException;
+use App\Exceptions\ErrorCode;
 use InvalidArgumentException;
 use Leevel\Support\Arr;
 use Leevel\Validate\Proxy\Validate;
@@ -75,11 +76,9 @@ trait WorkflowService
         list($rules, $names, $messages) = $inputRules;
 
         $validator = Validate::make($input, $rules, $names, $messages);
-
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
-            throw new BusinessException($e);
+            throw new BusinessException(ErrorCode::SERVICE_INVALID_ARGUMENT, $e, true);
         }
     }
 
@@ -100,14 +99,6 @@ trait WorkflowService
      */
     private function filterEmptyStringInput(array $input): array
     {
-        $input = array_map(function ($v) {
-            if ('' === $v) {
-                $v = null;
-            }
-
-            return $v;
-        }, $input);
-
-        return $input;
+        return array_map(fn (mixed $v) => '' === $v ? null : $v, $input);
     }
 }
