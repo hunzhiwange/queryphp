@@ -31,7 +31,7 @@ final class PermissionResource extends AbstractMigration
                 `update_account` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 `version` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '操作版本号',
                 PRIMARY KEY (`id`),
-                UNIQUE KEY `uniq_permission_resource` (`permission_id`,`resource_id`,`delete_at`)
+                UNIQUE KEY `uniq_permission_resource` (`permission_id`,`resource_id`,`delete_at`) USING BTREE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限资源关联';
             EOT;
         $this->execute($sql);
