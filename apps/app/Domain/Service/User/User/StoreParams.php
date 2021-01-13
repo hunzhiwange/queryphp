@@ -18,7 +18,7 @@ class StoreParams extends Dto
 
     public int $status;
 
-    public TypedIntArray $userRole;
-
     public string $password;
+    
+    public TypedIntArray $userRole;
 }

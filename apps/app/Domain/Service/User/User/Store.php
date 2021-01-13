@@ -21,8 +21,6 @@ class Store
 {
     use BaseStoreUpdate;
 
-    private array $input;
-
     private StoreParams $params;
 
     public function __construct(
@@ -107,17 +105,17 @@ class Store
             $params,
             [
                 'name'     => 'required|chinese_alpha_num|max_length:64|'.($uniqueRule = UniqueRule::rule(User::class, null, null, null, 'delete_at', 0)),
+                'num'      => 'required|alpha_dash|'.$uniqueRule,
                 'password' => 'required|min_length:6,max_length:30',
                 'status' => [
                     ['in', User::values('status')],
                 ],
-                'num'      => 'required|alpha_dash|'.$uniqueRule,
             ],
             [
                 'name'     => __('名字'),
+                'num'      => __('编号'),
                 'password' => __('密码'),
                 'status'   => __('状态值'),
-                'num'      => __('编号'),
             ]
         );
 

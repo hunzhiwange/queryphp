@@ -122,12 +122,16 @@ class Update
                 'alpha_dash',
                 UniqueRule::rule(Role::class, null, $input['id'], null, 'delete_at', 0),
             ],
+            'status' => [
+                ['in', Role::values('status')],
+            ],
         ];
 
         $names = [
             'id'            => 'ID',
             'name'          => __('名字'),
             'num'           => __('编号'),
+            'status' => __('状态值'),
         ];
 
         return [$rules, $names];

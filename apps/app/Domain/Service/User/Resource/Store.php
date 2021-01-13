@@ -75,10 +75,14 @@ class Store
             [
                 'name' => 'required|chinese_alpha_num|max_length:50',
                 'num'           => 'required|'.UniqueRule::rule(Resource::class, null, null, null, 'delete_at', 0),
+                'status' => [
+                    ['in', Resource::values('status')],
+                ],
             ],
             [
                 'name' => __('名字'),
                 'num'           => __('编号'),
+                'status' => __('状态值'),
             ]
         );
 

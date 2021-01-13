@@ -7,6 +7,7 @@ namespace App\Domain\Service\User\Role;
 use App\Domain\Entity\User\Role;
 use App\Domain\Entity\User\RolePermission as EntityRolePermission;
 use Leevel\Collection\Collection;
+use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
 
 /**
@@ -44,7 +45,7 @@ class Permission
     {
         return $this->w
             ->repository(EntityRolePermission::class)
-            ->findAll(function ($select) use ($roleId) {
+            ->findAll(function (Select $select) use ($roleId) {
                 $select->where('role_id', $roleId);
             });
     }

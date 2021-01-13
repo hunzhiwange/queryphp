@@ -59,7 +59,7 @@ class Store
         return [
             'name'       => trim($input['name']),
             'num'        => trim($input['num']),
-            'status'     => $input['status'],
+            'status' => $input['status'],
         ];
     }
 
@@ -75,10 +75,14 @@ class Store
             [
                 'name' => 'required|chinese_alpha_num|max_length:50',
                 'num'           => 'required|alpha_dash|'.UniqueRule::rule(Role::class, null, null, null, 'delete_at', 0),
+                'status' => [
+                    ['in', Role::values('status')],
+                ],
             ],
             [
                 'name' => __('名字'),
                 'num'           => __('编号'),
+                'status'   => __('状态值'),
             ]
         );
 

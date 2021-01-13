@@ -7,6 +7,7 @@ namespace App\Domain\Service\User\Permission;
 use App\Domain\Entity\User\Permission;
 use App\Domain\Entity\User\PermissionResource as EntityPermissionResource;
 use Leevel\Collection\Collection;
+use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
 
 /**
@@ -47,7 +48,7 @@ class Resource
     {
         return $this->w
             ->repository(EntityPermissionResource::class)
-            ->findAll(function ($select) use ($permissionId) {
+            ->findAll(function (Select $select) use ($permissionId) {
                 $select->where('permission_id', $permissionId);
             });
     }

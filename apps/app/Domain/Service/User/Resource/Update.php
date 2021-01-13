@@ -89,11 +89,15 @@ class Update
                 'id'            => 'required',
                 'name' => 'required|chinese_alpha_num|max_length:50',
                 'num'           => 'required|'.UniqueRule::rule(Resource::class, null, $this->input['id']),
+                'status' => [
+                    ['in', Resource::values('status')],
+                ],
             ],
             [
                 'id'            => 'ID',
                 'name' => __('名字'),
                 'num'           => __('编号'),
+                'status' => __('状态值'),
             ]
         );
 

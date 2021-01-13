@@ -94,10 +94,14 @@ class Store
             [
                 'name' => 'required|chinese_alpha_num|max_length:50',
                 'num'  => 'required|alpha_dash|'.UniqueRule::rule(Permission::class, null, null, null, 'delete_at', 0),
+                'status' => [
+                    ['in', Permission::values('status')],
+                ],
             ],
             [
                 'name' => __('名字'),
                 'num'  => __('编号'),
+                'status' => __('状态值'),
             ]
         );
 
