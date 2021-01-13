@@ -17,4 +17,10 @@ final class AuthErrorCode extends ErrorCode
 
     #[msg('你没有权限执行操作')]
     public const AUTH_NO_PERMISSION = 1000030005;
+
+    #[msg('权限认证失败')]
+    public const PERMISSION_AUTHENTICATION_FAILED = 1000030006;
+
+    #[msg('管理系统已锁定')]
+    public const MANAGEMENT_SYSTEM_LOCKED = 1000030007;
 }

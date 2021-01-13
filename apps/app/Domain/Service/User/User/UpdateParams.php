@@ -17,8 +17,8 @@ class UpdateParams extends Dto
     public string $num;
 
     public int $status;
-
-    public TypedIntArray $userRole;
-
+    
     public string $password = '';
+    
+    public TypedIntArray $userRole;
 }

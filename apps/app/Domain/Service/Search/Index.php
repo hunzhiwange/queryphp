@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Search;
 
-use App\Exceptions\SearchItemNotFoundException;
+use RuntimeException;
 use Leevel;
 
 /**
@@ -48,7 +48,7 @@ class Index
             }
 
             $convertService = $this->convertService($keyMap[$service] ?? $service);
-            $serviceClass = '\\'.$this->topNamespace.'\\App\\Service\\Search\\'.$convertService.'\\';
+            $serviceClass = '\\'.$this->topNamespace.'\\Service\\Search\\'.$convertService.'\\';
 
             foreach ($method as $v) {
                 if (isset($keyMap[$v])) {
@@ -60,14 +60,14 @@ class Index
                 if (!class_exists($serviceHandle)) {
                     $e = sprintf('Service `%s` was not found.', $serviceHandle);
 
-                    throw new SearchItemNotFoundException($e);
+                    throw new RuntimeException($e);
                 }
 
                 $serviceObj = Leevel::make($serviceHandle);
                 if (!is_object($serviceObj) || !is_callable([$serviceObj, 'handle'])) {
                     $e = sprintf('Service `%s:%s` was invalid.', $serviceHandle, 'handle');
 
-                    throw new SearchItemNotFoundException($e);
+                    throw new RuntimeException($e);
                 }
 
                 $result[lcfirst($convertService)][lcfirst($convertMethod)] = Leevel::call([$serviceObj, 'handle'], [$input]);

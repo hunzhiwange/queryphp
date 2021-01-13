@@ -7,6 +7,7 @@ namespace App\Domain\Service\Support;
 use App\Exceptions\BusinessException;
 use App\Exceptions\ErrorCode;
 use Leevel\Collection\Collection;
+use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate;
 
@@ -53,7 +54,7 @@ trait Status
         /** @var \Leevel\Collection\Collection $entitys */
         $entitys = $this->w
             ->repository($this->entity())
-            ->findAll(function ($select) use ($input) {
+            ->findAll(function (Select $select) use ($input) {
                 $select->whereIn('id', $input['ids']);
             });
 

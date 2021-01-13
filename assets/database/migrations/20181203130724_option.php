@@ -31,7 +31,7 @@ final class Option extends AbstractMigration
                 `update_account` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 `version` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '操作版本号',
                 PRIMARY KEY (`id`),
-                UNIQUE KEY `uniq_name` (`name`,`delete_at`)
+                UNIQUE KEY `uniq_name` (`name`,`delete_at`) USING BTREE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置';
             EOT;
         $this->execute($sql);

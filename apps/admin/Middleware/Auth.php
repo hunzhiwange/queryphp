@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Middleware;
 
-use Admin\Exceptions\LockException;
+use App\Exceptions\LockException;
 use Admin\Infra\Lock;
 use App\Exceptions\AuthBusinessException;
 use App\Exceptions\AuthErrorCode;
@@ -81,7 +81,7 @@ class Auth extends BaseAuth
 
             parent::handle($next, $request);
         } catch (AuthException) {
-            throw new UnauthorizedHttpException(__('权限认证失败'));
+            throw new UnauthorizedHttpException(AuthErrorCode::PERMISSION_AUTHENTICATION_FAILED);
         }
     }
 
@@ -111,13 +111,13 @@ class Auth extends BaseAuth
     /**
      * 验证是否锁定.
      *
-     * @throws \Admin\Exceptions\LockException
+     * @throws \App\Exceptions\LockException
      */
     private function validateLock(Request $request, string $token): void
     {
         if (!\in_array($request->getPathInfo(), $this->ignoreLockPathInfo, true) &&
             $token && (new Lock())->has($token)) {
-            throw new LockException(__('系统已锁定'));
+            throw new LockException(AuthErrorCode::MANAGEMENT_SYSTEM_LOCKED);
         }
     }
 

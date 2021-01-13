@@ -108,6 +108,15 @@ class Update
      */
     private function validateInputRules(array $input): array
     {
+        $uniqueRule = UniqueRule::rule(
+            Role::class, 
+            null, 
+            $input['id'], 
+            null, 
+            'delete_at', 
+            0
+        );
+
         $rules = [
             'id' => [
                 'required',
@@ -116,11 +125,15 @@ class Update
                 'required',
                 'chinese_alpha_num',
                 'max_length:50',
+                $uniqueRule,
             ],
             'num' => [
                 'required',
                 'alpha_dash',
-                UniqueRule::rule(Role::class, null, $input['id'], null, 'delete_at', 0),
+                $uniqueRule,
+            ],
+            'status' => [
+                ['in', Role::values('status')],
             ],
         ];
 
@@ -128,6 +141,7 @@ class Update
             'id'            => 'ID',
             'name'          => __('名字'),
             'num'           => __('编号'),
+            'status' => __('状态值'),
         ];
 
         return [$rules, $names];

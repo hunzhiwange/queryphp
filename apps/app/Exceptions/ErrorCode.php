@@ -40,6 +40,9 @@ class ErrorCode extends Enum
     #[msg('应用无法找到')]
     public const APP_NOT_FOUND = 1000000003;
 
+    #[msg('服务参数错误')]
+    public const SERVICE_INVALID_ARGUMENT = 1000000004; 
+
     /**
      * 获取错误消息.
      */

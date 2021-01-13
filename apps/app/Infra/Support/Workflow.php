@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infra\Support;
 
-use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * 工作流.
@@ -14,17 +14,16 @@ trait Workflow
     /**
      * 执行工作流.
      *
-     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
     private function workflow(array &$input): array
     {
         $result = $args = [];
-
         foreach ($this->normalizeWorkflow() as $wf) {
             if (!method_exists($this, $wf)) {
                 $e = sprintf('Workflow `%s` was not found.', $wf);
 
-                throw new InvalidArgumentException($e);
+                throw new RuntimeException($e);
             }
 
             if (null !== ($tmp = $this->{$wf}($input, $args))) {
@@ -40,14 +39,13 @@ trait Workflow
     /**
      * 整理工作流.
      *
-     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
     private function normalizeWorkflow(): array
     {
         $workflow = $this->workflow;
-
         if (!is_array($workflow)) {
-            throw new InvalidArgumentException('Invalid workflow.');
+            throw new RuntimeException('Invalid workflow.');
         }
 
         /*

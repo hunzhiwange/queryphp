@@ -98,17 +98,30 @@ class Update
      */
     private function validateArgs(): void
     {
+        $uniqueRule = UniqueRule::rule(
+            Permission::class,
+            null,
+            $this->input['id'],
+            null,
+            'delete_at',
+            0
+        );
+
         $validator = Validate::make(
             $this->input,
             [
                 'id'            => 'required',
-                'name' => 'required|chinese_alpha_num|max_length:50',
-                'num'           => 'required|alpha_dash|'.UniqueRule::rule(Permission::class, null, $this->input['id']),
+                'name' => 'required|chinese_alpha_num|max_length:50|'.$uniqueRule,
+                'num'           => 'required|alpha_dash|'.$uniqueRule,
+                'status' => [
+                    ['in', Permission::values('status')],
+                ],
             ],
             [
                 'id'            => 'ID',
                 'name' => __('名字'),
                 'num'           => __('编号'),
+                'status' => __('状态值'),
             ]
         );
 

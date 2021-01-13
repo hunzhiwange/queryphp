@@ -70,15 +70,28 @@ class Store
      */
     private function validateArgs(): void
     {
+        $uniqueRule = UniqueRule::rule(
+            Resource::class,
+            null,
+            null,
+            null,
+            'delete_at',
+            0
+        );
+
         $validator = Validate::make(
             $this->input,
             [
-                'name' => 'required|chinese_alpha_num|max_length:50',
-                'num'           => 'required|'.UniqueRule::rule(Resource::class, null, null, null, 'delete_at', 0),
+                'name' => 'required|chinese_alpha_num|max_length:50|'.$uniqueRule,
+                'num'           => 'required|'.$uniqueRule,
+                'status' => [
+                    ['in', Resource::values('status')],
+                ],
             ],
             [
                 'name' => __('名字'),
                 'num'           => __('编号'),
+                'status' => __('状态值'),
             ]
         );
 
