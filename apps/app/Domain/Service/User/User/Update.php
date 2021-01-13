@@ -109,10 +109,19 @@ class Update
             $params['password'] = null;
         }
 
+        $uniqueRule = UniqueRule::rule(
+            User::class,
+            null,
+            $this->params->id,
+            null,
+            'delete_at', 
+            0
+        );
+
         $validator = Validate::make(
             $params,
             [
-                'num'      => 'required|alpha_dash|'.UniqueRule::rule(User::class, null, $this->params->id, null, 'delete_at', 0),
+                'num'      => 'required|alpha_dash|'.$uniqueRule,
                 'password' => 'required|min_length:6,max_length:30'.'|'.IValidator::OPTIONAL,
                 'status' => [
                     ['in', User::values('status')],

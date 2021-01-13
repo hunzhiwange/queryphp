@@ -101,10 +101,19 @@ class Store
             ->only(['name', 'num', 'password', 'status'])
             ->toArray();
 
+        $uniqueRule = UniqueRule::rule(
+            User::class,
+            null,
+            null,
+            null,
+            'delete_at',
+            0
+        );
+
         $validator = Validate::make(
             $params,
             [
-                'name'     => 'required|chinese_alpha_num|max_length:64|'.($uniqueRule = UniqueRule::rule(User::class, null, null, null, 'delete_at', 0)),
+                'name'     => 'required|chinese_alpha_num|max_length:64|'.$uniqueRule,
                 'num'      => 'required|alpha_dash|'.$uniqueRule,
                 'password' => 'required|min_length:6,max_length:30',
                 'status' => [

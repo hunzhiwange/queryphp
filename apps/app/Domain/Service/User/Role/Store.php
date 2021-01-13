@@ -70,11 +70,20 @@ class Store
      */
     private function validateArgs(): void
     {
+        $uniqueRule = UniqueRule::rule(
+            Role::class, 
+            null, 
+            null, 
+            null, 
+            'delete_at', 
+            0
+        );
+
         $validator = Validate::make(
             $this->input,
             [
-                'name' => 'required|chinese_alpha_num|max_length:50',
-                'num'           => 'required|alpha_dash|'.UniqueRule::rule(Role::class, null, null, null, 'delete_at', 0),
+                'name' => 'required|chinese_alpha_num|max_length:50|'.$uniqueRule,
+                'num'           => 'required|alpha_dash|'.$uniqueRule,
                 'status' => [
                     ['in', Role::values('status')],
                 ],
