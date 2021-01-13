@@ -16,20 +16,15 @@
         <testsuite name="Main Test Suite">
             <directory>./tests/</directory>
         </testsuite>
-        <testsuite name="Application Test Suite">
-            <directory>./application/</directory>
-        </testsuite>
-        <testsuite name="Common Test Suite">
-            <directory>./common/</directory>
+        <testsuite name="Apps Test Suite">
+            <directory>./apps/</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">./application/</directory>
-            <directory suffix=".php">./common/</directory>
+            <directory suffix=".php">./apps/</directory>
             <exclude>
-                <directory suffix="Test.php">./application/</directory>
-                <directory suffix="Test.php">./common/</directory>
+                <directory suffix="Test.php">./apps/</directory>
             </exclude>
         </whitelist>
     </filter>
