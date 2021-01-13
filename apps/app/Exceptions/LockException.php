@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Leevel\Kernel\Exceptions\UnauthorizedHttpException as BaseUnauthorizedHttpException;
 use Throwable;
+use Leevel\Kernel\Exceptions\HttpException;
+use Symfony\Component\HttpFoundation\Response;
 
-class UnauthorizedHttpException extends BaseUnauthorizedHttpException
+/**
+ * 锁定异常.
+ */
+class LockException extends HttpException
 {
     /**
      * 构造函数.
@@ -21,7 +25,7 @@ class UnauthorizedHttpException extends BaseUnauthorizedHttpException
     {
         $message = $overrideMessage ? $message : 
                     $this->getErrorMessage($code).($message ? ': '.$message : '');
-        parent::__construct($message, $code, $previous);
+        parent::__construct(Response::HTTP_FAILED_DEPENDENCY, $message, $code, $previous);
     }
 
     /**
