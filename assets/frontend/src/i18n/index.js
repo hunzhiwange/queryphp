@@ -14,8 +14,6 @@ const navLang = navigator.language
 const localLang = navLang === 'zh-CN' || navLang === 'en-US' ? navLang : false
 const lang = window.localStorage.lang || localLang || 'zh-CN'
 
-//Vue.config.lang = lang
-
 const i18n = new VueI18n({
     locale: lang,
     messages: {

@@ -23,11 +23,11 @@
     "vuex": "^3.6.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.2.0",
-    "@vue/cli-plugin-eslint": "^3.2.1",
-    "@vue/cli-service": "^4.4.6",
-    "@vue/eslint-config-standard": "^3.0.0-beta.10",
-    "@vue/test-utils": "^1.0.0-beta.10",
+    "@vue/cli-plugin-babel": "^4.5.10",
+    "@vue/cli-plugin-eslint": "^4.5.10",
+    "@vue/cli-service": "^4.5.10",
+    "@vue/eslint-config-standard": "^6.0.0",
+    "@vue/test-utils": "^1.1.2",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.8.0",
     "eslint-plugin-cypress": "^2.0.1",
