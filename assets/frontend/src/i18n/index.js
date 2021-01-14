@@ -14,8 +14,15 @@ const navLang = navigator.language
 const localLang = navLang === 'zh-CN' || navLang === 'en-US' ? navLang : false
 const lang = window.localStorage.lang || localLang || 'zh-CN'
 
-Vue.config.lang = lang
+//Vue.config.lang = lang
 
-Vue.locale('zh-CN', Object.assign(zhCnLocale, zhCnApp))
-Vue.locale('zh-TW', Object.assign(zhTwLocale, zhTwApp))
-Vue.locale('en-US', Object.assign(enUsLocale, enUsApp))
+const i18n = new VueI18n({
+    locale: lang,
+    messages: {
+      'zh-CN': Object.assign(zhCnLocale, zhCnApp),
+      'zh-TW': Object.assign(zhTwLocale, zhTwApp),
+      'en-US': Object.assign(enUsLocale, enUsApp),
+    }
+})
+
+export default i18n
