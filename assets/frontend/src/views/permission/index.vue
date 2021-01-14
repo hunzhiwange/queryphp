@@ -58,7 +58,7 @@
                     type="text"
                     @click="add()"
                     class="add-extra"
-                    :disabled="!utils.permission('permission_add_button')"
+                    v-if="utils.permission('permission_add_button')"
                     ><Icon type="md-add-circle"></Icon> {{ __('新增') }}</i-button
                 >
             </div>

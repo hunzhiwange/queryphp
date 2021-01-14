@@ -171,7 +171,7 @@ let appRouterData = [
     },
     {
         path: '/test',
-        icon: 'ios-water',
+        icon: 'md-checkmark-circle-outline',
         name: 'test',
         meta: {
             title: __('测试页面'),
@@ -192,7 +192,7 @@ let appRouterData = [
     },
     {
         path: '/menu',
-        icon: 'ios-water',
+        icon: 'md-menu',
         name: 'menu',
         meta: {
             title: __('一级菜单'),

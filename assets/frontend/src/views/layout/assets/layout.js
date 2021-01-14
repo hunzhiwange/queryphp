@@ -44,19 +44,43 @@ export default {
     computed: {
         menuList() {
             let menuList = this.$store.state.app.menuList
-
             menuList.forEach(item => {
                 item.permission = utils.permission(item.name + '_menu')
-
+                let firstLevelChildrenHasPermission = false
                 item.children.forEach(v => {
                     v.permission = utils.permission(v.name + '_menu')
-
+                    let seccondLevelChildrenHasPermission = true
                     if (v.children) {
+                        seccondLevelChildrenHasPermission = false
                         v.children.forEach(v => {
                             v.permission = utils.permission(v.name + '_menu')
+
+                            // 判断是否存在有权限的直接子节点
+                            if (v.permission) {
+                                seccondLevelChildrenHasPermission = true;
+                            }
                         })
                     }
+
+                    // 直接子节点无权限，父节点将不会有权限
+                    if (v.permission && seccondLevelChildrenHasPermission) {
+                        v.permission = true
+                    } else {
+                        v.permission = false
+                    }
+
+                    // 判断是否存在有权限的直接子节点
+                    if (v.permission) {
+                        firstLevelChildrenHasPermission = true;
+                    }
                 })
+
+                // 直接子节点无权限，父节点将不会有权限
+                if (item.permission && firstLevelChildrenHasPermission) {
+                    item.permission = true
+                } else {
+                    item.permission = false
+                }
             })
 
             return menuList

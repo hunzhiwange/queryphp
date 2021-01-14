@@ -81,27 +81,27 @@ export default {
                             <i-button
                                 type="text"
                                 on-click={() => this.append(root, node, data)}
-                                disabled={!utils.permission('permission_add_button')}>
+                                v-show={utils.permission('permission_add_button')}>
                                 {this.__('新增')}
                             </i-button>
                             <i-button
                                 type="text"
                                 on-click={() => this.edit(root, node, data)}
-                                disabled={!utils.permission('permission_edit_button')}>
+                                v-show={utils.permission('permission_edit_button')}>
                                 {this.__('编辑')}
                             </i-button>
                             <i-button
                                 type="text"
                                 onClick={() => this.resource(root, node, data)}
-                                disabled={!utils.permission('permission_resource_button')}>
+                                v-show={utils.permission('permission_resource_button')}>
                                 {this.__('授权')}
                             </i-button>
                             <i-button
                                 type="text"
                                 onClick={() => this.remove(root, node, data)}
-                                disabled={
-                                    (data.children && data.children.length > 0) ||
-                                    !utils.permission('permission_delete_button')
+                                v-show={
+                                    !((data.children && data.children.length > 0) ||
+                                    !utils.permission('permission_delete_button'))
                                 }>
                                 {this.__('删除')}
                             </i-button>

@@ -72,14 +72,14 @@
                             type="primary"
                             icon="md-eye"
                             @click="statusMany(1)"
-                            :disabled="!utils.permission('role_status_button')"
+                            v-if="utils.permission('role_status_button')"
                             >{{ __('启用') }}</i-button
                         >
                         <i-button
                             type="primary"
                             icon="md-eye-off"
                             @click="statusMany(0)"
-                            :disabled="!utils.permission('role_status_button')"
+                            v-if="utils.permission('role_status_button')"
                             >{{ __('禁用') }}</i-button
                         >
                     </ButtonGroup>
@@ -108,7 +108,7 @@
                     <i-col span="24">
                         <FormItem :label="__('请选择权限')" label-position="top">
                             <div class="tree-for-role">
-                                <Tree :data="dataTree" ref="tree" show-checkbox multiple :render="renderContent"></Tree>
+                                <Tree :data="dataTree" ref="tree" check-strictly show-checkbox multiple :render="renderContent"></Tree>
                             </div>
                         </FormItem>
                     </i-col>
