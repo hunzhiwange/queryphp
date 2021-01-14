@@ -50,6 +50,10 @@ final class RolePermission extends AbstractMigration
             INSERT INTO `role_permission`(`id`, `role_id`, `permission_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (8, 2, 8, '2019-01-31 09:27:04', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `role_permission`(`id`, `role_id`, `permission_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (9, 2, 9, '2019-01-31 09:27:04', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `role_permission`(`id`, `role_id`, `permission_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (10, 3, 7, '2019-01-31 09:27:42', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `role_permission`(`id`, `role_id`, `permission_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (11, 2, 10, '2021-01-13 15:31:25', '2021-01-13 15:31:25', 0, 0, 0, 0);
+            INSERT INTO `role_permission`(`id`, `role_id`, `permission_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (12, 2, 11, '2021-01-13 15:31:25', '2021-01-13 15:31:25', 0, 0, 0, 0);
+            INSERT INTO `role_permission`(`id`, `role_id`, `permission_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (13, 2, 12, '2021-01-13 15:31:25', '2021-01-13 15:31:25', 0, 0, 0, 0);
+            INSERT INTO `role_permission`(`id`, `role_id`, `permission_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (14, 2, 13, '2021-01-13 15:31:25', '2021-01-13 15:31:25', 0, 0, 0, 0);
             EOT;
         $this->execute($sql);
     }
