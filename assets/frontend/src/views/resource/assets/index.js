@@ -23,7 +23,7 @@ export default {
                 },
                 {
                     type: 'index',
-                    width: 50,
+                    width: 55,
                     align: 'center',
                     className: 'table-index',
                 },
@@ -57,13 +57,13 @@ export default {
                                     <i-button
                                         type="text"
                                         onClick={() => this.edit(params)}
-                                        disabled={!utils.permission('resource_edit_button')}>
+                                        v-show={utils.permission('resource_edit_button')}>
                                         {this.__('编辑')}
                                     </i-button>
                                     <i-button
                                         type="text"
                                         onClick={() => this.remove(params)}
-                                        disabled={!utils.permission('resource_delete_button')}>
+                                        v-show={utils.permission('resource_delete_button')}>
                                         {this.__('删除')}
                                     </i-button>
                                 </buttonGroup>

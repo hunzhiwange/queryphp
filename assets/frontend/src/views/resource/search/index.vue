@@ -50,7 +50,7 @@
                     type="text"
                     @click="add()"
                     class="add-extra"
-                    :disabled="!utils.permission('resource_add_button')"
+                    v-if="utils.permission('resource_add_button')"
                     ><Icon type="md-add-circle"></Icon> {{ __('新增') }}</i-button
                 >
             </i-col>

@@ -89,14 +89,14 @@
                             type="primary"
                             icon="md-eye"
                             @click="statusMany(1)"
-                            :disabled="!utils.permission('user_status_button')"
+                            v-if="utils.permission('user_status_button')"
                             >{{ __('启用') }}</i-button
                         >
                         <i-button
                             type="primary"
                             icon="md-eye-off"
                             @click="statusMany(0)"
-                            :disabled="!utils.permission('user_status_button')"
+                            v-if="utils.permission('user_status_button')"
                             >{{ __('禁用') }}</i-button
                         >
                     </ButtonGroup>
