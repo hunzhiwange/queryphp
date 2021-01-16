@@ -24,7 +24,6 @@ class Cors
             'Access-Control-Allow-Headers'     => 'Origin, X-Requested-With, Content-Type, Accept, token',
             'Access-Control-Allow-Credentials' => 'true',
         ];
-
         $response = new Response();
         $response->headers->add($headers);
         $response->sendHeaders();
