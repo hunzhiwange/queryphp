@@ -26,11 +26,20 @@ service.interceptors.request.use(
     config => {
         let apiToken = bus.$store.state.user.token
 
+        // 使用 header 传递 token
+        // 会多一次 OPTIONS 请求
+        // if (apiToken) {
+        //     config.headers['token'] = apiToken
+        // }
+
         if (apiToken) {
-            config.headers['token'] = apiToken
+            if ('get' === config.method) {
+                config.params['token'] = apiToken
+            } else {
+                config.data['token'] = apiToken
+            }
         }
 
-        // config.headers['Content-Type'] = 'application/json'
         return config
     },
     error => {
