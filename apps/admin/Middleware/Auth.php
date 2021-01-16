@@ -14,6 +14,7 @@ use App\Infra\Proxy\Permission;
 use Leevel\Auth\AuthException;
 use Leevel\Auth\Middleware\Auth as BaseAuth;
 use Leevel\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * auth 中间件.
@@ -62,12 +63,11 @@ class Auth extends BaseAuth
      *
      * @throws \App\Exceptions\UnauthorizedHttpException
      */
-    public function handle(Closure $next, Request $request): void
+    public function handle(Closure $next, Request $request): Response 
     {
-        if ($request::METHOD_OPTIONS === $request->getMethod() || $this->isIgnoreRouter($request)) {
-            $next($request);
-
-            return;
+        if ($request::METHOD_OPTIONS === $request->getMethod() || 
+            $this->isIgnoreRouter($request)) {
+            return $next($request);
         }
 
         try {
@@ -79,7 +79,7 @@ class Auth extends BaseAuth
                 }
             }
 
-            parent::handle($next, $request);
+            return parent::handle($next, $request);
         } catch (AuthException) {
             throw new UnauthorizedHttpException(AuthErrorCode::PERMISSION_AUTHENTICATION_FAILED);
         }
