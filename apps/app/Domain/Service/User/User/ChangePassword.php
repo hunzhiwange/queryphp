@@ -16,18 +16,19 @@ use App\Infra\Repository\User\User as UserReposity;
  */
 class ChangePassword
 {
-    private array $input;
+
+    private ChangePasswordParams $params;
 
     public function __construct(private UnitOfWork $w)
     {
     }
 
-    public function handle(array $input): array
+    public function handle(ChangePasswordParams $params): array
     {
-        $this->input = $input;
+        $this->params = $params;
         $this->validateArgs();
         $this->validateUser();
-        $this->save($input);
+        $this->save($params);
 
         return [];
     }
@@ -38,8 +39,8 @@ class ChangePassword
     private function validateUser(): void
     {
         $userReposity = $this->userReposity();
-        $user = $userReposity->findValidUserById($this->input['id'], 'id,password');
-        $userReposity->verifyPassword($this->input['old_pwd'], $user->password);
+        $user = $userReposity->findValidUserById($this->params->id, 'id,password');
+        $userReposity->verifyPassword($this->params->oldPwd, $user->password);
     }
 
     /**
@@ -58,21 +59,18 @@ class ChangePassword
     /**
      * 保存.
      */
-    private function save(array $input): User
+    private function save(ChangePasswordParams $params): User
     {
-        $this->w->persist($entity = $this->entity($input));
+        $this->w->persist($entity = $this->entity($params));
         $this->w->flush();
 
         return $entity;
     }
 
-    /**
-     * 验证参数.
-     */
-    private function entity(array $input): User
+    private function entity(ChangePasswordParams $params): User
     {
-        $entity = $this->find((int) $input['id']);
-        $entity->withProps($this->data($input));
+        $entity = $this->find($params->id);
+        $entity->password = $this->createPassword($params->newPwd);
 
         return $entity;
     }
@@ -88,24 +86,18 @@ class ChangePassword
     }
 
     /**
-     * 组装实体数据.
-     */
-    private function data(array $input): array
-    {
-        return [
-            'password' => $this->createPassword(trim($input['new_pwd'])),
-        ];
-    }
-
-    /**
      * 校验基本参数.
      *
      * @throws \App\Exceptions\BusinessException
      */
     private function validateArgs(): void
     {
+        $params = $this->params
+            ->only(['id', 'old_pwd', 'new_pwd', 'confirm_pwd'])
+            ->toArray();
+
         $validator = Validates::make(
-            $this->input,
+            $params,
             [
                 'id'                  => 'required',
                 'old_pwd'             => 'required|alpha_dash|min_length:6',

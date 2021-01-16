@@ -29,7 +29,7 @@ class ChangePassword
         return $this->main($request, $service);
     }
 
-    private function extendInput(Request $request): array
+    private function extendInput(): array
     {
         return ['id' => $this->id()];
     }
@@ -39,6 +39,6 @@ class ChangePassword
      */
     private function id(): int
     {
-        return (int) Auth::getLogin()['id'];
+        return Auth::getLogin()['id'];
     }
 }
