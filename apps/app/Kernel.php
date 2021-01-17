@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use App\Middleware\Cors;
+use App\Middleware\Filter;
 use Leevel\Debug\Middleware\Debug;
 use Leevel\Kernel\IApp;
 use Leevel\Kernel\Kernel as Kernels;
@@ -19,6 +20,7 @@ class Kernel extends Kernels
     protected array $middlewares = [
         Cors::class,
         Log::class,
+        Filter::class,
     ];
 
     /**
