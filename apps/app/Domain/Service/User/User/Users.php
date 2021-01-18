@@ -23,30 +23,11 @@ class Users
 
     public function handle(UsersParams $params): array
     {
-        $repository = $this->w->repository(User::class);
-
-        return $this->findPage($params, $repository);
+        return $this->findLists($params, User::class);
     }
 
-    /**
-     * 准备用户数据.
-     */
-    private function prepareItem(User $user): array
+    private function conditionCall(): ?Closure
     {
-        $data = $user->toArray();
-        $data['role'] = $user->role->toArray();
-
-        return $data;
-    }
-
-    /**
-     * 查询条件.
-     */
-    private function condition(UsersParams $params): Closure
-    {
-        return function (Select $select) use ($params) {
-            $select->eager(['role']);
-            $this->spec($select, $params);
-        };
+        return fn(Select $select) => $select->eager(['role']);
     }
 }

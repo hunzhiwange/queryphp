@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\Resource;
 
-use Closure;
 use App\Domain\Entity\User\Resource;
 use App\Domain\Service\Support\Read;
 use App\Domain\Service\User\Resource\ResourcesParams;
-use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
 
 /**
@@ -24,23 +22,6 @@ class Resources
 
     public function handle(ResourcesParams $params): array
     {
-        $repository = $this->w->repository(Resource::class);
-
-        return $this->findPage($params, $repository);
-    }
-
-    private function prepareItem(Resource $user): array
-    {
-        return $user->toArray();
-    }
-
-    /**
-     * 查询条件.
-     */
-    private function condition(ResourcesParams $params): Closure
-    {
-        return function (Select $select) use ($params) {
-            $this->spec($select, $params);
-        };
+        return $this->findLists($params, Resource::class);
     }
 }

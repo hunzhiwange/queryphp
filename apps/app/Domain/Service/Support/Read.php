@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Support;
 
+use Closure;
 use Leevel\Collection\Collection;
 use Leevel\Collection\TypedStringArray;
 use Leevel\Database\Ddd\Repository;
@@ -116,16 +117,39 @@ trait Read
         return $data;
     }
 
+    public function findLists(ReadParams $params, string $entityClass): array
+    {
+        return $this->findPage($params, $this->w->repository($entityClass));
+    }
+
+    private function condition(ReadParams $params): Closure
+    {
+        return $this->baseCondition(
+            $params,
+            $this->conditionCall(),
+        );
+    }
+
+    private function conditionCall(): ?Closure
+    {
+        return null;
+    }
+
+    private function baseCondition(ReadParams $params, ?Closure $call = null): Closure
+    {
+        return function (Select $select) use ($params, $call) {
+            if ($call) {
+                $call($select);
+            }
+            $this->spec($select, $params);
+        };
+    }
+
     /**
      * 转换集合为数组.
      */
     private function prepareToArray(Collection $data): array
     {
-        $result = [];
-        foreach ($data as $v) {
-            $result[] = $this->prepareItem($v);
-        }
-
-        return $result;
+        return $data->toArray();
     }
 }
