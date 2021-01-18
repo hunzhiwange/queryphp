@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Login;
 
-use  Admin\Controller\Support\Controller;
-use  Admin\Service\Login\Code as Service;
+use Admin\Controller\Support\Controller;
+use Admin\Service\Login\Code as Service;
 use function App\Infra\Helper\force_close_debug;
 use Leevel\Http\Request;
 use Leevel\Http\Response;

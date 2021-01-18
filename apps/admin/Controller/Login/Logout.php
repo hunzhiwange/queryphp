@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Login;
 
-use  Admin\Service\Login\Logout as Service;
+use Admin\Service\Login\Logout as Service;
 
 /**
  * 用户登出.

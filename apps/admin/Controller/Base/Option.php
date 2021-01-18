@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Base;
 
-use  Admin\Controller\Support\Controller;
-use  Admin\Service\Base\Option as Service;
+use Admin\Controller\Support\Controller;
+use Admin\Service\Base\Option as Service;
 use Leevel\Http\Request;
 
 /**

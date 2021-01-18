@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Login;
 
-use  Admin\Controller\Support\Controller;
-use  Admin\Service\Login\Validate as Service;
+use Admin\Controller\Support\Controller;
+use Admin\Service\Login\Validate as Service;
 use Leevel\Http\Request;
 
 /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Permission;
 
-use  Admin\Service\Permission\Index as Service;
+use Admin\Service\Permission\Index as Service;
 
 /**
  * 权限列表.

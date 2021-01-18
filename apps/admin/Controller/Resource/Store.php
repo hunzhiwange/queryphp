@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Resource;
 
-use  Admin\Controller\Support\Controller;
-use  Admin\Service\Resource\Store as Service;
+use Admin\Controller\Support\Controller;
+use Admin\Service\Resource\Store as Service;
 use Leevel\Http\Request;
 
 /**

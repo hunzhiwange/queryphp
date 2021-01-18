@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Base;
 
-use  Admin\Service\Base\GetOption as Service;
+use Admin\Service\Base\GetOption as Service;
 use Leevel\Http\Request;
 
 /**
