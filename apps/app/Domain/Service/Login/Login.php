@@ -20,10 +20,8 @@ use App\Infra\Repository\Base\App as AppReposity;
 /**
  * 验证登录.
  */
-class Validate
+class Login
 {
-    private array $input;
-
     public function __construct(
         private Request $request, 
         private Code $code, 
@@ -32,19 +30,18 @@ class Validate
     {
     }
 
-    public function handle(array $input): array
+    public function handle(LoginParams $params): array
     {
-        $this->input = $input;
-        $this->validateArgs();
+        $this->validateArgs($params);
 
         // Mac 自带 PHP 有问题
         if (\function_exists('imagettftext')) {
-            $this->validateCode();
+            $this->validateCode($params);
         }
 
-        $appSecret = $this->findAppSecret();
-        $user = $this->validateUser();
-        Auth::setTokenName($token = $this->createToken($appSecret));
+        $appSecret = $this->findAppSecret($params->appId, $params->appKey);
+        $user = $this->validateUser($params->name, $params->password);
+        Auth::setTokenName($token = $this->createToken($params, $appSecret));
         Auth::login($user->toArray());
 
         return ['token' => $token];
@@ -53,16 +50,16 @@ class Validate
     /**
      * 生成 token.
      */
-    private function createToken(string $appSecret): string
+    private function createToken(LoginParams $params, string $appSecret): string
     {
         $token = substr(
             md5(
                 $this->request->server->get('HTTP_USER_AGENT').
                 $this->request->server->get('SERVER_ADDR').
-                $this->input['app_id'].
-                $this->input['app_key'].
-                $this->input['name'].
-                $this->input['password'].
+                $params->appId.
+                $params->appKey.
+                $params->name.
+                $params->password.
                 substr((string) time(), 0, 6)
             ),
             8,
@@ -76,13 +73,13 @@ class Validate
     /**
      * 查找应用秘钥.
      */
-    private function findAppSecret(): string
+    private function findAppSecret(string $appId, string $appKey): string
     {
         return $this
             ->appReposity()
             ->findAppSecretByNumAndKey(
-                $this->input['app_id'],
-                $this->input['app_key'],
+                $appId,
+                $appKey,
             );
     }
 
@@ -94,11 +91,11 @@ class Validate
     /**
      * 校验用户.
      */
-    private function validateUser(): User
+    private function validateUser(string $name, string $password): User
     {
         $userReposity = $this->userReposity();
-        $user = $userReposity->findValidUserByName($this->input['name']);
-        $userReposity->verifyPassword($this->input['password'], $user->password);
+        $user = $userReposity->findValidUserByName($name);
+        $userReposity->verifyPassword($password, $user->password);
 
         return $user;
     }
@@ -113,14 +110,14 @@ class Validate
      *
      * @throws \App\Exceptions\AuthBusinessException
      */
-    private function validateCode(): void
+    private function validateCode(LoginParams $params): void
     {
-        $codeFromCache = $this->code->get($this->input['name']);
+        $codeFromCache = $this->code->get($params->name);
         if ('' === $codeFromCache) {
             return;
         }
 
-        if (strtoupper($this->input['code']) !== strtoupper($codeFromCache)) {
+        if (strtoupper($params->code) !== strtoupper($codeFromCache)) {
             throw new AuthBusinessException(AuthErrorCode::VERIFICATION_CODE_ERROR);
         }
     }
@@ -130,16 +127,18 @@ class Validate
      *
      * @throws \App\Exceptions\AuthBusinessException
      */
-    private function validateArgs(): void
+    private function validateArgs(LoginParams $params): void
     {
+        $params = $params->toArray();
         $validator = Validates::make(
-            $this->input,
+            $params,
             [
                 'app_id'   => 'required|alpha_dash',
                 'app_key'  => 'required|alpha_dash',
                 'name'     => 'required|chinese_alpha_num|max_length:50',
                 'password' => 'required|chinese_alpha_dash|max_length:50',
                 'code'     => 'required|alpha|min_length:4|max_length:4',
+                'remember' => 'required',
             ],
             [
                 'app_id'       => __('应用 ID'),
@@ -147,6 +146,7 @@ class Validate
                 'name'         => __('用户名'),
                 'password' => __('密码'),
                 'code'         => __('校验码'),
+                'remember'     => __('保持登陆'),
             ]
         );
 
