@@ -16,7 +16,8 @@
         "php": "^8.0",
         "ext-mbstring": "*",
         "ext-openssl": "*",
-        "hunzhiwange/framework": "dev-master"
+        "hunzhiwange/framework": "dev-master",
+        "symfony/workflow": "^5.2"
     },
     "require-dev": {
         "codedungeon/php-cli-colors": "^1.12.0",
