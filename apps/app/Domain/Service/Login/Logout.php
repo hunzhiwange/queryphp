@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Admin\Service\Login;
+namespace App\Domain\Service\Login;
 
 use Leevel\Auth\Proxy\Auth;
 
@@ -11,8 +11,10 @@ use Leevel\Auth\Proxy\Auth;
  */
 class Logout
 {
-    public function handle(): void
+    public function handle(): array
     {
         Auth::logout();
+
+        return [];
     }
 }
