@@ -10,12 +10,17 @@ use Leevel\Collection\TypedStringArray;
 use Leevel\Database\Ddd\Repository;
 use Leevel\Database\Ddd\Select;
 use function Leevel\Support\Str\camelize;
+use Leevel\Database\Ddd\UnitOfWork;
 
 /**
  * 查询.
  */
 trait Read
 {
+    public function __construct(private UnitOfWork $w)
+    {
+    }
+
     /**
      * 预处理.
      */

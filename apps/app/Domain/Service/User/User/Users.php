@@ -8,7 +8,6 @@ use Closure;
 use App\Domain\Entity\User\User;
 use App\Domain\Service\Support\Read;
 use Leevel\Database\Ddd\Select;
-use Leevel\Database\Ddd\UnitOfWork;
 
 /**
  * 用户列表.
@@ -16,10 +15,6 @@ use Leevel\Database\Ddd\UnitOfWork;
 class Users
 {
     use Read;
-
-    public function __construct(private UnitOfWork $w)
-    {
-    }
 
     public function handle(UsersParams $params): array
     {
