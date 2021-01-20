@@ -16,19 +16,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Upload
 {
-    public function handle(array $input): array
+    public function handle(UploadParams $params): array
     {
-        $this->closeDebug();
-
-        return $this->save($input['file']);
-    }
-
-    /**
-     * 关闭调试.
-     */
-    private function closeDebug(): void
-    {
-        Option::set('debug', false);
+        return $this->save($params->file);
     }
 
     /**
@@ -45,7 +35,9 @@ class Upload
         $savePath = $this->getSavePath($file);
         $this->saveFile($file->getPathname(), $savePath);
 
-        return [$this->savePathForUrl($savePath)];
+        return [
+            'file_url' => $this->savePathForUrl($savePath)
+        ];
     }
 
     /**
