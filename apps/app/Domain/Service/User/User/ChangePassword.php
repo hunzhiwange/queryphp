@@ -92,9 +92,7 @@ class ChangePassword
      */
     private function validateArgs(): void
     {
-        $params = $this->params
-            ->only(['id', 'old_pwd', 'new_pwd', 'confirm_pwd'])
-            ->toArray();
+        $params = $this->params->toArray();
 
         $validator = Validates::make(
             $params,

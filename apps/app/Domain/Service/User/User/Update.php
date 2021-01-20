@@ -102,9 +102,7 @@ class Update
      */
     private function validateArgs(): void
     {
-        $params = $this->params
-            ->only(['num', 'password', 'status'])
-            ->toArray();
+        $params = $this->params->toArray();
         if (empty($params['password'])) {
             $params['password'] = null;
         }

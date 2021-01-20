@@ -97,9 +97,7 @@ class Store
      */
     private function validateArgs(): void
     {
-        $params = $this->params
-            ->only(['name', 'num', 'password', 'status'])
-            ->toArray();
+        $params = $this->params->toArray();
 
         $uniqueRule = UniqueRule::rule(
             User::class,
