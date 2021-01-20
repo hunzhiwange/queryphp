@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Base;
 
-use App\Domain\Entity\Base\Option as Options;
+use App\Domain\Entity\Base\Option as OptionEntity;
 use Leevel\Database\Ddd\UnitOfWork;
 
 /**
  * 获取配置.
  */
-class GetOption
+class Options
 {
     public function __construct(private UnitOfWork $w)
     {
@@ -19,7 +19,7 @@ class GetOption
     public function handle(): array
     {
         $options = $this->w
-            ->repository(Options::class)
+            ->repository(OptionEntity::class)
             ->findAll();
         $result = $options->toArray();
 
