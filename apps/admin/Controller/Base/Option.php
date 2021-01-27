@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Admin\Controller\Base;
 
 use Admin\Controller\Support\Controller;
-use Admin\Service\Base\Option as Service;
 use Leevel\Http\Request;
+use App\Domain\Service\Base\OptionUpdate;
+use App\Domain\Service\Base\OptionUpdateParams;
 
 /**
  * 配置更新.
@@ -22,8 +23,10 @@ class Option
         'site_close',
     ];
 
-    public function handle(Request $request, Service $service): array
+    public function handle(Request $request, OptionUpdate $service): array
     {
-        return $this->main($request, $service);
+        $params = OptionUpdateParams::fromRequest($this->input($request));
+
+        return $service->handle($params);
     }
 }

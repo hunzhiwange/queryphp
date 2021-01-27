@@ -23,6 +23,13 @@ class Option extends Entity
      * Primary key.
      */
     public const ID = 'id';
+ 
+    /**
+     * Unique key.
+     */
+    public const UNIQUE = [
+        ['name', 'delete_at'],
+    ];
 
     /**
      * Auto increment.
