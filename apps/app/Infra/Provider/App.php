@@ -49,9 +49,7 @@ class App extends Provider
         $this->container->singleton('permission', function (IContainer $container): Permission {
             /** @var \Leevel\Http\Request $request */
             $request = $container->make('request');
-            $token = Request::METHOD_GET === $request->getMethod()?
-                        $request->query->get('token', '') : 
-                        $request->request->get('token', '');
+            $token = $request->query->get('token', $request->request->get('token', ''));
 
             return new Permission($container->make(PermissionCache::class), $token);
         });
