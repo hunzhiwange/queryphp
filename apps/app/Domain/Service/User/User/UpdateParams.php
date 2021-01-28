@@ -21,4 +21,14 @@ class UpdateParams extends Dto
     public string $password = '';
     
     public TypedIntArray $userRole;
+
+    protected function userRoleDefaultValue(): TypedIntArray
+    {
+        return new TypedIntArray([]);
+    }
+
+    protected function userRoleTransformValue(string|array $value): TypedIntArray
+    {
+        return TypedIntArray::fromRequest($value);
+    }
 }
