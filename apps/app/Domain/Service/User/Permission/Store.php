@@ -63,8 +63,8 @@ class Store
 
         return [
             'pid'        => $input['pid'],
-            'name'       => trim($input['name']),
-            'num'        => trim($input['num']),
+            'name'       => $input['name'],
+            'num'        => $input['num'],
             'status' => $input['status'],
         ];
     }
