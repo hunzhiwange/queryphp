@@ -19,13 +19,13 @@ trait Destroy
     {
     }
 
-    public function handle(array $input): array
+    public function handle(DestroyParams $params): array
     {
-        $this->validateArgs($input);
+        $this->validateArgs($params);
         if (method_exists($this, 'validate')) {
-            $this->validate($input);
+            $this->validate($params);
         }
-        $this->remove($this->find($input['id']));
+        $this->remove($this->find($params->id));
 
         return [];
     }
@@ -54,10 +54,10 @@ trait Destroy
      *
      * @throws \App\Exceptions\BusinessException
      */
-    private function validateArgs(array $input): void
+    private function validateArgs(DestroyParams $params): void
     {
         $validator = Validate::make(
-            $input,
+            $params->toArray(),
             [
                 'id' => 'required',
             ],
