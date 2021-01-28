@@ -33,7 +33,8 @@ service.interceptors.request.use(
         // }
 
         if (apiToken) {
-            if ('get' === config.method) {
+            let methods = ['get', 'delete']
+            if (methods.includes(config.method)) {
                 config.params['token'] = apiToken
             } else {
                 config.data['token'] = apiToken
