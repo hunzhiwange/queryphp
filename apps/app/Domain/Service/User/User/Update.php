@@ -23,8 +23,6 @@ class Update
 {
     use BaseStoreUpdate;
 
-    private UpdateParams $params;
-
     public function __construct(
         private UnitOfWork $w,
         private Hash $hash
@@ -34,8 +32,7 @@ class Update
 
     public function handle(UpdateParams $params): array
     {
-        $this->params = $params;
-        $this->validateArgs();
+        $this->validateArgs($params);
 
         return $this->prepareData($this->save($params));
     }
@@ -100,24 +97,24 @@ class Update
      *
      * @throws \App\Exceptions\UserBusinessException
      */
-    private function validateArgs(): void
+    private function validateArgs(UpdateParams $params): void
     {
-        $params = $this->params->toArray();
-        if (empty($params['password'])) {
-            $params['password'] = null;
+        $data = $params->toArray();
+        if (empty($data['password'])) {
+            $data['password'] = null;
         }
 
         $uniqueRule = UniqueRule::rule(
             User::class,
             null,
-            $this->params->id,
+            $params->id,
             null,
             'delete_at', 
             0
         );
 
         $validator = Validate::make(
-            $params,
+            $data,
             [
                 'num'      => 'required|alpha_dash|'.$uniqueRule,
                 'password' => 'required|min_length:6,max_length:30'.'|'.IValidator::OPTIONAL,

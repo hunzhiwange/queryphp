@@ -12,23 +12,11 @@ use Leevel\Support\Dto;
  */
 class UpdateParams extends Dto
 {
+    use BaseStoreUpdateParams;
+
     public int $id;
 
-    public string $num;
-
-    public int $status;
-    
     public string $password = '';
     
     public TypedIntArray $userRole;
-
-    protected function userRoleDefaultValue(): TypedIntArray
-    {
-        return new TypedIntArray([]);
-    }
-
-    protected function userRoleTransformValue(string|array $value): TypedIntArray
-    {
-        return TypedIntArray::fromRequest($value);
-    }
 }

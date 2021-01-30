@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\User;
 
-use Leevel\Collection\TypedIntArray;
 use Leevel\Support\Dto;
 
 /**
@@ -12,13 +11,9 @@ use Leevel\Support\Dto;
  */
 class StoreParams extends Dto
 {
+    use BaseStoreUpdateParams;
+
     public string $name;
 
-    public string $num;
-
-    public int $status;
-
     public string $password;
-    
-    public TypedIntArray $userRole;
 }

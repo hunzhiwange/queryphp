@@ -14,7 +14,10 @@ class Permission
     /**
      * 构造函数.
      */
-    public function __construct(private PermissionCache $permissionCache, private UserPermission $permission)
+    public function __construct(
+        private PermissionCache $permissionCache,
+        private UserPermission $permission,
+    )
     {
     }
 
