@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Admin\Controller\Role;
 
 use Admin\Controller\Support\Controller;
-use Admin\Service\Role\Destroy as Service;
+use App\Domain\Service\User\Role\Destroy as Service;
+use App\Domain\Service\Support\DestroyParams;
 use Leevel\Http\Request;
 
 /**
@@ -19,7 +20,9 @@ class Destroy
 
     public function handle(Request $request, Service $service): array
     {
-        return $this->main($request, $service);
+        $params = new DestroyParams($this->input($request));
+
+        return $service->handle($params);
     }
 
     private function input(Request $request): array
