@@ -7,12 +7,12 @@ namespace App\Domain\Service\User\Permission;
 use App\Domain\Entity\User\Permission;
 use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Tree\Tree;
+use Leevel\Tree\Tree as BaseTree;
 
 /**
- * 权限列表.
+ * 权限树列表.
  */
-class Index
+class Tree 
 {
     public function __construct(private UnitOfWork $w)
     {
@@ -43,9 +43,9 @@ class Index
     /**
      * 生成节点树.
      */
-    private function createTree(Collection $entitys): Tree
+    private function createTree(Collection $entitys): BaseTree
     {
-        return new Tree($this->parseToNode($entitys));
+        return new BaseTree($this->parseToNode($entitys));
     }
 
     /**
