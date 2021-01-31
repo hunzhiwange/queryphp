@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Base;
 
-use App\Domain\Service\Base\Options;
-use Leevel\Http\Request;
+use App\Domain\Service\Option\Options;
 
 /**
  * 获取配置.
@@ -14,7 +13,7 @@ use Leevel\Http\Request;
  */
 class GetOption
 {
-    public function handle(Request $request, Options $service): array
+    public function handle(Options $service): array
     {
         return $service->handle();
     }

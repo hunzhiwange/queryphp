@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Service\Base;
+namespace App\Domain\Service\Option;
 
+use App\Domain\Entity\Base\Option as EntityOption;
 use Leevel\Support\Enum;
 
 /**
@@ -15,5 +16,5 @@ class DefaultOptions extends Enum
     const SITE_NAME = '';
 
     #[option('站点状态')]
-    const SITE_STATUS = 1;
+    const SITE_STATUS = EntityOption::SITE_STATUS_ENABLE;
 }

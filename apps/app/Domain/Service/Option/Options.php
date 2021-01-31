@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Service\Base;
+namespace App\Domain\Service\Option;
 
 use App\Domain\Entity\Base\Option as OptionEntity;
 use JsonException;

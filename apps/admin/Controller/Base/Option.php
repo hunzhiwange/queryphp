@@ -6,8 +6,8 @@ namespace Admin\Controller\Base;
 
 use Admin\Controller\Support\Controller;
 use Leevel\Http\Request;
-use App\Domain\Service\Base\OptionUpdate;
-use App\Domain\Service\Base\OptionUpdateParams;
+use App\Domain\Service\Option\OptionUpdate;
+use App\Domain\Service\Option\OptionUpdateParams;
 
 /**
  * 配置更新.
@@ -25,7 +25,7 @@ class Option
 
     public function handle(Request $request, OptionUpdate $service): array
     {
-        $params = OptionUpdateParams::fromRequest($this->input($request));
+        $params = new OptionUpdateParams($this->input($request));
 
         return $service->handle($params);
     }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Service\Base;
+namespace App\Domain\Service\Option;
 
 use App\Domain\Entity\Base\Option as OptionEntity;
 use Leevel\Database\Ddd\UnitOfWork;
@@ -28,7 +28,7 @@ class OptionUpdate
 
     private function validateParams(OptionUpdateParams $params)
     {
-        foreach ($params->options as $k => $v) {
+        foreach ($params->all() as $k => $v) {
             $validatorClass = __NAMESPACE__.'\\Validator\\'.ucfirst(Str::camelize($k)).'Validator';
             if (class_exists($validatorClass)) {
                 $validator = new $validatorClass();
@@ -42,7 +42,7 @@ class OptionUpdate
      */
     private function save(OptionUpdateParams $params): void
     {
-        foreach ($params->options as $k => $v) {
+        foreach ($params->all() as $k => $v) {
             $this->w->replace($this->entity($k, $v));
         }
 
