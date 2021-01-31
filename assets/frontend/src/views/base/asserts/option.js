@@ -10,7 +10,6 @@ export default {
                     this.apiPost('base/option', this.formItem).then(
                         res => {
                             this.loading = !this.loading
-
                             utils.success(res.message)
                         },
                         () => {
@@ -32,7 +31,7 @@ export default {
         return {
             formItem: {
                 site_name: '',
-                site_close: '1',
+                site_status: 1,
             },
             loading: false,
             rules: {

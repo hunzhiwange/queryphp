@@ -41,7 +41,8 @@ class OptionUpdate
      */
     private function entity(string $name, string $value): OptionEntity
     {
-        $option = new OptionEntity(['name' => $name], true);
+        $option = new OptionEntity();
+        $option->name = $name;
         if(Arr::shouldJson($value)) {
             $value = Arr::convertJson($value);
         }

@@ -11,12 +11,12 @@
                                     <FormItem :label="__('站点名字')" prop="site_name">
                                         <i-input v-model="formItem.site_name" placeholder=""></i-input>
                                     </FormItem>
-                                    <FormItem :label="__('站点状态')" prop="site_close">
+                                    <FormItem :label="__('站点状态')" prop="site_status">
                                         <i-switch
-                                            v-model="formItem.site_close"
+                                            v-model="formItem.site_status"
                                             size="large"
-                                            true-value="1"
-                                            false-value="0"
+                                            :true-value=1
+                                            :false-value=0
                                         >
                                             <span slot="open">{{ __('启用') }}</span>
                                             <span slot="close">{{ __('关闭') }}</span>

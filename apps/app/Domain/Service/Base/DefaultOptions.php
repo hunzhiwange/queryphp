@@ -14,6 +14,6 @@ class DefaultOptions extends Enum
     #[option('站点名字')]
     const SITE_NAME = '';
 
-    #[option('站点关闭状态')]
-    const SITE_CLOSE = 0;
+    #[option('站点状态')]
+    const SITE_STATUS = 1;
 }

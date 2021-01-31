@@ -20,7 +20,7 @@ class Option
 
     private array $allowedInput = [
         'site_name',
-        'site_close',
+        'site_status',
     ];
 
     public function handle(Request $request, OptionUpdate $service): array
