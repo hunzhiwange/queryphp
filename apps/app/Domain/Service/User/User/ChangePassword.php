@@ -16,18 +16,14 @@ use App\Infra\Repository\User\User as UserReposity;
  */
 class ChangePassword
 {
-
-    private ChangePasswordParams $params;
-
     public function __construct(private UnitOfWork $w)
     {
     }
 
     public function handle(ChangePasswordParams $params): array
     {
-        $this->params = $params;
-        $this->validateArgs();
-        $this->validateUser();
+        $this->validateArgs($params);
+        $this->validateUser($params);
         $this->save($params);
 
         return [];
@@ -36,11 +32,11 @@ class ChangePassword
     /**
      * 校验用户.
      */
-    private function validateUser(): void
+    private function validateUser(ChangePasswordParams $params): void
     {
         $userReposity = $this->userReposity();
-        $user = $userReposity->findValidUserById($this->params->id, 'id,password');
-        $userReposity->verifyPassword($this->params->oldPwd, $user->password);
+        $user = $userReposity->findValidUserById($params->id, 'id,password');
+        $userReposity->verifyPassword($params->oldPwd, $user->password);
     }
 
     /**
@@ -90,12 +86,10 @@ class ChangePassword
      *
      * @throws \App\Exceptions\BusinessException
      */
-    private function validateArgs(): void
+    private function validateArgs(ChangePasswordParams $params): void
     {
-        $params = $this->params->toArray();
-
         $validator = Validates::make(
-            $params,
+            $params->toArray(),
             [
                 'id'                  => 'required',
                 'old_pwd'             => 'required|alpha_dash|min_length:6',
