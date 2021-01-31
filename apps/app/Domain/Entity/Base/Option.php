@@ -98,4 +98,14 @@ class Option extends Entity
      * Soft delete column.
      */
     public const DELETE_AT = 'delete_at';
+
+    /**
+     * 站点状态.
+     */
+    
+    #[site_status('禁用')]
+    public const SITE_STATUS_DISABLE = 0;
+
+    #[site_status('启用')]
+    public const SITE_STATUS_ENABLE = 1;
 }
