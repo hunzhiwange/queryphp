@@ -40,8 +40,8 @@
                                         <i-switch
                                             v-model="formItem.status"
                                             size="large"
-                                            :true-value="1"
-                                            :false-value="0"
+                                            :true-value=1
+                                            :false-value=0
                                         >
                                             <span slot="open">{{ __('启用') }}</span>
                                             <span slot="close">{{ __('禁用') }}</span>
