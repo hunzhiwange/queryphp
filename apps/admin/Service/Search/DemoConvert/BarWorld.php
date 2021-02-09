@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Admin\Service\Search\TestConvert;
+namespace Admin\Service\Search\DemoConvert;
 
-class FooHello
+class BarWorld
 {
     public function handle(array $input): array
     {

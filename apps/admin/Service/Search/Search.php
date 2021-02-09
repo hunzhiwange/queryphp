@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Admin\Service\Search;
 
-use App\Domain\Service\Search\Index as Service;
+use App\Domain\Service\Search\Search as Service;
 
 /**
- * 搜索服务.
+ * 搜索项.
  */
-class Index
+class Search 
 {
     public function __construct(private Service $service)
     {

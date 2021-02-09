@@ -8,21 +8,10 @@ use RuntimeException;
 use Leevel;
 
 /**
- * 搜索列表.
+ * 搜索项.
  */
-class Index
+class Search
 {
-    /**
-     * 特殊的语言保留关键字.
-     *
-     * 遇到一个新增加即可，不需要全部添加.
-     */
-    private array $keyMap = [
-        'return' => 'returns',
-        'list'   => 'lists',
-        'new'    => 'news',
-    ];
-
     /**
      * 构造函数.
      *
@@ -35,19 +24,17 @@ class Index
     /**
      * 响应方法.
      *
-     * @throws \App\Exceptions\SearchItemNotFoundException
+     * @throws \RuntimeException
      */
     public function handle(array $input): array
     {
         $result = [];
-        $keyMap = $this->keyMap;
-
         foreach ($input as $service => $method) {
             if (!is_array($method)) {
                 continue;
             }
 
-            $convertService = $this->convertService($keyMap[$service] ?? $service);
+            $convertService = $this->convertService($service);
             $serviceClass = '\\'.$this->topNamespace.'\\Service\\Search\\'.$convertService.'\\';
 
             foreach ($method as $v) {
@@ -58,14 +45,14 @@ class Index
                 $convertMethod = $this->convertService($v);
                 $serviceHandle = $serviceClass.$convertMethod;
                 if (!class_exists($serviceHandle)) {
-                    $e = sprintf('Service `%s` was not found.', $serviceHandle);
+                    $e = sprintf('Search condition `%s` was not found.', $serviceHandle);
 
                     throw new RuntimeException($e);
                 }
 
                 $serviceObj = Leevel::make($serviceHandle);
                 if (!is_object($serviceObj) || !is_callable([$serviceObj, 'handle'])) {
-                    $e = sprintf('Service `%s:%s` was invalid.', $serviceHandle, 'handle');
+                    $e = sprintf('Search condition `%s:%s` was invalid.', $serviceHandle, 'handle');
 
                     throw new RuntimeException($e);
                 }
@@ -78,7 +65,7 @@ class Index
     }
 
     /**
-     * 转换搜索服务.
+     * 转换搜索项.
      */
     private function convertService(string $service): string
     {

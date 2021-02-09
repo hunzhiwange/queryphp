@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Admin\Service\Search\Test;
+namespace Admin\Service\Search\Demo;
 
-class Foo
+class Bar
 {
     public function handle(array $input): array
     {

@@ -6,7 +6,7 @@ namespace App\Domain\Service\Search;
 
 use Tests\TestCase;
 
-class IndexTest extends TestCase
+class SearchTest extends TestCase
 {
     public function testBaseUse(): void
     {

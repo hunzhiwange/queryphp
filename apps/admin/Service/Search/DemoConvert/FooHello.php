@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Admin\Service\Search\Test;
+namespace Admin\Service\Search\DemoConvert;
 
-class Lists
+class FooHello
 {
     public function handle(array $input): array
     {
         return [
-            'speciallists' => [
+            'FooHello' => [
                 'hello' => 'world',
                 'foo'   => 'bar',
             ],
