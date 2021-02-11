@@ -46,6 +46,7 @@
             "/vendor/symfony/translation-contracts",
             "/vendor/symfony/translation",
             "/vendor/symfony/service-contracts",
+            "/vendor/symfony/config",
             "/vendor/symfony/psr-http-message-bridge",
             "/vendor/symfony/yaml",
             "/vendor/symfony/string",
@@ -66,7 +67,10 @@
             "/vendor/hunzhiwange/framework/src/**/Console/",
             "/vendor/monolog/",
             "/vendor/codedungeon/",
-            "/vendor/league/"
+            "/vendor/league/",
+            "/vendor/nikic/php-parser/",
+            "/vendor/cakephp/",
+            "/vendor/robmorgan/phinx/"
         ]
     },
     "autoload-dev": {
