@@ -2,47 +2,41 @@
 
 declare(strict_types=1);
 
-namespace Tests\Admin\Service\Resource;
+namespace App\Domain\Service\User\Resource;
 
-use Admin\Service\Resource\Index;
-use Admin\Service\Resource\Store;
+use App\Domain\Entity\User\Resource;
+use Leevel\Database\Proxy\Db;
 use Tests\TestCase;
 
-/**
- * IndexTest.
- */
-class IndexTest extends TestCase
+class ResourcesTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->clear();
     }
 
     protected function tearDown(): void
     {
         parent::tearDown();
-
         $this->clear();
     }
 
     public function testBaseUse(): void
     {
-        $service = $this->app->container()->make(Index::class);
-
-        $result = $service->handle([
-            'key'    => '',
-            'status' => '',
+        $service = $this->app->container()->make(Resources::class);
+        $result = $service->handle(new ResourcesParams([
+            'key'    => null,
+            'status' => null,
             'page'   => 1,
             'size'   => 10,
-        ]);
+        ]));
 
         $data = <<<'eot'
             {
                 "per_page": 10,
                 "current_page": 1,
-                "total_page": null,
+                "total_page": 0,
                 "total_record": 0,
                 "total_macro": false,
                 "from": 0,
@@ -64,14 +58,13 @@ class IndexTest extends TestCase
     {
         $this->createResource();
 
-        $service = $this->app->container()->make(Index::class);
-
-        $result = $service->handle([
-            'key'    => '',
-            'status' => '',
+        $service = $this->app->container()->make(Resources::class);
+        $result = $service->handle(new ResourcesParams([
+            'key'    => null,
+            'status' => null,
             'page'   => 1,
             'size'   => 10,
-        ]);
+        ]));
 
         $data = <<<'eot'
             {
@@ -108,12 +101,10 @@ class IndexTest extends TestCase
 
     protected function createResource()
     {
-        $service = $this->app->container()->make(Store::class);
-
-        $service->handle([
+        $this->assertSame(1, Db::table('resource')->insert([
             'name'     => 'foo',
             'num'      => 'bar',
-            'status'   => '1',
-        ]);
+            'status'   => Resource::STATUS_ENABLE,
+        ]));
     }
 }
