@@ -23,8 +23,6 @@ class Auth extends BaseAuth
 {
     /**
      * 忽略锁定路由.
-     *
-     * @return array
      */
     private array $ignoreLockPathInfo = [
         '/:admin/user/lock',
@@ -34,8 +32,6 @@ class Auth extends BaseAuth
 
     /**
      * 忽略路由.
-     *
-     * @return array
      */
     private array $ignorePathInfo = [
         '/:admin/login/code',
@@ -44,8 +40,6 @@ class Auth extends BaseAuth
 
     /**
      * 忽略权限路由.
-     *
-     * @return array
      */
     private array $ignorePermissionPathInfo = [
         '/:admin/login/logout',
