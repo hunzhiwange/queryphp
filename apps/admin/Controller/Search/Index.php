@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Search;
 
-use  Admin\Controller\Support\Controller;
-use  Admin\Service\Search\Index as Service;
+use Admin\Controller\Support\Controller;
+use Admin\Service\Search\Search as Service;
 use Leevel\Http\Request;
 
 /**

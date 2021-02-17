@@ -21,8 +21,6 @@ class Store
 {
     use BaseStoreUpdate;
 
-    private StoreParams $params;
-
     public function __construct(
         private UnitOfWork $w,
         private Hash $hash,
@@ -32,8 +30,7 @@ class Store
 
     public function handle(StoreParams $params): array
     {
-        $this->params = $params;
-        $this->validateArgs();
+        $this->validateArgs($params);
 
         return $this->prepareData($this->save($params));
     }
@@ -95,12 +92,8 @@ class Store
      *
      * @throws \App\Exceptions\UserBusinessException
      */
-    private function validateArgs(): void
+    private function validateArgs(StoreParams $params): void
     {
-        $params = $this->params
-            ->only(['name', 'num', 'password', 'status'])
-            ->toArray();
-
         $uniqueRule = UniqueRule::rule(
             User::class,
             null,
@@ -111,7 +104,7 @@ class Store
         );
 
         $validator = Validate::make(
-            $params,
+            $params->toArray(),
             [
                 'name'     => 'required|chinese_alpha_num|max_length:64|'.$uniqueRule,
                 'num'      => 'required|alpha_dash|'.$uniqueRule,

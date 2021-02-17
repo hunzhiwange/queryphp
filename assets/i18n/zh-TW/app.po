@@ -1,0 +1,63 @@
+# app
+#
+msgid ""
+msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: zh-TW\n"
+"Language-Team: \n"
+"Last-Translator: \n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2021-02-12 11:33:12\n"
+"POT-Creation-Date: 2021-02-12 11:33:12\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Project-Id-Version: app\n"
+"X-Generator: php leevel i18n:generate\n"
+
+msgid "应用 ID"
+msgstr ""
+
+msgid "应用 KEY"
+msgstr ""
+
+msgid "用户名"
+msgstr ""
+
+msgid "密码"
+msgstr ""
+
+msgid "校验码"
+msgstr ""
+
+msgid "保持登陆"
+msgstr ""
+
+msgid "站点状态"
+msgstr ""
+
+msgid "名字"
+msgstr ""
+
+msgid "编号"
+msgstr ""
+
+msgid "状态值"
+msgstr ""
+
+msgid "旧密码"
+msgstr ""
+
+msgid "新密码"
+msgstr ""
+
+msgid "确认密码"
+msgstr ""
+
+msgid "解锁密码"
+msgstr ""
+
+msgid "邮件"
+msgstr ""
+
+msgid "手机"
+msgstr ""

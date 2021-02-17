@@ -14,9 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 class Cors
 {
     /**
-     * 响应.
+     * 请求.
      */
-    public function terminate(Closure $next, Request $request, Response $response): void
+    public function handle(Closure $next, Request $request): Response
     {
         $headers = [
             'Access-Control-Allow-Origin'      => '*',
@@ -24,7 +24,10 @@ class Cors
             'Access-Control-Allow-Headers'     => 'Origin, X-Requested-With, Content-Type, Accept, token',
             'Access-Control-Allow-Credentials' => 'true',
         ];
+        $response = new Response();
         $response->headers->add($headers);
-        $next($request, $response);
+        $response->sendHeaders();
+        
+        return $next($request);
     }
 }

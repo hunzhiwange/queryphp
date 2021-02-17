@@ -57,8 +57,8 @@ class Store
     private function data(array $input): array
     {
         return [
-            'name'       => trim($input['name']),
-            'num'        => trim($input['num']),
+            'name'       => $input['name'],
+            'num'        => $input['num'],
             'status' => $input['status'],
         ];
     }

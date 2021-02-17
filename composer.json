@@ -16,7 +16,8 @@
         "php": "^8.0",
         "ext-mbstring": "*",
         "ext-openssl": "*",
-        "hunzhiwange/framework": "dev-master"
+        "hunzhiwange/framework": "dev-master",
+        "symfony/workflow": "^5.2"
     },
     "require-dev": {
         "codedungeon/php-cli-colors": "^1.12.0",
@@ -45,6 +46,7 @@
             "/vendor/symfony/translation-contracts",
             "/vendor/symfony/translation",
             "/vendor/symfony/service-contracts",
+            "/vendor/symfony/config",
             "/vendor/symfony/psr-http-message-bridge",
             "/vendor/symfony/yaml",
             "/vendor/symfony/string",
@@ -65,8 +67,16 @@
             "/vendor/hunzhiwange/framework/src/**/Console/",
             "/vendor/monolog/",
             "/vendor/codedungeon/",
-            "/vendor/league/"
+            "/vendor/league/",
+            "/vendor/nikic/php-parser/",
+            "/vendor/cakephp/",
+            "/vendor/robmorgan/phinx/"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
     },
     "extra": {
         "branch-alias": {
@@ -92,6 +102,14 @@
             "@i18ns": "The extend i18ns",
             "i18ns": [
             ],
+            "i18n-paths": {
+                "exception": [
+                    "assets/exceptions"
+                ],
+                "app": [
+                    "apps"
+                ]
+            },
             "@metas": "The metas",
             "metas": {
             }

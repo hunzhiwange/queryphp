@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Role;
 
-use  Admin\Controller\Support\Controller;
-use  Admin\Service\Role\Index as Service;
+use Admin\Controller\Support\Controller;
+use App\Domain\Service\User\Role\Roles as Service;
+use App\Domain\Service\User\Role\RolesParams;
 use Leevel\Http\Request;
 
 /**
@@ -26,6 +27,9 @@ class Index
 
     public function handle(Request $request, Service $service): array
     {
-        return $this->main($request, $service);
+        $input = $this->input($request);
+        $params = new RolesParams($input);
+
+        return $service->handle($params);
     }
 }

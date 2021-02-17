@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Attachment;
 
-use  Admin\Controller\Support\Controller;
-use  Admin\Service\Attachment\Upload as Service;
+use Admin\Controller\Support\CloseDebug;
+use Admin\Controller\Support\Controller;
+use App\Domain\Service\Attachment\Upload as AttachmentUpload;
+use App\Domain\Service\Attachment\UploadParams;
 use Leevel\Http\Request;
 
 /**
@@ -16,10 +18,14 @@ use Leevel\Http\Request;
 class Upload
 {
     use Controller;
+    use CloseDebug;
 
-    public function handle(Request $request, Service $service): string
+    public function handle(Request $request, AttachmentUpload $service): array 
     {
-        return $this->main($request, $service)[0];
+        $this->closeDebug();
+        $params = new UploadParams($this->input($request));
+
+        return $service->handle($params);
     }
 
     private function input(Request $request): array

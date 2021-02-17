@@ -2,7 +2,7 @@ import Vue from 'vue'
 import ViewUI from 'view-design'
 import 'view-design/dist/styles/iview.css'
 import App from './App'
-import '@/i18n'
+import i18n from '@/i18n'
 import router from './router'
 import {appRouter} from './router/router'
 import store from './store'
@@ -36,6 +36,7 @@ Vue.prototype.utils = utils
 window.bus = new Vue({
     router,
     store,
+    i18n,
     render: h => h(App),
     data: {
         currentPageName: '',

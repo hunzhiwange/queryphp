@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Resource;
 
-use  Admin\Controller\Support\Controller;
-use  Admin\Service\Resource\Index as Service;
+use Admin\Controller\Support\Controller;
+use App\Domain\Service\User\Resource\Resources as Service;
+use App\Domain\Service\User\Resource\ResourcesParams;
 use Leevel\Http\Request;
 
 /**
@@ -26,6 +27,9 @@ class Index
 
     public function handle(Request $request, Service $service): array
     {
-        return $this->main($request, $service);
+        $input = $this->input($request);
+        $params = new ResourcesParams($input);
+
+        return $service->handle($params);;
     }
 }

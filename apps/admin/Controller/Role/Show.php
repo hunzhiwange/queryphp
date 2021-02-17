@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Role;
 
-use  Admin\Controller\Support\Controller;
-use  Admin\Service\Role\Show as Service;
+use Admin\Controller\Support\Controller;
+use Admin\Service\Role\Show as Service;
 use Leevel\Http\Request;
 
 /**

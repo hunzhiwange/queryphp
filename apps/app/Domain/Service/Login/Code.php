@@ -17,7 +17,7 @@ class Code
     {
     }
 
-    public function handle(array $input): string
+    public function handle(CodeParams $params): string
     {
         // Mac 自带 PHP 有问题
         if (!function_exists('imagettftext')) {
@@ -32,8 +32,8 @@ class Code
 
         ob_start();
         $seccode->display(4);
-        if (!empty($input['id'])) {
-            $this->code->set($input['id'], (string) $seccode->getCode());
+        if ($params->id) {
+            $this->code->set($params->id, (string) $seccode->getCode());
         }
         $content = ob_get_contents() ?: '';
         ob_end_clean();

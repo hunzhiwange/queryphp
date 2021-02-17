@@ -27,6 +27,7 @@ export default {
         },
         setIi8n() {
             localStorage.lang = this.i18n
+            this.$i18n.locale = this.i18n
             this.$store.commit('switchLang', this.i18n)
 
             this.i18nSelect = false

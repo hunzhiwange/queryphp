@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Permission;
 
-use  Admin\Controller\Support\Controller;
-use  Admin\Service\Permission\Update as Service;
+use Admin\Controller\Support\Controller;
+use Admin\Service\Permission\Update as Service;
 use Leevel\Http\Request;
 
 /**

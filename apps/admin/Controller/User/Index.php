@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Admin\Controller\User;
 
-use  Admin\Controller\Support\Controller;
-use  Admin\Service\User\Index as Service;
+use Admin\Controller\Support\Controller;
+use App\Domain\Service\User\User\Users as Service;
+use App\Domain\Service\User\User\UsersParams;
 use Leevel\Http\Request;
 
 /**
@@ -28,6 +29,9 @@ class Index
 
     public function handle(Request $request, Service $service): array
     {
-        return $this->main($request, $service);
+        $input = $this->input($request);
+        $params = new UsersParams($input);
+
+        return $service->handle($params);
     }
 }

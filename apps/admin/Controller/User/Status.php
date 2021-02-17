@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Controller\User;
 
-use  Admin\Controller\Support\Controller;
-use  Admin\Service\User\Status as Service;
+use Admin\Controller\Support\Controller;
+use Admin\Service\User\Status as Service;
 use Leevel\Http\Request;
 
 /**

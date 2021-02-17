@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Login;
 
-use  Admin\Controller\Support\Controller;
-use  Admin\Service\Login\Validate as Service;
+use Admin\Controller\Support\Controller;
+use App\Domain\Service\Login\Login as Service;
+use App\Domain\Service\Login\LoginParams;
 use Leevel\Http\Request;
 
 /**
@@ -28,6 +29,8 @@ class Validate
 
     public function handle(Request $request, Service $service): array
     {
-        return $this->main($request, $service);
+        $params = new LoginParams($request->toArray());
+
+        return $service->handle($params);
     }
 }

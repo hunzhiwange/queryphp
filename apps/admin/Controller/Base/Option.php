@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Base;
 
-use  Admin\Controller\Support\Controller;
-use  Admin\Service\Base\Option as Service;
+use Admin\Controller\Support\Controller;
 use Leevel\Http\Request;
+use App\Domain\Service\Option\OptionUpdate;
+use App\Domain\Service\Option\OptionUpdateParams;
 
 /**
  * 配置更新.
@@ -19,11 +20,13 @@ class Option
 
     private array $allowedInput = [
         'site_name',
-        'site_close',
+        'site_status',
     ];
 
-    public function handle(Request $request, Service $service): array
+    public function handle(Request $request, OptionUpdate $service): array
     {
-        return $this->main($request, $service);
+        $params = new OptionUpdateParams($this->input($request));
+
+        return $service->handle($params);
     }
 }

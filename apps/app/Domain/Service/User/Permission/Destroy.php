@@ -6,6 +6,7 @@ namespace App\Domain\Service\User\Permission;
 
 use App\Domain\Entity\User\Permission;
 use App\Domain\Service\Support\Destroy as CommonDestroy;
+use App\Domain\Service\Support\DestroyParams;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
 
@@ -27,9 +28,9 @@ class Destroy
     /**
      * 校验.
      */
-    private function validate(array $input): void
+    private function validate(DestroyParams $params): void
     {
-        $this->checkChildren((int) $input['id']);
+        $this->checkChildren($params->id);
     }
 
     /**

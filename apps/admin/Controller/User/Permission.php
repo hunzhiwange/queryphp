@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Controller\User;
 
-use  Admin\Controller\Support\Controller;
-use  Admin\Service\User\Permission as Service;
+use Admin\Controller\Support\Controller;
+use Admin\Service\User\Permission as Service;
 use Leevel\Auth\Proxy\Auth;
 use Leevel\Http\Request;
 

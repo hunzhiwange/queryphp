@@ -23,12 +23,11 @@ trait Controller
     private function input(Request $request): array
     {
         $input = $request->only($this->allowedInput);
-
-        if (method_exists($this, 'extendInput')) {
-            $input = array_merge($input, $this->extendInput($request));
+        if (!method_exists($this, 'extendInput')) {
+            return $input;
         }
-
-        return $input;
+        
+        return array_merge($input, $this->extendInput($request));
     }
 
     private function restfulInput(Request $request): array
