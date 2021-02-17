@@ -11,15 +11,15 @@ class SearchTest extends TestCase
     public function testBaseUse(): void
     {
         $input = [
-            'test' => ['foo', 'bar'],
+            'demo' => ['foo', 'bar'],
         ];
 
-        $m = new Index();
+        $m = new Search();
         $result = $m->handle($input);
 
         $json = <<<'eot'
             {
-                "test": {
+                "demo": {
                     "foo": {
                         "foo": {
                             "hello": "world",
@@ -50,7 +50,7 @@ class SearchTest extends TestCase
             'test' => 'notarray',
         ];
 
-        $m = new Index();
+        $m = new Search();
         $result = $m->handle($input);
 
         $json = <<<'eot'
@@ -67,16 +67,17 @@ class SearchTest extends TestCase
 
     public function testSpecialKey(): void
     {
+        // list 为 PHP 保留关键字，不允许作为类名字，只能是 lists
         $input = [
-            'test' => ['list'],
+            'demo' => ['lists'],
         ];
 
-        $m = new Index();
+        $m = new Search();
         $result = $m->handle($input);
 
         $json = <<<'eot'
             {
-                "test": {
+                "demo": {
                     "lists": {
                         "speciallists": {
                             "hello": "world",
@@ -98,15 +99,15 @@ class SearchTest extends TestCase
     public function testConvert(): void
     {
         $input = [
-            'test-convert' => ['foo-Hello', 'bar_world'],
+            'demo-convert' => ['foo-Hello', 'bar_world'],
         ];
 
-        $m = new Index();
+        $m = new Search();
         $result = $m->handle($input);
 
         $json = <<<'eot'
             {
-                "testConvert": {
+                "demoConvert": {
                     "fooHello": {
                         "FooHello": {
                             "hello": "world",
@@ -135,14 +136,14 @@ class SearchTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage(
-            'Service `\\Admin\\Service\\Search\\SearchNotfound\\Notfound` was not found.'
+            'Search condition `\\Admin\\Service\\Search\\SearchNotfound\\Notfound` was not found.'
         );
 
         $input = [
             'search-notfound' => ['notfound'],
         ];
 
-        $m = new Index();
+        $m = new Search();
         $m->handle($input);
     }
 
@@ -150,14 +151,14 @@ class SearchTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage(
-            'Service `\\Admin\\Service\\Search\\Test\\NotCallback:handle` was invalid.'
+            'Search condition `\\Admin\\Service\\Search\\Demo\\NotCallback:handle` was invalid.'
         );
 
         $input = [
-            'test' => ['not-callback'],
+            'demo' => ['not-callback'],
         ];
 
-        $m = new Index();
+        $m = new Search();
         $m->handle($input);
     }
 }
