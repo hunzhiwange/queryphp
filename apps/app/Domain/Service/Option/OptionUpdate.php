@@ -60,6 +60,7 @@ class OptionUpdate
             $value = Arr::convertJson($value);
         }
         $option->value = $value;
+        $option->{$option->deleteAtColumn()} = 0;
 
         return $option;
     }
