@@ -72,11 +72,7 @@ class Store
     {
         $uniqueRule = UniqueRule::rule(
             Role::class, 
-            null, 
-            null, 
-            null, 
-            'delete_at', 
-            0
+            additional:['delete_at' => 0]
         );
 
         $validator = Validate::make(

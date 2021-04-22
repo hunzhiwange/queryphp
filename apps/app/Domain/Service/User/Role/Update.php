@@ -109,12 +109,9 @@ class Update
     private function validateInputRules(array $input): array
     {
         $uniqueRule = UniqueRule::rule(
-            Role::class, 
-            null, 
-            $input['id'], 
-            null, 
-            'delete_at', 
-            0
+            Role::class,
+            primaryKey:$input['id'], 
+            additional:['delete_at' => 0]
         );
 
         $rules = [

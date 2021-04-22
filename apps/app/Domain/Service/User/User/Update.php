@@ -106,11 +106,8 @@ class Update
 
         $uniqueRule = UniqueRule::rule(
             User::class,
-            null,
-            $params->id,
-            null,
-            'delete_at', 
-            0
+            primaryKey:$params->id,
+            additional:['delete_at' => 0]
         );
 
         $validator = Validate::make(

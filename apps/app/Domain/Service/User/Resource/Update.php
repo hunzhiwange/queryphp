@@ -85,11 +85,8 @@ class Update
     {
         $uniqueRule = UniqueRule::rule(
             Resource::class,
-            null,
-            $this->input['id'],
-            null,
-            'delete_at',
-            0
+            primaryKey:$this->input['id'],
+            additional:['delete_at' => 0]
         );
 
         $validator = Validate::make(
