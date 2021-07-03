@@ -6,7 +6,9 @@ export default function(Vue, options) {
     }
 
     Vue.prototype.__ = function() {
-        arguments[0] = this.$t(arguments[0])
+        if ('zh-CN' !== this._i18n.locale) {
+            arguments[0] = this.$t(arguments[0])
+        }
 
         if (arguments.length > 1) {
             return sprintf.apply(null, arguments)
