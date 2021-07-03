@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-03-07 17:15+0800\n"
-"PO-Revision-Date: 2020-03-07 17:15+0800\n"
+"POT-Creation-Date: 2021-07-02 16:11+0800\n"
+"PO-Revision-Date: 2021-07-03 11:13+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-Basepath: ../../../tmp-i18n\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-KeywordsList: __\n"
@@ -397,6 +397,7 @@ msgstr ""
 
 #: src_views_layout_lockscreen_components_assets_unlock.js.tmp.i18n.js:1
 #: src_views_login_assets_index.js.tmp.i18n.js:2
+#: src_views_user_assets_index.js.tmp.i18n.js:1
 msgid "请输入密码"
 msgstr ""
 
@@ -477,6 +478,10 @@ msgstr ""
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:4
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:6
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:8
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:18
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:20
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:22
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:24
 msgid "暗夜"
 msgstr ""
 
@@ -499,10 +504,34 @@ msgstr ""
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:12
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:14
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:16
-msgid "光天"
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:26
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:28
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:30
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:32
+msgid "青天"
 msgstr ""
 
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:17
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:25
+msgid "JIRA 经典蓝"
+msgstr ""
+
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:19
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:27
+msgid "青春绽放"
+msgstr ""
+
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:21
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:29
+msgid "VIP 尊贵"
+msgstr ""
+
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:23
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:31
+msgid "Github 经典"
+msgstr ""
+
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:33
 msgid "主题切换成功"
 msgstr ""
 
@@ -523,18 +552,10 @@ msgid "请输入旧密码"
 msgstr ""
 
 #: src_views_layout_user_assets_change_password.js.tmp.i18n.js:4
-#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:12
-#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:25
-#: src_views_login_assets_index.js.tmp.i18n.js:3
-#, javascript-format
-msgid "长度在 %d 到 %d 个字符"
-msgstr ""
-
-#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:11
 msgid "请输入新密码"
 msgstr ""
 
-#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:42
+#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:5
 msgid "修改密码后你需要从新登陆"
 msgstr ""
 
@@ -571,16 +592,11 @@ msgstr ""
 msgid "请输入账号"
 msgstr ""
 
-#: src_views_login_assets_index.js.tmp.i18n.js:10
+#: src_views_login_assets_index.js.tmp.i18n.js:3
 msgid "请输入验证码"
 msgstr ""
 
-#: src_views_login_assets_index.js.tmp.i18n.js:11
-#, javascript-format
-msgid "长度为 %d 个字符"
-msgstr ""
-
-#: src_views_login_assets_index.js.tmp.i18n.js:49
+#: src_views_login_assets_index.js.tmp.i18n.js:4
 msgid "登陆成功"
 msgstr ""
 
@@ -870,10 +886,6 @@ msgstr ""
 
 #: src_views_role_index.vue.tmp.i18n.js:13
 msgid "请选择权限"
-msgstr ""
-
-#: src_views_user_assets_index.js.tmp.i18n.js:1
-msgid "请输入用户密码"
 msgstr ""
 
 #: src_views_user_assets_index.js.tmp.i18n.js:8
