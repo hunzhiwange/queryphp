@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-07-02 16:11+0800\n"
-"PO-Revision-Date: 2021-07-03 11:13+0800\n"
+"POT-Creation-Date: 2021-07-03 11:46+0800\n"
+"PO-Revision-Date: 2021-07-03 11:46+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh_CN\n"
@@ -84,8 +84,12 @@ msgstr ""
 msgid "二级菜单"
 msgstr ""
 
-#: src_router_router.js.tmp.i18n.js:20 src_router_router.js.tmp.i18n.js:21
-msgid "下级菜单"
+#: src_router_router.js.tmp.i18n.js:20
+msgid "下级菜单 1"
+msgstr ""
+
+#: src_router_router.js.tmp.i18n.js:21
+msgid "下级菜单 2"
 msgstr ""
 
 #: src_utils_index.js.tmp.i18n.js:1 src_utils_index.js.tmp.i18n.js:2
@@ -271,7 +275,7 @@ msgid "个人资料"
 msgstr ""
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:1
-#: src_views_dashboard_index.vue.tmp.i18n.js:18
+#: src_views_dashboard_index.vue.tmp.i18n.js:19
 msgid "官方网站"
 msgstr ""
 
@@ -286,52 +290,56 @@ msgid "二次开发说明"
 msgstr ""
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:6
-msgid "已完成"
+msgid "下级菜单"
 msgstr ""
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:7
-msgid "搭建开发环境"
+msgid "已完成"
 msgstr ""
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:8
-msgid "创新"
+msgid "搭建开发环境"
 msgstr ""
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:9
-msgid "阅读 Vue & QueryPHP 开发文档"
+msgid "创新"
 msgstr ""
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:10
-msgid "专注"
+msgid "阅读 Vue & QueryPHP 开发文档"
 msgstr ""
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:11
-msgid "学习基础功能示例"
+msgid "专注"
 msgstr ""
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:12
-msgid "分享"
+msgid "学习基础功能示例"
 msgstr ""
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:13
-msgid "根据业务改造基础框架"
+msgid "分享"
 msgstr ""
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:14
+msgid "根据业务改造基础框架"
+msgstr ""
+
+#: src_views_dashboard_index.vue.tmp.i18n.js:15
 msgid "综合说明"
 msgstr ""
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:16
+#: src_views_dashboard_index.vue.tmp.i18n.js:17
 msgid ""
 "QueryVue　希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框架，"
 "以满足用户快速地理解并使用我们的产品。"
 msgstr ""
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:19
+#: src_views_dashboard_index.vue.tmp.i18n.js:20
 msgid "感谢信"
 msgstr ""
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:21
+#: src_views_dashboard_index.vue.tmp.i18n.js:22
 #, javascript-format
 msgid ""
 "在这里特别鸣谢 %s、%s 和 %s 等开源的基础框架，使得我们才能够站在巨人的肩膀"
