@@ -196,7 +196,7 @@ function readDir(filePath) {
 function readLang(file) {
     fs.readFile(file, 'utf-8', function(error, data) {
         if (error) return console.log('error' + error.message)
-        var reg = /__\([\s]*[\'\"]([\s\S]*?)[\'\"][\s]*\)/g
+        var reg = /__[\s]*\([\s]*[\'\"]+[^\)]+[\'\"]+[\s]*\)/g
         var result = data.match(reg)
         if (!result) {
             return

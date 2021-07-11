@@ -105,6 +105,8 @@
                     <Page
                         class="fr"
                         :total="total"
+                        :current="page"
+                        :page-size="pageSize"
                         show-sizer
                         @on-change="changePage"
                         @on-page-size-change="changePageSize"

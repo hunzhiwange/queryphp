@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: QueryPHP-Vue default\n"
-"POT-Creation-Date: 2020-03-07 17:17+0800\n"
-"PO-Revision-Date: 2020-03-07 17:40+0800\n"
+"POT-Creation-Date: 2021-07-09 17:22+0800\n"
+"PO-Revision-Date: 2021-07-09 17:22+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-Basepath: ../../../tmp-i18n\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -85,9 +85,13 @@ msgstr "Menu 1"
 msgid "二级菜单"
 msgstr "Menu 2"
 
-#: src_router_router.js.tmp.i18n.js:20 src_router_router.js.tmp.i18n.js:21
-msgid "下级菜单"
-msgstr "Menu bottom"
+#: src_router_router.js.tmp.i18n.js:20
+msgid "下级菜单 1"
+msgstr "Menu bottom 1"
+
+#: src_router_router.js.tmp.i18n.js:21
+msgid "下级菜单 2"
+msgstr "Menu bottom 2"
 
 #: src_utils_index.js.tmp.i18n.js:1 src_utils_index.js.tmp.i18n.js:2
 msgid "操作成功"
@@ -328,8 +332,12 @@ msgid "综合说明"
 msgstr "Comprehensive description"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:16
+#, fuzzy
+#| msgid ""
+#| "QueryVue　希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框"
+#| "架，以满足用户快速地理解并使用我们的产品。"
 msgid ""
-"QueryVue　希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框架，以"
+"QueryVue 希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框架，以"
 "满足用户快速地理解并使用我们的产品。"
 msgstr ""
 "QueryVue hopes to provide you with a super backstage development "
@@ -408,6 +416,7 @@ msgstr "Log out"
 
 #: src_views_layout_lockscreen_components_assets_unlock.js.tmp.i18n.js:1
 #: src_views_login_assets_index.js.tmp.i18n.js:2
+#: src_views_user_assets_index.js.tmp.i18n.js:1
 msgid "请输入密码"
 msgstr "Please input a password"
 
@@ -488,6 +497,10 @@ msgstr "Blue"
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:4
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:6
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:8
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:18
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:20
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:22
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:24
 msgid "暗夜"
 msgstr "Dark night"
 
@@ -510,10 +523,34 @@ msgstr "Red"
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:12
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:14
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:16
-msgid "光天"
-msgstr "Light day"
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:26
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:28
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:30
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:32
+msgid "青天"
+msgstr ""
 
 #: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:17
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:25
+msgid "JIRA 经典蓝"
+msgstr ""
+
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:19
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:27
+msgid "青春绽放"
+msgstr ""
+
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:21
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:29
+msgid "VIP 尊贵"
+msgstr ""
+
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:23
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:31
+msgid "Github 经典"
+msgstr ""
+
+#: src_views_layout_theme-switch_assets_index.js.tmp.i18n.js:33
 msgid "主题切换成功"
 msgstr "Switch theme successfully"
 
@@ -534,18 +571,10 @@ msgid "请输入旧密码"
 msgstr "Please enter the old password"
 
 #: src_views_layout_user_assets_change_password.js.tmp.i18n.js:4
-#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:12
-#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:25
-#: src_views_login_assets_index.js.tmp.i18n.js:3
-#, javascript-format
-msgid "长度在 %d 到 %d 个字符"
-msgstr "Length from %d to %d characters"
-
-#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:11
 msgid "请输入新密码"
 msgstr "Please enter a new password"
 
-#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:42
+#: src_views_layout_user_assets_change_password.js.tmp.i18n.js:5
 msgid "修改密码后你需要从新登陆"
 msgstr "After you change your password, you need to log in again"
 
@@ -582,16 +611,11 @@ msgstr "Mobile"
 msgid "请输入账号"
 msgstr "Please enter account"
 
-#: src_views_login_assets_index.js.tmp.i18n.js:10
+#: src_views_login_assets_index.js.tmp.i18n.js:3
 msgid "请输入验证码"
 msgstr "Please enter the verification code"
 
-#: src_views_login_assets_index.js.tmp.i18n.js:11
-#, javascript-format
-msgid "长度为 %d 个字符"
-msgstr "The length is %d characters"
-
-#: src_views_login_assets_index.js.tmp.i18n.js:49
+#: src_views_login_assets_index.js.tmp.i18n.js:4
 msgid "登陆成功"
 msgstr "Login successfully"
 
@@ -883,10 +907,6 @@ msgstr "Add role"
 msgid "请选择权限"
 msgstr "Please select permission"
 
-#: src_views_user_assets_index.js.tmp.i18n.js:1
-msgid "请输入用户密码"
-msgstr "Please enter user password"
-
 #: src_views_user_assets_index.js.tmp.i18n.js:8
 msgid "请输入用户名字"
 msgstr "Please enter user name"
@@ -918,6 +938,23 @@ msgstr "Password cannot be empty"
 #: src_views_user_index.vue.tmp.i18n.js:8
 msgid "所属角色"
 msgstr "The role"
+
+#~ msgid "下级菜单"
+#~ msgstr "Menu bottom"
+
+#~ msgid "光天"
+#~ msgstr "Light day"
+
+#, javascript-format
+#~ msgid "长度在 %d 到 %d 个字符"
+#~ msgstr "Length from %d to %d characters"
+
+#, javascript-format
+#~ msgid "长度为 %d 个字符"
+#~ msgstr "The length is %d characters"
+
+#~ msgid "请输入用户密码"
+#~ msgstr "Please enter user password"
 
 #~ msgid "三级菜单"
 #~ msgstr "Menu 3"

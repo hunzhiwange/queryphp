@@ -56,7 +56,7 @@
                                     <TabPane :label="__('综合说明')" icon="social-github">
                                         {{
                                             __(
-                                                'QueryVue　希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框架，以满足用户快速地理解并使用我们的产品。'
+                                                'QueryVue 希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框架，以满足用户快速地理解并使用我们的产品。'
                                             )
                                         }}
                                     </TabPane>

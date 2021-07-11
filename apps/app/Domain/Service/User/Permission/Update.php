@@ -100,11 +100,8 @@ class Update
     {
         $uniqueRule = UniqueRule::rule(
             Permission::class,
-            null,
-            $this->input['id'],
-            null,
-            'delete_at',
-            0
+            exceptId:$this->input['id'],
+            additional:['delete_at' => 0]
         );
 
         $validator = Validate::make(
