@@ -110,7 +110,7 @@ class Update
     {
         $uniqueRule = UniqueRule::rule(
             Role::class,
-            primaryKey:$input['id'], 
+            exceptId:$input['id'], 
             additional:['delete_at' => 0]
         );
 

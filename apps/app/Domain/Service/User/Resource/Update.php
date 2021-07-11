@@ -85,7 +85,7 @@ class Update
     {
         $uniqueRule = UniqueRule::rule(
             Resource::class,
-            primaryKey:$this->input['id'],
+            exceptId:$this->input['id'],
             additional:['delete_at' => 0]
         );
 

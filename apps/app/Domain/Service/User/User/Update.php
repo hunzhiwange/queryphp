@@ -106,7 +106,7 @@ class Update
 
         $uniqueRule = UniqueRule::rule(
             User::class,
-            primaryKey:$params->id,
+            exceptId:$params->id,
             additional:['delete_at' => 0]
         );
 

@@ -100,7 +100,7 @@ class Update
     {
         $uniqueRule = UniqueRule::rule(
             Permission::class,
-            primaryKey:$this->input['id'],
+            exceptId:$this->input['id'],
             additional:['delete_at' => 0]
         );
 
