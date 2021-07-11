@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: QueryPHP-Vue default\n"
-"POT-Creation-Date: 2021-07-03 11:47+0800\n"
-"PO-Revision-Date: 2021-07-03 11:47+0800\n"
+"POT-Creation-Date: 2021-07-09 17:22+0800\n"
+"PO-Revision-Date: 2021-07-09 17:22+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -277,7 +277,7 @@ msgid "个人资料"
 msgstr "Profile"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:1
-#: src_views_dashboard_index.vue.tmp.i18n.js:19
+#: src_views_dashboard_index.vue.tmp.i18n.js:18
 msgid "官方网站"
 msgstr "Official website"
 
@@ -296,59 +296,59 @@ msgid "二次开发说明"
 msgstr "Development instructions"
 
 #: src_views_dashboard_index.vue.tmp.i18n.js:6
-msgid "下级菜单"
-msgstr "Menu bottom"
-
-#: src_views_dashboard_index.vue.tmp.i18n.js:7
 msgid "已完成"
 msgstr "Done"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:8
+#: src_views_dashboard_index.vue.tmp.i18n.js:7
 msgid "搭建开发环境"
 msgstr "Setting development environment"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:9
+#: src_views_dashboard_index.vue.tmp.i18n.js:8
 msgid "创新"
 msgstr "Innovate"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:10
+#: src_views_dashboard_index.vue.tmp.i18n.js:9
 msgid "阅读 Vue & QueryPHP 开发文档"
 msgstr "Reading Vue & QueryPHP development documents"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:11
+#: src_views_dashboard_index.vue.tmp.i18n.js:10
 msgid "专注"
 msgstr "Absorbed"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:12
+#: src_views_dashboard_index.vue.tmp.i18n.js:11
 msgid "学习基础功能示例"
 msgstr "Examples of learning basic functions"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:13
+#: src_views_dashboard_index.vue.tmp.i18n.js:12
 msgid "分享"
 msgstr "Share"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:14
+#: src_views_dashboard_index.vue.tmp.i18n.js:13
 msgid "根据业务改造基础框架"
 msgstr "Based on the basic framework of business transformation"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:15
+#: src_views_dashboard_index.vue.tmp.i18n.js:14
 msgid "综合说明"
 msgstr "Comprehensive description"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:17
+#: src_views_dashboard_index.vue.tmp.i18n.js:16
+#, fuzzy
+#| msgid ""
+#| "QueryVue　希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框"
+#| "架，以满足用户快速地理解并使用我们的产品。"
 msgid ""
-"QueryVue　希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框架，以"
+"QueryVue 希望为大家提供了基于 Vue 与 QueryPHP 整合的超级后台开发基础框架，以"
 "满足用户快速地理解并使用我们的产品。"
 msgstr ""
 "QueryVue hopes to provide you with a super backstage development "
 "infrastructure based on integration of Vue and QueryPHP to meet users' quick "
 "understanding and use of our products。"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:20
+#: src_views_dashboard_index.vue.tmp.i18n.js:19
 msgid "感谢信"
 msgstr "Letter of thanks"
 
-#: src_views_dashboard_index.vue.tmp.i18n.js:22
+#: src_views_dashboard_index.vue.tmp.i18n.js:21
 #, javascript-format
 msgid ""
 "在这里特别鸣谢 %s、%s 和 %s 等开源的基础框架，使得我们才能够站在巨人的肩膀上"
@@ -938,6 +938,9 @@ msgstr "Password cannot be empty"
 #: src_views_user_index.vue.tmp.i18n.js:8
 msgid "所属角色"
 msgstr "The role"
+
+#~ msgid "下级菜单"
+#~ msgstr "Menu bottom"
 
 #~ msgid "光天"
 #~ msgstr "Light day"
