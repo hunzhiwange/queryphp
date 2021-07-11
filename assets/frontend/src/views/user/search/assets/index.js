@@ -20,6 +20,8 @@ export default {
     },
     methods: {
         search(page, pageSize) {
+            this.searchForm.page = resetForm.page
+
             if (page) {
                 this.searchForm.page = page
             }
@@ -34,6 +36,7 @@ export default {
         },
         reset() {
             Object.assign(this.searchForm, resetForm)
+            this.search()
         },
         add() {
             this.$emit('add')

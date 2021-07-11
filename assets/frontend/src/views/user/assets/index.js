@@ -127,6 +127,8 @@ export default {
         getDataFromSearch(data) {
             this.data = data.data
             this.total = data.page.total_record
+            this.page = data.page.current_page
+            this.pageSize = data.page.per_page
             this.loadingTable = false
         },
         edit(params) {
