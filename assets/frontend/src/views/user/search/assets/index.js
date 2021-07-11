@@ -1,6 +1,6 @@
 import http from '@/utils/http'
 
-const resetFrom = {
+const resetForm = {
     key: '',
     status: '',
     page: 1,
@@ -10,7 +10,7 @@ const resetFrom = {
 export default {
     data() {
         return {
-            searchForm: Object.assign({}, resetFrom),
+            searchForm: Object.assign({}, resetForm),
             searchRule: {},
             searchItem: {
                 status: [{status: '1', title: this.__('启用')}, {status: '0', title: this.__('禁用')}],
@@ -33,7 +33,7 @@ export default {
             })
         },
         reset() {
-            Object.assign(this.searchForm, resetFrom)
+            Object.assign(this.searchForm, resetForm)
         },
         add() {
             this.$emit('add')
