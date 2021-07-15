@@ -54,13 +54,7 @@ const app = {
                     let len = menuList.push(item)
                     let childrenArr = []
                     childrenArr = item.children.filter(child => {
-                        //if (child.access !== undefined) {
-                        //if (utils.showThisRoute(child.access, accessCode)) {
-                        //return child
-                        //}
-                        //} else {
                         return child
-                        //}
                     })
                     let handledItem = JSON.parse(JSON.stringify(menuList[len - 1]))
                     handledItem.children = childrenArr
