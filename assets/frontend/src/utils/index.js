@@ -221,7 +221,11 @@ util.openNewPage = function(vm, name, argu, query) {
     }
     if (!tagHasOpened) {
         let tag = vm.$store.state.app.tagsList.filter(item => {
-            if (item.children) {
+            if (item.children && item.children.length > 1) {
+                return item.children.filter(v => {
+                    return name === v.name
+                }).length > 0;
+            } else if (item.children) {
                 return name === item.children[0].name
             } else {
                 return name === item.name
@@ -230,7 +234,14 @@ util.openNewPage = function(vm, name, argu, query) {
 
         tag = tag[0]
         if (tag) {
-            tag = tag.children ? tag.children[0] : tag
+            if (tag.children && tag.children.length > 1) {
+                tag = tag.children.filter(v => {
+                    return name === v.name
+                })[0]
+            } else if(tag.children) {
+                tag = tag.children[0]
+            }
+
             if (argu) {
                 tag.argu = argu
             }
