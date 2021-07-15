@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-07-09 17:22+0800\n"
-"PO-Revision-Date: 2021-07-09 17:22+0800\n"
+"POT-Creation-Date: 2021-07-14 12:21+0800\n"
+"PO-Revision-Date: 2021-07-14 12:22+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh_CN\n"
@@ -85,12 +85,12 @@ msgid "二级菜单"
 msgstr "二級選單"
 
 #: src_router_router.js.tmp.i18n.js:20
-msgid "下级菜单 1"
-msgstr "下級選單 1"
+msgid "菜单一"
+msgstr "選單一"
 
 #: src_router_router.js.tmp.i18n.js:21
-msgid "下级菜单 2"
-msgstr "下級選單 2"
+msgid "菜单二"
+msgstr "選單二"
 
 #: src_utils_index.js.tmp.i18n.js:1 src_utils_index.js.tmp.i18n.js:2
 msgid "操作成功"
@@ -933,6 +933,12 @@ msgstr "密碼不能為空"
 #: src_views_user_index.vue.tmp.i18n.js:8
 msgid "所属角色"
 msgstr "所屬角色"
+
+#~ msgid "下级菜单 1"
+#~ msgstr "下級選單 1"
+
+#~ msgid "下级菜单 2"
+#~ msgstr "下級選單 2"
 
 #~ msgid "下级菜单"
 #~ msgstr "下級選單"
