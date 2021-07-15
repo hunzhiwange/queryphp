@@ -214,7 +214,7 @@ let appRouterData = [
                         icon: '',
                         name: 'three1_index',
                         meta: {
-                            title: __('下级菜单 1'),
+                            title: __('菜单一'),
                             par: ['menu', 'sub_index'],
                         },
                         component: importRouter('menu/test.1'),
@@ -224,7 +224,7 @@ let appRouterData = [
                         icon: '',
                         name: 'three2_index',
                         meta: {
-                            title: __('下级菜单 2'),
+                            title: __('菜单二'),
                             par: ['menu', 'sub_index'],
                         },
                         component: importRouter('menu/test.2'),

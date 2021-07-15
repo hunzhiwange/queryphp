@@ -6,6 +6,11 @@ import {getToken, isLock} from '../utils/auth'
 
 Vue.use(Router)
 
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 let router = new Router({
     // mode: 'history', 后端支持可开
     scrollBehavior: () => ({y: 0}),
