@@ -10,21 +10,18 @@ use App\Exceptions\UserErrorCode;
 use Leevel\Validate\Proxy\Validate as Validates;
 
 /**
- * 锁定管理面板
+ * 锁定管理面板.
  */
 class Lock
 {
-    private array $input;
-
     public function __construct(private CacheLock $lock)
     {
     }
 
-    public function handle(array $input): array
+    public function handle(LockParams $params): array
     {
-        $this->input = $input;
-        $this->validateArgs();
-        $this->lock();
+        $this->validateArgs($params);
+        $this->lock($params->token);
 
         return [];
     }
@@ -32,9 +29,9 @@ class Lock
     /**
      * 锁定.
      */
-    private function lock(): void
+    private function lock(string $token): void
     {
-        $this->lock->set($this->input['token']);
+        $this->lock->set($token);
     }
 
     /**
@@ -42,10 +39,10 @@ class Lock
      *
      * @throws \App\Exceptions\UserBusinessException
      */
-    private function validateArgs(): void
+    private function validateArgs(LockParams $params): void
     {
         $validator = Validates::make(
-            $this->input,
+            $params->toArray(),
             [
                 'token'  => 'required',
             ],
