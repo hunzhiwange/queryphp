@@ -7,6 +7,7 @@ namespace App\Domain\Service\Support;
 use App\Exceptions\BusinessException;
 use App\Exceptions\ErrorCode;
 use Leevel\Collection\Collection;
+use Leevel\Collection\TypedIntArray;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate;
@@ -20,13 +21,10 @@ trait Status
     {
     }
 
-    public function handle(array $input): array
+    public function handle(StatusParams $params): array
     {
-        $this->validateArgs($input);
-        $input['ids'] = array_map(function ($item) {
-            return (int) $item;
-        }, $input['ids']);
-        $this->save($this->findAll($input), (int) $input['status']);
+        $this->validateArgs($params);
+        $this->save($this->findAll($params->ids), $params->status);
 
         return [];
     }
@@ -49,13 +47,13 @@ trait Status
      *
      * @throws \App\Exceptions\BusinessException
      */
-    private function findAll(array $input): Collection
+    private function findAll(TypedIntArray $ids): Collection
     {
         /** @var \Leevel\Collection\Collection $entitys */
         $entitys = $this->w
             ->repository($this->entity())
-            ->findAll(function (Select $select) use ($input) {
-                $select->whereIn('id', $input['ids']);
+            ->findAll(function (Select $select) use ($ids) {
+                $select->whereIn('id', $ids->toArray());
             });
 
         if (0 === count($entitys)) {
@@ -70,10 +68,10 @@ trait Status
      *
      * @throws \App\Exceptions\BusinessException
      */
-    private function validateArgs(array $input): void
+    private function validateArgs(StatusParams $params): void
     {
         $validator = Validate::make(
-            $input,
+            $params->toArray(),
             [
                 'ids'  => 'required|is_array',
             ],
