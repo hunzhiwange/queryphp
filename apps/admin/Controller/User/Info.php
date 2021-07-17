@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller\User;
 
-use Admin\Service\User\Info as Service;
+use App\Domain\Service\Login\LoginInfo as Service;
 
 /**
  * 当前登陆用户查询.
