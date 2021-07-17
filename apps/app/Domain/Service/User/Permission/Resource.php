@@ -7,6 +7,7 @@ namespace App\Domain\Service\User\Permission;
 use App\Domain\Entity\User\Permission;
 use App\Domain\Entity\User\PermissionResource as EntityPermissionResource;
 use Leevel\Collection\Collection;
+use Leevel\Collection\TypedIntArray;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
 
@@ -19,12 +20,9 @@ class Resource
     {
     }
 
-    public function handle(array $input): array
+    public function handle(ResourceParams $params): array
     {
-        if (!isset($input['resource_id'])) {
-            $input['resource_id'] = [];
-        }
-        $this->save($input);
+        $this->save($params);
 
         return [];
     }
@@ -32,10 +30,10 @@ class Resource
     /**
      * 保存.
      */
-    private function save(array $input): Permission
+    private function save(ResourceParams $params): Permission
     {
-        $entity = $this->entity($input);
-        $this->setPermissionResource((int) $input['id'], $input['resource_id']);
+        $entity = $this->entity($params->id);
+        $this->setPermissionResource($params->id, $params->resourceId);
         $this->w->flush();
 
         return $entity;
@@ -56,9 +54,9 @@ class Resource
     /**
      * 验证参数.
      */
-    private function entity(array $input): Permission
+    private function entity(int $id): Permission
     {
-        return $this->find((int) $input['id']);
+        return $this->find($id);
     }
 
     /**
@@ -72,7 +70,7 @@ class Resource
     /**
      * 设置权限资源授权.
      */
-    private function setPermissionResource(int $permissionId, array $resourceId): void
+    private function setPermissionResource(int $permissionId, TypedIntArray $resourceId): void
     {
         $resources = $this->findResources($permissionId);
         $existResourceId = array_column($resources->toArray(), 'resource_id');
@@ -83,6 +81,7 @@ class Resource
             }
         }
 
+        $resourceId = $resourceId->toArray();
         foreach ($resources as $r) {
             if (\in_array($r['resource_id'], $resourceId, true)) {
                 continue;

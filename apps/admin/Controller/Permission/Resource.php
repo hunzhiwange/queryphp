@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Admin\Controller\Permission;
 
 use Admin\Controller\Support\Controller;
-use Admin\Service\Permission\Resource as Service;
+use App\Domain\Service\User\Permission\Resource as Service;
+use App\Domain\Service\User\Permission\ResourceParams;
 use Leevel\Http\Request;
 
 /**
@@ -24,6 +25,8 @@ class Resource
 
     public function handle(Request $request, Service $service): array
     {
-        return $this->main($request, $service);
+        $params = new ResourceParams($this->input($request));
+
+        return $service->handle($params);
     }
 }
