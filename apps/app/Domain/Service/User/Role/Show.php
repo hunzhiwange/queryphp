@@ -16,9 +16,9 @@ class Show
     {
     }
 
-    public function handle(array $input): array
+    public function handle(ShowParams $params): array
     {
-        $entity = $this->find($input['id']);
+        $entity = $this->find($params->id);
         $result = $entity->toArray();
         $result['permission'] = $entity->permission->toArray();
 
