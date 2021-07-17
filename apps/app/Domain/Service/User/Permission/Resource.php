@@ -75,7 +75,6 @@ class Resource
         $resources = $this->findResources($permissionId);
         $existResourceId = array_column($resources->toArray(), 'resource_id');
         foreach ($resourceId as &$rid) {
-            $rid = (int) $rid;
             if (!\in_array($rid, $existResourceId, true)) {
                 $this->w->create($this->entityPermissionResource($permissionId, $rid));
             }
