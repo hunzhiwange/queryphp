@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Support;
 
+use App\Domain\Entity\Base\Common;
 use App\Exceptions\BusinessException;
 use App\Exceptions\ErrorCode;
 use Leevel\Collection\Collection;
@@ -74,9 +75,13 @@ trait Status
             $params->toArray(),
             [
                 'ids'  => 'required|is_array',
+                'status' => [
+                    ['in', Common::values('status')],
+                ],
             ],
             [
                 'ids' => 'ID',
+                'status' => __('状态值'),
             ]
         );
 
