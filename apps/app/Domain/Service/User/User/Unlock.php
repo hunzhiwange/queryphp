@@ -13,23 +13,20 @@ use Leevel\Validate\Proxy\Validate as Validates;
 use App\Infra\Repository\User\User as UserReposity;
 
 /**
- * 解锁.
+ * 解锁管理面板.
  */
 class Unlock
 {
-    private array $input;
-
     public function __construct(private UnitOfWork $w, private Lock $lock)
     {
         $this->lock = $lock;
     }
 
-    public function handle(array $input): array
+    public function handle(UnlockParams $params): array
     {
-        $this->input = $input;
-        $this->validateArgs();
-        $this->validateUser();
-        $this->unlock();
+        $this->validateArgs($params);
+        $this->validateUser($params->id, $params->password);
+        $this->unlock($params->token);
 
         return [];
     }
@@ -37,19 +34,19 @@ class Unlock
     /**
      * 解锁.
      */
-    private function unlock(): void
+    private function unlock(string $token): void
     {
-        $this->lock->delete($this->input['token']);
+        $this->lock->delete($token);
     }
 
     /**
      * 校验用户.
      */
-    private function validateUser(): void 
+    private function validateUser(int $id, string $password): void 
     {
         $userReposity = $this->userReposity();
-        $user = $userReposity->findValidUserById($this->input['id'], 'id,password');
-        $userReposity->verifyPassword($this->input['password'], $user->password);
+        $user = $userReposity->findValidUserById($id, 'id,password');
+        $userReposity->verifyPassword($password, $user->password);
     }
 
     private function userReposity(): UserReposity
@@ -62,10 +59,10 @@ class Unlock
      *
      * @throws \App\Exceptions\UserBusinessException
      */
-    private function validateArgs(): void
+    private function validateArgs(UnlockParams $params): void
     {
         $validator = Validates::make(
-            $this->input,
+            $params->toArray(),
             [
                 'id'                   => 'required',
                 'token'                => 'required',

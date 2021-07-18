@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Admin\Service\User;
+namespace App\Domain\Service\Login;
 
 use Leevel\Auth\Proxy\Auth;
 
 /**
- * 当前登陆用户查询.
+ * 登陆信息.
  */
-class Info
+class LoginInfo
 {
     public function handle(): array
     {

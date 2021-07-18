@@ -21,14 +21,14 @@ class Permission
     {
     }
 
-    public function handle(array $input): array
+    public function handle(PermissionParams $params): array
     {
         // 刷线缓存
-        if ($input['refresh']) {
-            return $this->getPermission($input['token'], (int) $input['id']);
+        if ($params->refresh) {
+            return $this->getPermission($params->token, $params->id);
         }
 
-        return $this->permissionCache->get($input['token']);
+        return $this->permissionCache->get($params->token);
     }
 
     /**
@@ -36,7 +36,7 @@ class Permission
      */
     private function getPermission(string $token, int $userId): array
     {
-        $permission = $this->permission->handle(['user_id' => $userId]);
+        $permission = $this->permission->handle(new UserPermissionParams(['user_id' => $userId]));
         $this->permissionCache->set($token, $permission);
 
         return $permission;

@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Admin\Controller\User;
 
 use Admin\Controller\Support\Controller;
-use Admin\Service\User\Unlock as Service;
+use App\Domain\Service\User\User\Unlock as Service;
+use App\Domain\Service\User\User\UnlockParams;
 use Leevel\Auth\Proxy\Auth;
 use Leevel\Http\Request;
 
 /**
- * 解锁.
+ * 解锁管理面板.
  *
  * @codeCoverageIgnore
  */
@@ -24,7 +25,9 @@ class Unlock
 
     public function handle(Request $request, Service $service): array
     {
-        return $this->main($request, $service);
+        $params = new UnlockParams($this->input($request));
+
+        return $service->handle($params);
     }
 
     private function extendInput(Request $request): array
@@ -48,6 +51,6 @@ class Unlock
      */
     private function id(): int
     {
-        return (int) Auth::getLogin()['id'];
+        return Auth::getLogin()['id'];
     }
 }

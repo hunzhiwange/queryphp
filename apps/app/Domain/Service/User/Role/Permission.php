@@ -7,6 +7,7 @@ namespace App\Domain\Service\User\Role;
 use App\Domain\Entity\User\Role;
 use App\Domain\Entity\User\RolePermission as EntityRolePermission;
 use Leevel\Collection\Collection;
+use Leevel\Collection\TypedIntArray;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
 
@@ -19,9 +20,9 @@ class Permission
     {
     }
 
-    public function handle(array $input): array
+    public function handle(PermissionParams $params): array
     {
-        $this->save($input);
+        $this->save($params);
 
         return [];
     }
@@ -29,10 +30,10 @@ class Permission
     /**
      * 保存.
      */
-    private function save(array $input): Role
+    private function save(PermissionParams $params): Role
     {
-        $entity = $this->entity((int) $input['id']);
-        $this->setRolePermission((int) $input['id'], $input['permission_id'] ?? []);
+        $entity = $this->entity($params->id);
+        $this->setRolePermission($params->id, $params->permissionId);
         $this->w->flush();
 
         return $entity;
@@ -69,17 +70,18 @@ class Permission
     /**
      * 设置权限授权.
      */
-    private function setRolePermission(int $roleId, array $permissionId): void
+    private function setRolePermission(int $roleId, TypedIntArray $permissionId): void
     {
         $permissions = $this->findPermissions($roleId);
         $existPermissionId = array_column($permissions->toArray(), 'permission_id');
         foreach ($permissionId as &$pid) {
-            $pid = (int) $pid;
+            $pid = $pid;
             if (!\in_array($pid, $existPermissionId, true)) {
                 $this->w->create($this->entityRolePermission($roleId, $pid));
             }
         }
 
+        $permissionId = $permissionId->toArray();
         foreach ($permissions as $p) {
             if (\in_array($p['permission_id'], $permissionId, true)) {
                 continue;

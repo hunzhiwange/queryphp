@@ -16,9 +16,9 @@ class UserPermission
     {
     }
 
-    public function handle(array $input): array
+    public function handle(UserPermissionParams $params): array
     {
-        $user = $this->findUser((int) $input['user_id']);
+        $user = $this->findUser($params->userId);
         $data = $this->parsePermission($user);
 
         return $this->normalizePermission($data);
