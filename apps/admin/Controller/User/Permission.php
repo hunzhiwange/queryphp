@@ -41,6 +41,6 @@ class Permission
      */
     private function id(): int
     {
-        return (int) Auth::getLogin()['id'];
+        return Auth::getLogin()['id'];
     }
 }
