@@ -16,27 +16,24 @@ use Leevel\Validate\UniqueRule;
  */
 class Update
 {
-    private array $input;
-
     public function __construct(private UnitOfWork $w)
     {
     }
 
-    public function handle(array $input): array
+    public function handle(UpdateParams $params): array
     {
-        $this->input = $input;
-        $this->validateArgs();
+        $this->validateArgs($params);
 
-        return $this->save($input)->toArray();
+        return $this->save($params)->toArray();
     }
 
     /**
      * 保存.
      */
-    private function save(array $input): Resource
+    private function save(UpdateParams $params): Resource
     {
         $this->w
-            ->persist($entity = $this->entity($input))
+            ->persist($entity = $this->entity($params))
             ->flush();
         $entity->refresh();
 
@@ -46,10 +43,10 @@ class Update
     /**
      * 验证参数.
      */
-    private function entity(array $input): Resource
+    private function entity(UpdateParams $params): Resource
     {
-        $entity = $this->find((int) $input['id']);
-        $entity->withProps($this->data($input));
+        $entity = $this->find($params->id);
+        $entity->withProps($this->data($params));
 
         return $entity;
     }
@@ -67,13 +64,9 @@ class Update
     /**
      * 组装实体数据.
      */
-    private function data(array $input): array
+    private function data(UpdateParams $params): array
     {
-        return [
-            'name'  => $input['name'],
-            'num'        => $input['num'],
-            'status' => $input['status'],
-        ];
+        return $params->except(['id'])->toArray();
     }
 
     /**
@@ -81,16 +74,16 @@ class Update
      *
      * @throws \App\Exceptions\UserBusinessException
      */
-    private function validateArgs(): void
+    private function validateArgs(UpdateParams $params): void
     {
         $uniqueRule = UniqueRule::rule(
             Resource::class,
-            exceptId:$this->input['id'],
+            exceptId:$params->id,
             additional:['delete_at' => 0]
         );
 
         $validator = Validate::make(
-            $this->input,
+            $params->toArray(),
             [
                 'id'            => 'required',
                 'name' => 'required|chinese_alpha_num|max_length:50|'.$uniqueRule,

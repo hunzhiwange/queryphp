@@ -16,27 +16,24 @@ use Leevel\Validate\UniqueRule;
  */
 class Store
 {
-    private array $input;
-
     public function __construct(private UnitOfWork $w)
     {
     }
 
-    public function handle(array $input): array
+    public function handle(StoreParams $params): array
     {
-        $this->input = $input;
-        $this->validateArgs();
+        $this->validateArgs($params);
 
-        return $this->save($input)->toArray();
+        return $this->save($params)->toArray();
     }
 
     /**
      * 保存.
      */
-    private function save(array $input): Resource
+    private function save(StoreParams $params): Resource
     {
         $this->w
-            ->persist($entity = $this->entity($input))
+            ->persist($entity = $this->entity($params))
             ->flush();
         $entity->refresh();
 
@@ -46,21 +43,17 @@ class Store
     /**
      * 创建实体.
      */
-    private function entity(array $input): Resource
+    private function entity(StoreParams $params): Resource
     {
-        return new Resource($this->data($input));
+        return new Resource($this->data($params));
     }
 
     /**
      * 组装实体数据.
      */
-    private function data(array $input): array
+    private function data(StoreParams $params): array
     {
-        return [
-            'name'       => $input['name'],
-            'num'        => $input['num'],
-            'status' => $input['status'],
-        ];
+        return $params->toArray();
     }
 
     /**
@@ -68,7 +61,7 @@ class Store
      *
      * @throws \App\Exceptions\UserBusinessException
      */
-    private function validateArgs(): void
+    private function validateArgs(StoreParams $params): void
     {
         $uniqueRule = UniqueRule::rule(
             Resource::class,
@@ -76,7 +69,7 @@ class Store
         );
 
         $validator = Validate::make(
-            $this->input,
+            $params->toArray(),
             [
                 'name' => 'required|chinese_alpha_num|max_length:50|'.$uniqueRule,
                 'num'           => 'required|'.$uniqueRule,
