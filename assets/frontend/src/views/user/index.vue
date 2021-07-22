@@ -114,6 +114,36 @@
                 </i-col>
             </Row>
         </div>
+        <Drawer
+            :title="viewDetail.name + ' ' + __('角色授权')"
+            v-model="rightForm"
+            width="800"
+            :mask-closable="false"
+            :styles="styles"
+        >
+            <i-form ref="formRole" :model="formRole">
+                <Row :gutter="32">
+                    <i-col span="24">
+                        <FormItem :label="__('所属角色')">
+                            <i-select v-model="formRole.role" multiple style="width:400px">
+                                <i-option v-for="item in roles" :value="item.id" :key="item.id">{{
+                                    item.name
+                                }}</i-option>
+                            </i-select>
+                        </FormItem>
+                    </i-col>
+                </Row>
+            </i-form>
+            <div class="demo-drawer-footer">
+                <i-button style="margin-right: 8px" @click="rightForm = false">{{ __('取消') }}</i-button>
+                <i-button
+                    type="primary"
+                    :loading="loading"
+                    @click.native.prevent="handleRoleSubmit('formRole')"
+                    >{{ __('确定') }}</i-button
+                >
+            </div>
+        </Drawer>
     </div>
 </template>
 

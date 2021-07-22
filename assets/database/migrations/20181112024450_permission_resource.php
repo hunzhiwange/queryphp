@@ -96,10 +96,11 @@ final class PermissionResource extends AbstractMigration
             INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (54, 9, 25, '2019-01-31 09:21:55', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (55, 9, 28, '2019-01-31 09:21:55', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (56, 9, 33, '2019-01-31 09:21:55', '2019-08-25 21:19:23', 0, 0, 0);
-            INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (60, 13, 65, '2021-01-14 01:32:12', '2021-01-14 01:32:12', 0, 0, 0, 0);
-            INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (59, 12, 64, '2021-01-14 01:31:59', '2021-01-14 01:31:59', 0, 0, 0, 0);
-            INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (58, 11, 63, '2021-01-14 01:31:50', '2021-01-14 01:31:50', 0, 0, 0, 0);
-            INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (57, 10, 62, '2021-01-14 01:31:40', '2021-01-14 01:31:40', 0, 0, 0, 0);
+            INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (57, 13, 65, '2021-01-14 01:32:12', '2021-01-14 01:32:12', 0, 0, 0, 0);
+            INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (58, 12, 64, '2021-01-14 01:31:59', '2021-01-14 01:31:59', 0, 0, 0, 0);
+            INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (59, 11, 63, '2021-01-14 01:31:50', '2021-01-14 01:31:50', 0, 0, 0, 0);
+            INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (60, 10, 62, '2021-01-14 01:31:40', '2021-01-14 01:31:40', 0, 0, 0, 0);
+            INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (61, 3, 68, '2021-07-22 07:38:07', '2021-07-22 07:38:07', 0, 0, 0, 0);
             EOT;
         $this->execute($sql);
     }

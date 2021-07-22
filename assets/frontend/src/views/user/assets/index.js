@@ -10,6 +10,11 @@ const resetForm = {
     password: '',
 }
 
+const resetFormRole = {
+    id: 0,
+    role: [],
+}
+
 export default {
     components: {
         search,
@@ -66,7 +71,7 @@ export default {
                 {
                     title: this.__('操作'),
                     key: 'action',
-                    width: 135,
+                    width: 185,
                     fixed: 'right',
                     align: 'left',
                     render: (h, params) => {
@@ -78,6 +83,12 @@ export default {
                                         onClick={() => this.edit(params)}
                                         v-show={utils.permission('user_edit_button')}>
                                         {this.__('编辑')}
+                                    </i-button>
+                                    <i-button
+                                        type="text"
+                                        onClick={() => this.role(params)}
+                                        v-show={utils.permission('user_role_button')}>
+                                        {this.__('授权')}
                                     </i-button>
                                     <i-button
                                         type="text"
@@ -121,6 +132,16 @@ export default {
             selectedData: [],
             roles: [],
             userRole: [],
+            viewDetail: {},
+            rightForm: false,
+            styles: {
+                height: 'calc(100% - 55px)',
+                overflow: 'auto',
+                paddingBottom: '53px',
+                position: 'static',
+            },
+            formRole: resetFormRole,
+            selectRole: [],
         }
     },
     methods: {
@@ -199,7 +220,7 @@ export default {
                 this.loadingTable = false
             })
 
-            this.apiGet('role').then(res => {
+            this.apiGet('role', {status: 1}).then(res => {
                 this.roles = res.data
             })
         },
@@ -286,6 +307,43 @@ export default {
                 }
                 this.liveNode = true
             }
+        },
+        role(params) {
+            this.viewDetail = params.row
+            this.formRole.id = params.row.id
+            var role = []
+            params.row.role.forEach(item => {
+                role.push(item.id)
+            })
+            this.formRole.role = role
+
+            this.rightForm = true
+        },
+        handleRoleSubmit(form) {
+            this.loading = !this.loading
+
+            var formData = {
+                id: this.formRole.id,
+                role_id: this.formRole.role,
+            }
+
+            this.apiPost('user/role', formData).then(
+                res => {
+                    this.loading = !this.loading
+                    this.rightForm = false
+
+                    this.data.forEach((item, index) => {
+                        if (item.id === this.formRole.id) {
+                            this.$set(this.data, index, res)
+                        }
+                    })
+
+                    utils.success(res.message)
+                },
+                () => {
+                    this.loading = !this.loading
+                }
+            )
         },
     },
     computed: {},
