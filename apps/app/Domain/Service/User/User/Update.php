@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
-use App\Domain\Entity\User\UserRole as EntityUserRole;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
 use Leevel\Auth\Hash;
-use Leevel\Collection\Collection;
-use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\IValidator;
 use Leevel\Validate\Proxy\Validate;
@@ -43,23 +40,10 @@ class Update
     private function save(UpdateParams $params): User
     {
         $this->w->persist($entity = $this->entity($params));
-        $this->setUserRole($params->id, $params->userRole);
         $this->w->flush();
         $entity->refresh();
 
         return $entity;
-    }
-
-    /**
-     * 查找存在角色.
-     */
-    private function findRoles(int $userId): Collection
-    {
-        return $this->w
-            ->repository(EntityUserRole::class)
-            ->findAll(function (Select $select) use ($userId) {
-                $select->where('user_id', $userId);
-            });
     }
 
     private function entity(UpdateParams $params): User

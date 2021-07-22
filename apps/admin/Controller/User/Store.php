@@ -22,7 +22,6 @@ class Store
         'name',
         'num',
         'status',
-        'userRole',
         'password',
     ];
 

@@ -131,7 +131,6 @@ export default {
             loading: false,
             selectedData: [],
             roles: [],
-            userRole: [],
             viewDetail: {},
             rightForm: false,
             styles: {
@@ -156,16 +155,11 @@ export default {
             let row = params.row
             this.minForm = true
             this.formItem.id = row.id
-
             Object.assign(this.formItem, row)
-
-            this.userRole = []
-            row.role.forEach(item => this.userRole.push(item.id))
         },
         add: function() {
             this.minForm = true
             this.formItem.id = ''
-            this.userRole = []
             this.reset()
         },
         remove(params) {
@@ -238,15 +232,11 @@ export default {
         },
         saveUser(form) {
             var formData = this.formItem
-            formData.userRole = this.userRole
-
             this.apiPost('user', formData).then(
                 res => {
                     let addNode = Object.assign({}, this.formItem, res)
 
                     this.data.unshift(addNode)
-
-                    this.userRole = []
                     this.loading = !this.loading
                     this.cancelMinForm(form)
 
@@ -259,7 +249,6 @@ export default {
         },
         updateUser(form) {
             var formData = this.formItem
-            formData.userRole = this.userRole
             this.apiPut('user', this.formItem.id, formData).then(
                 res => {
                     this.data.forEach((item, index) => {
@@ -268,7 +257,6 @@ export default {
                         }
                     })
 
-                    this.userRole = []
                     this.loading = !this.loading
                     this.cancelMinForm(form)
 

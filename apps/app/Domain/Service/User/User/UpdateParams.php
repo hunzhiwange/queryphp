@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\User;
 
-use Leevel\Collection\TypedIntArray;
 use Leevel\Support\Dto;
 
 /**
@@ -17,6 +16,4 @@ class UpdateParams extends Dto
     public int $id;
 
     public string $password = '';
-    
-    public TypedIntArray $userRole;
 }

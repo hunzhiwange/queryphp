@@ -17,9 +17,6 @@
                                             :disabled="formItem.id ? true : false"
                                         ></i-input>
                                     </FormItem>
-                                    <FormItem :label="__('编号')" prop="num">
-                                        <i-input v-model="formItem.num" placeholder=""></i-input>
-                                    </FormItem>
                                     <FormItem :label="__('密码')" prop="password">
                                         <i-input
                                             v-model="formItem.password"
@@ -29,12 +26,8 @@
                                     </FormItem>
                                 </i-col>
                                 <i-col span="12">
-                                    <FormItem :label="__('所属角色')">
-                                        <i-select v-model="userRole" multiple style="width:400px">
-                                            <i-option v-for="item in roles" :value="item.id" :key="item.id">{{
-                                                item.name
-                                            }}</i-option>
-                                        </i-select>
+                                    <FormItem :label="__('编号')" prop="num">
+                                        <i-input v-model="formItem.num" placeholder=""></i-input>
                                     </FormItem>
                                     <FormItem :label="__('状态')">
                                         <i-switch
