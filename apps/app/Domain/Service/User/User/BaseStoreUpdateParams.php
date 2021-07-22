@@ -8,7 +8,7 @@ use Leevel\Collection\TypedIntArray;
 
 trait BaseStoreUpdateParams
 {
-   public string $num;
+    public string $num;
 
     public int $status;
     
