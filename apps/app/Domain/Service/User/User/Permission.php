@@ -23,7 +23,7 @@ class Permission
 
     public function handle(PermissionParams $params): array
     {
-        // 刷线缓存
+        // 刷新缓存
         if ($params->refresh) {
             return $this->getPermission($params->token, $params->id);
         }
