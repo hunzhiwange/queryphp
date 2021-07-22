@@ -367,7 +367,9 @@ export default {
             })
         },
         savePermission(form) {
-            this.apiPost('permission', this.formItem).then(
+            let inputData = this.formItem
+            inputData.pid = this.parsePid(inputData.pid)
+            this.apiPost('permission', inputData).then(
                 res => {
                     let addNode = Object.assign({}, this.formItem, res)
 
@@ -391,7 +393,9 @@ export default {
             )
         },
         updatePermission(form) {
-            this.apiPut('permission', this.formItem.id, this.formItem).then(
+            let inputData = this.formItem
+            inputData.pid = this.parsePid(inputData.pid)
+            this.apiPut('permission', this.formItem.id, inputData).then(
                 res => {
                     const parentKey = this.formItem.pid[this.formItem.pid.length - 1]
                     const oldParentKey = this.oldEditPid[this.oldEditPid.length - 1]
@@ -439,6 +443,14 @@ export default {
                 }
             )
         },
+        parsePid(pid) {
+            pid = pid.pop()
+            if (pid < 0) {
+                pid = 0
+            }
+
+            return pid
+        },
         handleReset(form) {
             this.$refs[form].resetFields()
         },
@@ -477,10 +489,9 @@ export default {
                 if (query !== '') {
                     this.loadingResource = true
 
-                    this.apiGet('resource', {key: query, size: 9999}).then(res => {
+                    this.apiGet('resource', {key: query, size: 9999, status: 1}).then(res => {
                         this.loadingResource = false
                         this.resources = res.data
-                        //this.resourceTotal = res.page.total_record
                     })
                 } else {
                     this.resources = []
