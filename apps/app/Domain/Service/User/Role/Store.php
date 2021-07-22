@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\Role;
 
 use App\Domain\Entity\User\Role;
+use App\Domain\Service\User\Role\StoreParams;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
@@ -16,27 +17,24 @@ use Leevel\Validate\UniqueRule;
  */
 class Store
 {
-    private array $input;
-
     public function __construct(private UnitOfWork $w)
     {
     }
 
-    public function handle(array $input): array
+    public function handle(StoreParams $params): array
     {
-        $this->input = $input;
-        $this->validateArgs();
+        $this->validateArgs($params);
 
-        return $this->save($input)->toArray();
+        return $this->save($params)->toArray();
     }
 
     /**
      * 保存.
      */
-    private function save(array $input): Role
+    private function save(StoreParams $params): Role
     {
         $this->w
-            ->persist($entity = $this->entity($input))
+            ->persist($entity = $this->entity($params))
             ->flush();
         $entity->refresh();
 
@@ -46,21 +44,17 @@ class Store
     /**
      * 创建实体.
      */
-    private function entity(array $input): Role
+    private function entity(StoreParams $params): Role
     {
-        return new Role($this->data($input));
+        return new Role($this->data($params));
     }
 
     /**
      * 组装实体数据.
      */
-    private function data(array $input): array
+    private function data(StoreParams $params): array
     {
-        return [
-            'name'       => $input['name'],
-            'num'        => $input['num'],
-            'status' => $input['status'],
-        ];
+        return $params->toArray();
     }
 
     /**
@@ -68,7 +62,7 @@ class Store
      *
      * @throws \App\Exceptions\UserBusinessException
      */
-    private function validateArgs(): void
+    private function validateArgs(StoreParams $params): void
     {
         $uniqueRule = UniqueRule::rule(
             Role::class, 
@@ -76,18 +70,18 @@ class Store
         );
 
         $validator = Validate::make(
-            $this->input,
+            $params->toArray(),
             [
                 'name' => 'required|chinese_alpha_num|max_length:50|'.$uniqueRule,
-                'num'           => 'required|alpha_dash|'.$uniqueRule,
+                'num'  => 'required|alpha_dash|'.$uniqueRule,
                 'status' => [
                     ['in', Role::values('status')],
                 ],
             ],
             [
-                'name' => __('名字'),
-                'num'           => __('编号'),
-                'status'   => __('状态值'),
+                'name'    => __('名字'),
+                'num'     => __('编号'),
+                'status'  => __('状态值'),
             ]
         );
 

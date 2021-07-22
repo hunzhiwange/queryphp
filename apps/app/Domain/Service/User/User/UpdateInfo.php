@@ -19,17 +19,14 @@ class UpdateInfo
 {
     use WorkflowService;
 
-    private array $input;
-
     public function __construct(private UnitOfWork $w)
     {
     }
 
-    public function handle(array $input): array
+    public function handle(UpdateInfoParams $params): array
     {
-        $this->input = $input;
-        $this->validateArgs();
-        $this->save($input)->toArray();
+        $this->validateArgs($params);
+        $this->save($params)->toArray();
 
         return [];
     }
@@ -37,9 +34,9 @@ class UpdateInfo
     /**
      * 保存.
      */
-    private function save(array $input): User
+    private function save(UpdateInfoParams $params): User
     {
-        $this->w->persist($entity = $this->entity($input));
+        $this->w->persist($entity = $this->entity($params));
         $this->w->flush();
 
         return $entity;
@@ -48,10 +45,10 @@ class UpdateInfo
     /**
      * 验证参数.
      */
-    private function entity(array $input): User
+    private function entity(UpdateInfoParams $params): User
     {
-        $entity = $this->find((int) $input['id']);
-        $entity->withProps($this->data($input));
+        $entity = $this->find($params->id);
+        $entity->withProps($this->data($params));
 
         return $entity;
     }
@@ -69,11 +66,11 @@ class UpdateInfo
     /**
      * 组装实体数据.
      */
-    private function data(array $input): array
+    private function data(UpdateInfoParams $params): array
     {
         return [
-            'email'        => $input['email'] ?: '',
-            'mobile'       => $input['mobile'] ?: '',
+            'email' => $params->email,
+            'mobile' => $params->mobile,
         ];
     }
 
@@ -82,12 +79,12 @@ class UpdateInfo
      *
      * @throws \App\Exceptions\UserBusinessException
      */
-    private function validateArgs(): void
+    private function validateArgs(UpdateInfoParams $params): void
     {
-        $input = $this->filterEmptyStringInput($this->input);
+        $params = $this->filterEmptyStringInput($params->toArray());
 
         $validator = Validates::make(
-            $input,
+            $params,
             [
                 'email'  => 'email|'.IValidator::OPTIONAL,
                 'mobile' => 'mobile|'.IValidator::OPTIONAL,

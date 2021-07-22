@@ -36,6 +36,9 @@ final class UserErrorCode extends ErrorCode
     #[msg('角色保存参数错误')]
     public const ROLE_STORE_INVALID_ARGUMENT = 1000010008;
 
+    #[msg('角色更新参数错误')]
+    public const ROLE_UPDATE_INVALID_ARGUMENT = 1000010014;
+
     #[msg('用户保存参数错误')]
     public const USER_STORE_INVALID_ARGUMENT = 1000010009;
 

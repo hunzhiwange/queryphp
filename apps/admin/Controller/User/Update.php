@@ -22,7 +22,6 @@ class Update
         'id',
         'num',
         'status',
-        'userRole',
         'password',
     ];
 

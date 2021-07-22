@@ -100,7 +100,8 @@ final class Resource extends AbstractMigration
             INSERT INTO `resource`(`id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (65, '下级菜单2', 'three2_index_menu', 1, '2021-01-13 15:25:07', '2021-01-13 15:25:07', 0, 0, 0, 0);
             INSERT INTO `resource`(`id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (64, '下级菜单1', 'three1_index_menu', 1, '2021-01-13 15:24:30', '2021-01-13 15:24:30', 0, 0, 0, 0);
             INSERT INTO `resource`(`id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (63, '二级菜单', 'sub_index_menu', 1, '2021-01-13 15:23:56', '2021-01-13 15:23:56', 0, 0, 0, 0);
-            INSERT INTO     `resource`(`id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (62, '一级菜单', 'menu_menu', 1, '2021-01-13 15:23:31', '2021-01-13 15:23:31', 0, 0, 0, 0);
+            INSERT INTO `resource`(`id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (62, '一级菜单', 'menu_menu', 1, '2021-01-13 15:23:31', '2021-01-13 15:23:31', 0, 0, 0, 0);
+            INSERT INTO `resource`(`id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (68, '用户角色授权按钮', 'user_role_button', 1, '2021-07-22 07:36:44', '2021-07-22 07:36:55', 0, 0, 0, 0);
             EOT;
         $this->execute($sql);
     }

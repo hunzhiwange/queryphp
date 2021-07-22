@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
-use App\Domain\Entity\User\UserRole;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
 use Leevel\Auth\Hash;
-use Leevel\Collection\Collection;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate;
 use Leevel\Validate\UniqueRule;
@@ -41,21 +39,10 @@ class Store
     private function save(StoreParams $params): User
     {
         $this->w->create($entity = $this->entity($params));
-        $this->w->on($entity, function (User $user) use ($params) {
-            $this->setUserRole($user->id, $params->userRole);
-        });
         $this->w->flush();
         $entity->refresh();
 
         return $entity;
-    }
-
-    /**
-     * 查找存在角色.
-     */
-    private function findRoles(): Collection
-    {
-        return UserRole::make()->collection();
     }
 
     /**

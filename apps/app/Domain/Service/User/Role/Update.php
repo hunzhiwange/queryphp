@@ -5,54 +5,35 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\Role;
 
 use App\Domain\Entity\User\Role;
-use App\Infra\Support\WorkflowService;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\UniqueRule;
+use App\Exceptions\UserBusinessException;
+use App\Exceptions\UserErrorCode;
+use Leevel\Validate\Proxy\Validate;
 
 /**
  * 角色更新.
  */
 class Update
 {
-    use WorkflowService;
-
-    private array $workflow = [
-        'allowedInput',
-        'filterInput',
-        'validateInput',
-    ];
-
-    private array $allowedInput = [
-        'id',
-        'name',
-        'num',
-        'status',
-    ];
-
     public function __construct(private UnitOfWork $w)
     {
     }
 
-    public function handle(array $input): array
+    public function handle(UpdateParams $params): array
     {
-        return $this->workflow($input);
-    }
+        $this->validateArgs($params);
 
-    /**
-     * 过滤输入数据.
-     */
-    private function main(array &$input): array
-    {
-        return $this->save($input)->toArray();
+        return $this->save($params)->toArray();
     }
 
     /**
      * 验证参数.
      */
-    private function entity(array $input): Role
+    private function entity(UpdateParams $params): Role
     {
-        $entity = $this->find($input['id']);
-        $entity->withProps($this->data($input));
+        $entity = $this->find($params->id);
+        $entity->withProps($this->data($params));
 
         return $entity;
     }
@@ -70,22 +51,18 @@ class Update
     /**
      * 组装实体数据.
      */
-    private function data(array $input): array
+    private function data(UpdateParams $params): array
     {
-        return [
-            'name'       => $input['name'],
-            'num'        => $input['num'],
-            'status'     => $input['status'],
-        ];
+        return $params->except(['id'])->toArray();
     }
 
     /**
      * 保存.
      */
-    private function save(array $input): Role
+    private function save(UpdateParams $params): Role
     {
         $this->w
-            ->persist($entity = $this->entity($input))
+            ->persist($entity = $this->entity($params))
             ->flush();
         $entity->refresh();
 
@@ -93,24 +70,35 @@ class Update
     }
 
     /**
-     * 过滤数据规则.
+     * 校验基本参数.
+     *
+     * @throws \App\Exceptions\UserBusinessException
      */
-    private function filterInputRules(): array
+    private function validateArgs(UpdateParams $params): void
     {
-        return [
-            'id'     => ['intval'],
-            'status' => ['intval'],
-        ];
+        list($rules, $names) = $this->validateInputRules($params);
+
+        $validator = Validate::make(
+            $params->toArray(),
+            $rules,
+            $names,
+        );
+
+        if ($validator->fail()) {
+            $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
+
+            throw new UserBusinessException(UserErrorCode::ROLE_UPDATE_INVALID_ARGUMENT, $e, true);
+        }
     }
 
     /**
      * 校验数据规则.
      */
-    private function validateInputRules(array $input): array
+    private function validateInputRules(UpdateParams $params): array
     {
         $uniqueRule = UniqueRule::rule(
             Role::class,
-            exceptId:$input['id'], 
+            exceptId:$params->id, 
             additional:['delete_at' => 0]
         );
 
@@ -135,9 +123,9 @@ class Update
         ];
 
         $names = [
-            'id'            => 'ID',
-            'name'          => __('名字'),
-            'num'           => __('编号'),
+            'id'     => 'ID',
+            'name'   => __('名字'),
+            'num'    => __('编号'),
             'status' => __('状态值'),
         ];
 

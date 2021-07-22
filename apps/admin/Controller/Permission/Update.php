@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Admin\Controller\Permission;
 
 use Admin\Controller\Support\Controller;
-use Admin\Service\Permission\Update as Service;
+use App\Domain\Service\User\Permission\Update as Service;
+use App\Domain\Service\User\Permission\UpdateParams;
 use Leevel\Http\Request;
 
 /**
@@ -27,7 +28,9 @@ class Update
 
     public function handle(Request $request, Service $service): array
     {
-        return $this->main($request, $service);
+        $params = new UpdateParams($this->input($request));
+
+        return $service->handle($params);
     }
 
     private function extendInput(Request $request): array
