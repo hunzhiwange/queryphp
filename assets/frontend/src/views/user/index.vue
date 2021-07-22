@@ -19,6 +19,7 @@
                                     </FormItem>
                                     <FormItem :label="__('密码')" prop="password">
                                         <i-input
+                                            type="password"
                                             v-model="formItem.password"
                                             :placeholder="formItem.id ? __('不修改密码请留空') : __('密码不能为空')"
                                             :on-change="passwordValidate(formItem.id)"

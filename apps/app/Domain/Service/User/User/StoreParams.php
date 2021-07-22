@@ -11,7 +11,9 @@ use Leevel\Support\Dto;
  */
 class StoreParams extends Dto
 {
-    use BaseStoreUpdateParams;
+    public string $num;
+
+    public int $status;
 
     public string $name;
 

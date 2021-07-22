@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Admin\Controller\User;
 
 use Admin\Controller\Support\Controller;
-use App\Domain\Service\User\User\UpdateInfo as Service;
-use App\Domain\Service\User\User\UpdateInfoParams;
+use App\Domain\Service\User\User\Update as Service;
+use App\Domain\Service\User\User\UpdateParams;
 use Leevel\Auth\Proxy\Auth;
 use Leevel\Http\Request;
 
@@ -26,7 +26,7 @@ class UpdateInfo
 
     public function handle(Request $request, Service $service): array
     {
-        $params = new UpdateInfoParams($this->input($request));
+        $params = new UpdateParams($this->input($request));
 
         return $service->handle($params);
     }
