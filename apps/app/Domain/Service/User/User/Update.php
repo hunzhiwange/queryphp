@@ -12,7 +12,6 @@ use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\IValidator;
 use Leevel\Validate\Proxy\Validate;
 use Leevel\Validate\UniqueRule;
-use App\Infra\Support\WorkflowService;
 
 /**
  * 用户更新.
@@ -20,7 +19,6 @@ use App\Infra\Support\WorkflowService;
 class Update
 {
     use BaseStoreUpdate;
-    use WorkflowService;
 
     public function __construct(
         private UnitOfWork $w,
@@ -57,7 +55,7 @@ class Update
             }
 
             if ('password' === $field) {
-                $entity->password = $this->createPassword($params->password);
+                $entity->password = $this->createPassword($value);
             } else {
                 $entity->{$field} = $value;
             }
@@ -91,8 +89,6 @@ class Update
      */
     private function validateArgs(UpdateParams $params): void
     {
-        $data = $this->filterEmptyStringInput($params->toArray());
-
         $uniqueRule = UniqueRule::rule(
             User::class,
             exceptId:$params->id,
@@ -100,7 +96,7 @@ class Update
         );
 
         $validator = Validate::make(
-            $data,
+            $params->toArray(),
             [
                 'num'      => 'required|alpha_dash|'.$uniqueRule.'|'.IValidator::OPTIONAL,
                 'password' => 'required|min_length:6,max_length:30|'.IValidator::OPTIONAL,
