@@ -18,10 +18,13 @@ class Tree
     {
     }
 
-    public function handle(): array
+    public function handle(TreeParams $params): array
     {
         $repository = $this->w->repository(Permission::class);
         $permission = $repository
+            ->if(null !== $params->status)
+            ->where('status', $params->status)
+            ->fi()
             ->setColumns('id,pid,name,num,status,create_at')
             ->findAll();
 

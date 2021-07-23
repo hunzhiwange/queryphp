@@ -134,6 +134,6 @@ class Permission extends Entity
     {
         $relation
             ->where('status', Resource::STATUS_ENABLE)
-            ->setColumns(['id', 'name', 'num']);
+            ->setColumns(['id', 'name', 'num', 'status']);
     }
 }

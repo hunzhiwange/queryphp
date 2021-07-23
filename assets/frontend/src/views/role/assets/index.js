@@ -268,7 +268,7 @@ export default {
         },
         permission(params) {
             if (!this.dataTreeInit) {
-                this.apiGet('permission').then(res => {
+                this.apiGet('permission', {status: 1}).then(res => {
                     this.dataTree = res
                     this.dataTreeInit = true
                 })
