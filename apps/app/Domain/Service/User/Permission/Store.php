@@ -23,6 +23,7 @@ class Store
     public function handle(StoreParams $params): array
     {
         $this->validateArgs($params);
+        $this->validateData($params);
 
         return $this->save($params)->toArray();
     }
@@ -88,5 +89,30 @@ class Store
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
             throw new UserBusinessException(UserErrorCode::PERMISSION_STORE_INVALID_ARGUMENT, $e, true);
         }
+    }
+
+    /**
+     * 校验数据.
+     */
+    private function validateData(StoreParams $params): void
+    {
+        if ($params->pid > 0) {
+            $this->validatePidData($params->pid);
+        }
+    }
+
+    private function validatePidData(int $pid)
+    {
+        $this->find($pid);
+    }
+
+    /**
+     * 查找实体.
+     */
+    private function find(int $id): Permission
+    {
+        return $this->w
+            ->repository(Permission::class)
+            ->findOrFail($id);
     }
 }
