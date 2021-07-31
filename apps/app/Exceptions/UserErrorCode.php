@@ -45,9 +45,6 @@ final class UserErrorCode extends ErrorCode
     #[msg('用户更新参数错误')]
     public const USER_UPDATE_INVALID_ARGUMENT = 1000010010;
 
-    #[msg('用户更新资料参数错误')]
-    public const USER_UPDATE_INFO_INVALID_ARGUMENT = 1000010011;
-
     #[msg('锁定管理面板参数错误')]
     public const LOCK_ANAGEMENT_PANEL_INVALID_ARGUMENT = 1000010012;
 

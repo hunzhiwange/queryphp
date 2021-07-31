@@ -9,10 +9,9 @@ use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Validate\IValidator;
-use Leevel\Validate\Proxy\Validate;
+use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
-use App\Infra\Support\WorkflowService;
+use App\Domain\Validate\User\User as UserUser;
 
 /**
  * 用户更新.
@@ -20,7 +19,6 @@ use App\Infra\Support\WorkflowService;
 class Update
 {
     use BaseStoreUpdate;
-    use WorkflowService;
 
     public function __construct(
         private UnitOfWork $w,
@@ -57,7 +55,7 @@ class Update
             }
 
             if ('password' === $field) {
-                $entity->password = $this->createPassword($params->password);
+                $entity->password = $this->createPassword($value);
             } else {
                 $entity->{$field} = $value;
             }
@@ -91,35 +89,13 @@ class Update
      */
     private function validateArgs(UpdateParams $params): void
     {
-        $data = $this->filterEmptyStringInput($params->toArray());
-
         $uniqueRule = UniqueRule::rule(
             User::class,
             exceptId:$params->id,
             additional:['delete_at' => 0]
         );
 
-        $validator = Validate::make(
-            $data,
-            [
-                'num'      => 'required|alpha_dash|'.$uniqueRule.'|'.IValidator::OPTIONAL,
-                'password' => 'required|min_length:6,max_length:30|'.IValidator::OPTIONAL,
-                'status' => [
-                    ['in', User::values('status')],
-                    IValidator::OPTIONAL,
-                ],
-                'email'  => 'email|'.IValidator::OPTIONAL,
-                'mobile' => 'mobile|'.IValidator::OPTIONAL,
-            ],
-            [
-                'num'      => __('编号'),
-                'password' => __('密码'),
-                'status'   => __('状态值'),
-                'email'  => __('邮件'),
-                'mobile' => __('手机'),
-            ]
-        );
-
+        $validator = Validate::make(new UserUser($uniqueRule), 'update', $params->toArray())->getValidator();
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 

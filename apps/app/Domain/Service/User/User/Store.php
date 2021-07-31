@@ -9,8 +9,9 @@ use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Validate\Proxy\Validate;
+use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
+use App\Domain\Validate\User\User as UserUser;
 
 /**
  * 用户保存.
@@ -86,24 +87,7 @@ class Store
             additional:['delete_at' => 0]
         );
 
-        $validator = Validate::make(
-            $params->toArray(),
-            [
-                'name'     => 'required|chinese_alpha_num|max_length:64|'.$uniqueRule,
-                'num'      => 'required|alpha_dash|'.$uniqueRule,
-                'password' => 'required|min_length:6,max_length:30',
-                'status' => [
-                    ['in', User::values('status')],
-                ],
-            ],
-            [
-                'name'     => __('名字'),
-                'num'      => __('编号'),
-                'password' => __('密码'),
-                'status'   => __('状态值'),
-            ]
-        );
-
+        $validator = Validate::make(new UserUser($uniqueRule), 'store', $params->toArray())->getValidator();
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
