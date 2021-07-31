@@ -116,7 +116,7 @@ class Permission extends Entity
             self::MIDDLE_TARGET_KEY      => 'resource_id',
             self::RELATION_SCOPE         => 'resource',
         ],
-    ];
+    ]; // END STRUCT
 
     /**
      * Soft delete column.

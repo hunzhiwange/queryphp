@@ -99,7 +99,7 @@ class Resource extends Entity
         'version' => [
             self::COLUMN_NAME => '操作版本号',
         ],
-    ];
+    ]; // END STRUCT
 
     /**
      * Soft delete column.

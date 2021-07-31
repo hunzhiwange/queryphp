@@ -34,6 +34,6 @@ class {{file_name}} extends Entity
      */
     public const STRUCT = [
 {{struct}}
-    ];
+    ]; // END STRUCT
 {{const_extend}}
 }

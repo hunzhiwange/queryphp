@@ -129,7 +129,7 @@ class User extends Entity
             self::MIDDLE_TARGET_KEY      => 'role_id',
             self::RELATION_SCOPE         => 'role',
         ],
-    ];
+    ]; // END STRUCT
 
     /**
      * Soft delete column.

@@ -109,7 +109,7 @@ class Role extends Entity
             self::MIDDLE_TARGET_KEY      => 'permission_id',
             self::RELATION_SCOPE         => 'permission',
         ],
-    ];
+    ]; // END STRUCT
 
     /**
      * Soft delete column.
