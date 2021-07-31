@@ -9,7 +9,8 @@ use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\UniqueRule;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
-use Leevel\Validate\Proxy\Validate;
+use App\Domain\Validate\Validate;
+use App\Domain\Validate\User\Role as UserRole;
 
 /**
  * 角色更新.
@@ -76,59 +77,17 @@ class Update
      */
     private function validateArgs(UpdateParams $params): void
     {
-        list($rules, $names) = $this->validateInputRules($params);
-
-        $validator = Validate::make(
-            $params->toArray(),
-            $rules,
-            $names,
-        );
-
-        if ($validator->fail()) {
-            $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
-            throw new UserBusinessException(UserErrorCode::ROLE_UPDATE_INVALID_ARGUMENT, $e, true);
-        }
-    }
-
-    /**
-     * 校验数据规则.
-     */
-    private function validateInputRules(UpdateParams $params): array
-    {
         $uniqueRule = UniqueRule::rule(
             Role::class,
             exceptId:$params->id, 
             additional:['delete_at' => 0]
         );
 
-        $rules = [
-            'id' => [
-                'required',
-            ],
-            'name' => [
-                'required',
-                'chinese_alpha_num',
-                'max_length:50',
-                $uniqueRule,
-            ],
-            'num' => [
-                'required',
-                'alpha_dash',
-                $uniqueRule,
-            ],
-            'status' => [
-                ['in', Role::values('status')],
-            ],
-        ];
+        $validator = Validate::make(new UserRole($uniqueRule), 'update', $params->toArray())->getValidator();
+        if ($validator->fail()) {
+            $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
-        $names = [
-            'id'     => 'ID',
-            'name'   => __('名字'),
-            'num'    => __('编号'),
-            'status' => __('状态值'),
-        ];
-
-        return [$rules, $names];
+            throw new UserBusinessException(UserErrorCode::ROLE_UPDATE_INVALID_ARGUMENT, $e, true);
+        }
     }
 }

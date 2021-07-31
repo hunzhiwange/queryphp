@@ -9,9 +9,9 @@ use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Validate\IValidator;
-use Leevel\Validate\Proxy\Validate;
+use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
+use App\Domain\Validate\User\User as UserUser;
 
 /**
  * 用户更新.
@@ -95,27 +95,7 @@ class Update
             additional:['delete_at' => 0]
         );
 
-        $validator = Validate::make(
-            $params->toArray(),
-            [
-                'num'      => 'required|alpha_dash|'.$uniqueRule.'|'.IValidator::OPTIONAL,
-                'password' => 'required|min_length:6,max_length:30|'.IValidator::OPTIONAL,
-                'status' => [
-                    ['in', User::values('status')],
-                    IValidator::OPTIONAL,
-                ],
-                'email'  => 'email|'.IValidator::OPTIONAL,
-                'mobile' => 'mobile|'.IValidator::OPTIONAL,
-            ],
-            [
-                'num'      => __('编号'),
-                'password' => __('密码'),
-                'status'   => __('状态值'),
-                'email'  => __('邮件'),
-                'mobile' => __('手机'),
-            ]
-        );
-
+        $validator = Validate::make(new UserUser($uniqueRule), 'update', $params->toArray())->getValidator();
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 

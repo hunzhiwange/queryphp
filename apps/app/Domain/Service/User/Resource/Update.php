@@ -8,8 +8,9 @@ use App\Domain\Entity\User\Resource;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Validate\Proxy\Validate;
+use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
+use App\Domain\Validate\User\Resource as UserResource;
 
 /**
  * 资源更新.
@@ -82,24 +83,7 @@ class Update
             additional:['delete_at' => 0]
         );
 
-        $validator = Validate::make(
-            $params->toArray(),
-            [
-                'id'            => 'required',
-                'name' => 'required|chinese_alpha_num|max_length:50|'.$uniqueRule,
-                'num'           => 'required|'.$uniqueRule,
-                'status' => [
-                    ['in', Resource::values('status')],
-                ],
-            ],
-            [
-                'id'            => 'ID',
-                'name' => __('名字'),
-                'num'           => __('编号'),
-                'status' => __('状态值'),
-            ]
-        );
-
+        $validator = Validate::make(new UserResource($uniqueRule), 'update', $params->toArray())->getValidator();
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 

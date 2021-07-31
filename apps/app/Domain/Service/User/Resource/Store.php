@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\Resource;
 
 use App\Domain\Entity\User\Resource;
+use App\Domain\Validate\User\Resource as UserResource;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Validate\Proxy\Validate;
+use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
 
 /**
@@ -68,22 +69,7 @@ class Store
             additional:['delete_at' => 0]
         );
 
-        $validator = Validate::make(
-            $params->toArray(),
-            [
-                'name' => 'required|chinese_alpha_num|max_length:50|'.$uniqueRule,
-                'num'           => 'required|'.$uniqueRule,
-                'status' => [
-                    ['in', Resource::values('status')],
-                ],
-            ],
-            [
-                'name' => __('名字'),
-                'num'           => __('编号'),
-                'status' => __('状态值'),
-            ]
-        );
-
+        $validator = Validate::make(new UserResource($uniqueRule), 'store', $params->toArray())->getValidator();
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
