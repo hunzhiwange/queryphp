@@ -65,6 +65,9 @@ class Auth extends BaseAuth
             return $next($request);
         }
 
+        // 校验过期时间
+        $this->validateExpired($request);
+
         // 校验签名
         $this->validateSignature($request);
 
@@ -84,6 +87,24 @@ class Auth extends BaseAuth
     }
 
     /**
+     * 校验是否过期.
+     * 
+     * @throws \App\Exceptions\AuthBusinessException
+     */
+    private function validateExpired(Request $request): void
+    {
+        $timestamp = $request->get('timestamp');
+        if (empty($timestamp)) {
+            throw new AuthBusinessException(AuthErrorCode::AUTH_TIMESTAMP_CANNOT_BE_EMPTY);
+        }
+
+        // 接口 5 分钟过期
+        if ((int) $timestamp+300*1000 < time()*1000) {
+            throw new AuthBusinessException(AuthErrorCode::AUTH_TIMESTAMP_EXPIRED);
+        }
+    }
+
+    /**
      * 校验签名.
      * 
      * @throws \App\Exceptions\AuthBusinessException
@@ -94,6 +115,7 @@ class Auth extends BaseAuth
         if (empty($params['signature'])) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_CANNOT_BE_EMPTY);
         }
+
         $signature = $params['signature'];
         unset($params['signature']);
         $currentSignature = func(fn() => create_signature($params, '4282222'));

@@ -29,4 +29,10 @@ final class AuthErrorCode extends ErrorCode
 
     #[msg('签名必须')]
     public const AUTH_SIGNATURE_CANNOT_BE_EMPTY = 1000030009;
+
+    #[msg('接口时间必须')]
+    public const AUTH_TIMESTAMP_CANNOT_BE_EMPTY = 1000030010;
+
+    #[msg('接口过期')]
+    public const AUTH_TIMESTAMP_EXPIRED = 1000030011;
 }
