@@ -97,9 +97,9 @@ class Auth extends BaseAuth
         if (empty($timestamp)) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_TIMESTAMP_CANNOT_BE_EMPTY);
         }
-
+ 
         // 接口 5 分钟过期
-        if ((int) $timestamp+300*1000 < time()*1000) {
+        if ((int) $timestamp + 300 * 1000 < time() * 1000) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_TIMESTAMP_EXPIRED);
         }
     }
@@ -114,6 +114,12 @@ class Auth extends BaseAuth
         $params = $request->all();
         if (empty($params['signature'])) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_CANNOT_BE_EMPTY);
+        }
+        if (empty($params['signature_method'])) {
+            throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_METHOD_CANNOT_BE_EMPTY);
+        }
+        if (!in_array($params['signature_method'], ['sha256'], true)) {
+            throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_METHOD_NOT_SUPPORT);
         }
 
         $signature = $params['signature'];

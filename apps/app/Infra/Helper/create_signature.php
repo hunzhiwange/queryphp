@@ -19,7 +19,7 @@ function create_signature(array $params, string $appSecret): string
         if (!is_array($v)) {                                                    
             $tmpParams[] = $k . $v;                                                    
         } else {  
-            $tmpParams[] = $k . json_encode($v, JSON_FORCE_OBJECT);                                
+            $tmpParams[] = $k . json_encode($v, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);                                
         }                                                                       
     }
     $tmpParams[] = $appSecret;

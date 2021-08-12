@@ -35,4 +35,10 @@ final class AuthErrorCode extends ErrorCode
 
     #[msg('接口过期')]
     public const AUTH_TIMESTAMP_EXPIRED = 1000030011;
+
+    #[msg('签名方法必须')]
+    public const AUTH_SIGNATURE_METHOD_CANNOT_BE_EMPTY = 1000030012;
+
+    #[msg('签名方法不支持')]
+    public const AUTH_SIGNATURE_METHOD_NOT_SUPPORT = 1000030013;
 }
