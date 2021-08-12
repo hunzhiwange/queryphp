@@ -3,6 +3,7 @@ import isJSON from 'validator/lib/isJSON'
 import {lock} from '@/utils/auth'
 import Vue from 'vue'
 import qs from 'qs'
+import {createSignature} from './signature'
 
 // 设置 axios 为 form-data
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
@@ -34,10 +35,26 @@ service.interceptors.request.use(
 
         if (apiToken) {
             let methods = ['get', 'delete']
+            let baseData = {
+                token: apiToken,
+                format: 'json',
+                app_key: process.env.VUE_APP_APP_KEY,
+                timestamp: new Date().getTime(),
+                method: 'set_or_get.module.demo',
+                signature_method: 'sha256',
+            }
             if (methods.includes(config.method)) {
-                config.params['token'] = apiToken
+                Object.assign(config.params, baseData)
+                if (!config.params.hasOwnProperty('version')) {
+                    config.params['version'] = 'v1'
+                }
+                config.params['signature'] = createSignature(config.params, process.env.VUE_APP_APP_SECRET)
             } else {
-                config.data['token'] = apiToken
+                Object.assign(config.data, baseData)
+                if (!config.data.hasOwnProperty('version')) {
+                    config.data['version'] = 'v1'
+                }
+                config.data['signature'] = createSignature(config.data, process.env.VUE_APP_APP_SECRET)
             }
         }
 
