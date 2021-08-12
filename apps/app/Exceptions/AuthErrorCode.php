@@ -23,4 +23,10 @@ final class AuthErrorCode extends ErrorCode
 
     #[msg('管理系统已锁定')]
     public const MANAGEMENT_SYSTEM_LOCKED = 1000030007;
+
+    #[msg('签名校验失败')]
+    public const AUTH_SIGNATURE_VERIFY_FAILD = 1000030008;
+
+    #[msg('签名必须')]
+    public const AUTH_SIGNATURE_CANNOT_BE_EMPTY = 1000030009;
 }

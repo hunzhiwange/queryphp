@@ -15,6 +15,7 @@ use Leevel\Auth\AuthException;
 use Leevel\Auth\Middleware\Auth as BaseAuth;
 use Leevel\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use function App\Infra\Helper\create_signature;
 
 /**
  * auth 中间件.
@@ -64,6 +65,9 @@ class Auth extends BaseAuth
             return $next($request);
         }
 
+        // 校验签名
+        $this->validateSignature($request);
+
         try {
             $token = $this->normalizeToken($request);
             if ($this->manager->isLogin()) {
@@ -76,6 +80,25 @@ class Auth extends BaseAuth
             return parent::handle($next, $request);
         } catch (AuthException) {
             throw new UnauthorizedHttpException(AuthErrorCode::PERMISSION_AUTHENTICATION_FAILED);
+        }
+    }
+
+    /**
+     * 校验签名.
+     * 
+     * @throws \App\Exceptions\AuthBusinessException
+     */
+    private function validateSignature(Request $request): void
+    {
+        $params = $request->all();
+        if (empty($params['signature'])) {
+            throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_CANNOT_BE_EMPTY);
+        }
+        $signature = $params['signature'];
+        unset($params['signature']);
+        $currentSignature = func(fn() => create_signature($params, '4282222'));
+        if ($currentSignature !== $signature) {
+            throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_VERIFY_FAILD);
         }
     }
 
