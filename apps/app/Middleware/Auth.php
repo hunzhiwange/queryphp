@@ -172,7 +172,8 @@ class Auth extends BaseAuth
      */
     private function validateSignature(Request $request, string $appSecret): void
     {
-        $params = $request->all();
+        // 不能包含 attributes，前端生成签名不包含，否则签名无效通过
+        $params = $request->request->all() + $request->query->all();
         if (empty($params['signature'])) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_CANNOT_BE_EMPTY);
         }
