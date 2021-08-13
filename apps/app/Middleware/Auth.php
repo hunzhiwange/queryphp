@@ -29,31 +29,31 @@ class Auth extends BaseAuth
      * 忽略锁定路由.
      */
     private array $ignoreLockPathInfo = [
-        '/user/lock',
-        '/user/unlock',
-        '/login/logout',
+        'user/lock',
+        'user/unlock',
+        'login/logout',
     ];
 
     /**
      * 忽略路由.
      */
     private array $ignorePathInfo = [
-        '/login/code',
-        '/login/validate',
+        'login/code',
+        'login/validate',
     ];
 
     /**
      * 忽略权限路由.
      */
     private array $ignorePermissionPathInfo = [
-        '/login/logout',
-        '/user/update-info',
-        '/user/lock',
-        '/user/unlock',
-        '/user/change-password',
-        '/user/permission',
-        '/user/info',
-        '/search',
+        'login/logout',
+        'user/update-info',
+        'user/lock',
+        'user/unlock',
+        'user/change-password',
+        'user/permission',
+        'user/info',
+        'search',
     ];
 
     /**
@@ -158,10 +158,10 @@ class Auth extends BaseAuth
         if (empty($timestamp)) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_TIMESTAMP_CANNOT_BE_EMPTY);
         }
- 
+
         // 接口 5 分钟过期
         if ((int) $timestamp + 300 * 1000 < time() * 1000) {
-            throw new AuthBusinessException(AuthErrorCode::AUTH_TIMESTAMP_EXPIRED);
+           throw new AuthBusinessException(AuthErrorCode::AUTH_TIMESTAMP_EXPIRED);
         }
     }
 
@@ -197,7 +197,7 @@ class Auth extends BaseAuth
      */
     private function isIgnoreRouter(Request $request): bool
     {
-        return \in_array($request->getPathInfo(), $this->ignorePathInfo, true);
+        return \in_array($this->getPathInfo($request), $this->ignorePathInfo, true);
     }
 
     /**
@@ -222,7 +222,7 @@ class Auth extends BaseAuth
      */
     private function validateLock(Request $request, string $token): void
     {
-        if (!\in_array($request->getPathInfo(), $this->ignoreLockPathInfo, true) &&
+        if (!\in_array($this->getPathInfo($request), $this->ignoreLockPathInfo, true) &&
             $token && (new Lock())->has($token)) {
             throw new LockException(AuthErrorCode::MANAGEMENT_SYSTEM_LOCKED);
         }
@@ -233,7 +233,7 @@ class Auth extends BaseAuth
      */
     private function isIgnorePermission(Request $request): bool
     {
-        return \in_array($request->getPathInfo(), $this->ignorePermissionPathInfo, true);
+        return \in_array($this->getPathInfo($request), $this->ignorePermissionPathInfo, true);
     }
 
     /**
@@ -243,10 +243,16 @@ class Auth extends BaseAuth
      */
     private function validatePermission(Request $request): void
     {
-        $pathInfo = str_replace('/', '', $request->getPathInfo());
+        $pathInfo = $this->getPathInfo($request);
         $method = strtolower($request->getMethod());
         if (!Permission::handle($pathInfo, $method)) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_NO_PERMISSION);
         }
+    }
+
+    private function getPathInfo(Request $request): string
+    {
+        // 去掉前缀
+        return preg_replace('/^api\/v([0-9])+:/', '', trim($request->getPathInfo(), '/'));
     }
 }

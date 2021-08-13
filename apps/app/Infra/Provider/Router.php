@@ -56,7 +56,7 @@ class Router extends RouterProvider
         'api/test' => [
             'middlewares' => 'api',
         ],
-        '*' => [
+        'api/v*' => [
             'middlewares' => 'auth',
         ],
     ];

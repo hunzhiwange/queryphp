@@ -18,7 +18,7 @@ export default {
                 code: '',
             },
             codeUrl: '',
-            codeImg: process.env.VUE_APP_BASE_API + '/login/code',
+            codeImg: process.env.VUE_APP_BASE_API + '/api/v1:login/code',
             rules: {
                 name: [
                     {
