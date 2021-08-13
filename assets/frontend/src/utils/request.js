@@ -25,6 +25,15 @@ const service = axios.create({
 // request 拦截器
 service.interceptors.request.use(
     config => {
+        let methods = ['get', 'delete']
+        let baseData = {
+            format: 'json',
+            app_key: process.env.VUE_APP_APP_KEY,
+            timestamp: new Date().getTime(),
+            method: 'set_or_get.module.demo',
+            signature_method: 'hmac_sha256',
+        }
+
         let apiToken = bus.$store.state.user.token
 
         // 使用 header 传递 token
@@ -34,28 +43,21 @@ service.interceptors.request.use(
         // }
 
         if (apiToken) {
-            let methods = ['get', 'delete']
-            let baseData = {
-                token: apiToken,
-                format: 'json',
-                app_key: process.env.VUE_APP_APP_KEY,
-                timestamp: new Date().getTime(),
-                method: 'set_or_get.module.demo',
-                signature_method: 'hmac_sha256',
+            baseData['token'] = apiToken;
+        }
+
+        if (methods.includes(config.method)) {
+            Object.assign(config.params, baseData)
+            if (!config.params.hasOwnProperty('version')) {
+                config.params['version'] = 'v1'
             }
-            if (methods.includes(config.method)) {
-                Object.assign(config.params, baseData)
-                if (!config.params.hasOwnProperty('version')) {
-                    config.params['version'] = 'v1'
-                }
-                config.params['signature'] = createSignature(config.params, process.env.VUE_APP_APP_SECRET)
-            } else {
-                Object.assign(config.data, baseData)
-                if (!config.data.hasOwnProperty('version')) {
-                    config.data['version'] = 'v1'
-                }
-                config.data['signature'] = createSignature(config.data, process.env.VUE_APP_APP_SECRET)
+            config.params['signature'] = createSignature(config.params, process.env.VUE_APP_APP_SECRET)
+        } else {
+            Object.assign(config.data, baseData)
+            if (!config.data.hasOwnProperty('version')) {
+                config.data['version'] = 'v1'
             }
+            config.data['signature'] = createSignature(config.data, process.env.VUE_APP_APP_SECRET)
         }
 
         return config

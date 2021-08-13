@@ -81,7 +81,6 @@ export default {
                     data.name = this.form.name
                     data.password = this.form.password
                     data.code = this.form.code
-                    data.app_key = process.env.VUE_APP_APP_KEY
 
                     if (this.checked) {
                         data.remember = 1
