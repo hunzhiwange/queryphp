@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Infra\Helper;
 
+use UnexpectedValueException;
+
 /**
  * 签名生成.
+ * 
+ * @throws \UnexpectedValueException
  */
-function create_signature(array $params, string $appSecret): string  
+function create_signature(string $signatureMethod, array $params, string $appSecret): string  
 {                                                                          
     if(empty($params)) {
         return '';
@@ -24,7 +28,12 @@ function create_signature(array $params, string $appSecret): string
     }
     $tmpParams[] = $appSecret;
 
-    return base64_encode(hash_hmac('sha256', implode('', $tmpParams), $appSecret, true));                                                                
+    switch ($signatureMethod) {
+        case 'hmac_sha256':
+            return base64_encode(hash_hmac('sha256', implode('', $tmpParams), $appSecret, true));
+    }
+    
+    throw new UnexpectedValueException(sprintf('Signature method (%s) not supported.', $signatureMethod));
 }
 
 class create_signature

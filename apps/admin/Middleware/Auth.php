@@ -6,13 +6,17 @@ namespace Admin\Middleware;
 
 use App\Exceptions\LockException;
 use Admin\Infra\Lock;
+use App\Domain\Entity\Base\App;
 use App\Exceptions\AuthBusinessException;
 use App\Exceptions\AuthErrorCode;
 use Closure;
 use App\Exceptions\UnauthorizedHttpException;
 use App\Infra\Proxy\Permission;
+use App\Infra\Repository\Base\App as BaseApp;
 use Leevel\Auth\AuthException;
 use Leevel\Auth\Middleware\Auth as BaseAuth;
+use Leevel\Cache\Proxy\Cache;
+use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use function App\Infra\Helper\create_signature;
@@ -54,6 +58,11 @@ class Auth extends BaseAuth
     ];
 
     /**
+     * 应用秘钥.
+     */
+    private string $appSecret;
+
+    /**
      * 请求.
      *
      * @throws \App\Exceptions\UnauthorizedHttpException
@@ -65,12 +74,6 @@ class Auth extends BaseAuth
             return $next($request);
         }
 
-        // 校验过期时间
-        $this->validateExpired($request);
-
-        // 校验签名
-        $this->validateSignature($request);
-
         try {
             $token = $this->normalizeToken($request);
             if ($this->manager->isLogin()) {
@@ -80,10 +83,69 @@ class Auth extends BaseAuth
                 }
             }
 
+            // 校验格式化
+            $this->validateFormat($request);
+
+            // 校验应用
+            $this->validateAppKey($request);
+
+            // 校验过期时间
+            $this->validateExpired($request);
+
+            // 校验签名
+            $this->validateSignature($request, $this->appSecret);
+
             return parent::handle($next, $request);
         } catch (AuthException) {
             throw new UnauthorizedHttpException(AuthErrorCode::PERMISSION_AUTHENTICATION_FAILED);
         }
+    }
+
+    /**
+     * 校验格式化.
+     * 
+     * @throws \App\Exceptions\AuthBusinessException
+     */
+    private function validateFormat(Request $request): void
+    {
+        $format = $request->get('format');
+        if (empty($format)) {
+            throw new AuthBusinessException(AuthErrorCode::AUTH_FORMAT_CANNOT_BE_EMPTY);
+        }
+
+        if (!in_array($format, ['json'], true)) {
+            throw new AuthBusinessException(AuthErrorCode::AUTH_FORMAT_NOT_SUPPORT);
+        }
+    }
+
+    /**
+     * 校验应用 KEY.
+     * 
+     * @throws \App\Exceptions\AuthBusinessException
+     */
+    private function validateAppKey(Request $request): void
+    {
+        $appKey = $request->get('app_key');
+        if (empty($appKey)) {
+            throw new AuthBusinessException(AuthErrorCode::AUTH_APP_KEY_CANNOT_BE_EMPTY);
+        }
+
+        $this->appSecret = $this->findAppSecret($appKey);
+    }
+
+    /**
+     * 查找应用秘钥.
+     */
+    private function findAppSecret(string $appKey): string
+    {
+        return $this
+            ->appReposity()
+            ->findAppSecretByKey($appKey);
+    }
+
+    private function appReposity(): BaseApp
+    {
+        return UnitOfWork::make()->repository(App::class);
     }
 
     /**
@@ -109,7 +171,7 @@ class Auth extends BaseAuth
      * 
      * @throws \App\Exceptions\AuthBusinessException
      */
-    private function validateSignature(Request $request): void
+    private function validateSignature(Request $request, string $appSecret): void
     {
         $params = $request->all();
         if (empty($params['signature'])) {
@@ -118,13 +180,13 @@ class Auth extends BaseAuth
         if (empty($params['signature_method'])) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_METHOD_CANNOT_BE_EMPTY);
         }
-        if (!in_array($params['signature_method'], ['sha256'], true)) {
+        if (!in_array($params['signature_method'], ['hmac_sha256'], true)) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_METHOD_NOT_SUPPORT);
         }
 
         $signature = $params['signature'];
         unset($params['signature']);
-        $currentSignature = func(fn() => create_signature($params, '4282222'));
+        $currentSignature = func(fn() => create_signature($params['signature_method'], $params, $appSecret));
         if ($currentSignature !== $signature) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_VERIFY_FAILD);
         }

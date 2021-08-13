@@ -34,4 +34,25 @@ class App extends Repository
 
         return $app->secret;
     }
+
+    /**
+     * 根据应用 KEY 查找应用秘钥.
+     * 
+     * @throws \App\Exceptions\BusinessException
+     */
+    public function findAppSecretByKey(string $appKey): string
+    {
+        $app = $this->entity
+            ->select()
+            ->cache('app:'.$appKey, rand(300, 600))
+            ->where('key', $appKey)
+            ->where('status', BaseApp::STATUS_ENABLE)
+            ->setColumns('id,secret')
+            ->findOne();
+        if (!$app->id) {
+            throw new BusinessException(ErrorCode::APP_NOT_FOUND);
+        }
+
+        return $app->secret;
+    }
 }

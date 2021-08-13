@@ -41,4 +41,16 @@ final class AuthErrorCode extends ErrorCode
 
     #[msg('签名方法不支持')]
     public const AUTH_SIGNATURE_METHOD_NOT_SUPPORT = 1000030013;
+
+    #[msg('接口应用 KEY 必须')]
+    public const AUTH_APP_KEY_CANNOT_BE_EMPTY = 1000030014;
+
+    #[msg('接口应用 KEY 已失效')]
+    public const AUTH_APP_KEY_INVALID = 1000030015;
+
+    #[msg('接口格式化必须')]
+    public const AUTH_FORMAT_CANNOT_BE_EMPTY = 1000030016;
+
+    #[msg('接口格式化不支持')]
+    public const AUTH_FORMAT_NOT_SUPPORT = 1000030017;
 }

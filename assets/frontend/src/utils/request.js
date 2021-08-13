@@ -41,7 +41,7 @@ service.interceptors.request.use(
                 app_key: process.env.VUE_APP_APP_KEY,
                 timestamp: new Date().getTime(),
                 method: 'set_or_get.module.demo',
-                signature_method: 'sha256',
+                signature_method: 'hmac_sha256',
             }
             if (methods.includes(config.method)) {
                 Object.assign(config.params, baseData)
