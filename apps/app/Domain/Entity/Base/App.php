@@ -41,7 +41,7 @@ class App extends Entity
      *                   key: MUL  default:   extra: 
      * - key
      *                   comment: 应用 KEY  type: varchar(64)  null: false  
-     *                   key:   default:   extra: 
+     *                   key: MUL  default:   extra: 
      * - secret
      *                   comment: 应用秘钥  type: varchar(64)  null: false  
      *                   key:   default:   extra: 

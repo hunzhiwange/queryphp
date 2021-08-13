@@ -19,7 +19,6 @@ class Validate
     use Controller;
 
     private array $allowedInput = [
-        'app_id',
         'app_key',
         'name',
         'password',

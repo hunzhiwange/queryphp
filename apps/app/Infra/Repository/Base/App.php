@@ -15,27 +15,6 @@ use Leevel\Database\Ddd\Repository;
 class App extends Repository
 {
     /**
-     * 根据应用 ID 和应用 KEY 查找应用秘钥.
-     * 
-     * @throws \App\Exceptions\BusinessException
-     */
-    public function findAppSecretByNumAndKey(string $appId, string $appKey): string
-    {
-        $app = $this->entity
-            ->select()
-            ->where('num', $appId)
-            ->where('key', $appKey)
-            ->where('status', BaseApp::STATUS_ENABLE)
-            ->setColumns('id,secret')
-            ->findOne();
-        if (!$app->id) {
-            throw new BusinessException(ErrorCode::APP_NOT_FOUND);
-        }
-
-        return $app->secret;
-    }
-
-    /**
      * 根据应用 KEY 查找应用秘钥.
      * 
      * @throws \App\Exceptions\BusinessException
