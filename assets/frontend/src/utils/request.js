@@ -28,7 +28,7 @@ service.interceptors.request.use(
         let methods = ['get', 'delete']
         let baseData = {
             format: 'json',
-            app_key: process.env.VUE_APP_APP_KEY,
+            app_key: process.env.VUE_APP_KEY,
             timestamp: new Date().getTime(),
             method: 'set_or_get.module.demo',
             signature_method: 'hmac_sha256',
@@ -51,13 +51,13 @@ service.interceptors.request.use(
             if (!config.params.hasOwnProperty('version')) {
                 config.params['version'] = 'v1'
             }
-            config.params['signature'] = createSignature(config.params, process.env.VUE_APP_APP_SECRET)
+            config.params['signature'] = createSignature(config.params, process.env.VUE_APP_SECRET)
         } else {
             Object.assign(config.data, baseData)
             if (!config.data.hasOwnProperty('version')) {
                 config.data['version'] = 'v1'
             }
-            config.data['signature'] = createSignature(config.data, process.env.VUE_APP_APP_SECRET)
+            config.data['signature'] = createSignature(config.data, process.env.VUE_APP_SECRET)
         }
 
         return config
