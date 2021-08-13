@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Login;
 
-use Admin\Infra\Code as Codes;
+use App\Infra\Code as Codes;
 use Leevel;
 use Leevel\Seccode\Seccode;
 

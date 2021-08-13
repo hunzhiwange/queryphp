@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Login;
 
-use Admin\Infra\Code;
+use App\Infra\Code;
 use App\Domain\Entity\Base\App;
 use App\Domain\Entity\User\User;
 use App\Exceptions\AuthBusinessException;
@@ -67,7 +67,7 @@ class Login
         ).
         Str::randAlphaNum(10);
 
-        return 'token:admin:'.hash_hmac('sha256', $token, $appSecret);
+        return 'token:'.hash_hmac('sha256', $token, $appSecret);
     }
 
     /**

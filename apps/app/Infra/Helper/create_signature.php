@@ -27,7 +27,7 @@ function create_signature(string $signatureMethod, array $params, string $appSec
         }                                                                       
     }
     $tmpParams[] = $appSecret;
-
+//print_r($tmpParams);
     switch ($signatureMethod) {
         case 'hmac_sha256':
             return base64_encode(hash_hmac('sha256', implode('', $tmpParams), $appSecret, true));

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infra\Provider;
 
-use Admin\Middleware\Auth as AdminAuth;
+use App\Middleware\Auth;
 use Leevel\Router\RouterProvider;
 use Leevel\Session\Middleware\Session;
 use Leevel\Throttler\Middleware\Throttler;
@@ -44,9 +44,9 @@ class Router extends RouterProvider
      * - 例外在应用执行结束后响应环节也会调用 HTTP 中间件.
      */
     protected array $middlewareAlias = [
-        'admin_auth' => AdminAuth::class,
-        'session'           => Session::class,
-        'throttler'         => Throttler::class,
+        'auth' => Auth::class,
+        'session'    => Session::class,
+        'throttler'  => Throttler::class,
     ];
 
     /**
@@ -56,8 +56,8 @@ class Router extends RouterProvider
         'api/test' => [
             'middlewares' => 'api',
         ],
-        ':admin/*' => [
-            'middlewares' => 'admin_auth',
+        '*' => [
+            'middlewares' => 'auth',
         ],
     ];
 

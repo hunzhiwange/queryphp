@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infra\Proxy;
 
-use Admin\Infra\Permission as AdminPermisson;
+use App\Infra\Permission as AdminPermisson;
 use Leevel\Di\Container;
 
 /**

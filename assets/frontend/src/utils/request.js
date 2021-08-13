@@ -18,7 +18,7 @@ Vue.prototype.$axios = axios
 
 // 创建 axios 实例
 const service = axios.create({
-    baseURL: process.env.VUE_APP_BASE_API + '/:admin/', // api 的 base_url
+    baseURL: process.env.VUE_APP_BASE_API + '/', // api 的 base_url
     timeout: 15000, // 请求超时时间
 })
 
