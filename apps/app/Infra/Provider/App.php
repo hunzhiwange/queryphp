@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infra\Provider;
 
-use Admin\Infra\Permission;
-use Admin\Infra\PermissionCache;
+use App\Infra\Permission;
+use App\Infra\PermissionCache;
 use Leevel\Di\IContainer;
 use Leevel\Di\Provider;
 use Leevel\Http\Request;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Login;
 
-use Admin\Infra\Code;
+use App\Infra\Code;
 use App\Domain\Entity\Base\App;
 use App\Domain\Entity\User\User;
 use App\Exceptions\AuthBusinessException;
@@ -39,7 +39,7 @@ class Login
             $this->validateCode($params);
         }
 
-        $appSecret = $this->findAppSecret($params->appId, $params->appKey);
+        $appSecret = $this->findAppSecret($params->appKey);
         $user = $this->validateUser($params->name, $params->password);
         Auth::setTokenName($token = $this->createToken($params, $appSecret));
         Auth::login($user->toArray());
@@ -56,7 +56,6 @@ class Login
             md5(
                 $this->request->server->get('HTTP_USER_AGENT').
                 $this->request->server->get('SERVER_ADDR').
-                $params->appId.
                 $params->appKey.
                 $params->name.
                 $params->password.
@@ -67,20 +66,17 @@ class Login
         ).
         Str::randAlphaNum(10);
 
-        return 'token:admin:'.hash_hmac('sha256', $token, $appSecret);
+        return 'token:'.hash_hmac('sha256', $token, $appSecret);
     }
 
     /**
      * 查找应用秘钥.
      */
-    private function findAppSecret(string $appId, string $appKey): string
+    private function findAppSecret(string $appKey): string
     {
         return $this
             ->appReposity()
-            ->findAppSecretByNumAndKey(
-                $appId,
-                $appKey,
-            );
+            ->findAppSecretByKey($appKey);
     }
 
     private function appReposity(): AppReposity
@@ -133,7 +129,6 @@ class Login
         $validator = Validates::make(
             $params,
             [
-                'app_id'   => 'required|alpha_dash',
                 'app_key'  => 'required|alpha_dash',
                 'name'     => 'required|chinese_alpha_num|max_length:50',
                 'password' => 'required|chinese_alpha_dash|max_length:50',
@@ -141,7 +136,6 @@ class Login
                 'remember' => 'required',
             ],
             [
-                'app_id'       => __('应用 ID'),
                 'app_key'      => __('应用 KEY'),
                 'name'         => __('用户名'),
                 'password' => __('密码'),

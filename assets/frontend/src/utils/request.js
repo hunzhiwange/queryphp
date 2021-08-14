@@ -3,6 +3,7 @@ import isJSON from 'validator/lib/isJSON'
 import {lock} from '@/utils/auth'
 import Vue from 'vue'
 import qs from 'qs'
+import {createSignature} from './signature'
 
 // 设置 axios 为 form-data
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
@@ -17,13 +18,22 @@ Vue.prototype.$axios = axios
 
 // 创建 axios 实例
 const service = axios.create({
-    baseURL: process.env.VUE_APP_BASE_API + '/:admin/', // api 的 base_url
+    baseURL: process.env.VUE_APP_BASE_API + '/api/', // api 的 base_url
     timeout: 15000, // 请求超时时间
 })
 
 // request 拦截器
 service.interceptors.request.use(
     config => {
+        let methods = ['get', 'delete']
+        let baseData = {
+            format: 'json',
+            app_key: process.env.VUE_APP_KEY,
+            timestamp: new Date().getTime(),
+            method: 'set_or_get.module.demo',
+            signature_method: 'hmac_sha256',
+        }
+
         let apiToken = bus.$store.state.user.token
 
         // 使用 header 传递 token
@@ -33,12 +43,21 @@ service.interceptors.request.use(
         // }
 
         if (apiToken) {
-            let methods = ['get', 'delete']
-            if (methods.includes(config.method)) {
-                config.params['token'] = apiToken
-            } else {
-                config.data['token'] = apiToken
+            baseData['token'] = apiToken;
+        }
+
+        if (methods.includes(config.method)) {
+            Object.assign(config.params, baseData)
+            if (!config.params.hasOwnProperty('version')) {
+                config.params['version'] = 'v1'
             }
+            config.params['signature'] = createSignature(config.params, process.env.VUE_APP_SECRET)
+        } else {
+            Object.assign(config.data, baseData)
+            if (!config.data.hasOwnProperty('version')) {
+                config.data['version'] = 'v1'
+            }
+            config.data['signature'] = createSignature(config.data, process.env.VUE_APP_SECRET)
         }
 
         return config

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\User;
 
-use Admin\Infra\Lock;
+use App\Infra\Lock;
 use App\Domain\Entity\User\User;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;

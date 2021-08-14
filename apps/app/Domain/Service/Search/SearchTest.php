@@ -136,7 +136,7 @@ class SearchTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage(
-            'Search condition `\\Admin\\Service\\Search\\SearchNotfound\\Notfound` was not found.'
+            'Search condition `\\App\\Service\\Search\\SearchNotfound\\Notfound` was not found.'
         );
 
         $input = [
@@ -151,7 +151,7 @@ class SearchTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage(
-            'Search condition `\\Admin\\Service\\Search\\Demo\\NotCallback:handle` was invalid.'
+            'Search condition `\\App\\Service\\Search\\Demo\\NotCallback:handle` was invalid.'
         );
 
         $input = [

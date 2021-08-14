@@ -15,15 +15,15 @@ use Leevel\Database\Ddd\Repository;
 class App extends Repository
 {
     /**
-     * 根据应用 ID 和应用 KEY 查找应用秘钥.
+     * 根据应用 KEY 查找应用秘钥.
      * 
      * @throws \App\Exceptions\BusinessException
      */
-    public function findAppSecretByNumAndKey(string $appId, string $appKey): string
+    public function findAppSecretByKey(string $appKey): string
     {
         $app = $this->entity
             ->select()
-            ->where('num', $appId)
+            ->cache('app:'.$appKey, rand(300, 600))
             ->where('key', $appKey)
             ->where('status', BaseApp::STATUS_ENABLE)
             ->setColumns('id,secret')

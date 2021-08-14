@@ -8,8 +8,6 @@ use Leevel\Support\Dto;
 
 class LoginParams extends Dto
 {
-    public string $appId;
-
     public string $appKey;
 
     public string $name;

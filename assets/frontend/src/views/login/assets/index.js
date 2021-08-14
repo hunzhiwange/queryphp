@@ -18,7 +18,7 @@ export default {
                 code: '',
             },
             codeUrl: '',
-            codeImg: process.env.VUE_APP_BASE_API + '/:admin/login/code',
+            codeImg: process.env.VUE_APP_BASE_API + '/api/v1:login/code',
             rules: {
                 name: [
                     {
@@ -81,8 +81,6 @@ export default {
                     data.name = this.form.name
                     data.password = this.form.password
                     data.code = this.form.code
-                    data.app_id = process.env.VUE_APP_APP_ID
-                    data.app_key = process.env.VUE_APP_APP_KEY
 
                     if (this.checked) {
                         data.remember = 1
