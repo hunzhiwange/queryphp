@@ -16,7 +16,7 @@
         "php": "^8.0",
         "ext-mbstring": "*",
         "ext-openssl": "*",
-        "hunzhiwange/framework": "~1.1.0-beta.2",
+        "hunzhiwange/framework": "dev-master",
         "symfony/workflow": "^5.2"
     },
     "require-dev": {
