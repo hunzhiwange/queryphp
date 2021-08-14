@@ -50,8 +50,8 @@ const apiMethods = {
             params = params || {}
 
             // 判断 URL 版本
-            if (-1 === url.indexOf(':')) {
-                url = 'v1:' + url
+            if (-1 === url.indexOf(';')) {
+                url = 'v1;' + url
             }
 
             return new Promise((resolve, reject) => {
