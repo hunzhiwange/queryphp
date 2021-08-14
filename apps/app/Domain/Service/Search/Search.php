@@ -17,7 +17,7 @@ class Search
      *
      * 加入顶层命名空间以便于做单元测试
      */
-    public function __construct(private string $topNamespace = 'Admin')
+    public function __construct(private string $topNamespace = 'App')
     {
     }
 
