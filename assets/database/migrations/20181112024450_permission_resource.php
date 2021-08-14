@@ -101,6 +101,7 @@ final class PermissionResource extends AbstractMigration
             INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (59, 11, 63, '2021-01-14 01:31:50', '2021-01-14 01:31:50', 0, 0, 0, 0);
             INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (60, 10, 62, '2021-01-14 01:31:40', '2021-01-14 01:31:40', 0, 0, 0, 0);
             INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (61, 3, 68, '2021-07-22 07:38:07', '2021-07-22 07:38:07', 0, 0, 0, 0);
+            INSERT INTO `permission_resource`(`id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (62, 3, 69, '2021-08-14 06:30:47', '2021-08-14 06:30:47', 0, 0, 0, 0);
             EOT;
         $this->execute($sql);
     }

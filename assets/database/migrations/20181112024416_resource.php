@@ -102,6 +102,7 @@ final class Resource extends AbstractMigration
             INSERT INTO `resource`(`id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (63, '二级菜单', 'sub_index_menu', 1, '2021-01-13 15:23:56', '2021-01-13 15:23:56', 0, 0, 0, 0);
             INSERT INTO `resource`(`id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (62, '一级菜单', 'menu_menu', 1, '2021-01-13 15:23:31', '2021-01-13 15:23:31', 0, 0, 0, 0);
             INSERT INTO `resource`(`id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (68, '用户角色授权按钮', 'user_role_button', 1, '2021-07-22 07:36:44', '2021-07-22 07:36:55', 0, 0, 0, 0);
+            INSERT INTO `resource`(`id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (69, '用户角色授权', 'post:user/role', 1, '2021-08-14 06:30:28', '2021-08-14 06:30:28', 0, 0, 0, 0);
             EOT;
         $this->execute($sql);
     }
