@@ -79,7 +79,7 @@ trait Read
      */
     private function columnSpec(Select $select, TypedStringArray $value): void
     {
-        $select->setColumns($value->all());
+        $select->columns($value->all());
     }
 
     /**
@@ -110,7 +110,7 @@ trait Read
             $params->page,
             $params->size,
             $this->condition($params),
-        );
+        ); 
         $page = $page->toArray();
 
         $data['page'] = $page['page'];
