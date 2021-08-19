@@ -17,8 +17,10 @@ use Leevel\Auth\AuthException;
 use Leevel\Auth\Middleware\Auth as BaseAuth;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Http\Request;
+use Leevel\Kernel\IApp;
 use Symfony\Component\HttpFoundation\Response;
 use function App\Infra\Helper\create_signature;
+use Leevel\Auth\Manager;
 
 /**
  * auth 中间件.
@@ -62,6 +64,17 @@ class Auth extends BaseAuth
     private string $appSecret;
 
     /**
+     * 构造函数.
+     */
+    public function __construct(
+        protected Manager $manager,
+        protected IApp $app
+    )
+    {
+        parent::__construct($manager);
+    }
+
+    /**
      * 请求.
      *
      * @throws \App\Exceptions\UnauthorizedHttpException
@@ -88,11 +101,14 @@ class Auth extends BaseAuth
             // 校验应用
             $this->validateAppKey($request);
 
-            // 校验过期时间
-            $this->validateExpired($request);
+            // 开发模式不校验过期时间和签名
+            if (!$this->app->isDebug()) {
+                // 校验过期时间
+                $this->validateExpired($request);
 
-            // 校验签名
-            $this->validateSignature($request, $this->appSecret);
+                // 校验签名
+                $this->validateSignature($request, $this->appSecret);
+            }
 
             return parent::handle($next, $request);
         } catch (AuthException) {
