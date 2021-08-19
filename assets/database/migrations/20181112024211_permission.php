@@ -36,7 +36,7 @@ final class Permission extends AbstractMigration
                 UNIQUE KEY `uniq_num` (`num`,`delete_at`) USING BTREE,
                 UNIQUE KEY `uniq_name` (`name`,`delete_at`) USING BTREE,
                 KEY `idx_pid` (`pid`) USING BTREE
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限';
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限';
             EOT;
         $this->execute($sql);
     }

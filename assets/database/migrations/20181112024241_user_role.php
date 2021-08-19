@@ -32,7 +32,7 @@ final class UserRole extends AbstractMigration
                 `version` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '操作版本号',
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `uniq_user_role` (`user_id`,`role_id`,`delete_at`) USING BTREE
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色';
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色';
             EOT;
         $this->execute($sql);
     }

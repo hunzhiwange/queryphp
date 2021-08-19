@@ -32,7 +32,7 @@ final class Option extends AbstractMigration
                 `version` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '操作版本号',
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `uniq_name` (`name`,`delete_at`) USING BTREE
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置';
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置';
             EOT;
         $this->execute($sql);
     }

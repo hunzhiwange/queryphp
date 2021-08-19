@@ -34,7 +34,7 @@ final class Resource extends AbstractMigration
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `uniq_num` (`num`,`delete_at`) USING BTREE,
                 UNIQUE KEY `uniq_name` (`name`,`delete_at`) USING BTREE
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资源';
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资源';
             EOT;
         $this->execute($sql);
     }
