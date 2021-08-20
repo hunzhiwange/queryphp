@@ -22,10 +22,10 @@ final class ProjectUser extends AbstractMigration
         $sql = <<<'EOT'
             CREATE TABLE `project_user` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-                `type` tinyint(1) DEFAULT 1 COMMENT '类型 1=成员;2=收藏;3=关注;',
-                `project_id` bigint(20) DEFAULT 0 COMMENT '项目ID',
-                `project_issue_id` bigint(20) DEFAULT 0 COMMENT '任务ID',
-                `is_owner` tinyint(1) DEFAULT 1 COMMENT '是否项目所有者 1=否;2=是;',
+                `user_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '用户 ID',
+                `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '类型 1=成员;2=收藏;3=关注;4=管理员;',
+                `data_type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '数据类型2 1=项目;2=问题;',
+                `data_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '数据 ID',
                 `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                 `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                 `delete_at` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间 0=未删除;大于0=删除时间;',
