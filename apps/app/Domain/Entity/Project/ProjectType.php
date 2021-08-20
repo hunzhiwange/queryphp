@@ -36,13 +36,13 @@ class ProjectType extends Entity
      *                   comment: ID  type: bigint(20) unsigned  null: false  
      *                   key: PRI  default: null  extra: auto_increment
      * - name
-     *                   comment: 类型名称  type: varchar(255)  null: true  
+     *                   comment: 类型名称  type: varchar(255)  null: false  
      *                   key: MUL  default:   extra: 
      * - sort
-     *                   comment: 排序(ASC)  type: tinyint(3)  null: false  
+     *                   comment: 排序(ASC)  type: tinyint(3) unsigned  null: false  
      *                   key:   default: 0  extra: 
      * - icon
-     *                   comment: 类型图标  type: varchar(255)  null: true  
+     *                   comment: 类型图标  type: varchar(255)  null: false  
      *                   key:   default:   extra: 
      * - create_at
      *                   comment: 创建时间  type: datetime  null: false  

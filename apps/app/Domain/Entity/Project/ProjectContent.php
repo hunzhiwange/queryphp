@@ -36,13 +36,13 @@ class ProjectContent extends Entity
      *                     comment: ID  type: bigint(20) unsigned  null: false  
      *                     key: PRI  default: null  extra: auto_increment
      * - project_id
-     *                     comment: 项目ID  type: bigint(20)  null: true  
+     *                     comment: 项目ID  type: bigint(20) unsigned  null: false  
      *                     key:   default: 0  extra: 
      * - project_issue_id
-     *                     comment: 问题 ID  type: bigint(20)  null: true  
+     *                     comment: 问题 ID  type: bigint(20) unsigned  null: false  
      *                     key:   default: 0  extra: 
      * - content
-     *                     comment: 内容  type: text  null: true  
+     *                     comment: 内容  type: text  null: false  
      *                     key:   default: null  extra: 
      * - create_at
      *                     comment: 创建时间  type: datetime  null: false  

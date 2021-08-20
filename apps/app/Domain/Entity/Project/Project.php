@@ -36,19 +36,19 @@ class Project extends Entity
      *                      comment: ID  type: bigint(20) unsigned  null: false  
      *                      key: PRI  default: null  extra: auto_increment
      * - name
-     *                      comment: 项目名称  type: varchar(255)  null: true  
+     *                      comment: 项目名称  type: varchar(255)  null: false  
      *                      key: MUL  default:   extra: 
      * - owner_user_id
-     *                      comment: 项目所有者用户 ID  type: varchar(100)  null: true  
-     *                      key:   default:   extra: 
+     *                      comment: 项目所有者用户 ID  type: bigint(20) unsigned  null: false  
+     *                      key:   default: 0  extra: 
      * - completed_number
-     *                      comment: 已完成任务数量  type: bigint(20)  null: true  
+     *                      comment: 已完成任务数量  type: bigint(20) unsigned  null: false  
      *                      key:   default: 0  extra: 
      * - unfinished_number
-     *                      comment: 未完成任务数量  type: bigint(20)  null: true  
+     *                      comment: 未完成任务数量  type: bigint(20) unsigned  null: false  
      *                      key:   default: 0  extra: 
      * - sort
-     *                      comment: 排序(ASC)  type: tinyint(3)  null: false  
+     *                      comment: 排序(ASC)  type: tinyint(3) unsigned  null: false  
      *                      key:   default: 0  extra: 
      * - create_at
      *                      comment: 创建时间  type: datetime  null: false  

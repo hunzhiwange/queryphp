@@ -36,13 +36,13 @@ class ProjectLabel extends Entity
      *                   comment: ID  type: bigint(20) unsigned  null: false  
      *                   key: PRI  default: null  extra: auto_increment
      * - project_id
-     *                   comment: 项目 ID  type: bigint(20)  null: false  
+     *                   comment: 项目 ID  type: bigint(20) unsigned  null: false  
      *                   key: MUL  default: 0  extra: 
      * - name
      *                   comment: 分类名称  type: varchar(100)  null: false  
      *                   key:   default:   extra: 
      * - sort
-     *                   comment: 排序(ASC)  type: tinyint(3)  null: false  
+     *                   comment: 排序(ASC)  type: tinyint(3) unsigned  null: false  
      *                   key:   default: 0  extra: 
      * - create_at
      *                   comment: 创建时间  type: datetime  null: false  

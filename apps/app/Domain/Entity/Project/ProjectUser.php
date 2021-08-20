@@ -33,55 +33,55 @@ class ProjectUser extends Entity
      * Entity struct.
      *
      * - id
-     *                     comment: ID  type: bigint(20) unsigned  null: false  
-     *                     key: PRI  default: null  extra: auto_increment
+     *                   comment: ID  type: bigint(20) unsigned  null: false  
+     *                   key: PRI  default: null  extra: auto_increment
+     * - user_id
+     *                   comment: 用户 ID  type: bigint(20) unsigned  null: false  
+     *                   key:   default: 0  extra: 
      * - type
-     *                     comment: 类型 1=成员;2=收藏;3=关注;  type: tinyint(1)  null: true  
-     *                     key:   default: 1  extra: 
-     * - project_id
-     *                     comment: 项目ID  type: bigint(20)  null: true  
-     *                     key:   default: 0  extra: 
-     * - project_issue_id
-     *                     comment: 任务ID  type: bigint(20)  null: true  
-     *                     key:   default: 0  extra: 
-     * - is_owner
-     *                     comment: 是否项目所有者 1=否;2=是;  type: tinyint(1)  null: true  
-     *                     key:   default: 1  extra: 
+     *                   comment: 类型 1=成员;2=收藏;3=关注;4=管理员;  type: tinyint(1) unsigned  null: false  
+     *                   key:   default: 1  extra: 
+     * - data_type
+     *                   comment: 数据类型2 1=项目;2=问题;  type: tinyint(1) unsigned  null: false  
+     *                   key:   default: 1  extra: 
+     * - data_id
+     *                   comment: 数据 ID  type: bigint(20) unsigned  null: false  
+     *                   key:   default: 0  extra: 
      * - create_at
-     *                     comment: 创建时间  type: datetime  null: false  
-     *                     key:   default: CURRENT_TIMESTAMP  extra: 
+     *                   comment: 创建时间  type: datetime  null: false  
+     *                   key:   default: CURRENT_TIMESTAMP  extra: 
      * - update_at
-     *                     comment: 更新时间  type: datetime  null: false  
-     *                     key:   default: CURRENT_TIMESTAMP  extra: on update CURRENT_TIMESTAMP
+     *                   comment: 更新时间  type: datetime  null: false  
+     *                   key:   default: CURRENT_TIMESTAMP  extra: on update CURRENT_TIMESTAMP
      * - delete_at
-     *                     comment: 删除时间 0=未删除;大于0=删除时间;  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                   comment: 删除时间 0=未删除;大于0=删除时间;  type: bigint(20) unsigned  null: false  
+     *                   key:   default: 0  extra: 
      * - create_account
-     *                     comment: 创建账号  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                   comment: 创建账号  type: bigint(20) unsigned  null: false  
+     *                   key:   default: 0  extra: 
      * - update_account
-     *                     comment: 更新账号  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                   comment: 更新账号  type: bigint(20) unsigned  null: false  
+     *                   key:   default: 0  extra: 
      * - version
-     *                     comment: 操作版本号  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                   comment: 操作版本号  type: bigint(20) unsigned  null: false  
+     *                   key:   default: 0  extra: 
      */
     public const STRUCT = [
         'id' => [
             self::COLUMN_NAME => 'ID',
             self::READONLY => true,
         ],
+        'user_id' => [
+            self::COLUMN_NAME => '用户 ID',
+        ],
         'type' => [
-            self::COLUMN_NAME => '类型 1=成员;2=收藏;3=关注;',
+            self::COLUMN_NAME => '类型 1=成员;2=收藏;3=关注;4=管理员;',
         ],
-        'project_id' => [
-            self::COLUMN_NAME => '项目ID',
+        'data_type' => [
+            self::COLUMN_NAME => '数据类型2 1=项目;2=问题;',
         ],
-        'project_issue_id' => [
-            self::COLUMN_NAME => '任务ID',
-        ],
-        'is_owner' => [
-            self::COLUMN_NAME => '是否项目所有者 1=否;2=是;',
+        'data_id' => [
+            self::COLUMN_NAME => '数据 ID',
         ],
         'create_at' => [
             self::COLUMN_NAME => '创建时间',
@@ -106,6 +106,32 @@ class ProjectUser extends Entity
             self::COLUMN_NAME => '操作版本号',
         ],
     ]; // END STRUCT
+
+    /**
+     * 类型.
+     */
+    
+    #[type('成员')]
+    public const TYPE_MEMBER = 1;
+
+    #[type('收藏')]
+    public const TYPE_FAVOR = 2;
+
+    #[type('关注')]
+    public const TYPE_FOLLOW = 3;
+
+    #[type('管理员')]
+    public const TYPE_ADMINISTRATOR = 4;
+
+    /**
+     * 数据类型.
+     */
+    
+    #[data_type('项目')]
+    public const DATA_TYPE_PROJECT = 1;
+
+    #[data_type('问题')]
+    public const DATA_TYPE_ISSUE = 2;
 
     /**
      * Soft delete column.

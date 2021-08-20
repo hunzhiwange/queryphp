@@ -36,25 +36,25 @@ class ProjectAttachement extends Entity
      *                     comment: ID  type: bigint(20) unsigned  null: false  
      *                     key: PRI  default: null  extra: auto_increment
      * - project_id
-     *                     comment: 项目ID  type: int(11)  null: true  
+     *                     comment: 项目ID  type: int(11) unsigned  null: false  
      *                     key:   default: 0  extra: 
      * - project_issue_id
-     *                     comment: 任务ID  type: int(11)  null: true  
+     *                     comment: 任务ID  type: int(11) unsigned  null: false  
      *                     key:   default: 0  extra: 
      * - name
-     *                     comment: 文件名称  type: varchar(100)  null: true  
+     *                     comment: 文件名称  type: varchar(100)  null: false  
      *                     key:   default:   extra: 
      * - size
-     *                     comment: 文件大小(B)  type: int(11)  null: true  
+     *                     comment: 文件大小(B)  type: int(11) unsigned  null: false  
      *                     key:   default: 0  extra: 
      * - ext
-     *                     comment: 文件格式  type: varchar(20)  null: true  
+     *                     comment: 文件格式  type: varchar(20)  null: false  
      *                     key:   default:   extra: 
      * - path
-     *                     comment: 文件地址  type: varchar(255)  null: true  
+     *                     comment: 文件地址  type: varchar(255)  null: false  
      *                     key:   default:   extra: 
      * - download_number
-     *                     comment: 下载次数  type: int(11)  null: true  
+     *                     comment: 下载次数  type: int(11) unsigned  null: false  
      *                     key:   default: 0  extra: 
      * - create_at
      *                     comment: 创建时间  type: datetime  null: false  
