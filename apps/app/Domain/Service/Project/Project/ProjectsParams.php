@@ -14,6 +14,10 @@ class ProjectsParams extends ReadParams
 {
     public ?int $status = null;
 
+    public ?int $userId = null;
+
+    public string $type = 'member';
+
     public string $orderBy = 'sort ASC,id DESC';
 
     protected function columnDefaultValue(): TypedStringArray

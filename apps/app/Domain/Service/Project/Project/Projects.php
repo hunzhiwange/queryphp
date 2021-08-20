@@ -6,6 +6,7 @@ namespace App\Domain\Service\Project\Project;
 
 use Closure;
 use App\Domain\Entity\Project\Project;
+use App\Domain\Entity\Project\ProjectUser;
 use App\Domain\Service\Support\Read;
 use Leevel\Database\Condition;
 use Leevel\Database\Ddd\Select;
@@ -22,10 +23,44 @@ class Projects
         return $this->findLists($params, Project::class);
     }
 
+    /**
+     * 用户 ID 条件.
+     */
+    private function userIdSpec(Select $select, int $value): void
+    {
+        $select->where('project_user.user_id', $value);
+    }
+
+    /**
+     * 类型条件.
+     */
+    private function typeSpec(Select $select, string $value): void
+    {
+        switch ($value) {
+            case 'favor':
+                $select->where('project_user.type', ProjectUser::TYPE_FAVOR);
+                break;
+            case 'administrator':
+                $select->where('project_user.type', ProjectUser::TYPE_ADMINISTRATOR);
+                break;
+            default:
+                $select->whereIn('project_user.type', [
+                    ProjectUser::TYPE_MEMBER,
+                    ProjectUser::TYPE_ADMINISTRATOR,
+                ]);
+                break;
+        }
+    }
+
     private function conditionCall(): ?Closure
     {
         return function(Select $select) {
-            $select->leftJoin('project_user', '*', 'project_id', '=', Condition::raw('[project.id]'));
+            $select
+                ->leftJoin('project_user', '', function (Condition $select) {
+                    $select
+                        ->where('data_id', Condition::raw('[project.id]'))
+                        ->where('data_type', ProjectUser::DATA_TYPE_PROJECT);
+                });
         };
     }
 }
