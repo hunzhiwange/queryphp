@@ -79,7 +79,7 @@ trait Read
      */
     private function columnSpec(Select $select, TypedStringArray $value): void
     {
-        $select->columns($value->all());
+        $select->setColumns($value->all());
     }
 
     /**
@@ -110,16 +110,12 @@ trait Read
             $params->page,
             $params->size,
             $this->condition($params),
-        ); 
+        );
         $page = $page->toArray();
-
-        $data['page'] = $page['page'];
-        $entitys = $page['data'];
-        $lists = $this->prepareToArray($entitys);
-        $this->prepare($lists, $params);
-        $data['data'] = $lists;
-
-        return $data;
+        $page['data'] = $this->prepareToArray($page['data']);
+        $this->prepare($page['data'], $params);
+        
+        return $page;
     }
 
     public function findLists(ReadParams $params, string $entityClass): array
@@ -143,10 +139,10 @@ trait Read
     private function baseCondition(ReadParams $params, ?Closure $call = null): Closure
     {
         return function (Select $select) use ($params, $call) {
+            $this->spec($select, $params);
             if ($call) {
                 $call($select);
             }
-            $this->spec($select, $params);
         };
     }
 
