@@ -41,19 +41,22 @@ class Projects
                 $select->where('project_user.type', ProjectUser::TYPE_FAVOR);
                 break;
             case 'administrator':
-                $select->where('project_user.type', ProjectUser::TYPE_ADMINISTRATOR);
+                $select->where('project_user.type', ProjectUser::TYPE_MEMBER);
+                $select->where('project_user.extend_type', ProjectUser::TEXTEND_TYPE_ADMINISTRATOR);
                 break;
             default:
-                $select->whereIn('project_user.type', [
-                    ProjectUser::TYPE_MEMBER,
-                    ProjectUser::TYPE_ADMINISTRATOR,
-                ]);
+                // member
+                $select->where('project_user.type', ProjectUser::TYPE_MEMBER);
                 break;
         }
     }
 
-    private function conditionCall(): ?Closure
+    private function conditionCall(ProjectsParams $params): ?Closure
     {
+        if (!$params->userId && !$params->type) {
+            return null;
+        }
+
         return function(Select $select) {
             $select
                 ->leftJoin('project_user', '', function (Condition $select) {
