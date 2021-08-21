@@ -4,7 +4,7 @@
             <i-col span="18">
                 <Row :gutter="16">
                     <i-col span="8">
-                        <i-input v-model="searchForm.key" :placeholder="__('名字') + ',' + __('编号')" clearable>
+                        <i-input v-model="searchForm.key" :placeholder="'ID,'+__('名字') + ',' + __('编号')" clearable>
                         </i-input>
                     </i-col>
                     <i-col span="4">
