@@ -38,6 +38,12 @@ class Project extends Entity
      * - name
      *                      comment: 项目名称  type: varchar(255)  null: false  
      *                      key: MUL  default:   extra: 
+     * - num
+     *                      comment: 编号  type: varchar(64)  null: false  
+     *                      key:   default:   extra: 
+     * - status
+     *                      comment: 状态 0=禁用;1=启用;  type: tinyint(4) unsigned  null: false  
+     *                      key:   default: 1  extra: 
      * - owner_user_id
      *                      comment: 项目所有者用户 ID  type: bigint(20) unsigned  null: false  
      *                      key:   default: 0  extra: 
@@ -77,6 +83,12 @@ class Project extends Entity
         'name' => [
             self::COLUMN_NAME => '项目名称',
         ],
+        'num' => [
+            self::COLUMN_NAME => '编号',
+        ],
+        'status' => [
+            self::COLUMN_NAME => '状态 0=禁用;1=启用;',
+        ],
         'owner_user_id' => [
             self::COLUMN_NAME => '项目所有者用户 ID',
         ],
@@ -112,6 +124,16 @@ class Project extends Entity
             self::COLUMN_NAME => '操作版本号',
         ],
     ]; // END STRUCT
+
+    /**
+     * 状态值.
+     */
+    
+    #[status('禁用')]
+    public const STATUS_DISABLE = 0;
+
+    #[status('启用')]
+    public const STATUS_ENABLE = 1;
 
     /**
      * Soft delete column.
