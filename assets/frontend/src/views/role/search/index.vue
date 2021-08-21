@@ -3,9 +3,8 @@
         <Row :gutter="16">
             <i-col span="18">
                 <Row :gutter="16">
-                    <i-col span="8">
-                        <i-input @on-search="search()" search v-model="searchForm.key" :placeholder="'ID,'+__('名字') + ',' + __('编号')" clearable>
-                        </i-input>
+                    <i-col span="6">
+                        <i-input @on-search="search()" search v-model="searchForm.key" :placeholder="'ID,'+__('名字') + ',' + __('编号')" clearable></i-input>
                     </i-col>
                     <i-col span="4">
                         <i-select
