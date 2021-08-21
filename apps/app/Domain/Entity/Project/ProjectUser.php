@@ -39,7 +39,10 @@ class ProjectUser extends Entity
      *                   comment: 用户 ID  type: bigint(20) unsigned  null: false  
      *                   key:   default: 0  extra: 
      * - type
-     *                   comment: 类型 1=成员;2=收藏;3=关注;4=管理员;  type: tinyint(1) unsigned  null: false  
+     *                   comment: 类型 1=成员;2=收藏;3=关注;  type: tinyint(1) unsigned  null: false  
+     *                   key:   default: 1  extra: 
+     * - extend_type
+     *                   comment: 扩展类型 1=成员;2=管理员;  type: tinyint(1) unsigned  null: false  
      *                   key:   default: 1  extra: 
      * - data_type
      *                   comment: 数据类型2 1=项目;2=问题;  type: tinyint(1) unsigned  null: false  
@@ -75,7 +78,10 @@ class ProjectUser extends Entity
             self::COLUMN_NAME => '用户 ID',
         ],
         'type' => [
-            self::COLUMN_NAME => '类型 1=成员;2=收藏;3=关注;4=管理员;',
+            self::COLUMN_NAME => '类型 1=成员;2=收藏;3=关注;',
+        ],
+        'extend_type' => [
+            self::COLUMN_NAME => '扩展类型 1=成员;2=管理员;',
         ],
         'data_type' => [
             self::COLUMN_NAME => '数据类型2 1=项目;2=问题;',
@@ -120,8 +126,15 @@ class ProjectUser extends Entity
     #[type('关注')]
     public const TYPE_FOLLOW = 3;
 
-    #[type('管理员')]
-    public const TYPE_ADMINISTRATOR = 4;
+    /**
+     * 扩展类型.
+     */
+    
+    #[extend_type('成员')]
+    public const EXTEND_TYPE_MEMBER = 1;
+
+    #[extend_type('管理')]
+    public const TEXTEND_TYPE_ADMINISTRATOR = 2;
 
     /**
      * 数据类型.

@@ -23,7 +23,8 @@ final class ProjectUser extends AbstractMigration
             CREATE TABLE `project_user` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
                 `user_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '用户 ID',
-                `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '类型 1=成员;2=收藏;3=关注;4=管理员;',
+                `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '类型 1=成员;2=收藏;3=关注;',
+                `extend_type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '扩展类型 1=成员;2=管理员;',
                 `data_type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '数据类型2 1=项目;2=问题;',
                 `data_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '数据 ID',
                 `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

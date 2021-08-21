@@ -127,11 +127,11 @@ trait Read
     {
         return $this->baseCondition(
             $params,
-            $this->conditionCall(),
+            $this->conditionCall($params),
         );
     }
 
-    private function conditionCall(): ?Closure
+    private function conditionCall(ReadParams $params): ?Closure
     {
         return null;
     }
