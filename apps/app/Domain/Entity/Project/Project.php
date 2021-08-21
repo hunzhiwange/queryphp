@@ -40,7 +40,7 @@ class Project extends Entity
      *                      key: MUL  default:   extra: 
      * - num
      *                      comment: 编号  type: varchar(64)  null: false  
-     *                      key:   default:   extra: 
+     *                      key: MUL  default:   extra: 
      * - status
      *                      comment: 状态 0=禁用;1=启用;  type: tinyint(4) unsigned  null: false  
      *                      key:   default: 1  extra: 
