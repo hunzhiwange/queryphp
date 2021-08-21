@@ -44,6 +44,9 @@ class Project extends Entity
      * - status
      *                      comment: 状态 0=禁用;1=启用;  type: tinyint(4) unsigned  null: false  
      *                      key:   default: 1  extra: 
+     * - progress
+     *                      comment: 进度条(最大值 10000，需要除以 100 表示实际进度)  type: int(5) unsigned  null: false  
+     *                      key:   default: 0  extra: 
      * - owner_user_id
      *                      comment: 项目所有者用户 ID  type: bigint(20) unsigned  null: false  
      *                      key:   default: 0  extra: 
@@ -88,6 +91,9 @@ class Project extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
+        ],
+        'progress' => [
+            self::COLUMN_NAME => '进度条(最大值 10000，需要除以 100 表示实际进度)',
         ],
         'owner_user_id' => [
             self::COLUMN_NAME => '项目所有者用户 ID',

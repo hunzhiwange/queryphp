@@ -25,6 +25,7 @@ final class Project extends AbstractMigration
                 `name` varchar(255) NOT NULL DEFAULT '' COMMENT '项目名称',
                 `num` varchar(64) NOT NULL DEFAULT '' COMMENT '编号',
                 `status` tinyint(4) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
+                `progress` int(5) unsigned NOT NULL DEFAULT '0' COMMENT '进度条(最大值 10000，需要除以 100 表示实际进度)',
                 `owner_user_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '项目所有者用户 ID',
                 `completed_number` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '已完成任务数量',
                 `unfinished_number` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '未完成任务数量',

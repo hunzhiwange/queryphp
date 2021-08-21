@@ -16,7 +16,7 @@ class ProjectsParams extends ReadParams
 
     public ?int $userId = null;
 
-    public string $type = 'member';
+    public ?string $type = null;
 
     public string $orderBy = 'sort ASC,id DESC';
 
