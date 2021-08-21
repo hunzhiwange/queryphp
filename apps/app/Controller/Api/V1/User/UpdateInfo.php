@@ -33,14 +33,6 @@ class UpdateInfo
 
     private function extendInput(): array
     {
-        return ['id' => $this->id()];
-    }
-
-    /**
-     * 获取用户 ID.
-     */
-    private function id(): int
-    {
-        return Auth::getLogin()['id'];
+        return ['id' => $this->userId()];
     }
 }
