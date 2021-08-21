@@ -13,9 +13,9 @@ use App\Domain\Validate\Validate;
 use App\Domain\Validate\Project\ProjectUser as ProjectProjectUser;
 
 /**
- * 项目收藏.
+ * 取消项目收藏.
  */
-class Favor
+class CancelFavor
 {
     public function __construct(
         private UnitOfWork $w
@@ -23,7 +23,7 @@ class Favor
     {
     }
 
-    public function handle(FavorParams $params): array
+    public function handle(CancelFavorParams $params): array
     {
         $this->validateArgs($params);
 
@@ -33,34 +33,26 @@ class Favor
     /**
      * 保存.
      */
-    private function save(FavorParams $params): ProjectUser
+    private function save(CancelFavorParams $params): ProjectUser
     {
         $this->w->persist($entity = $this->entity($params));
+        $this->w->delete($entity);
         $this->w->flush();
         $entity->refresh();
 
         return $entity;
     }
 
-    private function entity(FavorParams $params): ProjectUser
+    private function entity(CancelFavorParams $params): ProjectUser
     {
         $this->findProject($params->projectId);
-        $this->findProjectUser($params);
-        $projectUser = new ProjectUser([
-            'user_id' => $params->userId,
-            'type' => ProjectUser::TYPE_FAVOR,
-            'data_id' => $params->projectId,
-            'data_type' => ProjectUser::DATA_TYPE_PROJECT,
-        ]);
-        $projectUser->userId = $projectUser->userId;
-
-        return $projectUser;
+        return $this->findProjectUser($params);
     }
 
     /**
      * @throws \App\Exceptions\UserBusinessException
      */
-    private function findProjectUser(FavorParams $params): ProjectUser
+    private function findProjectUser(CancelFavorParams $params): ProjectUser
     {
         $map = [
             'user_id' => $params->userId,
@@ -73,8 +65,8 @@ class Favor
             ->repository(ProjectUser::class)
             ->where($map)
             ->findOne();
-        if ($entity->id) {
-            throw new ProjectBusinessException(ProjectErrorCode::PROJECT_USER_FAVOR_ALREADY_EXIST);
+        if (!$entity->id) {
+            throw new ProjectBusinessException(ProjectErrorCode::PROJECT_USER_FAVOR_NOT_EXIST);
         }
 
         return $entity;
@@ -95,17 +87,17 @@ class Favor
      *
      * @throws \App\Exceptions\ProjectBusinessException
      */
-    private function validateArgs(FavorParams $params): void
+    private function validateArgs(CancelFavorParams $params): void
     {
         $input = [
             'data_id' => $params->projectId,
             'user_id' => $params->userId,
         ];
-        $validator = Validate::make(new ProjectProjectUser(), 'store', $input)->getValidator();
+        $validator = Validate::make(new ProjectProjectUser(), 'delete', $input)->getValidator();
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
-            throw new ProjectBusinessException(ProjectErrorCode::PROJECT_USER_FAVOR_CANCEL_INVALID_ARGUMENT, $e, true);
+            throw new ProjectBusinessException(ProjectErrorCode::PROJECT_USER_FAVOR_STORE_INVALID_ARGUMENT, $e, true);
         }
     }
 }

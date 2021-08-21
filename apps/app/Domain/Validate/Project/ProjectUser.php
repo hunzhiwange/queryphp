@@ -24,6 +24,10 @@ class ProjectUser implements IValidator
                 'user_id',
                 'data_id',
             ],
+            'delete' => [
+                'user_id',
+                'data_id',
+            ],
         ];
     }
 

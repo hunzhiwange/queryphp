@@ -14,4 +14,10 @@ final class ProjectErrorCode extends ErrorCode
 
     #[msg('你已经收藏过该项目')]
     public const PROJECT_USER_FAVOR_ALREADY_EXIST = 1000050002;
+
+    #[msg('项目收藏取消参数错误')]
+    public const PROJECT_USER_FAVOR_CANCEL_INVALID_ARGUMENT = 1000050003;
+
+    #[msg('你尚未收藏过该项目')]
+    public const PROJECT_USER_FAVOR_NOT_EXIST = 1000050004;
 }
