@@ -44,7 +44,7 @@ final class Permission extends AbstractMigration
     private function seed(): void
     {
         $sql = <<<'EOT'
-            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, 0, '超级管理员', 'SuperAdministrator', 1, '2019-01-31 01:14:34', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, 0, '超级管理员', 'super_administrator', 1, '2019-01-31 01:14:34', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (2, 0, '权限管理分组', 'permission', 1, '2019-01-31 01:31:11', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (3, 2, '用户管理', 'user_manager', 1, '2019-01-31 01:31:24', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (4, 2, '角色管理', 'role_manager', 1, '2019-01-31 01:31:38', '2019-08-25 21:19:23', 0, 0, 0);
