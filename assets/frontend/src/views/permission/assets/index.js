@@ -68,13 +68,11 @@ export default {
         renderContent(h, {root, node, data}) {
             return (
                 <span class="tree-item" style="display: inline-block; width: 100%;">
-                    <span
-                        class="tree-item-title"
-                        style={{
-                            textDecoration: data.status ? 'none' : 'line-through',
-                            color: data.status ? '' : '#c5c8ce',
-                        }}>
-                        {data.name}
+                    <span class="tree-item-title">
+                        <Badge status={1 === data.status ? 'success' : 'default'} text={data.name} />
+                        <span class="m-l-10" style="color:#c5c8ce;">
+                            {data.num}
+                        </span>
                     </span>
                     <span class="tree-item-operate">
                         <buttonGroup size="small" shape="circle">

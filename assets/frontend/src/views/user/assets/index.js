@@ -58,14 +58,35 @@ export default {
                 {
                     title: this.__('编号'),
                     key: 'num',
+                    render: (h, params) => {
+                        return <tag color="default">{params.row.num}</tag>
+                    },
+                },
+                {
+                    title: this.__('角色'),
+                    key: 'num',
+                    render: (h, params) => {
+                        return (
+                            <div>
+                                {
+                                    params.row.role.map(item =>{
+                                        return <Tag color="green">{item.name}</Tag>
+                                    })
+                                }
+                            </div>
+                        )
+                    },
+                },
+                {
+                    title: this.__('创建时间'),
+                    key: 'create_at',
                 },
                 {
                     title: this.__('状态'),
                     key: 'status_enum',
                     width: 120,
                     render: (h, params) => {
-                        const row = params.row
-                        return <tag color={1 === row.status ? 'green' : 'red'}>{row.status_enum}</tag>
+                        return <Badge status={1 === params.row.status ? 'success' : 'default'} text={params.row.status_enum} />
                     },
                 },
                 {
