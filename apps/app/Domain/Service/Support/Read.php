@@ -43,7 +43,7 @@ trait Read
      */
     private function spec(Select $select, ReadParams $params): void
     {
-        foreach ($params->all(false) as $k => $v) {
+        foreach (array_merge(['initialization' => true], $params->all(false)) as $k => $v) {
             if (null !== $v) {
                 $method = $k.'Spec';
                 if (method_exists($this, $method)) {
@@ -51,6 +51,13 @@ trait Read
                 }
             }
         }
+    }
+
+    /**
+     * 初始化规约.
+     */
+    private function initializationSpec(Select $select, bool $value, ReadParams $params): void
+    {
     }
 
     /**
