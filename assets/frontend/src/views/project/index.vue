@@ -60,11 +60,11 @@
                 <p slot="title">
                     {{ __('项目用户') }}
                 </p>
-                <a href="#" slot="extra" @click.prevent="changeLimit">
+                <a slot="extra">
                     <i-button
                     size="small"
                     type="text"
-                    @click="add()"
+                    @click="addUser"
                     class="add-extra"
                     v-if="utils.permission('resource_add_button')"
                     ><Icon type="md-add-circle"></Icon> {{ __('新增') }}</i-button>
@@ -161,23 +161,37 @@
             </Row>
         </div>
         <Drawer
-            :title="viewDetail.name + ' ' + __('角色授权')"
+            :title="viewDetail.name + ' ' + __('添加用户')"
             v-model="rightForm"
             width="800"
             :mask-closable="false"
             :styles="styles"
         >
-            <i-form ref="formRole" :model="formRole">
+            <i-form ref="formCommonUser" :model="formCommonUser">
                 <Row :gutter="32">
                     <i-col span="24">
-                        <FormItem :label="__('所属角色')">
-                            <i-select v-model="formRole.role" multiple style="width:400px">
-                                <i-option v-for="item in roles" :value="item.id" :key="item.id">{{
-                                    item.name
-                                }}</i-option>
+                        <FormItem :label="__('请输入用户关键字')" label-position="top">
+                            <i-select
+                                v-model="selectUser"
+                                multiple
+                                filterable
+                                remote
+                                :remote-method="searchCommonUser"
+                                @on-change="changeCommonUser"
+                                :loading="loadingCommonUser"
+                            >
+                                <i-option
+                                    v-for="r in commonUsers"
+                                    :value="r.id"
+                                    :key="r.id"
+                                    :label="r.name"
+                                >
+                                    <span>{{ r.name }}</span>
+                                </i-option>
                             </i-select>
                         </FormItem>
                     </i-col>
+                    <i-col span="24"> </i-col>
                 </Row>
             </i-form>
             <div class="demo-drawer-footer">
@@ -185,7 +199,7 @@
                 <i-button
                     type="primary"
                     :loading="loading"
-                    @click.native.prevent="handleRoleSubmit('formRole')"
+                    @click.native.prevent="handleAddUserSubmit('formCommonUser')"
                     >{{ __('确定') }}</i-button
                 >
             </div>

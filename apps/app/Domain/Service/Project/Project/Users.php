@@ -47,7 +47,7 @@ class Users
                         'user.num AS user.num',
                     ], function (Condition $select) {
                     $select
-                        ->where('id', Condition::raw('[project_user.id]'));
+                        ->where('id', Condition::raw('[project_user.user_id]'));
                 });
         };
     }

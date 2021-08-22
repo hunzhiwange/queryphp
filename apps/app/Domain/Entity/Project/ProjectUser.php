@@ -45,7 +45,7 @@ class ProjectUser extends Entity
      *                   comment: 扩展类型 1=成员;2=管理员;  type: tinyint(1) unsigned  null: false  
      *                   key:   default: 1  extra: 
      * - data_type
-     *                   comment: 数据类型2 1=项目;2=问题;  type: tinyint(1) unsigned  null: false  
+     *                   comment: 数据类型 1=项目;2=问题;  type: tinyint(1) unsigned  null: false  
      *                   key:   default: 1  extra: 
      * - data_id
      *                   comment: 数据 ID  type: bigint(20) unsigned  null: false  
@@ -84,7 +84,7 @@ class ProjectUser extends Entity
             self::COLUMN_NAME => '扩展类型 1=成员;2=管理员;',
         ],
         'data_type' => [
-            self::COLUMN_NAME => '数据类型2 1=项目;2=问题;',
+            self::COLUMN_NAME => '数据类型 1=项目;2=问题;',
         ],
         'data_id' => [
             self::COLUMN_NAME => '数据 ID',

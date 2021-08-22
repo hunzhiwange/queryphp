@@ -151,6 +151,11 @@ class User extends Entity
     #[status('启用')]
     public const STATUS_ENABLE = 1;
 
+    public static function repository(?Entity $entity = null): RepositoryUser
+    {
+        return parent::repository($entity);
+    }
+
     /**
      * 角色关联查询作用域.
      */

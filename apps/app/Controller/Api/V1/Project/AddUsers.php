@@ -5,27 +5,27 @@ declare(strict_types=1);
 namespace App\Controller\Api\V1\Project;
 
 use App\Controller\Support\Controller;
-use App\Domain\Service\Project\Project\DeleteUser as Service;
-use App\Domain\Service\Project\Project\DeleteUserParams;
+use App\Domain\Service\Project\Project\AddUsers as Service;
+use App\Domain\Service\Project\Project\AddUsersParams;
 use Leevel\Http\Request;
 
 /**
- * 删除成员.
+ * 添加成员.
  *
  * @codeCoverageIgnore
  */
-class DeleteUser
+class AddUsers
 {
     use Controller;
 
     private array $allowedInput = [
         'project_id',
-        'user_id',
+        'user_ids',
     ];
 
     public function handle(Request $request, Service $service): array
     {
-        $params = new DeleteUserParams($this->input($request));
+        $params = new AddUsersParams($this->input($request));
 
         return $service->handle($params);
     }

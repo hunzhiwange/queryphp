@@ -78,4 +78,18 @@ class User extends Repository
     {   
         return (new Hash())->password($password);
     }
+
+    /**
+     * 校验用户.
+     * 
+     * @throws \App\Exceptions\UserBusinessException
+     */
+    public function verifyUsersByIds(array $userIds): void
+    {
+        $userIds = array_unique($userIds);
+        $users = $this->whereIn('id', $userIds)->findAll();
+        if (count($userIds) !== count($users)) {
+            throw new UserBusinessException(UserErrorCode::SOME_USERS_DOES_NOT_EXIST);
+        }
+    }
 }

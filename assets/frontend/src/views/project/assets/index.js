@@ -10,7 +10,7 @@ const resetForm = {
     password: '',
 }
 
-const resetFormRole = {
+const resetFormCommonUser = {
     id: 0,
     role: [],
 }
@@ -21,6 +21,8 @@ const resetUserForm = {
     page: 1,
     size: 10,
 }
+
+const resetFormUser = {}
 
 export default {
     components: {
@@ -172,8 +174,16 @@ export default {
                 paddingBottom: '53px',
                 position: 'static',
             },
-            formRole: resetFormRole,
+            formCommonUser: resetFormCommonUser,
             selectRole: [],
+            selectUser: [],
+            loadingCommonUser: false,
+            commonUsers: [],
+            userTotal: 0,
+            userPage: 1,
+            userPageSize: 10,
+            userPermissionId: 0,
+            userSearchKey: '',
             userColumns: [
                 {
                     title: this.__('用户名'),
@@ -395,6 +405,7 @@ export default {
         },
         user: function(params) {
             this.minUser = true
+            this.viewDetail = params.row
             this.minUserProjectId = params.row.id
             this.searchUser()
         },
@@ -409,6 +420,23 @@ export default {
                 this.loadingUserTable = false
             })
         },
+        searchCommonUser(query) {
+            query = query.replace(/(^\s*)|(\s*$)/g, '')
+            this.userSearchKey = query
+
+            utils.once(() => {
+                if (query !== '') {
+                    this.loadingCommonUser = true
+                    this.apiGet('user', {key: query, size: 9999, status: 1}).then(res => {
+                        this.loadingCommonUser = false
+                        this.commonUsers = res.data
+                    })
+                } else {
+                    this.commonUsers = []
+                }
+            }, 500)
+        },
+        changeCommonUser() {},
         resetUser() {
             Object.assign(this.searchUserForm, resetUserForm)
             this.searchUser()
@@ -492,36 +520,28 @@ export default {
                 this.liveNode = true
             }
         },
-        role(params) {
-            this.viewDetail = params.row
-            this.formRole.id = params.row.id
-            var role = []
-            params.row.role.forEach(item => {
-                role.push(item.id)
-            })
-            this.formRole.role = role
-
+        addUser() {
             this.rightForm = true
         },
-        handleRoleSubmit(form) {
-            this.loading = !this.loading
-
+        handleAddUserSubmit(form) {
             var formData = {
-                id: this.formRole.id,
-                role_id: this.formRole.role,
+                project_id: this.minUserProjectId,
+                user_ids: this.selectUser,
             }
 
-            this.apiPost('project/role', formData).then(
+            if (!formData.user_ids.length) {
+                utils.warning(this.__('请选择用户'))
+                return
+            }
+
+            this.loading = !this.loading
+            this.apiPost('project/addUsers', formData).then(
                 res => {
                     this.loading = !this.loading
                     this.rightForm = false
-
-                    this.data.forEach((item, index) => {
-                        if (item.id === this.formRole.id) {
-                            this.$set(this.data, index, res)
-                        }
-                    })
-
+                    this.commonUsers = []
+                    this.selectUser = []
+                    this.searchUser()
                     utils.success(res.message)
                 },
                 () => {
