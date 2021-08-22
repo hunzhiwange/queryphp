@@ -172,6 +172,8 @@ export default {
             this.apiGet('resource').then(res => {
                 this.data = res.data
                 this.total = res.page.total_record
+                this.page = res.page.current_page
+                this.pageSize = res.page.per_page
                 this.loadingTable = false
             })
         },
