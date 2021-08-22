@@ -26,4 +26,7 @@ final class ProjectErrorCode extends ErrorCode
 
     #[msg('你不是该项目的管理')]
     public const PROJECT_USER_MEMBER_IS_NOT_ADMINISTRATOR = 1000050006;
+
+    #[msg('你已经是该项目的管理')]
+    public const PROJECT_USER_MEMBER_ALREADY_ADMINISTRATOR = 1000050007;
 }

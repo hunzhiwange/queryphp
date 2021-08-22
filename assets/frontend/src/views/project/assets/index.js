@@ -136,6 +136,7 @@ export default {
             formItem: Object.assign({}, resetForm),
             minForm: false,
             minUser: false,
+            minUserProjectId: 0,
             searchUserForm: Object.assign({}, resetUserForm),
             userTotal: 0,
             userPage: 1,
@@ -195,7 +196,36 @@ export default {
                 },
                 {
                     title: this.__('操作'),
-                    key: 'address'
+                    key: 'action',
+                    width: 160,
+                    fixed: 'right',
+                    align: 'left',
+                    render: (h, params) => {
+                        return (
+                            <div>
+                                <buttonGroup size="small" shape="circle">
+                                    <i-button
+                                        type="text"
+                                        onClick={() => this.setMember(params)}
+                                        v-show={2 === params.row.extend_type && utils.permission('project_role_button')}>
+                                        {this.__('设为成员')}
+                                    </i-button>
+                                    <i-button
+                                        type="text"
+                                        onClick={() => this.setAdministrator(params)}
+                                        v-show={1 === params.row.extend_type && utils.permission('project_role_button')}>
+                                        {this.__('设为管理')}
+                                    </i-button>
+                                    <i-button
+                                        type="text"
+                                        onClick={() => this.remove(params)}
+                                        v-show={utils.permission('project_delete_button')}>
+                                        {this.__('删除')}
+                                    </i-button>
+                                </buttonGroup>
+                            </div>
+                        )
+                    },
                 }
             ],
             userData: [],
@@ -365,11 +395,12 @@ export default {
         },
         user: function(params) {
             this.minUser = true
-            this.searchUserForm.project_id = params.row.id
+            this.minUserProjectId = params.row.id
             this.searchUser()
         },
         searchUser: function() {
             this.loadingUserTable = true
+            this.searchUserForm.project_id = this.minUserProjectId
             this.apiGet('project/user', this.searchUserForm).then(res => {
                 this.userData = res.data
                 this.userTotal = res.page.total_record
@@ -379,10 +410,52 @@ export default {
             })
         },
         resetUser() {
-            let projectId = this.searchUserForm.project_id
             Object.assign(this.searchUserForm, resetUserForm)
-            this.searchUserForm.project_id = projectId
             this.searchUser()
+        },
+        setMember(params) {
+            var formData = {
+                project_id: this.minUserProjectId,
+                user_id: params.row.user_id,
+            }
+
+            this.apiPost('project/set-member', formData).then(
+                res => {
+                    this.userData.forEach((item, index) => {
+                        if (item.user_id === params.row.user_id) {
+                            item.extend_type = res.extend_type
+                            item.extend_type_enum = res.extend_type_enum
+                            this.$set(this.userData, index, item)
+                        }
+                    })
+
+                    utils.success(res.message)
+                },
+                () => {
+                }
+            )
+        },
+        setAdministrator(params) {
+            var formData = {
+                project_id: this.minUserProjectId,
+                user_id: params.row.user_id,
+            }
+
+            this.apiPost('project/set-administrator', formData).then(
+                res => {
+                    this.userData.forEach((item, index) => {
+                        if (item.user_id === params.row.user_id) {
+                            item.extend_type = res.extend_type
+                            item.extend_type_enum = res.extend_type_enum
+                            this.$set(this.userData, index, item)
+                        }
+                    })
+
+                    utils.success(res.message)
+                },
+                () => {
+                }
+            )
         },
         reset() {
             this.formItem = resetForm
