@@ -87,7 +87,7 @@ export const otherRouter = {
 }
 
 let appRouterData = [
-    {
+    /*{
         path: '/base',
         icon: 'md-settings',
         name: 'base',
@@ -115,6 +115,57 @@ let appRouterData = [
                     par: ['base'],
                 },
                 component: importRouter('base/profile'),
+            },
+        ],
+    },*/
+    {
+        path: '/project',
+        icon: 'md-git-branch',
+        name: 'project',
+        meta: {
+            title: __('项目管理'),
+        },
+        component: layout,
+        children: [
+            {
+                path: 'project',
+                icon: '',
+                name: 'project_index',
+                meta: {
+                    title: __('项目管理'),
+                    par: ['project'],
+                },
+                component: importRouter('project/index'),
+            },
+            {
+                path: 'role',
+                icon: '',
+                name: 'role_index',
+                meta: {
+                    title: __('角色管理'),
+                    par: ['permission'],
+                },
+                component: importRouter('role/index'),
+            },
+            {
+                path: 'permission',
+                icon: '',
+                name: 'permission_index',
+                meta: {
+                    title: __('权限管理'),
+                    par: ['permission'],
+                },
+                component: importRouter('permission/index'),
+            },
+            {
+                path: 'resource',
+                icon: '',
+                name: 'resource_index',
+                meta: {
+                    title: __('资源管理'),
+                    par: ['permission'],
+                },
+                component: importRouter('resource/index'),
             },
         ],
     },
@@ -169,7 +220,7 @@ let appRouterData = [
             },
         ],
     },
-    {
+    /*{
         path: '/test',
         icon: 'md-checkmark-circle-outline',
         name: 'test',
@@ -232,7 +283,7 @@ let appRouterData = [
                 ],
             },
         ],
-    },
+    },*/
 ]
 
 let dataMenu = localStorage.getItem('menus')

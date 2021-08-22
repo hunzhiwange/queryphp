@@ -44,6 +44,7 @@ class Users
             $select
                 ->leftJoin('user', [
                         'user.name AS user.name',
+                        'user.num AS user.num',
                     ], function (Condition $select) {
                     $select
                         ->where('id', Condition::raw('[project_user.id]'));

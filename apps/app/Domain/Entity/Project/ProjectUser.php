@@ -114,6 +114,9 @@ class ProjectUser extends Entity
         'user.name' => [
             self::VIRTUAL_COLUMN => true,
         ],
+        'user.num' => [
+            self::VIRTUAL_COLUMN => true,
+        ],
     ]; // END STRUCT
 
     /**

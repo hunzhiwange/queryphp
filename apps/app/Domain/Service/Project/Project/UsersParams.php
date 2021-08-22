@@ -26,7 +26,7 @@ class UsersParams extends ReadParams
     protected function keyColumnDefaultValue(): TypedStringArray
     {
         return new TypedStringArray([
-            'user.id', 'user.name',
+            'user.id', 'user.name', 'user.num',
         ]);
     }
 }
