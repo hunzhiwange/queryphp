@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace App\Controller\Api\V1\Project;
 
 use App\Controller\Support\Controller;
-use App\Domain\Service\Project\Project\CancelFavor as Service;
-use App\Domain\Service\Project\Project\CancelFavorParams;
+use App\Domain\Service\Project\Project\SetMember as Service;
+use App\Domain\Service\Project\Project\SetMemberParams;
 use Leevel\Http\Request;
 
 /**
- * 项目收藏取消.
+ * 设为成员.
  *
  * @codeCoverageIgnore
  */
-class CancelFavor
+class SetMember
 {
     use Controller;
 
@@ -24,7 +24,7 @@ class CancelFavor
 
     public function handle(Request $request, Service $service): array
     {
-        $params = new CancelFavorParams($this->input($request));
+        $params = new SetMemberParams($this->input($request));
 
         return $service->handle($params);
     }

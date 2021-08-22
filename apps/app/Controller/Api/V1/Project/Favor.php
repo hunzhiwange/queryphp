@@ -7,7 +7,6 @@ namespace App\Controller\Api\V1\Project;
 use App\Controller\Support\Controller;
 use App\Domain\Service\Project\Project\Favor as Service;
 use App\Domain\Service\Project\Project\FavorParams;
-use Leevel\Auth\Proxy\Auth;
 use Leevel\Http\Request;
 
 /**

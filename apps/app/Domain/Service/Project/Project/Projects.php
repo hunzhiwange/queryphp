@@ -42,7 +42,7 @@ class Projects
                 break;
             case 'administrator':
                 $select->where('project_user.type', ProjectUser::TYPE_MEMBER);
-                $select->where('project_user.extend_type', ProjectUser::TEXTEND_TYPE_ADMINISTRATOR);
+                $select->where('project_user.extend_type', ProjectUser::EXTEND_TYPE_ADMINISTRATOR);
                 break;
             default:
                 // member

@@ -20,4 +20,10 @@ final class ProjectErrorCode extends ErrorCode
 
     #[msg('你尚未收藏过该项目')]
     public const PROJECT_USER_FAVOR_NOT_EXIST = 1000050004;
+
+    #[msg('你尚未加入该项目')]
+    public const PROJECT_USER_MEMBER_NOT_EXIST = 1000050005;
+
+    #[msg('你不是该项目的管理')]
+    public const PROJECT_USER_MEMBER_IS_NOT_ADMINISTRATOR = 1000050006;
 }

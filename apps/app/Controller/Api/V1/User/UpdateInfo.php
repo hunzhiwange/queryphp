@@ -7,7 +7,6 @@ namespace App\Controller\Api\V1\User;
 use App\Controller\Support\Controller;
 use App\Domain\Service\User\User\Update as Service;
 use App\Domain\Service\User\User\UpdateParams;
-use Leevel\Auth\Proxy\Auth;
 use Leevel\Http\Request;
 
 /**

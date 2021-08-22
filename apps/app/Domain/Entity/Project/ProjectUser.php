@@ -140,7 +140,7 @@ class ProjectUser extends Entity
     public const EXTEND_TYPE_MEMBER = 1;
 
     #[extend_type('管理')]
-    public const TEXTEND_TYPE_ADMINISTRATOR = 2;
+    public const EXTEND_TYPE_ADMINISTRATOR = 2;
 
     /**
      * 数据类型.
