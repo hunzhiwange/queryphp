@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace App\Controller\Api\V1\Project;
 
 use App\Controller\Support\Controller;
-use App\Domain\Service\Project\Project\SetAdministrator as Service;
-use App\Domain\Service\Project\Project\SetAdministratorParams;
+use App\Domain\Service\Project\Project\DeleteUser as Service;
+use App\Domain\Service\Project\Project\DeleteUserParams;
 use Leevel\Http\Request;
 
 /**
- * 设为管理.
+ * 删除成员.
  *
  * @codeCoverageIgnore
  */
-class SetAdministrator
+class DeleteUser
 {
     use Controller;
 
@@ -24,7 +24,7 @@ class SetAdministrator
 
     public function handle(Request $request, Service $service): array
     {
-        $params = new SetAdministratorParams($this->input($request));
+        $params = new DeleteUserParams($this->input($request));
 
         return $service->handle($params);
     }

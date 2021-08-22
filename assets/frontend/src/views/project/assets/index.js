@@ -218,7 +218,7 @@ export default {
                                     </i-button>
                                     <i-button
                                         type="text"
-                                        onClick={() => this.remove(params)}
+                                        onClick={() => this.deleteUser(params)}
                                         v-show={utils.permission('project_delete_button')}>
                                         {this.__('删除')}
                                     </i-button>
@@ -456,6 +456,27 @@ export default {
                 () => {
                 }
             )
+        },
+        deleteUser(params) {
+            this.$Modal.confirm({
+                title: this.__('提示'),
+                content: this.__('确认删除该成员?'),
+                onOk: () => {
+                    var formData = {
+                        project_id: this.minUserProjectId,
+                        user_id: params.row.user_id,
+                    }
+
+                    this.apiPost('project/delete-user', formData).then(
+                        res => {
+                            this.userData.splice(params.index, 1)
+                            utils.success(res.message)
+                        },
+                        () => {}
+                    )
+                },
+                onCancel: () => {},
+            })
         },
         reset() {
             this.formItem = resetForm

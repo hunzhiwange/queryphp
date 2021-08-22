@@ -10,7 +10,7 @@ use App\Domain\Service\Project\Project\UsersParams;
 use Leevel\Http\Request;
 
 /**
- * 项目用户列表.
+ * 项目成员列表.
  *
  * @codeCoverageIgnore
  */
