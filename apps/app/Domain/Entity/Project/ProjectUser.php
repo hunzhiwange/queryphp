@@ -111,6 +111,9 @@ class ProjectUser extends Entity
         'version' => [
             self::COLUMN_NAME => '操作版本号',
         ],
+        'user.name' => [
+            self::VIRTUAL_COLUMN => true,
+        ],
     ]; // END STRUCT
 
     /**
