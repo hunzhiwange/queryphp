@@ -29,4 +29,7 @@ final class ProjectErrorCode extends ErrorCode
 
     #[msg('你已经是该项目的管理')]
     public const PROJECT_USER_MEMBER_ALREADY_ADMINISTRATOR = 1000050007;
+
+    #[msg('待新增的所有用户已经是项目的成员')]
+    public const PROJECT_USER_MEMBER_TO_BE_ADDED_ALREADY_EXIST = 1000050008;
 }

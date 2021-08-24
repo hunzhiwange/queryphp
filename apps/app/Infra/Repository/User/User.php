@@ -44,13 +44,13 @@ class User extends Repository
      * 
      * @throws \App\Exceptions\UserBusinessException
      */
-    public function findValidUserByCondition(Closure $call, string $column = '*'): EntityUser
+    public function findValidUserByCondition(Closure $condition, string $column = '*'): EntityUser
     {
         $select = $this->entity
             ->select()
             ->where('status', EntityUser::STATUS_ENABLE)
             ->columns($column);
-        $call($select);
+        $condition($select);
         $user = $select->findOne();
         if (!$user->id) {
             throw new UserBusinessException(UserErrorCode::ACCOUNT_NOT_EXIST_OR_DISABLED);
@@ -84,10 +84,14 @@ class User extends Repository
      * 
      * @throws \App\Exceptions\UserBusinessException
      */
-    public function verifyUsersByIds(array $userIds): void
+    public function verifyUsersByIds(array $userIds, ?Closure $condition = null): void
     {
         $userIds = array_unique($userIds);
-        $users = $this->whereIn('id', $userIds)->findAll();
+        $select = $this->whereIn('id', $userIds);
+        if ($condition) {
+            $condition($select);
+        }
+        $users = $select->findAll();
         if (count($userIds) !== count($users)) {
             throw new UserBusinessException(UserErrorCode::SOME_USERS_DOES_NOT_EXIST);
         }

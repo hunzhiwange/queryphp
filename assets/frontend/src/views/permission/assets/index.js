@@ -209,9 +209,8 @@ export default {
                 title: this.__('提示'),
                 content: this.__('确认删除该权限?'),
                 onOk: () => {
+                    this.loading = !this.loading
                     this.apiDelete('permission', nodeData.id).then(res => {
-                        utils.success(res.message)
-
                         const parentKey = root.find(el => el === node).parent
                         if (parentKey !== undefined) {
                             const parent = root.find(el => el.nodeKey === parentKey).node
@@ -222,17 +221,25 @@ export default {
                             const index = this.dataTree.indexOf(nowNode)
                             this.dataTree.splice(index, 1)
                         }
+                        this.loading = !this.loading
+                        utils.success(res.message)
+                    }, () => {
+                        this.loading = !this.loading
                     })
                 },
                 onCancel: () => {},
             })
         },
         status(nodeData, status) {
+            this.loading = !this.loading
             this.apiPut('permission/enable/', nodeData.id, {
                 status: status,
             }).then(res => {
                 this.$set(nodeData, 'status', status)
+                this.loading = !this.loading
                 utils.success(res.message)
+            }, () => {
+                this.loading = !this.loading
             })
         },
         statusMany(type) {
@@ -250,11 +257,15 @@ export default {
                 status: type,
             }
 
+            this.loading = !this.loading
             this.apiPost('permission/enables', data).then(res => {
                 selected.forEach((item, key) => {
                     this.$set(item, 'status', type)
                 })
+                this.loading = !this.loading
                 utils.success(res.message)
+            }, () => {
+                this.loading = !this.loading
             })
         },
         top(root, node, nodeData) {
@@ -294,9 +305,8 @@ export default {
                     break
             }
 
+            this.loading = !this.loading
             this.apiPut('permission/order/', nodeData.id, {type: type}).then(res => {
-                utils.success(res.message)
-
                 if (parentKey !== undefined) {
                     switch (type) {
                         case 'up':
@@ -322,6 +332,10 @@ export default {
                             break
                     }
                 }
+                this.loading = !this.loading
+                utils.success(res.message)
+            }, () => {
+                this.loading = !this.loading
             })
         },
         swapItems: function(arr, index1, index2) {
@@ -525,7 +539,7 @@ export default {
         },
     },
     computed: {},
-    created: function() {
+    mounted: function() {
         this.init()
     },
     mixins: [http],

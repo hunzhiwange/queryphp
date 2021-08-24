@@ -33,6 +33,23 @@ export default {
 
             this.apiGet('project', this.searchForm).then(res => {
                 this.$emit('getDataFromSearch', res)
+
+                let projectIds = []
+                res.data.forEach(item => {
+                    projectIds.push(item.id)
+                })
+                if (!projectIds.length) {
+                    return
+                }
+
+                this.apiGet('project', {
+                    type: 'favor',
+                    project_ids:projectIds,
+                    page: 1,
+                    pageSize: this.searchForm.size
+                }).then(res => {
+                    this.$emit('getProjectFavorDataFromSearch', res)
+                })
             })
         },
         reset() {

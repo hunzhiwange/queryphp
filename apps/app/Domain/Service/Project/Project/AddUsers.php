@@ -9,6 +9,8 @@ use Leevel\Database\Ddd\UnitOfWork;
 use App\Domain\Entity\Project\Project;
 use App\Domain\Entity\Project\ProjectUser;
 use App\Domain\Entity\User\User;
+use App\Exceptions\ProjectBusinessException;
+use App\Exceptions\ProjectErrorCode;
 
 /**
  * 项目新增成员.
@@ -19,6 +21,9 @@ class AddUsers
     {
     }
 
+    /**
+     * @throws \App\Exceptions\ProjectBusinessException
+     */
     public function handle(AddUsersParams $params): array
     {
         $this->verifyProject($params->projectId);
@@ -31,7 +36,12 @@ class AddUsers
         ];
         $existUserIds = $this->findExistUserIds($baseData);
 
-        foreach (array_diff($params->userIds->toArray(), $existUserIds) as $userId) {
+        $newUserIds = array_diff($params->userIds->toArray(), $existUserIds);
+        if (!$newUserIds) {
+            throw new ProjectBusinessException(ProjectErrorCode::PROJECT_USER_MEMBER_TO_BE_ADDED_ALREADY_EXIST);
+        }
+
+        foreach ($newUserIds as $userId) {
             $entity = new ProjectUser(array_merge($baseData, ['user_id' => $userId]));
             $this->w->persist($entity);
         }

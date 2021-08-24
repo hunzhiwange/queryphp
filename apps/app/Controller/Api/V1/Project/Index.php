@@ -27,6 +27,7 @@ class Index
         'order_by',
         'user_id',
         'type',
+        'project_ids',
     ];
 
     public function handle(Request $request, Service $service): array

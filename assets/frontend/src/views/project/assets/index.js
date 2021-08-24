@@ -1,18 +1,17 @@
 import http from '@/utils/http'
 import {validateAlphaDash} from '@/utils/validate'
 import search from '../search/index'
+import projectTemplate from './template'
 
 const resetForm = {
-    id: null,
     name: '',
     num: '',
     status: 1,
-    password: '',
+    template: [],
 }
 
 const resetFormCommonUser = {
-    id: 0,
-    role: [],
+    selectUser: [],
 }
 
 const resetUserForm = {
@@ -29,23 +28,6 @@ export default {
         search,
     },
     data() {
-        var passwordRule = [
-            {
-                required: true,
-                message: this.__('请输入密码'),
-                trigger: 'blur',
-            },
-            {
-                min: 6,
-                max: 30,
-                message: this.__('长度在 %d 到 %d 个字符', 6, 30),
-                trigger: 'blur',
-            },
-            {
-                validator: validateAlphaDash,
-            },
-        ]
-
         return {
             columns: [
                 {
@@ -93,7 +75,7 @@ export default {
                 {
                     title: this.__('操作'),
                     key: 'action',
-                    width: 235,
+                    width: 250,
                     fixed: 'right',
                     align: 'left',
                     render: (h, params) => {
@@ -115,8 +97,14 @@ export default {
                                     <i-button
                                         type="text"
                                         onClick={() => this.favor(params)}
-                                        v-show={utils.permission('project_edit_button')}>
+                                        v-show={!this.favorProjectIds.includes(params.row.id) && utils.permission('project_edit_button')}>
                                         {this.__('收藏')}
+                                    </i-button>
+                                    <i-button
+                                        type="text"
+                                        onClick={() => this.cancelFavor(params)}
+                                        v-show={this.favorProjectIds.includes(params.row.id) && utils.permission('project_edit_button')}>
+                                        {this.__('取消收藏')}
                                     </i-button>
                                     <i-button
                                         type="text"
@@ -160,8 +148,6 @@ export default {
                         validator: validateAlphaDash,
                     },
                 ],
-                password: passwordRule,
-                passwordBackup: passwordRule,
             },
             loading: false,
             selectedData: [],
@@ -175,8 +161,6 @@ export default {
                 position: 'static',
             },
             formCommonUser: resetFormCommonUser,
-            selectRole: [],
-            selectUser: [],
             loadingCommonUser: false,
             commonUsers: [],
             userTotal: 0,
@@ -239,6 +223,17 @@ export default {
                 }
             ],
             userData: [],
+            commonUserRules: {
+                selectUser: [
+                    {
+                        required: true,
+                        message: this.__('请选择用户'),
+                    },
+                ],
+            },
+            favorProjectIds: [],
+            projectTemplate: projectTemplate,
+            seletedProjectTemplate: 'soft',
         }
     },
     methods: {
@@ -248,6 +243,13 @@ export default {
             this.page = data.page.current_page
             this.pageSize = data.page.per_page
             this.loadingTable = false
+        },
+        getProjectFavorDataFromSearch(data) {
+            let favorProjectIds = []
+            data.data.forEach(item => {
+                favorProjectIds.push(item.id)
+            })
+            this.favorProjectIds = favorProjectIds
         },
         edit(params) {
             let row = params.row
@@ -265,10 +267,13 @@ export default {
                 title: this.__('提示'),
                 content: this.__('确认删除该项目?'),
                 onOk: () => {
+                    this.loadingTable = !this.loadingTable
                     this.apiDelete('project', params.row.id).then(res => {
-                        utils.success(res.message)
-
+                        this.loadingTable = !this.loadingTable
                         this.data.splice(params.index, 1)
+                        utils.success(res.message)
+                    }, () => {
+                        this.loadingTable = !this.loadingTable
                     })
                 },
                 onCancel: () => {},
@@ -278,18 +283,33 @@ export default {
             let data = {
                 project_id: params.row.id,
             }
-
+            this.loadingTable = !this.loadingTable
             this.apiPost('project/favor', data).then(res => {
+                if (!this.favorProjectIds.includes(data.project_id)) {
+                    this.favorProjectIds.push(data.project_id)
+                }
+                this.loadingTable = !this.loadingTable
                 utils.success(res.message)
+            }, () => {
+                this.loadingTable = !this.loadingTable
             })
         },
         cancelFavor(params) {
             let data = {
                 project_id: params.row.id,
             }
-
+            this.loadingTable = !this.loadingTable
             this.apiPost('project/cancel-favor', data).then(res => {
+                if (this.favorProjectIds.includes(data.project_id)) {
+                    let deleteProjectIndex = this.favorProjectIds.indexOf(data.project_id)
+                    if (deleteProjectIndex > -1) {
+                        this.favorProjectIds.splice(deleteProjectIndex, 1)
+                    }
+                }
+                this.loadingTable = !this.loadingTable
                 utils.success(res.message)
+            }, () => {
+                this.loadingTable = !this.loadingTable
             })
         },
         statusMany(type) {
@@ -324,14 +344,7 @@ export default {
             this.selectedData = ids
         },
         init: function() {
-            this.apiGet('project').then(res => {
-                this.data = res.data
-                this.total = res.page.total_record
-                this.page = res.page.current_page
-                this.pageSize = res.page.per_page
-                this.loadingTable = false
-            })
-
+            this.$refs.search.search()
             this.apiGet('role', {status: 1}).then(res => {
                 this.roles = res.data
             })
@@ -350,6 +363,7 @@ export default {
         },
         saveProject(form) {
             var formData = this.formItem
+            formData.template = this.seletedProjectTemplateData
             this.apiPost('project', formData).then(
                 res => {
                     let addNode = Object.assign({}, this.formItem, res)
@@ -410,14 +424,14 @@ export default {
             this.searchUser()
         },
         searchUser: function() {
-            this.loadingUserTable = true
+            this.loadingUserTable = false
             this.searchUserForm.project_id = this.minUserProjectId
             this.apiGet('project/user', this.searchUserForm).then(res => {
                 this.userData = res.data
                 this.userTotal = res.page.total_record
                 this.userPage = res.page.current_page
                 this.userPageSize = res.page.per_page
-                this.loadingUserTable = false
+                this.loadingUserTable != this.loadingUserTable
             })
         },
         searchCommonUser(query) {
@@ -447,6 +461,7 @@ export default {
                 user_id: params.row.user_id,
             }
 
+            this.loadingUserTable != this.loadingUserTable
             this.apiPost('project/set-member', formData).then(
                 res => {
                     this.userData.forEach((item, index) => {
@@ -456,10 +471,11 @@ export default {
                             this.$set(this.userData, index, item)
                         }
                     })
-
+                    this.loadingUserTable != this.loadingUserTable
                     utils.success(res.message)
                 },
                 () => {
+                    this.loadingUserTable != this.loadingUserTable
                 }
             )
         },
@@ -469,6 +485,7 @@ export default {
                 user_id: params.row.user_id,
             }
 
+            this.loadingUserTable != this.loadingUserTable
             this.apiPost('project/set-administrator', formData).then(
                 res => {
                     this.userData.forEach((item, index) => {
@@ -478,10 +495,11 @@ export default {
                             this.$set(this.userData, index, item)
                         }
                     })
-
+                    this.loadingUserTable != this.loadingUserTable
                     utils.success(res.message)
                 },
                 () => {
+                    this.loadingUserTable != this.loadingUserTable
                 }
             )
         },
@@ -494,13 +512,16 @@ export default {
                         project_id: this.minUserProjectId,
                         user_id: params.row.user_id,
                     }
-
+                    this.loadingUserTable != this.loadingUserTable
                     this.apiPost('project/delete-user', formData).then(
                         res => {
                             this.userData.splice(params.index, 1)
+                            this.loadingUserTable != this.loadingUserTable
                             utils.success(res.message)
                         },
-                        () => {}
+                        () => {
+                            this.loadingUserTable != this.loadingUserTable
+                        }
                     )
                 },
                 onCancel: () => {},
@@ -524,34 +545,44 @@ export default {
             this.rightForm = true
         },
         handleAddUserSubmit(form) {
-            var formData = {
-                project_id: this.minUserProjectId,
-                user_ids: this.selectUser,
-            }
+            this.$refs[form].validate(pass => {
+                if (pass) {
+                    var formData = {
+                        project_id: this.minUserProjectId,
+                        user_ids: this.formCommonUser.selectUser,
+                    }
 
-            if (!formData.user_ids.length) {
-                utils.warning(this.__('请选择用户'))
-                return
-            }
-
-            this.loading = !this.loading
-            this.apiPost('project/addUsers', formData).then(
-                res => {
                     this.loading = !this.loading
-                    this.rightForm = false
-                    this.commonUsers = []
-                    this.selectUser = []
-                    this.searchUser()
-                    utils.success(res.message)
-                },
-                () => {
-                    this.loading = !this.loading
+                    this.loadingUserTable != this.loadingUserTable
+                    this.apiPost('project/addUsers', formData).then(
+                        res => {
+                            this.loading = !this.loading
+                            this.rightForm = false
+                            this.commonUsers = []
+                            this.selectUser = []
+                            this.searchUser()
+                            this.loadingUserTable != this.loadingUserTable
+                            utils.success(res.message)
+                        },
+                        () => {
+                            this.loading = !this.loading
+                            this.loadingUserTable != this.loadingUserTable
+                        }
+                    )
                 }
-            )
+            })
         },
     },
-    computed: {},
-    created: function() {
+    computed: {
+        seletedProjectTemplateData: function () {
+            let selecedData = this.projectTemplate.find(item => {
+                return item.key === this.seletedProjectTemplate;
+            })
+            selecedData = selecedData || {}
+            return selecedData
+        },
+    },
+    mounted: function() {
         this.init()
     },
     mixins: [http],

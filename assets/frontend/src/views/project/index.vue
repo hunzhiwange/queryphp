@@ -3,7 +3,7 @@
         <div class="min-form" v-show="minForm">
             <Card :bordered="false">
                 <p slot="title">
-                    {{ formItem.id ? __('编辑项目') : __('新增项目') }}
+                    {{ __('新增项目') }}
                 </p>
                 <div class="min-form-inner">
                     <div class="min-form-body">
@@ -17,13 +17,15 @@
                                             :disabled="formItem.id ? true : false"
                                         ></i-input>
                                     </FormItem>
-                                    <FormItem :label="__('密码')" prop="password">
-                                        <i-input
-                                            type="password"
-                                            v-model="formItem.password"
-                                            :placeholder="formItem.id ? __('不修改密码请留空') : __('密码不能为空')"
-                                            :on-change="passwordValidate(formItem.id)"
-                                        ></i-input>
+                                    <FormItem :label="__('项目模板')">
+                                        <Select v-model="seletedProjectTemplate">
+                                            <Option v-for="item in projectTemplate" :value="item.key" :key="item.key">{{ item.title }}</Option>
+                                        </Select>
+                                        <div class="m-t-20" style="height:200px;overflow:auto;">
+                                            <Steps :current="0" direction="vertical">
+                                                <Step v-for="item in seletedProjectTemplateData.data" :value="item.tag" :key="item.tag" :title="item.title" :content="item.description"></Step>
+                                            </Steps>
+                                        </div>
                                     </FormItem>
                                 </i-col>
                                 <i-col span="12">
@@ -111,7 +113,7 @@
             <div class="fixed-footer-offset">
                 <Row>
                     <i-col span="24">
-                        <search ref="search" @getDataFromSearch="getDataFromSearch" @add="add"></search>
+                        <search ref="search" @getDataFromSearch="getDataFromSearch" @getProjectFavorDataFromSearch="getProjectFavorDataFromSearch" @add="add"></search>
                         <i-table
                             stripe
                             :loading="loadingTable"
@@ -167,12 +169,12 @@
             :mask-closable="false"
             :styles="styles"
         >
-            <i-form ref="formCommonUser" :model="formCommonUser">
+            <i-form ref="formCommonUser" :rules="commonUserRules" :model="formCommonUser">
                 <Row :gutter="32">
                     <i-col span="24">
-                        <FormItem :label="__('请输入用户关键字')" label-position="top">
+                        <FormItem :label="__('请输入用户关键字')" label-position="top" prop="selectUser">
                             <i-select
-                                v-model="selectUser"
+                                v-model="formCommonUser.selectUser"
                                 multiple
                                 filterable
                                 remote

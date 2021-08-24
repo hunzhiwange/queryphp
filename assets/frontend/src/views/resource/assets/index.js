@@ -128,10 +128,13 @@ export default {
                 title: this.__('提示'),
                 content: this.__('确认删除该资源?'),
                 onOk: () => {
+                    this.loadingTable = !this.loadingTable
                     this.apiDelete('resource', params.row.id).then(res => {
-                        utils.success(res.message)
-
                         this.data.splice(params.index, 1)
+                        this.loadingTable = !this.loadingTable
+                        utils.success(res.message)
+                    }, () => {
+                        this.loadingTable = !this.loadingTable
                     })
                 },
                 onCancel: () => {},
@@ -249,7 +252,7 @@ export default {
         },
     },
     computed: {},
-    created: function() {
+    mounted: function() {
         this.init()
     },
     mixins: [http],

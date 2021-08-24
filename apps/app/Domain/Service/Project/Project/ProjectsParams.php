@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\Project\Project;
 
 use App\Domain\Service\Support\ReadParams;
+use Leevel\Collection\TypedIntArray;
 use Leevel\Collection\TypedStringArray;
 
 /**
@@ -17,6 +18,8 @@ class ProjectsParams extends ReadParams
     public ?int $userId = null;
 
     public ?string $type = null;
+
+    public ?TypedIntArray $projectIds = null;
 
     public string $orderBy = 'sort ASC,id DESC';
 
@@ -32,5 +35,10 @@ class ProjectsParams extends ReadParams
         return new TypedStringArray([
             'id', 'name',
         ]);
+    }
+
+    protected function projectIdsTransformValue(string|array $value): TypedIntArray
+    {
+        return TypedIntArray::fromRequest($value);
     }
 }

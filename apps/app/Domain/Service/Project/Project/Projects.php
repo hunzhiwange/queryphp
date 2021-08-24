@@ -8,6 +8,7 @@ use Closure;
 use App\Domain\Entity\Project\Project;
 use App\Domain\Entity\Project\ProjectUser;
 use App\Domain\Service\Support\Read;
+use Leevel\Collection\TypedIntArray;
 use Leevel\Database\Condition;
 use Leevel\Database\Ddd\Select;
 
@@ -29,6 +30,14 @@ class Projects
     private function userIdSpec(Select $select, int $value): void
     {
         $select->where('project_user.user_id', $value);
+    }
+
+    /**
+     * 项目 ID 条件.
+     */
+    private function projectIdsSpec(Select $select, TypedIntArray $value): void
+    {
+        $select->whereIn('id', $value->toArray());
     }
 
     /**
@@ -61,6 +70,7 @@ class Projects
             $select
                 ->leftJoin('project_user', '', function (Condition $select) {
                     $select
+                        ->where('delete_at', 0)
                         ->where('data_id', Condition::raw('[project.id]'))
                         ->where('data_type', ProjectUser::DATA_TYPE_PROJECT);
                 });
