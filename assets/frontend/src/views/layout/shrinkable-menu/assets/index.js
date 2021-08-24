@@ -12,6 +12,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        tmpShrink: {
+            type: Boolean,
+            default: false,
+        },
         menuList: {
             type: Array,
             required: true,
@@ -49,6 +53,11 @@ export default {
                 })
             }
             this.$emit('on-change', name)
+        },
+        setTmpShrink(type) {
+            if (this.shrink) {
+                this.$emit('toggleClickTemp', type)
+            }
         },
     },
 }

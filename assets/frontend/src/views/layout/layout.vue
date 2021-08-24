@@ -1,23 +1,26 @@
 <template>
     <div class="main" :class="{'main-hide-text': shrink}">
-        <div slot="top" class="logo-con" :style="{width: shrink ? '60px' : '200px'}">
-            <img v-show="!shrink" :src="img_logo" key="max-logo" />
-            <img v-show="shrink" :src="img_mini_logo" key="min-logo" />
+        <div slot="top" class="logo-con" :style="{width: tmpShrink && shrink ? '60px' : '200px'}">
+            <img v-show="!(shrink && tmpShrink)" :src="img_logo" key="max-logo" />
+            <img v-show="tmpShrink && shrink" :src="img_mini_logo" key="min-logo" />
         </div>
         <div
             class="sidebar-menu-con"
             :style="{
-                width: shrink ? '60px' : '200px',
-                overflow: shrink ? 'visible' : 'auto',
+                width: tmpShrink && shrink ? '60px' : '200px',
+                overflow: tmpShrink && shrink ? 'visible' : 'auto',
             }"
         >
             <shrinkable-menu
                 :shrink="shrink"
+                :tmpShrink="tmpShrink"
                 @on-change="handleSubmenuChange"
                 :theme="menuTheme"
                 :before-push="beforePush"
                 :open-names="openedSubmenuArr"
                 :menu-list="menuList"
+                @toggleClick="toggleClick"
+                @toggleClickTemp="toggleClickTemp"
             >
             </shrinkable-menu>
         </div>

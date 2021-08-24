@@ -39,6 +39,7 @@ export default {
             openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
             dialogVisible: false,
             avator: avator,
+            tmpShrink: true,
         }
     },
     computed: {
@@ -156,6 +157,9 @@ export default {
         },
         toggleClick() {
             this.$store.commit('changeMenuShrink', !this.shrink)
+        },
+        toggleClickTemp(hello) {
+            this.tmpShrink = !hello
         },
         logout() {
             this.$Modal.confirm({
