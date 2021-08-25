@@ -83,6 +83,14 @@ export const otherRouter = {
             name: 'message_index',
             component: importRouter('message/message'),
         },
+        {
+            path:"/project/:id",
+            meta: {
+                title: __('任务看板'),
+            },
+            name: 'project_view_index',
+            component: importRouter('project/view'),
+        },
     ],
 }
 

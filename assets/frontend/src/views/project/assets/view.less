@@ -1,0 +1,137 @@
+.project-navigation {
+    z-index: 1;
+    background-color: #fff;
+    -webkit-transition: right 218ms ease;
+    transition: right 218ms ease;
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    transition: all 0.3s ease-in-out;
+}
+
+div::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+div::-webkit-scrollbar-track {
+    background: rgb(239, 239, 239);
+    border-radius: 2px;
+}
+
+div::-webkit-scrollbar-thumb {
+    background: #bfbfbf;
+    border-radius: 10px;
+}
+
+div::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+div::-webkit-scrollbar-corner {
+    background: #179a16;
+}
+
+.main-box {
+    width: 100% !important;
+    overflow-y: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+    box-sizing: border-box;
+    position: fixed;
+    height: 100%;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.flip-list-move {
+    transition: transform 0.5s;
+}
+
+.no-move {
+    transition: transform 0s;
+}
+
+.ghost {
+    opacity: 0.4;
+    background: #c8ebfb;
+    border: 1px dashed #ccc
+}
+
+.stage-header {
+    margin: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+}
+
+.stage-header .name {
+    white-space: normal;
+    width: 270px
+}
+
+.stage-header .title {
+    margin: 5px;
+    font-size: 16px
+}
+
+.stage-item {
+    height: 100%;
+    border-radius: 4px;
+    width: 350px;
+    display: inline-flex;
+    flex-direction: column;
+    margin-right: 20px;
+    align-items: stretch;
+    background-color: #f8f8f9;
+    box-shadow: 2px 2px 5px #dcdee2;
+}
+
+.undraggable {
+    margin-right: 20px;
+    display: inline-flex;
+    flex-direction: column;
+    position: relative;
+    top: -15px;
+}
+
+.list-group-stage {
+    overflow-y: auto;
+}
+
+.list-group {
+    min-height: 350px;
+}
+
+.list-group-item {
+    cursor: move;
+    margin: 10px !important;
+    background-color: #fff;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px #d2d2d2;
+}
+
+.list-group-item i {
+    cursor: pointer;
+}
+
+.close-item {
+    cursor: pointer;
+    color: #aaa;
+    display: none
+}
+
+.delstage {
+    display: none;
+}
+
+.stage-item:hover .delstage {
+    display: inline-block;
+}
+
+.list-group-item:hover .close-item {
+    display: block;
+}
+
+
