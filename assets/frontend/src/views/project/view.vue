@@ -185,7 +185,7 @@
                                           <div slot="title">
                                               <!-- <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-default"><span class="ivu-checkbox"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label> -->
                                             <!-- <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-wrapper-checked ivu-checkbox-default"><span class="ivu-checkbox ivu-checkbox-checked"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label> -->
-                                            <Checkbox v-model="single">2021-05-05</Checkbox>
+                                            <Checkbox v-model="single"><em>2021-05-05 08:11</em></Checkbox>
                                         </div>
                                         <a href="javascript:void(0);" class="close-item" slot="extra" @click.prevent="delTask(index,k)">
                                             <Icon color="#808695" size="18" type="md-close"></Icon>
