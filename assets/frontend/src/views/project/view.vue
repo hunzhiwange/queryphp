@@ -185,7 +185,10 @@
                                           <div slot="title">
                                               <!-- <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-default"><span class="ivu-checkbox"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label> -->
                                             <!-- <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-wrapper-checked ivu-checkbox-default"><span class="ivu-checkbox ivu-checkbox-checked"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label> -->
-                                            <Checkbox v-model="single"><em>2021-05-05 08:11</em></Checkbox>
+                                            <Checkbox v-model="single"><em></em></Checkbox>
+                                            <Icon type="ios-bug" color="red" />
+                                            TRACK-6333
+                                            <Icon type="ios-copy-outline" />
                                         </div>
                                         <a href="javascript:void(0);" class="close-item" slot="extra" @click.prevent="delTask(index,k)">
                                             <Icon color="#808695" size="18" type="md-close"></Icon>
@@ -195,6 +198,7 @@
                                             <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-wrapper-checked ivu-checkbox-default"><span class="ivu-checkbox ivu-checkbox-checked"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label>
                                         </span> -->
                                         <span class="name">{{element.name}}</span>
+                                        <Divider orientation="right" size="small"><em style="color: #c5c8ce;">2021-08-11 08:11:55</em></Divider>
                                         <div class="m-t-10">
                                             <Badge status="success" text="环境问题" class="m-r-10"/>
                                             <Badge status="warning" text="Bug" />

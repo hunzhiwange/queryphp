@@ -51,25 +51,27 @@
                 </div>
             </Card>
         </div>
-        <Card shadow id="permission-page">
-            <div slot="title">
-                <i-button
-                    size="small"
-                    type="text"
-                    @click="add()"
-                    class="add-extra"
-                    v-if="utils.permission('permission_add_button')"
-                    ><Icon type="md-add-circle"></Icon> {{ __('新增') }}</i-button
-                >
-            </div>
-            <div class="tree-for-list">
-                <Row>
-                    <i-col span="24">
-                        <Tree :data="dataTree" ref="tree" show-checkbox2 multiple :render="renderContent"></Tree>
-                    </i-col>
-                </Row>
-            </div>
-        </Card>
+        <div class="wrap">
+            <Card shadow id="permission-page">
+                <div slot="title">
+                    <i-button
+                        size="small"
+                        type="text"
+                        @click="add()"
+                        class="add-extra"
+                        v-if="utils.permission('permission_add_button')"
+                        ><Icon type="md-add-circle"></Icon> {{ __('新增') }}</i-button
+                    >
+                </div>
+                <div class="tree-for-list">
+                    <Row>
+                        <i-col span="24">
+                            <Tree :data="dataTree" ref="tree" show-checkbox2 multiple :render="renderContent"></Tree>
+                        </i-col>
+                    </Row>
+                </div>
+            </Card>
+        </div>
 
         <!--<Row class="m-t-10">
             <ButtonGroup shape="circle">
