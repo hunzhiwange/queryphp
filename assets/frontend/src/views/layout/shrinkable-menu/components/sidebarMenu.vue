@@ -9,7 +9,7 @@
     >
         <template v-for="item in menuList">
             <!-- prettier-ignore -->
-            <MenuItem v-if="
+            <MenuItem v-show="
                 !shrink && item.permission &&
                     (item.children.length <= 1 &&
                     (!item.children[0].children || item.children[0].children.length < 1))" :name="item.children[0].name" :key="item.path">
@@ -19,7 +19,7 @@
             </MenuItem>
 
             <Submenu
-                v-if="!shrink &&
+                v-show="!shrink &&
                     item.permission &&
                     (item.children.length > 1 || (item.children[0].children && item.children[0].children.length >= 1))"
                 :name="item.name"
@@ -83,7 +83,7 @@
             </Submenu>
 
             <!-- prettier-ignore -->
-            <MenuItem v-if="
+            <MenuItem v-show="
                 shrink && item.permission &&
                     (item.children.length <= 1 &&
                     (!item.children[0].children || item.children[0].children.length < 1))" :name="item.children[0].name" :key="item.path">
@@ -92,7 +92,7 @@
             </MenuItem>
 
             <!-- prettier-ignore -->
-            <MenuItem v-if="
+            <MenuItem v-show="
                 shrink &&
                     item.permission &&
                     (item.children.length > 1 || (item.children[0].children && item.children[0].children.length >= 1))" :name="item.name" :key="item.path + '_path_sub'">
