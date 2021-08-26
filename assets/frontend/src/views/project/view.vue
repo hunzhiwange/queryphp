@@ -198,7 +198,7 @@
                                             <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-wrapper-checked ivu-checkbox-default"><span class="ivu-checkbox ivu-checkbox-checked"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label>
                                         </span> -->
                                         <span class="name">{{element.name}}</span>
-                                        <Divider orientation="right" size="small"><em style="color: #c5c8ce;">2021-08-11 08:11:55</em></Divider>
+                                        <Divider orientation="right" size="small"><em style="color: #c5c8ce;font-weight:normal;font-size:13px;">2021-08-11 08:11:55</em></Divider>
                                         <div class="m-t-10">
                                             <Badge status="success" text="环境问题" class="m-r-10"/>
                                             <Badge status="warning" text="Bug" />
