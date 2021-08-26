@@ -10,16 +10,18 @@
         <template v-for="item in menuList">
             <!-- prettier-ignore -->
             <MenuItem v-if="
-                item.permission &&
+                !shrink && item.permission &&
                     (item.children.length <= 1 &&
                     (!item.children[0].children || item.children[0].children.length < 1))" :name="item.children[0].name" :key="item.path">
                 <Icon :v-if="item.icon" :type="item.icon" :size="iconSize" :key="item.path+'_icon'"></Icon>
-                <div class="layout-text" :key="item.path+'_path'">{{ itemTitle(item) }}</div>
+                <div class="layout-text" :key="item.path+'_path'">2{{ itemTitle(item) }}</div>
             <!-- prettier-ignore -->
             </MenuItem>
 
             <Submenu
-                v-if="item.permission && (item.children.length > 1 || (item.children[0].children && item.children[0].children.length >= 1))"
+                v-if="!shrink &&
+                    item.permission &&
+                    (item.children.length > 1 || (item.children[0].children && item.children[0].children.length >= 1))"
                 :name="item.name"
                 :key="item.path + '_path_sub'"
             >
@@ -61,7 +63,7 @@
                         </template>
                         <template v-for="childsub in child.children">
                             <!-- prettier-ignore -->
-                             <template v-if="childsub.permission">
+                            <template v-if="childsub.permission">
                                 <MenuItem :name="childsub.name" :key="childsub.name + '_sub_sub'">
                                     <Icon
                                         :v-if="childsub.icon"
@@ -79,6 +81,24 @@
                     </Submenu>
                 </template>
             </Submenu>
+
+            <!-- prettier-ignore -->
+            <MenuItem v-if="
+                shrink && item.permission &&
+                    (item.children.length <= 1 &&
+                    (!item.children[0].children || item.children[0].children.length < 1))" :name="item.children[0].name" :key="item.path">
+                <Icon :v-if="item.icon" :type="item.icon" :size="iconSize" :key="item.path+'_icon'"></Icon>
+            <!-- prettier-ignore -->
+            </MenuItem>
+
+            <!-- prettier-ignore -->
+            <MenuItem v-if="
+                shrink &&
+                    item.permission &&
+                    (item.children.length > 1 || (item.children[0].children && item.children[0].children.length >= 1))" :name="item.name" :key="item.path + '_path_sub'">
+                <Icon :v-if="item.icon" :type="item.icon" :size="iconSize" :key="item.path+'_icon'"></Icon>
+            <!-- prettier-ignore -->
+            </MenuItem>
         </template>
     </i-menu>
 </template>

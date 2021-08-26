@@ -1,6 +1,10 @@
 export default {
     name: 'sidebarMenu',
     props: {
+        shrink: {
+            type: Boolean,
+            default: true,
+        },
         menuList: Array,
         iconSize: Number,
         menuTheme: {

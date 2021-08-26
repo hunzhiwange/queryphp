@@ -2,19 +2,14 @@
     <div class="ivu-shrinkable-menu" @mouseover="setTmpShrink(true)" @mouseout="setTmpShrink(false)">
         <slot name="top"></slot>
         <sidebar-menu
-            v-show="!(tmpShrink && shrink)"
+            :shrink="tmpShrink && shrink"
             :menu-theme="theme"
             :menu-list="menuList"
             :open-names="openNames"
             @on-change="handleChange"
+            @mouseover="setTmpShrink(true)"
+            @mouseout="setTmpShrink(false)"
         ></sidebar-menu>
-        <sidebar-menu-shrink
-            v-show="tmpShrink && shrink"
-            :menu-theme="theme"
-            :menu-list="menuList"
-            :icon-color="shrinkIconColor"
-            @on-change="handleChange"
-        ></sidebar-menu-shrink>
     </div>
 </template>
 

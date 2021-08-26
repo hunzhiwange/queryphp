@@ -56,7 +56,9 @@ export default {
         },
         setTmpShrink(type) {
             if (this.shrink) {
-                this.$emit('toggleClickTemp', type)
+                utils.once(() => {
+                    this.$emit('toggleClickTemp', type)
+                })
             }
         },
     },
