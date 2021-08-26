@@ -1,0 +1,21 @@
+/* 可以设置不同的进入和离开动画 */
+/* 设置持续时间和动画函数 */
+.slide-fade-enter-active {
+    transition: all .5s ease;
+}
+
+.slide-fade-enter, .slide-fade-leave-to
+    /* .slide-fade-leave-active for below version 2.1.8 */ {
+    transform: translateX(10px);
+    opacity: 0;
+}
+
+.slide-fade2-enter-active {
+    transition: all 1.0s ease;
+}
+
+.slide-fade2-enter, .slide-fade2-leave-to
+    /* .slide-fade-leave-active for below version 2.1.8 */ {
+    transform: translateX(20px);
+    opacity: 0;
+}
