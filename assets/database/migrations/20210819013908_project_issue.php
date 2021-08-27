@@ -37,7 +37,7 @@ final class ProjectIssue extends AbstractMigration
                 `file_number` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '附件数量',
                 `start_date` datetime NOT NULL COMMENT '计划开始时间',
                 `end_date` datetime NOT NULL COMMENT '计划结束时间',
-                `archived` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否归档',
+                `archived` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否归档：1=未归档;2=已归档;',
                 `archived_date` datetime NOT NULL COMMENT '归档时间',
                 `sort` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '排序(DESC)',
                 `user_sort` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '会员自己的排序(DESC)',

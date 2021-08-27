@@ -110,6 +110,7 @@
         </div>
 
         <div class="wrap">
+
             <div class="fixed-footer-offset2">
             <div class="project-navigation">
                         <Menu mode="horizontal" theme2="light" active-name="1">
@@ -163,13 +164,31 @@
 
                 </div>
             </div>
+            <div style="display:none;" class="fixed-footer-offset2 ">
+                <Row>
+                    <i-col span="24">
+                        <search ref="search" @getDataFromSearch="getDataFromSearch" @getProjectFavorDataFromSearch="getProjectFavorDataFromSearch" @add="add"></search>
+                        <!-- <i-table
+                            stripe
+                            :loading="loadingTable"
+                            ref="table"
+                            :border="false"
+                            :columns="columns"
+                            :data="data"
+                            class="search-table"
+                            @on-selection-change="onSelectionChange"
+                        >
+                        </i-table> -->
+                    </i-col>
+                </Row>
+            </div>
             <div class="project-navigation">
                  <Row>
                     <Col span="24">
                 <draggable class="main-box" v-model="dragList" :move="onMove" filter=".undraggable">
                     <div v-for="(stage,index) in dragList" class="stage-item" :key="index">
                         <div class="stage-header">
-                            <Badge :count="5" type="success">
+                            <Badge :count="stage.list.length" type="success">
                             <div class="title">{{stage.name}}</div>
                             </Badge>
                             <div>
@@ -185,9 +204,9 @@
                                           <div slot="title">
                                               <!-- <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-default"><span class="ivu-checkbox"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label> -->
                                             <!-- <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-wrapper-checked ivu-checkbox-default"><span class="ivu-checkbox ivu-checkbox-checked"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label> -->
-                                            <Checkbox v-model="single"><em></em></Checkbox>
-                                            <Icon type="ios-bug" color="red" />
-                                            TRACK-6333
+                                            <Checkbox v-model="element.completed_bool"><em></em></Checkbox>
+                                            <Icon :type="element.project_type_icon.icon" :color="element.project_type_icon.color" />
+                                            <span :class="element.completed_bool ? 'item-removed' : ''">{{ element.num }}</span>
                                             <Icon type="ios-copy-outline" />
                                         </div>
                                         <a href="javascript:void(0);" class="close-item" slot="extra" @click.prevent="delTask(index,k)">
@@ -197,15 +216,19 @@
                                             <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-default"><span class="ivu-checkbox"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label>
                                             <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-wrapper-checked ivu-checkbox-default"><span class="ivu-checkbox ivu-checkbox-checked"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label>
                                         </span> -->
-                                        <span class="name">{{element.name}}</span>
-                                        <Divider orientation="right" size="small"><em style="color: #c5c8ce;font-weight:normal;font-size:13px;">2021-08-11 08:11:55</em></Divider>
+                                        <span :class="element.completed_bool ? 'item-removed name' : 'name'">{{ element.name }}</span>
+                                        <Divider orientation="right" size="small"><em style="color: #c5c8ce;font-weight:normal;font-size:13px;">
+                                            {{ element.create_at }}
+                                            </em>
+                                        </Divider>
                                         <div class="m-t-10">
-                                            <Badge status="success" text="环境问题" class="m-r-10"/>
-                                            <Badge status="warning" text="Bug" />
-                                            </div>
+                                            <Badge v-for="(item, index) in element.project_tags" :key="index" :text="item.name" :color="item.color" class="m-r-10"/>
+                                        </div>
                                         <div class="m-t-10">
-                                            <Tag color="#c5c8ce">v20210804</Tag>
-                                            <Tag color="#c5c8ce">v20210805</Tag>
+                                            <Tag v-for="(item, index) in element.project_releases" :key="index" :label="item.name" color="#c5c8ce">{{ item.name }}</Tag>
+                                        </div>
+                                        <div class="m-t-10">
+                                            <Tag v-for="(item, index) in element.project_modules" :key="index" :label="item.name" :color="item.color">{{ item.name }}</Tag>
                                         </div>
                                     </Card>
                                 </li>
@@ -218,24 +241,6 @@
                 </draggable>
                 </Col>
                  </Row>
-            </div>
-            <div style="display:none;" class="fixed-footer-offset">
-                <Row>
-                    <i-col span="24">
-                        <search ref="search" @getDataFromSearch="getDataFromSearch" @getProjectFavorDataFromSearch="getProjectFavorDataFromSearch" @add="add"></search>
-                        <i-table
-                            stripe
-                            :loading="loadingTable"
-                            ref="table"
-                            :border="false"
-                            :columns="columns"
-                            :data="data"
-                            class="search-table"
-                            @on-selection-change="onSelectionChange"
-                        >
-                        </i-table>
-                    </i-col>
-                </Row>
             </div>
         </div>
         <div style="display:none;" class="fixed-footer">

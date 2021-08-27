@@ -1,6 +1,6 @@
 import http from '@/utils/http'
 import {validateAlphaDash} from '@/utils/validate'
-import search from '../search/index'
+import search from '../../project-issue/search/index'
 import projectTemplate from './template'
 //see https://github.com/SortableJS/Vue.Draggable
 import draggable from 'vuedraggable'
@@ -21,6 +21,29 @@ const resetUserForm = {
     project_id: null,
     page: 1,
     size: 10,
+}
+
+const projectTypeIcon = {
+    'bug': {
+        'icon': 'ios-bug',
+        'color': 'red',
+    },
+    'task': {
+        'icon': 'ios-list-box-outline',
+        'color': 'blue',
+    },
+    'product': {
+        'icon': 'md-map',
+        'color': 'green',
+    },
+    'story': {
+        'icon': 'md-mail-open',
+        'color': 'purple',
+    },
+    'doc': {
+        'icon': 'ios-document-outline',
+        'color': 'red',
+    },
 }
 
 const resetFormUser = {}
@@ -269,7 +292,8 @@ export default {
             favorProjectIds: [],
             projectTemplate: projectTemplate,
             seletedProjectTemplate: 'soft',
-            dragList: [{
+            dragList: [],
+            dragList2: [{
                 list: message.map((name, index) => {
                     return {
                         name,
@@ -317,6 +341,7 @@ export default {
             editable: true,
             order: 1000,
             single: false,
+            projectLabels: [],
         }
     },
     methods: {
@@ -363,11 +388,49 @@ export default {
             this.dragList.splice(index, 1);
         },
         getDataFromSearch(data) {
-            this.data = data.data
-            this.total = data.page.total_record
-            this.page = data.page.current_page
-            this.pageSize = data.page.per_page
-            this.loadingTable = false
+            // this.data = data.data
+            // this.total = data.page.total_record
+            // this.page = data.page.current_page
+            // this.pageSize = data.page.per_page
+            // this.loadingTable = false
+
+            let map = {}
+            data.data.forEach ((item, key) => {
+                if (!map.hasOwnProperty(item.project_label_id)) {
+                    map[item.project_label_id] = []
+                }
+                map[item.project_label_id].push({
+                    name: item.title,
+                    num: item.num,
+                    create_at: item.create_at,
+                    completed: item.completed,
+                    completed_bool: 2 === item.completed,
+                    completed_date: item.completed_date,
+                    project_releases: item.project_releases,
+                    project_tags: item.project_tags,
+                    project_modules: item.project_modules,
+                    project_type: item.project_type,
+                    project_type_icon: {
+                        icon: projectTypeIcon[item.project_type.icon]['icon'],
+                        color: projectTypeIcon[item.project_type.icon]['color'],
+                    },
+                    order: item.sort,
+                    fixed: false,
+                })
+            })
+
+            let hello = []
+            this.projectLabels.forEach((item, key) => {
+                hello.push({
+                    label_id: item.id,
+                    order: item.sort,
+                    name: item.name,
+                    fixed: false,
+                    list: map.hasOwnProperty(item.id) ? map[item.id] : [],
+                })
+            })
+
+            this.dragList = hello
         },
         getProjectFavorDataFromSearch(data) {
             let favorProjectIds = []
@@ -469,9 +532,9 @@ export default {
             this.selectedData = ids
         },
         init: function() {
-            this.$refs.search.search()
-            this.apiGet('role', {status: 1}).then(res => {
-                this.roles = res.data
+            this.apiGet('project-label', {project_ids: [1]}).then(res => {
+                this.projectLabels = res.data
+                this.$refs.search.search()
             })
         },
         handleSubmit(form) {

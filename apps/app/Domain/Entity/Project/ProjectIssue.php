@@ -6,6 +6,8 @@ namespace App\Domain\Entity\Project;
 
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\GetterSetter;
+use Leevel\Database\Ddd\Relation\HasOne;
+use Leevel\Database\Ddd\Relation\ManyMany;
 
 /**
  * 项目问题.
@@ -50,6 +52,9 @@ class ProjectIssue extends Entity
      * - title
      *                     comment: 标题  type: varchar(255)  null: false  
      *                     key:   default:   extra: 
+     * - num
+     *                     comment: 编号: 例如 ISSUE-1101  type: varchar(50)  null: false  
+     *                     key:   default:   extra: 
      * - desc
      *                     comment: 描述  type: varchar(500)  null: false  
      *                     key:   default:   extra: 
@@ -81,8 +86,8 @@ class ProjectIssue extends Entity
      *                     comment: 计划结束时间  type: datetime  null: false  
      *                     key:   default: null  extra: 
      * - archived
-     *                     comment: 是否归档  type: tinyint(4)  null: false  
-     *                     key:   default: 0  extra: 
+     *                     comment: 是否归档：1=未归档;2=已归档;  type: tinyint(1) unsigned  null: false  
+     *                     key:   default: 1  extra: 
      * - archived_date
      *                     comment: 归档时间  type: datetime  null: false  
      *                     key:   default: null  extra: 
@@ -131,6 +136,9 @@ class ProjectIssue extends Entity
         'title' => [
             self::COLUMN_NAME => '标题',
         ],
+        'num' => [
+            self::COLUMN_NAME => '编号: 例如 ISSUE-1101',
+        ],
         'desc' => [
             self::COLUMN_NAME => '描述',
         ],
@@ -162,7 +170,7 @@ class ProjectIssue extends Entity
             self::COLUMN_NAME => '计划结束时间',
         ],
         'archived' => [
-            self::COLUMN_NAME => '是否归档',
+            self::COLUMN_NAME => '是否归档：1=未归档;2=已归档;',
         ],
         'archived_date' => [
             self::COLUMN_NAME => '归档时间',
@@ -195,10 +203,71 @@ class ProjectIssue extends Entity
         'version' => [
             self::COLUMN_NAME => '操作版本号',
         ],
+        'project_type'      => [
+            self::HAS_ONE                => ProjectType::class,
+            self::SOURCE_KEY             => 'project_type_id',
+            self::TARGET_KEY             => 'id',
+            self::RELATION_SCOPE         => 'projectType',
+        ],
+        'project_releases'      => [
+            self::MANY_MANY              => ProjectRelease::class,
+            self::MIDDLE_ENTITY          => ProjectIssueRelease::class,
+            self::SOURCE_KEY             => 'id',
+            self::TARGET_KEY             => 'id',
+            self::MIDDLE_SOURCE_KEY      => 'project_issue_id',
+            self::MIDDLE_TARGET_KEY      => 'project_release_id',
+            self::RELATION_SCOPE         => 'projectReleases',
+        ],
+        'project_tags'      => [
+            self::MANY_MANY              => ProjectTag::class,
+            self::MIDDLE_ENTITY          => ProjectIssueTag::class,
+            self::SOURCE_KEY             => 'id',
+            self::TARGET_KEY             => 'id',
+            self::MIDDLE_SOURCE_KEY      => 'project_issue_id',
+            self::MIDDLE_TARGET_KEY      => 'project_tag_id',
+            self::RELATION_SCOPE         => 'projectTags',
+        ],
+        'project_modules'      => [
+            self::MANY_MANY              => ProjectModule::class,
+            self::MIDDLE_ENTITY          => ProjectIssueModule::class,
+            self::SOURCE_KEY             => 'id',
+            self::TARGET_KEY             => 'id',
+            self::MIDDLE_SOURCE_KEY      => 'project_issue_id',
+            self::MIDDLE_TARGET_KEY      => 'project_module_id',
+            self::RELATION_SCOPE         => 'projectModules',
+        ],
     ]; // END STRUCT
 
     /**
      * Soft delete column.
      */
     public const DELETE_AT = 'delete_at';
+
+    /**
+     * 问题类型关联查询作用域.
+     */
+    protected function relationScopeProjectType(HasOne $relation): void
+    {
+    }
+
+    /**
+     * 问题发行版关联查询作用域.
+     */
+    protected function relationScopeProjectReleases(ManyMany $relation): void
+    {
+    }
+
+    /**
+     * 问题标签关联查询作用域.
+     */
+    protected function relationScopeProjectTags(ManyMany $relation): void
+    {
+    }
+
+    /**
+     * 问题模块关联查询作用域.
+     */
+    protected function relationScopeProjectModules(ManyMany $relation): void
+    {
+    }
 }
