@@ -146,14 +146,14 @@ let appRouterData = [
                 component: importRouter('project/index'),
             },
             {
-                path: 'role',
+                path: 'release',
                 icon: '',
-                name: 'role_index',
+                name: 'project_release_index',
                 meta: {
-                    title: __('角色管理'),
-                    par: ['permission'],
+                    title: __('项目发行'),
+                    par: ['project'],
                 },
-                component: importRouter('role/index'),
+                component: importRouter('project-release/index'),
             },
             {
                 path: 'permission',

@@ -44,6 +44,12 @@ class ProjectRelease extends Entity
      * - project_id
      *                   comment: 项目 ID  type: bigint(20) unsigned  null: false  
      *                   key:   default: 0  extra: 
+     * - completed
+     *                   comment: 是否完成：1=未完成;2=已完成;  type: tinyint(1) unsigned  null: false  
+     *                   key:   default: 1  extra: 
+     * - completed_date
+     *                   comment: 完成时间  type: datetime  null: false  
+     *                   key:   default: null  extra: 
      * - create_at
      *                   comment: 创建时间  type: datetime  null: false  
      *                   key:   default: CURRENT_TIMESTAMP  extra: 
@@ -76,6 +82,12 @@ class ProjectRelease extends Entity
         ],
         'project_id' => [
             self::COLUMN_NAME => '项目 ID',
+        ],
+        'completed' => [
+            self::COLUMN_NAME => '是否完成：1=未完成;2=已完成;',
+        ],
+        'completed_date' => [
+            self::COLUMN_NAME => '完成时间',
         ],
         'create_at' => [
             self::COLUMN_NAME => '创建时间',

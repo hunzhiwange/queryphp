@@ -65,7 +65,7 @@ class ProjectIssue extends Entity
      *                     comment: 是否完成：1=未完成;2=已完成;  type: tinyint(1) unsigned  null: false  
      *                     key:   default: 1  extra: 
      * - completed_date
-     *                     comment: 创建时间  type: datetime  null: false  
+     *                     comment: 完成时间  type: datetime  null: false  
      *                     key:   default: null  extra: 
      * - sub_task
      *                     comment: 子任务列表  type: text  null: false  
@@ -149,7 +149,7 @@ class ProjectIssue extends Entity
             self::COLUMN_NAME => '是否完成：1=未完成;2=已完成;',
         ],
         'completed_date' => [
-            self::COLUMN_NAME => '创建时间',
+            self::COLUMN_NAME => '完成时间',
         ],
         'sub_task' => [
             self::COLUMN_NAME => '子任务列表',
