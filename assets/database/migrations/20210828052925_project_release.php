@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class Apps extends AbstractMigration
+final class ProjectRelease extends AbstractMigration
 {
     public function up(): void
     {
@@ -14,18 +14,20 @@ final class Apps extends AbstractMigration
 
     public function down(): void
     {
-        $this->table('app')->drop()->save();
+        $this->table('project_release')->drop()->save();
     }
 
     private function struct(): void
     {
         $sql = <<<'EOT'
-            CREATE TABLE `app` (
+            CREATE TABLE `project_release` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-                `num` varchar(64) NOT NULL DEFAULT '' COMMENT '应用 ID',
-                `key` varchar(64) NOT NULL DEFAULT '' COMMENT '应用 KEY',
-                `secret` varchar(64) NOT NULL DEFAULT '' COMMENT '应用秘钥',
+                `name` varchar(255) NOT NULL DEFAULT '' COMMENT '发行版名称',
+                `sort` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '排序(ASC)',
                 `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
+                `project_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '项目 ID',
+                `completed` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否完成：1=未完成;2=已完成;',
+                `completed_date` datetime NOT NULL COMMENT '完成时间',
                 `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                 `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                 `delete_at` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间 0=未删除;大于0=删除时间;',
@@ -33,18 +35,19 @@ final class Apps extends AbstractMigration
                 `update_account` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 `version` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '操作版本号',
                 PRIMARY KEY (`id`),
-                UNIQUE KEY `uniq_num` (`num`,`delete_at`) USING BTREE,
-                UNIQUE KEY `uniq_key` (`key`,`delete_at`) USING BTREE
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='应用';
+                UNIQUE KEY `uniq_name` (`name`,`delete_at`) USING BTREE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='项目发行版';
             EOT;
         $this->execute($sql);
     }
 
     private function seed(): void
     {
+        return;
+        /*
         $sql = <<<'EOT'
-            INSERT INTO `app`(`id`, `num`, `key`, `secret`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, 'admin', 'B1DA4485-B49D-D8E3-0F9E-168D7605A797', '4282222', 1, '2019-04-14 22:26:25', '2019-08-25 21:19:23', 0, 0, 0);
             EOT;
         $this->execute($sql);
+        */
     }
 }

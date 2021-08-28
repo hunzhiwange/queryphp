@@ -39,8 +39,11 @@ class ProjectRelease extends Entity
      *                   comment: 发行版名称  type: varchar(255)  null: false  
      *                   key: MUL  default:   extra: 
      * - sort
-     *                   comment: 排序(ASC)  type: tinyint(3) unsigned  null: false  
+     *                   comment: 排序(ASC)  type: bigint(20) unsigned  null: false  
      *                   key:   default: 0  extra: 
+     * - status
+     *                   comment: 状态 0=禁用;1=启用;  type: tinyint(1) unsigned  null: false  
+     *                   key:   default: 1  extra: 
      * - project_id
      *                   comment: 项目 ID  type: bigint(20) unsigned  null: false  
      *                   key:   default: 0  extra: 
@@ -79,6 +82,9 @@ class ProjectRelease extends Entity
         ],
         'sort' => [
             self::COLUMN_NAME => '排序(ASC)',
+        ],
+        'status' => [
+            self::COLUMN_NAME => '状态 0=禁用;1=启用;',
         ],
         'project_id' => [
             self::COLUMN_NAME => '项目 ID',

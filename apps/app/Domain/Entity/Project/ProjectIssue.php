@@ -49,6 +49,9 @@ class ProjectIssue extends Entity
      * - owner_user_id
      *                     comment: 负责人用户 ID  type: bigint(20) unsigned  null: false  
      *                     key:   default: 0  extra: 
+     * - project_log_id
+     *                     comment: 项目日志 ID  type: bigint(20) unsigned  null: false  
+     *                     key:   default: 0  extra: 
      * - title
      *                     comment: 标题  type: varchar(255)  null: false  
      *                     key:   default:   extra: 
@@ -73,9 +76,6 @@ class ProjectIssue extends Entity
      * - follower
      *                     comment: 关注人列表  type: text  null: false  
      *                     key:   default: null  extra: 
-     * - push_id
-     *                     comment: 已发送的最后动态 ID  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
      * - file_number
      *                     comment: 附件数量  type: bigint(20) unsigned  null: false  
      *                     key:   default: 0  extra: 
@@ -133,6 +133,9 @@ class ProjectIssue extends Entity
         'owner_user_id' => [
             self::COLUMN_NAME => '负责人用户 ID',
         ],
+        'project_log_id' => [
+            self::COLUMN_NAME => '项目日志 ID',
+        ],
         'title' => [
             self::COLUMN_NAME => '标题',
         ],
@@ -156,9 +159,6 @@ class ProjectIssue extends Entity
         ],
         'follower' => [
             self::COLUMN_NAME => '关注人列表',
-        ],
-        'push_id' => [
-            self::COLUMN_NAME => '已发送的最后动态 ID',
         ],
         'file_number' => [
             self::COLUMN_NAME => '附件数量',

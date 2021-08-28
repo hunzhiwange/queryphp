@@ -42,7 +42,7 @@ class Project extends Entity
      *                      comment: 编号  type: varchar(64)  null: false  
      *                      key: MUL  default:   extra: 
      * - status
-     *                      comment: 状态 0=禁用;1=启用;  type: tinyint(4) unsigned  null: false  
+     *                      comment: 状态 0=禁用;1=启用;  type: tinyint(1) unsigned  null: false  
      *                      key:   default: 1  extra: 
      * - progress
      *                      comment: 进度条(最大值 10000，需要除以 100 表示实际进度)  type: int(5) unsigned  null: false  
@@ -57,7 +57,7 @@ class Project extends Entity
      *                      comment: 未完成任务数量  type: bigint(20) unsigned  null: false  
      *                      key:   default: 0  extra: 
      * - sort
-     *                      comment: 排序(ASC)  type: tinyint(3) unsigned  null: false  
+     *                      comment: 排序(ASC)  type: bigint(20) unsigned  null: false  
      *                      key:   default: 0  extra: 
      * - create_at
      *                      comment: 创建时间  type: datetime  null: false  

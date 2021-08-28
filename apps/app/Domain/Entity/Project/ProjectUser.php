@@ -37,7 +37,7 @@ class ProjectUser extends Entity
      *                   key: PRI  default: null  extra: auto_increment
      * - user_id
      *                   comment: 用户 ID  type: bigint(20) unsigned  null: false  
-     *                   key:   default: 0  extra: 
+     *                   key: MUL  default: 0  extra: 
      * - type
      *                   comment: 类型 1=成员;2=收藏;3=关注;  type: tinyint(1) unsigned  null: false  
      *                   key:   default: 1  extra: 

@@ -23,6 +23,7 @@ final class ProjectType extends AbstractMigration
             CREATE TABLE `project_type` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
                 `name` varchar(255) NOT NULL DEFAULT '' COMMENT '类型名称',
+                `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
                 `sort` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序(ASC)',
                 `icon` varchar(255) NOT NULL DEFAULT '' COMMENT '类型图标',
                 `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

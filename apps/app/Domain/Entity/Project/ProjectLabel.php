@@ -41,8 +41,11 @@ class ProjectLabel extends Entity
      * - name
      *                   comment: 分类名称  type: varchar(100)  null: false  
      *                   key:   default:   extra: 
+     * - status
+     *                   comment: 状态 0=禁用;1=启用;  type: tinyint(1) unsigned  null: false  
+     *                   key:   default: 1  extra: 
      * - sort
-     *                   comment: 排序(ASC)  type: tinyint(3) unsigned  null: false  
+     *                   comment: 排序(ASC)  type: bigint(20) unsigned  null: false  
      *                   key:   default: 0  extra: 
      * - create_at
      *                   comment: 创建时间  type: datetime  null: false  
@@ -73,6 +76,9 @@ class ProjectLabel extends Entity
         ],
         'name' => [
             self::COLUMN_NAME => '分类名称',
+        ],
+        'status' => [
+            self::COLUMN_NAME => '状态 0=禁用;1=启用;',
         ],
         'sort' => [
             self::COLUMN_NAME => '排序(ASC)',

@@ -38,11 +38,14 @@ class ProjectModule extends Entity
      * - name
      *                   comment: 模块名称  type: varchar(255)  null: false  
      *                   key: MUL  default:   extra: 
+     * - status
+     *                   comment: 状态 0=禁用;1=启用;  type: tinyint(1) unsigned  null: false  
+     *                   key:   default: 1  extra: 
      * - color
      *                   comment: 模块颜色  type: char(7)  null: false  
      *                   key:   default:   extra: 
      * - sort
-     *                   comment: 排序(ASC)  type: tinyint(3) unsigned  null: false  
+     *                   comment: 排序(ASC)  type: bigint(20) unsigned  null: false  
      *                   key:   default: 0  extra: 
      * - project_id
      *                   comment: 项目 ID  type: bigint(20) unsigned  null: false  
@@ -73,6 +76,9 @@ class ProjectModule extends Entity
         ],
         'name' => [
             self::COLUMN_NAME => '模块名称',
+        ],
+        'status' => [
+            self::COLUMN_NAME => '状态 0=禁用;1=启用;',
         ],
         'color' => [
             self::COLUMN_NAME => '模块颜色',

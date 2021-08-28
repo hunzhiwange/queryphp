@@ -53,7 +53,7 @@ class User extends Entity
      *                   comment: 手机  type: char(11)  null: false  
      *                   key:   default:   extra: 
      * - status
-     *                   comment: 状态 0=禁用;1=启用;  type: tinyint(4)  null: false  
+     *                   comment: 状态 0=禁用;1=启用;  type: tinyint(1)  null: false  
      *                   key:   default: 1  extra: 
      * - create_at
      *                   comment: 创建时间  type: datetime  null: false  
@@ -86,7 +86,6 @@ class User extends Entity
             self::COLUMN_NAME => '编号',
         ],
         'password' => [
-            self::SHOW_PROP_BLACK => true,
             self::COLUMN_NAME => '密码',
         ],
         'email' => [
