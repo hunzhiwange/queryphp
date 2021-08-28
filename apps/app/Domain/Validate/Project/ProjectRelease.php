@@ -25,13 +25,15 @@ class ProjectRelease implements IValidator
             'update' => [
                 'id',
                 'name',
-                'num',
+                'sort',
                 'status',
+                'project_id',
             ],
             'store' => [
                 'name',
-                'num',
+                'sort',
                 'status',
+                'project_id',
             ],
         ];
     }
@@ -60,7 +62,8 @@ class ProjectRelease implements IValidator
         return [
             'id' => 'required|type:int|gt:0',
             'name' => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
-            'num'  => ['required', $this->uniqueRule],
+            'sort'  => 'required|type:int|egt:0',
+            'project_id'  => 'required|type:int|gt:0',
             'status' => [
                 ['in', EntityProjectRelease::values('status')],
             ],

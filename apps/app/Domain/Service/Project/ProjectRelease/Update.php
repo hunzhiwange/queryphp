@@ -87,7 +87,7 @@ class Update
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
-            throw new ProjectBusinessException(ProjectErrorCode::RESOURCE_UPDATE_INVALID_ARGUMENT, $e, true);
+            throw new ProjectBusinessException(ProjectErrorCode::PROJECT_RELEASE_UPDATE_INVALID_ARGUMENT, $e, true);
         }
     }
 }

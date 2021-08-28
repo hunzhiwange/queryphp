@@ -6,9 +6,11 @@ namespace App\Domain\Service\Project\ProjectRelease;
 
 trait BaseStoreUpdateParams
 {
-    public string $num;
+    public int $sort = 0;
 
     public string $name;
 
     public int $status;
+
+    public int $projectId;
 }

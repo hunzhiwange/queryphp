@@ -73,7 +73,7 @@ class Store
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
-            throw new ProjectBusinessException(ProjectErrorCode::RESOURCE_STORE_INVALID_ARGUMENT, $e, true);
+            throw new ProjectBusinessException(ProjectErrorCode::PROJECT_RELEASE_STORE_INVALID_ARGUMENT, $e, true);
         }
     }
 }

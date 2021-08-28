@@ -14,20 +14,17 @@ class ProjectReleasesParams extends ReadParams
 {
     public ?int $status = null;
 
-    public string $orderBy = 'id DESC';
+    public string $orderBy = 'sort ASC,id DESC';
 
     protected function columnDefaultValue(): TypedStringArray
     {
-        return new TypedStringArray([
-            'id', 'name', 'num',
-            'status', 'create_at',
-        ]);
+        return new TypedStringArray(['*']);
     }
 
     protected function keyColumnDefaultValue(): TypedStringArray
     {
         return new TypedStringArray([
-            'id', 'name', 'num',
+            'id', 'name',
         ]);
     }
 }
