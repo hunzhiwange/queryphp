@@ -123,4 +123,14 @@ class ProjectRelease extends Entity
      * Soft delete column.
      */
     public const DELETE_AT = 'delete_at';
+
+    /**
+     * 状态值.
+     */
+    
+    #[status('禁用')]
+    public const STATUS_DISABLE = 0;
+
+    #[status('启用')]
+    public const STATUS_ENABLE = 1;
 }
