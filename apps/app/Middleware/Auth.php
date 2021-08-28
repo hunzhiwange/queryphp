@@ -21,6 +21,7 @@ use Leevel\Kernel\IApp;
 use Symfony\Component\HttpFoundation\Response;
 use function App\Infra\Helper\create_signature;
 use Leevel\Auth\Manager;
+use App as Apps;
 
 /**
  * auth 中间件.
@@ -110,10 +111,21 @@ class Auth extends BaseAuth
                 $this->validateSignature($request, $this->appSecret);
             }
 
+            // 注入公司 ID
+            $this->setCompanyId();
+
             return parent::handle($next, $request);
         } catch (AuthException) {
             throw new UnauthorizedHttpException(AuthErrorCode::PERMISSION_AUTHENTICATION_FAILED);
         }
+    }
+
+    /**
+     * 注入公司 ID.
+     */
+    private function setCompanyId(): void
+    {
+        Apps::container()->instance('company_id', 1);
     }
 
     /**

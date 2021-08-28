@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Support;
 
-use App\Domain\Entity\Base\Common;
+use App\Domain\Entity\Common;
 use App\Exceptions\BusinessException;
 use App\Exceptions\ErrorCode;
 use Leevel\Collection\Collection;

@@ -6,6 +6,7 @@ namespace App\Domain\Entity\Project;
 
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\GetterSetter;
+use App\Domain\Entity\CompanyId;
 
 /**
  * 项目.
@@ -13,6 +14,7 @@ use Leevel\Database\Ddd\GetterSetter;
 class Project extends Entity
 {
     use GetterSetter;
+    use CompanyId;
 
     /**
      * Database table.
@@ -35,6 +37,9 @@ class Project extends Entity
      * - id
      *                      comment: ID  type: bigint(20) unsigned  null: false  
      *                      key: PRI  default: null  extra: auto_increment
+     * - company_id
+     *                      comment: 公司 ID  type: bigint(20) unsigned  null: false  
+     *                      key:   default: 1  extra: 
      * - name
      *                      comment: 项目名称  type: varchar(255)  null: false  
      *                      key: MUL  default:   extra: 
@@ -82,6 +87,9 @@ class Project extends Entity
         'id' => [
             self::COLUMN_NAME => 'ID',
             self::READONLY => true,
+        ],
+        'company_id' => [
+            self::COLUMN_NAME => '公司 ID',
         ],
         'name' => [
             self::COLUMN_NAME => '项目名称',
@@ -145,4 +153,13 @@ class Project extends Entity
      * Soft delete column.
      */
     public const DELETE_AT = 'delete_at';
+
+    /**
+     * {@inheritDoc}
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+        static::addCompanyIdGlobalScope();
+    }
 }
