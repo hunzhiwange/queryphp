@@ -152,7 +152,7 @@ class ProjectRelease extends Entity
     public const COMPLETED_TRUE = 2;
 
     /**
-     * 问题关联查询作用域.
+     * 项目关联查询作用域.
      */
     protected function relationScopeProject(BelongsTo $relation): void
     {
