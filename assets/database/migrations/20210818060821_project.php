@@ -22,6 +22,7 @@ final class Project extends AbstractMigration
         $sql = <<<'EOT'
             CREATE TABLE `project` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                `company_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '公司 ID',
                 `name` varchar(255) NOT NULL DEFAULT '' COMMENT '项目名称',
                 `num` varchar(64) NOT NULL DEFAULT '' COMMENT '编号',
                 `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
