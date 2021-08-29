@@ -11,6 +11,4 @@ trait BaseStoreUpdateParams
     public string $name;
 
     public int $status;
-
-    public int $projectId;
 }

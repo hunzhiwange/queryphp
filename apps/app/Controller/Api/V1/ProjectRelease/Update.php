@@ -23,7 +23,6 @@ class Update
         'name',
         'sort',
         'status',
-        'project_id',
     ];
 
     public function handle(Request $request, Service $service): array

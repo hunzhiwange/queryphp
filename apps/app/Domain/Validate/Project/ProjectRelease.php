@@ -27,7 +27,6 @@ class ProjectRelease implements IValidator
                 'name',
                 'sort',
                 'status',
-                'project_id',
             ],
             'store' => [
                 'name',

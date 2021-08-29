@@ -12,4 +12,6 @@ use Leevel\Support\Dto;
 class StoreParams extends Dto
 {
     use BaseStoreUpdateParams;
+
+    public int $projectId;
 }
