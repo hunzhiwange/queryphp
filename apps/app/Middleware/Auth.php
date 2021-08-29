@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 use function App\Infra\Helper\create_signature;
 use Leevel\Auth\Manager;
 use App as Apps;
+use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\Select;
 
 /**
  * auth 中间件.
@@ -125,7 +127,22 @@ class Auth extends BaseAuth
      */
     private function setCompanyId(): void
     {
-        Apps::container()->instance('company_id', 1);
+        // 先写死公司，后续可以替换
+        $companyId = 1;
+
+        // 注册到容器中，其它地方可以调用
+        Apps::container()->instance('company_id', $companyId);
+
+        // 拥有 company_id 字段的实体自动添加全局 company_id 查询过滤
+        Entity::event(Entity::BOOT_EVENT, function (string $event, string $entityClass) use($companyId): void {
+            if (!$entityClass::hasField('company_id')) {
+                return;
+            }
+
+            $entityClass::addGlobalScope('company_id', function (Select $select) use($companyId): void {
+                $select->where('company_id', $companyId);
+            });
+        });
     }
 
     /**

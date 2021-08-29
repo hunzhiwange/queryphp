@@ -6,7 +6,6 @@ namespace App\Domain\Entity\Project;
 
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\GetterSetter;
-use App\Domain\Entity\CompanyId;
 
 /**
  * 项目.
@@ -14,7 +13,6 @@ use App\Domain\Entity\CompanyId;
 class Project extends Entity
 {
     use GetterSetter;
-    use CompanyId;
 
     /**
      * Database table.
@@ -153,13 +151,4 @@ class Project extends Entity
      * Soft delete column.
      */
     public const DELETE_AT = 'delete_at';
-
-    /**
-     * {@inheritDoc}
-     */
-    protected static function boot(): void
-    {
-        parent::boot();
-        static::addCompanyIdGlobalScope();
-    }
 }
