@@ -10,7 +10,7 @@ use App\Domain\Service\Support\StatusParams;
 use Leevel\Http\Request;
 
 /**
- * 批量修改项目发行版状态.
+ * 批量修改项目发行状态.
  *
  * @codeCoverageIgnore
  */

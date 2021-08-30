@@ -37,6 +37,15 @@ class ProjectIssue extends Entity
      * - id
      *                     comment: ID  type: bigint(20) unsigned  null: false  
      *                     key: PRI  default: null  extra: auto_increment
+     * - title
+     *                     comment: 标题  type: varchar(255)  null: false  
+     *                     key:   default:   extra: 
+     * - num
+     *                     comment: 编号: 例如 ISSUE-1101  type: varchar(50)  null: false  
+     *                     key:   default:   extra: 
+     * - company_id
+     *                     comment: 公司 ID  type: bigint(20) unsigned  null: false  
+     *                     key: MUL  default: 1  extra: 
      * - project_id
      *                     comment: 项目ID  type: bigint(20) unsigned  null: false  
      *                     key:   default: 0  extra: 
@@ -52,12 +61,6 @@ class ProjectIssue extends Entity
      * - project_log_id
      *                     comment: 项目日志 ID  type: bigint(20) unsigned  null: false  
      *                     key:   default: 0  extra: 
-     * - title
-     *                     comment: 标题  type: varchar(255)  null: false  
-     *                     key:   default:   extra: 
-     * - num
-     *                     comment: 编号: 例如 ISSUE-1101  type: varchar(50)  null: false  
-     *                     key:   default:   extra: 
      * - desc
      *                     comment: 描述  type: varchar(500)  null: false  
      *                     key:   default:   extra: 
@@ -121,6 +124,15 @@ class ProjectIssue extends Entity
             self::COLUMN_NAME => 'ID',
             self::READONLY => true,
         ],
+        'title' => [
+            self::COLUMN_NAME => '标题',
+        ],
+        'num' => [
+            self::COLUMN_NAME => '编号: 例如 ISSUE-1101',
+        ],
+        'company_id' => [
+            self::COLUMN_NAME => '公司 ID',
+        ],
         'project_id' => [
             self::COLUMN_NAME => '项目ID',
         ],
@@ -135,12 +147,6 @@ class ProjectIssue extends Entity
         ],
         'project_log_id' => [
             self::COLUMN_NAME => '项目日志 ID',
-        ],
-        'title' => [
-            self::COLUMN_NAME => '标题',
-        ],
-        'num' => [
-            self::COLUMN_NAME => '编号: 例如 ISSUE-1101',
         ],
         'desc' => [
             self::COLUMN_NAME => '描述',

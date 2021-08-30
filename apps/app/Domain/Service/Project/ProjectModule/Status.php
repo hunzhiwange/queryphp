@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Service\Project\ProjectRelease;
+namespace App\Domain\Service\Project\ProjectModule;
 
-use App\Domain\Entity\Project\ProjectRelease;
+use App\Domain\Entity\Project\ProjectModule;
 use App\Domain\Service\Support\Status as CommonStatus;
 
 /**
- * 批量修改项目发行状态.
+ * 批量修改项目模块状态.
  */
 class Status
 {
@@ -19,6 +19,6 @@ class Status
      */
     private function entity(): string
     {
-        return ProjectRelease::class;
+        return ProjectModule::class;
     }
 }

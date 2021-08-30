@@ -35,6 +35,9 @@ class ProjectContent extends Entity
      * - id
      *                     comment: ID  type: bigint(20) unsigned  null: false  
      *                     key: PRI  default: null  extra: auto_increment
+     * - company_id
+     *                     comment: 公司 ID  type: bigint(20) unsigned  null: false  
+     *                     key: MUL  default: 1  extra: 
      * - project_id
      *                     comment: 项目ID  type: bigint(20) unsigned  null: false  
      *                     key:   default: 0  extra: 
@@ -67,6 +70,9 @@ class ProjectContent extends Entity
         'id' => [
             self::COLUMN_NAME => 'ID',
             self::READONLY => true,
+        ],
+        'company_id' => [
+            self::COLUMN_NAME => '公司 ID',
         ],
         'project_id' => [
             self::COLUMN_NAME => '项目ID',

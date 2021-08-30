@@ -11,7 +11,7 @@ use App\Domain\Service\Project\ProjectRelease\ProjectReleasesParams;
 use Leevel\Database\Ddd\Select;
 
 /**
- * 项目发行版列表.
+ * 项目发行列表.
  */
 class ProjectReleases
 {

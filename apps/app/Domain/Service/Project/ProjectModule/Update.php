@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Service\Project\ProjectRelease;
+namespace App\Domain\Service\Project\ProjectModule;
 
-use App\Domain\Entity\Project\ProjectRelease;
+use App\Domain\Entity\Project\ProjectModule;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
 use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
-use App\Domain\Validate\Project\ProjectRelease as ProjectProjectRelease;
+use App\Domain\Validate\Project\ProjectModule as ProjectProjectModule;
 
 /**
- * 项目发行更新.
+ * 项目模块更新.
  */
 class Update
 {
@@ -31,7 +31,7 @@ class Update
     /**
      * 保存.
      */
-    private function save(UpdateParams $params): ProjectRelease
+    private function save(UpdateParams $params): ProjectModule
     {
         $this->w
             ->persist($entity = $this->entity($params))
@@ -44,7 +44,7 @@ class Update
     /**
      * 验证参数.
      */
-    private function entity(UpdateParams $params): ProjectRelease
+    private function entity(UpdateParams $params): ProjectModule
     {
         $entity = $this->find($params->id);
         $entity->withProps($this->data($params));
@@ -55,10 +55,10 @@ class Update
     /**
      * 查找实体.
      */
-    private function find(int $id): ProjectRelease
+    private function find(int $id): ProjectModule
     {
         return $this->w
-            ->repository(ProjectRelease::class)
+            ->repository(ProjectModule::class)
             ->findOrFail($id);
     }
 
@@ -78,16 +78,16 @@ class Update
     private function validateArgs(UpdateParams $params): void
     {
         $uniqueRule = UniqueRule::rule(
-            ProjectRelease::class,
+            ProjectModule::class,
             exceptId:$params->id,
             additional:['delete_at' => 0]
         );
 
-        $validator = Validate::make(new ProjectProjectRelease($uniqueRule), 'update', $params->toArray())->getValidator();
+        $validator = Validate::make(new ProjectProjectModule($uniqueRule), 'update', $params->toArray())->getValidator();
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
-            throw new ProjectBusinessException(ProjectErrorCode::PROJECT_RELEASE_UPDATE_INVALID_ARGUMENT, $e, true);
+            throw new ProjectBusinessException(ProjectErrorCode::PROJECT_MODULE_UPDATE_INVALID_ARGUMENT, $e, true);
         }
     }
 }

@@ -35,12 +35,15 @@ class ProjectLabel extends Entity
      * - id
      *                   comment: ID  type: bigint(20) unsigned  null: false  
      *                   key: PRI  default: null  extra: auto_increment
-     * - project_id
-     *                   comment: 项目 ID  type: bigint(20) unsigned  null: false  
-     *                   key: MUL  default: 0  extra: 
+     * - company_id
+     *                   comment: 公司 ID  type: bigint(20) unsigned  null: false  
+     *                   key:   default: 1  extra: 
      * - name
      *                   comment: 分类名称  type: varchar(100)  null: false  
      *                   key:   default:   extra: 
+     * - project_id
+     *                   comment: 项目 ID  type: bigint(20) unsigned  null: false  
+     *                   key: MUL  default: 0  extra: 
      * - status
      *                   comment: 状态 0=禁用;1=启用;  type: tinyint(1) unsigned  null: false  
      *                   key:   default: 1  extra: 
@@ -71,11 +74,14 @@ class ProjectLabel extends Entity
             self::COLUMN_NAME => 'ID',
             self::READONLY => true,
         ],
-        'project_id' => [
-            self::COLUMN_NAME => '项目 ID',
+        'company_id' => [
+            self::COLUMN_NAME => '公司 ID',
         ],
         'name' => [
             self::COLUMN_NAME => '分类名称',
+        ],
+        'project_id' => [
+            self::COLUMN_NAME => '项目 ID',
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',

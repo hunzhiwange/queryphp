@@ -2,32 +2,30 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\V1\ProjectRelease;
+namespace App\Controller\Api\V1\ProjectModule;
 
 use App\Controller\Support\Controller;
-use App\Domain\Service\Project\ProjectRelease\Store as Service;
-use App\Domain\Service\Project\ProjectRelease\StoreParams;
+use App\Domain\Service\Project\ProjectModule\Status as Service;
+use App\Domain\Service\Support\StatusParams;
 use Leevel\Http\Request;
 
 /**
- * 项目发行保存.
+ * 批量修改项目模块状态.
  *
  * @codeCoverageIgnore
  */
-class Store
+class Status
 {
     use Controller;
 
     private array $allowedInput = [
-        'name',
-        'sort',
+        'ids',
         'status',
-        'project_id',
     ];
 
     public function handle(Request $request, Service $service): array
     {
-        $params = new StoreParams($this->input($request));
+        $params = new StatusParams($this->input($request));
 
         return $service->handle($params);
     }

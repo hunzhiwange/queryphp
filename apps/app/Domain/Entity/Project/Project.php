@@ -37,7 +37,7 @@ class Project extends Entity
      *                      key: PRI  default: null  extra: auto_increment
      * - company_id
      *                      comment: 公司 ID  type: bigint(20) unsigned  null: false  
-     *                      key:   default: 1  extra: 
+     *                      key: MUL  default: 1  extra: 
      * - name
      *                      comment: 项目名称  type: varchar(255)  null: false  
      *                      key: MUL  default:   extra: 

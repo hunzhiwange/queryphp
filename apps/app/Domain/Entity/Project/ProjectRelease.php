@@ -9,7 +9,7 @@ use Leevel\Database\Ddd\GetterSetter;
 use Leevel\Database\Ddd\Relation\BelongsTo;
 
 /**
- * 项目发行版.
+ * 项目发行.
  */
 class ProjectRelease extends Entity
 {
@@ -38,9 +38,9 @@ class ProjectRelease extends Entity
      *                   key: PRI  default: null  extra: auto_increment
      * - company_id
      *                   comment: 公司 ID  type: bigint(20) unsigned  null: false  
-     *                   key:   default: 1  extra: 
+     *                   key: MUL  default: 1  extra: 
      * - name
-     *                   comment: 发行版名称  type: varchar(255)  null: false  
+     *                   comment: 发行名称  type: varchar(255)  null: false  
      *                   key: MUL  default:   extra: 
      * - sort
      *                   comment: 排序(ASC)  type: bigint(20) unsigned  null: false  
@@ -85,7 +85,7 @@ class ProjectRelease extends Entity
             self::COLUMN_NAME => '公司 ID',
         ],
         'name' => [
-            self::COLUMN_NAME => '发行版名称',
+            self::COLUMN_NAME => '发行名称',
         ],
         'sort' => [
             self::COLUMN_NAME => '排序(ASC)',

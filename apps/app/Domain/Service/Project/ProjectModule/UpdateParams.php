@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Service\Project\ProjectRelease;
+namespace App\Domain\Service\Project\ProjectModule;
 
 use Leevel\Support\Dto;
 
 /**
- * 项目发行更新参数.
+ * 项目模块更新参数.
  */
 class UpdateParams extends Dto
 {

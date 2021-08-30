@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\V1\ProjectRelease;
+namespace App\Controller\Api\V1\ProjectModule;
 
 use App\Controller\Support\Controller;
-use App\Domain\Service\Project\ProjectRelease\ProjectReleases as Service;
-use App\Domain\Service\Project\ProjectRelease\ProjectReleasesParams;
+use App\Domain\Service\Project\ProjectModule\ProjectModules as Service;
+use App\Domain\Service\Project\ProjectModule\ProjectModulesParams;
 use Leevel\Http\Request;
 
 /**
- * 项目发行列表.
+ * 项目模块列表.
  *
  * @codeCoverageIgnore
  */
@@ -28,7 +28,7 @@ class Index
     public function handle(Request $request, Service $service): array
     {
         $input = $this->input($request);
-        $params = new ProjectReleasesParams($input);
+        $params = new ProjectModulesParams($input);
 
         return $service->handle($params);;
     }

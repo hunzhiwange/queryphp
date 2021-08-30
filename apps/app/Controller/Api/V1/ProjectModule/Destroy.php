@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\V1\ProjectRelease;
+namespace App\Controller\Api\V1\ProjectModule;
 
 use App\Controller\Support\Controller;
-use App\Domain\Service\Project\ProjectRelease\Destroy as Service;
+use App\Domain\Service\Project\ProjectModule\Destroy as Service;
 use App\Domain\Service\Support\DestroyParams;
 use Leevel\Http\Request;
 
 /**
- * 项目发行删除.
+ * 项目模块删除.
  *
  * @codeCoverageIgnore
  */

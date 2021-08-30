@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\V1\ProjectRelease;
+namespace App\Controller\Api\V1\ProjectModule;
 
 use App\Controller\Support\Controller;
-use App\Domain\Service\Project\ProjectRelease\Store as Service;
-use App\Domain\Service\Project\ProjectRelease\StoreParams;
+use App\Domain\Service\Project\ProjectModule\Store as Service;
+use App\Domain\Service\Project\ProjectModule\StoreParams;
 use Leevel\Http\Request;
 
 /**
- * 项目发行保存.
+ * 项目模块保存.
  *
  * @codeCoverageIgnore
  */
@@ -22,6 +22,7 @@ class Store
         'name',
         'sort',
         'status',
+        'color',
         'project_id',
     ];
 

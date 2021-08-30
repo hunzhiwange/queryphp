@@ -35,9 +35,15 @@ class ProjectTag extends Entity
      * - id
      *                   comment: ID  type: bigint(20) unsigned  null: false  
      *                   key: PRI  default: null  extra: auto_increment
+     * - company_id
+     *                   comment: 公司 ID  type: bigint(20) unsigned  null: false  
+     *                   key: MUL  default: 1  extra: 
      * - name
      *                   comment: 标签名称  type: varchar(255)  null: false  
      *                   key: MUL  default:   extra: 
+     * - status
+     *                   comment: 状态 0=禁用;1=启用;  type: tinyint(1) unsigned  null: false  
+     *                   key:   default: 1  extra: 
      * - color
      *                   comment: 标签颜色  type: char(7)  null: false  
      *                   key:   default:   extra: 
@@ -71,8 +77,14 @@ class ProjectTag extends Entity
             self::COLUMN_NAME => 'ID',
             self::READONLY => true,
         ],
+        'company_id' => [
+            self::COLUMN_NAME => '公司 ID',
+        ],
         'name' => [
             self::COLUMN_NAME => '标签名称',
+        ],
+        'status' => [
+            self::COLUMN_NAME => '状态 0=禁用;1=启用;',
         ],
         'color' => [
             self::COLUMN_NAME => '标签颜色',

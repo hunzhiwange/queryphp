@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\Validate\Project;
 
-use App\Domain\Entity\Project\ProjectRelease as EntityProjectRelease;
+use App\Domain\Entity\Project\ProjectModule as EntityProjectModule;
 use App\Domain\Validate\IValidator;
 
 /**
- * 项目发行验证.
+ * 项目模块验证.
  */
-class ProjectRelease implements IValidator
+class ProjectModule implements IValidator
 {
     public function __construct(private string $uniqueRule)
     {
@@ -42,7 +42,7 @@ class ProjectRelease implements IValidator
      */
     public function names(): array
     {
-        return EntityProjectRelease::columnNames();
+        return EntityProjectModule::columnNames();
     }
 
     /**
@@ -64,7 +64,7 @@ class ProjectRelease implements IValidator
             'sort'  => 'required|type:int|egt:0',
             'project_id'  => 'required|type:int|gt:0',
             'status' => [
-                ['in', EntityProjectRelease::values('status')],
+                ['in', EntityProjectModule::values('status')],
             ],
         ];
     }

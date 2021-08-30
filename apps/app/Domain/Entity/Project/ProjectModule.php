@@ -6,6 +6,7 @@ namespace App\Domain\Entity\Project;
 
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\GetterSetter;
+use Leevel\Database\Ddd\Relation\BelongsTo;
 
 /**
  * 项目模块.
@@ -35,6 +36,9 @@ class ProjectModule extends Entity
      * - id
      *                   comment: ID  type: bigint(20) unsigned  null: false  
      *                   key: PRI  default: null  extra: auto_increment
+     * - company_id
+     *                   comment: 公司 ID  type: bigint(20) unsigned  null: false  
+     *                   key:   default: 1  extra: 
      * - name
      *                   comment: 模块名称  type: varchar(255)  null: false  
      *                   key: MUL  default:   extra: 
@@ -49,7 +53,7 @@ class ProjectModule extends Entity
      *                   key:   default: 0  extra: 
      * - project_id
      *                   comment: 项目 ID  type: bigint(20) unsigned  null: false  
-     *                   key:   default: 0  extra: 
+     *                   key: MUL  default: 0  extra: 
      * - create_at
      *                   comment: 创建时间  type: datetime  null: false  
      *                   key:   default: CURRENT_TIMESTAMP  extra: 
@@ -73,6 +77,9 @@ class ProjectModule extends Entity
         'id' => [
             self::COLUMN_NAME => 'ID',
             self::READONLY => true,
+        ],
+        'company_id' => [
+            self::COLUMN_NAME => '公司 ID',
         ],
         'name' => [
             self::COLUMN_NAME => '模块名称',
@@ -111,6 +118,12 @@ class ProjectModule extends Entity
         'version' => [
             self::COLUMN_NAME => '操作版本号',
         ],
+        'project'      => [
+            self::BELONGS_TO             => Project::class,
+            self::SOURCE_KEY             => 'project_id',
+            self::TARGET_KEY             => 'id',
+            self::RELATION_SCOPE         => 'project',
+        ],
     ]; // END STRUCT
 
     /**
@@ -127,4 +140,11 @@ class ProjectModule extends Entity
 
     #[status('启用')]
     public const STATUS_ENABLE = 1;
+
+    /**
+     * 项目关联查询作用域.
+     */
+    protected function relationScopeProject(BelongsTo $relation): void
+    {
+    }
 }

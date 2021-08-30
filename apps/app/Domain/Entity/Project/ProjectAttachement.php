@@ -35,15 +35,18 @@ class ProjectAttachement extends Entity
      * - id
      *                     comment: ID  type: bigint(20) unsigned  null: false  
      *                     key: PRI  default: null  extra: auto_increment
+     * - name
+     *                     comment: 文件名称  type: varchar(100)  null: false  
+     *                     key:   default:   extra: 
+     * - company_id
+     *                     comment: 公司 ID  type: bigint(20) unsigned  null: false  
+     *                     key: MUL  default: 1  extra: 
      * - project_id
      *                     comment: 项目ID  type: int(11) unsigned  null: false  
      *                     key:   default: 0  extra: 
      * - project_issue_id
      *                     comment: 任务ID  type: int(11) unsigned  null: false  
      *                     key:   default: 0  extra: 
-     * - name
-     *                     comment: 文件名称  type: varchar(100)  null: false  
-     *                     key:   default:   extra: 
      * - size
      *                     comment: 文件大小(B)  type: int(11) unsigned  null: false  
      *                     key:   default: 0  extra: 
@@ -73,21 +76,24 @@ class ProjectAttachement extends Entity
      *                     key:   default: 0  extra: 
      * - version
      *                     comment: 操作版本号  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                     key:   default: 1  extra: 
      */
     public const STRUCT = [
         'id' => [
             self::COLUMN_NAME => 'ID',
             self::READONLY => true,
         ],
+        'name' => [
+            self::COLUMN_NAME => '文件名称',
+        ],
+        'company_id' => [
+            self::COLUMN_NAME => '公司 ID',
+        ],
         'project_id' => [
             self::COLUMN_NAME => '项目ID',
         ],
         'project_issue_id' => [
             self::COLUMN_NAME => '任务ID',
-        ],
-        'name' => [
-            self::COLUMN_NAME => '文件名称',
         ],
         'size' => [
             self::COLUMN_NAME => '文件大小(B)',

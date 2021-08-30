@@ -35,11 +35,14 @@ class ProjectIssueRelease extends Entity
      * - id
      *                       comment: ID  type: bigint(20) unsigned  null: false  
      *                       key: PRI  default: null  extra: auto_increment
+     * - company_id
+     *                       comment: 公司 ID  type: bigint(20) unsigned  null: false  
+     *                       key:   default: 1  extra: 
      * - project_issue_id
      *                       comment: 项目问题 ID  type: bigint(20) unsigned  null: false  
      *                       key: MUL  default: 0  extra: 
      * - project_release_id
-     *                       comment: 项目发行版 ID  type: bigint(20) unsigned  null: false  
+     *                       comment: 项目发行 ID  type: bigint(20) unsigned  null: false  
      *                       key:   default: 0  extra: 
      * - create_at
      *                       comment: 创建时间  type: datetime  null: false  
@@ -65,11 +68,14 @@ class ProjectIssueRelease extends Entity
             self::COLUMN_NAME => 'ID',
             self::READONLY => true,
         ],
+        'company_id' => [
+            self::COLUMN_NAME => '公司 ID',
+        ],
         'project_issue_id' => [
             self::COLUMN_NAME => '项目问题 ID',
         ],
         'project_release_id' => [
-            self::COLUMN_NAME => '项目发行版 ID',
+            self::COLUMN_NAME => '项目发行 ID',
         ],
         'create_at' => [
             self::COLUMN_NAME => '创建时间',

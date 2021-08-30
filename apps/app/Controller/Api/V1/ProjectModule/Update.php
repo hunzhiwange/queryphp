@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\V1\ProjectRelease;
+namespace App\Controller\Api\V1\ProjectModule;
 
 use App\Controller\Support\Controller;
-use App\Domain\Service\Project\ProjectRelease\Update as Service;
-use App\Domain\Service\Project\ProjectRelease\UpdateParams;
+use App\Domain\Service\Project\ProjectModule\Update as Service;
+use App\Domain\Service\Project\ProjectModule\UpdateParams;
 use Leevel\Http\Request;
 
 /**
- * 项目发行更新.
+ * 项目模块更新.
  *
  * @codeCoverageIgnore
  */
@@ -23,6 +23,7 @@ class Update
         'name',
         'sort',
         'status',
+        'color',
     ];
 
     public function handle(Request $request, Service $service): array
