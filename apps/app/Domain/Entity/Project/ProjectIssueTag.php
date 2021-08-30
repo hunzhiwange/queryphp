@@ -68,6 +68,9 @@ class ProjectIssueTag extends Entity
             self::COLUMN_NAME => 'ID',
             self::READONLY => true,
         ],
+        'company_id' => [
+            self::COLUMN_NAME => '公司 ID',
+        ],
         'project_issue_id' => [
             self::COLUMN_NAME => '项目问题 ID',
         ],
