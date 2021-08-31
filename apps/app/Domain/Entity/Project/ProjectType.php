@@ -6,6 +6,7 @@ namespace App\Domain\Entity\Project;
 
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\GetterSetter;
+use Leevel\Database\Ddd\Relation\BelongsTo;
 
 /**
  * 项目问题类型.
@@ -41,6 +42,15 @@ class ProjectType extends Entity
      * - name
      *                   comment: 类型名称  type: varchar(255)  null: false  
      *                   key: MUL  default:   extra: 
+     * - num
+     *                   comment: 编号  type: varchar(64)  null: false  
+     *                   key:   default:   extra: 
+     * - content_type
+     *                   comment: 内容类型 1=BUG;2=任务;3=需求;4=故事;5=文档;  type: tinyint(3) unsigned  null: false  
+     *                   key:   default: 1  extra: 
+     * - color
+     *                   comment: 颜色  type: char(7)  null: false  
+     *                   key:   default:   extra: 
      * - status
      *                   comment: 状态 0=禁用;1=启用;  type: tinyint(1) unsigned  null: false  
      *                   key:   default: 1  extra: 
@@ -79,6 +89,15 @@ class ProjectType extends Entity
         ],
         'name' => [
             self::COLUMN_NAME => '类型名称',
+        ],
+        'num' => [
+            self::COLUMN_NAME => '编号',
+        ],
+        'content_type' => [
+            self::COLUMN_NAME => '内容类型 1=BUG;2=任务;3=需求;4=故事;5=文档;',
+        ],
+        'color' => [
+            self::COLUMN_NAME => '颜色',
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
@@ -127,4 +146,23 @@ class ProjectType extends Entity
 
     #[status('启用')]
     public const STATUS_ENABLE = 1;
+
+    /**
+     * 内容类型值.
+     */
+
+    #[content_type('BUG')]
+    public const CONTENT_TYPE_BUG = 1;
+
+    #[content_type('任务')]
+    public const CONTENT_TYPE_TASK = 2;
+
+    #[content_type('需求')]
+    public const CONTENT_TYPE_PRODUCT = 3;
+
+    #[content_type('故事')]
+    public const CONTENT_TYPE_STORY = 4;
+
+    #[content_type('文档')]
+    public const CONTENT_TYPE_DOC = 5;
 }
