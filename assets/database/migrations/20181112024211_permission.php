@@ -25,10 +25,10 @@ final class Permission extends AbstractMigration
                 `pid` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '父级 ID',
                 `name` varchar(64) NOT NULL DEFAULT '' COMMENT '权限名字',
                 `num` varchar(64) NOT NULL DEFAULT '' COMMENT '编号',
-                `status` tinyint(4) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
+                `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
                 `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                 `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-                `delete_at` bigint(20)  unsigned NOT NULL DEFAULT '0' COMMENT '删除时间 0=未删除;大于0=删除时间;',
+                `delete_at` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间 0=未删除;大于0=删除时间;',
                 `create_account` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '创建账号',
                 `update_account` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 `version` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '操作版本号',
@@ -36,7 +36,7 @@ final class Permission extends AbstractMigration
                 UNIQUE KEY `uniq_num` (`num`,`delete_at`) USING BTREE,
                 UNIQUE KEY `uniq_name` (`name`,`delete_at`) USING BTREE,
                 KEY `idx_pid` (`pid`) USING BTREE
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限';
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限';
             EOT;
         $this->execute($sql);
     }
@@ -44,7 +44,7 @@ final class Permission extends AbstractMigration
     private function seed(): void
     {
         $sql = <<<'EOT'
-            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, 0, '超级管理员', 'SuperAdministrator', 1, '2019-01-31 01:14:34', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, 0, '超级管理员', 'super_administrator', 1, '2019-01-31 01:14:34', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (2, 0, '权限管理分组', 'permission', 1, '2019-01-31 01:31:11', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (3, 2, '用户管理', 'user_manager', 1, '2019-01-31 01:31:24', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `permission`(`id`, `pid`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (4, 2, '角色管理', 'role_manager', 1, '2019-01-31 01:31:38', '2019-08-25 21:19:23', 0, 0, 0);

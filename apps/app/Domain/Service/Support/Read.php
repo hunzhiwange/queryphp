@@ -43,7 +43,7 @@ trait Read
      */
     private function spec(Select $select, ReadParams $params): void
     {
-        foreach ($params->all(false) as $k => $v) {
+        foreach (array_merge(['initialization' => true], $params->all(false)) as $k => $v) {
             if (null !== $v) {
                 $method = $k.'Spec';
                 if (method_exists($this, $method)) {
@@ -51,6 +51,13 @@ trait Read
                 }
             }
         }
+    }
+
+    /**
+     * 初始化规约.
+     */
+    private function initializationSpec(Select $select, bool $value, ReadParams $params): void
+    {
     }
 
     /**
@@ -112,14 +119,10 @@ trait Read
             $this->condition($params),
         );
         $page = $page->toArray();
-
-        $data['page'] = $page['page'];
-        $entitys = $page['data'];
-        $lists = $this->prepareToArray($entitys);
-        $this->prepare($lists, $params);
-        $data['data'] = $lists;
-
-        return $data;
+        $page['data'] = $this->prepareToArray($page['data']);
+        $this->prepare($page['data'], $params);
+        
+        return $page;
     }
 
     public function findLists(ReadParams $params, string $entityClass): array
@@ -131,11 +134,11 @@ trait Read
     {
         return $this->baseCondition(
             $params,
-            $this->conditionCall(),
+            $this->conditionCall($params),
         );
     }
 
-    private function conditionCall(): ?Closure
+    private function conditionCall(ReadParams $params): ?Closure
     {
         return null;
     }
@@ -143,10 +146,10 @@ trait Read
     private function baseCondition(ReadParams $params, ?Closure $call = null): Closure
     {
         return function (Select $select) use ($params, $call) {
+            $this->spec($select, $params);
             if ($call) {
                 $call($select);
             }
-            $this->spec($select, $params);
         };
     }
 

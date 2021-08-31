@@ -8,7 +8,6 @@ use App\Infra\Permission;
 use App\Infra\PermissionCache;
 use Leevel\Di\IContainer;
 use Leevel\Di\Provider;
-use Leevel\Http\Request;
 
 /**
  * 应用服务提供者.
@@ -39,6 +38,15 @@ class App extends Provider
     public static function isDeferred(): bool
     {
         return true;
+    }
+
+    /**
+     * bootstrap.
+     * 
+     * @todo bootstrap 执行两遍的问题
+     */
+    public function bootstrap(): void
+    {
     }
 
     /**

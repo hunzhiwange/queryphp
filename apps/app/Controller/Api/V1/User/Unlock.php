@@ -33,7 +33,7 @@ class Unlock
     private function extendInput(Request $request): array
     {
         return [
-            'id'    => $this->id(),
+            'id'    => $this->userId(),
             'token' => $this->token(),
         ];
     }
@@ -44,13 +44,5 @@ class Unlock
     private function token(): string
     {
         return Auth::getTokenName();
-    }
-
-    /**
-     * 获取用户 ID.
-     */
-    private function id(): int
-    {
-        return Auth::getLogin()['id'];
     }
 }

@@ -141,9 +141,7 @@
         "migrate-phpunit": "@php leevel migrate:migrate -e env.phpunit",
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "@php -r \"file_exists('.env.phpunit') || copy('.env.phpunit.example', '.env.phpunit');\"",
-            "@php -r \"file_exists('assets/frontend/.env.local') || copy('assets/frontend/.env.example', 'assets/frontend/.env.local');\"",
-            "@php -r \"file_exists('assets/frontend/.env.production') || copy('assets/frontend/.env.example', 'assets/frontend/.env.production');\""
+            "@php -r \"file_exists('.env.phpunit') || copy('.env.phpunit.example', '.env.phpunit');\""
         ],
         "post-create-project-cmd": [
             "@php leevel links"

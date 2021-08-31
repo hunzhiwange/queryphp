@@ -50,4 +50,7 @@ final class UserErrorCode extends ErrorCode
 
     #[msg('解锁管理面板参数错误')]
     public const UNLOCK_ANAGEMENT_PANEL_INVALID_ARGUMENT = 1000010013;
+
+    #[msg('指定用户部分不存在')]
+    public const SOME_USERS_DOES_NOT_EXIST = 1000010014;
 }

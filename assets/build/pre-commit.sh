@@ -4,7 +4,7 @@
 # https://blog.csdn.net/xsgnzb/article/details/52222366?locationNum=4&fps=1
 # https://blog.csdn.net/ljihe/article/details/80826071
 # =================== how to use ====================
-# cp ./build/pre-commit.sh ./.git/hooks/pre-commit
+# cp ./assets/build/pre-commit.sh ./.git/hooks/pre-commit
 # chmod 777 ./.git/hooks/pre-commit
 # git commit -h
 # git commit -n -m 'pass hook' #bypass pre-commit and commit-msg hooks
@@ -34,8 +34,6 @@ do
 done
 
 phpcsfixer_path=$(cd `dirname $0`; pwd)"/../../assets/build/php-cs-fixer"
-gulp_path=$(cd `dirname $0`; pwd)"/../../assets/frontend/node_modules/.bin/gulp"
-prettier_path=$(cd `dirname $0`; pwd)"/../../assets/frontend/node_modules/.bin/prettier"
 
 # format code style
 if [ "$FILES" != "" ]
@@ -77,19 +75,6 @@ then
         echo "The file has been automatically formatted."
     fi
 fi
-
-# for js
-jsfiles=$(git diff --cached --name-only --diff-filter=ACM "*.js" "*.jsx" "*.vue" "*.css" "*.less" | tr '\n' ' ')
-[ -z "$jsfiles" ] && exit 0
-
-# format iview
-$gulp_path iview --gulpfile assets/frontend/gulpfile.js
-
-# Prettify all staged .js files
-echo "$jsfiles" | xargs $prettier_path --config assets/frontend/.prettierrc.js --ignore-path assets/frontend/.prettierignore --write
-
-# Add back the modified/prettified files to staging
-echo "$jsfiles" | xargs git add
 
 git update-index -g
 

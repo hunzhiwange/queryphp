@@ -100,10 +100,12 @@ $php leevel server
 
 ### Install frontend
 
-First to install the frontend,see more detail on `assets/frontend/README.md`.
+Frontend project <https://github.com/hunzhiwange/queryvue>。
+
+First to install the frontend,see more detail on `README.md`.
 
 ```
-cd assets/frontend
+cd cd data/codes/queryvue/
 npm install -g cnpm --registry=https://registry.npm.taobao.org // Just once
 cnpm install
 npm run serve # npm run dev

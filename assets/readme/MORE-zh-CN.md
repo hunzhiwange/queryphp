@@ -100,10 +100,12 @@ $php leevel server
 
 ### 安装前端
 
-第一步安装前端,细节信息可以在 `assets/frontend/README.md` 查看.
+前端项目 <https://github.com/hunzhiwange/queryvue>。
+
+第一步安装前端,细节信息可以在 `README-zh-CN.md` 查看.
 
 ```
-cd assets/frontend
+cd data/codes/queryvue/
 npm install -g cnpm --registry=https://registry.npm.taobao.org // Just once
 cnpm install
 npm run serve # npm run dev
