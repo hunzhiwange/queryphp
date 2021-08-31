@@ -38,10 +38,6 @@ class Search
             $serviceClass = '\\'.$this->topNamespace.'\\Service\\Search\\'.$convertService.'\\';
 
             foreach ($method as $v) {
-                if (isset($keyMap[$v])) {
-                    $v = $keyMap[$v];
-                }
-
                 $convertMethod = $this->convertService($v);
                 $serviceHandle = $serviceClass.$convertMethod;
                 if (!class_exists($serviceHandle)) {
@@ -57,7 +53,7 @@ class Search
                     throw new RuntimeException($e);
                 }
 
-                $result[lcfirst($convertService)][lcfirst($convertMethod)] = Leevel::call([$serviceObj, 'handle'], [$input]);
+                $result[$service][$v] = Leevel::call([$serviceObj, 'handle'], [$input]);
             }
         }
 
