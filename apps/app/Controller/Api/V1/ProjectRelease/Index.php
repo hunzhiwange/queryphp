@@ -10,7 +10,7 @@ use App\Domain\Service\Project\ProjectRelease\ProjectReleasesParams;
 use Leevel\Http\Request;
 
 /**
- * 项目发行列表.
+ * 项目版本列表.
  *
  * @codeCoverageIgnore
  */
@@ -23,6 +23,7 @@ class Index
         'status',
         'page',
         'size',
+        'project_ids',
     ];
 
     public function handle(Request $request, Service $service): array

@@ -33,10 +33,10 @@ final class ProjectErrorCode extends ErrorCode
     #[msg('待新增的所有用户已经是项目的成员')]
     public const PROJECT_USER_MEMBER_TO_BE_ADDED_ALREADY_EXIST = 1000050008;
 
-    #[msg('项目发行保存参数错误')]
+    #[msg('项目版本保存参数错误')]
     public const PROJECT_RELEASE_STORE_INVALID_ARGUMENT = 1000050009;
 
-    #[msg('项目发行更新参数错误')]
+    #[msg('项目版本更新参数错误')]
     public const PROJECT_RELEASE_UPDATE_INVALID_ARGUMENT = 1000050010;
 
     #[msg('项目模块保存参数错误')]

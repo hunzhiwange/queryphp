@@ -23,7 +23,7 @@ final class ProjectIssueRelease extends AbstractMigration
             CREATE TABLE `project_issue_release` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
                 `project_issue_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '项目问题 ID',
-                `project_release_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '项目发行版 ID',
+                `project_release_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '项目版本 ID',
                 `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                 `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                 `delete_at` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间 0=未删除;大于0=删除时间;',

@@ -9,7 +9,7 @@ use Leevel\Database\Ddd\GetterSetter;
 use Leevel\Database\Ddd\Relation\BelongsTo;
 
 /**
- * 项目发行.
+ * 项目版本.
  */
 class ProjectRelease extends Entity
 {

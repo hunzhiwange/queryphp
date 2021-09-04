@@ -13,7 +13,7 @@ use Leevel\Validate\UniqueRule;
 use App\Domain\Validate\Project\ProjectRelease as ProjectProjectRelease;
 
 /**
- * 项目发行更新.
+ * 项目版本更新.
  */
 class Update
 {

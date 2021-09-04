@@ -13,7 +13,7 @@ use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
 
 /**
- * 项目发行保存.
+ * 项目版本保存.
  */
 class Store
 {

@@ -10,7 +10,7 @@ use App\Domain\Service\Project\ProjectRelease\StoreParams;
 use Leevel\Http\Request;
 
 /**
- * 项目发行保存.
+ * 项目版本保存.
  *
  * @codeCoverageIgnore
  */

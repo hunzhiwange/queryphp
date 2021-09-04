@@ -7,7 +7,7 @@ namespace App\Domain\Service\Project\ProjectRelease;
 use Leevel\Support\Dto;
 
 /**
- * 项目发行更新参数.
+ * 项目版本更新参数.
  */
 class UpdateParams extends Dto
 {
