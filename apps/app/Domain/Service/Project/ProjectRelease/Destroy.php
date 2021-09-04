@@ -8,7 +8,7 @@ use App\Domain\Entity\Project\ProjectRelease;
 use App\Domain\Service\Support\Destroy as CommonDestroy;
 
 /**
- * 项目发行删除.
+ * 项目版本删除.
  */
 class Destroy
 {

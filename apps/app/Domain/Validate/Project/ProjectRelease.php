@@ -8,7 +8,7 @@ use App\Domain\Entity\Project\ProjectRelease as EntityProjectRelease;
 use App\Domain\Validate\IValidator;
 
 /**
- * 项目发行验证.
+ * 项目版本验证.
  */
 class ProjectRelease implements IValidator
 {

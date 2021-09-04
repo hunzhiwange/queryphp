@@ -8,7 +8,7 @@ use App\Domain\Service\Support\ReadParams;
 use Leevel\Collection\TypedStringArray;
 
 /**
- * 项目发行列表参数.
+ * 项目版本列表参数.
  */
 class ProjectReleasesParams extends ReadParams
 {

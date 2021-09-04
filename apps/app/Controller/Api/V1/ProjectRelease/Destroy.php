@@ -10,7 +10,7 @@ use App\Domain\Service\Support\DestroyParams;
 use Leevel\Http\Request;
 
 /**
- * 项目发行删除.
+ * 项目版本删除.
  *
  * @codeCoverageIgnore
  */

@@ -10,7 +10,7 @@ use App\Domain\Service\Project\ProjectRelease\UpdateParams;
 use Leevel\Http\Request;
 
 /**
- * 项目发行更新.
+ * 项目版本更新.
  *
  * @codeCoverageIgnore
  */
