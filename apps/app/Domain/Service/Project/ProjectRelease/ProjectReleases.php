@@ -8,8 +8,8 @@ use Closure;
 use App\Domain\Entity\Project\ProjectRelease;
 use App\Domain\Service\Support\Read;
 use App\Domain\Service\Project\ProjectRelease\ProjectReleasesParams;
-use Leevel\Collection\TypedIntArray;
 use Leevel\Database\Ddd\Select;
+use App\Domain\Service\Support\Spec\Project\ProjectIds;
 
 /**
  * 项目版本列表.
@@ -17,18 +17,11 @@ use Leevel\Database\Ddd\Select;
 class ProjectReleases
 {
     use Read;
+    use ProjectIds;
 
     public function handle(ProjectReleasesParams $params): array
     {
         return $this->findLists($params, ProjectRelease::class);
-    }
-
-    /**
-     * 项目 ID 条件.
-     */
-    private function projectIdsSpec(Select $select, TypedIntArray $value): void
-    {
-        $select->whereIn('project_id', $value->toArray());
     }
 
     private function conditionCall(ProjectReleasesParams $params): ?Closure

@@ -6,8 +6,7 @@ namespace App\Domain\Service\Project\ProjectLabel;
 
 use App\Domain\Entity\Project\ProjectLabel;
 use App\Domain\Service\Support\Read;
-use Leevel\Collection\TypedIntArray;
-use Leevel\Database\Ddd\Select;
+use App\Domain\Service\Support\Spec\Project\ProjectIds;
 
 /**
  * 项目分类列表.
@@ -15,17 +14,10 @@ use Leevel\Database\Ddd\Select;
 class ProjectLabels
 {
     use Read;
+    use ProjectIds;
 
     public function handle(ProjectLabelsParams $params): array
     {
         return $this->findLists($params, ProjectLabel::class);
-    }
-
-    /**
-     * 项目 ID 条件.
-     */
-    private function projectIdsSpec(Select $select, TypedIntArray $value): void
-    {
-        $select->whereIn('project_id', $value->toArray());
     }
 }

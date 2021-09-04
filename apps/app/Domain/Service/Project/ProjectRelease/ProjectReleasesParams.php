@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Project\ProjectRelease;
 
+use App\Domain\Service\Support\Params\Project\ProjectIds;
 use App\Domain\Service\Support\ReadParams;
-use Leevel\Collection\TypedIntArray;
 use Leevel\Collection\TypedStringArray;
 
 /**
@@ -13,11 +13,11 @@ use Leevel\Collection\TypedStringArray;
  */
 class ProjectReleasesParams extends ReadParams
 {
+    use ProjectIds;
+
     public ?int $status = null;
 
     public string $orderBy = 'sort ASC,id DESC';
-
-    public ?TypedIntArray $projectIds = null;
 
     protected function columnDefaultValue(): TypedStringArray
     {
@@ -29,10 +29,5 @@ class ProjectReleasesParams extends ReadParams
         return new TypedStringArray([
             'id', 'name',
         ]);
-    }
-
-    protected function projectIdsTransformValue(string|array $value): TypedIntArray
-    {
-        return TypedIntArray::fromRequest($value);
     }
 }

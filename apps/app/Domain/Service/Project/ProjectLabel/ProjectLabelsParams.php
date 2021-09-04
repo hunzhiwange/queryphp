@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Project\ProjectLabel;
 
+use App\Domain\Service\Support\Params\Project\ProjectIds;
 use App\Domain\Service\Support\ReadParams;
-use Leevel\Collection\TypedIntArray;
 use Leevel\Collection\TypedStringArray;
 
 /**
@@ -13,7 +13,7 @@ use Leevel\Collection\TypedStringArray;
  */
 class ProjectLabelsParams extends ReadParams
 {
-    public ?TypedIntArray $projectIds = null;
+    use ProjectIds;
 
     public string $orderBy = 'sort ASC,id DESC';
 
@@ -29,10 +29,5 @@ class ProjectLabelsParams extends ReadParams
         return new TypedStringArray([
             'id', 'name',
         ]);
-    }
-
-    protected function projectIdsTransformValue(string|array $value): TypedIntArray
-    {
-        return TypedIntArray::fromRequest($value);
     }
 }
