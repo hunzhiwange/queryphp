@@ -23,6 +23,7 @@ class Index
         'status',
         'page',
         'size',
+        'project_ids',
     ];
 
     public function handle(Request $request, Service $service): array
