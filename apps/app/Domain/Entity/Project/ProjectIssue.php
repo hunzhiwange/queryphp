@@ -250,6 +250,16 @@ class ProjectIssue extends Entity
     public const DELETE_AT = 'delete_at';
 
     /**
+     * 是否完成.
+     */
+    
+    #[completed('未完成')]
+    public const COMPLETED_FALSE = 1;
+
+    #[completed('已完成')]
+    public const COMPLETED_TRUE = 2;
+
+    /**
      * 问题类型关联查询作用域.
      */
     protected function relationScopeProjectType(HasOne $relation): void
