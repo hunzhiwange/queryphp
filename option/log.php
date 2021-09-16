@@ -74,7 +74,7 @@ return [
             'channel' => null,
 
             // 日志文件名时间格式化
-            'name' => 'Y-m-d H',
+            'name' => 'Y-m-d',
 
             // 默认的日志路径
             'path' => Leevel::storagePath('logs'),
