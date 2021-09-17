@@ -28,11 +28,6 @@ class Sort
         $this->sort($params);
 
         return [];
-
-        die;
-        // $this->validateArgs($params);
-
-        // return $this->save($params)->toArray();
     }
 
     public function sort(SortParams $params): void
@@ -58,8 +53,7 @@ class Sort
                 ->where('sort', '>', $nextIssue->sort)
                 ->orderBy('sort DESC')
                 ->findEntity();
-           //echo     $issueRepository->getLastSql(true);
-           //var_dump($nextPreIssue);
+
             if ($nextPreIssue->id) {
                 $newSort = (int) (($nextIssue->sort + $nextPreIssue->sort) / 2);
             } else {
@@ -74,9 +68,7 @@ class Sort
              ->findMin('sort');
             $newSort = (int) (($minSort + 0) / 2);
         }
-//  var_dump($newSort);
 
-// die;
         if ($newSort && $newSort > 50) {
             if ($preIssue->projectLabelId !== $params->projectLabelId) {
                 $preIssue->projectLabelId = $params->projectLabelId;
