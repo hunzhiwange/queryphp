@@ -27,3 +27,20 @@ if (!function_exists('sql')) {
             });
     }
 }
+
+if (!function_exists('inject_company')) {
+    /**
+     * 注入公司信息.
+     */
+    function inject_company(array &$data): array
+    {
+        $companyId = \App::make('company_id');
+        foreach ($data as &$v) {
+            if (!isset($v['company_id'])) {
+                $v['company_id'] = $companyId;
+            }
+        }
+
+        return $data;
+    }
+}
