@@ -17,6 +17,8 @@ use App\Domain\Validate\Project\ProjectModule as ProjectProjectModule;
  */
 class Update
 {
+    private ProjectModule $entity;
+
     public function __construct(private UnitOfWork $w)
     {
     }
@@ -80,7 +82,7 @@ class Update
         $uniqueRule = UniqueRule::rule(
             ProjectModule::class,
             exceptId:$params->id,
-            additional:['delete_at' => 0]
+            additional:['project_id' => $this->entity->projectId]
         );
 
         $validator = Validate::make(new ProjectProjectModule($uniqueRule), 'update', $params->toArray())->getValidator();

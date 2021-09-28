@@ -66,7 +66,6 @@ class Store
     {
         $uniqueRule = UniqueRule::rule(
             Resource::class,
-            additional:['delete_at' => 0]
         );
 
         $validator = Validate::make(new UserResource($uniqueRule), 'store', $params->toArray())->getValidator();

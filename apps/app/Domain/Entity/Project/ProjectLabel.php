@@ -6,6 +6,7 @@ namespace App\Domain\Entity\Project;
 
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\GetterSetter;
+use Leevel\Database\Ddd\Relation\BelongsTo;
 
 /**
  * 项目分类.
@@ -111,6 +112,12 @@ class ProjectLabel extends Entity
         'version' => [
             self::COLUMN_NAME => '操作版本号',
         ],
+        'project'      => [
+            self::BELONGS_TO             => Project::class,
+            self::SOURCE_KEY             => 'project_id',
+            self::TARGET_KEY             => 'id',
+            self::RELATION_SCOPE         => 'project',
+        ],
     ]; // END STRUCT
 
     /**
@@ -127,4 +134,11 @@ class ProjectLabel extends Entity
 
     #[status('启用')]
     public const STATUS_ENABLE = 1;
+
+    /**
+     * 项目关联查询作用域.
+     */
+    protected function relationScopeProject(BelongsTo $relation): void
+    {
+    }
 }

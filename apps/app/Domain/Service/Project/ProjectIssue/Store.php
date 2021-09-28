@@ -13,8 +13,6 @@ use Leevel\Database\Ddd\UnitOfWork;
 use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
 
-use function Leevel\Validate\Helper\upper;
-
 /**
  * 项目问题保存.
  */
@@ -89,7 +87,7 @@ class Store
     {
         $uniqueRule = UniqueRule::rule(
             ProjectRelease::class,
-            additional:['delete_at' => 0]
+            additional:['project_id' => $params->projectId]
         );
 
         $validator = Validate::make(new ProjectProjectRelease($uniqueRule), 'store', $params->toArray())->getValidator();

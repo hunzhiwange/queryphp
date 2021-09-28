@@ -80,7 +80,7 @@ class Store
     {
         // $uniqueRule = UniqueRule::rule(
         //     Project::class, 
-        //     additional:['delete_at' => 0]
+        //     additional:[]
         // );
 
         // $validator = Validate::make(new ProjectProject($uniqueRule), 'store', $params->toArray())->getValidator();

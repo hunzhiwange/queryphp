@@ -66,8 +66,7 @@ class Store
     private function validateArgs(StoreParams $params): void
     {
         $uniqueRule = UniqueRule::rule(
-            Role::class, 
-            additional:['delete_at' => 0]
+            Role::class,
         );
 
         $validator = Validate::make(new UserRole($uniqueRule), 'store', $params->toArray())->getValidator();

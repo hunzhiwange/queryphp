@@ -236,7 +236,7 @@ class Update
         $uniqueRule = UniqueRule::rule(
             ProjectModule::class,
             exceptId:$params->id,
-            additional:['delete_at' => 0]
+            additional:[]
         );
 
         $validator = Validate::make(new ProjectProjectModule($uniqueRule), 'update', $params->toArray())->getValidator();

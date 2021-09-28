@@ -136,7 +136,7 @@ class Sort
     {
         $uniqueRule = UniqueRule::rule(
             ProjectRelease::class,
-            additional:['delete_at' => 0]
+            additional:[]
         );
 
         $validator = Validate::make(new ProjectProjectRelease($uniqueRule), 'store', $params->toArray())->getValidator();

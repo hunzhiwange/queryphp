@@ -66,7 +66,7 @@ class Store
     {
         $uniqueRule = UniqueRule::rule(
             ProjectModule::class,
-            additional:['delete_at' => 0]
+            additional:['project_id' => $params->projectId]
         );
 
         $validator = Validate::make(new ProjectProjectModule($uniqueRule), 'store', $params->toArray())->getValidator();
