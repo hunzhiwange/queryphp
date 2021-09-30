@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Project\ProjectRelease;
 
+use App\Domain\Entity\Common;
 use App\Domain\Entity\Project\ProjectRelease;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
@@ -26,6 +27,13 @@ class Update
     public function handle(UpdateParams $params): array
     {
         $this->entity = $this->find($params->id);
+
+        if (isset($params->completed) &&
+            ProjectRelease::COMPLETED_PUBLISHED === $params->completed &&
+            !isset($params->completedDate)) {
+            $params->completedDate = Common::getCurrentDate();
+        }
+
         $this->validateArgs($params);
 
         return $this->save($params)->toArray();

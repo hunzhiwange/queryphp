@@ -20,4 +20,6 @@ class UpdateParams extends Dto
     public ?int $status = null;
 
     public ?int $completed = null;
+
+    public ?string $completedDate = null;
 }
