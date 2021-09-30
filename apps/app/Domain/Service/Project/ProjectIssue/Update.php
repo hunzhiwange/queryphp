@@ -212,18 +212,15 @@ class Update
      */
     private function data(UpdateParams $params): array
     {
-        $data = $params->except([
-            'id',
-            'tags',
-            'releases',
-            'modules',
-        ])->toArray();
-
-        $data = array_filter($data, function ($item) {
-            return null !== $item;
-        });
-
-        return $data;
+        return $params
+            ->except([
+                'id',
+                'tags',
+                'releases',
+                'modules',
+            ])
+            ->withoutNull()
+            ->toArray();
     }
 
     /**

@@ -17,7 +17,7 @@ use App\Domain\Validate\Project\ProjectLabel as ProjectProjectLabel;
  */
 class Update
 {
-    private ProjectLabel $entity;
+    private ?ProjectLabel $entity = null;
 
     public function __construct(private UnitOfWork $w)
     {

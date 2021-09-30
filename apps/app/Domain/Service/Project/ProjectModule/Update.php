@@ -17,7 +17,7 @@ use App\Domain\Validate\Project\ProjectModule as ProjectProjectModule;
  */
 class Update
 {
-    private ProjectModule $entity;
+    private ?ProjectModule $entity = null;
 
     public function __construct(private UnitOfWork $w)
     {
@@ -25,6 +25,7 @@ class Update
 
     public function handle(UpdateParams $params): array
     {
+        $this->entity = $this->find($params->id);
         $this->validateArgs($params);
 
         return $this->save($params)->toArray();
@@ -48,7 +49,7 @@ class Update
      */
     private function entity(UpdateParams $params): ProjectModule
     {
-        $entity = $this->find($params->id);
+        $entity = $this->entity;
         $entity->withProps($this->data($params));
 
         return $entity;

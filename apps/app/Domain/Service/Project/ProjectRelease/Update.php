@@ -17,7 +17,7 @@ use App\Domain\Validate\Project\ProjectRelease as ProjectProjectRelease;
  */
 class Update
 {
-    private ProjectRelease $entity;
+    private ?ProjectRelease $entity = null;
 
     public function __construct(private UnitOfWork $w)
     {
@@ -70,7 +70,10 @@ class Update
      */
     private function data(UpdateParams $params): array
     {
-        return $params->except(['id'])->toArray();
+        return $params
+            ->except(['id'])
+            ->withoutNull()
+            ->toArray();
     }
 
     /**

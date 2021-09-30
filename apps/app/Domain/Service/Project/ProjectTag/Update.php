@@ -17,7 +17,7 @@ use App\Domain\Validate\Project\ProjectTag as ProjectProjectTag;
  */
 class Update
 {
-    private ProjectTag $entity;
+    private ?ProjectTag $entity = null;
 
     public function __construct(private UnitOfWork $w)
     {
