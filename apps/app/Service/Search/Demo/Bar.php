@@ -6,7 +6,7 @@ namespace App\Service\Search\Demo;
 
 class Bar
 {
-    public function handle(array $input): array
+    public function handle(): array
     {
         return [
             'foo' => [

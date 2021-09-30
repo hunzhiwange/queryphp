@@ -6,7 +6,7 @@ namespace App\Service\Search\DemoConvert;
 
 class BarWorld
 {
-    public function handle(array $input): array
+    public function handle(): array
     {
         return [
             'FooHello' => [
