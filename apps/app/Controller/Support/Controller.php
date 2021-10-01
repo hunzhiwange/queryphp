@@ -13,14 +13,6 @@ use Leevel\Router\IRouter;
  */
 trait Controller
 {
-    /**
-     * 调用服务.
-     */
-    private function main(Request $request, object $service): array
-    {
-        return $service->handle($this->input($request));
-    }
-
     private function input(Request $request): array
     {
         $input = $request->only($this->allowedInput);

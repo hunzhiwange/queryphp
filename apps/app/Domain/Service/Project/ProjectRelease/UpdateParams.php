@@ -11,7 +11,15 @@ use Leevel\Support\Dto;
  */
 class UpdateParams extends Dto
 {
-    use BaseStoreUpdateParams;
-
     public int $id;
+
+    public ?int $sort = null;
+
+    public ?string $name = null;
+
+    public ?int $status = null;
+
+    public ?int $completed = null;
+
+    public ?string $completedDate = null;
 }

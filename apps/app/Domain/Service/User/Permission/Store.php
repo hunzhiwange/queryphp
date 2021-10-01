@@ -67,7 +67,6 @@ class Store
     {
         $uniqueRule = UniqueRule::rule(
             Permission::class,
-            additional:['delete_at' => 0]
         );
 
         $validator = Validate::make(new UserPermission($uniqueRule), 'store', $params->toArray())->getValidator();

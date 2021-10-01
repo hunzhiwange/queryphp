@@ -6,6 +6,7 @@ namespace App\Domain\Validate\Project;
 
 use App\Domain\Entity\Project\ProjectRelease as EntityProjectRelease;
 use App\Domain\Validate\IValidator;
+use Leevel\Validate\IValidator as ValidateIValidator;
 
 /**
  * 项目版本验证.
@@ -24,9 +25,9 @@ class ProjectRelease implements IValidator
         return [
             'update' => [
                 'id',
-                'name',
-                'sort',
-                'status',
+                ':name' => ValidateIValidator::OPTIONAL,
+                ':sort' => ValidateIValidator::OPTIONAL,
+                ':status'  => ValidateIValidator::OPTIONAL,
             ],
             'store' => [
                 'name',

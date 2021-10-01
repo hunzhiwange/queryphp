@@ -79,8 +79,7 @@ class Update
     {
         $uniqueRule = UniqueRule::rule(
             Role::class,
-            exceptId:$params->id, 
-            additional:['delete_at' => 0]
+            exceptId:$params->id,
         );
 
         $validator = Validate::make(new UserRole($uniqueRule), 'update', $params->toArray())->getValidator();

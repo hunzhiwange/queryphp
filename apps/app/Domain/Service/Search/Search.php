@@ -34,11 +34,18 @@ class Search
                 continue;
             }
 
+            $subService = null;
+            if (strpos($service, ':')) {
+                $tempService = explode(':', $service);
+                $service = $tempService[0];
+                $subService = $tempService[1];
+            }
+
             $convertService = $this->convertService($service);
-            $serviceClass = '\\'.$this->topNamespace.'\\Service\\Search\\'.$convertService.'\\';
+            $serviceClass = $this->topNamespace.'\\Service\\Search\\'.$convertService.'\\';
 
             foreach ($method as $v) {
-                $convertMethod = $this->convertService($v);
+                $convertMethod = $this->convertService($subService ? $subService : $v);
                 $serviceHandle = $serviceClass.$convertMethod;
                 if (!class_exists($serviceHandle)) {
                     $e = sprintf('Search condition `%s` was not found.', $serviceHandle);
@@ -53,7 +60,11 @@ class Search
                     throw new RuntimeException($e);
                 }
 
-                $result[$service][$v] = Leevel::call([$serviceObj, 'handle'], [$input]);
+                if ($subService) {
+                    $result[$service][$subService][$v] = Leevel::call([$serviceObj, 'handle'], [$v, $input]);
+                } else {
+                    $result[$service][$v] = Leevel::call([$serviceObj, 'handle'], [$v, $input]);
+                }
             }
         }
 

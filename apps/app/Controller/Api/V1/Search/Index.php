@@ -19,7 +19,7 @@ class Index
 
     public function handle(Request $request, Service $service): array
     {
-        return $this->main($request, $service);
+        return $service->handle($this->input($request));
     }
 
     private function input(Request $request): array

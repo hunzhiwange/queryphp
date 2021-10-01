@@ -6,7 +6,7 @@ namespace App\Service\Search\DemoConvert;
 
 class FooHello
 {
-    public function handle(array $input): array
+    public function handle(): array
     {
         return [
             'FooHello' => [

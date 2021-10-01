@@ -80,7 +80,6 @@ class Update
         $uniqueRule = UniqueRule::rule(
             Permission::class,
             exceptId:$params->id,
-            additional:['delete_at' => 0]
         );
 
         $validator = Validate::make(new UserPermission($uniqueRule), 'update', $params->toArray())->getValidator();

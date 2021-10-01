@@ -48,6 +48,9 @@ class ProjectRelease extends Entity
      * - status
      *                   comment: 状态 0=禁用;1=启用;  type: tinyint(1) unsigned  null: false  
      *                   key:   default: 1  extra: 
+     * - progress
+     *                   comment: 进度条(最大值 10000，需要除以 100 表示实际进度)  type: int(5) unsigned  null: false  
+     *                   key:   default: 0  extra: 
      * - project_id
      *                   comment: 项目 ID  type: bigint(20) unsigned  null: false  
      *                   key:   default: 0  extra: 
@@ -92,6 +95,9 @@ class ProjectRelease extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
+        ],
+        'progress' => [
+            self::COLUMN_NAME => '进度条(最大值 10000，需要除以 100 表示实际进度)',
         ],
         'project_id' => [
             self::COLUMN_NAME => '项目 ID',
@@ -151,11 +157,17 @@ class ProjectRelease extends Entity
      * 完成状态值.
      */
     
-    #[completed('待发布')]
-    public const COMPLETED_FALSE = 1;
+    #[completed('未开始')]
+    public const COMPLETED_NOT_STARTED = 1;
+
+    #[completed('进行中')]
+    public const COMPLETED_ONGOING = 2;
+
+    #[completed('延期发布')]
+    public const COMPLETED_DELAYED_RELEASE = 3;
 
     #[completed('已发布')]
-    public const COMPLETED_TRUE = 2;
+    public const COMPLETED_PUBLISHED = 4;
 
     /**
      * 项目关联查询作用域.

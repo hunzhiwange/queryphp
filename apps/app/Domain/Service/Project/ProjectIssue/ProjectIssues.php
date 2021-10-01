@@ -8,7 +8,7 @@ use Closure;
 use App\Domain\Entity\Project\ProjectIssue;
 use App\Domain\Entity\Project\ProjectUser;
 use App\Domain\Service\Support\Read;
-use Leevel\Collection\TypedIntArray;
+use App\Domain\Service\Support\Spec\Project\ProjectIds;
 use Leevel\Database\Condition;
 use Leevel\Database\Ddd\Select;
 
@@ -18,6 +18,7 @@ use Leevel\Database\Ddd\Select;
 class ProjectIssues
 {
     use Read;
+    use ProjectIds;
 
     public function handle(ProjectIssuesParams $params): array
     {
@@ -30,14 +31,6 @@ class ProjectIssues
     private function userIdSpec(Select $select, int $value): void
     {
         $select->where('project_user.user_id', $value);
-    }
-
-    /**
-     * 项目 ID 条件.
-     */
-    private function projectIdsSpec(Select $select, TypedIntArray $value): void
-    {
-        $select->whereIn('project_id', $value->toArray());
     }
 
     /**

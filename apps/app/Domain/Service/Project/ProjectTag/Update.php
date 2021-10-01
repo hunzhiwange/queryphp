@@ -17,12 +17,15 @@ use App\Domain\Validate\Project\ProjectTag as ProjectProjectTag;
  */
 class Update
 {
+    private ?ProjectTag $entity = null;
+
     public function __construct(private UnitOfWork $w)
     {
     }
 
     public function handle(UpdateParams $params): array
     {
+        $this->entity = $this->find($params->id);
         $this->validateArgs($params);
 
         return $this->save($params)->toArray();
@@ -46,7 +49,7 @@ class Update
      */
     private function entity(UpdateParams $params): ProjectTag
     {
-        $entity = $this->find($params->id);
+        $entity = $this->entity;
         $entity->withProps($this->data($params));
 
         return $entity;
@@ -80,7 +83,7 @@ class Update
         $uniqueRule = UniqueRule::rule(
             ProjectTag::class,
             exceptId:$params->id,
-            additional:['delete_at' => 0]
+            additional:['project_id' => $this->entity->projectId]
         );
 
         $validator = Validate::make(new ProjectProjectTag($uniqueRule), 'update', $params->toArray())->getValidator();
