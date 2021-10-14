@@ -22,12 +22,4 @@ class Common
 
     #[status('启用')]
     public const STATUS_ENABLE = 1;
-
-    /**
-     * 获取当前时间.
-     */
-    public static function getCurrentDate()
-    {
-       return date('Y-m-d H:i:s');
-    }
 }

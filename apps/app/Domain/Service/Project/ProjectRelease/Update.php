@@ -31,7 +31,7 @@ class Update
         if (isset($params->completed) &&
             ProjectRelease::COMPLETED_PUBLISHED === $params->completed &&
             !isset($params->completedDate)) {
-            $params->completedDate = Common::getCurrentDate();
+            $params->completedDate = \get_current_date();
         }
 
         $this->validateArgs($params);
