@@ -70,7 +70,7 @@ class Store
         $maxSort = ProjectIssue::repository()
             ->where('project_id', $params->projectId)
             ->findMax('sort');
-        $newSort = $maxSort + 65536;
+        $newSort = $maxSort + ProjectIssue::SORT_INTERVAL;
 
         $data = $params->toArray();
         $data['sort'] = $newSort;
