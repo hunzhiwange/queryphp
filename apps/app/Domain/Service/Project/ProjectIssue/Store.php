@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\Project\ProjectIssue;
 
 use App\Domain\Entity\Project\Project;
+use App\Domain\Entity\Project\ProjectContent;
 use App\Domain\Entity\Project\ProjectIssue;
 use App\Domain\Validate\Project\ProjectRelease as ProjectProjectRelease;
 use App\Exceptions\ProjectBusinessException;
@@ -46,6 +47,15 @@ class Store
             ], true);
             $updateEntity->num = strtoupper($this->project->num).'-'.$updateEntity->id;
             $this->w->update($updateEntity);
+        });
+
+        $this->w->on($entity, function (ProjectIssue $entity) {
+            $projectContentEntity = new ProjectContent([
+                'project_id' => $entity->projectId,
+                'project_issue_id' => $entity->id,
+                'content' => '',
+            ]);
+            $this->w->persist($projectContentEntity);
         });
 
         $this->w->flush();
