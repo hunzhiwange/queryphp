@@ -14,7 +14,7 @@ class ProjectModulesParams extends ReadParams
 {
     public ?int $status = null;
 
-    public string $orderBy = 'sort ASC,id DESC';
+    public string $orderBy = 'project_id DESC,sort ASC,id DESC';
 
     protected function columnDefaultValue(): TypedStringArray
     {

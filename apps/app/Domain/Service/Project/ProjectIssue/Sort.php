@@ -60,7 +60,7 @@ class Sort
                 $maxSort = $issueRepository
                     ->where('project_id', $params->projectId)
                     ->findMax('sort');
-                $newSort = $maxSort + 65536;
+                $newSort = $maxSort + ProjectIssue::SORT_INTERVAL;
             }
         }else {
             $minSort = $issueRepository
@@ -93,7 +93,7 @@ class Sort
             $issueRepository
                 ->where('project_id', $projectId)
                 ->orderBy('sort ASC,id ASC')
-                ->update(['sort' => Condition::raw('@num := @num + 65536')]);
+                ->update(['sort' => Condition::raw(sprintf('@num := @num + %d', ProjectIssue::SORT_INTERVAL))]);
         });
         $w->flush();
     }

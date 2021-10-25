@@ -44,3 +44,13 @@ if (!function_exists('inject_company')) {
         return $data;
     }
 }
+
+if (!function_exists('get_current_date')) {
+    /**
+     * 获取当前时间.
+     */
+    function get_current_date()
+    {
+       return date('Y-m-d H:i:s');
+    }
+}

@@ -260,6 +260,11 @@ class ProjectIssue extends Entity
     public const COMPLETED_TRUE = 2;
 
     /**
+     * 排序间隔.
+     */
+    public const SORT_INTERVAL = 65536;
+
+    /**
      * 问题类型关联查询作用域.
      */
     protected function relationScopeProjectType(HasOne $relation): void

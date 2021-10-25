@@ -22,6 +22,10 @@ class UpdateParams extends Dto
 
     public ?TypedIntArray $releases = null;
 
+    public ?int $completed = null;
+
+    public ?string $completedDate = null;
+
     protected function tagsTransformValue(string|array $value): TypedIntArray
     {
         return TypedIntArray::fromRequest($value);

@@ -15,7 +15,7 @@ class ProjectLabelsParams extends ReadParams
 {
     use ProjectIds;
 
-    public string $orderBy = 'sort ASC,id DESC';
+    public string $orderBy = 'project_id DESC,sort ASC,id DESC';
 
     protected function columnDefaultValue(): TypedStringArray
     {

@@ -12,6 +12,7 @@ use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
 use App\Domain\Validate\Validate;
+use Egulias\EmailValidator\Exception\CommaInDomain;
 use Leevel\Database\Ddd\Select;
 use Leevel\Validate\UniqueRule;
 
@@ -39,6 +40,12 @@ class Update
 
         if (isset($params->modules)) {
             $this->modules($params);
+        }
+
+        if (isset($params->completed) && 
+            ProjectIssue::COMPLETED_TRUE === $params->completed &&
+            !isset($params->completedDate)) {
+            $params->completedDate = \get_current_date();
         }
 
         return $this->save($params)->toArray();
