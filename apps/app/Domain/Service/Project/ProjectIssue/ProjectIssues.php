@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Project\ProjectIssue;
 
-use Closure;
 use App\Domain\Entity\Project\ProjectIssue;
 use App\Domain\Entity\Project\ProjectUser;
 use App\Domain\Service\Support\Read;
 use App\Domain\Service\Support\Spec\Project\ProjectIds;
+use Closure;
 use Leevel\Database\Condition;
 use Leevel\Database\Ddd\Select;
 
@@ -55,7 +55,7 @@ class ProjectIssues
 
     private function conditionCall(ProjectIssuesParams $params): ?Closure
     {
-        return function(Select $select) use($params) {
+        return function (Select $select) use ($params) {
             $select->eager([
                 'project_type',
                 'project_releases',

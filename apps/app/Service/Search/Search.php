@@ -9,7 +9,7 @@ use App\Domain\Service\Search\Search as Service;
 /**
  * 搜索项.
  */
-class Search 
+class Search
 {
     public function __construct(private Service $service)
     {

@@ -7,24 +7,21 @@ namespace App\Domain\Validate;
 use InvalidArgumentException;
 use Leevel\Validate\IValidator as BaseIValidator;
 use Leevel\Validate\Proxy\Validate as ProxyValidate;
-use App\Domain\Validate\IValidator;
 
 class Validate
 {
     public function __construct(
-        protected IValidator $validator, 
+        protected IValidator $validator,
         protected string $scene,
         protected array $data,
-    )
-    {
+    ) {
     }
 
     public static function make(
-        IValidator $validator, 
+        IValidator $validator,
         string $scene,
         array $data,
-    ): static
-    {
+    ): static {
         return new static($validator, $scene, $data);
     }
 
@@ -32,7 +29,7 @@ class Validate
     {
         return ProxyValidate::make(
             $this->data,
-            $this->parseRules($this-> validator, $this->scene),
+            $this->parseRules($this->validator, $this->scene),
             $this->validator->names(),
             $this->validator->messages()
         );
@@ -58,7 +55,7 @@ class Validate
             } else {
                 // 键值第一个为冒号表示合并验证规则
                 // 否则为替换验证规则
-                if (0 === strpos($k, ':')){
+                if (0 === strpos($k, ':')) {
                     $k = substr($k, 1);
                     $rules[$k] = array_merge((array) $v, (array) $validatorRules[$k]);
                 } else {

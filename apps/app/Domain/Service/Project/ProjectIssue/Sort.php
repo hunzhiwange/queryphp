@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Service\Project\ProjectIssue;
 
 use App\Domain\Entity\Project\ProjectIssue;
-use App\Domain\Entity\Project\ProjectLabel;
 use App\Domain\Validate\Project\ProjectLabel as ProjectProjectRelease;
+use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
-use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Validate\Validate;
 use Leevel\Database\Condition;
+use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\UniqueRule;
 
 /**
@@ -62,7 +61,7 @@ class Sort
                     ->findMax('sort');
                 $newSort = $maxSort + ProjectIssue::SORT_INTERVAL;
             }
-        }else {
+        } else {
             $minSort = $issueRepository
             ->where('project_id', $params->projectId)
              ->findMin('sort');
@@ -73,7 +72,7 @@ class Sort
             if ($preIssue->projectLabelId !== $params->projectLabelId) {
                 $preIssue->projectLabelId = $params->projectLabelId;
             }
-    
+
             $preIssue->sort = $newSort;
             $this->w->persist($preIssue);
             $this->w->flush();
@@ -87,7 +86,7 @@ class Sort
     public function resetSort(int $projectId): void
     {
         $w = clone $this->w;
-        $w->persist(function() use ($projectId) {
+        $w->persist(function () use ($projectId) {
             $issueRepository = ProjectIssue::repository();
             $issueRepository->execute('SET @num=1');
             $issueRepository

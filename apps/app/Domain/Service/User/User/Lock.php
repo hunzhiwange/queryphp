@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\User;
 
-use App\Infra\Lock as CacheLock;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
+use App\Infra\Lock as CacheLock;
 use Leevel\Validate\Proxy\Validate as Validates;
 
 /**

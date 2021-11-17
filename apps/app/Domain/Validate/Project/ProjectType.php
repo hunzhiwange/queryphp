@@ -58,9 +58,9 @@ class ProjectType implements IValidator
     public function rules(): array
     {
         return [
-            'id' => 'required|type:int|gt:0',
-            'name' => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
-            'sort'  => 'required|type:int|egt:0',
+            'id'     => 'required|type:int|gt:0',
+            'name'   => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
+            'sort'   => 'required|type:int|egt:0',
             'status' => [
                 ['in', EntityProjectType::values('status')],
             ],

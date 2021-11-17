@@ -6,10 +6,10 @@ namespace App\Domain\Service\Project\ProjectModule;
 
 use App\Domain\Entity\Project\ProjectModule;
 use App\Domain\Validate\Project\ProjectModule as ProjectProjectModule;
+use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
 
 /**

@@ -8,10 +8,10 @@ use App\Domain\Entity\Project\Project;
 use App\Domain\Entity\Project\ProjectContent;
 use App\Domain\Entity\Project\ProjectIssue;
 use App\Domain\Validate\Project\ProjectRelease as ProjectProjectRelease;
+use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
 
 /**
@@ -27,7 +27,7 @@ class Store
 
     public function handle(StoreParams $params): array
     {
-       // $this->validateArgs($params);
+        // $this->validateArgs($params);
 
         $this->project = Project::repository()->findOrFail($params->projectId);
 
@@ -51,9 +51,9 @@ class Store
 
         $this->w->on($entity, function (ProjectIssue $entity) {
             $projectContentEntity = new ProjectContent([
-                'project_id' => $entity->projectId,
+                'project_id'       => $entity->projectId,
                 'project_issue_id' => $entity->id,
-                'content' => '',
+                'content'          => '',
             ]);
             $this->w->persist($projectContentEntity);
         });

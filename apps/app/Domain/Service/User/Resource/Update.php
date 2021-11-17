@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\Resource;
 
 use App\Domain\Entity\User\Resource;
+use App\Domain\Validate\User\Resource as UserResource;
+use App\Domain\Validate\Validate;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
-use App\Domain\Validate\User\Resource as UserResource;
 
 /**
  * 资源更新.

@@ -7,7 +7,7 @@ namespace App\Controller\Swagger;
 /**
  * @codeCoverageIgnore
  */
-class WebDemo 
+class WebDemo
 {
     /**
      * @OA\Get(
@@ -29,10 +29,10 @@ class WebDemo
      * )
      */
     #[Route(
-        path: "/swagger/web/v1/demo/{name:[A-Za-z]+}/",
+        path: '/swagger/web/v1/demo/{name:[A-Za-z]+}/',
     )]
     public function index(string $name): string
     {
-        return 'swagger web demo '. $name;
+        return 'swagger web demo '.$name;
     }
 }

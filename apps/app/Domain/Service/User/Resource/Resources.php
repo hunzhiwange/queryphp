@@ -6,7 +6,6 @@ namespace App\Domain\Service\User\Resource;
 
 use App\Domain\Entity\User\Resource;
 use App\Domain\Service\Support\Read;
-use App\Domain\Service\User\Resource\ResourcesParams;
 
 /**
  * 资源列表.

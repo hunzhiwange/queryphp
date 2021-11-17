@@ -25,7 +25,7 @@ class ProjectLabels
 
     private function conditionCall(ProjectLabelsParams $params): ?Closure
     {
-        return function(Select $select) use($params) {
+        return function (Select $select) {
             $select->eager([
                 'project',
             ]);

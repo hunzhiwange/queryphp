@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Project\Project;
 
-use Closure;
 use App\Domain\Entity\Project\ProjectUser;
 use App\Domain\Service\Support\Read;
+use Closure;
 use Leevel\Database\Condition;
 use Leevel\Database\Ddd\Select;
 
@@ -40,15 +40,15 @@ class Users
 
     private function conditionCall(UsersParams $params): ?Closure
     {
-        return function(Select $select) {
+        return function (Select $select) {
             $select
                 ->leftJoin('user', [
-                        'user.name AS user.name',
-                        'user.num AS user.num',
-                    ], function (Condition $select) {
-                    $select
+                    'user.name AS user.name',
+                    'user.num AS user.num',
+                ], function (Condition $select) {
+                        $select
                         ->where('id', Condition::raw('[project_user.user_id]'));
-                });
+                    });
         };
     }
 }

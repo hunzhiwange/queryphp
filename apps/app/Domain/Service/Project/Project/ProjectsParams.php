@@ -26,7 +26,7 @@ class ProjectsParams extends ReadParams
     protected function columnDefaultValue(): TypedStringArray
     {
         return new TypedStringArray([
-            '*'
+            '*',
         ]);
     }
 

@@ -56,7 +56,7 @@ class OptionUpdate
     {
         $option = new OptionEntity();
         $option->name = $name;
-        if(Arr::shouldJson($value)) {
+        if (Arr::shouldJson($value)) {
             $value = Arr::convertJson($value);
         }
         $option->value = $value;

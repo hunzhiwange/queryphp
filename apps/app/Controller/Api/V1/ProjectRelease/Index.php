@@ -31,6 +31,6 @@ class Index
         $input = $this->input($request);
         $params = new ProjectReleasesParams($input);
 
-        return $service->handle($params);;
+        return $service->handle($params);
     }
 }

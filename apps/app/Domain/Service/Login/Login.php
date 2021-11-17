@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Login;
 
-use App\Infra\Code;
 use App\Domain\Entity\Base\App;
 use App\Domain\Entity\User\User;
 use App\Exceptions\AuthBusinessException;
 use App\Exceptions\AuthErrorCode;
+use App\Infra\Code;
+use App\Infra\Repository\Base\App as AppReposity;
+use App\Infra\Repository\User\User as UserReposity;
 use Leevel\Auth\Proxy\Auth;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Http\Request;
 use Leevel\Support\Str;
 use Leevel\Validate\Proxy\Validate as Validates;
-use App\Infra\Repository\User\User as UserReposity;
-use App\Infra\Repository\Base\App as AppReposity;
 
 /**
  * 验证登录.
@@ -23,11 +23,10 @@ use App\Infra\Repository\Base\App as AppReposity;
 class Login
 {
     public function __construct(
-        private Request $request, 
-        private Code $code, 
+        private Request $request,
+        private Code $code,
         private UnitOfWork $w
-    ) 
-    {
+    ) {
     }
 
     public function handle(LoginParams $params): array
@@ -138,7 +137,7 @@ class Login
             [
                 'app_key'      => __('应用 KEY'),
                 'name'         => __('用户名'),
-                'password' => __('密码'),
+                'password'     => __('密码'),
                 'code'         => __('校验码'),
                 'remember'     => __('保持登陆'),
             ]
@@ -146,6 +145,7 @@ class Login
 
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
+
             throw new AuthBusinessException(AuthErrorCode::AUTH_INVALID_ARGUMENT, $e, true);
         }
     }

@@ -6,11 +6,11 @@ namespace App\Domain\Service\Project\Project;
 
 use App\Domain\Entity\Project\Project;
 use App\Domain\Entity\Project\ProjectUser;
+use App\Domain\Validate\Project\ProjectUser as ProjectProjectUser;
+use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Validate\Validate;
-use App\Domain\Validate\Project\ProjectUser as ProjectProjectUser;
 
 /**
  * 设为管理.
@@ -19,8 +19,7 @@ class SetAdministrator
 {
     public function __construct(
         private UnitOfWork $w
-    )
-    {
+    ) {
     }
 
     public function handle(SetAdministratorParams $params): array
@@ -45,6 +44,7 @@ class SetAdministrator
     private function entity(SetAdministratorParams $params): ProjectUser
     {
         $this->findProject($params->projectId);
+
         return $this->findProjectUser($params);
     }
 
@@ -54,9 +54,9 @@ class SetAdministrator
     private function findProjectUser(SetAdministratorParams $params): ProjectUser
     {
         $map = [
-            'user_id' => $params->userId,
-            'type' => ProjectUser::TYPE_MEMBER,
-            'data_id' => $params->projectId,
+            'user_id'   => $params->userId,
+            'type'      => ProjectUser::TYPE_MEMBER,
+            'data_id'   => $params->projectId,
             'data_type' => ProjectUser::DATA_TYPE_PROJECT,
         ];
 

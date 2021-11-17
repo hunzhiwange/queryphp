@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Project\ProjectModule;
 
-use Closure;
 use App\Domain\Entity\Project\ProjectModule;
 use App\Domain\Service\Support\Read;
-use App\Domain\Service\Project\ProjectModule\ProjectModulesParams;
+use Closure;
 use Leevel\Database\Ddd\Select;
 
 /**
@@ -24,7 +23,7 @@ class ProjectModules
 
     private function conditionCall(ProjectModulesParams $params): ?Closure
     {
-        return function(Select $select) use($params) {
+        return function (Select $select) {
             $select->eager([
                 'project',
             ]);

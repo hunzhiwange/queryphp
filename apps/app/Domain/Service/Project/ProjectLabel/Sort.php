@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Service\Project\ProjectLabel;
 
 use App\Domain\Entity\Project\Project;
-use App\Domain\Entity\Project\ProjectIssue;
 use App\Domain\Entity\Project\ProjectLabel;
 use App\Domain\Validate\Project\ProjectLabel as ProjectProjectRelease;
+use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Validate\Validate;
-use Leevel\Database\Condition;
 use Leevel\Validate\UniqueRule;
 
 /**
@@ -50,12 +48,12 @@ class Sort
         if ($count !== count($params->projectLabelIds)) {
             throw new \Exception('yy');
         }
-        
-        $this->w->persist(function() use($projectLabelIds) {
+
+        $this->w->persist(function () use ($projectLabelIds) {
             $updateData = [];
             foreach ($projectLabelIds as $k => $projectLabelId) {
                 $updateData[] = [
-                    'id' => $projectLabelId,
+                    'id'   => $projectLabelId,
                     'sort' => $k,
                 ];
             }

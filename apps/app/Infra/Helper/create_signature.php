@@ -8,23 +8,23 @@ use UnexpectedValueException;
 
 /**
  * 签名生成.
- * 
+ *
  * @throws \UnexpectedValueException
  */
-function create_signature(string $signatureMethod, array $params, string $appSecret): string  
-{                                                                          
-    if(empty($params)) {
+function create_signature(string $signatureMethod, array $params, string $appSecret): string
+{
+    if (empty($params)) {
         return '';
     }
 
     ksort($params);
     $tmpParams = [$appSecret];
-    foreach($params as $k => $v){                                                    
-        if (!is_array($v)) {                                                    
-            $tmpParams[] = $k . $v;                                                    
-        } else {  
-            $tmpParams[] = $k . json_encode($v, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);                                
-        }                                                                       
+    foreach ($params as $k => $v) {
+        if (!is_array($v)) {
+            $tmpParams[] = $k.$v;
+        } else {
+            $tmpParams[] = $k.json_encode($v, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
+        }
     }
     $tmpParams[] = $appSecret;
 
@@ -32,7 +32,7 @@ function create_signature(string $signatureMethod, array $params, string $appSec
         case 'hmac_sha256':
             return base64_encode(hash_hmac('sha256', implode('', $tmpParams), $appSecret, true));
     }
-    
+
     throw new UnexpectedValueException(sprintf('Signature method (%s) not supported.', $signatureMethod));
 }
 

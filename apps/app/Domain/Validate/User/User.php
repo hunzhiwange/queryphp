@@ -25,9 +25,9 @@ class User implements IValidator
         return [
             'update' => [
                 'id',
-                ':num' => ValidateIValidator::OPTIONAL,
+                ':num'      => ValidateIValidator::OPTIONAL,
                 ':password' => ValidateIValidator::OPTIONAL,
-                ':status'  => ValidateIValidator::OPTIONAL,
+                ':status'   => ValidateIValidator::OPTIONAL,
                 'email',
                 'mobile',
             ],
@@ -62,11 +62,11 @@ class User implements IValidator
     public function rules(): array
     {
         return [
-            'id' => 'required|type:int|gt:0',
-            'name' => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
-            'num'  => ['required|alpha_dash', $this->uniqueRule],
+            'id'       => 'required|type:int|gt:0',
+            'name'     => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
+            'num'      => ['required|alpha_dash', $this->uniqueRule],
             'password' => 'required|min_length:6,max_length:30',
-            'status' => [
+            'status'   => [
                 ['in', UserUser::values('status')],
             ],
             'email'  => 'email|'.ValidateIValidator::OPTIONAL,

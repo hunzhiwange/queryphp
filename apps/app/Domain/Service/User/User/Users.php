@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\User;
 
-use Closure;
 use App\Domain\Entity\User\User;
 use App\Domain\Service\Support\Read;
+use Closure;
 use Leevel\Database\Ddd\Select;
 
 /**
@@ -23,6 +23,6 @@ class Users
 
     private function conditionCall(): ?Closure
     {
-        return fn(Select $select) => $select->eager(['role']);
+        return fn (Select $select) => $select->eager(['role']);
     }
 }

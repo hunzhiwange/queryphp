@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Api\V1\Resource;
 
 use App\Controller\Support\Controller;
-use App\Domain\Service\User\Resource\Status as Service;
 use App\Domain\Service\Support\StatusParams;
+use App\Domain\Service\User\Resource\Status as Service;
 use Leevel\Http\Request;
 
 /**

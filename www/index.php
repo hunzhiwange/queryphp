@@ -8,8 +8,8 @@ use Leevel\Di\Container;
 use Leevel\Di\IContainer;
 use Leevel\Http\Request;
 use Leevel\Kernel\App;
-use Leevel\Kernel\IApp;
 use Leevel\Kernel\Exceptions\IRuntime;
+use Leevel\Kernel\IApp;
 use Leevel\Kernel\IKernel;
 
 // 加载 Composer

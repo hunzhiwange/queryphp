@@ -17,7 +17,7 @@ class Filter
     public function handle(Closure $next, Request $request): Response
     {
         $this->filterRequest($request);
-        
+
         return $next($request);
     }
 
@@ -37,10 +37,10 @@ class Filter
     }
 
     protected function filterArray(array $data): array
-    { 
+    {
         array_walk(
             $data,
-            fn (mixed &$value, string $key) => $value = $this->transformValue($value, $key),
+            fn (mixed & $value, string $key) => $value = $this->transformValue($value, $key),
         );
 
         return $data;

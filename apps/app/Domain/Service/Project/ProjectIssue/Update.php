@@ -8,11 +8,11 @@ use App\Domain\Entity\Project\ProjectIssue;
 use App\Domain\Entity\Project\ProjectIssueModule;
 use App\Domain\Entity\Project\ProjectIssueRelease;
 use App\Domain\Entity\Project\ProjectIssueTag;
+use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
-use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Validate\Validate;
 use Leevel\Database\Ddd\Select;
+use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\UniqueRule;
 
 //use App\Domain\Validate\Project\ProjectModule as ProjectProjectModule;
@@ -41,7 +41,7 @@ class Update
             $this->modules($params);
         }
 
-        if (isset($params->completed) && 
+        if (isset($params->completed) &&
             ProjectIssue::COMPLETED_TRUE === $params->completed &&
             !isset($params->completedDate)) {
             $params->completedDate = \get_current_date();
@@ -52,8 +52,8 @@ class Update
 
     private function tags(UpdateParams $params)
     {
-        $this->w->persist(function() use($params) {
-            $old =  $this->w
+        $this->w->persist(function () use ($params) {
+            $old = $this->w
                 ->repository(ProjectIssueTag::class)
                 ->findAll(function (Select $select) use ($params) {
                     $select->where('project_issue_id', $params->id);
@@ -66,26 +66,26 @@ class Update
             foreach ($params->tags as $projectTagId) {
                 if (in_array($projectTagId, $old)) {
                     $updateData[] = [
-                        'id' => $oldid[$projectTagId],
+                        'id'               => $oldid[$projectTagId],
                         'project_issue_id' => $params->id,
-                        'project_tag_id' => $projectTagId,
-                        'delete_at' => 0,
+                        'project_tag_id'   => $projectTagId,
+                        'delete_at'        => 0,
                     ];
                 } else {
                     $updateData[] = [
-                        'id' => 0,
+                        'id'               => 0,
                         'project_issue_id' => $params->id,
-                        'project_tag_id' => $projectTagId,
-                        'delete_at' => 0,
+                        'project_tag_id'   => $projectTagId,
+                        'delete_at'        => 0,
                     ];
                 }
             }
             foreach ($del as $id) {
                 $updateData[] = [
-                    'id' => $oldid[$id],
+                    'id'               => $oldid[$id],
                     'project_issue_id' => $params->id,
-                    'project_tag_id' => $id,
-                    'delete_at' => time(),
+                    'project_tag_id'   => $id,
+                    'delete_at'        => time(),
                 ];
             }
             \inject_company($updateData);
@@ -95,8 +95,8 @@ class Update
 
     private function releases(UpdateParams $params)
     {
-        $this->w->persist(function() use($params) {
-            $old =  $this->w
+        $this->w->persist(function () use ($params) {
+            $old = $this->w
                 ->repository(ProjectIssueRelease::class)
                 ->findAll(function (Select $select) use ($params) {
                     $select->where('project_issue_id', $params->id);
@@ -109,26 +109,26 @@ class Update
             foreach ($params->releases as $projectReleaseId) {
                 if (in_array($projectReleaseId, $old)) {
                     $updateData[] = [
-                        'id' => $oldid[$projectReleaseId],
-                        'project_issue_id' => $params->id,
+                        'id'                 => $oldid[$projectReleaseId],
+                        'project_issue_id'   => $params->id,
                         'project_release_id' => $projectReleaseId,
-                        'delete_at' => 0,
+                        'delete_at'          => 0,
                     ];
                 } else {
                     $updateData[] = [
-                        'id' => 0,
-                        'project_issue_id' => $params->id,
+                        'id'                 => 0,
+                        'project_issue_id'   => $params->id,
                         'project_release_id' => $projectReleaseId,
-                        'delete_at' => 0,
+                        'delete_at'          => 0,
                     ];
                 }
             }
             foreach ($del as $id) {
                 $updateData[] = [
-                    'id' => $oldid[$id],
-                    'project_issue_id' => $params->id,
+                    'id'                 => $oldid[$id],
+                    'project_issue_id'   => $params->id,
                     'project_release_id' => $id,
-                    'delete_at' => time(),
+                    'delete_at'          => time(),
                 ];
             }
             \inject_company($updateData);
@@ -138,8 +138,8 @@ class Update
 
     private function modules(UpdateParams $params)
     {
-        $this->w->persist(function() use($params) {
-            $old =  $this->w
+        $this->w->persist(function () use ($params) {
+            $old = $this->w
                 ->repository(ProjectIssueModule::class)
                 ->findAll(function (Select $select) use ($params) {
                     $select->where('project_issue_id', $params->id);
@@ -152,26 +152,26 @@ class Update
             foreach ($params->modules as $projectModuleId) {
                 if (in_array($projectModuleId, $old)) {
                     $updateData[] = [
-                        'id' => $oldid[$projectModuleId],
-                        'project_issue_id' => $params->id,
+                        'id'                => $oldid[$projectModuleId],
+                        'project_issue_id'  => $params->id,
                         'project_module_id' => $projectModuleId,
-                        'delete_at' => 0,
+                        'delete_at'         => 0,
                     ];
                 } else {
                     $updateData[] = [
-                        'id' => 0,
-                        'project_issue_id' => $params->id,
+                        'id'                => 0,
+                        'project_issue_id'  => $params->id,
                         'project_module_id' => $projectModuleId,
-                        'delete_at' => 0,
+                        'delete_at'         => 0,
                     ];
                 }
             }
             foreach ($del as $id) {
                 $updateData[] = [
-                    'id' => $oldid[$id],
-                    'project_issue_id' => $params->id,
+                    'id'                => $oldid[$id],
+                    'project_issue_id'  => $params->id,
                     'project_module_id' => $id,
-                    'delete_at' => time(),
+                    'delete_at'         => time(),
                 ];
             }
             \inject_company($updateData);

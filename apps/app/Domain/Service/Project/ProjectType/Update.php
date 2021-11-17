@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Service\Project\ProjectType;
 
 use App\Domain\Entity\Project\ProjectType;
+use App\Domain\Validate\Project\ProjectType as ProjectProjectType;
+use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
-use App\Domain\Validate\Project\ProjectType as ProjectProjectType;
 
 /**
  * 项目类型更新.

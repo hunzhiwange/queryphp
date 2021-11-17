@@ -72,6 +72,7 @@ class Store
         $validator = Validate::make(new UserPermission($uniqueRule), 'store', $params->toArray())->getValidator();
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
+
             throw new UserBusinessException(UserErrorCode::PERMISSION_STORE_INVALID_ARGUMENT, $e, true);
         }
     }

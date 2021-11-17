@@ -7,10 +7,10 @@ namespace App\Domain\Service\User\User;
 use App\Domain\Entity\User\User;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
+use App\Infra\Repository\User\User as UserReposity;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate as Validates;
-use App\Infra\Repository\User\User as UserReposity;
- 
+
 /**
  * 用户修改密码.
  */
@@ -94,18 +94,19 @@ class ChangePassword
                 'id'                  => 'required',
                 'old_pwd'             => 'required|alpha_dash|min_length:6',
                 'new_pwd'             => 'required|alpha_dash|min_length:6',
-                'confirm_pwd' => 'required|alpha_dash|min_length:6|equal_to:new_pwd',
+                'confirm_pwd'         => 'required|alpha_dash|min_length:6|equal_to:new_pwd',
             ],
             [
                 'id'                  => 'ID',
                 'old_pwd'             => __('旧密码'),
                 'new_pwd'             => __('新密码'),
-                'confirm_pwd' => __('确认密码'),
+                'confirm_pwd'         => __('确认密码'),
             ]
         );
 
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
+
             throw new UserBusinessException(UserErrorCode::CHANGE_PASSWORD_INVALID_ARGUMENT, $e, true);
         }
     }
