@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\Api\V1\Base;
 
 use App\Controller\Support\Controller;
-use Leevel\Http\Request;
 use App\Domain\Service\Option\OptionUpdate;
 use App\Domain\Service\Option\OptionUpdateParams;
+use Leevel\Http\Request;
 
 /**
  * 配置更新.

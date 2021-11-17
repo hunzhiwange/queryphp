@@ -9,8 +9,8 @@ use Leevel\Collection\Collection;
 use Leevel\Collection\TypedStringArray;
 use Leevel\Database\Ddd\Repository;
 use Leevel\Database\Ddd\Select;
-use function Leevel\Support\Str\camelize;
 use Leevel\Database\Ddd\UnitOfWork;
+use function Leevel\Support\Str\camelize;
 
 /**
  * 查询.
@@ -121,7 +121,7 @@ trait Read
         $page = $page->toArray();
         $page['data'] = $this->prepareToArray($page['data']);
         $this->prepare($page['data'], $params);
-        
+
         return $page;
     }
 

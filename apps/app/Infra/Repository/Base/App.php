@@ -16,7 +16,7 @@ class App extends Repository
 {
     /**
      * 根据应用 KEY 查找应用秘钥.
-     * 
+     *
      * @throws \App\Exceptions\BusinessException
      */
     public function findAppSecretByKey(string $appKey): string

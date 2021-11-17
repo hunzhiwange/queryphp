@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Search;
 
-use RuntimeException;
 use Leevel;
+use RuntimeException;
 
 /**
  * 搜索项.

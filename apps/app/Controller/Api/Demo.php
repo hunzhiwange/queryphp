@@ -9,7 +9,7 @@ use App\Service\Demo\Demo as AppDemoService;
 /**
  * @codeCoverageIgnore
  */
-class Demo 
+class Demo
 {
     public function __construct(private AppDemoService $service)
     {

@@ -6,10 +6,10 @@ namespace App\Domain\Service\Project\ProjectTag;
 
 use App\Domain\Entity\Project\ProjectTag;
 use App\Domain\Validate\Project\ProjectTag as ProjectProjectTag;
+use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
 
 /**

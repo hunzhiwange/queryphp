@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\User;
 
-use App\Infra\Lock;
 use App\Domain\Entity\User\User;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
+use App\Infra\Lock;
+use App\Infra\Repository\User\User as UserReposity;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate as Validates;
-use App\Infra\Repository\User\User as UserReposity;
 
 /**
  * 解锁管理面板.
@@ -42,7 +42,7 @@ class Unlock
     /**
      * 校验用户.
      */
-    private function validateUser(int $id, string $password): void 
+    private function validateUser(int $id, string $password): void
     {
         $userReposity = $this->userReposity();
         $user = $userReposity->findValidUserById($id, 'id,password');
@@ -66,12 +66,12 @@ class Unlock
             [
                 'id'                   => 'required',
                 'token'                => 'required',
-                'password' => 'required|alpha_dash|min_length:6',
+                'password'             => 'required|alpha_dash|min_length:6',
             ],
             [
                 'id'                   => 'ID',
                 'token'                => 'Token',
-                'password' => __('解锁密码'),
+                'password'             => __('解锁密码'),
             ]
         );
 

@@ -10,7 +10,7 @@ namespace App\Controller\Api;
 class Web
 {
     #[Route(
-        path: "/web/v1/demo/{name:[A-Za-z]+}/",
+        path: '/web/v1/demo/{name:[A-Za-z]+}/',
     )]
     public function demo1(string $name): string
     {
@@ -18,7 +18,7 @@ class Web
     }
 
     #[Route(
-        path: "/web/v2/demo/",
+        path: '/web/v2/demo/',
     )]
     public function demo2(): string
     {

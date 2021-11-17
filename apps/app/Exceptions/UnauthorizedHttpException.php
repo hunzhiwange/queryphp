@@ -17,9 +17,8 @@ class UnauthorizedHttpException extends BaseUnauthorizedHttpException
         string $message = '',
         bool $overrideMessage = false,
         Throwable $previous = null
-    )
-    {
-        $message = $overrideMessage ? $message : 
+    ) {
+        $message = $overrideMessage ? $message :
                     $this->getErrorMessage($code).($message ? ': '.$message : '');
         parent::__construct($message, $code, $previous);
     }

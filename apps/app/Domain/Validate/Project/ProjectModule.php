@@ -59,11 +59,11 @@ class ProjectModule implements IValidator
     public function rules(): array
     {
         return [
-            'id' => 'required|type:int|gt:0',
-            'name' => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
-            'sort'  => 'required|type:int|egt:0',
+            'id'          => 'required|type:int|gt:0',
+            'name'        => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
+            'sort'        => 'required|type:int|egt:0',
             'project_id'  => 'required|type:int|gt:0',
-            'status' => [
+            'status'      => [
                 ['in', EntityProjectModule::values('status')],
             ],
         ];

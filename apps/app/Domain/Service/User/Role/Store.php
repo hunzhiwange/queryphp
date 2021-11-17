@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\Role;
 
 use App\Domain\Entity\User\Role;
-use App\Domain\Service\User\Role\StoreParams;
+use App\Domain\Validate\User\Role as UserRole;
+use App\Domain\Validate\Validate;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
-use App\Domain\Validate\User\Role as UserRole;
 
 /**
  * 角色保存.

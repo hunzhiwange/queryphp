@@ -35,94 +35,94 @@ class ProjectIssue extends Entity
      * Entity struct.
      *
      * - id
-     *                     comment: ID  type: bigint(20) unsigned  null: false  
+     *                     comment: ID  type: bigint(20) unsigned  null: false
      *                     key: PRI  default: null  extra: auto_increment
      * - title
-     *                     comment: 标题  type: varchar(255)  null: false  
-     *                     key:   default:   extra: 
+     *                     comment: 标题  type: varchar(255)  null: false
+     *                     key:   default:   extra:
      * - num
-     *                     comment: 编号: 例如 ISSUE-1101  type: varchar(50)  null: false  
-     *                     key:   default:   extra: 
+     *                     comment: 编号: 例如 ISSUE-1101  type: varchar(50)  null: false
+     *                     key:   default:   extra:
      * - company_id
-     *                     comment: 公司 ID  type: bigint(20) unsigned  null: false  
-     *                     key: MUL  default: 1  extra: 
+     *                     comment: 公司 ID  type: bigint(20) unsigned  null: false
+     *                     key: MUL  default: 1  extra:
      * - project_id
-     *                     comment: 项目ID  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                     comment: 项目ID  type: bigint(20) unsigned  null: false
+     *                     key:   default: 0  extra:
      * - project_label_id
-     *                     comment: 项目分类 ID  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                     comment: 项目分类 ID  type: bigint(20) unsigned  null: false
+     *                     key:   default: 0  extra:
      * - project_type_id
-     *                     comment: 项目问题类型 ID  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                     comment: 项目问题类型 ID  type: bigint(20) unsigned  null: false
+     *                     key:   default: 0  extra:
      * - owner_user_id
-     *                     comment: 负责人用户 ID  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                     comment: 负责人用户 ID  type: bigint(20) unsigned  null: false
+     *                     key:   default: 0  extra:
      * - project_log_id
-     *                     comment: 项目日志 ID  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                     comment: 项目日志 ID  type: bigint(20) unsigned  null: false
+     *                     key:   default: 0  extra:
      * - desc
-     *                     comment: 描述  type: varchar(500)  null: false  
-     *                     key:   default:   extra: 
+     *                     comment: 描述  type: varchar(500)  null: false
+     *                     key:   default:   extra:
      * - level
-     *                     comment: 优先级别：1~4  type: tinyint(1) unsigned  null: false  
-     *                     key:   default: 1  extra: 
+     *                     comment: 优先级别：1~4  type: tinyint(1) unsigned  null: false
+     *                     key:   default: 1  extra:
      * - completed
-     *                     comment: 是否完成：1=未完成;2=已完成;  type: tinyint(1) unsigned  null: false  
-     *                     key:   default: 1  extra: 
+     *                     comment: 是否完成：1=未完成;2=已完成;  type: tinyint(1) unsigned  null: false
+     *                     key:   default: 1  extra:
      * - completed_date
-     *                     comment: 完成时间  type: datetime  null: false  
-     *                     key:   default: null  extra: 
+     *                     comment: 完成时间  type: datetime  null: false
+     *                     key:   default: null  extra:
      * - sub_task
-     *                     comment: 子任务列表  type: text  null: false  
-     *                     key:   default: null  extra: 
+     *                     comment: 子任务列表  type: text  null: false
+     *                     key:   default: null  extra:
      * - follower
-     *                     comment: 关注人列表  type: text  null: false  
-     *                     key:   default: null  extra: 
+     *                     comment: 关注人列表  type: text  null: false
+     *                     key:   default: null  extra:
      * - file_number
-     *                     comment: 附件数量  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                     comment: 附件数量  type: bigint(20) unsigned  null: false
+     *                     key:   default: 0  extra:
      * - start_date
-     *                     comment: 计划开始时间  type: datetime  null: false  
-     *                     key:   default: null  extra: 
+     *                     comment: 计划开始时间  type: datetime  null: false
+     *                     key:   default: null  extra:
      * - end_date
-     *                     comment: 计划结束时间  type: datetime  null: false  
-     *                     key:   default: null  extra: 
+     *                     comment: 计划结束时间  type: datetime  null: false
+     *                     key:   default: null  extra:
      * - archived
-     *                     comment: 是否归档：1=未归档;2=已归档;  type: tinyint(1) unsigned  null: false  
-     *                     key:   default: 1  extra: 
+     *                     comment: 是否归档：1=未归档;2=已归档;  type: tinyint(1) unsigned  null: false
+     *                     key:   default: 1  extra:
      * - archived_date
-     *                     comment: 归档时间  type: datetime  null: false  
-     *                     key:   default: null  extra: 
+     *                     comment: 归档时间  type: datetime  null: false
+     *                     key:   default: null  extra:
      * - sort
-     *                     comment: 排序(DESC)  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                     comment: 排序(DESC)  type: bigint(20) unsigned  null: false
+     *                     key:   default: 0  extra:
      * - user_sort
-     *                     comment: 会员自己的排序(DESC)  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                     comment: 会员自己的排序(DESC)  type: bigint(20) unsigned  null: false
+     *                     key:   default: 0  extra:
      * - create_at
-     *                     comment: 创建时间  type: datetime  null: false  
-     *                     key:   default: CURRENT_TIMESTAMP  extra: 
+     *                     comment: 创建时间  type: datetime  null: false
+     *                     key:   default: CURRENT_TIMESTAMP  extra:
      * - update_at
-     *                     comment: 更新时间  type: datetime  null: false  
+     *                     comment: 更新时间  type: datetime  null: false
      *                     key:   default: CURRENT_TIMESTAMP  extra: on update CURRENT_TIMESTAMP
      * - delete_at
-     *                     comment: 删除时间 0=未删除;大于0=删除时间;  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                     comment: 删除时间 0=未删除;大于0=删除时间;  type: bigint(20) unsigned  null: false
+     *                     key:   default: 0  extra:
      * - create_account
-     *                     comment: 创建账号  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                     comment: 创建账号  type: bigint(20) unsigned  null: false
+     *                     key:   default: 0  extra:
      * - update_account
-     *                     comment: 更新账号  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                     comment: 更新账号  type: bigint(20) unsigned  null: false
+     *                     key:   default: 0  extra:
      * - version
-     *                     comment: 操作版本号  type: bigint(20) unsigned  null: false  
-     *                     key:   default: 0  extra: 
+     *                     comment: 操作版本号  type: bigint(20) unsigned  null: false
+     *                     key:   default: 0  extra:
      */
     public const STRUCT = [
         'id' => [
             self::COLUMN_NAME => 'ID',
-            self::READONLY => true,
+            self::READONLY    => true,
         ],
         'title' => [
             self::COLUMN_NAME => '标题',
@@ -191,19 +191,19 @@ class ProjectIssue extends Entity
             self::COLUMN_NAME => '创建时间',
         ],
         'update_at' => [
-            self::COLUMN_NAME => '更新时间',
+            self::COLUMN_NAME     => '更新时间',
             self::SHOW_PROP_BLACK => true,
         ],
         'delete_at' => [
-            self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
+            self::COLUMN_NAME     => '删除时间 0=未删除;大于0=删除时间;',
             self::SHOW_PROP_BLACK => true,
         ],
         'create_account' => [
-            self::COLUMN_NAME => '创建账号',
+            self::COLUMN_NAME     => '创建账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'update_account' => [
-            self::COLUMN_NAME => '更新账号',
+            self::COLUMN_NAME     => '更新账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'version' => [
@@ -252,7 +252,6 @@ class ProjectIssue extends Entity
     /**
      * 是否完成.
      */
-    
     #[completed('未完成')]
     public const COMPLETED_FALSE = 1;
 

@@ -6,13 +6,12 @@ namespace App\Domain\Service\Project\Project;
 
 use App\Domain\Entity\Project\Project;
 use App\Domain\Entity\Project\ProjectLabel as ProjectLabel;
-use App\Domain\Service\Project\Project\StoreParams;
+use App\Domain\Validate\Project\Project as ProjectProject;
+use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
-use App\Domain\Validate\Project\Project as ProjectProject;
 
 /**
  * 项目保存.
@@ -37,13 +36,13 @@ class Store
     {
         $this->w->persist($entity = $this->entity($params));
         if ($params->template->key) {
-            $this->w->on($entity, function(Project $entity) use($params) {
+            $this->w->on($entity, function (Project $entity) use ($params) {
                 // 保存模板
                 foreach ($params->template->data as $key => $item) {
                     $projectLabel = new ProjectLabel([
                         'project_id' => $entity->id,
-                        'name' => $item['title'],
-                        'sort' => $key,
+                        'name'       => $item['title'],
+                        'sort'       => $key,
                     ]);
                     $this->w->persist($projectLabel);
                 }
@@ -79,7 +78,7 @@ class Store
     private function validateArgs(StoreParams $params): void
     {
         // $uniqueRule = UniqueRule::rule(
-        //     Project::class, 
+        //     Project::class,
         //     additional:[]
         // );
 

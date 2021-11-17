@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\User;
 
+use App\Domain\Entity\User\User;
+use App\Domain\Entity\User\UserRole as EntityUserRole;
 use Leevel\Collection\Collection;
 use Leevel\Collection\TypedIntArray;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Entity\User\User;
-use App\Domain\Entity\User\UserRole as EntityUserRole;
 
 /**
  * 用户授权角色.

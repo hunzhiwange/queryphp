@@ -27,7 +27,7 @@ class Cors
         $response = new Response();
         $response->headers->add($headers);
         $response->sendHeaders();
-        
+
         return $next($request);
     }
 }

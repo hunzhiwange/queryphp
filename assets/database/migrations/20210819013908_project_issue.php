@@ -56,7 +56,7 @@ final class ProjectIssue extends AbstractMigration
 
     private function seed(): void
     {
-        return;
+
         /*
         $sql = <<<'EOT'
             EOT;
