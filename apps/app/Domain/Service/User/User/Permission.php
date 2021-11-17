@@ -17,8 +17,7 @@ class Permission
     public function __construct(
         private PermissionCache $permissionCache,
         private UserPermission $permission,
-    )
-    {
+    ) {
     }
 
     public function handle(PermissionParams $params): array

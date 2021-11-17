@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Api\V1\Permission;
 
 use App\Controller\Support\Controller;
-use App\Domain\Service\User\Permission\Destroy as Service;
 use App\Domain\Service\Support\DestroyParams;
+use App\Domain\Service\User\Permission\Destroy as Service;
 use Leevel\Http\Request;
 
 /**

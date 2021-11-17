@@ -6,6 +6,7 @@ namespace App\Controller\Swagger;
 
 /**
  * 文档汇总.
+ *
  * @codeCoverageIgnore
  */
 class Apis

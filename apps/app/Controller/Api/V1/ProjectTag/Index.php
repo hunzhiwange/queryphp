@@ -30,6 +30,6 @@ class Index
         $input = $this->input($request);
         $params = new ProjectTagsParams($input);
 
-        return $service->handle($params);;
+        return $service->handle($params);
     }
 }

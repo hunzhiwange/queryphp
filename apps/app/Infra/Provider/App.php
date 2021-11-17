@@ -42,7 +42,7 @@ class App extends Provider
 
     /**
      * bootstrap.
-     * 
+     *
      * @todo bootstrap 执行两遍的问题
      */
     public function bootstrap(): void

@@ -36,7 +36,7 @@ class Upload
         $this->saveFile($file->getPathname(), $savePath);
 
         return [
-            'file_url' => $this->savePathForUrl($savePath)
+            'file_url' => $this->savePathForUrl($savePath),
         ];
     }
 

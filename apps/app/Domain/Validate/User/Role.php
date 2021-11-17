@@ -58,9 +58,9 @@ class Role implements IValidator
     public function rules(): array
     {
         return [
-            'id' => 'required|type:int|gt:0',
-            'name' => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
-            'num'  => ['required|alpha_dash', $this->uniqueRule],
+            'id'     => 'required|type:int|gt:0',
+            'name'   => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
+            'num'    => ['required|alpha_dash', $this->uniqueRule],
             'status' => [
                 ['in', UserRole::values('status')],
             ],

@@ -44,7 +44,7 @@ class Router extends RouterProvider
      * - 例外在应用执行结束后响应环节也会调用 HTTP 中间件.
      */
     protected array $middlewareAlias = [
-        'auth' => Auth::class,
+        'auth'       => Auth::class,
         'session'    => Session::class,
         'throttler'  => Throttler::class,
     ];

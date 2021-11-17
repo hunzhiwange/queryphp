@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Project\ProjectIssue;
 
-use Leevel\Support\Dto;
 use Leevel\Collection\TypedIntArray;
+use Leevel\Support\Dto;
 
 /**
  * 项目任务更新参数.

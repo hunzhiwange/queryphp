@@ -6,11 +6,11 @@ namespace App\Domain\Service\Project\Project;
 
 use App\Domain\Entity\Project\Project;
 use App\Domain\Entity\Project\ProjectUser;
+use App\Domain\Validate\Project\ProjectUser as ProjectProjectUser;
+use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Validate\Validate;
-use App\Domain\Validate\Project\ProjectUser as ProjectProjectUser;
 
 /**
  * 项目收藏.
@@ -19,8 +19,7 @@ class Favor
 {
     public function __construct(
         private UnitOfWork $w
-    )
-    {
+    ) {
     }
 
     public function handle(FavorParams $params): array
@@ -47,9 +46,9 @@ class Favor
         $this->findProject($params->projectId);
         $this->findProjectUser($params);
         $projectUser = new ProjectUser([
-            'user_id' => $params->userId,
-            'type' => ProjectUser::TYPE_FAVOR,
-            'data_id' => $params->projectId,
+            'user_id'   => $params->userId,
+            'type'      => ProjectUser::TYPE_FAVOR,
+            'data_id'   => $params->projectId,
             'data_type' => ProjectUser::DATA_TYPE_PROJECT,
         ]);
         $projectUser->userId = $projectUser->userId;
@@ -63,9 +62,9 @@ class Favor
     private function findProjectUser(FavorParams $params): ProjectUser
     {
         $map = [
-            'user_id' => $params->userId,
-            'type' => ProjectUser::TYPE_FAVOR,
-            'data_id' => $params->projectId,
+            'user_id'   => $params->userId,
+            'type'      => ProjectUser::TYPE_FAVOR,
+            'data_id'   => $params->projectId,
             'data_type' => ProjectUser::DATA_TYPE_PROJECT,
         ];
 

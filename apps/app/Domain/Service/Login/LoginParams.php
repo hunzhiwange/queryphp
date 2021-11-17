@@ -15,6 +15,6 @@ class LoginParams extends Dto
     public string $password;
 
     public string $code;
-    
+
     public int $remember = 0;
 }

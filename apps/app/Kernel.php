@@ -31,7 +31,7 @@ class Kernel extends Kernels
         if ($app->isDebug()) {
             $this->middlewares[] = Debug::class;
         }
-        
+
         parent::__construct($app, $router);
     }
 }

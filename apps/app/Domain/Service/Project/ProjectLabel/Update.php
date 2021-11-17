@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Service\Project\ProjectLabel;
 
 use App\Domain\Entity\Project\ProjectLabel;
+use App\Domain\Validate\Project\ProjectLabel as ProjectProjectLabel;
+use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
-use App\Domain\Validate\Project\ProjectLabel as ProjectProjectLabel;
 
 /**
  * 项目分类更新.

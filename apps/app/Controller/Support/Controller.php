@@ -19,7 +19,7 @@ trait Controller
         if (!method_exists($this, 'extendInput')) {
             return $input;
         }
-        
+
         return array_merge($input, $this->extendInput($request));
     }
 

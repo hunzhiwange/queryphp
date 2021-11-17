@@ -16,7 +16,6 @@ class Common
     /**
      * 公共状态.
      */
-    
     #[status('禁用')]
     public const STATUS_DISABLE = 0;
 

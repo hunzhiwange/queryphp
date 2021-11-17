@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\Role;
 
 use App\Domain\Entity\User\Role;
-use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Validate\UniqueRule;
+use App\Domain\Validate\User\Role as UserRole;
+use App\Domain\Validate\Validate;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
-use App\Domain\Validate\Validate;
-use App\Domain\Validate\User\Role as UserRole;
+use Leevel\Database\Ddd\UnitOfWork;
+use Leevel\Validate\UniqueRule;
 
 /**
  * 角色更新.

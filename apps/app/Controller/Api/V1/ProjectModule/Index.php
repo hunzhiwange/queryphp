@@ -30,6 +30,6 @@ class Index
         $input = $this->input($request);
         $params = new ProjectModulesParams($input);
 
-        return $service->handle($params);;
+        return $service->handle($params);
     }
 }

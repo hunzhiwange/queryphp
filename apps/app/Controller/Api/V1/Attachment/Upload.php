@@ -20,7 +20,7 @@ class Upload
     use Controller;
     use CloseDebug;
 
-    public function handle(Request $request, AttachmentUpload $service): array 
+    public function handle(Request $request, AttachmentUpload $service): array
     {
         $this->closeDebug();
         $params = new UploadParams($this->input($request));

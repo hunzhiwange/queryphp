@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Project\Project;
 
-use Closure;
 use App\Domain\Entity\Project\Project;
 use App\Domain\Entity\Project\ProjectUser;
 use App\Domain\Service\Support\Read;
+use Closure;
 use Leevel\Collection\TypedIntArray;
 use Leevel\Database\Condition;
 use Leevel\Database\Ddd\Select;
@@ -66,7 +66,7 @@ class Projects
             return null;
         }
 
-        return function(Select $select) {
+        return function (Select $select) {
             $select
                 ->leftJoin('project_user', '', function (Condition $select) {
                     $select

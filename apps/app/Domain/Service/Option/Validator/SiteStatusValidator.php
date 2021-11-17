@@ -28,6 +28,7 @@ class SiteStatusValidator extends Validator
 
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
+
             throw new OptionBusinessException(OptionErrorCode::SITE_STATUS_ERROR, $e, true);
         }
     }

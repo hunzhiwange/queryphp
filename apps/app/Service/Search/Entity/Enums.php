@@ -10,7 +10,7 @@ use Leevel\Database\Ddd\Entity;
 
 /**
  * 实体枚举.
- * 
+ *
  * - 请求如下：api/v1:search?entity:enums[]=Project:ProjectRelease:completed
  */
 class Enums
@@ -36,7 +36,7 @@ class Enums
         if (!$entity instanceof Entity) {
             throw new Exception(sprintf('Class `%s` is not an entity.', $entity));
         }
-        
+
         return $entity::valueDescriptionMap($field);
     }
 }

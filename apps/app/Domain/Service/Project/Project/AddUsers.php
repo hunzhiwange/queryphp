@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Project\Project;
 
-use Leevel\Collection\TypedIntArray;
-use Leevel\Database\Ddd\UnitOfWork;
 use App\Domain\Entity\Project\Project;
 use App\Domain\Entity\Project\ProjectUser;
 use App\Domain\Entity\User\User;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
+use Leevel\Collection\TypedIntArray;
+use Leevel\Database\Ddd\UnitOfWork;
 
 /**
  * 项目新增成员.
@@ -30,8 +30,8 @@ class AddUsers
         $this->verifyUsers($params->userIds);
 
         $baseData = [
-            'type' => ProjectUser::TYPE_MEMBER,
-            'data_id' => $params->projectId,
+            'type'      => ProjectUser::TYPE_MEMBER,
+            'data_id'   => $params->projectId,
             'data_type' => ProjectUser::DATA_TYPE_PROJECT,
         ];
         $existUserIds = $this->findExistUserIds($baseData);

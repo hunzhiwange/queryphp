@@ -4,26 +4,26 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
-use App\Exceptions\LockException;
-use App\Infra\Lock;
+use App as Apps;
 use App\Domain\Entity\Base\App;
 use App\Exceptions\AuthBusinessException;
 use App\Exceptions\AuthErrorCode;
-use Closure;
+use App\Exceptions\LockException;
 use App\Exceptions\UnauthorizedHttpException;
+use function App\Infra\Helper\create_signature;
+use App\Infra\Lock;
 use App\Infra\Proxy\Permission;
 use App\Infra\Repository\Base\App as BaseApp;
+use Closure;
 use Leevel\Auth\AuthException;
+use Leevel\Auth\Manager;
 use Leevel\Auth\Middleware\Auth as BaseAuth;
+use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Http\Request;
 use Leevel\Kernel\IApp;
 use Symfony\Component\HttpFoundation\Response;
-use function App\Infra\Helper\create_signature;
-use Leevel\Auth\Manager;
-use App as Apps;
-use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\Select;
 
 /**
  * auth 中间件.
@@ -72,8 +72,7 @@ class Auth extends BaseAuth
     public function __construct(
         protected Manager $manager,
         protected IApp $app
-    )
-    {
+    ) {
         parent::__construct($manager);
     }
 
@@ -82,9 +81,9 @@ class Auth extends BaseAuth
      *
      * @throws \App\Exceptions\UnauthorizedHttpException
      */
-    public function handle(Closure $next, Request $request): Response 
+    public function handle(Closure $next, Request $request): Response
     {
-        if ($request::METHOD_OPTIONS === $request->getMethod() || 
+        if ($request::METHOD_OPTIONS === $request->getMethod() ||
             $this->isIgnoreRouter($request)) {
             return $next($request);
         }
@@ -134,18 +133,18 @@ class Auth extends BaseAuth
         Apps::container()->instance('company_id', $companyId);
 
         // 拥有 company_id 字段的实体会做一些处理
-        Entity::event(Entity::BOOT_EVENT, function (string $event, string $entityClass) use($companyId): void {
+        Entity::event(Entity::BOOT_EVENT, function (string $event, string $entityClass) use ($companyId): void {
             if (!$entityClass::hasField('company_id')) {
                 return;
             }
 
             // 自动添加全局 company_id 查询过滤
-            $entityClass::addGlobalScope('company_id', function (Select $select) use($companyId): void {
+            $entityClass::addGlobalScope('company_id', function (Select $select) use ($companyId): void {
                 $select->where('company_id', $companyId);
             });
 
             // 新增数据时自动添加 company_id
-            $entityClass::event(Entity::BEFORE_CREATE_EVENT, function (string $event, Entity $entity) use($companyId): void {
+            $entityClass::event(Entity::BEFORE_CREATE_EVENT, function (string $event, Entity $entity) use ($companyId): void {
                 $entity->companyId = $companyId;
             });
         });
@@ -153,7 +152,7 @@ class Auth extends BaseAuth
 
     /**
      * 校验格式化.
-     * 
+     *
      * @throws \App\Exceptions\AuthBusinessException
      */
     private function validateFormat(Request $request): void
@@ -170,7 +169,7 @@ class Auth extends BaseAuth
 
     /**
      * 校验应用 KEY.
-     * 
+     *
      * @throws \App\Exceptions\AuthBusinessException
      */
     private function validateAppKey(Request $request): void
@@ -200,7 +199,7 @@ class Auth extends BaseAuth
 
     /**
      * 校验是否过期.
-     * 
+     *
      * @throws \App\Exceptions\AuthBusinessException
      */
     private function validateExpired(Request $request): void
@@ -212,13 +211,13 @@ class Auth extends BaseAuth
 
         // 接口 5 分钟过期
         if ((int) $timestamp + 300 * 1000 < time() * 1000) {
-           throw new AuthBusinessException(AuthErrorCode::AUTH_TIMESTAMP_EXPIRED);
+            throw new AuthBusinessException(AuthErrorCode::AUTH_TIMESTAMP_EXPIRED);
         }
     }
 
     /**
      * 校验签名.
-     * 
+     *
      * @throws \App\Exceptions\AuthBusinessException
      */
     private function validateSignature(Request $request, string $appSecret): void
@@ -237,7 +236,7 @@ class Auth extends BaseAuth
 
         $signature = $params['signature'];
         unset($params['signature']);
-        $currentSignature = func(fn() => create_signature($params['signature_method'], $params, $appSecret));
+        $currentSignature = func(fn () => create_signature($params['signature_method'], $params, $appSecret));
         if ($currentSignature !== $signature) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_VERIFY_FAILD);
         }

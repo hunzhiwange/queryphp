@@ -6,7 +6,6 @@ namespace App\Domain\Service\Project\ProjectType;
 
 use App\Domain\Entity\Project\ProjectType;
 use App\Domain\Service\Support\Read;
-use App\Domain\Service\Project\ProjectType\ProjectTypesParams;
 
 /**
  * 项目类型列表.

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\Api\V1\User;
 
 use App\Controller\Support\Controller;
-use Leevel\Http\Request;
 use App\Domain\Service\User\User\ChangePassword as Service;
 use App\Domain\Service\User\User\ChangePasswordParams;
+use Leevel\Http\Request;
 
 /**
  * 用户修改密码.

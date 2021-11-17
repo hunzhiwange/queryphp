@@ -19,7 +19,7 @@ class UsersParams extends ReadParams
     protected function columnDefaultValue(): TypedStringArray
     {
         return new TypedStringArray([
-            '*'
+            '*',
         ]);
     }
 

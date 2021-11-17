@@ -74,13 +74,13 @@ trait Status
         $validator = Validate::make(
             $params->toArray(),
             [
-                'ids'  => 'required|is_array',
+                'ids'    => 'required|is_array',
                 'status' => [
                     ['in', Common::values('status')],
                 ],
             ],
             [
-                'ids' => 'ID',
+                'ids'    => 'ID',
                 'status' => __('状态值'),
             ]
         );

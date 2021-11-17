@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
+use App\Domain\Validate\User\User as UserUser;
+use App\Domain\Validate\Validate;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Validate\Validate;
 use Leevel\Validate\UniqueRule;
-use App\Domain\Validate\User\User as UserUser;
 
 /**
  * 用户保存.
@@ -23,8 +23,7 @@ class Store
     public function __construct(
         private UnitOfWork $w,
         private Hash $hash,
-    )
-    {
+    ) {
     }
 
     public function handle(StoreParams $params): array
@@ -71,7 +70,7 @@ class Store
             'name'       => $params->name,
             'num'        => $params->num,
             'status'     => $params->status,
-            'password' => $this->createPassword($params->password),
+            'password'   => $this->createPassword($params->password),
         ];
     }
 

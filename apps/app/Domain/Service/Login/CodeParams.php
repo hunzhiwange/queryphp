@@ -10,7 +10,7 @@ class CodeParams extends Dto
 {
     /**
      * 验证码对应的唯一键.
-     * 
+     *
      * - 这里为用户名
      */
     public string $id = '';

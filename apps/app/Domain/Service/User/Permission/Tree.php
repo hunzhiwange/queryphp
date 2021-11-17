@@ -12,7 +12,7 @@ use Leevel\Tree\Tree as BaseTree;
 /**
  * 权限树列表.
  */
-class Tree 
+class Tree
 {
     public function __construct(private UnitOfWork $w)
     {
