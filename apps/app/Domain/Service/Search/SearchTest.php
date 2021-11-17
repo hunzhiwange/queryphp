@@ -107,14 +107,14 @@ class SearchTest extends TestCase
 
         $json = <<<'eot'
             {
-                "demoConvert": {
-                    "fooHello": {
+                "demo-convert": {
+                    "foo-Hello": {
                         "FooHello": {
                             "hello": "world",
                             "foo": "bar"
                         }
                     },
-                    "barWorld": {
+                    "bar_world": {
                         "FooHello": {
                             "hello": "world",
                             "foo": "bar"
@@ -136,7 +136,7 @@ class SearchTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage(
-            'Search condition `\\App\\Service\\Search\\SearchNotfound\\Notfound` was not found.'
+            'Search condition `App\\Service\\Search\\SearchNotfound\\Notfound` was not found.'
         );
 
         $input = [
@@ -151,7 +151,7 @@ class SearchTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage(
-            'Search condition `\\App\\Service\\Search\\Demo\\NotCallback:handle` was invalid.'
+            'Search condition `App\\Service\\Search\\Demo\\NotCallback:handle` was invalid.'
         );
 
         $input = [

@@ -12,7 +12,6 @@ use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
 use App\Domain\Validate\Validate;
-use Egulias\EmailValidator\Exception\CommaInDomain;
 use Leevel\Database\Ddd\Select;
 use Leevel\Validate\UniqueRule;
 

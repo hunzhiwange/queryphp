@@ -24,7 +24,7 @@ final class Company extends AbstractMigration
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '公司 ID',
                 `num` varchar(30) NOT NULL DEFAULT '' COMMENT '编号',
                 `name` varchar(50) NOT NULL DEFAULT '' COMMENT '名称',
-                `full_name` char(20) NOT NULL DEFAULT '' COMMENT '公司全称',
+                `full_name` char(100) NOT NULL DEFAULT '' COMMENT '公司全称',
                 `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
                 `business_license` varchar(20) NOT NULL DEFAULT '' COMMENT '营业执照号',
                 `legal_person` varchar(20) NOT NULL DEFAULT '' COMMENT '法人代表',
@@ -35,8 +35,8 @@ final class Company extends AbstractMigration
                 `web_url` varchar(50) NOT NULL DEFAULT '' COMMENT '网站',
                 `logo` varchar(200) DEFAULT '' COMMENT 'logo',
                 `about` varchar(1024) NOT NULL DEFAULT '' COMMENT '介绍',
-                `begin_date` date NOT NULL DEFAULT '0000-00-00' COMMENT '开通时间',
-                `end_date` date NOT NULL DEFAULT '0000-00-00' COMMENT '到期时间',
+                `begin_date` date NOT NULL DEFAULT '1970-01-01' COMMENT '开通时间',
+                `end_date` date NOT NULL DEFAULT '1970-01-01' COMMENT '到期时间',
                 `email` varchar(30) NOT NULL DEFAULT '' COMMENT '邮箱',
                 `contact` varchar(30) NOT NULL DEFAULT '' COMMENT '联系人',
                 `product_version` tinyint(1) NOT NULL DEFAULT '1' COMMENT '产品版本',
@@ -58,7 +58,7 @@ final class Company extends AbstractMigration
     private function seed(): void
     {
         $sql = <<<'EOT'
-            INSERT INTO `company`(`id`, `num`, `name`, `short_name`, `status`, `business_license`, `legal_person`, `legal_mobile`, `phone`, `fax`, `address`, `web_url`, `logo`, `about`, `begin_date`, `end_date`, `email`, `contact`, `product_version`, `regist_ip`, `is_test_company`, `extended_product_version`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (1, 'hunzhiwange', '魂之挽歌', '四川魂之挽歌信息技术公司', 1, '', '', '', '', '', '', '', '', '', '2021-08-28', '2099-08-28', '', '', 1, '0.0.0.0', 0, 1, '2021-08-28 12:51:49', '2021-08-28 13:02:50', 0, 0, 0, 0);
+            INSERT INTO `company`(`id`, `num`, `name`, `full_name`, `status`, `business_license`, `legal_person`, `legal_mobile`, `phone`, `fax`, `address`, `web_url`, `logo`, `about`, `begin_date`, `end_date`, `email`, `contact`, `product_version`, `regist_ip`, `is_test_company`, `extended_product_version`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (1, 'hunzhiwange', '魂之挽歌', '四川魂之挽歌信息技术公司', 1, '', '', '', '', '', '', '', '', '', '2021-08-28', '2099-08-28', '', '', 1, '0.0.0.0', 0, 1, '2021-08-28 12:51:49', '2021-08-28 13:02:50', 0, 0, 0, 0);
             EOT;
         $this->execute($sql);
     }  
