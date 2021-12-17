@@ -1,7 +1,7 @@
 {
     "name": "hunzhiwange/queryphp",
     "description": "The QueryPHP Application.",
-    "keywords": ["php", "framework", "queryphp", "vue", "swoole", "iview"],
+    "keywords": ["php", "framework", "queryphp", "swoole", "vue", "iview"],
     "license": "MIT",
     "homepage": "http://www.queryphp.com",
     "support": {
@@ -148,9 +148,7 @@
         ],
         "post-autoload-dump": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "@php -r \"file_exists('.env.phpunit') || copy('.env.phpunit.example', '.env.phpunit');\"",
-            "@php -r \"file_exists('assets/frontend/.env.local') || copy('assets/frontend/.env.example', 'assets/frontend/.env.local');\"",
-            "@php -r \"file_exists('assets/frontend/.env.production') || copy('assets/frontend/.env.example', 'assets/frontend/.env.production');\""
+            "@php -r \"file_exists('.env.phpunit') || copy('.env.phpunit.example', '.env.phpunit');\""
         ]
     },
     "config": {
