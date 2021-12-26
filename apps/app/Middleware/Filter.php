@@ -6,8 +6,10 @@ namespace App\Middleware;
 
 use Closure;
 use Leevel\Http\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 /**
  * 过滤输入中间件.
@@ -17,8 +19,36 @@ class Filter
     public function handle(Closure $next, Request $request): Response
     {
         $this->filterRequest($request);
+        
+        $response = $next($request);
+        if (in_array($request->getMethod(), [
+                Request::METHOD_POST, 
+                Request::METHOD_PUT, 
+                Request::METHOD_DELETE,
+            ]) &&
+            $response instanceof JsonResponse &&
+            is_array($data = $this->jsonStringToArray($response->getContent())) &&
+            !isset($data['success'])) {
+            $response->setData(\success($data));
+        }
 
-        return $next($request);
+        return $response;
+    }
+
+    /**
+     * JSON 字符串转为数组.
+     */
+    protected function jsonStringToArray(false|string $value): mixed
+    {
+        if (!is_string($value)) {
+            return false;
+        }
+
+        try {
+            return json_decode($value, true, 512, JSON_THROW_ON_ERROR);
+        } catch (Throwable) {
+            return false;
+        }
     }
 
     protected function filterRequest(Request $request): void

@@ -54,3 +54,30 @@ if (!function_exists('get_current_date')) {
         return date('Y-m-d H:i:s');
     }
 }
+
+if (!function_exists('success')) {
+    /**
+     * 正确消息.
+     */
+    function success(array $data, string $message = '', int $code = 0, array $extend = []): array 
+    {
+        if ($data && array_values($data) === $data) {
+            return $data;
+        }
+
+        // code 前后端可以根据 code 自定义消息
+        // message 后端消息内容
+        // throw_message 立刻抛出后端消息
+        // type 正确消息模板类型
+        $success = [
+            'code' => $code,
+            'message' => $message ?: __('操作成功'),
+            'throw_message' => true, 
+            'type' => 'default',
+        ];
+        $success = array_merge($success, $extend);
+        $data['success'] = $success;
+
+        return $data;
+    }
+}
