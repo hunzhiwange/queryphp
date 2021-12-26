@@ -72,7 +72,12 @@ if (!function_exists('success')) {
             'type' => 'default',
         ];
         $success = array_merge($success, $extend);
-        $data['success'] = $success;
+
+        if (array_values($data) !== $data) {
+            $data['success'] = $success;
+        } else {
+            $data[] = ['success' => $success];
+        }
 
         return $data;
     }
