@@ -15,6 +15,6 @@ class Logout
 {
     public function handle(Service $service): array
     {
-        return $service->handle();
+        return \success($service->handle(), __('登出成功'));
     }
 }
