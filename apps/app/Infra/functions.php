@@ -61,6 +61,10 @@ if (!function_exists('success')) {
      */
     function success(array $data, string $message = '', int $code = 0, array $extend = []): array 
     {
+        if ($data && array_values($data) === $data) {
+            return $data;
+        }
+
         // code 前后端可以根据 code 自定义消息
         // message 后端消息内容
         // throw_message 立刻抛出后端消息
@@ -72,12 +76,7 @@ if (!function_exists('success')) {
             'type' => 'default',
         ];
         $success = array_merge($success, $extend);
-
-        if (array_values($data) !== $data) {
-            $data['success'] = $success;
-        } else {
-            $data[] = ['success' => $success];
-        }
+        $data['success'] = $success;
 
         return $data;
     }
