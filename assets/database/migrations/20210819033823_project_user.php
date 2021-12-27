@@ -22,6 +22,7 @@ final class ProjectUser extends AbstractMigration
         $sql = <<<'EOT'
             CREATE TABLE `project_user` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                `company_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '公司 ID',
                 `user_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '用户 ID',
                 `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '类型 1=成员;2=收藏;3=关注;',
                 `extend_type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '扩展类型 1=成员;2=管理员;',
@@ -34,7 +35,7 @@ final class ProjectUser extends AbstractMigration
                 `update_account` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 `version` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '操作版本号',
                 PRIMARY KEY (`id`),
-                UNIQUE KEY `uniq_user` (`user_id`,`type`,`extend_type`,`data_type`,`data_id`,`delete_at`) USING BTREE
+                UNIQUE KEY `uniq_user` (`user_id`,`type`,`extend_type`,`data_type`,`data_id`,`delete_at`,`company_id`) USING BTREE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='项目用户';
             EOT;
         $this->execute($sql);

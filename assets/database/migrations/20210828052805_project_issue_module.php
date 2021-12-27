@@ -22,6 +22,7 @@ final class ProjectIssueModule extends AbstractMigration
         $sql = <<<'EOT'
             CREATE TABLE `project_issue_module` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                `company_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '公司 ID',
                 `project_issue_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '项目问题 ID',
                 `project_module_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '项目模块 ID',
                 `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -31,7 +32,7 @@ final class ProjectIssueModule extends AbstractMigration
                 `update_account` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 `version` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '操作版本号',
                 PRIMARY KEY (`id`),
-                UNIQUE KEY `uniq_issue_release` (`project_issue_id`,`project_module_id`,`delete_at`) USING BTREE
+                UNIQUE KEY `uniq_issue_release` (`project_issue_id`,`project_module_id`,`delete_at`,`company_id`) USING BTREE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='项目问题模块关联';
             EOT;
         $this->execute($sql);

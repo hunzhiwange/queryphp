@@ -22,7 +22,9 @@ final class ProjectTag extends AbstractMigration
         $sql = <<<'EOT'
             CREATE TABLE `project_tag` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                `company_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '公司 ID',
                 `name` varchar(255) NOT NULL DEFAULT '' COMMENT '标签名称',
+                `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
                 `color` char(7) NOT NULL DEFAULT '' COMMENT '标签颜色',
                 `sort` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序(ASC)',
                 `project_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '项目 ID',
@@ -33,7 +35,8 @@ final class ProjectTag extends AbstractMigration
                 `update_account` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 `version` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '操作版本号',
                 PRIMARY KEY (`id`),
-                UNIQUE KEY `uniq_name` (`name`,`delete_at`) USING BTREE
+                UNIQUE KEY `uniq_name` (`name`,`delete_at`,`company_id`) USING BTREE,
+                KEY `idx_project` (`company_id`,`project_id`,`delete_at`,`status`) USING BTREE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='项目标签';
             EOT;
         $this->execute($sql);

@@ -22,13 +22,14 @@ final class ProjectIssue extends AbstractMigration
         $sql = <<<'EOT'
             CREATE TABLE `project_issue` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
+                `num` varchar(50) NOT NULL DEFAULT '' COMMENT '编号: 例如 ISSUE-1101',
+                `company_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '公司 ID',
                 `project_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '项目ID',
                 `project_label_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '项目分类 ID',
                 `project_type_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '项目问题类型 ID',
                 `owner_user_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '负责人用户 ID',
                 `project_log_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '项目日志 ID',
-                `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
-                `num` varchar(50) NOT NULL DEFAULT '' COMMENT '编号: 例如 ISSUE-1101',
                 `desc` varchar(500) NOT NULL DEFAULT '' COMMENT '描述',
                 `level` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '优先级别：1~4',
                 `completed` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否完成：1=未完成;2=已完成;',
@@ -48,7 +49,11 @@ final class ProjectIssue extends AbstractMigration
                 `create_account` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '创建账号',
                 `update_account` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 `version` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '操作版本号',
-                PRIMARY KEY (`id`)
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `uniq_num` (`company_id`,`project_id`,`num`) USING BTREE,
+                KEY `idx_company` (`company_id`,`project_id`,`delete_at`) USING BTREE,
+                KEY `idx_label` (`company_id`,`project_label_id`,`delete_at`) USING BTREE,
+                KEY `idx_type` (`company_id`,`project_type_id`,`delete_at`) USING BTREE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='项目问题';
             EOT;
         $this->execute($sql);
