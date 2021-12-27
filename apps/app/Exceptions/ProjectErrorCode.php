@@ -44,4 +44,7 @@ final class ProjectErrorCode extends ErrorCode
 
     #[msg('项目模块更新参数错误')]
     public const PROJECT_MODULE_UPDATE_INVALID_ARGUMENT = 1000050012;
+
+    #[msg('项目任务不存在')]
+    public const PROJECT_ISSUE_NOT_EXIST = 1000050013;
 }

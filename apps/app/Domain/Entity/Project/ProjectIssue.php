@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity\Project;
 
+use App\Infra\Repository\Project\ProjectIssue as ProjectProjectIssue;
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\GetterSetter;
 use Leevel\Database\Ddd\Relation\HasOne;
@@ -250,6 +251,11 @@ class ProjectIssue extends Entity
     public const DELETE_AT = 'delete_at';
 
     /**
+     * 仓储.
+     */
+    public const REPOSITORY = ProjectProjectIssue::class;
+
+    /**
      * 是否完成.
      */
     #[completed('未完成')]
@@ -262,6 +268,11 @@ class ProjectIssue extends Entity
      * 排序间隔.
      */
     public const SORT_INTERVAL = 65536;
+
+    public static function repository(?Entity $entity = null): ProjectProjectIssue
+    {
+        return parent::repository($entity);
+    }
 
     /**
      * 问题类型关联查询作用域.
