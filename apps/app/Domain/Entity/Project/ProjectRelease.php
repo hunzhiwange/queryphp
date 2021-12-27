@@ -34,55 +34,55 @@ class ProjectRelease extends Entity
      * Entity struct.
      *
      * - id
-     *                   comment: ID  type: bigint(20) unsigned  null: false
+     *                   comment: ID  type: bigint(20) unsigned  null: false  
      *                   key: PRI  default: null  extra: auto_increment
      * - company_id
-     *                   comment: 公司 ID  type: bigint(20) unsigned  null: false
-     *                   key: MUL  default: 1  extra:
+     *                   comment: 公司 ID  type: bigint(20) unsigned  null: false  
+     *                   key: MUL  default: 1  extra: 
      * - name
-     *                   comment: 发行名称  type: varchar(255)  null: false
-     *                   key: MUL  default:   extra:
+     *                   comment: 发行名称  type: varchar(255)  null: false  
+     *                   key: MUL  default:   extra: 
      * - sort
-     *                   comment: 排序(ASC)  type: bigint(20) unsigned  null: false
-     *                   key:   default: 0  extra:
+     *                   comment: 排序(ASC)  type: bigint(20) unsigned  null: false  
+     *                   key:   default: 0  extra: 
      * - status
-     *                   comment: 状态 0=禁用;1=启用;  type: tinyint(1) unsigned  null: false
-     *                   key:   default: 1  extra:
+     *                   comment: 状态 0=禁用;1=启用;  type: tinyint(1) unsigned  null: false  
+     *                   key:   default: 1  extra: 
      * - progress
-     *                   comment: 进度条(最大值 10000，需要除以 100 表示实际进度)  type: int(5) unsigned  null: false
-     *                   key:   default: 0  extra:
+     *                   comment: 进度条(最大值 10000，需要除以 100 表示实际进度)  type: int(5) unsigned  null: false  
+     *                   key:   default: 0  extra: 
      * - project_id
-     *                   comment: 项目 ID  type: bigint(20) unsigned  null: false
-     *                   key:   default: 0  extra:
+     *                   comment: 项目 ID  type: bigint(20) unsigned  null: false  
+     *                   key:   default: 0  extra: 
      * - completed
-     *                   comment: 是否完成：1=未完成;2=已完成;  type: tinyint(1) unsigned  null: false
-     *                   key:   default: 1  extra:
+     *                   comment: 是否完成：1=未开始;2=进行中;3=延期发布;4=已发布;  type: tinyint(1) unsigned  null: false  
+     *                   key:   default: 1  extra: 
      * - completed_date
-     *                   comment: 完成时间  type: datetime  null: false
-     *                   key:   default: null  extra:
+     *                   comment: 完成时间  type: datetime  null: false  
+     *                   key:   default: null  extra: 
      * - create_at
-     *                   comment: 创建时间  type: datetime  null: false
-     *                   key:   default: CURRENT_TIMESTAMP  extra:
+     *                   comment: 创建时间  type: datetime  null: false  
+     *                   key:   default: CURRENT_TIMESTAMP  extra: 
      * - update_at
-     *                   comment: 更新时间  type: datetime  null: false
+     *                   comment: 更新时间  type: datetime  null: false  
      *                   key:   default: CURRENT_TIMESTAMP  extra: on update CURRENT_TIMESTAMP
      * - delete_at
-     *                   comment: 删除时间 0=未删除;大于0=删除时间;  type: bigint(20) unsigned  null: false
-     *                   key:   default: 0  extra:
+     *                   comment: 删除时间 0=未删除;大于0=删除时间;  type: bigint(20) unsigned  null: false  
+     *                   key:   default: 0  extra: 
      * - create_account
-     *                   comment: 创建账号  type: bigint(20) unsigned  null: false
-     *                   key:   default: 0  extra:
+     *                   comment: 创建账号  type: bigint(20) unsigned  null: false  
+     *                   key:   default: 0  extra: 
      * - update_account
-     *                   comment: 更新账号  type: bigint(20) unsigned  null: false
-     *                   key:   default: 0  extra:
+     *                   comment: 更新账号  type: bigint(20) unsigned  null: false  
+     *                   key:   default: 0  extra: 
      * - version
-     *                   comment: 操作版本号  type: bigint(20) unsigned  null: false
-     *                   key:   default: 0  extra:
+     *                   comment: 操作版本号  type: bigint(20) unsigned  null: false  
+     *                   key:   default: 0  extra: 
      */
     public const STRUCT = [
         'id' => [
             self::COLUMN_NAME => 'ID',
-            self::READONLY    => true,
+            self::READONLY => true,
         ],
         'company_id' => [
             self::COLUMN_NAME => '公司 ID',
@@ -103,7 +103,7 @@ class ProjectRelease extends Entity
             self::COLUMN_NAME => '项目 ID',
         ],
         'completed' => [
-            self::COLUMN_NAME => '是否完成：1=未完成;2=已完成;',
+            self::COLUMN_NAME => '是否完成：1=未开始;2=进行中;3=延期发布;4=已发布;',
         ],
         'completed_date' => [
             self::COLUMN_NAME => '完成时间',
@@ -112,19 +112,19 @@ class ProjectRelease extends Entity
             self::COLUMN_NAME => '创建时间',
         ],
         'update_at' => [
-            self::COLUMN_NAME     => '更新时间',
+            self::COLUMN_NAME => '更新时间',
             self::SHOW_PROP_BLACK => true,
         ],
         'delete_at' => [
-            self::COLUMN_NAME     => '删除时间 0=未删除;大于0=删除时间;',
+            self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
             self::SHOW_PROP_BLACK => true,
         ],
         'create_account' => [
-            self::COLUMN_NAME     => '创建账号',
+            self::COLUMN_NAME => '创建账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'update_account' => [
-            self::COLUMN_NAME     => '更新账号',
+            self::COLUMN_NAME => '更新账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'version' => [
