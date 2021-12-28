@@ -193,7 +193,6 @@ class ProjectIssue extends Entity
         ],
         'update_at' => [
             self::COLUMN_NAME => '更新时间',
-            self::SHOW_PROP_BLACK => true,
         ],
         'delete_at' => [
             self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
@@ -242,6 +241,11 @@ class ProjectIssue extends Entity
             self::MIDDLE_SOURCE_KEY      => 'project_issue_id',
             self::MIDDLE_TARGET_KEY      => 'project_module_id',
             self::RELATION_SCOPE         => 'projectModules',
+        ],
+        'project_content'      => [
+            self::HAS_ONE                => ProjectContent::class,
+            self::SOURCE_KEY             => 'id',
+            self::TARGET_KEY             => 'project_issue_id',
         ],
     ]; // END STRUCT
 

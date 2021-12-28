@@ -76,7 +76,6 @@ class RolePermission extends Entity
         ],
         'update_at' => [
             self::COLUMN_NAME     => '更新时间',
-            self::SHOW_PROP_BLACK => true,
         ],
         'delete_at' => [
             self::COLUMN_NAME     => '删除时间 0=未删除;大于0=删除时间;',
