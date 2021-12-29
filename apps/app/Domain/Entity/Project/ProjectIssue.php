@@ -209,6 +209,16 @@ class ProjectIssue extends Entity
         'version' => [
             self::COLUMN_NAME => '操作版本号',
         ],
+        'project'      => [
+            self::BELONGS_TO             => Project::class,
+            self::SOURCE_KEY             => 'project_id',
+            self::TARGET_KEY             => 'id',
+        ],
+        'project_label'      => [
+            self::BELONGS_TO             => ProjectLabel::class,
+            self::SOURCE_KEY             => 'project_label_id',
+            self::TARGET_KEY             => 'id',
+        ],
         'project_type'      => [
             self::HAS_ONE                => ProjectType::class,
             self::SOURCE_KEY             => 'project_type_id',
