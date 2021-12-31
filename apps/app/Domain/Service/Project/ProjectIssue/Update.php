@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Project\ProjectIssue;
 
+use App\Domain\Entity\Project\ProjectContent;
 use App\Domain\Entity\Project\ProjectIssue;
 use App\Domain\Entity\Project\ProjectIssueModule;
 use App\Domain\Entity\Project\ProjectIssueRelease;
@@ -41,6 +42,10 @@ class Update
             $this->modules($params);
         }
 
+        if (isset($params->content)) {
+            $this->saveContent($params);
+        }
+
         if (isset($params->completed) &&
             ProjectIssue::COMPLETED_TRUE === $params->completed &&
             !isset($params->completedDate)) {
@@ -48,6 +53,19 @@ class Update
         }
 
         return $this->save($params)->toArray();
+    }
+
+    private function saveContent(UpdateParams $params)
+    {
+        $projectContent = $this->w
+            ->repository(ProjectContent::class)
+            ->where('project_issue_id', $params->id)
+            ->findOne();
+        if (!$projectContent->id) {
+            throw new ProjectBusinessException(0, 'xx');
+        }
+        $projectContent->content = $params->content;
+        $this->w->update($projectContent);
     }
 
     private function tags(UpdateParams $params)
@@ -224,6 +242,7 @@ class Update
                 'tags',
                 'releases',
                 'modules',
+                'content',
             ])
             ->withoutNull()
             ->toArray();
