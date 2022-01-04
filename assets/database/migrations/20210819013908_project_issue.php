@@ -23,6 +23,7 @@ final class ProjectIssue extends AbstractMigration
             CREATE TABLE `project_issue` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
                 `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
+                `sub_title` varchar(255) NOT NULL DEFAULT '' COMMENT '子标题',
                 `num` varchar(50) NOT NULL DEFAULT '' COMMENT '编号: 例如 ISSUE-1101',
                 `company_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '公司 ID',
                 `project_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '项目ID',

@@ -41,6 +41,9 @@ class ProjectIssue extends Entity
      * - title
      *                     comment: 标题  type: varchar(255)  null: false  
      *                     key:   default:   extra: 
+     * - sub_title
+     *                     comment: 子标题  type: varchar(255)  null: false  
+     *                     key:   default:   extra: 
      * - num
      *                     comment: 编号: 例如 ISSUE-1101  type: varchar(50)  null: false  
      *                     key:   default:   extra: 
@@ -127,6 +130,9 @@ class ProjectIssue extends Entity
         ],
         'title' => [
             self::COLUMN_NAME => '标题',
+        ],
+        'sub_title' => [
+            self::COLUMN_NAME => '子标题',
         ],
         'num' => [
             self::COLUMN_NAME => '编号: 例如 ISSUE-1101',

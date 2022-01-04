@@ -21,6 +21,7 @@ class Content
     private array $allowedInput = [
         'id',
         'content',
+        'sub_title',
     ];
 
     public function handle(Request $request, Service $service): array

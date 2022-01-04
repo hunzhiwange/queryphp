@@ -28,6 +28,8 @@ class UpdateParams extends Dto
 
     public ?string $content = null;
 
+    public ?string $subTitle = null;
+
     protected function tagsTransformValue(string|array $value): TypedIntArray
     {
         return TypedIntArray::fromRequest($value);

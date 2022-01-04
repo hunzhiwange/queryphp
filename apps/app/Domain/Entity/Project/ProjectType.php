@@ -45,7 +45,7 @@ class ProjectType extends Entity
      *                   comment: 编号  type: varchar(64)  null: false  
      *                   key:   default:   extra: 
      * - content_type
-     *                   comment: 内容类型 1=BUG;2=任务;3=需求;4=故事;5=文档;  type: tinyint(3) unsigned  null: false  
+     *                   comment: 内容类型 1=BUG;2=任务;3=需求;4=故事;5=文档;6=流程图;  type: tinyint(3) unsigned  null: false  
      *                   key:   default: 1  extra: 
      * - color
      *                   comment: 颜色  type: char(7)  null: false  
@@ -93,7 +93,7 @@ class ProjectType extends Entity
             self::COLUMN_NAME => '编号',
         ],
         'content_type' => [
-            self::COLUMN_NAME => '内容类型 1=BUG;2=任务;3=需求;4=故事;5=文档;',
+            self::COLUMN_NAME => '内容类型 1=BUG;2=任务;3=需求;4=故事;5=文档;6=流程图;',
         ],
         'color' => [
             self::COLUMN_NAME => '颜色',
@@ -161,4 +161,7 @@ class ProjectType extends Entity
 
     #[content_type('文档')]
     public const CONTENT_TYPE_DOC = 5;
+
+    #[content_type('流程图')]
+    public const CONTENT_TYPE_PROCESS = 6;
 }
