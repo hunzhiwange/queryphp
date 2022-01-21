@@ -29,7 +29,15 @@ class Show
     {
         return $this->w
             ->repository(ProjectIssue::class)
-            ->eager(['project_content', 'project'])
+            ->eager([
+                'project',
+                'project_content',
+                'project_label',
+                'project_type',
+                'project_releases',
+                'project_tags',
+                'project_modules',
+            ])
             ->findOrFail(function (Condition $select) use ($num): void {
                 $select->where('num', $num);
             });
