@@ -57,6 +57,8 @@ class ProjectIssues
     {
         return function (Select $select) use ($params) {
             $select->eager([
+                'project',
+                'project_label',
                 'project_type',
                 'project_releases',
                 'project_tags',

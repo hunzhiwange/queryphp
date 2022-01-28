@@ -22,6 +22,7 @@ final class ProjectModule extends AbstractMigration
         $sql = <<<'EOT'
             CREATE TABLE `project_module` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                `company_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '公司 ID',
                 `name` varchar(255) NOT NULL DEFAULT '' COMMENT '模块名称',
                 `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0=禁用;1=启用;',
                 `color` char(7) NOT NULL DEFAULT '' COMMENT '模块颜色',
@@ -34,7 +35,8 @@ final class ProjectModule extends AbstractMigration
                 `update_account` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '更新账号',
                 `version` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '操作版本号',
                 PRIMARY KEY (`id`),
-                UNIQUE KEY `uniq_name` (`name`,`delete_at`) USING BTREE
+                UNIQUE KEY `uniq_name` (`name`,`delete_at`,`company_id`) USING BTREE,
+                KEY `idx_project` (`project_id`,`company_id`,`status`,`delete_at`) USING BTREE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='项目模块';
             EOT;
         $this->execute($sql);

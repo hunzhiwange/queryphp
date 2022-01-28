@@ -61,6 +61,7 @@ if (!function_exists('success')) {
      */
     function success(array $data, string $message = '', int $code = 0, array $extend = []): array 
     {
+        // 非空索引数组不支持写入 success
         if ($data && array_values($data) === $data) {
             return $data;
         }

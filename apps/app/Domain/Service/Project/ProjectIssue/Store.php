@@ -39,16 +39,7 @@ class Store
      */
     private function save(StoreParams $params): ProjectIssue
     {
-        $this->w
-            ->persist($entity = $this->entity($params));
-        $this->w->on($entity, function (ProjectIssue $entity) {
-            $updateEntity = new ProjectIssue([
-                'id' => $entity->id,
-            ], true);
-            $updateEntity->num = strtoupper($this->project->num).'-'.$updateEntity->id;
-            $this->w->update($updateEntity);
-        });
-
+        $this->w->persist($entity = $this->entity($params));
         $this->w->on($entity, function (ProjectIssue $entity) {
             $projectContentEntity = new ProjectContent([
                 'project_id'       => $entity->projectId,
@@ -69,7 +60,11 @@ class Store
      */
     private function entity(StoreParams $params): ProjectIssue
     {
-        return new ProjectIssue($this->data($params));
+        $entity = new ProjectIssue($this->data($params));
+        $maxId = ProjectIssue::repository()->findNextIssueNum($params->projectId);
+        $entity->num = strtoupper($this->project->num).'-'.$maxId;
+
+        return $entity;
     }
 
     /**
