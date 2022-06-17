@@ -59,7 +59,7 @@ if (!function_exists('success')) {
     /**
      * 正确消息.
      */
-    function success(array $data, string $message = '', int $code = 0, array $extend = []): array 
+    function success(array $data, string $message = '', int $code = 0, array $extend = []): array
     {
         // 非空索引数组不支持写入 success
         if ($data && array_values($data) === $data) {
@@ -71,10 +71,10 @@ if (!function_exists('success')) {
         // throw_message 立刻抛出后端消息
         // type 正确消息模板类型
         $success = [
-            'code' => $code,
-            'message' => $message ?: __('操作成功'),
-            'throw_message' => true, 
-            'type' => 'default',
+            'code'          => $code,
+            'message'       => $message ?: __('操作成功'),
+            'throw_message' => true,
+            'type'          => 'default',
         ];
         $success = array_merge($success, $extend);
         $data['success'] = $success;
