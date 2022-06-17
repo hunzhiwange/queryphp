@@ -14,7 +14,7 @@ use Leevel\Http\Request;
  *
  * @codeCoverageIgnore
  */
-class Content 
+class Content
 {
     use Controller;
 

@@ -19,13 +19,13 @@ class Filter
     public function handle(Closure $next, Request $request): Response
     {
         $this->filterRequest($request);
-        
+
         $response = $next($request);
         if (in_array($request->getMethod(), [
-                Request::METHOD_POST, 
-                Request::METHOD_PUT, 
-                Request::METHOD_DELETE,
-            ]) &&
+            Request::METHOD_POST,
+            Request::METHOD_PUT,
+            Request::METHOD_DELETE,
+        ]) &&
             $response instanceof JsonResponse &&
             is_array($data = $this->jsonStringToArray($response->getContent())) &&
             !isset($data['success'])) {

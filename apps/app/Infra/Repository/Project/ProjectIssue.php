@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infra\Repository\Project;
 
-use App\Exceptions\ProjectBusinessException;
-use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\Repository;
 
 /**
