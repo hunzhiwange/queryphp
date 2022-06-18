@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href='https://packagist.org/packages/hunzhiwange/queryphp'><img src='http://img.shields.io/packagist/v/hunzhiwange/queryphp.svg' alt='Latest Stable Version' /></a>
-  <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-%3E%3D%208.0.0-8892BF.svg" alt="Minimum PHP Version"></a>
+  <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-%3E%3D%208.1.0-8892BF.svg" alt="Minimum PHP Version"></a>
   <a href="https://www.swoole.com/"><img src="https://img.shields.io/badge/Swoole-%3E%3D%204.5.9-008de0.svg" alt="Minimum Swoole Version"></a>
   <a href="https://github.com/spiral/roadrunner"><img alt="RoadRunner Version" src="https://img.shields.io/badge/RoadRunner-%3E=1.8.2-brightgreen.svg" /></a>
   <a href="http://opensource.org/licenses/MIT">
@@ -29,7 +29,7 @@
   <a href="https://codecov.io/gh/hunzhiwange/framework">
     <img src="https://codecov.io/gh/hunzhiwange/framework/branch/master/graph/badge.svg?token=GMWV1X9F7T"/>
   </a>
-</p>
+</p> 
 
 <p align="center">
     <a href="./README.md">English</a> | <a href="./README-zh-CN.md">中文</a>
