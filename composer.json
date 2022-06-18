@@ -13,11 +13,12 @@
         "email": "635750556@qq.com"
     }],
     "require": {
-        "php": "^8.0",
+        "php": ">=8.1",
+        "composer-runtime-api": ">=2.1",
         "ext-mbstring": "*",
         "ext-openssl": "*",
         "hunzhiwange/framework": "dev-master",
-        "symfony/workflow": "^5.2"
+        "symfony/workflow": "^6.2"
     },
     "require-dev": {
         "codedungeon/php-cli-colors": "^1.12.0",
