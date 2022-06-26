@@ -9,11 +9,10 @@ use Leevel\Option\Proxy\Option;
 /**
  * 强制关闭调试模式.
  */
-function force_close_debug(): void
+class ForceCloseDebug
 {
-    Option::set('debug', false);
-}
-
-class force_close_debug
-{
+    public static function handle(): void
+    {
+        Option::set('debug', false);
+    }
 }

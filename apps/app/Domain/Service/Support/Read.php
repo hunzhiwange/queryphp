@@ -10,7 +10,7 @@ use Leevel\Collection\TypedStringArray;
 use Leevel\Database\Ddd\Repository;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
-use function Leevel\Support\Str\camelize;
+use  Leevel\Support\Str\Camelize;
 
 /**
  * 查询.
@@ -31,7 +31,7 @@ trait Read
         }
 
         foreach (array_keys($data[0]) as $field) {
-            $prepare = func(fn () => camelize((string) $field)).'Prepare';
+            $prepare = Camelize::handle((string) $field).'Prepare';
             if (method_exists($this, $prepare)) {
                 $this->{$prepare}($data, $field, $params);
             }

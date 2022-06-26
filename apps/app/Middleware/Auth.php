@@ -10,7 +10,7 @@ use App\Exceptions\AuthBusinessException;
 use App\Exceptions\AuthErrorCode;
 use App\Exceptions\LockException;
 use App\Exceptions\UnauthorizedHttpException;
-use function App\Infra\Helper\create_signature;
+use App\Infra\Helper\CreateSignature;
 use App\Infra\Lock;
 use App\Infra\Proxy\Permission;
 use App\Infra\Repository\Base\App as BaseApp;
@@ -236,7 +236,7 @@ class Auth extends BaseAuth
 
         $signature = $params['signature'];
         unset($params['signature']);
-        $currentSignature = func(fn () => create_signature($params['signature_method'], $params, $appSecret));
+        $currentSignature = CreateSignature::handle($params['signature_method'], $params, $appSecret);
         if ($currentSignature !== $signature) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_VERIFY_FAILD);
         }

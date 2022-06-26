@@ -6,7 +6,7 @@ namespace App\Infra\Helper;
 
 use Tests\TestCase;
 
-class ArrayToFormTest extends TestCase
+class Array2FormTest extends TestCase
 {
     public function testBaseUse(): void
     {
@@ -14,7 +14,7 @@ class ArrayToFormTest extends TestCase
             'foo' => 'bar',
         ];
 
-        $result = explode(PHP_EOL, array_to_form($data));
+        $result = explode(PHP_EOL, Array2Form::handle($data));
 
         $json = <<<'eot'
             [
@@ -40,7 +40,7 @@ class ArrayToFormTest extends TestCase
             'status'     => 1,
         ];
 
-        $result = explode(PHP_EOL, array_to_form($data));
+        $result = explode(PHP_EOL, Array2Form::handle($data));
 
         $json = <<<'eot'
             [
@@ -66,7 +66,7 @@ class ArrayToFormTest extends TestCase
             'goods' => [0, 1],
         ];
 
-        $result = explode(PHP_EOL, array_to_form($data));
+        $result = explode(PHP_EOL, Array2Form::handle($data));
 
         $json = <<<'eot'
             [
@@ -90,7 +90,7 @@ class ArrayToFormTest extends TestCase
             'goods' => ['hello' => 0, 'world' => 1],
         ];
 
-        $result = explode(PHP_EOL, array_to_form($data));
+        $result = explode(PHP_EOL, Array2Form::handle($data));
 
         $json = <<<'eot'
             [
@@ -114,7 +114,7 @@ class ArrayToFormTest extends TestCase
             'goods' => ['hello' => ['foo' => 5, 'bar' => ['h', 'w']], 'world' => 1],
         ];
 
-        $result = explode(PHP_EOL, array_to_form($data));
+        $result = explode(PHP_EOL, Array2Form::handle($data));
 
         $json = <<<'eot'
             [
@@ -140,7 +140,7 @@ class ArrayToFormTest extends TestCase
             'goods' => ['xxx=xx', 'yy=xx'],
         ];
 
-        $result = explode(PHP_EOL, array_to_form($data));
+        $result = explode(PHP_EOL, Array2Form::handle($data));
 
         $json = <<<'eot'
             [
@@ -158,6 +158,3 @@ class ArrayToFormTest extends TestCase
         );
     }
 }
-
-// import fn.
-class_exists(array_to_form::class);
