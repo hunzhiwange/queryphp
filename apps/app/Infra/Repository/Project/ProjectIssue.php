@@ -17,7 +17,8 @@ class ProjectIssue extends Repository
     public function findNextIssueNum(int $projectId): int
     {
         $projectIssue = $this->entity
-            ->select()
+            // 下一条任务编号需要查询软删除的数据，避免编号重复
+            ->withSoftDeleted()
             ->where('project_id', $projectId)
             ->columns('num')
             ->orderBy('id DESC')
