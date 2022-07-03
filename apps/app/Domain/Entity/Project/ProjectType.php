@@ -93,7 +93,7 @@ class ProjectType extends Entity
             self::COLUMN_NAME => '编号',
         ],
         'content_type' => [
-            self::COLUMN_NAME => '内容类型 1=BUG;2=任务;3=需求;4=故事;5=文档;6=流程图;7=思维导图;',
+            self::COLUMN_NAME => '内容类型 1=BUG;2=任务;3=需求;4=故事;5=文档;6=流程图;7=思维导图;8=Swagger内容;9=Swagger网址;',
         ],
         'color' => [
             self::COLUMN_NAME => '颜色',
@@ -167,4 +167,10 @@ class ProjectType extends Entity
 
     #[content_type('思维导图')]
     public const CONTENT_TYPE_MIND = 7;
+
+    #[content_type('Swagger内容')]
+    public const CONTENT_TYPE_SWAGGER = 8;
+
+    #[content_type('Swagger网址')]
+    public const CONTENT_TYPE_SWAGGER_URL = 9;
 }
