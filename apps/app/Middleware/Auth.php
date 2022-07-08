@@ -19,8 +19,10 @@ use Leevel\Auth\AuthException;
 use Leevel\Auth\Manager;
 use Leevel\Auth\Middleware\Auth as BaseAuth;
 use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\Repository;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
+use Leevel\Event\Proxy\Event;
 use Leevel\Http\Request;
 use Leevel\Kernel\IApp;
 use Symfony\Component\HttpFoundation\Response;
@@ -146,6 +148,17 @@ class Auth extends BaseAuth
             // 新增数据时自动添加 company_id
             $entityClass::event(Entity::BEFORE_CREATE_EVENT, function (string $event, Entity $entity) use ($companyId): void {
                 $entity->companyId = $companyId;
+            });
+        });
+
+        // 批量插入数据自动添加 company_id
+        Event::register(Repository::INSERT_ALL_EVENT, function (object|string $event, Repository $repository) {
+            if(!$repository->entity()->hasField('company_id')) {
+                return;
+            }
+
+            $repository->insertAllBoot(function (&$data) {
+                \inject_company($data);
             });
         });
     }
