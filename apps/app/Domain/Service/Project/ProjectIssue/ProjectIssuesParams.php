@@ -19,7 +19,7 @@ class ProjectIssuesParams extends ReadParams
 
     public ?string $type = null;
 
-    public string $orderBy = 'sort DESC';
+    public string $orderBy = 'id DESC';
 
     protected function columnDefaultValue(): TypedStringArray
     {

@@ -69,7 +69,7 @@ class ProjectIssue extends Entity
      *                     comment: 描述  type: varchar(500)  null: false
      *                     key:   default:   extra:
      * - level
-     *                     comment: 优先级别：1~4  type: tinyint(1) unsigned  null: false
+     *                     comment: 优先级别：1~5  type: tinyint(1) unsigned  null: false
      *                     key:   default: 1  extra:
      * - completed
      *                     comment: 是否完成：1=未完成;2=已完成;  type: tinyint(1) unsigned  null: false
@@ -283,6 +283,24 @@ class ProjectIssue extends Entity
 
     #[completed('已完成')]
     public const COMPLETED_TRUE = 2;
+
+    /**
+     * 优先级别.
+     */
+    #[level('极高')]
+    public const LEVEL_HIGHEST = 1;
+
+    #[level('高')]
+    public const LEVEL_HIGH = 2;
+
+    #[level('中')]
+    public const LEVEL_MEDIUM = 3;
+
+    #[level('低')]
+    public const LEVEL_LOW = 4;
+
+    #[level('极低')]
+    public const LEVEL_LOWEST = 5;
 
     /**
      * 排序间隔.

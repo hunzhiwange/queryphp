@@ -32,7 +32,7 @@ final class ProjectIssue extends AbstractMigration
                 `owner_user_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '负责人用户 ID',
                 `project_log_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '项目日志 ID',
                 `desc` varchar(500) NOT NULL DEFAULT '' COMMENT '描述',
-                `level` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '优先级别：1~4',
+                `level` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '优先级别：1~5',
                 `completed` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否完成：1=未完成;2=已完成;',
                 `completed_date` datetime NOT NULL COMMENT '完成时间',
                 `sub_task` text NOT NULL COMMENT '子任务列表',

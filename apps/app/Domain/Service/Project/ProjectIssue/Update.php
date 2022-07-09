@@ -106,7 +106,6 @@ class Update
                     'delete_at'        => time(),
                 ];
             }
-            \inject_company($updateData);
             ProjectIssueTag::repository()->insertAll($updateData, replace:['delete_at']);
         });
     }
@@ -149,7 +148,6 @@ class Update
                     'delete_at'          => time(),
                 ];
             }
-            \inject_company($updateData);
             ProjectIssueRelease::repository()->insertAll($updateData, replace:['delete_at']);
         });
     }
@@ -192,7 +190,6 @@ class Update
                     'delete_at'         => time(),
                 ];
             }
-            \inject_company($updateData);
             ProjectIssueModule::repository()->insertAll($updateData, replace:['delete_at']);
         });
     }
