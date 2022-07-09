@@ -276,7 +276,7 @@ _____________                           _______________
 | host                  | 0.0.0.0                         |
 | port                  | 9527                            |
 | process_name          | leevel.http                     |
-| pid_path              | @path/runtime/protocol/http.pid |
+| pid_path              | @path/runtime/level/http.pid |
 | worker_num            | 8                               |
 | daemonize             | 0                               |
 | enable_static_handler | 1                               |
@@ -313,7 +313,7 @@ _____________                           _______________
 | host            | 0.0.0.0                              |
 | port            | 9502                                 |
 | process_name    | leevel.websocket                     |
-| pid_path        | @path/runtime/protocol/websocket.pid |
+| pid_path        | @path/runtime/level/websocket.pid |
 | worker_num      | 8                                    |
 | daemonize       | 0                                    |
 | task_worker_num | 4                                    |
