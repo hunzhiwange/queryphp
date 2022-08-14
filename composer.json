@@ -14,10 +14,13 @@
     }],
     "require": {
         "php": ">=8.1",
-        "composer-runtime-api": ">=2.1",
         "ext-mbstring": "*",
         "ext-openssl": "*",
+        "composer-runtime-api": ">=2.1",
         "hunzhiwange/framework": "dev-master",
+        "spiral/dumper": "^2.6.3",
+        "spiral/roadrunner": "^1.9.0",
+        "symfony/psr-http-message-bridge": "^2.0",
         "symfony/workflow": "^6.2"
     },
     "require-dev": {
