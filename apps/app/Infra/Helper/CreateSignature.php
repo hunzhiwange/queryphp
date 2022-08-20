@@ -26,7 +26,7 @@ class CreateSignature
             if (!is_array($v)) {
                 $tmpParams[] = $k . $v;
             } else {
-                $tmpParams[] = $k . json_encode($v, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
+                $tmpParams[] = $k . self::handle($signatureMethod, $v, $appSecret);
             }
         }
         $tmpParams[] = $appSecret;

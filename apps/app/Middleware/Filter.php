@@ -19,8 +19,8 @@ class Filter
     public function handle(Closure $next, Request $request): Response
     {
         $this->filterRequest($request);
-
         $response = $next($request);
+
         if (in_array($request->getMethod(), [
             Request::METHOD_POST,
             Request::METHOD_PUT,
@@ -28,7 +28,8 @@ class Filter
         ]) &&
             $response instanceof JsonResponse &&
             is_array($data = $this->jsonStringToArray($response->getContent())) &&
-            !isset($data['success'])) {
+            !isset($data['success']) &&
+            !isset($data['error'])) {
             $response->setData(\success($data));
         }
 
