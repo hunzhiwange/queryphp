@@ -28,7 +28,7 @@ reload:
       # recursive search for file patterns to add
       recursive: true
       # ignored folders
-      ignore: ["vendor"]
+      ignore: ["vendor","storage","tests"]
       # service specific file pattens to sync
       patterns: [".php"]
       # directories to sync. If recursive is set to true, 
