@@ -64,11 +64,8 @@ return [
             // driver
             'driver' => 'token',
 
-            // token
+            // token，需要从接口传入进来
             'token' => null,
-
-            // input token
-            'input_token' => 'token',
 
             // 默认过期时间
             'expire' => null,
