@@ -23,7 +23,7 @@ class App extends Repository
     {
         $app = $this->entity
             ->select()
-            ->cache('app:'.$appKey, rand(300, 600))
+            ->cache('app:'.$appKey, rand(8640000, 8650000))
             ->where('key', $appKey)
             ->where('status', BaseApp::STATUS_ENABLE)
             ->setColumns('id,secret')
