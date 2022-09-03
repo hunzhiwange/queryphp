@@ -92,6 +92,7 @@ class Auth extends BaseAuth
 
         try {
             $token = $this->normalizeToken($request);
+            $this->manager->setTokenName($token);
             if ($this->manager->isLogin()) {
                 $this->validateLock($request, $token);
                 if (!$this->isIgnorePermission($request)) {
@@ -271,11 +272,14 @@ class Auth extends BaseAuth
         // 兼容 header，也可以通过 get 或者 post 来设置 token
         if ($token = $request->headers->get('token')) {
             $request->query->set('token', $token);
-        } else {
-            $token = $request->query->get('token', '');
+            return $token;
         }
 
-        return $token;
+        if ($token = $request->request->get('token', '')) {
+            return $token;
+        }
+
+        return $request->query->get('token', '');
     }
 
     /**
