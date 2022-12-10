@@ -79,9 +79,8 @@ php leevel websocket:status
 ### Go RoadRunner 服务 
 
 ```
-/data/server/roadrunner-1.8.2-darwin-amd64/rr serve -d -v # -d = debug
-/data/server/roadrunner-1.8.2-darwin-amd64/rr http:reset
-/data/server/roadrunner-1.8.2-darwin-amd64/rr http:workers -i
+/data/server/roadrunner-2.12.1-darwin-amd64/rr serve
+/data/server/roadrunner-2.12.1-darwin-amd64/rr http:reset
 ```
 
 ## 版权协议
