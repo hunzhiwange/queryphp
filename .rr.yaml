@@ -1,12 +1,14 @@
-# RoadRunner Server
-# more https://roadrunner.dev/docs/intro-config
+# configuration version: https://roadrunner.dev/docs/beep-beep-config/2.x/en
+version: '2.7'
+
+rpc:
+  listen: tcp://127.0.0.1:6001
+
+server:
+  command: "php leevel rr:server"
 
 http:
-  address: 0.0.0.0:9527
-  workers:
-    command: "php leevel rr:server"
-    pool:
-      numWorkers: 4
+  address: "0.0.0.0:9527"
 
 static:
   # root directory for static file (HTTP would not serve .php and .htaccess files).
@@ -16,8 +18,6 @@ static:
   forbid: [".php", ".htaccess"]
 
 reload:
-  # enable or disable file watcher
-  enabled: true
   # sync interval
   interval: 1s
   # global patterns to sync
@@ -31,6 +31,9 @@ reload:
       ignore: ["vendor","storage","tests"]
       # service specific file pattens to sync
       patterns: [".php"]
-      # directories to sync. If recursive is set to true, 
+      # directories to sync. If recursive is set to true,
       # recursive sync will be applied only to the directories in `dirs` section
       dirs:     ["."]
+
+logs:
+  level: debug

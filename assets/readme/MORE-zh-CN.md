@@ -332,35 +332,43 @@ RoadRunner 是一个开源的高性能 PHP 应用服务器、负载均衡器和�
 
 ```
 cd /data/server
-wget https://github.com/spiral/roadrunner/releases/download/v1.8.2/roadrunner-1.8.2-darwin-amd64.zip
-unzip roadrunner-1.8.2-darwin-amd64.zip
+wget https://github.com/spiral/roadrunner/releases/download/v2.12.1/roadrunner-2.12.1-darwin-amd64.zip
+unzip roadrunner-2.12.1-darwin-amd64.zip
 cd /data/codes/queryphp
 ```
 
 安装依赖包
 
 ```          
-composer require spiral/roadrunner ^1.9.0              
-composer require spiral/dumper ^2.6.3.                 
+composer require spiral/roadrunner ^2.12.1              
+composer require spiral/dumper ^2.14.1.                 
 composer require symfony/psr-http-message-bridge ^2.0  
+composer require nyholm/psr7 ^1.5  
 ```
 
 ### RoadRunner 服务
 
 ```
-/data/server/roadrunner-1.8.2-darwin-amd64/rr serve -d -v # -d = debug
-/data/server/roadrunner-1.8.2-darwin-amd64/rr http:reset
-/data/server/roadrunner-1.8.2-darwin-amd64/rr http:workers -i
+/data/server/roadrunner-2.12.1-darwin-amd64/rr serve
+/data/server/roadrunner-2.12.1-darwin-amd64/rr http:reset
 ```
 
 RoadRunner 和 php-fpm 保持一致
 
 ```
-root@vagrant-ubuntu-10-0-2-5:/data/codes/queryphp# /data/server/roadrunner-1.8.2-darwin-amd64/rr serve -d -v
-DEBU[0000] [static]: disabled
-DEBU[0000] [rpc]: started
-DEBU[0000] [http]: started
-INFO[0060] 127.0.0.1 {23.1ms} 200 GET http://127.0.0.1:9527/api/test
+root@vagrant-ubuntu-10-0-2-5:/data/codes/queryphp# /data/server/roadrunner-2.12.1-darwin-amd64/rr serve
+2022-12-10T16:43:30.226+0800	DEBUG	rpc         	plugin was started	{"address": "tcp://127.0.0.1:6001", "list of the plugins with RPC methods:": ["app", "informer", "resetter"]}
+[INFO] RoadRunner server started; version: 2.12.1, buildtime: 2022-12-01T12:41:50+0000
+2022-12-10T16:43:30.524+0800	DEBUG	server      	worker is allocated	{"pid": 9522, "internal_event_name": "EventWorkerConstruct"}
+2022-12-10T16:43:30.524+0800	DEBUG	server      	worker is allocated	{"pid": 9525, "internal_event_name": "EventWorkerConstruct"}
+2022-12-10T16:43:30.524+0800	DEBUG	server      	worker is allocated	{"pid": 9523, "internal_event_name": "EventWorkerConstruct"}
+2022-12-10T16:43:30.524+0800	DEBUG	server      	worker is allocated	{"pid": 9529, "internal_event_name": "EventWorkerConstruct"}
+2022-12-10T16:43:30.524+0800	DEBUG	server      	worker is allocated	{"pid": 9528, "internal_event_name": "EventWorkerConstruct"}
+2022-12-10T16:43:30.524+0800	DEBUG	server      	worker is allocated	{"pid": 9526, "internal_event_name": "EventWorkerConstruct"}
+2022-12-10T16:43:30.524+0800	DEBUG	server      	worker is allocated	{"pid": 9527, "internal_event_name": "EventWorkerConstruct"}
+2022-12-10T16:43:30.524+0800	DEBUG	server      	worker is allocated	{"pid": 9524, "internal_event_name": "EventWorkerConstruct"}
+2022-12-10T16:43:30.525+0800	DEBUG	http        	http server was started	{"address": "0.0.0.0:9527"}
+2022-12-10T16:44:08.664+0800	INFO	http        	http log	{"status": 200, "method": "GET", "URI": "/", "remote_address": "127.0.0.1:56516", "read_bytes": 0, "write_bytes": 18441, "start": "2022-12-10T16:44:08.644+0800", "elapsed": "19.623241ms"}
 ```
 
 ## 统一团队代码风格
