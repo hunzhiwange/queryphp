@@ -27,7 +27,7 @@ class Code
         $params = new CodeParams($this->input($request));
         $code = $service->handle($params);
 
-        return new Response($code, 200, ['Content-type' => 'image/png']);
+        return new Response($code, 200, ['Content-type' => 'image/jpeg']);
     }
 
     private function input(Request $request): array
