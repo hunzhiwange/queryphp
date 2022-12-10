@@ -131,7 +131,7 @@ class Login
                 'app_key'  => 'required|alpha_dash',
                 'name'     => 'required|chinese_alpha_num|max_length:50',
                 'password' => 'required|chinese_alpha_dash|max_length:50',
-                'code'     => 'required|alpha|min_length:4|max_length:4',
+                'code'     => 'required',
                 'remember' => 'required',
             ],
             [

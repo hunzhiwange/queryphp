@@ -6,7 +6,7 @@ namespace App\Domain\Service\Login;
 
 use App\Infra\Code as Codes;
 use Leevel;
-use Leevel\Seccode\Seccode;
+use Gregwar\Captcha\CaptchaBuilder;
 
 /**
  * 验证码生成.
@@ -21,23 +21,21 @@ class Code
     {
         // Mac 自带 PHP 有问题
         if (!function_exists('imagettftext')) {
-            return file_get_contents(Leevel::path('assets/seccode/code.png')) ?: '';
+            return file_get_contents(Leevel::path('assets/captcha/code.png')) ?: '';
         }
 
-        $seccode = new Seccode([
-            'font_path' => Leevel::path('assets/seccode/font'),
-            'width'     => 120,
-            'height'    => 36,
-        ]);
+        $numFirst = rand(11, 99);
+        $numSecond = rand(11, 99);
+        $numResult = $numFirst + $numSecond;
+        $numPhrase = $numFirst . '+' . $numSecond;
 
-        ob_start();
-        $seccode->display(4);
+        $builder = new CaptchaBuilder($numPhrase);
+        $builder->build(120, 36);
+
         if ($params->id) {
-            $this->code->set($params->id, (string) $seccode->getCode());
+            $this->code->set($params->id, (string) $numResult);
         }
-        $content = ob_get_contents() ?: '';
-        ob_end_clean();
 
-        return $content;
+        return $builder->get(100);
     }
 }

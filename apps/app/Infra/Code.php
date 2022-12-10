@@ -16,7 +16,7 @@ class Code
      */
     public function set(string $id, string $code): void
     {
-        Cache::set('seccode:'.$id, $code);
+        Cache::set('captcha:'.$id, $code);
     }
 
     /**
@@ -24,6 +24,6 @@ class Code
      */
     public function get(string $id): string
     {
-        return Cache::get('seccode:'.$id) ?: '';
+        return Cache::get('captcha:'.$id) ?: '';
     }
 }
