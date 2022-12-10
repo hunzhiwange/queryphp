@@ -69,32 +69,6 @@ return [
             'expire' => null,
         ],
 
-        'redisPool' => [
-            // driver
-            'driver' => 'redisPool',
-
-            // redis 连接
-            'redis_connect' => 'redis',
-
-            // 最小空闲连接池数据量
-            'max_idle_connections' => (int) Leevel::env('CACHE_REDIS_POOL_MAX_IDLE_CONNECTIONS', 30),
-
-            // 最大空闲连接池数据量
-            'min_idle_connections' => (int) Leevel::env('CACHE_REDIS_POOL_MIN_IDLE_CONNECTIONS', 10),
-
-            // 通道写入最大超时时间设置(单位为毫秒)
-            'max_push_timeout' => -1000,
-
-            // 通道获取最大等待超时(单位为毫秒)
-            'max_pop_timeout' => 0,
-
-            // 连接的存活时间(单位为毫秒)
-            'keep_alive_duration' => 60000,
-
-            // 最大尝试次数
-            'retry_times' => 3,
-        ],
-
         'file_throttler' => [
             // driver
             'driver' => 'file',
