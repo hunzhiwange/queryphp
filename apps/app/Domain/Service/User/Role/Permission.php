@@ -6,8 +6,8 @@ namespace App\Domain\Service\User\Role;
 
 use App\Domain\Entity\User\Role;
 use App\Domain\Entity\User\RolePermission as EntityRolePermission;
-use Leevel\Collection\Collection;
-use Leevel\Collection\TypedIntArray;
+use Leevel\Support\Collection;
+use Leevel\Support\TypedIntArray;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
 

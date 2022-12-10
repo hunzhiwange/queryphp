@@ -6,8 +6,8 @@ namespace App\Domain\Service\User\Permission;
 
 use App\Domain\Entity\User\Permission;
 use App\Domain\Entity\User\PermissionResource as EntityPermissionResource;
-use Leevel\Collection\Collection;
-use Leevel\Collection\TypedIntArray;
+use Leevel\Support\Collection;
+use Leevel\Support\TypedIntArray;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
 

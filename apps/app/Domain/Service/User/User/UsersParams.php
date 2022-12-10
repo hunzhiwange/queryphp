@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\User;
 
 use App\Domain\Service\Support\ReadParams;
-use Leevel\Collection\TypedStringArray;
+use Leevel\Support\TypedStringArray;
 
 /**
  * 用户列表参数.

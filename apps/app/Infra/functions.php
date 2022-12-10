@@ -15,11 +15,11 @@ if (!function_exists('permission')) {
     }
 }
 
-if (!function_exists('sql')) {
+if (!function_exists('sql_listener')) {
     /**
      * SQL 监听器.
      */
-    function sql(Closure $call): void
+    function sql_listener(Closure $call): void
     {
         \App::make('event')
             ->register(IDatabase::SQL_EVENT, function (string $event, string $sql) use ($call): void {

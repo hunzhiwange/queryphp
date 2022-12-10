@@ -6,7 +6,7 @@ namespace App\Domain\Service\Project\ProjectLabel;
 
 use App\Domain\Service\Support\Params\Project\ProjectIds;
 use App\Domain\Service\Support\ReadParams;
-use Leevel\Collection\TypedStringArray;
+use Leevel\Support\TypedStringArray;
 
 /**
  * 项目分类列表参数.

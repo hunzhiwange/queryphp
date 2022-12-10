@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Support;
 
-use Leevel\Collection\TypedIntArray;
+use Leevel\Support\TypedIntArray;
 use Leevel\Support\Dto;
 
 class StatusParams extends Dto

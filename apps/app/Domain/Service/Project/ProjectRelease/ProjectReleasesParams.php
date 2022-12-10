@@ -6,7 +6,7 @@ namespace App\Domain\Service\Project\ProjectRelease;
 
 use App\Domain\Service\Support\Params\Project\ProjectIds;
 use App\Domain\Service\Support\ReadParams;
-use Leevel\Collection\TypedStringArray;
+use Leevel\Support\TypedStringArray;
 
 /**
  * 项目版本列表参数.

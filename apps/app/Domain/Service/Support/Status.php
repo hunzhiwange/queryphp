@@ -7,8 +7,8 @@ namespace App\Domain\Service\Support;
 use App\Domain\Entity\Common;
 use App\Exceptions\BusinessException;
 use App\Exceptions\ErrorCode;
-use Leevel\Collection\Collection;
-use Leevel\Collection\TypedIntArray;
+use Leevel\Support\Collection;
+use Leevel\Support\TypedIntArray;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\Proxy\Validate;
@@ -50,7 +50,7 @@ trait Status
      */
     private function findAll(TypedIntArray $ids): Collection
     {
-        /** @var \Leevel\Collection\Collection $entitys */
+        /** @var \Leevel\Support\Collection $entitys */
         $entitys = $this->w
             ->repository($this->entity())
             ->findAll(function (Select $select) use ($ids) {

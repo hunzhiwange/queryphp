@@ -9,7 +9,7 @@ use App\Domain\Entity\Project\ProjectUser;
 use App\Domain\Entity\User\User;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
-use Leevel\Collection\TypedIntArray;
+use Leevel\Support\TypedIntArray;
 use Leevel\Database\Ddd\UnitOfWork;
 
 /**

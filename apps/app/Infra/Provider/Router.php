@@ -31,10 +31,7 @@ class Router extends RouterProvider
         ],
 
         // api 请求中间件
-        'api' => [
-            // API 限流，可以通过网关来做限流更高效，如果需要去掉注释即可
-            // 'throttler:60,60',
-        ],
+        'api' => [],
     ];
 
     /**
@@ -46,7 +43,6 @@ class Router extends RouterProvider
     protected array $middlewareAlias = [
         'auth'       => Auth::class,
         'session'    => Session::class,
-        'throttler'  => Throttler::class,
     ];
 
     /**
