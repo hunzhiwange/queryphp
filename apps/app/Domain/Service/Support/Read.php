@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Service\Support;
 
 use Closure;
-use Leevel\Collection\Collection;
-use Leevel\Collection\TypedStringArray;
+use Leevel\Support\Collection;
+use Leevel\Support\TypedStringArray;
 use Leevel\Database\Ddd\Repository;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;

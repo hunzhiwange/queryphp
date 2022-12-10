@@ -7,7 +7,7 @@ namespace App\Domain\Service\Project\Project;
 use App\Domain\Dto\Project\Template;
 use App\Domain\Dto\Project\TemplateData;
 use InvalidArgumentException;
-use Leevel\Collection\TypedDtoArray;
+use Leevel\Support\TypedDtoArray;
 use Leevel\Support\Dto;
 
 /**

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\Project\ProjectModule;
 
 use App\Domain\Service\Support\ReadParams;
-use Leevel\Collection\TypedStringArray;
+use Leevel\Support\TypedStringArray;
 
 /**
  * 项目模块列表参数.

@@ -8,7 +8,7 @@ use App\Domain\Entity\Project\Project;
 use App\Domain\Entity\Project\ProjectUser;
 use App\Domain\Service\Support\Read;
 use Closure;
-use Leevel\Collection\TypedIntArray;
+use Leevel\Support\TypedIntArray;
 use Leevel\Database\Condition;
 use Leevel\Database\Ddd\Select;
 

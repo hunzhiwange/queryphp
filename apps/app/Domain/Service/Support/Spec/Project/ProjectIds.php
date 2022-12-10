@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Support\Spec\Project;
 
-use Leevel\Collection\TypedIntArray;
+use Leevel\Support\TypedIntArray;
 use Leevel\Database\Ddd\Select;
 
 /**

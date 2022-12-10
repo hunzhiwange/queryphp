@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Support\Params\Project;
 
-use Leevel\Collection\TypedIntArray;
+use Leevel\Support\TypedIntArray;
 
 trait ProjectIds
 {

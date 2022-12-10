@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Dto\Project;
 
-use Leevel\Collection\TypedDtoArray;
+use Leevel\Support\TypedDtoArray;
 use Leevel\Support\Dto;
 
 /**
