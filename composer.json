@@ -18,8 +18,8 @@
         "ext-openssl": "*",
         "composer-runtime-api": ">=2.1",
         "hunzhiwange/framework": "dev-master",
-        "spiral/dumper": "^2.6.3",
-        "spiral/roadrunner": "^1.9.0",
+        "spiral/dumper": "^2.14.1",
+        "spiral/roadrunner": "^2.12.1",
         "symfony/psr-http-message-bridge": "^2.0",
         "symfony/workflow": "^6.2"
     },
