@@ -21,7 +21,8 @@
         "nyholm/psr7": "^1.5",
         "spiral/dumper": "^2.14.1",
         "spiral/roadrunner": "^2.12.1",
-        "symfony/psr-http-message-bridge": "^2.0"
+        "symfony/psr-http-message-bridge": "^2.0",
+        "gregwar/captcha": "dev-master"
     },
     "require-dev": {
         "codedungeon/php-cli-colors": "^1.12.0",
