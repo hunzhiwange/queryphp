@@ -24,8 +24,8 @@ class Code
             return file_get_contents(Leevel::path('assets/captcha/code.png')) ?: '';
         }
 
-        $numFirst = rand(11, 50);
-        $numSecond = rand(11, 50);
+        $numFirst = rand(11, 99);
+        $numSecond = rand(11, 99);
         $numResult = $numFirst + $numSecond;
         $numPhrase = $numFirst . '+' . $numSecond;
 
