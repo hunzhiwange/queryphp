@@ -1,7 +1,7 @@
 {
     "name": "hunzhiwange/queryphp",
     "description": "The QueryPHP Application.",
-    "keywords": ["php", "framework", "queryphp", "swoole", "vue", "iview"],
+    "keywords": ["php", "framework", "queryphp", "vue", "iview"],
     "license": "MIT",
     "homepage": "http://www.queryphp.com",
     "support": {
@@ -65,7 +65,6 @@
             "/vendor/gettext/",
             "/vendor/doctrine/",
             "/vendor/egulias/",
-            "/vendor/hunzhiwange/framework/src/Leevel/Protocol/",
             "/vendor/hunzhiwange/framework/src/Leevel/Debug/",
             "/vendor/psr/",
             "/vendor/clio/",
