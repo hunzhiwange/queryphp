@@ -17,17 +17,10 @@ return [
      * 允许记录的日志级别
      * ---------------------------------------------------------------
      *
-     * 默认为 debug、info、notice、warning、error、critical、alert 和 emergency
+     * 默认为 info
      */
-    'levels' => [
-        'debug',
-        'info',
-        'notice',
-        'warning',
-        'error',
-        'critical',
-        'alert',
-        'emergency',
+    'level' => [
+        \Leevel\Log\ILog::DEFAULT_MESSAGE_CATEGORY => Leevel::env('LOG_DEFAULT_LEVEL', \Leevel\Log\ILog::LEVEL_INFO),
     ],
 
     /*
@@ -70,6 +63,9 @@ return [
             // driver
             'driver' => 'file',
 
+            // 驱动类
+            'driver_class' => \Leevel\Log\File::class,
+
             // 频道
             'channel' => null,
 
@@ -94,14 +90,14 @@ return [
             // driver
             'driver' => 'syslog',
 
+            // 驱动类
+            'driver_class' => \Leevel\Log\Syslog::class,
+
             // 频道
             'channel' => null,
 
-            // 存储 @see \Monolog\Handler\AbstractSyslogHandler
+            // 存储 \Monolog\Handler\AbstractSyslogHandler
             'facility' => LOG_USER,
-
-            // 等级
-            'level' => 'debug',
 
             // 日志行事件格式化，支持微秒
             'format' => 'Y-m-d H:i:s u',

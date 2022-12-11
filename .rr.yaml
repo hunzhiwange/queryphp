@@ -1,4 +1,4 @@
-# configuration version: https://roadrunner.dev/docs/beep-beep-config/2.x/en
+# configuration version: https://roadrunner.dev/docs/intro-config/2.x/en
 version: '2.7'
 
 rpc:
@@ -9,13 +9,12 @@ server:
 
 http:
   address: "0.0.0.0:9527"
-
-static:
-  # root directory for static file (HTTP would not serve .php and .htaccess files).
-  dir:   "."
-
-  # list of extensions for forbid for serving.
-  forbid: [".php", ".htaccess"]
+  middleware: [ "static", "gzip"]
+  static:
+    # root directory for static file (HTTP would not serve .php and .htaccess files).
+    dir:   "."
+    # list of extensions for forbid for serving.
+    forbid: [".php", ".htaccess"]
 
 reload:
   # sync interval
@@ -28,7 +27,7 @@ reload:
       # recursive search for file patterns to add
       recursive: true
       # ignored folders
-      ignore: ["vendor","storage","tests"]
+      ignore: ["vendor", "storage", "tests"]
       # service specific file pattens to sync
       patterns: [".php"]
       # directories to sync. If recursive is set to true,

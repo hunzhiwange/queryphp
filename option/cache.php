@@ -36,6 +36,9 @@ return [
             // driver
             'driver' => 'file',
 
+            // 驱动类
+            'driver_class' => \Leevel\Cache\File::class,
+
             // 文件缓存路径
             'path' => Leevel::storagePath('app/cache'),
 
@@ -46,6 +49,9 @@ return [
         'redis' => [
             // driver
             'driver' => 'redis',
+
+            // 驱动类
+            'driver_class' => \Leevel\Cache\Redis::class,
 
             // 默认缓存服务器
             'host' => Leevel::env('CACHE_REDIS_HOST', '127.0.0.1'),
