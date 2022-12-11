@@ -7,7 +7,7 @@ namespace App\Domain\Service\User\Permission;
 use App\Domain\Entity\User\Permission;
 use Leevel\Support\Collection;
 use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Tree\Tree as BaseTree;
+use Leevel\Support\Tree as BaseTree;
 
 /**
  * 权限树列表.
