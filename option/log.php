@@ -17,16 +17,10 @@ return [
      * 允许记录的日志级别
      * ---------------------------------------------------------------
      *
-     * 默认为 info、notice、warning、error、critical、alert 和 emergency
+     * 默认为 info
      */
-    'levels' => [
-        \Leevel\Log\ILog::LEVEL_EMERGENCY,
-        \Leevel\Log\ILog::LEVEL_ALERT,
-        \Leevel\Log\ILog::LEVEL_CRITICAL,
-        \Leevel\Log\ILog::LEVEL_ERROR,
-        \Leevel\Log\ILog::LEVEL_WARNING,
-        \Leevel\Log\ILog::LEVEL_NOTICE,
-        \Leevel\Log\ILog::LEVEL_INFO,
+    'level'   => [
+        \Leevel\Log\ILog::DEFAULT_MESSAGE_CATEGORY => \Leevel\Log\ILog::LEVEL_INFO,
     ],
 
     /*
@@ -102,11 +96,8 @@ return [
             // 频道
             'channel' => null,
 
-            // 存储 @see \Monolog\Handler\AbstractSyslogHandler
+            // 存储 \Monolog\Handler\AbstractSyslogHandler
             'facility' => LOG_USER,
-
-            // 等级
-            'level' => \Leevel\Log\ILog::LEVEL_INFO,
 
             // 日志行事件格式化，支持微秒
             'format' => 'Y-m-d H:i:s u',
