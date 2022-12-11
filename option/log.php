@@ -70,6 +70,9 @@ return [
             // driver
             'driver' => 'file',
 
+            // 驱动类
+            'driver_class' => \Leevel\Log\File::class,
+
             // 频道
             'channel' => null,
 
@@ -93,6 +96,9 @@ return [
         'syslog' => [
             // driver
             'driver' => 'syslog',
+
+            // 驱动类
+            'driver_class' => \Leevel\Log\Syslog::class,
 
             // 频道
             'channel' => null,

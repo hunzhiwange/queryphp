@@ -53,6 +53,9 @@ return [
             // driver
             'driver' => 'session',
 
+            // 驱动类
+            'driver_class' => \Leevel\Auth\Session::class,
+
             // token
             'token' => 'token',
 
@@ -63,6 +66,9 @@ return [
         'token' => [
             // driver
             'driver' => 'token',
+
+            // 驱动类
+            'driver_class' => \Leevel\Auth\Token::class,
 
             // token，需要从接口传入进来
             'token' => null,

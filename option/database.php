@@ -24,6 +24,9 @@ return [
             // driver
             'driver' => 'mysql',
 
+            // 驱动类
+            'driver_class' => \Leevel\Database\Mysql::class,
+
             // 数据库 host，默认为 localhost
             'host' => Leevel::env('DATABASE_HOST', 'localhost'),
 

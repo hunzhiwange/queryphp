@@ -55,6 +55,9 @@ return [
             // driver
             'driver' => 'file',
 
+            // 驱动类
+            'driver_class' => \Leevel\Session\File::class,
+
             // 文件缓存驱动
             'file_driver' => Leevel::env('SESSION_FILE_DRIVER', 'file_session'),
         ],
@@ -63,6 +66,9 @@ return [
             // driver
             'driver' => 'redis',
 
+            // 驱动类
+            'driver_class' => \Leevel\Session\Redis::class,
+
             // Redis 缓存驱动
             'redis_driver' => Leevel::env('SESSION_REDIS_DRIVER', 'redis_session'),
         ],
@@ -70,6 +76,9 @@ return [
         'test' => [
             // driver
             'driver' => 'test',
+
+            // 驱动类
+            'driver_class' => \Leevel\Session\Test::class,
         ],
     ],
 ];
