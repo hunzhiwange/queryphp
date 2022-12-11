@@ -19,8 +19,8 @@ return [
      *
      * 默认为 info
      */
-    'level'   => [
-        \Leevel\Log\ILog::DEFAULT_MESSAGE_CATEGORY => \Leevel\Log\ILog::LEVEL_INFO,
+    'level' => [
+        \Leevel\Log\ILog::DEFAULT_MESSAGE_CATEGORY => Leevel::env('LOG_DEFAULT_LEVEL', \Leevel\Log\ILog::LEVEL_INFO),
     ],
 
     /*
