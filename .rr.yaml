@@ -29,7 +29,7 @@ reload:
       # ignored folders
       ignore: ["vendor", "storage", "tests"]
       # service specific file pattens to sync
-      patterns: [".php"]
+      patterns: [".php", ".env"]
       # directories to sync. If recursive is set to true,
       # recursive sync will be applied only to the directories in `dirs` section
       dirs:     ["."]
