@@ -7,23 +7,25 @@ namespace App\Exceptions;
 use App;
 use Leevel\Kernel\Exceptions\BusinessException as BaseBusinessException;
 use Throwable;
+use Exception;
 
 /**
  * 通用业务操作异常.
  */
 class BusinessException extends BaseBusinessException
 {
+    use PrepareCodeAndMessage;
+
     /**
      * 构造函数.
      */
     public function __construct(
-        int $code = 0,
+        int|object $code = 0,
         string $message = '',
         bool $overrideMessage = false,
         Throwable $previous = null
     ) {
-        $message = $overrideMessage ? $message :
-                    $this->getErrorMessage($code).($message ? ': '.$message : '');
+        list($code, $message) = $this->prepareCodeAndMessage($code, $message, $overrideMessage);
         parent::__construct($message, $code, $previous);
     }
 
@@ -46,9 +48,9 @@ class BusinessException extends BaseBusinessException
     /**
      * 获取错误消息.
      */
-    protected function getErrorMessage(int $code): string
+    protected function getErrorMessage(int|object $code): string
     {
-        return ErrorCode::getErrorMessage($code);
+        return ErrorCode::description($code);
     }
 
     /**

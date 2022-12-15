@@ -9,6 +9,8 @@ use Throwable;
 
 class UnauthorizedHttpException extends BaseUnauthorizedHttpException
 {
+    use PrepareCodeAndMessage;
+
     /**
      * 构造函数.
      */
@@ -18,16 +20,15 @@ class UnauthorizedHttpException extends BaseUnauthorizedHttpException
         bool $overrideMessage = false,
         Throwable $previous = null
     ) {
-        $message = $overrideMessage ? $message :
-                    $this->getErrorMessage($code).($message ? ': '.$message : '');
+        list($code, $message) = $this->prepareCodeAndMessage($code, $message, $overrideMessage);
         parent::__construct($message, $code, $previous);
     }
 
     /**
      * 获取错误消息.
      */
-    protected function getErrorMessage(int $code): string
+    protected function getErrorMessage(int|object $code): string
     {
-        return AuthErrorCode::getErrorMessage($code);
+        return AuthErrorCode::description($code);
     }
 }

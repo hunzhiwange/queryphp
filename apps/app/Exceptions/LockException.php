@@ -13,17 +13,18 @@ use Throwable;
  */
 class LockException extends HttpException
 {
+    use PrepareCodeAndMessage;
+
     /**
      * 构造函数.
      */
     public function __construct(
-        int $code = 0,
+        int|object $code = 0,
         string $message = '',
         bool $overrideMessage = false,
         Throwable $previous = null
     ) {
-        $message = $overrideMessage ? $message :
-                    $this->getErrorMessage($code).($message ? ': '.$message : '');
+        list($code, $message) = $this->prepareCodeAndMessage($code, $message, $overrideMessage);
         parent::__construct(Response::HTTP_FAILED_DEPENDENCY, $message, $code, $previous);
     }
 
@@ -32,6 +33,6 @@ class LockException extends HttpException
      */
     protected function getErrorMessage(int $code): string
     {
-        return AuthErrorCode::getErrorMessage($code);
+        return AuthErrorCode::description($code);
     }
 }
