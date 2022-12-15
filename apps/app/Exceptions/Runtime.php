@@ -47,4 +47,25 @@ class Runtime extends ExceptionRuntime
     {
         return Leevel::path('assets/exceptions/default.php');
     }
+
+    /**
+     * 获取 JSON 状态的异常模板.
+     */
+    public function getJsonExceptionView(HttpException $e): string
+    {
+        return Leevel::path(sprintf('assets/exceptions/%d.php', $e->getStatusCode()));
+    }
+
+    /**
+     * 获取 JSON 状态的默认异常结果.
+     */
+    public function getDefaultJsonExceptionData(Throwable $e): array
+    {
+        return [
+            'error' => [
+                'code'    => $e->getCode(),
+                'message' => $e->getMessage(),
+            ],
+        ];
+    }
 }
