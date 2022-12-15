@@ -140,13 +140,11 @@ class User extends Entity
     public const REPOSITORY = RepositoryUser::class;
 
     /**
-     * 状态值.
+     * 模型枚举值.
      */
-    #[status('禁用')]
-    public const STATUS_DISABLE = 0;
-
-    #[status('启用')]
-    public const STATUS_ENABLE = 1;
+    public const ENUM = [
+        'status' => UserStatusEnum::class,
+    ];
 
     public static function repository(?Entity $entity = null): RepositoryUser
     {
@@ -159,7 +157,7 @@ class User extends Entity
     protected function relationScopeRole(ManyMany $relation): void
     {
         $relation
-            ->where('status', self::STATUS_ENABLE)
+            ->where('status', UserStatusEnum::ENABLE->value)
             ->setColumns(['id', 'name']);
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
+use App\Domain\Entity\User\UserStatusEnum;
 use Leevel\Database\Ddd\UnitOfWork;
 
 /**
@@ -71,7 +72,7 @@ class UserPermission
         return $this->w
             ->repository(User::class)
             ->eager(['role.permission.resource'])
-            ->where('status', User::STATUS_ENABLE)
+            ->where('status', UserStatusEnum::ENABLE->value)
             ->findOrFail($id);
     }
 }
