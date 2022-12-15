@@ -96,6 +96,7 @@ class User extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
+            self::ENUM_CLASS => UserStatusEnum::class,
         ],
         'create_at' => [
             self::COLUMN_NAME => '创建时间',
@@ -138,13 +139,6 @@ class User extends Entity
      * 仓储.
      */
     public const REPOSITORY = RepositoryUser::class;
-
-    /**
-     * 模型枚举值.
-     */
-    public const ENUM = [
-        'status' => UserStatusEnum::class,
-    ];
 
     public static function repository(?Entity $entity = null): RepositoryUser
     {
