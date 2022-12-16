@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Leevel\Support\BaseEnum;
+use Leevel\Support\Enum;
 
 /**
  * 用户业务错误码.
  */
 enum UserErrorCode:int
 {
-    use BaseEnum;
+    use Enum;
 
     #[msg('修改密码参数错误')]
     case CHANGE_PASSWORD_INVALID_ARGUMENT = 1000010000;

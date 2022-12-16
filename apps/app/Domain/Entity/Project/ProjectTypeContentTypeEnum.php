@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity\Project;
 
-use Leevel\Support\BaseEnum;
+use Leevel\Support\Enum;
 
 /**
  * 项目问题类型内容类型值枚举.
  */
 enum ProjectTypeContentTypeEnum:int
 {
-    use BaseEnum;
+    use Enum;
 
     #[msg('BUG')]
     case BUG = 1;

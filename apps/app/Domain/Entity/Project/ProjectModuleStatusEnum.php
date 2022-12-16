@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity\Project;
 
-use Leevel\Support\BaseEnum;
+use Leevel\Support\Enum;
 
 /**
  * 项目模块状态值枚举.
  */
 enum ProjectModuleStatusEnum:int
 {
-    use BaseEnum;
+    use Enum;
 
     #[msg('禁用')]
     case DISABLE = 0;

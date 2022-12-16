@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity\User;
 
-use Leevel\Support\BaseEnum;
+use Leevel\Support\Enum;
 
 /**
  * 角色状态值枚举.
  */
 enum RoleStatusEnum:int
 {
-    use BaseEnum;
+    use Enum;
 
     #[msg('禁用')]
     case DISABLE = 0;

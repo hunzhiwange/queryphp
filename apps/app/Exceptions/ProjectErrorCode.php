@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Leevel\Support\BaseEnum;
+use Leevel\Support\Enum;
 
 /**
  * 项目业务错误码.
  */
 enum ProjectErrorCode:int
 {
-    use BaseEnum;
+    use Enum;
 
     #[msg('项目收藏保存参数错误')]
     case PROJECT_USER_FAVOR_STORE_INVALID_ARGUMENT = 1000050001;

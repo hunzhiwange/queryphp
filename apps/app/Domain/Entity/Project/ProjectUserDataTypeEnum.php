@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity\Project;
 
-use Leevel\Support\BaseEnum;
+use Leevel\Support\Enum;
 
 /**
  * 项目用户数据类型枚举.
  */
 enum ProjectUserDataTypeEnum:int
 {
-    use BaseEnum;
+    use Enum;
 
     #[msg('项目')]
     case PROJECT = 1;

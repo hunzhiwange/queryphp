@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Leevel\Support\BaseEnum;
+use Leevel\Support\Enum;
 
 /**
  * 认证业务错误码.
  */
 enum AuthErrorCode:int
 {
-    use BaseEnum;
+    use Enum;
 
     #[msg('验证码错误')]
     case VERIFICATION_CODE_ERROR = 1000030003;

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity\Project;
 
-use Leevel\Support\BaseEnum;
+use Leevel\Support\Enum;
 
 /**
  * 项目问题优先级别枚举.
  */
 enum ProjectIssueLevelEnum:int
 {
-    use BaseEnum;
+    use Enum;
 
     #[msg('极高')]
     case HIGHEST = 1;

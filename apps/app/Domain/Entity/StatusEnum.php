@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
-use Leevel\Support\BaseEnum;
+use Leevel\Support\Enum;
 
 /**
  * 公共状态值枚举.
  */
 enum StatusEnum:int
 {
-    use BaseEnum;
+    use Enum;
 
     #[msg('禁用')]
     case DISABLE = 0;

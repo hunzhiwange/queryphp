@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity\Project;
 
-use Leevel\Support\BaseEnum;
+use Leevel\Support\Enum;
 
 /**
  * 项目版本完成状态值枚举.
  */
 enum ProjectReleaseCompletedEnum:int
 {
-    use BaseEnum;
+    use Enum;
 
     #[msg('未开始')]
     case NOT_STARTED = 1;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Leevel\Support\BaseEnum;
+use Leevel\Support\Enum;
 
 /**
  * 通用业务错误码.
@@ -29,7 +29,7 @@ use Leevel\Support\BaseEnum;
  */
 enum ErrorCode:int
 {
-    use BaseEnum;
+    use Enum;
 
     #[msg('删除数据参数错误')]
     case DESTROY_DATA_INVALID_ARGUMENT = 1000000000;
