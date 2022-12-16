@@ -86,6 +86,7 @@ class ProjectModule extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
+            self::ENUM_CLASS => ProjectModuleStatusEnum::class,
         ],
         'color' => [
             self::COLUMN_NAME => '模块颜色',
@@ -129,15 +130,6 @@ class ProjectModule extends Entity
      * Soft delete column.
      */
     public const DELETE_AT = 'delete_at';
-
-    /**
-     * 状态值.
-     */
-    #[status('禁用')]
-    public const STATUS_DISABLE = 0;
-
-    #[status('启用')]
-    public const STATUS_ENABLE = 1;
 
     /**
      * 项目关联查询作用域.

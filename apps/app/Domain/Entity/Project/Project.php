@@ -97,6 +97,7 @@ class Project extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
+            self::ENUM_CLASS => ProjectStatusEnum::class,
         ],
         'progress' => [
             self::COLUMN_NAME => '进度条(最大值 10000，需要除以 100 表示实际进度)',
@@ -140,13 +141,4 @@ class Project extends Entity
      * Soft delete column.
      */
     public const DELETE_AT = 'delete_at';
-
-    /**
-     * 状态值.
-     */
-    #[status('禁用')]
-    public const STATUS_DISABLE = 0;
-
-    #[status('启用')]
-    public const STATUS_ENABLE = 1;
 }
