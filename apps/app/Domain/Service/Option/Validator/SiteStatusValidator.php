@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Option\Validator;
 
-use App\Domain\Entity\Base\Option;
+use App\Domain\Entity\StatusEnum;
 use App\Exceptions\OptionBusinessException;
 use App\Exceptions\OptionErrorCode;
 use Leevel\Validate\Proxy\Validate;
@@ -18,7 +18,7 @@ class SiteStatusValidator extends Validator
             [$key => $value],
             [
                 'site_status'  => [
-                    ['in', Option::values('site_status')],
+                    ['in', StatusEnum::values()],
                 ],
             ],
             [

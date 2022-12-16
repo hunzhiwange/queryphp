@@ -15,7 +15,7 @@ class UnauthorizedHttpException extends BaseUnauthorizedHttpException
      * 构造函数.
      */
     public function __construct(
-        int $code = 0,
+        int|object $code = 0,
         string $message = '',
         bool $overrideMessage = false,
         Throwable $previous = null
