@@ -6,6 +6,9 @@ namespace App\Domain\Service\Project\Project;
 
 use App\Domain\Entity\Project\Project;
 use App\Domain\Entity\Project\ProjectUser;
+use App\Domain\Entity\Project\ProjectUserDataTypeEnum;
+use App\Domain\Entity\Project\ProjectUserExtendTypeEnum;
+use App\Domain\Entity\Project\ProjectUserTypeEnum;
 use App\Domain\Validate\Project\ProjectUser as ProjectProjectUser;
 use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
@@ -55,9 +58,9 @@ class SetMember
     {
         $map = [
             'user_id'   => $params->userId,
-            'type'      => ProjectUser::TYPE_MEMBER,
+            'type'      => ProjectUserTypeEnum::MEMBER->value,
             'data_id'   => $params->projectId,
-            'data_type' => ProjectUser::DATA_TYPE_PROJECT,
+            'data_type' => ProjectUserDataTypeEnum::PROJECT->value,
         ];
 
         $entity = $this->w
@@ -68,11 +71,11 @@ class SetMember
             throw new ProjectBusinessException(ProjectErrorCode::PROJECT_USER_MEMBER_NOT_EXIST);
         }
 
-        if (ProjectUser::EXTEND_TYPE_ADMINISTRATOR !== $entity->extendType) {
+        if (ProjectUserExtendTypeEnum::ADMINISTRATOR->value !== $entity->extendType) {
             throw new ProjectBusinessException(ProjectErrorCode::PROJECT_USER_MEMBER_IS_NOT_ADMINISTRATOR);
         }
 
-        $entity->extendType = ProjectUser::EXTEND_TYPE_MEMBER;
+        $entity->extendType = ProjectUserExtendTypeEnum::MEMBER->value;
 
         return $entity;
     }

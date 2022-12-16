@@ -6,6 +6,8 @@ namespace App\Domain\Service\Project\Project;
 
 use App\Domain\Entity\Project\Project;
 use App\Domain\Entity\Project\ProjectUser;
+use App\Domain\Entity\Project\ProjectUserDataTypeEnum;
+use App\Domain\Entity\Project\ProjectUserTypeEnum;
 use App\Domain\Validate\Project\ProjectUser as ProjectProjectUser;
 use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
@@ -56,9 +58,9 @@ class CancelFavor
     {
         $map = [
             'user_id'   => $params->userId,
-            'type'      => ProjectUser::TYPE_FAVOR,
+            'type'      => ProjectUserTypeEnum::FAVOR->value,
             'data_id'   => $params->projectId,
-            'data_type' => ProjectUser::DATA_TYPE_PROJECT,
+            'data_type' => ProjectUserDataTypeEnum::PROJECT->value,
         ];
 
         $entity = $this->w

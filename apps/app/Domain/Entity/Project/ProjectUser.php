@@ -85,12 +85,15 @@ class ProjectUser extends Entity
         ],
         'type' => [
             self::COLUMN_NAME => '类型 1=成员;2=收藏;3=关注;',
+            self::ENUM_CLASS => ProjectUserTypeEnum::class,
         ],
         'extend_type' => [
             self::COLUMN_NAME => '扩展类型 1=成员;2=管理员;',
+            self::ENUM_CLASS => ProjectUserExtendTypeEnum::class,
         ],
         'data_type' => [
             self::COLUMN_NAME => '数据类型 1=项目;2=问题;',
+            self::ENUM_CLASS => ProjectUserDataTypeEnum::class,
         ],
         'data_id' => [
             self::COLUMN_NAME => '数据 ID',
@@ -124,35 +127,8 @@ class ProjectUser extends Entity
         ],
     ]; // END STRUCT
 
-    /**
-     * 类型.
-     */
-    #[type('成员')]
-    public const TYPE_MEMBER = 1;
-
     #[type('收藏')]
     public const TYPE_FAVOR = 2;
-
-    #[type('关注')]
-    public const TYPE_FOLLOW = 3;
-
-    /**
-     * 扩展类型.
-     */
-    #[extend_type('成员')]
-    public const EXTEND_TYPE_MEMBER = 1;
-
-    #[extend_type('管理')]
-    public const EXTEND_TYPE_ADMINISTRATOR = 2;
-
-    /**
-     * 数据类型.
-     */
-    #[data_type('项目')]
-    public const DATA_TYPE_PROJECT = 1;
-
-    #[data_type('问题')]
-    public const DATA_TYPE_ISSUE = 2;
 
     /**
      * Soft delete column.

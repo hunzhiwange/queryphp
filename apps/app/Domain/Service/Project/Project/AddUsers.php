@@ -6,6 +6,8 @@ namespace App\Domain\Service\Project\Project;
 
 use App\Domain\Entity\Project\Project;
 use App\Domain\Entity\Project\ProjectUser;
+use App\Domain\Entity\Project\ProjectUserDataTypeEnum;
+use App\Domain\Entity\Project\ProjectUserTypeEnum;
 use App\Domain\Entity\User\User;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
@@ -30,9 +32,9 @@ class AddUsers
         $this->verifyUsers($params->userIds);
 
         $baseData = [
-            'type'      => ProjectUser::TYPE_MEMBER,
+            'type'      => ProjectUserTypeEnum::MEMBER->value,
             'data_id'   => $params->projectId,
-            'data_type' => ProjectUser::DATA_TYPE_PROJECT,
+            'data_type' => ProjectUserDataTypeEnum::PROJECT->value,
         ];
         $existUserIds = $this->findExistUserIds($baseData);
 

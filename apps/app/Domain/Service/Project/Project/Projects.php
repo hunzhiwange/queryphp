@@ -6,6 +6,9 @@ namespace App\Domain\Service\Project\Project;
 
 use App\Domain\Entity\Project\Project;
 use App\Domain\Entity\Project\ProjectUser;
+use App\Domain\Entity\Project\ProjectUserDataTypeEnum;
+use App\Domain\Entity\Project\ProjectUserExtendTypeEnum;
+use App\Domain\Entity\Project\ProjectUserTypeEnum;
 use App\Domain\Service\Support\Read;
 use Closure;
 use Leevel\Support\TypedIntArray;
@@ -47,15 +50,15 @@ class Projects
     {
         switch ($value) {
             case 'favor':
-                $select->where('project_user.type', ProjectUser::TYPE_FAVOR);
+                $select->where('project_user.type', ProjectUserTypeEnum::FAVOR->value);
                 break;
             case 'administrator':
-                $select->where('project_user.type', ProjectUser::TYPE_MEMBER);
-                $select->where('project_user.extend_type', ProjectUser::EXTEND_TYPE_ADMINISTRATOR);
+                $select->where('project_user.type', ProjectUserTypeEnum::MEMBER->value);
+                $select->where('project_user.extend_type', ProjectUserExtendTypeEnum::ADMINISTRATOR->value);
                 break;
             default:
                 // member
-                $select->where('project_user.type', ProjectUser::TYPE_MEMBER);
+                $select->where('project_user.type', ProjectUserTypeEnum::MEMBER->value);
                 break;
         }
     }
@@ -72,7 +75,7 @@ class Projects
                     $select
                         ->where('delete_at', 0)
                         ->where('data_id', Condition::raw('[project.id]'))
-                        ->where('data_type', ProjectUser::DATA_TYPE_PROJECT);
+                        ->where('data_type', ProjectUserDataTypeEnum::PROJECT->value);
                 });
         };
     }
