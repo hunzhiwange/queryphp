@@ -43,7 +43,7 @@ class Destroy
         /** @var \App\Infra\Repository\User\Permission $permissionRepository */
         $permissionRepository = $this->w->repository(Permission::class);
         if ($permissionRepository->hasChildren($id)) {
-            throw new UserBusinessException(UserErrorCode::PERMISSION_CONTAINS_SUBKEY_AND_CANNOT_BE_DELETED);
+            throw new UserBusinessException(UserErrorCode::PERMISSION_CONTAINS_SUB_KEY_AND_CANNOT_BE_DELETED);
         }
     }
 }

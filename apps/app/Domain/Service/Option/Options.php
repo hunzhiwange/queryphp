@@ -31,11 +31,8 @@ class Options
             }
         }
 
-        $defaultValue = [];
-        foreach (DefaultOptions::descriptions('option')['value'] as $key => $value) {
-            $defaultValue[strtolower($key)] = $value;
-        }
+        $defaultOptions = new DefaultOptions();
 
-        return array_merge($defaultValue, $result);
+        return array_merge($defaultOptions->toArray(), $result);
     }
 }

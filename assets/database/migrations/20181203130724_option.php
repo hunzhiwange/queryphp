@@ -42,6 +42,7 @@ final class Option extends AbstractMigration
         $sql = <<<'EOT'
             INSERT INTO `option`(`id`, `name`, `value`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (1, 'site_status', '1', '2019-04-14 22:26:25', '2019-08-25 21:19:23', 0, 0, 0);
             INSERT INTO `option`(`id`, `name`, `value`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`) VALUES (2, 'site_name', 'QueryPHP', '2019-04-14 22:26:25', '2019-08-25 21:19:23', 0, 0, 0);
+            INSERT INTO `option`(`id`, `name`, `value`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (3, 'site_json', '{\"hello\":\"world\"}', '2022-12-16 10:38:11', '2022-12-16 10:38:27', 0, 0, 0, 0);
             EOT;
         $this->execute($sql);
     }

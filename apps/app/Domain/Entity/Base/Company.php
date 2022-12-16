@@ -89,7 +89,7 @@ class Company extends Entity
      * - product_version
      *                             comment: 产品版本  type: tinyint(1)  null: false
      *                             key:   default: 1  extra:
-     * - regist_ip
+     * - register_ip
      *                             comment: 注册 IP 地址  type: char(15)  null: false
      *                             key:   default: 0.0.0.0  extra:
      * - is_test_company
@@ -133,6 +133,7 @@ class Company extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
+            self::ENUM_CLASS => CompanyStatusEnum::class,
         ],
         'business_license' => [
             self::COLUMN_NAME => '营业执照号',
@@ -176,7 +177,7 @@ class Company extends Entity
         'product_version' => [
             self::COLUMN_NAME => '产品版本',
         ],
-        'regist_ip' => [
+        'register_ip' => [
             self::COLUMN_NAME => '注册 IP 地址',
         ],
         'is_test_company' => [
@@ -212,13 +213,4 @@ class Company extends Entity
      * Soft delete column.
      */
     public const DELETE_AT = 'delete_at';
-
-    /**
-     * 状态值.
-     */
-    #[status('禁用')]
-    public const STATUS_DISABLE = 0;
-
-    #[status('启用')]
-    public const STATUS_ENABLE = 1;
 }

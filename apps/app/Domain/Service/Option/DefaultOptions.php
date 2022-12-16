@@ -4,17 +4,26 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Option;
 
-use App\Domain\Entity\Base\Option as EntityOption;
-use Leevel\Support\Enum;
+use App\Domain\Entity\StatusEnum;
+use Leevel\Support\Dto;
 
 /**
  * 默认配置.
  */
-class DefaultOptions extends Enum
+class DefaultOptions extends Dto
 {
-    #[option('站点名字')]
-    const SITE_NAME = '';
+    /**
+     * 站点名字.
+     */
+    public string $siteName = '';
 
-    #[option('站点状态')]
-    const SITE_STATUS = EntityOption::SITE_STATUS_ENABLE;
+    /**
+     * 站点状态.
+     */
+    public int $siteStatus;
+
+    protected function siteStatusDefaultValue(): int
+    {
+        return StatusEnum::ENABLE->value;
+    }
 }

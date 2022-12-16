@@ -96,6 +96,7 @@ class User extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
+            self::ENUM_CLASS => UserStatusEnum::class,
         ],
         'create_at' => [
             self::COLUMN_NAME => '创建时间',
@@ -139,15 +140,6 @@ class User extends Entity
      */
     public const REPOSITORY = RepositoryUser::class;
 
-    /**
-     * 状态值.
-     */
-    #[status('禁用')]
-    public const STATUS_DISABLE = 0;
-
-    #[status('启用')]
-    public const STATUS_ENABLE = 1;
-
     public static function repository(?Entity $entity = null): RepositoryUser
     {
         return parent::repository($entity);
@@ -159,7 +151,7 @@ class User extends Entity
     protected function relationScopeRole(ManyMany $relation): void
     {
         $relation
-            ->where('status', self::STATUS_ENABLE)
+            ->where('status', UserStatusEnum::ENABLE->value)
             ->setColumns(['id', 'name']);
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Validate\Project;
 
 use App\Domain\Entity\Project\ProjectRelease as EntityProjectRelease;
+use App\Domain\Entity\Project\ProjectReleaseStatusEnum;
 use App\Domain\Validate\IValidator;
 use Leevel\Validate\IValidator as ValidateIValidator;
 
@@ -65,7 +66,7 @@ class ProjectRelease implements IValidator
             'sort'        => 'required|type:int|egt:0',
             'project_id'  => 'required|type:int|gt:0',
             'status'      => [
-                ['in', EntityProjectRelease::values('status')],
+                ['in', ProjectReleaseStatusEnum::values()],
             ],
         ];
     }

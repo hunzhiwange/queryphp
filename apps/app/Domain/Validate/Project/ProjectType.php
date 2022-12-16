@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Validate\Project;
 
 use App\Domain\Entity\Project\ProjectType as EntityProjectType;
+use App\Domain\Entity\Project\ProjectTypeStatusEnum;
 use App\Domain\Validate\IValidator;
 
 /**
@@ -62,7 +63,7 @@ class ProjectType implements IValidator
             'name'   => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
             'sort'   => 'required|type:int|egt:0',
             'status' => [
-                ['in', EntityProjectType::values('status')],
+                ['in', ProjectTypeStatusEnum::values()],
             ],
         ];
     }

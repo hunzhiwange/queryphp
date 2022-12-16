@@ -27,16 +27,23 @@ class Enums
         }
 
         $field = array_pop($tempEntityField);
-        $entity = 'App\\Domain\\Entity\\'.implode('\\', $tempEntityField);
-        if (!class_exists($entity)) {
-            throw new Exception(sprintf('Entity `%s` was not found.', $entity));
+        $entityClass = 'App\\Domain\\Entity\\'.implode('\\', $tempEntityField);
+        if (!class_exists($entityClass)) {
+            throw new Exception(sprintf('Entity `%s` was not found.', $entityClass));
         }
 
-        $entity = new $entity();
+        $entity = new $entityClass();
         if (!$entity instanceof Entity) {
-            throw new Exception(sprintf('Class `%s` is not an entity.', $entity));
+            throw new Exception(sprintf('Class `%s` is not an entity.', $entityClass));
         }
 
-        return $entity::valueDescriptionMap($field);
+        $entityFields = $entity::fields();
+        if (empty($entityFields[$field][Entity::ENUM_CLASS])) {
+            throw new Exception(sprintf('The field `%s` of entity `%s` has no enum.', $field, $entityClass));
+        }
+
+        $enumClass = $entityFields[$field][Entity::ENUM_CLASS];
+
+        return $enumClass::valueDescriptionMap();
     }
 }

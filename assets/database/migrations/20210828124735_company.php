@@ -40,7 +40,7 @@ final class Company extends AbstractMigration
                 `email` varchar(30) NOT NULL DEFAULT '' COMMENT '邮箱',
                 `contact` varchar(30) NOT NULL DEFAULT '' COMMENT '联系人',
                 `product_version` tinyint(1) NOT NULL DEFAULT '1' COMMENT '产品版本',
-                `regist_ip` char(15) NOT NULL DEFAULT '0.0.0.0' COMMENT '注册 IP 地址',
+                `register_ip` char(15) NOT NULL DEFAULT '0.0.0.0' COMMENT '注册 IP 地址',
                 `is_test_company` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否是测试公司 0=否;1=是;',
                 `extended_product_version` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '相对于 product_version 的细分扩展版本',
                 `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -58,7 +58,7 @@ final class Company extends AbstractMigration
     private function seed(): void
     {
         $sql = <<<'EOT'
-            INSERT INTO `company`(`id`, `num`, `name`, `full_name`, `status`, `business_license`, `legal_person`, `legal_mobile`, `phone`, `fax`, `address`, `web_url`, `logo`, `about`, `begin_date`, `end_date`, `email`, `contact`, `product_version`, `regist_ip`, `is_test_company`, `extended_product_version`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (1, 'hunzhiwange', '魂之挽歌', '四川魂之挽歌信息技术公司', 1, '', '', '', '', '', '', '', '', '', '2021-08-28', '2099-08-28', '', '', 1, '0.0.0.0', 0, 1, '2021-08-28 12:51:49', '2021-08-28 13:02:50', 0, 0, 0, 0);
+            INSERT INTO `company`(`id`, `num`, `name`, `full_name`, `status`, `business_license`, `legal_person`, `legal_mobile`, `phone`, `fax`, `address`, `web_url`, `logo`, `about`, `begin_date`, `end_date`, `email`, `contact`, `product_version`, `register_ip`, `is_test_company`, `extended_product_version`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (1, 'hunzhiwange', '魂之挽歌', '四川魂之挽歌信息技术公司', 1, '', '', '', '', '', '', '', '', '', '2021-08-28', '2099-08-28', '', '', 1, '0.0.0.0', 0, 1, '2021-08-28 12:51:49', '2021-08-28 13:02:50', 0, 0, 0, 0);
             EOT;
         $this->execute($sql);
     }

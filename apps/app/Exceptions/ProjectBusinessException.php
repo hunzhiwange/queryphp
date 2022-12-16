@@ -12,8 +12,8 @@ class ProjectBusinessException extends BusinessException
     /**
      * {@inheritDoc}
      */
-    protected function getErrorMessage(int $code): string
+    protected function getErrorMessage(int|object $code): string
     {
-        return ProjectErrorCode::getErrorMessage($code);
+        return ProjectErrorCode::description($code);
     }
 }

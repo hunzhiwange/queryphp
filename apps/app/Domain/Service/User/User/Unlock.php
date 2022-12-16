@@ -78,7 +78,7 @@ class Unlock
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
-            throw new UserBusinessException(UserErrorCode::UNLOCK_ANAGEMENT_PANEL_INVALID_ARGUMENT, $e, true);
+            throw new UserBusinessException(UserErrorCode::UNLOCK_MANAGEMENT_PANEL_INVALID_ARGUMENT, $e, true);
         }
     }
 }

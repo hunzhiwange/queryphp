@@ -6,6 +6,7 @@ namespace App\Domain\Service\Project\ProjectIssue;
 
 use App\Domain\Entity\Project\ProjectContent;
 use App\Domain\Entity\Project\ProjectIssue;
+use App\Domain\Entity\Project\ProjectIssueCompletedEnum;
 use App\Domain\Entity\Project\ProjectIssueModule;
 use App\Domain\Entity\Project\ProjectIssueRelease;
 use App\Domain\Entity\Project\ProjectIssueTag;
@@ -15,8 +16,6 @@ use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Validate\UniqueRule;
-
-//use App\Domain\Validate\Project\ProjectModule as ProjectProjectModule;
 
 /**
  * 项目任务更新.
@@ -47,7 +46,7 @@ class Update
         }
 
         if (isset($params->completed) &&
-            ProjectIssue::COMPLETED_TRUE === $params->completed &&
+            ProjectIssueCompletedEnum::TRUE->value === $params->completed &&
             !isset($params->completedDate)) {
             $params->completedDate = \get_current_date();
         }

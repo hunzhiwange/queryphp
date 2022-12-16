@@ -252,7 +252,7 @@ class Auth extends BaseAuth
         unset($params['signature']);
         $currentSignature = CreateSignature::handle($params['signature_method'], $params, $appSecret);
         if ($currentSignature !== $signature) {
-            throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_VERIFY_FAILD);
+            throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_VERIFY_FAILED);
         }
     }
 

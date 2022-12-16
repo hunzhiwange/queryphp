@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\Project\Project;
 
 use App\Domain\Entity\Project\ProjectUser;
+use App\Domain\Entity\Project\ProjectUserTypeEnum;
 use App\Domain\Service\Support\Read;
 use Closure;
 use Leevel\Database\Condition;
@@ -35,7 +36,7 @@ class Users
      */
     private function initializationSpec(Select $select, bool $value, UsersParams $params): void
     {
-        $select->where('type', ProjectUser::TYPE_MEMBER);
+        $select->where('type', ProjectUserTypeEnum::MEMBER->value);
     }
 
     private function conditionCall(UsersParams $params): ?Closure

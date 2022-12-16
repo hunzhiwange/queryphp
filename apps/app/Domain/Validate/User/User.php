@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Validate\User;
 
 use App\Domain\Entity\User\User as UserUser;
+use App\Domain\Entity\User\UserStatusEnum;
 use App\Domain\Validate\IValidator;
 use Leevel\Validate\IValidator as ValidateIValidator;
 
@@ -67,7 +68,7 @@ class User implements IValidator
             'num'      => ['required|alpha_dash', $this->uniqueRule],
             'password' => 'required|min_length:6,max_length:30',
             'status'   => [
-                ['in', UserUser::values('status')],
+                ['in', UserStatusEnum::values()],
             ],
             'email'  => 'email|'.ValidateIValidator::OPTIONAL,
             'mobile' => 'mobile|'.ValidateIValidator::OPTIONAL,

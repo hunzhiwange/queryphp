@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\Project\ProjectRelease;
 
 use App\Domain\Entity\Project\ProjectRelease;
+use App\Domain\Entity\Project\ProjectReleaseCompletedEnum;
 use App\Domain\Validate\Project\ProjectRelease as ProjectProjectRelease;
 use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
@@ -28,7 +29,7 @@ class Update
         $this->entity = $this->find($params->id);
 
         if (isset($params->completed) &&
-            ProjectRelease::COMPLETED_PUBLISHED === $params->completed &&
+            ProjectReleaseCompletedEnum::PUBLISHED->value === $params->completed &&
             !isset($params->completedDate)) {
             $params->completedDate = \get_current_date();
         }

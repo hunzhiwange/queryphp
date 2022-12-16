@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infra\Repository\User;
 
 use App\Domain\Entity\User\User as EntityUser;
+use App\Domain\Entity\User\UserStatusEnum;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
 use Closure;
@@ -48,7 +49,7 @@ class User extends Repository
     {
         $select = $this->entity
             ->select()
-            ->where('status', EntityUser::STATUS_ENABLE)
+            ->where('status', UserStatusEnum::ENABLE->value)
             ->columns($column);
         $condition($select);
         $user = $select->findOne();

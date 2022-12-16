@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infra\Repository\Base;
 
-use App\Domain\Entity\Base\App as BaseApp;
+use App\Domain\Entity\Base\AppStatusEnum;
 use App\Exceptions\BusinessException;
 use App\Exceptions\ErrorCode;
 use Leevel\Database\Ddd\Repository;
@@ -25,7 +25,7 @@ class App extends Repository
             ->select()
             ->cache('app:'.$appKey, rand(8640000, 8650000))
             ->where('key', $appKey)
-            ->where('status', BaseApp::STATUS_ENABLE)
+            ->where('status', AppStatusEnum::ENABLE->value)
             ->setColumns('id,secret')
             ->findOne();
         if (!$app->id) {

@@ -12,8 +12,8 @@ class AuthBusinessException extends BusinessException
     /**
      * {@inheritDoc}
      */
-    protected function getErrorMessage(int $code): string
+    protected function getErrorMessage(int|object $code): string
     {
-        return AuthErrorCode::getErrorMessage($code);
+        return AuthErrorCode::description($code);
     }
 }

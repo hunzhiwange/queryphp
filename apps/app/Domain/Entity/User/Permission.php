@@ -84,6 +84,7 @@ class Permission extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
+            self::ENUM_CLASS => PermissionStatusEnum::class,
         ],
         'create_at' => [
             self::COLUMN_NAME => '创建时间',
@@ -128,21 +129,12 @@ class Permission extends Entity
     public const REPOSITORY = RepositoryPermission::class;
 
     /**
-     * 状态值.
-     */
-    #[status('禁用')]
-    public const STATUS_DISABLE = 0;
-
-    #[status('启用')]
-    public const STATUS_ENABLE = 1;
-
-    /**
      * 资源关联查询作用域.
      */
     protected function relationScopeResource(ManyMany $relation): void
     {
         $relation
-            ->where('status', Resource::STATUS_ENABLE)
+            ->where('status', ResourceStatusEnum::ENABLE->value)
             ->setColumns(['id', 'name', 'num', 'status']);
     }
 }

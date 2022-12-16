@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Exceptions;
 
 use Leevel\Support\Enum;
-use OutOfBoundsException;
 
 /**
  * 通用业务错误码.
@@ -28,32 +27,22 @@ use OutOfBoundsException;
  *
  * @see https://zhuanlan.zhihu.com/p/152115647
  */
-class ErrorCode extends Enum
+enum ErrorCode:int
 {
+    use Enum;
+
     #[msg('删除数据参数错误')]
-    public const DESTROY_DATA_INVALID_ARGUMENT = 1000000000;
+    case DESTROY_DATA_INVALID_ARGUMENT = 1000000000;
 
     #[msg('批量修改状态参数错误')]
-    public const BATCH_MODIFICATION_STATUS_INVALID_ARGUMENT = 1000000001;
+    case BATCH_MODIFICATION_STATUS_INVALID_ARGUMENT = 1000000001;
 
     #[msg('未发现数据')]
-    public const BATCH_MODIFICATION_STATUS_NO_DATA_FOUND = 1000000002;
+    case BATCH_MODIFICATION_STATUS_NO_DATA_FOUND = 1000000002;
 
     #[msg('应用无法找到')]
-    public const APP_NOT_FOUND = 1000000003;
+    case APP_NOT_FOUND = 1000000003;
 
     #[msg('服务参数错误')]
-    public const SERVICE_INVALID_ARGUMENT = 1000000004;
-
-    /**
-     * 获取错误消息.
-     */
-    public static function getErrorMessage(int $errorCode): string
-    {
-        try {
-            return static::description($errorCode);
-        } catch (OutOfBoundsException) {
-            return '';
-        }
-    }
+    case SERVICE_INVALID_ARGUMENT = 1000000004;
 }

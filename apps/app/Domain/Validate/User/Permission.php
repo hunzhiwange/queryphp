@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Validate\User;
 
 use App\Domain\Entity\User\Permission as UserPermission;
+use App\Domain\Entity\User\PermissionStatusEnum;
 use App\Domain\Validate\IValidator;
 
 /**
@@ -65,7 +66,7 @@ class Permission implements IValidator
             'name'   => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
             'num'    => ['required|alpha_dash', $this->uniqueRule],
             'status' => [
-                ['in', UserPermission::values('status')],
+                ['in', PermissionStatusEnum::values()],
             ],
         ];
     }

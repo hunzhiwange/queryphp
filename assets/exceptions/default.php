@@ -12,4 +12,4 @@ if (isset($file, $line)) {
     $title .= sprintf('<div class="file">#FILE %s #LINE %s</div>', $file, $line);
 }
 
-require __DIR__.'/layout.php';
+return require __DIR__.'/layout.php';
