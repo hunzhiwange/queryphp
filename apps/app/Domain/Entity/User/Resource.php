@@ -76,6 +76,7 @@ class Resource extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
+            self::ENUM_CLASS => ResourceStatusEnum::class,
         ],
         'create_at' => [
             self::COLUMN_NAME => '创建时间',
@@ -104,13 +105,4 @@ class Resource extends Entity
      * Soft delete column.
      */
     public const DELETE_AT = 'delete_at';
-
-    /**
-     * 状态值.
-     */
-    #[status('禁用')]
-    public const STATUS_DISABLE = 0;
-
-    #[status('启用')]
-    public const STATUS_ENABLE = 1;
 }

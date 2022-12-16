@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\Resource;
 
-use App\Domain\Entity\User\Resource;
+use App\Domain\Entity\User\ResourceStatusEnum;
 use Leevel\Database\Proxy\Db;
 use Tests\TestCase;
 
@@ -104,7 +104,7 @@ class ResourcesTest extends TestCase
         $this->assertSame(1, Db::table('resource')->insert([
             'name'     => 'foo',
             'num'      => 'bar',
-            'status'   => Resource::STATUS_ENABLE,
+            'status'   => ResourceStatusEnum::ENABLE->value,
         ]));
     }
 }
