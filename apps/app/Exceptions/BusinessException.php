@@ -7,7 +7,6 @@ namespace App\Exceptions;
 use App;
 use Leevel\Kernel\Exceptions\BusinessException as BaseBusinessException;
 use Throwable;
-use Exception;
 
 /**
  * 通用业务操作异常.
