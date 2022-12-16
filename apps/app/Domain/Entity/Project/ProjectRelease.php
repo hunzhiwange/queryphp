@@ -105,6 +105,7 @@ class ProjectRelease extends Entity
         ],
         'completed' => [
             self::COLUMN_NAME => '是否完成：1=未开始;2=进行中;3=延期发布;4=已发布;',
+            self::ENUM_CLASS => ProjectReleaseCompletedEnum::class,
         ],
         'completed_date' => [
             self::COLUMN_NAME => '完成时间',
@@ -142,21 +143,6 @@ class ProjectRelease extends Entity
      * Soft delete column.
      */
     public const DELETE_AT = 'delete_at';
-
-    /**
-     * 完成状态值.
-     */
-    #[completed('未开始')]
-    public const COMPLETED_NOT_STARTED = 1;
-
-    #[completed('进行中')]
-    public const COMPLETED_ONGOING = 2;
-
-    #[completed('延期发布')]
-    public const COMPLETED_DELAYED_RELEASE = 3;
-
-    #[completed('已发布')]
-    public const COMPLETED_PUBLISHED = 4;
 
     /**
      * 项目关联查询作用域.
