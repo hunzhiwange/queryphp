@@ -83,6 +83,7 @@ class App extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
+            self::ENUM_CLASS => AppStatusEnum::class,
         ],
         'create_at' => [
             self::COLUMN_NAME => '创建时间',
@@ -116,13 +117,4 @@ class App extends Entity
      * 仓储.
      */
     public const REPOSITORY = RepositoryApp::class;
-
-    /**
-     * 状态值.
-     */
-    #[status('禁用')]
-    public const STATUS_DISABLE = 0;
-
-    #[status('启用')]
-    public const STATUS_ENABLE = 1;
 }
