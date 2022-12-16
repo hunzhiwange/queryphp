@@ -94,6 +94,7 @@ class ProjectType extends Entity
         ],
         'content_type' => [
             self::COLUMN_NAME => '内容类型 1=BUG;2=任务;3=需求;4=故事;5=文档;6=流程图;7=思维导图;8=Swagger内容;9=Swagger网址;',
+            self::ENUM_CLASS => ProjectTypeContentTypeEnum::class,
         ],
         'color' => [
             self::COLUMN_NAME => '颜色',
@@ -135,34 +136,4 @@ class ProjectType extends Entity
      * Soft delete column.
      */
     public const DELETE_AT = 'delete_at';
-
-    /**
-     * 内容类型值.
-     */
-    #[content_type('BUG')]
-    public const CONTENT_TYPE_BUG = 1;
-
-    #[content_type('任务')]
-    public const CONTENT_TYPE_TASK = 2;
-
-    #[content_type('需求')]
-    public const CONTENT_TYPE_PRODUCT = 3;
-
-    #[content_type('故事')]
-    public const CONTENT_TYPE_STORY = 4;
-
-    #[content_type('文档')]
-    public const CONTENT_TYPE_DOC = 5;
-
-    #[content_type('流程图')]
-    public const CONTENT_TYPE_PROCESS = 6;
-
-    #[content_type('思维导图')]
-    public const CONTENT_TYPE_MIND = 7;
-
-    #[content_type('Swagger内容')]
-    public const CONTENT_TYPE_SWAGGER = 8;
-
-    #[content_type('Swagger网址')]
-    public const CONTENT_TYPE_SWAGGER_URL = 9;
 }
