@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Validate\User;
 
 use App\Domain\Entity\User\Resource as UserResource;
+use App\Domain\Entity\User\ResourceStatusEnum;
 use App\Domain\Validate\IValidator;
 
 /**
@@ -62,7 +63,7 @@ class Resource implements IValidator
             'name'   => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
             'num'    => ['required', $this->uniqueRule],
             'status' => [
-                ['in', UserResource::values('status')],
+                ['in', ResourceStatusEnum::values()],
             ],
         ];
     }

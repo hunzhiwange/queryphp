@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Support;
 
-use App\Domain\Entity\Common;
+use App\Domain\Entity\StatusEnum;
 use App\Exceptions\BusinessException;
 use App\Exceptions\ErrorCode;
 use Leevel\Support\Collection;
@@ -76,7 +76,7 @@ trait Status
             [
                 'ids'    => 'required|is_array',
                 'status' => [
-                    ['in', Common::values('status')],
+                    ['in', StatusEnum::values()],
                 ],
             ],
             [
