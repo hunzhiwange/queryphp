@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Entity\Base;
+namespace App\Domain\Entity;
 
 use Leevel\Support\BaseEnum;
 
 /**
- * 站点状态值枚举.
+ * 公共状态值枚举.
  */
-enum SiteStatusEnum:int
+enum StatusEnum:int
 {
     use BaseEnum;
 
