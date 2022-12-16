@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Validate\User;
 
 use App\Domain\Entity\User\Role as UserRole;
+use App\Domain\Entity\User\RoleStatusEnum;
 use App\Domain\Validate\IValidator;
 
 /**
@@ -62,7 +63,7 @@ class Role implements IValidator
             'name'   => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
             'num'    => ['required|alpha_dash', $this->uniqueRule],
             'status' => [
-                ['in', UserRole::values('status')],
+                ['in', RoleStatusEnum::values()],
             ],
         ];
     }

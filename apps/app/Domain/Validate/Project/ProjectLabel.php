@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Validate\Project;
 
 use App\Domain\Entity\Project\ProjectLabel as EntityProjectLabel;
+use App\Domain\Entity\Project\ProjectLabelStatusEnum;
 use App\Domain\Validate\IValidator;
 
 /**
@@ -64,7 +65,7 @@ class ProjectLabel implements IValidator
             'sort'        => 'required|type:int|egt:0',
             'project_id'  => 'required|type:int|gt:0',
             'status'      => [
-                ['in', EntityProjectLabel::values('status')],
+                ['in', ProjectLabelStatusEnum::values()],
             ],
         ];
     }
