@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Exceptions;
 
 use Leevel\Support\BaseEnum;
-use OutOfBoundsException;
 
 /**
  * 通用业务错误码.
