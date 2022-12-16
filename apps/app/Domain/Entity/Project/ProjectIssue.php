@@ -159,10 +159,12 @@ class ProjectIssue extends Entity
             self::COLUMN_NAME => '描述',
         ],
         'level' => [
-            self::COLUMN_NAME => '优先级别：1~4',
+            self::COLUMN_NAME => '优先级别：1~5',
+            self::ENUM_CLASS => ProjectIssueLevelEnum::class,
         ],
         'completed' => [
             self::COLUMN_NAME => '是否完成：1=未完成;2=已完成;',
+            self::ENUM_CLASS => ProjectIssueCompletedEnum::class,
         ],
         'completed_date' => [
             self::COLUMN_NAME => '完成时间',
@@ -274,33 +276,6 @@ class ProjectIssue extends Entity
      * 仓储.
      */
     public const REPOSITORY = ProjectProjectIssue::class;
-
-    /**
-     * 是否完成.
-     */
-    #[completed('未完成')]
-    public const COMPLETED_FALSE = 1;
-
-    #[completed('已完成')]
-    public const COMPLETED_TRUE = 2;
-
-    /**
-     * 优先级别.
-     */
-    #[level('极高')]
-    public const LEVEL_HIGHEST = 1;
-
-    #[level('高')]
-    public const LEVEL_HIGH = 2;
-
-    #[level('中')]
-    public const LEVEL_MEDIUM = 3;
-
-    #[level('低')]
-    public const LEVEL_LOW = 4;
-
-    #[level('极低')]
-    public const LEVEL_LOWEST = 5;
 
     /**
      * 排序间隔.
