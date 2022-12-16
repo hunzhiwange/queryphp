@@ -89,7 +89,7 @@ class Company extends Entity
      * - product_version
      *                             comment: 产品版本  type: tinyint(1)  null: false
      *                             key:   default: 1  extra:
-     * - regist_ip
+     * - register_ip
      *                             comment: 注册 IP 地址  type: char(15)  null: false
      *                             key:   default: 0.0.0.0  extra:
      * - is_test_company
@@ -177,7 +177,7 @@ class Company extends Entity
         'product_version' => [
             self::COLUMN_NAME => '产品版本',
         ],
-        'regist_ip' => [
+        'register_ip' => [
             self::COLUMN_NAME => '注册 IP 地址',
         ],
         'is_test_company' => [
