@@ -46,6 +46,12 @@ class User implements IValidator
             'lock' => [
                 'token',
             ],
+            'change_password' => [
+                'id',
+                'old_pwd',
+                'new_pwd',
+                'confirm_pwd',
+            ],
         ];
     }
 
@@ -54,7 +60,13 @@ class User implements IValidator
      */
     public function names(): array
     {
-        return UserUser::columnNames();
+        $baseNames = UserUser::columnNames();
+
+        return array_merge($baseNames, [
+            'old_pwd'      => __('旧密码'),
+            'new_pwd'      => __('新密码'),
+            'confirm_pwd'  => __('确认密码'),
+        ]);
     }
 
     /**
@@ -81,6 +93,9 @@ class User implements IValidator
             'email'  => 'email|'.ValidateIValidator::OPTIONAL,
             'mobile' => 'mobile|'.ValidateIValidator::OPTIONAL,
             'token'  => 'required',
+            'old_pwd'      => 'required|min_length:6,max_length:30',
+            'new_pwd'      => 'required|min_length:6,max_length:30',
+            'confirm_pwd'  => 'required|min_length:6,max_length:30|equal_to:new_pwd',
         ];
     }
 }
