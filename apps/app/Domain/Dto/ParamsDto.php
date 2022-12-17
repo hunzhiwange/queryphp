@@ -21,6 +21,8 @@ class ParamsDto extends Dto
      */
     public function validate(): void
     {
+        $this->beforeValidator();
+
         $validatorClass = $this->validatorClass;
         $validator = Leevel::make($validatorClass, $this->validatorClassArgs());
 
@@ -28,6 +30,22 @@ class ParamsDto extends Dto
             $validator,
             $this->validatorScene,
         );
+
+        $this->afterValidator();
+    }
+
+    /**
+     * 验证前.
+     */
+    protected function beforeValidator(): void
+    {
+    }
+
+    /**
+     * 验证后.
+     */
+    protected function afterValidator(): void
+    {
     }
 
     /**

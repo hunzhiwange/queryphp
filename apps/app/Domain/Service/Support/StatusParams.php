@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Support;
 
-use App\Domain\Validate\ValidateParams;
+use App\Domain\Dto\ParamsDto;
 use Leevel\Support\TypedIntArray;
-use Leevel\Support\Dto;
 use App\Domain\Validate\Support\Status;
 
-class StatusParams extends Dto
+class StatusParams extends ParamsDto
 {
-    use ValidateParams;
-
     public TypedIntArray $ids;
 
     public int $status;
+
+    protected string $validatorClass = Status::class;
 
     protected function idsDefaultValue(): TypedIntArray
     {
@@ -25,15 +24,5 @@ class StatusParams extends Dto
     protected function idsTransformValue(string|array $value): TypedIntArray
     {
         return TypedIntArray::fromRequest($value);
-    }
-
-    /**
-     * 校验基本参数.
-     */
-    public function validate(): void
-    {
-        $this->baseValidate(
-            new Status(),
-        );
     }
 }

@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Login;
 
+use App\Domain\Dto\ParamsDto;
 use App\Domain\Validate\User\User as UserValidate;
-use App\Domain\Validate\ValidateParams;
-use Leevel\Support\Dto;
 
-class LoginParams extends Dto
+class LoginParams extends ParamsDto
 {
-    use ValidateParams;
-
     public string $appKey;
 
     public string $name;
@@ -22,14 +19,7 @@ class LoginParams extends Dto
 
     public int $remember = 0;
 
-    /**
-     * 校验基本参数.
-     */
-    public function validate(): void
-    {
-        $this->baseValidate(
-            new UserValidate(),
-            'login',
-        );
-    }
+    protected string $validatorClass = UserValidate::class;
+
+    protected string $validatorScene = 'login';
 }
