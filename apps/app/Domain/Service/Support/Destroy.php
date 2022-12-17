@@ -22,6 +22,7 @@ trait Destroy
         if (method_exists($this, 'validate')) {
             $this->validate($params);
         }
+
         $this->remove($this->find($params->id));
 
         return [];
@@ -43,6 +44,8 @@ trait Destroy
      */
     private function find(int $id): Entity
     {
-        return $this->w->repository($this->entity())->findOrFail($id);
+        return $this->w
+            ->repository($this->entity())
+            ->findOrFail($id);
     }
 }
