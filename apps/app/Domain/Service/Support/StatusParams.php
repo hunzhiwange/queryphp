@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Service\Support;
 
 use App\Domain\Validate\ValidateParams;
-use App\Exceptions\BusinessException;
-use App\Exceptions\ErrorCode;
 use Leevel\Support\TypedIntArray;
 use Leevel\Support\Dto;
 use App\Domain\Validate\Support\Status;
@@ -36,9 +34,6 @@ class StatusParams extends Dto
     {
         $this->baseValidate(
             new Status(),
-            'all',
-            BusinessException::class,
-            ErrorCode::BATCH_MODIFICATION_STATUS_INVALID_ARGUMENT
         );
     }
 }

@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Service\Support;
 
 use App\Domain\Validate\ValidateParams;
-use App\Exceptions\BusinessException;
-use App\Exceptions\ErrorCode;
 use Leevel\Support\Dto;
 use App\Domain\Validate\Support\Destroy;
 
@@ -21,11 +19,6 @@ class DestroyParams extends Dto
      */
     public function validate(): void
     {
-        $this->baseValidate(
-            new Destroy(),
-            'all',
-            BusinessException::class,
-            ErrorCode::DESTROY_DATA_INVALID_ARGUMENT
-        );
+        $this->baseValidate(new Destroy());
     }
 }

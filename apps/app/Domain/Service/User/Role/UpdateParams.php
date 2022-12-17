@@ -7,8 +7,6 @@ namespace App\Domain\Service\User\Role;
 use App\Domain\Entity\User\Role;
 use App\Domain\Validate\User\Role as RoleValidate;
 use App\Domain\Validate\ValidateParams;
-use App\Exceptions\UserBusinessException;
-use App\Exceptions\UserErrorCode;
 use Leevel\Support\Dto;
 use Leevel\Validate\UniqueRule;
 
@@ -35,8 +33,6 @@ class UpdateParams extends Dto
         $this->baseValidate(
             new RoleValidate($uniqueRule),
             'update',
-            UserBusinessException::class,
-            UserErrorCode::ROLE_UPDATE_INVALID_ARGUMENT,
         );
     }
 }
