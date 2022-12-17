@@ -4,30 +4,31 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\Resource;
 
+use App\Domain\Dto\ParamsDto;
 use App\Domain\Entity\User\Resource;
 use App\Domain\Validate\User\Resource as ResourceValidate;
-use Leevel\Support\Dto;
 use Leevel\Validate\UniqueRule;
 
 /**
  * 资源保存参数.
  */
-class StoreParams extends Dto
+class StoreParams extends ParamsDto
 {
     use BaseStoreUpdateParams;
 
+    protected string $validatorClass = ResourceValidate::class;
+
+    protected string $validatorScene = 'store';
+
     /**
-     * 校验基本参数.
+     * {@inheritDoc}
      */
-    public function validate(): void
+    protected function validatorClassArgs(): array
     {
         $uniqueRule = UniqueRule::rule(
             Resource::class,
         );
 
-        $this->baseValidate(
-            new ResourceValidate($uniqueRule),
-            'store',
-        );
+        return [$uniqueRule];
     }
 }

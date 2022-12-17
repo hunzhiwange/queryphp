@@ -16,18 +16,19 @@ class StoreParams extends Dto
 {
     use BaseStoreUpdateParams;
 
+    protected string $validatorClass = RoleValidate::class;
+
+    protected string $validatorScene = 'store';
+
     /**
-     * 校验基本参数.
+     * {@inheritDoc}
      */
-    public function validate(): void
+    protected function validatorClassArgs(): array
     {
         $uniqueRule = UniqueRule::rule(
             Role::class,
         );
 
-        $this->baseValidate(
-            new RoleValidate($uniqueRule),
-            'store',
-        );
+        return [$uniqueRule];
     }
 }

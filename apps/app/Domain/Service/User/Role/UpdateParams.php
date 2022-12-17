@@ -4,33 +4,32 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\Role;
 
+use App\Domain\Dto\ParamsDto;
 use App\Domain\Entity\User\Role;
 use App\Domain\Validate\User\Role as RoleValidate;
-use Leevel\Support\Dto;
 use Leevel\Validate\UniqueRule;
 
 /**
  * 角色更新参数.
  */
-class UpdateParams extends Dto
+class UpdateParams extends ParamsDto
 {
-    use BaseStoreUpdateParams;
-
     public int $id;
 
+    protected string $validatorClass = RoleValidate::class;
+
+    protected string $validatorScene = 'update';
+
     /**
-     * 校验基本参数.
+     * {@inheritDoc}
      */
-    public function validate(): void
+    protected function validatorClassArgs(): array
     {
         $uniqueRule = UniqueRule::rule(
             Role::class,
-            exceptId:$this->id,
+            exceptId: $this->id,
         );
 
-        $this->baseValidate(
-            new RoleValidate($uniqueRule),
-            'update',
-        );
+        return [$uniqueRule];
     }
 }

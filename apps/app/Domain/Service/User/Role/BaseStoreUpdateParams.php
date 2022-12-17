@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\Role;
 
-use App\Domain\Validate\ValidateParams;
-
 trait BaseStoreUpdateParams
 {
-    use ValidateParams;
-
     public string $num;
 
     public string $name;
