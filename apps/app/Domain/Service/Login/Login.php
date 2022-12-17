@@ -9,13 +9,12 @@ use App\Domain\Entity\User\User;
 use App\Exceptions\AuthBusinessException;
 use App\Exceptions\AuthErrorCode;
 use App\Infra\Code;
-use App\Infra\Repository\Base\App as AppReposity;
-use App\Infra\Repository\User\User as UserReposity;
+use App\Infra\Repository\Base\App as AppRepository;
+use App\Infra\Repository\User\User as UserRepository;
 use Leevel\Auth\Proxy\Auth;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Http\Request;
 use Leevel\Support\Str;
-use Leevel\Validate\Proxy\Validate as Validates;
 
 /**
  * 验证登录.
@@ -31,7 +30,7 @@ class Login
 
     public function handle(LoginParams $params): array
     {
-        $this->validateArgs($params);
+        $params->validate();
 
         // Mac 自带 PHP 有问题
         if (\function_exists('imagettftext')) {
@@ -74,11 +73,11 @@ class Login
     private function findAppSecret(string $appKey): string
     {
         return $this
-            ->appReposity()
+            ->appRepository()
             ->findAppSecretByKey($appKey);
     }
 
-    private function appReposity(): AppReposity
+    private function appRepository(): AppRepository
     {
         return $this->w->repository(App::class);
     }
@@ -88,14 +87,14 @@ class Login
      */
     private function validateUser(string $name, string $password): User
     {
-        $userReposity = $this->userReposity();
-        $user = $userReposity->findValidUserByName($name);
-        $userReposity->verifyPassword($password, $user->password);
+        $userRepository = $this->userRepository();
+        $user = $userRepository->findValidUserByName($name);
+        $userRepository->verifyPassword($password, $user->password);
 
         return $user;
     }
 
-    private function userReposity(): UserReposity
+    private function userRepository(): UserRepository
     {
         return $this->w->repository(User::class);
     }
@@ -114,39 +113,6 @@ class Login
 
         if (strtoupper($params->code) !== strtoupper($codeFromCache)) {
             throw new AuthBusinessException(AuthErrorCode::VERIFICATION_CODE_ERROR);
-        }
-    }
-
-    /**
-     * 校验基本参数.
-     *
-     * @throws \App\Exceptions\AuthBusinessException
-     */
-    private function validateArgs(LoginParams $params): void
-    {
-        $params = $params->toArray();
-        $validator = Validates::make(
-            $params,
-            [
-                'app_key'  => 'required|alpha_dash',
-                'name'     => 'required|chinese_alpha_num|max_length:50',
-                'password' => 'required|chinese_alpha_dash|max_length:50',
-                'code'     => 'required',
-                'remember' => 'required',
-            ],
-            [
-                'app_key'      => __('应用 KEY'),
-                'name'         => __('用户名'),
-                'password'     => __('密码'),
-                'code'         => __('校验码'),
-                'remember'     => __('保持登陆'),
-            ]
-        );
-
-        if ($validator->fail()) {
-            $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
-            throw new AuthBusinessException(AuthErrorCode::AUTH_INVALID_ARGUMENT, $e, true);
         }
     }
 }
