@@ -6,6 +6,7 @@ namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
 use App\Domain\Validate\User\User as UserValidate;
+use App\Domain\Validate\ValidateParams;
 use Leevel\Support\Dto;
 use Leevel\Validate\UniqueRule;
 
@@ -14,6 +15,8 @@ use Leevel\Validate\UniqueRule;
  */
 class UpdateParams extends Dto
 {
+    use ValidateParams;
+
     public int $id;
 
     public ?string $num = null;

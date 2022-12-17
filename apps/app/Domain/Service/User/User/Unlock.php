@@ -19,12 +19,11 @@ class Unlock
 {
     public function __construct(private UnitOfWork $w, private Lock $lock)
     {
-        $this->lock = $lock;
     }
 
     public function handle(UnlockParams $params): array
     {
-        $this->validateArgs($params);
+        $params->validate();
         $this->validateUser($params->id, $params->password);
         $this->unlock($params->token);
 
@@ -44,41 +43,13 @@ class Unlock
      */
     private function validateUser(int $id, string $password): void
     {
-        $userReposity = $this->userReposity();
-        $user = $userReposity->findValidUserById($id, 'id,password');
-        $userReposity->verifyPassword($password, $user->password);
+        $userRepository = $this->userRepository();
+        $user = $userRepository->findValidUserById($id, 'id,password');
+        $userRepository->verifyPassword($password, $user->password);
     }
 
-    private function userReposity(): UserReposity
+    private function userRepository(): UserReposity
     {
         return $this->w->repository(User::class);
-    }
-
-    /**
-     * 校验基本参数.
-     *
-     * @throws \App\Exceptions\UserBusinessException
-     */
-    private function validateArgs(UnlockParams $params): void
-    {
-        $validator = Validates::make(
-            $params->toArray(),
-            [
-                'id'                   => 'required',
-                'token'                => 'required',
-                'password'             => 'required|alpha_dash|min_length:6',
-            ],
-            [
-                'id'                   => 'ID',
-                'token'                => 'Token',
-                'password'             => __('解锁密码'),
-            ]
-        );
-
-        if ($validator->fail()) {
-            $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
-            throw new UserBusinessException(UserErrorCode::UNLOCK_MANAGEMENT_PANEL_INVALID_ARGUMENT, $e, true);
-        }
     }
 }

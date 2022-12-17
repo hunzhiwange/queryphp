@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\User;
 
 use App\Domain\Validate\User\User as UserValidate;
+use App\Domain\Validate\ValidateParams;
 use Leevel\Support\Dto;
 
 /**
@@ -12,6 +13,8 @@ use Leevel\Support\Dto;
  */
 class UnlockParams extends Dto
 {
+    use ValidateParams;
+
     public int $id;
 
     public string $token;

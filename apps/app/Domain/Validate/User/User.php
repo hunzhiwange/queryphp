@@ -43,6 +43,9 @@ class User implements IValidator
                 'token',
                 'password',
             ],
+            'lock' => [
+                'token',
+            ],
         ];
     }
 
