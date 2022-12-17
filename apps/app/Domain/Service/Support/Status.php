@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Support;
 
-use App\Domain\Entity\StatusEnum;
 use App\Exceptions\BusinessException;
 use App\Exceptions\ErrorCode;
 use Leevel\Support\Collection;
 use Leevel\Support\TypedIntArray;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Validate\Proxy\Validate;
 
 /**
  * 批量修改状态.
@@ -24,7 +22,7 @@ trait Status
 
     public function handle(StatusParams $params): array
     {
-        $this->validateArgs($params);
+        $params->validate();
         $this->save($this->findAll($params->ids), $params->status);
 
         return [];
@@ -62,33 +60,5 @@ trait Status
         }
 
         return $entitys;
-    }
-
-    /**
-     * 校验基本参数.
-     *
-     * @throws \App\Exceptions\BusinessException
-     */
-    private function validateArgs(StatusParams $params): void
-    {
-        $validator = Validate::make(
-            $params->toArray(),
-            [
-                'ids'    => 'required|is_array',
-                'status' => [
-                    ['in', StatusEnum::values()],
-                ],
-            ],
-            [
-                'ids'    => 'ID',
-                'status' => __('状态值'),
-            ]
-        );
-
-        if ($validator->fail()) {
-            $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
-            throw new BusinessException(ErrorCode::BATCH_MODIFICATION_STATUS_INVALID_ARGUMENT, $e, true);
-        }
     }
 }
