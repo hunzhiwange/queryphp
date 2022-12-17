@@ -14,7 +14,7 @@ use Leevel\Validate\IValidator as ValidateIValidator;
  */
 class User implements IValidator
 {
-    public function __construct(private string $uniqueRule)
+    public function __construct(private string $uniqueRule = '')
     {
     }
 
@@ -37,6 +37,11 @@ class User implements IValidator
                 'num',
                 'password',
                 'status',
+            ],
+            'unlock' => [
+                'id',
+                'token',
+                'password',
             ],
         ];
     }
@@ -72,6 +77,7 @@ class User implements IValidator
             ],
             'email'  => 'email|'.ValidateIValidator::OPTIONAL,
             'mobile' => 'mobile|'.ValidateIValidator::OPTIONAL,
+            'token'  => 'required',
         ];
     }
 }

@@ -5,13 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
-use App\Domain\Validate\User\User as UserUser;
-use App\Domain\Validate\Validate;
-use App\Exceptions\UserBusinessException;
-use App\Exceptions\UserErrorCode;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Validate\UniqueRule;
 
 /**
  * 用户更新.
@@ -28,7 +23,7 @@ class Update
 
     public function handle(UpdateParams $params): array
     {
-        $this->validateArgs($params);
+        $params->validate();
 
         return $this->prepareData($this->save($params));
     }
@@ -79,25 +74,5 @@ class Update
     private function createPassword(string $password): string
     {
         return $this->hash->password($password);
-    }
-
-    /**
-     * 校验基本参数.
-     *
-     * @throws \App\Exceptions\UserBusinessException
-     */
-    private function validateArgs(UpdateParams $params): void
-    {
-        $uniqueRule = UniqueRule::rule(
-            User::class,
-            exceptId:$params->id,
-        );
-
-        $validator = Validate::make(new UserUser($uniqueRule), 'update', $params->toArray())->getValidator();
-        if ($validator->fail()) {
-            $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
-            throw new UserBusinessException(UserErrorCode::USER_UPDATE_INVALID_ARGUMENT, $e, true);
-        }
     }
 }
