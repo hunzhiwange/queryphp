@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\User;
 
+use App\Domain\Dto\ParamsDto;
 use App\Domain\Entity\User\User;
 use App\Domain\Validate\User\User as UserValidate;
-use App\Domain\Validate\ValidateParams;
-use Leevel\Support\Dto;
 use Leevel\Validate\UniqueRule;
 
 /**
  * 用户保存参数.
  */
-class StoreParams extends Dto
+class StoreParams extends ParamsDto
 {
-    use ValidateParams;
 
     public string $num;
 
@@ -25,18 +23,19 @@ class StoreParams extends Dto
 
     public string $password;
 
+    protected string $validatorClass = UserValidate::class;
+
+    protected string $validatorScene = 'store';
+
     /**
-     * 校验基本参数.
+     * {@inheritDoc}
      */
-    public function validate(): void
+    protected function validatorClassArgs(): array
     {
         $uniqueRule = UniqueRule::rule(
             User::class,
         );
 
-        $this->baseValidate(
-            new UserValidate($uniqueRule),
-            'store',
-        );
+        return [$uniqueRule];
     }
 }
