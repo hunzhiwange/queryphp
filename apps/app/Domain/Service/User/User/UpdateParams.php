@@ -5,18 +5,15 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
+use App\Domain\Dto\ParamsDto;
 use App\Domain\Validate\User\User as UserValidate;
-use App\Domain\Validate\ValidateParams;
-use Leevel\Support\Dto;
 use Leevel\Validate\UniqueRule;
 
 /**
  * 用户更新参数.
  */
-class UpdateParams extends Dto
+class UpdateParams extends ParamsDto
 {
-    use ValidateParams;
-
     public int $id;
 
     public ?string $num = null;
@@ -29,19 +26,20 @@ class UpdateParams extends Dto
 
     public ?string $mobile = null;
 
+    protected string $validatorClass = UserValidate::class;
+
+    protected string $validatorScene = 'update';
+
     /**
-     * 校验基本参数.
+     * {@inheritDoc}
      */
-    public function validate(): void
+    protected function validatorClassArgs(): array
     {
         $uniqueRule = UniqueRule::rule(
             User::class,
             exceptId:$this->id,
         );
 
-        $this->baseValidate(
-            new UserValidate($uniqueRule),
-            'update',
-        );
+        return [$uniqueRule];
     }
 }

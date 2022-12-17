@@ -14,7 +14,7 @@ trait ValidateParams
 {
     public function baseValidate(
         IValidator $validator,
-        string $scene = 'all',
+        string $scene,
         string $exceptionClass = BusinessException::class,
         object|int $code = ErrorCode::BASE_INVALID_ARGUMENT
     ): void
