@@ -5,12 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\Permission;
 
 use App\Domain\Entity\User\Permission;
-use App\Domain\Validate\User\Permission as UserPermission;
-use App\Domain\Validate\Validate;
-use App\Exceptions\UserBusinessException;
-use App\Exceptions\UserErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Validate\UniqueRule;
 
 /**
  * 权限更新.
@@ -23,7 +18,7 @@ class Update
 
     public function handle(UpdateParams $params): array
     {
-        $this->validateArgs($params);
+        $params->validate();
         $this->validateData($params);
 
         return $this->save($params)->toArray();
@@ -68,26 +63,6 @@ class Update
     private function data(UpdateParams $params): array
     {
         return $params->except(['id'])->toArray();
-    }
-
-    /**
-     * 校验基本参数.
-     *
-     * @throws \App\Exceptions\UserBusinessException
-     */
-    private function validateArgs(UpdateParams $params): void
-    {
-        $uniqueRule = UniqueRule::rule(
-            Permission::class,
-            exceptId:$params->id,
-        );
-
-        $validator = Validate::make(new UserPermission($uniqueRule), 'update', $params->toArray())->getValidator();
-        if ($validator->fail()) {
-            $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
-            throw new UserBusinessException(UserErrorCode::PERMISSION_UPDATE_INVALID_ARGUMENT, $e, true);
-        }
     }
 
     /**

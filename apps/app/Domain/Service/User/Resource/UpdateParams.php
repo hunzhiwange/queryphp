@@ -6,7 +6,6 @@ namespace App\Domain\Service\User\Resource;
 
 use App\Domain\Entity\User\Resource;
 use App\Domain\Validate\User\Resource as ResourceValidate;
-use App\Domain\Validate\ValidateParams;
 use Leevel\Support\Dto;
 use Leevel\Validate\UniqueRule;
 
@@ -16,7 +15,6 @@ use Leevel\Validate\UniqueRule;
 class UpdateParams extends Dto
 {
     use BaseStoreUpdateParams;
-    use ValidateParams;
 
     public int $id;
 
