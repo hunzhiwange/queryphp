@@ -14,8 +14,5 @@ class ProjectTypes
 {
     use Read;
 
-    public function handle(ProjectTypesParams $params): array
-    {
-        return $this->findLists($params, ProjectType::class);
-    }
+    protected string $entityClass = ProjectType::class;
 }

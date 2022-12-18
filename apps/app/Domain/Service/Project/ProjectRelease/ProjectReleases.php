@@ -18,10 +18,7 @@ class ProjectReleases
     use Read;
     use ProjectIds;
 
-    public function handle(ProjectReleasesParams $params): array
-    {
-        return $this->findLists($params, ProjectRelease::class);
-    }
+    protected string $entityClass = ProjectRelease::class;
 
     private function conditionCall(ProjectReleasesParams $params): ?Closure
     {

@@ -14,8 +14,5 @@ class Roles
 {
     use Read;
 
-    public function handle(RolesParams $params): array
-    {
-        return $this->findLists($params, Role::class);
-    }
+    protected string $entityClass = Role::class;
 }

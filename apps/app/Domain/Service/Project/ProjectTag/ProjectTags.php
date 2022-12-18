@@ -16,10 +16,7 @@ class ProjectTags
 {
     use Read;
 
-    public function handle(ProjectTagsParams $params): array
-    {
-        return $this->findLists($params, ProjectTag::class);
-    }
+    protected string $entityClass = ProjectTag::class;
 
     private function conditionCall(ProjectTagsParams $params): ?Closure
     {

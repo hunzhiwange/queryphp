@@ -21,6 +21,11 @@ trait Read
     {
     }
 
+    public function handle(ReadParams $params): array
+    {
+        return $this->findLists($params, $this->entityClass);
+    }
+
     /**
      * 预处理.
      */
