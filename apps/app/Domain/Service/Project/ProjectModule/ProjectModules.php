@@ -16,10 +16,7 @@ class ProjectModules
 {
     use Read;
 
-    public function handle(ProjectModulesParams $params): array
-    {
-        return $this->findLists($params, ProjectModule::class);
-    }
+    protected string $entityClass = ProjectModule::class;
 
     private function conditionCall(ProjectModulesParams $params): ?Closure
     {

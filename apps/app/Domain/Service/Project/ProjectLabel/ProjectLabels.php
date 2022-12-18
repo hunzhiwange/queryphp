@@ -18,10 +18,7 @@ class ProjectLabels
     use Read;
     use ProjectIds;
 
-    public function handle(ProjectLabelsParams $params): array
-    {
-        return $this->findLists($params, ProjectLabel::class);
-    }
+    protected string $entityClass = ProjectLabel::class;
 
     private function conditionCall(ProjectLabelsParams $params): ?Closure
     {

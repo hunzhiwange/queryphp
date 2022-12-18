@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\User;
 
-use Leevel\Support\Dto;
+use App\Domain\Dto\ParamsDto;
+use App\Domain\Validate\User\User as UserValidate;
 
 /**
  * 解锁管理面板参数.
  */
-class UnlockParams extends Dto
+class UnlockParams extends ParamsDto
 {
     public int $id;
 
     public string $token;
 
     public string $password;
+
+    protected string $validatorClass = UserValidate::class;
+
+    protected string $validatorScene = 'unlock';
 }

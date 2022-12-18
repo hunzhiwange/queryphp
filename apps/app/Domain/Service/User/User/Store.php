@@ -5,13 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
-use App\Domain\Validate\User\User as UserUser;
-use App\Domain\Validate\Validate;
-use App\Exceptions\UserBusinessException;
-use App\Exceptions\UserErrorCode;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Validate\UniqueRule;
 
 /**
  * 用户保存.
@@ -28,7 +23,7 @@ class Store
 
     public function handle(StoreParams $params): array
     {
-        $this->validateArgs($params);
+        $params->validate();
 
         return $this->prepareData($this->save($params));
     }
@@ -72,24 +67,5 @@ class Store
             'status'     => $params->status,
             'password'   => $this->createPassword($params->password),
         ];
-    }
-
-    /**
-     * 校验基本参数.
-     *
-     * @throws \App\Exceptions\UserBusinessException
-     */
-    private function validateArgs(StoreParams $params): void
-    {
-        $uniqueRule = UniqueRule::rule(
-            User::class,
-        );
-
-        $validator = Validate::make(new UserUser($uniqueRule), 'store', $params->toArray())->getValidator();
-        if ($validator->fail()) {
-            $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
-            throw new UserBusinessException(UserErrorCode::USER_STORE_INVALID_ARGUMENT, $e, true);
-        }
     }
 }

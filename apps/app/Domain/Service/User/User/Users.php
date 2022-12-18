@@ -16,10 +16,7 @@ class Users
 {
     use Read;
 
-    public function handle(UsersParams $params): array
-    {
-        return $this->findLists($params, User::class);
-    }
+    protected string $entityClass = User::class;
 
     private function conditionCall(): ?Closure
     {

@@ -75,7 +75,6 @@ class Permission
         $permissions = $this->findPermissions($roleId);
         $existPermissionId = array_column($permissions->toArray(), 'permission_id');
         foreach ($permissionId as &$pid) {
-            $pid = $pid;
             if (!\in_array($pid, $existPermissionId, true)) {
                 $this->w->create($this->entityRolePermission($roleId, $pid));
             }

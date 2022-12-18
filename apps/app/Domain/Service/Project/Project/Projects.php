@@ -22,10 +22,7 @@ class Projects
 {
     use Read;
 
-    public function handle(ProjectsParams $params): array
-    {
-        return $this->findLists($params, Project::class);
-    }
+    protected string $entityClass = Project::class;
 
     /**
      * 用户 ID 条件.

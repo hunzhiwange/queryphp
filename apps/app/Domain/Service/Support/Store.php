@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Service\User\Resource;
+namespace App\Domain\Service\Support;
 
-use App\Domain\Entity\User\Resource;
+use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\UnitOfWork;
 
 /**
- * 资源保存.
+ * 通用保存.
  */
-class Store
+trait Store
 {
     public function __construct(private UnitOfWork $w)
     {
@@ -26,7 +26,7 @@ class Store
     /**
      * 保存.
      */
-    private function save(StoreParams $params): Resource
+    private function save(StoreParams $params): Entity
     {
         $this->w
             ->persist($entity = $this->entity($params))
@@ -39,9 +39,9 @@ class Store
     /**
      * 创建实体.
      */
-    private function entity(StoreParams $params): Resource
+    private function entity(StoreParams $params): Entity
     {
-        return new Resource($this->data($params));
+        return new $this->entityClass($this->data($params));
     }
 
     /**

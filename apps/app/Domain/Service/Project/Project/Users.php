@@ -18,10 +18,7 @@ class Users
 {
     use Read;
 
-    public function handle(UsersParams $params): array
-    {
-        return $this->findLists($params, ProjectUser::class);
-    }
+    protected string $entityClass = ProjectUser::class;
 
     /**
      * 项目 ID 条件.

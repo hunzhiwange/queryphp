@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Support;
 
+use App\Domain\Dto\ParamsDto;
 use Leevel\Support\TypedIntArray;
-use Leevel\Support\Dto;
+use App\Domain\Validate\Support\Status;
 
-class StatusParams extends Dto
+class StatusParams extends ParamsDto
 {
     public TypedIntArray $ids;
 
     public int $status;
+
+    protected string $validatorClass = Status::class;
 
     protected function idsDefaultValue(): TypedIntArray
     {

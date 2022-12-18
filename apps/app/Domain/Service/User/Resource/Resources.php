@@ -14,8 +14,5 @@ class Resources
 {
     use Read;
 
-    public function handle(ResourcesParams $params): array
-    {
-        return $this->findLists($params, Resource::class);
-    }
+    protected string $entityClass = Resource::class;
 }

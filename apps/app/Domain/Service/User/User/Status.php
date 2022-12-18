@@ -14,11 +14,5 @@ class Status
 {
     use CommonStatus;
 
-    /**
-     * 返回实体.
-     */
-    private function entity(): string
-    {
-        return User::class;
-    }
+    protected string $entityClass = User::class;
 }
