@@ -6,6 +6,7 @@ namespace App\Domain\Service\User\Permission;
 
 use App\Domain\Entity\User\Permission;
 use App\Domain\Service\Support\Show as CommonShow;
+use Leevel\Database\Ddd\Entity;
 
 /**
  * 权限查询.
@@ -16,12 +17,8 @@ class Show
 
     protected string $entityClass = Permission::class;
 
-    public function handle(ShowParams $params): array
+    private function prepareData(Entity $entity, array &$result): void
     {
-        $entity = $this->find($params->id);
-        $result = $entity->toArray();
         $result['resource'] = $entity->resource->toArray();
-
-        return $result;
     }
 }
