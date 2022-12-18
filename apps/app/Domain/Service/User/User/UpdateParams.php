@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
-use App\Domain\Dto\ParamsDto;
 use App\Domain\Validate\User\User as UserValidate;
-use Leevel\Validate\UniqueRule;
+use App\Domain\Service\Support\UpdateParams as CommonUpdateParams;
 
 /**
  * 用户更新参数.
  */
-class UpdateParams extends ParamsDto
+class UpdateParams extends CommonUpdateParams
 {
     public int $id;
 
@@ -28,18 +27,5 @@ class UpdateParams extends ParamsDto
 
     protected string $validatorClass = UserValidate::class;
 
-    protected string $validatorScene = 'update';
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function validatorClassArgs(): array
-    {
-        $uniqueRule = UniqueRule::rule(
-            User::class,
-            exceptId:$this->id,
-        );
-
-        return [$uniqueRule];
-    }
+    protected string $entityClass = User::class;
 }

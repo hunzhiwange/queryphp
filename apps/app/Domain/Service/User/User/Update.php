@@ -7,6 +7,7 @@ namespace App\Domain\Service\User\User;
 use App\Domain\Entity\User\User;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\UnitOfWork;
+use App\Domain\Service\Support\Update as CommonUpdate;
 
 /**
  * 用户更新.
@@ -14,6 +15,9 @@ use Leevel\Database\Ddd\UnitOfWork;
 class Update
 {
     use BaseStoreUpdate;
+    use CommonUpdate;
+
+    protected string $entityClass = User::class;
 
     public function __construct(
         private UnitOfWork $w,
@@ -26,18 +30,6 @@ class Update
         $params->validate();
 
         return $this->prepareData($this->save($params));
-    }
-
-    /**
-     * 保存.
-     */
-    private function save(UpdateParams $params): User
-    {
-        $this->w->persist($entity = $this->entity($params));
-        $this->w->flush();
-        $entity->refresh();
-
-        return $entity;
     }
 
     private function entity(UpdateParams $params): User
@@ -56,16 +48,6 @@ class Update
         }
 
         return $entity;
-    }
-
-    /**
-     * 查找实体.
-     */
-    private function find(int $id): User
-    {
-        return $this->w
-            ->repository(User::class)
-            ->findOrFail($id);
     }
 
     /**

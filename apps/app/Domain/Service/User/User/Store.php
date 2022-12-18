@@ -7,6 +7,7 @@ namespace App\Domain\Service\User\User;
 use App\Domain\Entity\User\User;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\UnitOfWork;
+use App\Domain\Service\Support\Store as CommonStore;
 
 /**
  * 用户保存.
@@ -14,6 +15,9 @@ use Leevel\Database\Ddd\UnitOfWork;
 class Store
 {
     use BaseStoreUpdate;
+    use CommonStore;
+
+    protected string $entityClass = User::class;
 
     public function __construct(
         private UnitOfWork $w,
@@ -26,26 +30,6 @@ class Store
         $params->validate();
 
         return $this->prepareData($this->save($params));
-    }
-
-    /**
-     * 保存.
-     */
-    private function save(StoreParams $params): User
-    {
-        $this->w->create($entity = $this->entity($params));
-        $this->w->flush();
-        $entity->refresh();
-
-        return $entity;
-    }
-
-    /**
-     * 创建实体.
-     */
-    private function entity(StoreParams $params): User
-    {
-        return new User($this->data($params));
     }
 
     /**

@@ -6,29 +6,16 @@ namespace App\Domain\Service\User\Permission;
 
 use App\Domain\Entity\User\Permission;
 use App\Domain\Validate\User\Permission as PermissionValidate;
-use Leevel\Support\Dto;
-use Leevel\Validate\UniqueRule;
+use App\Domain\Service\Support\StoreParams as CommonStoreParams;
 
 /**
  * 权限保存参数.
  */
-class StoreParams extends Dto
+class StoreParams extends CommonStoreParams
 {
     use BaseStoreUpdateParams;
 
     protected string $validatorClass = PermissionValidate::class;
 
-    protected string $validatorScene = 'store';
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function validatorClassArgs(): array
-    {
-        $uniqueRule = UniqueRule::rule(
-            Permission::class,
-        );
-
-        return [$uniqueRule];
-    }
+    protected string $entityClass = Permission::class;
 }
