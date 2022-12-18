@@ -31,9 +31,9 @@ trait Status
     /**
      * 保存状态
      */
-    private function save(Collection $entitys, int $status): void
+    private function save(Collection $entities, int $status): void
     {
-        foreach ($entitys as $entity) {
+        foreach ($entities as $entity) {
             $entity->status = $status;
             $this->w->persist($entity);
         }
@@ -48,17 +48,18 @@ trait Status
      */
     private function findAll(TypedIntArray $ids): Collection
     {
-        /** @var \Leevel\Support\Collection $entitys */
-        $entitys = $this->w
-            ->repository($this->entity())
+        /** @var \Leevel\Support\Collection $entities */
+        $entities = $this->w
+            ->repository($this->entityClass)
             ->findAll(function (Select $select) use ($ids) {
-                $select->whereIn('id', $ids->toArray());
+                $primaryId = $this->entityClass::ID;
+                $select->whereIn($primaryId, $ids->toArray());
             });
 
-        if (0 === count($entitys)) {
+        if (0 === count($entities)) {
             throw new BusinessException(ErrorCode::BATCH_MODIFICATION_STATUS_NO_DATA_FOUND);
         }
 
-        return $entitys;
+        return $entities;
     }
 }
