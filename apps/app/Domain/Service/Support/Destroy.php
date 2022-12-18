@@ -23,7 +23,8 @@ trait Destroy
             $this->validate($params);
         }
 
-        $this->remove($this->find($params->id));
+        $primaryId = $this->entityClass::ID;
+        $this->remove($this->find($params->{$primaryId}));
 
         return [];
     }
@@ -45,7 +46,7 @@ trait Destroy
     private function find(int $id): Entity
     {
         return $this->w
-            ->repository($this->entity())
+            ->repository($this->entityClass)
             ->findOrFail($id);
     }
 }

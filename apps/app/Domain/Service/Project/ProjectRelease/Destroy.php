@@ -14,11 +14,5 @@ class Destroy
 {
     use CommonDestroy;
 
-    /**
-     * 返回实体.
-     */
-    private function entity(): string
-    {
-        return ProjectRelease::class;
-    }
+    protected string $entityClass = ProjectRelease::class;
 }

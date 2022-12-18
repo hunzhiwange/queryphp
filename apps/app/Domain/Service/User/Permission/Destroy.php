@@ -17,13 +17,7 @@ class Destroy
 {
     use CommonDestroy;
 
-    /**
-     * 返回实体.
-     */
-    private function entity(): string
-    {
-        return Permission::class;
-    }
+    protected string $entityClass = Permission::class;
 
     /**
      * 校验.
