@@ -12,7 +12,7 @@ class ParamsDto extends Dto
 {
     use ValidateParams;
 
-    protected string $validatorClass;
+    protected string $validatorClass = '';
 
     protected string $validatorScene = 'all';
 
@@ -23,13 +23,15 @@ class ParamsDto extends Dto
     {
         $this->beforeValidator();
 
-        $validatorClass = $this->validatorClass;
-        $validator = Leevel::make($validatorClass, $this->validatorClassArgs());
+        if ($this->validatorClass) {
+            $validatorClass = $this->validatorClass;
+            $validator = Leevel::make($validatorClass, $this->validatorClassArgs());
 
-        $this->baseValidate(
-            $validator,
-            $this->validatorScene,
-        );
+            $this->baseValidate(
+                $validator,
+                $this->validatorScene,
+            );
+        }
 
         $this->afterValidator();
     }
