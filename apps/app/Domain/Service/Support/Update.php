@@ -16,8 +16,14 @@ use Leevel\Database\Ddd\UnitOfWork;
     {
     }
 
+     public function beforeHandle(UpdateParams $params): void
+     {
+     }
+
     public function handle(UpdateParams $params): array
     {
+        $this->beforeHandle($params);
+
         $params->validate();
         $this->validate($params);
 
