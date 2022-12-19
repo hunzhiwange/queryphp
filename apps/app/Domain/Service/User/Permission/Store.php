@@ -16,18 +16,7 @@ class Store
 
     protected string $entityClass = Permission::class;
 
-    public function handle(StoreParams $params): array
-    {
-        $params->validate();
-        $this->validateData($params);
-
-        return $this->save($params)->toArray();
-    }
-
-    /**
-     * 校验数据.
-     */
-    private function validateData(StoreParams $params): void
+    private function validate(StoreParams $params): void
     {
         if ($params->pid > 0) {
             $this->validatePidData($params->pid);
