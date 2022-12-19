@@ -16,18 +16,7 @@ class Update
 
     protected string $entityClass = Permission::class;
 
-    public function handle(UpdateParams $params): array
-    {
-        $params->validate();
-        $this->validateData($params);
-
-        return $this->save($params)->toArray();
-    }
-
-    /**
-     * 校验数据.
-     */
-    private function validateData(UpdateParams $params): void
+    private function validate(UpdateParams $params): void
     {
         if ($params->pid > 0) {
             $this->validatePidData($params->pid);

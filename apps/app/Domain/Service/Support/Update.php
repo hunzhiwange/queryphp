@@ -19,9 +19,14 @@ use Leevel\Database\Ddd\UnitOfWork;
     public function handle(UpdateParams $params): array
     {
         $params->validate();
+        $this->validate($params);
 
         return $this->save($params)->toArray();
     }
+
+     private function validate(UpdateParams $params): void
+     {
+     }
 
     /**
      * 验证参数.
