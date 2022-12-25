@@ -12,7 +12,7 @@ class OptionBusinessException extends BusinessException
     /**
      * {@inheritDoc}
      */
-    protected function getErrorMessage(int|object $code): string
+    protected function getErrorMessage(object $code): string
     {
         return OptionErrorCode::description($code);
     }

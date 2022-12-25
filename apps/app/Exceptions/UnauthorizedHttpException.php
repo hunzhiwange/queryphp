@@ -27,7 +27,7 @@ class UnauthorizedHttpException extends BaseUnauthorizedHttpException
     /**
      * 获取错误消息.
      */
-    protected function getErrorMessage(int|object $code): string
+    protected function getErrorMessage(object $code): string
     {
         return AuthErrorCode::description($code);
     }
