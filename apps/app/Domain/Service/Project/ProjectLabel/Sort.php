@@ -45,12 +45,4 @@ class Sort
 
         $this->w->flush();
     }
-
-    /**
-     * 组装实体数据.
-     */
-    private function data(SortParams $params): array
-    {
-        return $params->toArray();
-    }
 }

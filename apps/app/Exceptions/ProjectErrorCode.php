@@ -46,6 +46,12 @@ enum ProjectErrorCode:int
     #[msg('项目分类ID不能为空')]
     case PROJECT_LABEL_SORT_PROJECT_LABEL_IDS_IS_EMPTY = 1000050014;
 
-    #[msg('项目分类ID存在相同的')]
+    #[msg('项目分类ID存在相同的数据')]
     case PROJECT_LABEL_SORT_PROJECT_LABEL_IDS_EXISTS_SAME_ID = 1000050015;
+
+    #[msg('项目任务ID不能和目标任务ID相同')]
+    case PROJECT_ISSUE_TASK_ID_CANNOT_BE_THE_SAME_AS_THE_TARGET_TASK_ID = 1000050016;
+
+    #[msg('项目目标任务分类和提交的任务分类不一致')]
+    case PROJECT_ISSUE_TASK_LABEL_MUST_BE_THE_SAME_AS_THE_SUBMITTED_LABEL = 1000050017;
 }
