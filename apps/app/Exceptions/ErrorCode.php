@@ -43,9 +43,6 @@ enum ErrorCode:int
     #[msg('应用无法找到')]
     case APP_NOT_FOUND = 1000000003;
 
-    #[msg('服务参数错误')]
-    case SERVICE_INVALID_ARGUMENT = 1000000004;
-
     #[msg('参数错误')]
     case BASE_INVALID_ARGUMENT = 1000000005;
 }

@@ -40,15 +40,18 @@ enum ProjectErrorCode:int
     #[msg('项目版本保存参数错误')]
     case PROJECT_RELEASE_STORE_INVALID_ARGUMENT = 1000050009;
 
-    #[msg('项目版本更新参数错误')]
-    case PROJECT_RELEASE_UPDATE_INVALID_ARGUMENT = 1000050010;
-
-    #[msg('项目模块保存参数错误')]
-    case PROJECT_MODULE_STORE_INVALID_ARGUMENT = 1000050011;
-
-    #[msg('项目模块更新参数错误')]
-    case PROJECT_MODULE_UPDATE_INVALID_ARGUMENT = 1000050012;
-
     #[msg('项目任务不存在')]
     case PROJECT_ISSUE_NOT_EXIST = 1000050013;
+
+    #[msg('项目分类ID不能为空')]
+    case PROJECT_LABEL_SORT_PROJECT_LABEL_IDS_IS_EMPTY = 1000050014;
+
+    #[msg('项目分类ID存在相同的数据')]
+    case PROJECT_LABEL_SORT_PROJECT_LABEL_IDS_EXISTS_SAME_ID = 1000050015;
+
+    #[msg('项目任务ID不能和目标任务ID相同')]
+    case PROJECT_ISSUE_TASK_ID_CANNOT_BE_THE_SAME_AS_THE_TARGET_TASK_ID = 1000050016;
+
+    #[msg('项目目标任务分类和提交的任务分类不一致')]
+    case PROJECT_ISSUE_TASK_LABEL_MUST_BE_THE_SAME_AS_THE_SUBMITTED_LABEL = 1000050017;
 }

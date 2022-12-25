@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace App\Domain\Service\Project\ProjectIssue;
 
 use App\Domain\Entity\Project\ProjectIssue;
-use App\Domain\Validate\Project\ProjectLabel as ProjectProjectRelease;
-use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Condition;
 use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Validate\UniqueRule;
 
 /**
  * 任务排序.
@@ -24,24 +21,24 @@ class Sort
 
     public function handle(SortParams $params): array
     {
+        $params->validate();
         $this->sort($params);
 
         return [];
     }
 
+    /**
+     * @throws \App\Exceptions\ProjectBusinessException
+     */
     public function sort(SortParams $params): void
     {
-        if ($params->prevIssueId === $params->nextIssueId) {
-            throw new \Exception('xx');
-        }
-
         $issueRepository = ProjectIssue::repository();
         $preIssue = $issueRepository->findOrFail($params->prevIssueId, ['sort', 'id', 'project_label_id']);
 
         if ($params->nextIssueId) {
             $nextIssue = $issueRepository->findOrFail($params->nextIssueId, ['sort', 'id', 'project_label_id']);
             if ($nextIssue->projectLabelId !== $params->projectLabelId) {
-                throw new \Exception('yyy');
+                throw new ProjectBusinessException(ProjectErrorCode::PROJECT_ISSUE_TASK_LABEL_MUST_BE_THE_SAME_AS_THE_SUBMITTED_LABEL);
             }
 
             $nextPreIssue = $issueRepository
@@ -95,54 +92,5 @@ class Sort
                 ->update(['sort' => Condition::raw(sprintf('@num := @num + %d', ProjectIssue::SORT_INTERVAL))]);
         });
         $w->flush();
-    }
-
-    /**
-     * 保存.
-     */
-    private function save(SortParams $params): ProjectRelease
-    {
-        $this->w
-            ->persist($entity = $this->entity($params))
-            ->flush();
-        $entity->refresh();
-
-        return $entity;
-    }
-
-    /**
-     * 创建实体.
-     */
-    private function entity(SortParams $params): ProjectRelease
-    {
-        return new ProjectRelease($this->data($params));
-    }
-
-    /**
-     * 组装实体数据.
-     */
-    private function data(SortParams $params): array
-    {
-        return $params->toArray();
-    }
-
-    /**
-     * 校验基本参数.
-     *
-     * @throws \App\Exceptions\ProjectBusinessException
-     */
-    private function validateArgs(SortParams $params): void
-    {
-        $uniqueRule = UniqueRule::rule(
-            ProjectRelease::class,
-            additional:[]
-        );
-
-        $validator = Validate::make(new ProjectProjectRelease($uniqueRule), 'store', $params->toArray())->getValidator();
-        if ($validator->fail()) {
-            $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
-            throw new ProjectBusinessException(ProjectErrorCode::PROJECT_RELEASE_STORE_INVALID_ARGUMENT, $e, true);
-        }
     }
 }

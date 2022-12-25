@@ -47,7 +47,7 @@ class BusinessException extends BaseBusinessException
     /**
      * 获取错误消息.
      */
-    protected function getErrorMessage(int|object $code): string
+    protected function getErrorMessage(object $code): string
     {
         return ErrorCode::description($code);
     }
