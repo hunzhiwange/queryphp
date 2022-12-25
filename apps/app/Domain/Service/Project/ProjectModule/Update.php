@@ -25,7 +25,7 @@ class Update
     }
 
     /**
-     * 验证参数.
+     * 更新实体.
      */
     private function entity(UpdateParams $params): ProjectModule
     {
