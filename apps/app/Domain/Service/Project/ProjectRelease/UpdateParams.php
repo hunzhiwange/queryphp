@@ -36,7 +36,7 @@ class UpdateParams extends CommonUpdateParams
     /**
      * {@inheritDoc}
      */
-    protected function beforeValidator(): void
+    protected function beforeValidate(): void
     {
         if (ProjectReleaseCompletedEnum::PUBLISHED->value === $this->completed &&
             !isset($params->completedDate)) {

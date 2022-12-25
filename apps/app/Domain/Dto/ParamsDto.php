@@ -21,7 +21,7 @@ class ParamsDto extends Dto
      */
     public function validate(): void
     {
-        $this->beforeValidator();
+        $this->beforeValidate();
 
         if ($this->validatorClass) {
             $validatorClass = $this->validatorClass;
@@ -33,20 +33,20 @@ class ParamsDto extends Dto
             );
         }
 
-        $this->afterValidator();
+        $this->afterValidate();
     }
 
     /**
      * 验证前.
      */
-    protected function beforeValidator(): void
+    protected function beforeValidate(): void
     {
     }
 
     /**
      * 验证后.
      */
-    protected function afterValidator(): void
+    protected function afterValidate(): void
     {
     }
 
