@@ -29,14 +29,8 @@ class Sort
     {
         Project::repository()->findOrFail($params->projectId);
 
-        // 检测是否为所有 label，不是直接报错
         $projectLabelIds = $params->projectLabelIds->toArray();
-        $count = ProjectLabel::repository()
-            ->whereIn('id', $projectLabelIds)
-            ->findCount();
-        if ($count !== count($params->projectLabelIds)) {
-            throw new \Exception('yy');
-        }
+        ProjectLabel::repository()->validateDataExists($projectLabelIds);
 
         $this->w->persist(function () use ($projectLabelIds) {
             $updateData = [];
