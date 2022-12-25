@@ -13,4 +13,6 @@ trait BaseStoreUpdateParams
     public int $status;
 
     public string $color;
+
+    public int $projectId = 0;
 }

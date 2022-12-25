@@ -29,9 +29,6 @@ class Update
      */
     private function entity(UpdateParams $params): ProjectLabel
     {
-        $entity = $this->entity;
-        $entity->withProps($this->data($params));
-
-        return $entity;
+        return $this->entity->withProps($this->data($params));
     }
 }
