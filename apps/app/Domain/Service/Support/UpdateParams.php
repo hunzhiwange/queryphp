@@ -19,7 +19,7 @@ class UpdateParams extends ParamsDto
     /**
      * {@inheritDoc}
      */
-    protected function validatorClassArgs(): array
+    protected function validatorArgs(): array
     {
         $primaryId = $this->entityClass::ID;
 

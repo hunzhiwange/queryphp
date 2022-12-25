@@ -25,7 +25,7 @@ class ParamsDto extends Dto
 
         if ($this->validatorClass) {
             $validatorClass = $this->validatorClass;
-            $validator = Leevel::make($validatorClass, $this->validatorClassArgs());
+            $validator = Leevel::make($validatorClass, $this->validatorArgs());
 
             $this->baseValidate(
                 $validator,
@@ -53,7 +53,7 @@ class ParamsDto extends Dto
     /**
      * 验证器初始化参数.
      */
-    protected function validatorClassArgs(): array
+    protected function validatorArgs(): array
     {
         return [];
     }

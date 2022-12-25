@@ -47,7 +47,7 @@ class UpdateParams extends CommonUpdateParams
     /**
      * {@inheritDoc}
      */
-    protected function validatorClassArgs(): array
+    protected function validatorArgs(): array
     {
         $uniqueRule = UniqueRule::rule(
             $this->entityClass,
