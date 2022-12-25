@@ -10,12 +10,9 @@ use App\Domain\Entity\Project\ProjectIssueCompletedEnum;
 use App\Domain\Entity\Project\ProjectIssueModule;
 use App\Domain\Entity\Project\ProjectIssueRelease;
 use App\Domain\Entity\Project\ProjectIssueTag;
-use App\Domain\Validate\Validate;
 use App\Exceptions\ProjectBusinessException;
-use App\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Validate\UniqueRule;
 
 /**
  * 项目任务更新.
@@ -28,7 +25,6 @@ class Update
 
     public function handle(UpdateParams $params): array
     {
-        //$this->validateArgs($params);
         if (isset($params->tags)) {
             $this->tags($params);
         }
@@ -75,7 +71,7 @@ class Update
                 ->findAll(function (Select $select) use ($params) {
                     $select->where('project_issue_id', $params->id);
                 });
-            $oldid = array_column($old->toArray(), 'id', 'project_tag_id');
+            $oldIds = array_column($old->toArray(), 'id', 'project_tag_id');
             $old = array_column($old->toArray(), 'project_tag_id');
             $now = $params->tags->toArray();
             $del = array_diff($old, $now);
@@ -83,7 +79,7 @@ class Update
             foreach ($params->tags as $projectTagId) {
                 if (in_array($projectTagId, $old)) {
                     $updateData[] = [
-                        'id'               => $oldid[$projectTagId],
+                        'id'               => $oldIds[$projectTagId],
                         'project_issue_id' => $params->id,
                         'project_tag_id'   => $projectTagId,
                         'delete_at'        => 0,
@@ -99,7 +95,7 @@ class Update
             }
             foreach ($del as $id) {
                 $updateData[] = [
-                    'id'               => $oldid[$id],
+                    'id'               => $oldIds[$id],
                     'project_issue_id' => $params->id,
                     'project_tag_id'   => $id,
                     'delete_at'        => time(),
@@ -117,7 +113,7 @@ class Update
                 ->findAll(function (Select $select) use ($params) {
                     $select->where('project_issue_id', $params->id);
                 });
-            $oldid = array_column($old->toArray(), 'id', 'project_release_id');
+            $oldIds = array_column($old->toArray(), 'id', 'project_release_id');
             $old = array_column($old->toArray(), 'project_release_id');
             $now = $params->releases->toArray();
             $del = array_diff($old, $now);
@@ -125,7 +121,7 @@ class Update
             foreach ($params->releases as $projectReleaseId) {
                 if (in_array($projectReleaseId, $old)) {
                     $updateData[] = [
-                        'id'                 => $oldid[$projectReleaseId],
+                        'id'                 => $oldIds[$projectReleaseId],
                         'project_issue_id'   => $params->id,
                         'project_release_id' => $projectReleaseId,
                         'delete_at'          => 0,
@@ -141,7 +137,7 @@ class Update
             }
             foreach ($del as $id) {
                 $updateData[] = [
-                    'id'                 => $oldid[$id],
+                    'id'                 => $oldIds[$id],
                     'project_issue_id'   => $params->id,
                     'project_release_id' => $id,
                     'delete_at'          => time(),
@@ -159,7 +155,7 @@ class Update
                 ->findAll(function (Select $select) use ($params) {
                     $select->where('project_issue_id', $params->id);
                 });
-            $oldid = array_column($old->toArray(), 'id', 'project_module_id');
+            $oldIds = array_column($old->toArray(), 'id', 'project_module_id');
             $old = array_column($old->toArray(), 'project_module_id');
             $now = $params->modules->toArray();
             $del = array_diff($old, $now);
@@ -167,7 +163,7 @@ class Update
             foreach ($params->modules as $projectModuleId) {
                 if (in_array($projectModuleId, $old)) {
                     $updateData[] = [
-                        'id'                => $oldid[$projectModuleId],
+                        'id'                => $oldIds[$projectModuleId],
                         'project_issue_id'  => $params->id,
                         'project_module_id' => $projectModuleId,
                         'delete_at'         => 0,
@@ -183,7 +179,7 @@ class Update
             }
             foreach ($del as $id) {
                 $updateData[] = [
-                    'id'                => $oldid[$id],
+                    'id'                => $oldIds[$id],
                     'project_issue_id'  => $params->id,
                     'project_module_id' => $id,
                     'delete_at'         => time(),
@@ -242,26 +238,5 @@ class Update
             ])
             ->withoutNull()
             ->toArray();
-    }
-
-    /**
-     * 校验基本参数.
-     *
-     * @throws \App\Exceptions\ProjectBusinessException
-     */
-    private function validateArgs(UpdateParams $params): void
-    {
-        $uniqueRule = UniqueRule::rule(
-            ProjectModule::class,
-            exceptId:$params->id,
-            additional:[]
-        );
-
-        $validator = Validate::make(new ProjectProjectModule($uniqueRule), 'update', $params->toArray())->getValidator();
-        if ($validator->fail()) {
-            $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
-            throw new ProjectBusinessException(ProjectErrorCode::PROJECT_MODULE_UPDATE_INVALID_ARGUMENT, $e, true);
-        }
     }
 }
