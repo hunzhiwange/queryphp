@@ -40,15 +40,6 @@ enum ProjectErrorCode:int
     #[msg('项目版本保存参数错误')]
     case PROJECT_RELEASE_STORE_INVALID_ARGUMENT = 1000050009;
 
-    #[msg('项目版本更新参数错误')]
-    case PROJECT_RELEASE_UPDATE_INVALID_ARGUMENT = 1000050010;
-
-    #[msg('项目模块保存参数错误')]
-    case PROJECT_MODULE_STORE_INVALID_ARGUMENT = 1000050011;
-
-    #[msg('项目模块更新参数错误')]
-    case PROJECT_MODULE_UPDATE_INVALID_ARGUMENT = 1000050012;
-
     #[msg('项目任务不存在')]
     case PROJECT_ISSUE_NOT_EXIST = 1000050013;
 }
