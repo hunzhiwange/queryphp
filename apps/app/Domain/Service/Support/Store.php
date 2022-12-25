@@ -19,8 +19,13 @@ trait Store
     public function handle(StoreParams $params): array
     {
         $params->validate();
+        $this->validate($params);
 
         return $this->save($params)->toArray();
+    }
+
+    private function validate(StoreParams $params): void
+    {
     }
 
     /**

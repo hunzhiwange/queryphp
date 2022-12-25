@@ -6,28 +6,16 @@ namespace App\Domain\Service\Project\Project;
 
 use App\Domain\Entity\Project\Project;
 use App\Domain\Entity\Project\ProjectLabel as ProjectLabel;
-use App\Domain\Validate\Project\Project as ProjectProject;
-use App\Domain\Validate\Validate;
-use App\Exceptions\ProjectBusinessException;
-use App\Exceptions\ProjectErrorCode;
-use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Validate\UniqueRule;
+use App\Domain\Service\Support\Store as CommonStore;
 
 /**
  * 项目保存.
  */
 class Store
 {
-    public function __construct(private UnitOfWork $w)
-    {
-    }
+    use CommonStore;
 
-    public function handle(StoreParams $params): array
-    {
-        $this->validateArgs($params);
-
-        return $this->save($params)->toArray();
-    }
+    protected string $entityClass = Project::class;
 
     /**
      * 保存.
@@ -55,38 +43,10 @@ class Store
     }
 
     /**
-     * 创建实体.
-     */
-    private function entity(StoreParams $params): Project
-    {
-        return new Project($this->data($params));
-    }
-
-    /**
      * 组装实体数据.
      */
     private function data(StoreParams $params): array
     {
         return $params->except(['template'])->toArray();
-    }
-
-    /**
-     * 校验基本参数.
-     *
-     * @throws \App\Exceptions\ProjectBusinessException
-     */
-    private function validateArgs(StoreParams $params): void
-    {
-        // $uniqueRule = UniqueRule::rule(
-        //     Project::class,
-        //     additional:[]
-        // );
-
-        // $validator = Validate::make(new ProjectProject($uniqueRule), 'store', $params->toArray())->getValidator();
-        // if ($validator->fail()) {
-        //     $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
-        //     throw new ProjectBusinessException(ProjectErrorCode::ROLE_STORE_INVALID_ARGUMENT, $e, true);
-        // }
     }
 }

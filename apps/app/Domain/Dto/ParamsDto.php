@@ -12,7 +12,7 @@ class ParamsDto extends Dto
 {
     use ValidateParams;
 
-    protected string $validatorClass;
+    protected string $validatorClass = '';
 
     protected string $validatorScene = 'all';
 
@@ -21,37 +21,39 @@ class ParamsDto extends Dto
      */
     public function validate(): void
     {
-        $this->beforeValidator();
+        $this->beforeValidate();
 
-        $validatorClass = $this->validatorClass;
-        $validator = Leevel::make($validatorClass, $this->validatorClassArgs());
+        if ($this->validatorClass) {
+            $validatorClass = $this->validatorClass;
+            $validator = Leevel::make($validatorClass, $this->validatorArgs());
 
-        $this->baseValidate(
-            $validator,
-            $this->validatorScene,
-        );
+            $this->baseValidate(
+                $validator,
+                $this->validatorScene,
+            );
+        }
 
-        $this->afterValidator();
+        $this->afterValidate();
     }
 
     /**
      * 验证前.
      */
-    protected function beforeValidator(): void
+    protected function beforeValidate(): void
     {
     }
 
     /**
      * 验证后.
      */
-    protected function afterValidator(): void
+    protected function afterValidate(): void
     {
     }
 
     /**
      * 验证器初始化参数.
      */
-    protected function validatorClassArgs(): array
+    protected function validatorArgs(): array
     {
         return [];
     }

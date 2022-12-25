@@ -16,16 +16,27 @@ use Leevel\Database\Ddd\UnitOfWork;
     {
     }
 
+     public function beforeHandle(UpdateParams $params): void
+     {
+     }
+
     public function handle(UpdateParams $params): array
     {
+        $this->beforeHandle($params);
+
         $params->validate();
+        $this->validate($params);
 
         return $this->save($params)->toArray();
     }
 
-    /**
-     * 验证参数.
-     */
+     private function validate(UpdateParams $params): void
+     {
+     }
+
+     /**
+      * 更新实体.
+      */
     private function entity(UpdateParams $params): Entity
     {
         $primaryId = $this->entityClass::ID;

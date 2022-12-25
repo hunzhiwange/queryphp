@@ -21,9 +21,13 @@ trait Show
         $primaryId = $this->entityClass::ID;
         $entity = $this->find($params->{$primaryId});
         $result = $entity->toArray();
-        $result['permission'] = $entity->permission->toArray();
+        $this->prepareData($entity, $result);
 
         return $result;
+    }
+
+    private function prepareData(Entity $entity, array &$result): void
+    {
     }
 
     /**

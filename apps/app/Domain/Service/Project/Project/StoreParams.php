@@ -6,18 +6,21 @@ namespace App\Domain\Service\Project\Project;
 
 use App\Domain\Dto\Project\Template;
 use App\Domain\Dto\Project\TemplateData;
+use App\Domain\Entity\Project\Project;
 use InvalidArgumentException;
 use Leevel\Support\TypedDtoArray;
-use Leevel\Support\Dto;
+use App\Domain\Service\Support\StoreParams as CommonStoreParams;
 
 /**
  * 项目保存参数.
  */
-class StoreParams extends Dto
+class StoreParams extends CommonStoreParams
 {
     use BaseStoreUpdateParams;
 
     public ?Template $template = null;
+
+    protected string $entityClass = Project::class;
 
     /**
      * @throws \InvalidArgumentException

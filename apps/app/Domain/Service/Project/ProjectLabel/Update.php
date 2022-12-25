@@ -5,43 +5,23 @@ declare(strict_types=1);
 namespace App\Domain\Service\Project\ProjectLabel;
 
 use App\Domain\Entity\Project\ProjectLabel;
-use App\Domain\Validate\Project\ProjectLabel as ProjectProjectLabel;
-use App\Domain\Validate\Validate;
-use App\Exceptions\ProjectBusinessException;
-use App\Exceptions\ProjectErrorCode;
-use Leevel\Database\Ddd\UnitOfWork;
-use Leevel\Validate\UniqueRule;
+use App\Domain\Service\Support\Update as CommonUpdate;
 
 /**
  * 项目分类更新.
  */
 class Update
 {
+    use CommonUpdate;
+
     private ?ProjectLabel $entity = null;
 
-    public function __construct(private UnitOfWork $w)
-    {
-    }
+    protected string $entityClass = ProjectLabel::class;
 
-    public function handle(UpdateParams $params): array
+    public function beforeHandle(UpdateParams $params): void
     {
         $this->entity = $this->find($params->id);
-        $this->validateArgs($params);
-
-        return $this->save($params)->toArray();
-    }
-
-    /**
-     * 保存.
-     */
-    private function save(UpdateParams $params): ProjectLabel
-    {
-        $this->w
-            ->persist($entity = $this->entity($params))
-            ->flush();
-        $entity->refresh();
-
-        return $entity;
+        $params->projectId = $this->entity->projectId;
     }
 
     /**
@@ -49,48 +29,6 @@ class Update
      */
     private function entity(UpdateParams $params): ProjectLabel
     {
-        $entity = $this->entity;
-        $entity->withProps($this->data($params));
-
-        return $entity;
-    }
-
-    /**
-     * 查找实体.
-     */
-    private function find(int $id): ProjectLabel
-    {
-        return $this->w
-            ->repository(ProjectLabel::class)
-            ->findOrFail($id);
-    }
-
-    /**
-     * 组装实体数据.
-     */
-    private function data(UpdateParams $params): array
-    {
-        return $params->except(['id'])->toArray();
-    }
-
-    /**
-     * 校验基本参数.
-     *
-     * @throws \App\Exceptions\ProjectBusinessException
-     */
-    private function validateArgs(UpdateParams $params): void
-    {
-        $uniqueRule = UniqueRule::rule(
-            ProjectLabel::class,
-            exceptId:$params->id,
-            additional:['project_id' => $this->entity->projectId]
-        );
-
-        $validator = Validate::make(new ProjectProjectLabel($uniqueRule), 'update', $params->toArray())->getValidator();
-        if ($validator->fail()) {
-            $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
-            throw new ProjectBusinessException(ProjectErrorCode::PROJECT_MODULE_UPDATE_INVALID_ARGUMENT, $e, true);
-        }
+        return $this->entity->withProps($this->data($params));
     }
 }
