@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Infra\Proxy\Permission;
 use Leevel\Database\IDatabase;
+use App\Infra\RoadRunnerDump;
 
 if (!function_exists('permission')) {
     /**
@@ -80,5 +81,15 @@ if (!function_exists('success')) {
         $data['success'] = $success;
 
         return $data;
+    }
+}
+
+if (!function_exists('rr_dump')) {
+    /**
+     * 调试 RoadRunner 变量.
+     */
+    function rr_dump(mixed $var, ...$moreVars): mixed
+    {
+        return RoadRunnerDump::handle($var, ...$moreVars);
     }
 }
