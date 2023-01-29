@@ -5,7 +5,7 @@ rpc:
   listen: tcp://127.0.0.1:6001
 
 server:
-  command: "php leevel rr:server"
+  command: "php rr.php"
 
 http:
   address: "0.0.0.0:9527"
