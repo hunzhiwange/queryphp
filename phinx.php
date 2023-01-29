@@ -29,6 +29,8 @@ putenv('RUNTIME_ENVIRONMENT='.$env);
 
 /**
  * 载入配置.
+ *
+ * @todo 移动到 \App\Infra 命名空间
  */
 class PhinxLoad
 {
