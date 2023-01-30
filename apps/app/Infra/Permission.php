@@ -9,25 +9,17 @@ namespace App\Infra;
  */
 class Permission
 {
-    /**
-     * 权限数据.
-     */
-    private array $permission = [];
+    private PermissionCache $permissionCache;
+
+    private string $token;
 
     /**
      * 构造函数.
      */
-    public function __construct(PermissionCache $permission, string $token)
+    public function __construct(PermissionCache $permissionCache, string $token)
     {
-        $this->permission = $permission->get($token);
-
-        if (!\is_array($this->permission['static'])) {
-            $this->permission['static'] = [];
-        }
-
-        if (!\is_array($this->permission['dynamic'])) {
-            $this->permission['dynamic'] = [];
-        }
+        $this->permissionCache = $permissionCache;
+        $this->token = $token;
     }
 
     /**
@@ -35,23 +27,26 @@ class Permission
      */
     public function handle(string $resource, ?string $method = null): bool
     {
+        // 获取权限数据
+        $permission = $this->getPermissionData();
+
         // 超级管理员
-        if (\in_array('*', $this->permission['static'], true)) {
+        if (\in_array('*', $permission['static'], true)) {
             return true;
         }
 
         // 所有请求
-        if (\in_array($resource, $this->permission['static'], true)) {
+        if (\in_array($resource, $permission['static'], true)) {
             return true;
         }
 
         // 带有请求类型
-        if ($method && \in_array($method.':'.$resource, $this->permission['static'], true)) {
+        if ($method && \in_array($method.':'.$resource, $permission['static'], true)) {
             return true;
         }
 
         // 动态权限
-        foreach ($this->permission['dynamic'] as $p) {
+        foreach ($permission['dynamic'] as $p) {
             $p = $this->prepareRegexForWildcard($p);
 
             // 无请求类型
@@ -77,5 +72,10 @@ class Permission
         $regex = '/^'.str_replace('\*', '(\S*)', $regex).'$/';
 
         return $regex;
+    }
+
+    protected function getPermissionData(): array
+    {
+        return $this->permissionCache->get($this->token);
     }
 }

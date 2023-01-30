@@ -52,7 +52,7 @@ class App extends Provider
      */
     private function permission(): void
     {
-        $this->container->singleton('permission', function (IContainer $container): Permission {
+        $this->container->bind('permission', function (IContainer $container): Permission {
             /** @var \Leevel\Http\Request $request */
             $request = $container->make('request');
             $token = $request->query->get('token', $request->request->get('token', ''));

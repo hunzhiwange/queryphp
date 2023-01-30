@@ -1,9 +1,6 @@
 # configuration version: https://roadrunner.dev/docs/intro-config/2.x/en
 version: '2.7'
 
-rpc:
-  listen: tcp://127.0.0.1:6001
-
 server:
   command: "php rr.php"
 
@@ -15,6 +12,22 @@ http:
     dir:   "."
     # list of extensions for forbid for serving.
     forbid: [".php", ".htaccess"]
+  # Workers pool settings.
+  pool:
+    # Debug mode for the pool. In this mode, pool will not pre-allocate the worker. Worker (only 1, num_workers ignored) will be allocated right after the request arrived.
+    #
+    # Default: false
+    debug: false
+
+    # How many worker processes will be started. Zero (or nothing) means the number of logical CPUs.
+    #
+    # Default: 0
+    num_workers: 0
+
+    # Maximal count of worker executions. Zero (or nothing) means no limit.
+    #
+    # Default: 0
+    max_jobs: 0
 
 reload:
   # sync interval
