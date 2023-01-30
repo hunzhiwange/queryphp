@@ -24,6 +24,16 @@ class PermissionCache
      */
     public function get(string $id): array
     {
-        return Cache::get('permission:'.$id) ?: ['static' => [], 'dynamic' => []];
+        $permission = Cache::get('permission:'.$id) ?: ['static' => [], 'dynamic' => []];
+
+        if (!\is_array($permission['static'])) {
+            $permission['static'] = [];
+        }
+
+        if (!\is_array($permission['dynamic'])) {
+            $permission['dynamic'] = [];
+        }
+
+        return $permission;
     }
 }
