@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-use Dotenv\Dotenv;
 use Leevel\Di\Container;
 use Leevel\Kernel\App;
-use Leevel\Kernel\IApp;
-use Leevel\Option\Env;
+use App\Infra\PhinxLoad;
 use Symfony\Component\Console\Input\ArgvInput;
 
 // 加载 Composer
@@ -26,58 +24,6 @@ if ($input->hasParameterOption('-e')) {
     $env = 'env';
 }
 putenv('RUNTIME_ENVIRONMENT='.$env);
-
-/**
- * 载入配置.
- *
- * @todo 移动到 \App\Infra 命名空间
- */
-class PhinxLoad
-{
-    use Env;
-
-    /**
-     * 执行入口.
-     */
-    public function handle(IApp $app): array
-    {
-        $this->checkRuntimeEnv($app);
-
-        return $this->loadEnvData($app);
-    }
-
-    /**
-     * 载入环境变量数据.
-     */
-    private function loadEnvData(IApp $app): array
-    {
-        $dotenv = Dotenv::createMutable($app->envPath(), $app->envFile());
-        $this->setEnvVars($envVars = $dotenv->load());
-
-        return $envVars;
-    }
-
-    /**
-     * 载入运行时环境变量.
-     *
-     * @throws \RuntimeException
-     */
-    private function checkRuntimeEnv(IApp $app)
-    {
-        if (!getenv('RUNTIME_ENVIRONMENT')) {
-            return;
-        }
-
-        $file = '.'.getenv('RUNTIME_ENVIRONMENT');
-        if (!is_file($fullFile = $app->envPath().'/'.$file)) {
-            $e = sprintf('Env file `%s` was not found.', $fullFile);
-
-            throw new RuntimeException($e);
-        }
-
-        $app->setEnvFile($file);
-    }
-}
 
 // 读取配置
 (new PhinxLoad())->handle($app);
