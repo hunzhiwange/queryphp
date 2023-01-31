@@ -3,8 +3,8 @@ parameters:
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
     paths:
-        - application 
-        - common
+        - api
+        - app
     autoload_files:
     excludes_analyse:
         - %currentWorkingDirectory%/common/ui/exception/layout.php
