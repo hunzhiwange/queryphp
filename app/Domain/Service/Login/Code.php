@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\Login;
 
 use App\Infra\Code as Codes;
-use Gregwar\Captcha\CaptchaBuilder;
+use SimpleCaptcha\Builder;
 use Leevel;
 
 /**
@@ -29,13 +29,13 @@ class Code
         $numResult = $numFirst + $numSecond;
         $numPhrase = $numFirst.'+'.$numSecond;
 
-        $builder = new CaptchaBuilder($numPhrase);
+        $builder = new Builder($numPhrase);
         $builder->build(120, 36);
 
         if ($params->id) {
             $this->code->set($params->id, (string) $numResult);
         }
 
-        return $builder->get(100);
+        return $builder->fetch(100);
     }
 }
