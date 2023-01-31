@@ -154,7 +154,7 @@ class Auth extends BaseAuth
 
         // 批量插入数据自动添加 company_id
         Event::register(Repository::INSERT_ALL_EVENT, function (object|string $event, Repository $repository) {
-            if(!$repository->entity()->hasField('company_id')) {
+            if (!$repository->entity()->hasField('company_id')) {
                 return;
             }
 
@@ -272,6 +272,7 @@ class Auth extends BaseAuth
         // 兼容 header，也可以通过 get 或者 post 来设置 token
         if ($token = $request->headers->get('token')) {
             $request->query->set('token', $token);
+
             return $token;
         }
 

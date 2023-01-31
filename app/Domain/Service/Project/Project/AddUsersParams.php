@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Project\Project;
 
-use Leevel\Support\TypedIntArray;
 use Leevel\Support\Dto;
+use Leevel\Support\TypedIntArray;
 
 /**
  * 项目新增成员参数.

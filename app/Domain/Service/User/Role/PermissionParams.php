@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\Role;
 
-use Leevel\Support\TypedIntArray;
 use Leevel\Support\Dto;
+use Leevel\Support\TypedIntArray;
 
 /**
  * 角色授权参数.

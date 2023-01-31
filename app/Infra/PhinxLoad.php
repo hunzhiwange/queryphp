@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infra;
 
-use Leevel\Option\Env;
-use Leevel\Kernel\IApp;
 use Dotenv\Dotenv;
+use Leevel\Kernel\IApp;
+use Leevel\Option\Env;
 use RuntimeException;
 
 /**

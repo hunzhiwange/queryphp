@@ -86,7 +86,7 @@ class ProjectTag extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
-            self::ENUM_CLASS => ProjectTagStatusEnum::class,
+            self::ENUM_CLASS  => ProjectTagStatusEnum::class,
         ],
         'color' => [
             self::COLUMN_NAME => '标签颜色',

@@ -133,7 +133,7 @@ class Company extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
-            self::ENUM_CLASS => CompanyStatusEnum::class,
+            self::ENUM_CLASS  => CompanyStatusEnum::class,
         ],
         'business_license' => [
             self::COLUMN_NAME => '营业执照号',

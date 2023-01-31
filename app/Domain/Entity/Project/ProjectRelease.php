@@ -95,7 +95,7 @@ class ProjectRelease extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
-            self::ENUM_CLASS => ProjectReleaseStatusEnum::class,
+            self::ENUM_CLASS  => ProjectReleaseStatusEnum::class,
         ],
         'progress' => [
             self::COLUMN_NAME => '进度条(最大值 10000，需要除以 100 表示实际进度)',
@@ -105,7 +105,7 @@ class ProjectRelease extends Entity
         ],
         'completed' => [
             self::COLUMN_NAME => '是否完成：1=未开始;2=进行中;3=延期发布;4=已发布;',
-            self::ENUM_CLASS => ProjectReleaseCompletedEnum::class,
+            self::ENUM_CLASS  => ProjectReleaseCompletedEnum::class,
         ],
         'completed_date' => [
             self::COLUMN_NAME => '完成时间',

@@ -160,11 +160,11 @@ class ProjectIssue extends Entity
         ],
         'level' => [
             self::COLUMN_NAME => '优先级别：1~5',
-            self::ENUM_CLASS => ProjectIssueLevelEnum::class,
+            self::ENUM_CLASS  => ProjectIssueLevelEnum::class,
         ],
         'completed' => [
             self::COLUMN_NAME => '是否完成：1=未完成;2=已完成;',
-            self::ENUM_CLASS => ProjectIssueCompletedEnum::class,
+            self::ENUM_CLASS  => ProjectIssueCompletedEnum::class,
         ],
         'completed_date' => [
             self::COLUMN_NAME => '完成时间',

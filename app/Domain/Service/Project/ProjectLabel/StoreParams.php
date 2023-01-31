@@ -6,8 +6,8 @@ namespace App\Domain\Service\Project\ProjectLabel;
 
 use App\Domain\Entity\Project\ProjectLabel;
 use App\Domain\Service\Support\StoreParams as CommonStoreParams;
-use Leevel\Validate\UniqueRule;
 use App\Domain\Validate\Project\ProjectLabel as ProjectLabelValidate;
+use Leevel\Validate\UniqueRule;
 
 /**
  * 项目分类保存参数.

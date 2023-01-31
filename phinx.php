@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Infra\PhinxLoad;
 use Leevel\Di\Container;
 use Leevel\Kernel\App;
-use App\Infra\PhinxLoad;
 use Symfony\Component\Console\Input\ArgvInput;
 
 // 加载 Composer

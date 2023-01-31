@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Service\Support;
 
 use App\Domain\Dto\ParamsDto;
-use Leevel\Support\TypedIntArray;
 use App\Domain\Validate\Support\Status;
+use Leevel\Support\TypedIntArray;
 
 class StatusParams extends ParamsDto
 {
