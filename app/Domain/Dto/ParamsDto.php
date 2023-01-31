@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Dto;
 
 use App\Domain\Validate\ValidateParams;
-use Leevel\Support\Dto;
 use Leevel;
+use Leevel\Support\Dto;
 
 class ParamsDto extends Dto
 {

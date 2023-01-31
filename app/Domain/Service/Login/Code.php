@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Service\Login;
 
 use App\Infra\Code as Codes;
-use Leevel;
 use Gregwar\Captcha\CaptchaBuilder;
+use Leevel;
 
 /**
  * 验证码生成.
@@ -27,7 +27,7 @@ class Code
         $numFirst = rand(11, 99);
         $numSecond = rand(11, 99);
         $numResult = $numFirst + $numSecond;
-        $numPhrase = $numFirst . '+' . $numSecond;
+        $numPhrase = $numFirst.'+'.$numSecond;
 
         $builder = new CaptchaBuilder($numPhrase);
         $builder->build(120, 36);

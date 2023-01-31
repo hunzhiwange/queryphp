@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Support\Spec\Project;
 
-use Leevel\Support\TypedIntArray;
 use Leevel\Database\Ddd\Select;
+use Leevel\Support\TypedIntArray;
 
 /**
  * 项目 ID 条件.

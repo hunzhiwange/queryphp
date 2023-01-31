@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\Role;
 
-use App\Domain\Service\Support\Show as CommonShow;
 use App\Domain\Entity\User\Role;
+use App\Domain\Service\Support\Show as CommonShow;
 use Leevel\Database\Ddd\Entity;
 
 /**

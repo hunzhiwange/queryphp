@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\User\Permission;
 
-use Leevel\Support\TypedIntArray;
 use Leevel\Support\Dto;
+use Leevel\Support\TypedIntArray;
 
 /**
  * 权限资源授权参数.

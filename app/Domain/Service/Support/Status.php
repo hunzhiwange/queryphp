@@ -6,10 +6,10 @@ namespace App\Domain\Service\Support;
 
 use App\Exceptions\BusinessException;
 use App\Exceptions\ErrorCode;
-use Leevel\Support\Collection;
-use Leevel\Support\TypedIntArray;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
+use Leevel\Support\Collection;
+use Leevel\Support\TypedIntArray;
 
 /**
  * 批量修改状态.

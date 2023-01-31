@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Service\Project\ProjectIssue;
 
 use App\Domain\Entity\Project\ProjectIssue;
-use App\Domain\Entity\Project\ProjectUser;
 use App\Domain\Entity\Project\ProjectUserDataTypeEnum;
 use App\Domain\Entity\Project\ProjectUserExtendTypeEnum;
 use App\Domain\Entity\Project\ProjectUserTypeEnum;

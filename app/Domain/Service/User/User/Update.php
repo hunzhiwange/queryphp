@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
+use App\Domain\Service\Support\Update as CommonUpdate;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Service\Support\Update as CommonUpdate;
 
 /**
  * 用户更新.
