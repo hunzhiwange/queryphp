@@ -17,12 +17,13 @@
         "ext-mbstring": "*",
         "ext-openssl": "*",
         "composer-runtime-api": ">=2.1",
+        "gregwar/captcha": "dev-master",
         "hunzhiwange/framework": "dev-master",
+        "nesbot/carbon": "^2.66",
         "nyholm/psr7": "^1.5",
         "spiral/dumper": "^2.14.1",
         "spiral/roadrunner": "^2.12.1",
-        "symfony/psr-http-message-bridge": "^2.0",
-        "gregwar/captcha": "dev-master"
+        "symfony/psr-http-message-bridge": "^2.0"
     },
     "require-dev": {
         "codedungeon/php-cli-colors": "^1.12.0",
@@ -31,11 +32,11 @@
     },
     "autoload": {
         "files": [
-            "apps/app/Infra/functions.php"
+            "app/Infra/functions.php"
         ],
         "psr-4": {
-            "App\\" : "apps/app",
-            "Admin\\" : "apps/admin"
+            "App\\" : "app",
+            "Api\\" : "api"
         },
         "exclude-from-classmap": [
             "/tests/",
