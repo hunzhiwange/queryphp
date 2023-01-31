@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Service\Option;
+namespace App\Domain\Service\Search;
 
 use Leevel\Support\Dto;
 
