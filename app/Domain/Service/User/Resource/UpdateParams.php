@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\Resource;
 
 use App\Domain\Entity\User\Resource;
-use App\Domain\Validate\User\Resource as ResourceValidate;
 use App\Domain\Service\Support\UpdateParams as CommonUpdateParams;
+use App\Domain\Validate\User\Resource as ResourceValidate;
 
 /**
  * 资源更新参数.

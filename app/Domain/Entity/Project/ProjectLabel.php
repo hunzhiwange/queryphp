@@ -86,7 +86,7 @@ class ProjectLabel extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
-            self::ENUM_CLASS => ProjectLabelStatusEnum::class,
+            self::ENUM_CLASS  => ProjectLabelStatusEnum::class,
         ],
         'sort' => [
             self::COLUMN_NAME => '排序(ASC)',

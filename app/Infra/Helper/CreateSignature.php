@@ -24,9 +24,9 @@ class CreateSignature
         $tmpParams = [$appSecret];
         foreach ($params as $k => $v) {
             if (!is_array($v)) {
-                $tmpParams[] = $k . $v;
+                $tmpParams[] = $k.$v;
             } else {
-                $tmpParams[] = $k . self::handle($signatureMethod, $v, $appSecret);
+                $tmpParams[] = $k.self::handle($signatureMethod, $v, $appSecret);
             }
         }
         $tmpParams[] = $appSecret;

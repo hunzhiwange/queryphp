@@ -76,7 +76,7 @@ class Resource extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
-            self::ENUM_CLASS => ResourceStatusEnum::class,
+            self::ENUM_CLASS  => ResourceStatusEnum::class,
         ],
         'create_at' => [
             self::COLUMN_NAME => '创建时间',

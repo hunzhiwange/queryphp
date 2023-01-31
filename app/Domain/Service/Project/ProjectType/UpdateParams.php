@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Project\ProjectType;
 
-use App\Domain\Service\Support\UpdateParams as CommonUpdateParams;
 use App\Domain\Entity\Project\ProjectType;
+use App\Domain\Service\Support\UpdateParams as CommonUpdateParams;
 use App\Domain\Validate\Project\ProjectType as ProjectTypeValidate;
 
 /**

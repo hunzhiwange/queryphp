@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Exceptions\Runtime;
+use App\Infra\RoadRunnerServer;
 use App\Kernel;
 use Leevel\Di\Container;
 use Leevel\Di\IContainer;
@@ -10,7 +11,6 @@ use Leevel\Kernel\App;
 use Leevel\Kernel\Exceptions\IRuntime;
 use Leevel\Kernel\IApp;
 use Leevel\Kernel\IKernel;
-use App\Infra\RoadRunnerServer;
 
 // 加载 Composer
 require __DIR__.'/vendor/autoload.php';

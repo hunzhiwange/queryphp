@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\Role;
 
 use App\Domain\Entity\User\Role;
-use App\Domain\Validate\User\Role as RoleValidate;
 use App\Domain\Service\Support\UpdateParams as CommonUpdateParams;
+use App\Domain\Validate\User\Role as RoleValidate;
 
 /**
  * 角色更新参数.

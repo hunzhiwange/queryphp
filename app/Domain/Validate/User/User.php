@@ -57,7 +57,7 @@ class User implements IValidator
                 'name' => 'required|chinese_alpha_num|max_length:50',
                 'password',
                 'code',
-                'remember'
+                'remember',
             ],
         ];
     }
@@ -100,15 +100,15 @@ class User implements IValidator
             'status'   => [
                 ['in', UserStatusEnum::values()],
             ],
-            'email'  => 'email|'.ValidateIValidator::OPTIONAL,
-            'mobile' => 'mobile|'.ValidateIValidator::OPTIONAL,
-            'token'  => 'required',
+            'email'        => 'email|'.ValidateIValidator::OPTIONAL,
+            'mobile'       => 'mobile|'.ValidateIValidator::OPTIONAL,
+            'token'        => 'required',
             'old_pwd'      => 'required|min_length:6,max_length:30',
             'new_pwd'      => 'required|min_length:6,max_length:30',
             'confirm_pwd'  => 'required|min_length:6,max_length:30|equal_to:new_pwd',
-            'app_key'  => 'required|alpha_dash',
-            'code'     => 'required',
-            'remember' => 'required',
+            'app_key'      => 'required|alpha_dash',
+            'code'         => 'required',
+            'remember'     => 'required',
         ];
     }
 }

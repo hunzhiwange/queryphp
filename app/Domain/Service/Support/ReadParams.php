@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Support;
 
-use Leevel\Support\TypedStringArray;
 use Leevel\Support\Dto;
+use Leevel\Support\TypedStringArray;
 
 /**
  * 查询参数.

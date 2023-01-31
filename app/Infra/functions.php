@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use App\Infra\Proxy\Permission;
-use Leevel\Database\IDatabase;
 use App\Infra\RoadRunnerDump;
+use Leevel\Database\IDatabase;
 
 if (!function_exists('permission')) {
     /**

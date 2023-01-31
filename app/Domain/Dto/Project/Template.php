@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Dto\Project;
 
-use Leevel\Support\TypedDtoArray;
 use Leevel\Support\Dto;
+use Leevel\Support\TypedDtoArray;
 
 /**
  * 项目模板对象.

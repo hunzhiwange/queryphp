@@ -85,15 +85,15 @@ class ProjectUser extends Entity
         ],
         'type' => [
             self::COLUMN_NAME => '类型 1=成员;2=收藏;3=关注;',
-            self::ENUM_CLASS => ProjectUserTypeEnum::class,
+            self::ENUM_CLASS  => ProjectUserTypeEnum::class,
         ],
         'extend_type' => [
             self::COLUMN_NAME => '扩展类型 1=成员;2=管理员;',
-            self::ENUM_CLASS => ProjectUserExtendTypeEnum::class,
+            self::ENUM_CLASS  => ProjectUserExtendTypeEnum::class,
         ],
         'data_type' => [
             self::COLUMN_NAME => '数据类型 1=项目;2=问题;',
-            self::ENUM_CLASS => ProjectUserDataTypeEnum::class,
+            self::ENUM_CLASS  => ProjectUserDataTypeEnum::class,
         ],
         'data_id' => [
             self::COLUMN_NAME => '数据 ID',

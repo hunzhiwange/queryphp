@@ -6,10 +6,10 @@ namespace App\Domain\Service\User\Role;
 
 use App\Domain\Entity\User\Role;
 use App\Domain\Entity\User\RolePermission as EntityRolePermission;
-use Leevel\Support\Collection;
-use Leevel\Support\TypedIntArray;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
+use Leevel\Support\Collection;
+use Leevel\Support\TypedIntArray;
 
 /**
  * 角色授权.

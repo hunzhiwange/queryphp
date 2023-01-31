@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Project\ProjectLabel;
 
+use App\Domain\Entity\Project\ProjectLabel;
 use App\Domain\Service\Support\UpdateParams as CommonUpdateParams;
 use App\Domain\Validate\Project\ProjectLabel as ProjectLabelValidate;
-use App\Domain\Entity\Project\ProjectLabel;
 use Leevel\Validate\UniqueRule;
 
 /**
