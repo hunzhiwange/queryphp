@@ -11,8 +11,8 @@ use App\Domain\Entity\Project\ProjectUserTypeEnum;
 use App\Domain\Entity\User\User;
 use App\Exceptions\ProjectBusinessException;
 use App\Exceptions\ProjectErrorCode;
-use Leevel\Support\TypedIntArray;
 use Leevel\Database\Ddd\UnitOfWork;
+use Leevel\Support\TypedIntArray;
 
 /**
  * 项目新增成员.

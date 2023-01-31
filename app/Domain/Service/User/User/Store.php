@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
+use App\Domain\Service\Support\Store as CommonStore;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\UnitOfWork;
-use App\Domain\Service\Support\Store as CommonStore;
 
 /**
  * 用户保存.

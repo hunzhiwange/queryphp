@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Service\Support;
 
 use Closure;
-use Leevel\Support\Collection;
-use Leevel\Support\TypedStringArray;
 use Leevel\Database\Ddd\Repository;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
-use  Leevel\Support\Str\Camelize;
+use Leevel\Support\Collection;
+use Leevel\Support\Str\Camelize;
+use  Leevel\Support\TypedStringArray;
 
 /**
  * 查询.

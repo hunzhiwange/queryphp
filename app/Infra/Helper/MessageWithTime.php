@@ -11,6 +11,6 @@ class MessageWithTime
 {
     public static function handle(string $message, string $format = 'Y-m-d H:i:s'): string
     {
-        return sprintf('[%s]', date($format)) . $message . PHP_EOL;
+        return sprintf('[%s]', date($format)).$message.PHP_EOL;
     }
 }

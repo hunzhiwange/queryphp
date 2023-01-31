@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\Project\Project;
 
 use App\Domain\Entity\Project\Project;
-use App\Domain\Entity\Project\ProjectLabel as ProjectLabel;
+use App\Domain\Entity\Project\ProjectLabel;
 use App\Domain\Service\Support\Store as CommonStore;
 
 /**

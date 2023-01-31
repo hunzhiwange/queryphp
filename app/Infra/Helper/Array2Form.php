@@ -22,6 +22,6 @@ class Array2Form
             },
         );
 
-        return PHP_EOL . implode(PHP_EOL, $query);
+        return PHP_EOL.implode(PHP_EOL, $query);
     }
 }

@@ -10,9 +10,9 @@ use App\Domain\Entity\Project\ProjectUserExtendTypeEnum;
 use App\Domain\Entity\Project\ProjectUserTypeEnum;
 use App\Domain\Service\Support\Read;
 use Closure;
-use Leevel\Support\TypedIntArray;
 use Leevel\Database\Condition;
 use Leevel\Database\Ddd\Select;
+use Leevel\Support\TypedIntArray;
 
 /**
  * 项目列表.

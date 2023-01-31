@@ -7,7 +7,6 @@ namespace App\Infra\Provider;
 use App\Middleware\Auth;
 use Leevel\Router\RouterProvider;
 use Leevel\Session\Middleware\Session;
-use Leevel\Throttler\Middleware\Throttler;
 
 /**
  * 路由服务提供者.

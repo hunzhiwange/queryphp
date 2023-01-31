@@ -97,7 +97,7 @@ class Project extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
-            self::ENUM_CLASS => ProjectStatusEnum::class,
+            self::ENUM_CLASS  => ProjectStatusEnum::class,
         ],
         'progress' => [
             self::COLUMN_NAME => '进度条(最大值 10000，需要除以 100 表示实际进度)',
