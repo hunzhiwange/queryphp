@@ -18,7 +18,7 @@
         "ext-openssl": "*",
         "composer-runtime-api": ">=2.1",
         "gregwar/captcha": "dev-master",
-        "hunzhiwange/framework": "dev-master",
+        "hunzhiwange/framework": "^1.1",
         "nesbot/carbon": "^2.66",
         "nyholm/psr7": "^1.5",
         "spiral/dumper": "^2.14.1",
