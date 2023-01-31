@@ -17,7 +17,7 @@
         "ext-mbstring": "*",
         "ext-openssl": "*",
         "composer-runtime-api": ">=2.1",
-        "gregwar/captcha": "dev-master",
+        "gregwar/captcha": "^1.1.9",
         "hunzhiwange/framework": "^1.1",
         "nesbot/carbon": "^2.66",
         "nyholm/psr7": "^1.5",
