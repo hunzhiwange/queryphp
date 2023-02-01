@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace App\Infra;
 
 use Closure;
-use Doctrine\DBAL\Configuration;
-use Doctrine\DBAL\DBALException;
-use Doctrine\DBAL\DriverManager;
 
 /**
  * ThinkPHP Model 模型类兼容层

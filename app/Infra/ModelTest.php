@@ -721,4 +721,112 @@ class ModelTest extends TestCase
         $sql = "SELECT   * FROM ( SELECT   brand_id,brand_name FROM base_brand GROUP BY brand_id ORDER BY brand_id DESC  ) a WHERE a.brand_name = '你好' ORDER BY a.brand_id DESC";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub41(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->forceMaster()
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "/*FORCE_MASTER*/ SELECT   * FROM base_brand";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub42(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->limit('0,5')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand LIMIT 0,5";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub43(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->limit(1,5)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand LIMIT 1,5";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub44(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->group('brand_id')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand GROUP BY brand_id";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub45(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->order('brand_id DESC')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand ORDER BY brand_id DESC";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub46(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->field('brand_id')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   brand_id FROM base_brand";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub47(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->comment('注释')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand /*注释*/";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub48(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->page(3,5)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand LIMIT 10,5";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub49(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->page('3,5')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand LIMIT 10,5";
+        $this->assertSame($result, $sql);
+    }
 }
