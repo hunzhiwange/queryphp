@@ -949,4 +949,18 @@ class ModelTest extends TestCase
         $sql = "SELECT   brand.brand_name,p.name FROM base_brand brand,permission p LIMIT 10";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub59(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->alias('a')
+            ->join('permission b ON b.id= a.brand_id')
+            ->limit(10)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand a INNER JOIN permission b ON b.id= a.brand_id  LIMIT 10";
+        $this->assertSame($result, $sql);
+    }
 }
