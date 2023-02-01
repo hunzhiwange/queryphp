@@ -651,4 +651,74 @@ class ModelTest extends TestCase
         $sql = "SELECT   brand_id FROM base_brand WHERE brand_name = 'Google' LIMIT 1";
         $this->assertSame($result, $sql);
     }
+
+
+    public function testQuerySub38(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $subQuery = $baseBrandModel
+            ->field('brand_id,brand_name')
+            ->table('base_brand')
+            ->group('brand_name')
+            ->where([
+                'brand_id' => 1,
+            ])
+            ->order('brand_id DESC')
+            ->select(false);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   brand_id,brand_name FROM base_brand GROUP BY brand_name ORDER BY brand_id DESC";
+        $this->assertSame($result, $sql);
+        $this->assertSame($subQuery, '( '.$sql.'  )');
+    }
+
+    public function testQuerySub39(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $subQuery = $baseBrandModel
+            ->field('brand_id,brand_name')
+            ->table('base_brand')
+            ->group('brand_name')
+            ->where([
+                'brand_id' => 1,
+            ])
+            ->order('brand_id DESC')
+            ->buildSql();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   brand_id,brand_name FROM base_brand GROUP BY brand_name ORDER BY brand_id DESC";
+        $this->assertSame($result, $sql);
+        $this->assertSame($subQuery, '( '.$sql.'  )');
+    }
+
+    public function testQuerySub40(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $subQuery = $baseBrandModel
+            ->field('brand_id,brand_name')
+            ->table('base_brand')
+            ->group('brand_id')
+            ->where([
+                'brand_id' => 1,
+            ])
+            ->order('brand_id DESC')
+            ->buildSql();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   brand_id,brand_name FROM base_brand GROUP BY brand_id ORDER BY brand_id DESC";
+        $this->assertSame($result, $sql);
+        $this->assertSame($subQuery, '( '.$sql.'  )');
+
+        $baseBrandModel
+            ->table($subQuery.' a')
+            ->where([
+                'a.brand_name' => '你好',
+            ])
+            ->order('a.brand_id DESC')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM ( SELECT   brand_id,brand_name FROM base_brand GROUP BY brand_id ORDER BY brand_id DESC  ) a WHERE a.brand_name = '你好' ORDER BY a.brand_id DESC";
+        $this->assertSame($result, $sql);
+    }
 }
