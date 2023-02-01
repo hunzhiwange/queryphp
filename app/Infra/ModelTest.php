@@ -526,4 +526,74 @@ class ModelTest extends TestCase
         $sql = "SELECT   * FROM base_brand WHERE brand_id > 1 AND (  (brand_name like \"%thinkphp%\")  OR ( order_num like \"%thinkphp\")  )";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub27(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $count = $baseBrandModel
+            ->count();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   COUNT(*) AS tp_count FROM base_brand LIMIT 1";
+        $this->assertSame($result, $sql);
+        $this->assertTrue(is_int($count));
+    }
+
+    public function testQuerySub28(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $count = $baseBrandModel
+            ->count('brand_id');
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   COUNT(brand_id) AS tp_count FROM base_brand LIMIT 1";
+        $this->assertSame($result, $sql);
+        $this->assertTrue(is_int($count));
+    }
+
+    public function testQuerySub29(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $count = $baseBrandModel
+            ->max('brand_id');
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   MAX(brand_id) AS tp_max FROM base_brand LIMIT 1";
+        $this->assertSame($result, $sql);
+        $this->assertTrue(is_int($count));
+    }
+
+    public function testQuerySub30(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $count = $baseBrandModel
+            ->where('brand_id>0')->min('brand_id');
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   MIN(brand_id) AS tp_min FROM base_brand WHERE ( brand_id>0 ) LIMIT 1";
+        $this->assertSame($result, $sql);
+        $this->assertTrue(is_int($count));
+    }
+
+    public function testQuerySub31(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $count = $baseBrandModel
+            ->where('brand_id>0')->avg('brand_id');
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   AVG(brand_id) AS tp_avg FROM base_brand WHERE ( brand_id>0 ) LIMIT 1";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub32(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $count = $baseBrandModel
+            ->where('brand_id>0')->sum('brand_id');
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   SUM(brand_id) AS tp_sum FROM base_brand WHERE ( brand_id>0 ) LIMIT 1";
+        $this->assertSame($result, $sql);
+    }
 }
