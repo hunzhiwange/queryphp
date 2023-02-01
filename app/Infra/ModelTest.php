@@ -168,4 +168,100 @@ class ModelTest extends TestCase
         $sql = "SELECT   * FROM base_brand WHERE brand_name = 'h' AND brand_num = 'y'";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuery6(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_name']  = array('eq','h');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_name = 'h'";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuery7(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_name']  = array('neq','h');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_name <> 'h'";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuery8(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_name']  = array('gt','h');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_name > 'h'";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuery9(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_name']  = array('egt','h');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_name >= 'h'";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub1(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_name']  = array('lt','h');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_name < 'h'";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub3(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_name']  = array('elt','h');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_name <= 'h'";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub4(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_name']  = array('like','h%');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_name LIKE 'h%'";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub5(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_name']  = array('notlike','h%');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_name NOT LIKE 'h%'";
+        $this->assertSame($result, $sql);
+    }
 }
