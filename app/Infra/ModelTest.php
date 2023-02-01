@@ -422,4 +422,108 @@ class ModelTest extends TestCase
         $sql = "UPDATE base_brand SET brand_name='ThinkPHP',company_id=company_id+1 WHERE ( brand_id=5 )";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub19(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] =array(array('gt',1),array('lt',10));
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( brand_id > 1 AND brand_id < 10  )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub20(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] =array(array('gt',3),array('lt',10), 'or');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( brand_id > 3 OR brand_id < 10 )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub21(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] =array(array('neq',6),array('gt',3),'and');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( brand_id <> 6 AND brand_id > 3  )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub22(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] =array(array('like','%a%'), array('like','%b%'), array('like','%c%'), 'ThinkPHP','or');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( brand_id LIKE '%a%' OR brand_id LIKE '%b%' OR brand_id LIKE '%c%' OR brand_id = 'ThinkPHP' )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub23(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] = array('neq',1);
+        $map['brand_name'] = 'ok';
+        $map['_string'] = 'company_id=1 AND order_num>10';
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_id <> 1 AND brand_name = 'ok' AND ( company_id=1 AND order_num>10 )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub24(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] = array('gt','100');
+        $map['_query'] = 'company_id=1&order_num=100&_logic=or';
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_id > '100' AND ( company_id = '1' OR order_num = '100' )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub25(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $where['brand_name']  = array('like', '%thinkphp%');
+        $where['order_num']  = array('like','%thinkphp%');
+        $where['_logic'] = 'or';
+        $map['_complex'] = $where;
+        $map['brand_id']  = array('gt',1);
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE (  brand_name LIKE '%thinkphp%' OR order_num LIKE '%thinkphp%' ) AND brand_id > 1";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub26(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] = array('gt',1);
+        $map['_string'] = ' (brand_name like "%thinkphp%")  OR ( order_num like "%thinkphp") ';
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_id > 1 AND (  (brand_name like \"%thinkphp%\")  OR ( order_num like \"%thinkphp\")  )";
+        $this->assertSame($result, $sql);
+    }
 }
