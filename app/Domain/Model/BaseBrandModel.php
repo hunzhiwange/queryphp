@@ -6,6 +6,7 @@ namespace App\Domain\Model;
 
 use App\Domain\Entity\Product\BaseBrand;
 use App\Infra\Model;
+use Leevel\Encryption\Helper\Text;
 
 /**
  * 商品品牌模型
@@ -240,7 +241,7 @@ class BaseBrandModel extends Model {
      * @since 2016-06-28
      */
     protected function _before_write(&$data) {
-        isset($data['brand_name']) && $data['brand_name'] = safe_text($data['brand_name']);
+        isset($data['brand_name']) && $data['brand_name'] = Text::handle($data['brand_name']);
     }
     
     public static function prepareBase($companyId, array &$data, $fields, $appendField = '')

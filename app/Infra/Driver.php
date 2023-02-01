@@ -181,60 +181,38 @@ use PDO;
      * @return mixed
      */
     public function execute($str,$fetchSql=false) {
-        $this->initConnect(true);
-        if ( !$this->_linkID ) return false;
         $this->queryStr = $str;
         if(!empty($this->bind)){
             $that   =   $this;
             $this->queryStr =   strtr($this->queryStr,array_map(function($val) use($that){ return '\''.$that->escapeString($val).'\''; },$this->bind));
         }
 
-        //error_log(date('H:i:s') . ' exec sql : ' . $this->queryStr . "\r\n\r\n",3,LOG_PATH . 'sql_' . date('Y_m_d') . '.log');
         if($fetchSql){
             return $this->queryStr;
         }
-        //释放前次的查询结果
-        if ( !empty($this->PDOStatement) ) $this->free();
         $this->executeTimes++;
-        N('db_write',1); // 兼容代码
-        // 记录开始执行时间
-        $this->debug(true);
-        // 修复在脚本中出现错误 "SQLSTATE[HY000]: General error: 2006 MySQL server has gone away"
-        try{
-            $this->PDOStatement =   $this->_linkID->prepare($str);
-        }catch(\PDOException $e){
-            if ($e->errorInfo[1] == 2006 || $e->errorInfo[1] == 2013) {
-                $this->linkID = array();
-                $this->_linkID = null;
-                $this->initConnect(false);
-                $this->PDOStatement = $this->_linkID->prepare($str);
-            }
-        }
+        // foreach ($this->bind as $key => $val) {
+        //     if(is_array($val)){
+        //         $this->PDOStatement->bindValue($key, $val[0], $val[1]);
+        //     }else{
+        //         $this->PDOStatement->bindValue($key, $val);
+        //     }
+        // }
 
-        if(false === $this->PDOStatement) {
-            $this->error();
-            return false;
-        }
-        foreach ($this->bind as $key => $val) {
-            if(is_array($val)){
-                $this->PDOStatement->bindValue($key, $val[0], $val[1]);
-            }else{
-                $this->PDOStatement->bindValue($key, $val);
-            }
-        }
         $this->bind =   array();
-        $result =   $this->PDOStatement->execute();
-        $this->debug(false);
-        if ( false === $result) {
-            $this->error();
-            return false;
-        } else {
-            $this->numRows = $this->PDOStatement->rowCount();
-            if(preg_match("/^\s*(INSERT\s+INTO|REPLACE\s+INTO)\s+/i", $str)) {
-                $this->lastInsID = $this->_linkID->lastInsertId();
-            }
-            return $this->numRows;
-        }
+        return $this->entity::select()->execute($this->queryStr);
+
+       // // $result =   $this->PDOStatement->execute();
+       //  if ( false === $result) {
+       //      $this->error();
+       //      return false;
+       //  } else {
+       //      $this->numRows = $this->PDOStatement->rowCount();
+       //      if(preg_match("/^\s*(INSERT\s+INTO|REPLACE\s+INTO)\s+/i", $str)) {
+       //          $this->lastInsID = $this->_linkID->lastInsertId();
+       //      }
+       //      return $this->numRows;
+       //  }
     }
 
     /**
@@ -1096,7 +1074,7 @@ use PDO;
      * @return string
      */
     public function getLastSql($model='') {
-        return $model?$this->modelSql[$model]:$this->queryStr;
+        return $model && isset($this->modelSql[$model]) ?$this->modelSql[$model]:$this->queryStr;
     }
 
     /**

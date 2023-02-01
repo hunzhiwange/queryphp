@@ -397,4 +397,29 @@ class ModelTest extends TestCase
         $sql = "SELECT   * FROM base_brand WHERE brand_id IN ('1','5','8')";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub17(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] =array('exp',' IN (1,3,8) ');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_id  IN (1,3,8)";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub18(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        // 要修改的数据对象属性赋值
+        $data['brand_name'] = 'ThinkPHP';
+        $data['company_id'] = array('exp','company_id+1');// 品牌的公司ID加1
+        $baseBrandModel->where('brand_id=5')->save($data); // 根据条件保存修改的数据
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE base_brand SET brand_name='ThinkPHP',company_id=company_id+1 WHERE ( brand_id=5 )";
+        $this->assertSame($result, $sql);
+    }
 }
