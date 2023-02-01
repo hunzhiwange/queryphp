@@ -578,7 +578,7 @@ class ModelTest extends TestCase
     public function testQuerySub31(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $count = $baseBrandModel
+        $baseBrandModel
             ->where('brand_id>0')->avg('brand_id');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -589,11 +589,66 @@ class ModelTest extends TestCase
     public function testQuerySub32(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $count = $baseBrandModel
+        $baseBrandModel
             ->where('brand_id>0')->sum('brand_id');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
         $sql = "SELECT   SUM(brand_id) AS tp_sum FROM base_brand WHERE ( brand_id>0 ) LIMIT 1";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub33(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->query("select * from base_brand where brand_id=83");
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "select * from base_brand where brand_id=83";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub34(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->execute("update base_brand set brand_name='hello' where brand_id=83");
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "update base_brand set brand_name='hello' where brand_id=83";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub35(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->getByBrandName('liu21st');
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_name = 'liu21st' LIMIT 1";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub36(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->getByBrandLogo('liu21st');
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_logo = 'liu21st' LIMIT 1";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub37(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->getFieldByBrandName('Google','brand_id');
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   brand_id FROM base_brand WHERE brand_name = 'Google' LIMIT 1";
         $this->assertSame($result, $sql);
     }
 }
