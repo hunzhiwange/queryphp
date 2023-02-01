@@ -1807,7 +1807,7 @@ abstract class Model {
      * @return Model
      */
     public function limit($offset,$length=null){
-        if(is_null($length) && strpos($offset,',')){
+        if(is_null($length) && is_string($offset) && strpos($offset,',')){
             list($offset,$length)   =   explode(',',$offset);
         }
         $this->options['limit']     =   intval($offset).( $length? ','.intval($length) : '' );

@@ -1101,7 +1101,7 @@ use PDO;
      * @param string $str  SQL字符串
      * @return string
      */
-    public function escapeString($str) {
+    public function escapeString(string $str):string {
         return addslashes($str);
     }
 

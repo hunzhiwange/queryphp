@@ -829,4 +829,124 @@ class ModelTest extends TestCase
         $sql = "SELECT   * FROM base_brand LIMIT 10,5";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub50(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('brand_id=1 AND brand_name=1')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( brand_id=1 AND brand_name=1 )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub51(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where("brand_id=%d and brand_name='%s' and brand_logo='%f'",array(1,'hello',0.5))
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( brand_id=1 and brand_name='hello' and brand_logo='0.500000' )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub52(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where("brand_id=%d and brand_name='%s' and brand_logo='%f'",1,'hello',0.5)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( brand_id=1 and brand_name='hello' and brand_logo='0.500000' )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub53(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_name'] = 'thinkphp';
+        $map['brand_logo'] = '1';
+        $baseBrandModel
+            ->where($map)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_name = 'thinkphp' AND brand_logo = '1'";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub54(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_name'] = 'thinkphp';
+        $map['brand_logo'] = 'thinkphp';
+        $where['brand_logo'] = '1';
+        $baseBrandModel
+            ->where($map)
+            ->where($where)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_name = 'thinkphp' AND brand_logo = '1'";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub55(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->table('base_brand')
+            ->where('brand_id<2')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( brand_id<2 )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub56(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->table('test_queryphp.base_brand')
+            ->where('brand_id<2')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM test_queryphp.base_brand WHERE ( brand_id<2 )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub57(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->field('brand.brand_name,p.name')
+            ->table('base_brand brand,permission p')
+            ->limit(10)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   brand.brand_name,p.name FROM base_brand brand,permission p LIMIT 10";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub58(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->field('brand.brand_name,p.name')
+            ->table(array('base_brand'=>'brand','permission'=>'p'))
+            ->limit(10)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   brand.brand_name,p.name FROM base_brand brand,permission p LIMIT 10";
+        $this->assertSame($result, $sql);
+    }
 }
