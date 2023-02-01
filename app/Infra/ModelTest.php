@@ -264,4 +264,137 @@ class ModelTest extends TestCase
         $sql = "SELECT   * FROM base_brand WHERE brand_name NOT LIKE 'h%'";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub6(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_name'] =array('like',array('%thinkphp%','%q'),'OR');
+        $map['brand_num'] =array('notlike',array('%thinkphp%','%q'),'AND');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE (brand_name LIKE '%thinkphp%' OR brand_name LIKE '%q') AND (brand_num NOT LIKE '%thinkphp%' AND brand_num NOT LIKE '%q')";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub7(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] =array('between','1,8');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_id BETWEEN '1' AND '8'";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub8(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] =array('between',array('1','8'));
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_id BETWEEN '1' AND '8'";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub9(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] =array('notbetween',array('1','8'));
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_id NOT BETWEEN '1' AND '8'";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub10(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] =array('notbetween','1,8');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_id NOT BETWEEN '1' AND '8'";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub11(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] =array('not in','1,5,8');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_id NOT IN ('1','5','8')";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub12(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] =array('in','1,5,8');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_id IN ('1','5','8')";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub13(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] =array('in','1,5,8');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_id IN ('1','5','8')";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub14(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] =array('in','1,5,8');
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_id IN ('1','5','8')";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub15(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] =array('not in',array('1','5','8'));
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_id NOT IN ('1','5','8')";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub16(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_id'] =array('in',array('1','5','8'));
+        $result = $baseBrandModel
+            ->where($map)
+            ->select(['fetch_sql' => true]);
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_id IN ('1','5','8')";
+        $this->assertSame($result, $sql);
+    }
 }
