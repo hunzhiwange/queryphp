@@ -129,7 +129,7 @@ use PDO;
      * @param boolean $fetchSql  不执行只是获取SQL
      * @return mixed
      */
-    public function query($str,$fetchSql=false) {
+    public function query($str,$fetchSql=false, $cacheOptions = []) {
         $this->queryStr     =   $str;
         if(!empty($this->bind)){
             $that   =   $this;
@@ -165,7 +165,14 @@ use PDO;
 
         $this->bind =   array();
 
-        $result = $this->entity::select()->query($this->queryStr);
+        $result = $this->entity::select()
+            ->query(
+                $this->queryStr,
+                [],
+                false,
+                $cacheOptions['key'] ?? null,
+                $cacheOptions['expire'] ?? null,
+            );
         foreach ($result as &$v) {
             $v = (array) $v;
         }
@@ -1015,7 +1022,7 @@ use PDO;
         $this->model  =   $options['model'];
         $this->parseBind(!empty($options['bind'])?$options['bind']:array());
         $sql    = $this->buildSelectSql($options);
-        $result   = $this->query($sql,!empty($options['fetch_sql']) ? true : false);
+        $result   = $this->query($sql,!empty($options['fetch_sql']) ? true : false, $options['cache'] ?? []);
         return $result;
     }
 

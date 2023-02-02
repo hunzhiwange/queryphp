@@ -747,12 +747,8 @@ abstract class Model {
         // 判断查询缓存
         if(isset($options['cache'])){
             $cache  =   $options['cache'];
-            $key    =   is_string($cache['key'])?$cache['key']:md5(serialize($options));
-            $data   =   S($key,'',$cache);
-            if(false !== $data){
-                $this->data     =   $data;
-                return $data;
-            }
+            $key    =   is_string($cache['key'])?$cache['key']:'sql:'.md5(serialize($options));
+            $options['cache']['key'] = $key;
         }
         $resultSet          =   $this->db->select($options);
         if(false === $resultSet) {
@@ -772,9 +768,7 @@ abstract class Model {
             return $this->returnResult($data,$this->options['result']);
         }
         $this->data     =   $data;
-        if(isset($cache)){
-            S($key,$data,$cache);
-        }
+
         return $this->data;
     }
     // 查询成功的回调方法
@@ -1645,7 +1639,7 @@ abstract class Model {
             $options  = preg_replace_callback("/__([A-Z0-9_-]+)__/sU", function($match) use($prefix){ return $prefix.strtolower($match[1]);}, $union);
         }elseif(is_array($union)){
             if(isset($union[0])) {
-                $this->options['union']  =  array_merge($this->options['union'],$union);
+                $this->options['union']  =  array_merge($this->options['union']??[],$union);
                 return $this;
             }else{
                 $options =  $union;
