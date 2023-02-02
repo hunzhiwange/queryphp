@@ -1788,7 +1788,7 @@ abstract class Model {
      * @return Model
      */
     public function page($page,$listRows=null){
-        if(is_null($listRows) && strpos($page,',')){
+        if(is_null($listRows) && is_string($page) && strpos($page,',')){
             list($page,$listRows)   =   explode(',',$page);
         }
         $this->options['page']      =   array(intval($page),intval($listRows));

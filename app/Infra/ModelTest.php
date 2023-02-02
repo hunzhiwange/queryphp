@@ -1317,4 +1317,278 @@ class ModelTest extends TestCase
         $sql = "UPDATE base_brand SET brand_name='hello',brand_logo='yes' WHERE ( brand_id=1 )";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub86(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status=1')
+            ->order('brand_id desc')
+            ->limit(5)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( status=1 ) ORDER BY brand_id desc LIMIT 5";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub87(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status=1')
+            ->order('brand_id desc,status')
+            ->limit(5)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( status=1 ) ORDER BY brand_id desc,status LIMIT 5";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub88(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status=1')
+            ->order(array('status','brand_id'=>'desc'))
+            ->limit(5)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( status=1 ) ORDER BY status,brand_id desc LIMIT 5";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub89(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status>1')
+            ->limit(3)
+            ->save(array('brand_name'=>'A'));
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE base_brand SET brand_name='A' WHERE ( status>1 ) LIMIT 3";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub90(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status>1')
+            ->limit('10,25')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( status>1 ) LIMIT 10,25";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub91(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status>1')
+            ->limit(10,25)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( status>1 ) LIMIT 10,25";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub92(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status>1')
+            ->page('1,10')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( status>1 ) LIMIT 0,10";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub93(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status>1')
+            ->page('2,10')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( status>1 ) LIMIT 10,10";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub94(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status>1')
+            ->page(2,10)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( status>1 ) LIMIT 10,10";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub95(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status>1')
+            ->limit(25)
+            ->page(3)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( status>1 ) LIMIT 50,25";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub96(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status>1')
+            ->page('3,25')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( status>1 ) LIMIT 50,25";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub97(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status>1')
+            ->field('brand_name,max(brand_id)')
+            ->group('brand_logo')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   brand_name,max(brand_id) FROM base_brand WHERE ( status>1 ) GROUP BY brand_logo";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub98(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status>1')
+            ->field('brand_name,max(brand_id)')
+            ->group('brand_logo,status')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   brand_name,max(brand_id) FROM base_brand WHERE ( status>1 ) GROUP BY brand_logo,status";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub99(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status>1')
+            ->field('brand_name,max(brand_id)')
+            ->group('brand_logo,status')
+            ->having('count(status)>3')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   brand_name,max(brand_id) FROM base_brand WHERE ( status>1 ) GROUP BY brand_logo,status HAVING count(status)>3";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub100(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->join('permission ON permission.id = base_brand.brand_id')
+            ->join('role ON role.id = base_brand.brand_id')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand INNER JOIN permission ON permission.id = base_brand.brand_id INNER JOIN role ON role.id = base_brand.brand_id";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub101(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->join([
+                'permission ON permission.id = base_brand.brand_id',
+                'role ON role.id = base_brand.brand_id',
+            ])
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand INNER JOIN permission ON permission.id = base_brand.brand_id INNER JOIN role ON role.id = base_brand.brand_id";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub102(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->join('LEFT JOIN permission ON permission.id = base_brand.brand_id')
+            ->join('LEFT JOIN role ON role.id = base_brand.brand_id')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand LEFT JOIN permission ON permission.id = base_brand.brand_id LEFT JOIN role ON role.id = base_brand.brand_id";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub103(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->join('RIGHT JOIN permission ON permission.id = base_brand.brand_id')
+            ->join('RIGHT JOIN role ON role.id = base_brand.brand_id')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand RIGHT JOIN permission ON permission.id = base_brand.brand_id RIGHT JOIN role ON role.id = base_brand.brand_id";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub104(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->field('brand_name as name')
+            ->table('base_brand')
+            ->union('SELECT name FROM permission')
+            ->union('SELECT name FROM role')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   brand_name as name FROM base_brand UNION SELECT name FROM permission UNION SELECT name FROM role";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub105(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->field('brand_name as name')
+            ->table('base_brand')
+            ->union(array('field'=>'name','table'=>'permission'))
+            ->union(array('field'=>'name','table'=>'role'))
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   brand_name as name FROM base_brand UNION SELECT   name FROM permission  UNION SELECT   name FROM role";
+        $this->assertSame($result, $sql);
+    }
 }
