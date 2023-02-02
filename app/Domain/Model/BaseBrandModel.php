@@ -40,12 +40,12 @@ class BaseBrandModel extends Model {
         $arrIn = array('map' => array());
         $arrIn['map'] = array(
             'company_id' => get_company_id(),
-            'brand_num' => I('brand_num','','trim'),
+            'brand_num' => http_request_value('brand_num','','trim'),
             'status'=>'T'
         );
         
-        if(I('brand_id','','intval')){
-            $arrIn['map']['brand_id'] = array('neq',I('brand_id','','intval'));
+        if(http_request_value('brand_id','','intval')){
+            $arrIn['map']['brand_id'] = array('neq',http_request_value('brand_id','','intval'));
         }
 
         return $this->where($arrIn['map'])->count() == 0;
@@ -62,13 +62,13 @@ class BaseBrandModel extends Model {
 
         $arrIn['map'] = array(
             'company_id' 	=> get_company_id(),
-            'brand_name' => I('brand_name','','trim'),
+            'brand_name' => http_request_value('brand_name','','trim'),
             'status' => 'T',
             'collaborator_id' => 0 //运营商校验数据时，排除同名的联营商品牌
         );
     
-        if(I('brand_id','','intval')){
-            $arrIn['map']['brand_id'] = array('neq',I('brand_id','','intval'));
+        if(http_request_value('brand_id','','intval')){
+            $arrIn['map']['brand_id'] = array('neq',http_request_value('brand_id','','intval'));
         }
         return $this->where($arrIn['map'])->count() < 1;
     }

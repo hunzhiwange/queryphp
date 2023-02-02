@@ -300,7 +300,7 @@ abstract class Model {
                 // 重置数据
                 $this->data     = array();
             }else{
-                $this->error    = L('_DATA_TYPE_INVALID_');
+                $this->error    = '_DATA_TYPE_INVALID_';
                 return false;
             }
         }
@@ -430,7 +430,7 @@ abstract class Model {
             }
             if(!isset($where)){
                 // 如果没有任何更新条件则不执行
-                $this->error        =   L('_OPERATION_WRONG_');
+                $this->error        =   '_OPERATION_WRONG_';
                 return false;
             }else{
                 $options['where']   =   $where;
@@ -985,13 +985,13 @@ abstract class Model {
      public function create($data='',$type='') {
         // 如果没有传值默认取POST数据
         if(empty($data)) {
-            $data   =   I('post.');
+            $data   = http_request()->request->all();
         }elseif(is_object($data)){
             $data   =   get_object_vars($data);
         }
         // 验证数据
         if(empty($data) || !is_array($data)) {
-            $this->error = L('_DATA_TYPE_INVALID_');
+            $this->error = '_DATA_TYPE_INVALID_';
             return false;
         }
 
@@ -1033,20 +1033,12 @@ abstract class Model {
         // 数据自动验证
         if(!$this->autoValidation($data,$type)) return false;
 
-        // 表单令牌验证
-        if(!$this->autoCheckToken($data)) {
-            $this->error = L('_TOKEN_ERROR_');
-            return false;
-        }
-
         // 验证完成生成数据对象
         if($this->autoCheckFields) { // 开启字段检测 则过滤非法字段数据
             $fields =   $this->getDbFields();
             foreach ($data as $key=>$val){
                 if(!in_array($key,$fields)) {
                     unset($data[$key]);
-                }elseif(MAGIC_QUOTES_GPC && is_string($val)){
-                    $data[$key] =   stripslashes($val);
                 }
             }
         }
@@ -1058,30 +1050,6 @@ abstract class Model {
         // 返回创建的数据以供其他调用
         return $data;
      }
-
-    // 自动表单令牌验证
-    // TODO  ajax无刷新多次提交暂不能满足
-    public function autoCheckToken($data) {
-        // 支持使用token(false) 关闭令牌验证
-        if(isset($this->options['token']) && !$this->options['token']) return true;
-        if(C('TOKEN_ON')){
-            $name   = C('TOKEN_NAME', null, '__hash__');
-            if(!isset($data[$name]) || !isset($_SESSION[$name])) { // 令牌数据无效
-                return false;
-            }
-
-            // 令牌验证
-            list($key,$value)  =  explode('_',$data[$name]);
-            if($value && $_SESSION[$name][$key] === $value) { // 防止重复提交
-                unset($_SESSION[$name][$key]); // 验证完成销毁session
-                return true;
-            }
-            // 开启TOKEN重置
-            if(C('TOKEN_RESET')) unset($_SESSION[$name][$key]);
-            return false;
-        }
-        return true;
-    }
 
     /**
      * 使用正则验证数据
@@ -1203,7 +1171,7 @@ abstract class Model {
                                 return false;
                             break;
                         case self::VALUE_VALIDATE:    // 值不为空的时候才验证
-                            if('' != trim($data[$val[0]]))
+                            if(isset($data[$val[0]]) && '' != trim($data[$val[0]]))
                                 if(false === $this->_validationField($data,$val)) 
                                     return false;
                             break;
@@ -1717,7 +1685,7 @@ abstract class Model {
      * @param boolean $except 是否排除
      * @return Model
      */
-    public function field($field,$except=false){
+    public function field($field = '',$except=false){
         if(true === $field) {// 获取全部字段
             $fields     =  $this->getDbFields();
             $field      =  $fields?:'*';

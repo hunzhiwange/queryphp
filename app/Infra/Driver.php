@@ -184,7 +184,7 @@ use PDO;
         $this->queryStr = $str;
         if(!empty($this->bind)){
             $that   =   $this;
-            $this->queryStr =   strtr($this->queryStr,array_map(function($val) use($that){ return '\''.$that->escapeString($val).'\''; },$this->bind));
+            $this->queryStr =   strtr($this->queryStr,array_map(function($val) use($that){ return '\''.(is_string($val) ? $that->escapeString($val): $val).'\''; },$this->bind));
         }
 
         if($fetchSql){
@@ -870,7 +870,7 @@ use PDO;
                 $values[]   =  $val[1];
             }elseif(is_scalar($val)) { // 过滤非标量数据
                 $fields[]   =   $this->parseKey($key);
-                if(0===strpos($val,':') && in_array($val,array_keys($this->bind))){
+                if(is_string($val) && 0===strpos($val,':') && in_array($val,array_keys($this->bind))){
                     $values[]   =   $this->parseValue($val);
                 }else{
                     $name       =   count($this->bind);
@@ -996,7 +996,7 @@ use PDO;
     public function getFields()
     {
         $fields = array_keys($this->entity->fields());
-        $primaryKey = array_keys($this->entity->primaryKey());
+        $primaryKey = $this->entity->primaryKey();
 
         return [
             'fields' => $fields,
