@@ -202,11 +202,11 @@ class Auth extends BaseAuth
     private function findAppSecret(string $appKey): string
     {
         return $this
-            ->appReposity()
+            ->appRepository()
             ->findAppSecretByKey($appKey);
     }
 
-    private function appReposity(): BaseApp
+    private function appRepository(): BaseApp
     {
         return UnitOfWork::make()->repository(App::class);
     }
