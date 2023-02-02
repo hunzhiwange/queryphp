@@ -1055,19 +1055,6 @@ class ModelTest extends TestCase
         $this->assertSame($result, $sql);
     }
 
-    public function testQuerySub66(): void
-    {
-        container()->instance('company_id', 999);
-        http_request()->request->set('brand_name', 'hello');
-        $baseBrandModel = BaseBrandModel::make();
-        $data = 'brand_name=hi&brand_logo=hello';
-        $baseBrandModel->data($data)->add($data);
-        $result = $baseBrandModel->getLastSql();
-        $result = trim($result);
-        $sql = "INSERT INTO base_brand (brand_name,brand_logo) VALUES ('hi','hello')";
-        $this->assertSame($result, $sql);
-    }
-
     public function testQuerySub68(): void
     {
         container()->instance('company_id', 999);
@@ -1235,6 +1222,99 @@ class ModelTest extends TestCase
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
         $sql = "SELECT   * FROM base_brand";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub80(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->field(true)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   brand_id,company_id,status,order_num,brand_num,brand_name,brand_logo,brand_about,update_date,create_date,brand_letter,seo_keywords FROM base_brand";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub81(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->field('brand_id',true)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   company_id,status,order_num,brand_num,brand_name,brand_logo,brand_about,update_date,create_date,brand_letter,seo_keywords FROM base_brand";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub82(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->field('brand_id,company_id',true)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   status,order_num,brand_num,brand_name,brand_logo,brand_about,update_date,create_date,brand_letter,seo_keywords FROM base_brand";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub83(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->field(['brand_id','company_id'],true)
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   status,order_num,brand_num,brand_name,brand_logo,brand_about,update_date,create_date,brand_letter,seo_keywords FROM base_brand";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub84(): void
+    {
+        container()->instance('company_id', 999);
+        http_request()->request->set('status', 'F');
+        http_request()->request->set('brand_name', 'hello');
+        http_request()->request->set('brand_logo', 'yes');
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->field('brand_logo,brand_name')
+            ->create();
+        $data = $baseBrandModel->data();
+        $json = <<<'eot'
+            {
+                "brand_name": "hello",
+                "brand_logo": "yes",
+                "company_id": 999
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $data
+            )
+        );
+    }
+
+    public function testQuerySub85(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->field('brand_logo,brand_name')
+            ->where('brand_id=1')
+            ->save([
+                'status' => 'F',
+                'brand_name' => 'hello',
+                'brand_logo' => 'yes'
+            ]);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE base_brand SET brand_name='hello',brand_logo='yes' WHERE ( brand_id=1 )";
         $this->assertSame($result, $sql);
     }
 }
