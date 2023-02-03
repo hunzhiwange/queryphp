@@ -1159,34 +1159,28 @@ abstract class Model
         return $result;
     }
 
-    protected function _before_update(&$data, $options)
+    protected function _before_update(array &$data, array $options): void
     {
     }
 
-    protected function _after_update($data, $options)
+    protected function _after_update(array $data, array $options): void
     {
     }
 
     /**
-     * 字段值减少
-     * @access public
-     * @param string $field 字段名
-     * @param integer $step 减少值
-     * @return boolean
+     * 字段值减少.
      */
-    public function setDec($field, $step = 1)
+    public function setDec($field, int $step = 1): bool|int|string
     {
         return $this->setField($field, array('exp', $field . '-' . $step));
     }
 
     /**
-     * 创建数据对象 但不保存到数据库
-     * @access public
-     * @param mixed $data 创建数据
-     * @param string $type 状态
-     * @return mixed
+     * 创建数据对象.
+     *
+     * - 但不保存到数据库.
      */
-    public function create($data = '', $type = '')
+    public function create(mixed $data = '', int $type = 0): mixed
     {
         // 如果没有传值默认取POST数据
         if (empty($data)) {
@@ -1196,7 +1190,7 @@ abstract class Model
         }
         // 验证数据
         if (empty($data) || !is_array($data)) {
-            $this->error = '_DATA_TYPE_INVALID_';
+            $this->error = 'Data type invalid.';
             return false;
         }
 
@@ -1230,7 +1224,9 @@ abstract class Model
         }
 
         // 数据自动验证
-        if (!$this->autoValidation($data, $type)) return false;
+        if (!$this->autoValidation($data, $type)) {
+            return false;
+        }
 
         // 验证完成生成数据对象
         if ($this->autoCheckFields) { // 开启字段检测 则过滤非法字段数据
