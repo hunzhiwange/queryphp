@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Infra;
 
 use App\Domain\Model\BaseBrandModel;
+use Exception;
 use Leevel\Http\Request;
-use Tests\TestCase;
 use stdClass;
+use Tests\TestCase;
+use Throwable;
 
 class ModelTest extends TestCase
 {
@@ -55,7 +57,7 @@ class ModelTest extends TestCase
     public function testQuickQuery2(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_name&brand_num'] =array('品牌1','品牌2','_multi'=>true);
+        $map['brand_name&brand_num'] = array('品牌1', '品牌2', '_multi' => true);
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -68,7 +70,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = '品牌1';
-        $map['brand_num']  = '品牌2';
+        $map['brand_num'] = '品牌2';
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -80,7 +82,7 @@ class ModelTest extends TestCase
     public function testQuickQuery3(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['`brand_name`&brand_num&`brand_logo`'] =array('1',array('gt','0'),'QueryPHP','_multi'=>true);
+        $map['`brand_name`&brand_num&`brand_logo`'] = array('1', array('gt', '0'), 'QueryPHP', '_multi' => true);
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -93,7 +95,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = '1';
-        $map['brand_num'] = array('gt',0);
+        $map['brand_num'] = array('gt', 0);
         $map['brand_logo'] = 'QueryPHP';
         $result = $baseBrandModel
             ->where($map)
@@ -147,7 +149,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $map = new stdClass();
         $map->brand_name = 'hello';
-        $map->brand_num= 'world';
+        $map->brand_num = 'world';
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -173,7 +175,7 @@ class ModelTest extends TestCase
     public function testQuery6(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_name']  = array('eq','h');
+        $map['brand_name'] = array('eq', 'h');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -185,7 +187,7 @@ class ModelTest extends TestCase
     public function testQuery7(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_name']  = array('neq','h');
+        $map['brand_name'] = array('neq', 'h');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -197,7 +199,7 @@ class ModelTest extends TestCase
     public function testQuery8(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_name']  = array('gt','h');
+        $map['brand_name'] = array('gt', 'h');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -209,7 +211,7 @@ class ModelTest extends TestCase
     public function testQuery9(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_name']  = array('egt','h');
+        $map['brand_name'] = array('egt', 'h');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -221,7 +223,7 @@ class ModelTest extends TestCase
     public function testQuerySub1(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_name']  = array('lt','h');
+        $map['brand_name'] = array('lt', 'h');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -233,7 +235,7 @@ class ModelTest extends TestCase
     public function testQuerySub3(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_name']  = array('elt','h');
+        $map['brand_name'] = array('elt', 'h');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -245,7 +247,7 @@ class ModelTest extends TestCase
     public function testQuerySub4(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_name']  = array('like','h%');
+        $map['brand_name'] = array('like', 'h%');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -257,7 +259,7 @@ class ModelTest extends TestCase
     public function testQuerySub5(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_name']  = array('notlike','h%');
+        $map['brand_name'] = array('notlike', 'h%');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -269,8 +271,8 @@ class ModelTest extends TestCase
     public function testQuerySub6(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_name'] =array('like',array('%thinkphp%','%q'),'OR');
-        $map['brand_num'] =array('notlike',array('%thinkphp%','%q'),'AND');
+        $map['brand_name'] = array('like', array('%thinkphp%', '%q'), 'OR');
+        $map['brand_num'] = array('notlike', array('%thinkphp%', '%q'), 'AND');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -282,7 +284,7 @@ class ModelTest extends TestCase
     public function testQuerySub7(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] =array('between','1,8');
+        $map['brand_id'] = array('between', '1,8');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -294,7 +296,7 @@ class ModelTest extends TestCase
     public function testQuerySub8(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] =array('between',array('1','8'));
+        $map['brand_id'] = array('between', array('1', '8'));
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -306,7 +308,7 @@ class ModelTest extends TestCase
     public function testQuerySub9(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] =array('notbetween',array('1','8'));
+        $map['brand_id'] = array('notbetween', array('1', '8'));
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -318,7 +320,7 @@ class ModelTest extends TestCase
     public function testQuerySub10(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] =array('notbetween','1,8');
+        $map['brand_id'] = array('notbetween', '1,8');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -330,7 +332,7 @@ class ModelTest extends TestCase
     public function testQuerySub11(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] =array('not in','1,5,8');
+        $map['brand_id'] = array('not in', '1,5,8');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -342,7 +344,7 @@ class ModelTest extends TestCase
     public function testQuerySub12(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] =array('in','1,5,8');
+        $map['brand_id'] = array('in', '1,5,8');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -354,7 +356,7 @@ class ModelTest extends TestCase
     public function testQuerySub13(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] =array('in','1,5,8');
+        $map['brand_id'] = array('in', '1,5,8');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -366,7 +368,7 @@ class ModelTest extends TestCase
     public function testQuerySub14(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] =array('in','1,5,8');
+        $map['brand_id'] = array('in', '1,5,8');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -378,7 +380,7 @@ class ModelTest extends TestCase
     public function testQuerySub15(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] =array('not in',array('1','5','8'));
+        $map['brand_id'] = array('not in', array('1', '5', '8'));
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -390,7 +392,7 @@ class ModelTest extends TestCase
     public function testQuerySub16(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] =array('in',array('1','5','8'));
+        $map['brand_id'] = array('in', array('1', '5', '8'));
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -402,7 +404,7 @@ class ModelTest extends TestCase
     public function testQuerySub17(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] =array('exp',' IN (1,3,8) ');
+        $map['brand_id'] = array('exp', ' IN (1,3,8) ');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -416,7 +418,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         // 要修改的数据对象属性赋值
         $data['brand_name'] = 'ThinkPHP';
-        $data['company_id'] = array('exp','company_id+1');// 品牌的公司ID加1
+        $data['company_id'] = array('exp', 'company_id+1');// 品牌的公司ID加1
         $baseBrandModel->where('brand_id=5')->save($data); // 根据条件保存修改的数据
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -427,7 +429,7 @@ class ModelTest extends TestCase
     public function testQuerySub19(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] =array(array('gt',1),array('lt',10));
+        $map['brand_id'] = array(array('gt', 1), array('lt', 10));
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -439,7 +441,7 @@ class ModelTest extends TestCase
     public function testQuerySub20(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] =array(array('gt',3),array('lt',10), 'or');
+        $map['brand_id'] = array(array('gt', 3), array('lt', 10), 'or');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -451,7 +453,7 @@ class ModelTest extends TestCase
     public function testQuerySub21(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] =array(array('neq',6),array('gt',3),'and');
+        $map['brand_id'] = array(array('neq', 6), array('gt', 3), 'and');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -463,7 +465,7 @@ class ModelTest extends TestCase
     public function testQuerySub22(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] =array(array('like','%a%'), array('like','%b%'), array('like','%c%'), 'ThinkPHP','or');
+        $map['brand_id'] = array(array('like', '%a%'), array('like', '%b%'), array('like', '%c%'), 'ThinkPHP', 'or');
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -475,7 +477,7 @@ class ModelTest extends TestCase
     public function testQuerySub23(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] = array('neq',1);
+        $map['brand_id'] = array('neq', 1);
         $map['brand_name'] = 'ok';
         $map['_string'] = 'company_id=1 AND order_num>10';
         $result = $baseBrandModel
@@ -489,7 +491,7 @@ class ModelTest extends TestCase
     public function testQuerySub24(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] = array('gt','100');
+        $map['brand_id'] = array('gt', '100');
         $map['_query'] = 'company_id=1&order_num=100&_logic=or';
         $result = $baseBrandModel
             ->where($map)
@@ -502,11 +504,11 @@ class ModelTest extends TestCase
     public function testQuerySub25(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $where['brand_name']  = array('like', '%thinkphp%');
-        $where['order_num']  = array('like','%thinkphp%');
+        $where['brand_name'] = array('like', '%thinkphp%');
+        $where['order_num'] = array('like', '%thinkphp%');
         $where['_logic'] = 'or';
         $map['_complex'] = $where;
-        $map['brand_id']  = array('gt',1);
+        $map['brand_id'] = array('gt', 1);
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
@@ -518,7 +520,7 @@ class ModelTest extends TestCase
     public function testQuerySub26(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_id'] = array('gt',1);
+        $map['brand_id'] = array('gt', 1);
         $map['_string'] = ' (`brand_name` like "%thinkphp%")  OR ( order_num like "%thinkphp") ';
         $result = $baseBrandModel
             ->where($map)
@@ -646,7 +648,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->getFieldByBrandName('Google','brand_id');
+            ->getFieldByBrandName('Google', 'brand_id');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
         $sql = "SELECT   `brand_id` FROM `base_brand` WHERE `brand_name` = 'Google' LIMIT 1";
@@ -670,7 +672,7 @@ class ModelTest extends TestCase
         $result = trim($result);
         $sql = "SELECT   `brand_id`,`brand_name` FROM `base_brand` GROUP BY brand_name ORDER BY brand_id DESC";
         $this->assertSame($result, $sql);
-        $this->assertSame($subQuery, '( '.$sql.'  )');
+        $this->assertSame($subQuery, '( ' . $sql . '  )');
     }
 
     public function testQuerySub39(): void
@@ -689,7 +691,7 @@ class ModelTest extends TestCase
         $result = trim($result);
         $sql = "SELECT   `brand_id`,`brand_name` FROM `base_brand` GROUP BY brand_name ORDER BY brand_id DESC";
         $this->assertSame($result, $sql);
-        $this->assertSame($subQuery, '( '.$sql.'  )');
+        $this->assertSame($subQuery, '( ' . $sql . '  )');
     }
 
     public function testQuerySub40(): void
@@ -708,10 +710,10 @@ class ModelTest extends TestCase
         $result = trim($result);
         $sql = "SELECT   `brand_id`,`brand_name` FROM `base_brand` GROUP BY brand_id ORDER BY brand_id DESC";
         $this->assertSame($result, $sql);
-        $this->assertSame($subQuery, '( '.$sql.'  )');
+        $this->assertSame($subQuery, '( ' . $sql . '  )');
 
         $baseBrandModel
-            ->table($subQuery.' a')
+            ->table($subQuery . ' a')
             ->where([
                 'a.`brand_name`' => '你好',
             ])
@@ -751,7 +753,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->limit(1,5)
+            ->limit(1, 5)
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -811,7 +813,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->page(3,5)
+            ->page(3, 5)
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -847,7 +849,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->where("brand_id=%d and `brand_name`='%s' and `brand_logo`='%f'",array(1,'hello',0.5))
+            ->where("brand_id=%d and `brand_name`='%s' and `brand_logo`='%f'", array(1, 'hello', 0.5))
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -859,7 +861,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->where("brand_id=%d and `brand_name`='%s' and `brand_logo`='%f'",1,'hello',0.5)
+            ->where("brand_id=%d and `brand_name`='%s' and `brand_logo`='%f'", 1, 'hello', 0.5)
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -942,7 +944,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('brand.`brand_name`,p.name')
-            ->table(array('`base_brand`'=>'brand','permission'=>'p'))
+            ->table(array('`base_brand`' => 'brand', 'permission' => 'p'))
             ->limit(10)
             ->select();
         $result = $baseBrandModel->getLastSql();
@@ -969,7 +971,7 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
-        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where(['brand_name' => 'hello'])
@@ -986,7 +988,7 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
-        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where(['brand_name' => 'hello'])
@@ -1175,7 +1177,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field(['brand_id','brand_name','brand_logo'])
+            ->field(['brand_id', 'brand_name', 'brand_logo'])
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1187,7 +1189,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field(['brand_id','brand_name','brand_logo' => 'logo2'])
+            ->field(['brand_id', 'brand_name', 'brand_logo' => 'logo2'])
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1201,8 +1203,8 @@ class ModelTest extends TestCase
         $baseBrandModel
             ->field([
                 'brand_id',
-                "concat(`brand_name`,'-',brand_id)"=>'true_name',
-                'LEFT(`brand_logo`,7)'=>'sub_logo'
+                "concat(`brand_name`,'-',brand_id)" => 'true_name',
+                'LEFT(`brand_logo`,7)' => 'sub_logo'
             ])
             ->select();
         $result = $baseBrandModel->getLastSql();
@@ -1251,7 +1253,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('brand_id',true)
+            ->field('brand_id', true)
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1263,7 +1265,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('brand_id,company_id',true)
+            ->field('brand_id,company_id', true)
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1275,7 +1277,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field(['brand_id','company_id'],true)
+            ->field(['brand_id', 'company_id'], true)
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1286,7 +1288,7 @@ class ModelTest extends TestCase
     public function testQuerySub84(): void
     {
         container()->instance('company_id', 999);
-        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         http_request()->request->set('status', 'F');
         http_request()->request->set('brand_name', 'hello');
         http_request()->request->set('brand_logo', 'yes');
@@ -1365,7 +1367,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status=1')
-            ->order(array('status','brand_id'=>'desc'))
+            ->order(array('status', 'brand_id' => 'desc'))
             ->limit(5)
             ->select();
         $result = $baseBrandModel->getLastSql();
@@ -1380,7 +1382,7 @@ class ModelTest extends TestCase
         $baseBrandModel
             ->where('status>1')
             ->limit(3)
-            ->save(array('brand_name'=>'A'));
+            ->save(array('brand_name' => 'A'));
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
         $sql = "UPDATE `base_brand` SET `brand_name`='A' WHERE ( status>1 ) LIMIT 3";
@@ -1405,7 +1407,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
-            ->limit(10,25)
+            ->limit(10, 25)
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1444,7 +1446,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
-            ->page(2,10)
+            ->page(2, 10)
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1597,8 +1599,8 @@ class ModelTest extends TestCase
         $baseBrandModel
             ->field('`brand_name` as name')
             ->table('`base_brand`')
-            ->union(array('field'=>'name','table'=>'permission'))
-            ->union(array('field'=>'name','table'=>'role'))
+            ->union(array('field' => 'name', 'table' => 'permission'))
+            ->union(array('field' => 'name', 'table' => 'role'))
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1612,7 +1614,7 @@ class ModelTest extends TestCase
         $baseBrandModel
             ->field('`brand_name` as name')
             ->table('`base_brand`')
-            ->union(array('SELECT name FROM permission','SELECT name FROM role'))
+            ->union(array('SELECT name FROM permission', 'SELECT name FROM role'))
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1626,8 +1628,8 @@ class ModelTest extends TestCase
         $baseBrandModel
             ->field('`brand_name` as name')
             ->table('`base_brand`')
-            ->union('SELECT name FROM permission',true)
-            ->union('SELECT name FROM role',true)
+            ->union('SELECT name FROM permission', true)
+            ->union('SELECT name FROM role', true)
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1641,7 +1643,7 @@ class ModelTest extends TestCase
         $baseBrandModel
             ->field('`brand_name` as name')
             ->table('`base_brand`')
-            ->union(array('SELECT name FROM permission','SELECT name FROM role'), true)
+            ->union(array('SELECT name FROM permission', 'SELECT name FROM role'), true)
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1693,7 +1695,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=83')
-            ->cache(true,60)
+            ->cache(true, 60)
             ->find();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1706,7 +1708,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=83')
-            ->cache('sql:hello',60)
+            ->cache('sql:hello', 60)
             ->find();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1742,7 +1744,7 @@ class ModelTest extends TestCase
 
     public function testQuerySub116(): void
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage(
             'Error query express:[not_found_field=>y]'
         );
@@ -1846,7 +1848,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->scope('default',['order'=>'brand_id DESC'])
+            ->scope('default', ['order' => 'brand_id DESC'])
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1858,7 +1860,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->scope('normal,latest',['order'=>'brand_id DESC'])
+            ->scope('normal,latest', ['order' => 'brand_id DESC'])
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1871,10 +1873,10 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->scope(array(
-                'field'=>'`brand_id`,`brand_name`',
-                'limit'=>5,
-                'where'=>'status=1',
-                'order'=>'create_date DESC'
+                'field' => '`brand_id`,`brand_name`',
+                'limit' => 5,
+                'where' => 'status=1',
+                'order' => 'create_date DESC'
             ))
             ->select();
         $result = $baseBrandModel->getLastSql();
@@ -1901,7 +1903,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->normal(array('limit'=>5))
+            ->normal(array('limit' => 5))
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
@@ -1913,7 +1915,7 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
-        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->create();
@@ -1937,7 +1939,7 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'ThinkPHP');
-        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         $data['brand_name'] = 'ThinkPHP';
         $data['brand_logo'] = 'ThinkPHP@gmail.com';
         $baseBrandModel = BaseBrandModel::make();
@@ -1964,7 +1966,7 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'ThinkPHP');
-        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
@@ -1992,7 +1994,7 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'ThinkPHP');
-        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
@@ -2036,13 +2038,13 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'ThinkPHP');
-        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->create($data,Model::MODEL_UPDATE);
+            ->create($data, Model::MODEL_UPDATE);
         $data = $baseBrandModel->data();
         $json = <<<'eot'
             {
@@ -2062,13 +2064,13 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'ThinkPHP');
-        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->create($data,Model::MODEL_INSERT);
+            ->create($data, Model::MODEL_INSERT);
         $data = $baseBrandModel->data();
         $json = <<<'eot'
             {
@@ -2089,13 +2091,13 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'ThinkPHP');
-        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->create($data,Model::MODEL_BOTH);
+            ->create($data, Model::MODEL_BOTH);
         $data = $baseBrandModel->data();
         $json = <<<'eot'
             {
@@ -2115,14 +2117,14 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'ThinkPHP');
-        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_id = 1;
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->create($data,Model::MODEL_BOTH);
+            ->create($data, Model::MODEL_BOTH);
         $data = $baseBrandModel->data();
         $json = <<<'eot'
             {
@@ -2143,14 +2145,14 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'ThinkPHP');
-        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_id = 1;
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->create($data,Model::MODEL_INSERT);
+            ->create($data, Model::MODEL_INSERT);
         $data = $baseBrandModel->data();
         $json = <<<'eot'
             {
@@ -2172,13 +2174,13 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'ThinkPHP');
-        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->create($data,Model::MODEL_BOTH);
+            ->create($data, Model::MODEL_BOTH);
         $data = $baseBrandModel->data();
         $json = <<<'eot'
             {
@@ -2248,7 +2250,7 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'thinkphp');
-        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         $data['brand_name'] = 'thinkphp';
         $data['brand_logo'] = 'thinkphp@gmail.com';
         $data['status'] = 1;
@@ -2293,7 +2295,7 @@ class ModelTest extends TestCase
         $data['brand_name'] = 'ThinkPHP';
         $data['brand_logo'] = 'ThinkPHP@gmail.com';
         $baseBrandModel
-            ->add($data,[], true);
+            ->add($data, [], true);
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
         $sql = "REPLACE INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
@@ -2320,13 +2322,13 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         $baseBrandModel = BaseBrandModel::make();
-        $dataList[] = array('brand_name'=>'thinkphp','brand_logo'=>'thinkphp@gamil.com');
-        $dataList[] = array('brand_name'=>'onethink','brand_logo'=>'onethink@gamil.com');
+        $dataList[] = array('brand_name' => 'thinkphp', 'brand_logo' => 'thinkphp@gamil.com');
+        $dataList[] = array('brand_name' => 'onethink', 'brand_logo' => 'onethink@gamil.com');
         $baseBrandModel
             ->addAll($dataList);
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) SELECT 'thinkphp','thinkphp@gamil.com' UNION ALL SELECT 'onethink','onethink@gamil.com'";
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('thinkphp','thinkphp@gamil.com'),('onethink','onethink@gamil.com')";
         $this->assertSame($result, $sql);
     }
 
@@ -2345,7 +2347,7 @@ class ModelTest extends TestCase
         $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
         $this->assertSame($result, $sql);
 
-        $baseBrandModel->where('brand_id='.$id)->find();
+        $baseBrandModel->where('brand_id=' . $id)->find();
         $this->assertSame($id, $baseBrandModel->data()['brand_id']);
     }
 
@@ -2364,7 +2366,7 @@ class ModelTest extends TestCase
         $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
         $this->assertSame($result, $sql);
 
-        $list = $baseBrandModel->where('brand_id='.$id)->select();
+        $list = $baseBrandModel->where('brand_id=' . $id)->select();
         $this->assertSame($id, $list[0]['brand_id']);
         $this->assertSame('ThinkPHP', $list[0]['brand_name']);
     }
@@ -2384,7 +2386,7 @@ class ModelTest extends TestCase
         $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
         $this->assertSame($result, $sql);
 
-        $value = $baseBrandModel->where('brand_id='.$id)->getField('brand_name');
+        $value = $baseBrandModel->where('brand_id=' . $id)->getField('brand_name');
         $this->assertSame('ThinkPHP', $value);
     }
 
@@ -2403,7 +2405,7 @@ class ModelTest extends TestCase
         $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
         $this->assertSame($result, $sql);
 
-        $value = $baseBrandModel->where('brand_id='.$id)->getField('brand_name', true);
+        $value = $baseBrandModel->where('brand_id=' . $id)->getField('brand_name', true);
         $this->assertSame(['ThinkPHP'], $value);
     }
 
@@ -2422,7 +2424,7 @@ class ModelTest extends TestCase
         $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
         $this->assertSame($result, $sql);
 
-        $value = $baseBrandModel->where('brand_id='.$id)->getField('brand_name,brand_logo');
+        $value = $baseBrandModel->where('brand_id=' . $id)->getField('brand_name,brand_logo');
         $this->assertSame(['ThinkPHP' => 'ThinkPHP@gmail.com'], $value);
     }
 
@@ -2441,7 +2443,7 @@ class ModelTest extends TestCase
         $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
         $this->assertSame($result, $sql);
 
-        $value = $baseBrandModel->where('brand_id='.$id)->getField('brand_id,brand_name,brand_logo');
+        $value = $baseBrandModel->where('brand_id=' . $id)->getField('brand_id,brand_name,brand_logo');
         $json = <<<eot
             {
                 "{$id}": {
@@ -2475,7 +2477,7 @@ class ModelTest extends TestCase
         $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
         $this->assertSame($result, $sql);
 
-        $value = $baseBrandModel->where('brand_id='.$id)->getField('brand_id,brand_name,brand_logo',':');
+        $value = $baseBrandModel->where('brand_id=' . $id)->getField('brand_id,brand_name,brand_logo', ':');
         $json = <<<eot
             {
                 "{$id}": "ThinkPHP:ThinkPHP@gmail.com"
@@ -2505,7 +2507,7 @@ class ModelTest extends TestCase
         $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
         $this->assertSame($result, $sql);
 
-        $value = $baseBrandModel->where('brand_id='.$id)->getField('brand_id,brand_name',5);
+        $value = $baseBrandModel->where('brand_id=' . $id)->getField('brand_id,brand_name', 5);
         $json = <<<eot
             {
                 "{$id}": "ThinkPHP"
@@ -2535,7 +2537,7 @@ class ModelTest extends TestCase
         $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
         $this->assertSame($result, $sql);
 
-        $value = $baseBrandModel->where('brand_id='.$id)->getField('brand_id',3);
+        $value = $baseBrandModel->where('brand_id=' . $id)->getField('brand_id', 3);
         $json = <<<eot
             [
                 {$id}
@@ -2645,7 +2647,7 @@ class ModelTest extends TestCase
     public function testQuerySub161(): void
     {
         container()->instance('company_id', 999);
-        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         http_request()->request->set('brand_name', 'hello');
         http_request()->request->set('brand_id', 1);
         $baseBrandModel = BaseBrandModel::make();
@@ -2665,7 +2667,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=5')
-            ->setField('brand_name','ThinkPHP');
+            ->setField('brand_name', 'ThinkPHP');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
         $sql = "UPDATE `base_brand` SET `brand_name`='ThinkPHP' WHERE ( brand_id=5 )";
@@ -2674,7 +2676,7 @@ class ModelTest extends TestCase
 
     public function testQuerySub163(): void
     {
-        $data = array('brand_name'=>'ThinkPHP','brand_logo'=>'ThinkPHP@gmail.com');
+        $data = array('brand_name' => 'ThinkPHP', 'brand_logo' => 'ThinkPHP@gmail.com');
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=5')
@@ -2690,7 +2692,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=5')
-            ->setInc('order_num',3);
+            ->setInc('order_num', 3);
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
         $sql = "UPDATE `base_brand` SET `order_num`=order_num+3 WHERE ( brand_id=5 )";
@@ -2849,7 +2851,7 @@ class ModelTest extends TestCase
         $baseBrandModel->save();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $this->assertTrue(strpos($result,"`brand_name`='TOPThink'") !== false);
+        $this->assertTrue(strpos($result, "`brand_name`='TOPThink'") !== false);
     }
 
     public function testQuerySub178(): void
@@ -2860,7 +2862,7 @@ class ModelTest extends TestCase
         $baseBrandModel->save();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $this->assertTrue(strpos($result,"`brand_name`='TOPThink'") !== false);
+        $this->assertTrue(strpos($result, "`brand_name`='TOPThink'") !== false);
     }
 
     public function testQuerySub179(): void
@@ -2903,7 +2905,7 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $id = null;
-        $baseBrandModel->transaction(function() use(&$id) {
+        $baseBrandModel->transaction(function () use (&$id) {
             $baseBrandModel = BaseBrandModel::make();
             $id = $baseBrandModel
                 ->data(['brand_name' => 'hello'])
@@ -2918,7 +2920,7 @@ class ModelTest extends TestCase
 
     public function testQuerySub183(): void
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage(
             'Error message'
         );
@@ -2926,25 +2928,25 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $id = null;
         try {
-            $baseBrandModel->transaction(function() use(&$id) {
+            $baseBrandModel->transaction(function () use (&$id) {
                 $baseBrandModel = BaseBrandModel::make();
                 $id = $baseBrandModel
                     ->data(['brand_name' => 'hello'])
                     ->add();
-                throw new \Exception('Error message');
+                throw new Exception('Error message');
             });
         } finally {
             $data = $baseBrandModel
                 ->forceMaster()
                 ->find($id);
-            $this->assertSame(true, $id>0);
+            $this->assertSame(true, $id > 0);
             $this->assertSame(true, empty($data));
         }
     }
 
     public function testQuerySub184(): void
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage(
             'Error message'
         );
@@ -2957,9 +2959,9 @@ class ModelTest extends TestCase
             $id = $baseBrandModel
                 ->data(['brand_name' => 'hello'])
                 ->add();
-            throw new \Exception('Error message');
+            throw new Exception('Error message');
             $baseBrandModel->commit();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $baseBrandModel->rollBack();
 
             throw $e;
@@ -2967,7 +2969,7 @@ class ModelTest extends TestCase
             $data = $baseBrandModel
                 ->forceMaster()
                 ->find($id);
-            $this->assertSame(true, $id>0);
+            $this->assertSame(true, $id > 0);
             $this->assertSame(true, empty($data));
         }
     }
@@ -2982,7 +2984,7 @@ class ModelTest extends TestCase
                 ->data(['brand_name' => 'hello'])
                 ->add();
             $baseBrandModel->commit();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $baseBrandModel->rollBack();
 
             throw $e;
