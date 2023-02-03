@@ -2732,4 +2732,87 @@ class ModelTest extends TestCase
         $sql = "UPDATE `base_brand` SET `order_num`=order_num-1 WHERE ( brand_id=5 )";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub168(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->delete(5);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "DELETE FROM `base_brand` WHERE `brand_id` = 5";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub169(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('brand_id=5')
+            ->delete();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "DELETE FROM `base_brand` WHERE ( brand_id=5 )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub170(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->delete('1,2,5');
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "DELETE FROM `base_brand` WHERE `brand_id` IN ('1','2','5')";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub171(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status=0')
+            ->delete();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "DELETE FROM `base_brand` WHERE ( status=0 )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub172(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('status=0')
+            ->order('create_date')
+            ->limit('5')
+            ->delete();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "DELETE FROM `base_brand` WHERE ( status=0 ) ORDER BY create_date LIMIT 5";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub173(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->delete();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub174(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('1')
+            ->delete();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "DELETE FROM `base_brand` WHERE ( 1 )";
+        $this->assertSame($result, $sql);
+    }
 }

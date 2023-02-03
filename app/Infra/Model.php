@@ -472,7 +472,7 @@ abstract class Model {
         }
         if(is_numeric($options)  || is_string($options)) {
             // 根据主键删除记录
-            if(strpos($options,',')) {
+            if(is_string($options) && strpos($options,',')) {
                 $where[$pk]     =  array('IN', $options);
             }else{
                 $where[$pk]     =  $options;
