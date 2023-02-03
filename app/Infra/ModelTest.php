@@ -2971,4 +2971,26 @@ class ModelTest extends TestCase
             $this->assertSame(true, empty($data));
         }
     }
+
+    public function testQuerySub185(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $id = null;
+        $baseBrandModel->startTrans();
+        try {
+            $id = $baseBrandModel
+                ->data(['brand_name' => 'hello'])
+                ->add();
+            $baseBrandModel->commit();
+        } catch (\Throwable $e) {
+            $baseBrandModel->rollBack();
+
+            throw $e;
+        } finally {
+            $data = $baseBrandModel
+                ->forceMaster()
+                ->find($id);
+            $this->assertSame($data['brand_id'], $id);
+        }
+    }
 }
