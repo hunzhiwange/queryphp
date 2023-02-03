@@ -2329,4 +2329,224 @@ class ModelTest extends TestCase
         $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) SELECT 'thinkphp','thinkphp@gamil.com' UNION ALL SELECT 'onethink','onethink@gamil.com'";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub146(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_name'] = '<b>ThinkPHP</b>';
+        $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
+        $id = $baseBrandModel
+            ->data($data)
+            ->filter('strip_tags')
+            ->add();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $this->assertSame($result, $sql);
+
+        $baseBrandModel->where('brand_id='.$id)->find();
+        $this->assertSame($id, $baseBrandModel->data()['brand_id']);
+    }
+
+    public function testQuerySub147(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_name'] = '<b>ThinkPHP</b>';
+        $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
+        $id = $baseBrandModel
+            ->data($data)
+            ->filter('strip_tags')
+            ->add();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $this->assertSame($result, $sql);
+
+        $list = $baseBrandModel->where('brand_id='.$id)->select();
+        $this->assertSame($id, $list[0]['brand_id']);
+        $this->assertSame('ThinkPHP', $list[0]['brand_name']);
+    }
+
+    public function testQuerySub148(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_name'] = '<b>ThinkPHP</b>';
+        $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
+        $id = $baseBrandModel
+            ->data($data)
+            ->filter('strip_tags')
+            ->add();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $this->assertSame($result, $sql);
+
+        $value = $baseBrandModel->where('brand_id='.$id)->getField('brand_name');
+        $this->assertSame('ThinkPHP', $value);
+    }
+
+    public function testQuerySub149(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_name'] = '<b>ThinkPHP</b>';
+        $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
+        $id = $baseBrandModel
+            ->data($data)
+            ->filter('strip_tags')
+            ->add();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $this->assertSame($result, $sql);
+
+        $value = $baseBrandModel->where('brand_id='.$id)->getField('brand_name', true);
+        $this->assertSame(['ThinkPHP'], $value);
+    }
+
+    public function testQuerySub150(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_name'] = '<b>ThinkPHP</b>';
+        $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
+        $id = $baseBrandModel
+            ->data($data)
+            ->filter('strip_tags')
+            ->add();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $this->assertSame($result, $sql);
+
+        $value = $baseBrandModel->where('brand_id='.$id)->getField('brand_name,brand_logo');
+        $this->assertSame(['ThinkPHP' => 'ThinkPHP@gmail.com'], $value);
+    }
+
+    public function testQuerySub151(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_name'] = '<b>ThinkPHP</b>';
+        $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
+        $id = $baseBrandModel
+            ->data($data)
+            ->filter('strip_tags')
+            ->add();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $this->assertSame($result, $sql);
+
+        $value = $baseBrandModel->where('brand_id='.$id)->getField('brand_id,brand_name,brand_logo');
+        $json = <<<eot
+            {
+                "{$id}": {
+                    "brand_id": {$id},
+                    "brand_name": "ThinkPHP",
+                    "brand_logo": "ThinkPHP@gmail.com"
+                }
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $value
+            )
+        );
+    }
+
+    public function testQuerySub152(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_name'] = '<b>ThinkPHP</b>';
+        $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
+        $id = $baseBrandModel
+            ->data($data)
+            ->filter('strip_tags')
+            ->add();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $this->assertSame($result, $sql);
+
+        $value = $baseBrandModel->where('brand_id='.$id)->getField('brand_id,brand_name,brand_logo',':');
+        $json = <<<eot
+            {
+                "{$id}": "ThinkPHP:ThinkPHP@gmail.com"
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $value
+            )
+        );
+    }
+
+    public function testQuerySub153(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_name'] = '<b>ThinkPHP</b>';
+        $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
+        $id = $baseBrandModel
+            ->data($data)
+            ->filter('strip_tags')
+            ->add();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $this->assertSame($result, $sql);
+
+        $value = $baseBrandModel->where('brand_id='.$id)->getField('brand_id,brand_name',5);
+        $json = <<<eot
+            {
+                "{$id}": "ThinkPHP"
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $value
+            )
+        );
+    }
+
+    public function testQuerySub154(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_name'] = '<b>ThinkPHP</b>';
+        $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
+        $id = $baseBrandModel
+            ->data($data)
+            ->filter('strip_tags')
+            ->add();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $this->assertSame($result, $sql);
+
+        $value = $baseBrandModel->where('brand_id='.$id)->getField('brand_id',3);
+        $json = <<<eot
+            [
+                {$id}
+            ]
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $value
+            )
+        );
+    }
 }
