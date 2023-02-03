@@ -1389,13 +1389,8 @@ abstract class Model
 
     /**
      * 验证数据 支持 in between equal length regex expire ip_allow ip_deny
-     * @access public
-     * @param string $value 验证数据
-     * @param mixed $rule 验证表达式
-     * @param string $type 验证方式 默认为正则验证
-     * @return boolean
      */
-    public function check($value, $rule, $type = 'regex')
+    public function check(mixed $value, array|string $rule, string $type = 'regex'): bool
     {
         $type = strtolower(trim($type));
         switch ($type) {
@@ -1425,9 +1420,13 @@ abstract class Model
                 }
             case 'expire':
                 list($start, $end) = explode(',', $rule);
-                if (!is_numeric($start)) $start = strtotime($start);
-                if (!is_numeric($end)) $end = strtotime($end);
-                return NOW_TIME >= $start && NOW_TIME <= $end;
+                if (!is_numeric($start)){
+                    $start = strtotime($start);
+                }
+                if (!is_numeric($end)){
+                    $end = strtotime($end);
+                }
+                return time() >= $start && time() <= $end;
             case 'ip_allow': // IP 操作许可验证
                 return in_array(get_client_ip(), explode(',', $rule));
             case 'ip_deny': // IP 操作禁止验证
@@ -1440,13 +1439,9 @@ abstract class Model
     }
 
     /**
-     * 使用正则验证数据
-     * @access public
-     * @param string $value 要验证的数据
-     * @param string $rule 验证规则
-     * @return boolean
+     * 使用正则验证数据.
      */
-    public function regex($value, $rule)
+    public function regex(string $value, string $rule): bool
     {
         $validate = array(
             'require' => '/\S+/',
@@ -1468,28 +1463,29 @@ abstract class Model
     }
 
     /**
-     * 自动表单处理
-     * @access public
-     * @param array $data 创建数据
-     * @param string $type 创建类型
-     * @return mixed
+     * 自动表单处理.
      */
-    private function autoOperation(&$data, $type)
+    private function autoOperation(array &$data, int $type): array
     {
         if (!empty($this->options['auto'])) {
-            $_auto = $this->options['auto'];
+            $autoData = $this->options['auto'];
             unset($this->options['auto']);
         } elseif (!empty($this->_auto)) {
-            $_auto = $this->_auto;
+            $autoData = $this->_auto;
         }
+
         // 自动填充
-        if (isset($_auto)) {
-            foreach ($_auto as $auto) {
+        if (isset($autoData)) {
+            foreach ($autoData as $auto) {
                 // 填充因子定义格式
                 // array('field','填充内容','填充条件','附加规则',[额外参数])
-                if (empty($auto[2])) $auto[2] = self::MODEL_INSERT; // 默认为新增的时候自动填充
+                if (empty($auto[2])) {
+                    $auto[2] = self::MODEL_INSERT; // 默认为新增的时候自动填充
+                }
                 if ($type == $auto[2] || $auto[2] == self::MODEL_BOTH) {
-                    if (empty($auto[3])) $auto[3] = 'string';
+                    if (empty($auto[3])) {
+                        $auto[3] = 'string';
+                    }
                     switch (trim($auto[3])) {
                         case 'function':    //  使用函数进行填充 字段的值作为参数
                         case 'callback': // 使用回调方法
@@ -1507,14 +1503,17 @@ abstract class Model
                             $data[$auto[0]] = $data[$auto[1]];
                             break;
                         case 'ignore': // 为空忽略
-                            if ($auto[1] === $data[$auto[0]])
+                            if ($auto[1] === $data[$auto[0]]){
                                 unset($data[$auto[0]]);
+                            }
                             break;
                         case 'string':
                         default: // 默认作为字符串填充
                             $data[$auto[0]] = $auto[1];
                     }
-                    if (isset($data[$auto[0]]) && false === $data[$auto[0]]) unset($data[$auto[0]]);
+                    if (isset($data[$auto[0]]) && false === $data[$auto[0]]){
+                        unset($data[$auto[0]]);
+                    }
                 }
             }
         }
@@ -1524,7 +1523,7 @@ abstract class Model
     /**
      * SQL 查询.
      */
-    public function query(string $sql, bool|array|string $parse = false)
+    public function query(string $sql, bool|array|string $parse = false): mixed
     {
         if (!is_bool($parse) && !is_array($parse)) {
             $parse = func_get_args();
@@ -1553,7 +1552,7 @@ abstract class Model
     /**
      * 执行 SQL 语句.
      */
-    public function execute($sql, $parse = false): int|false
+    public function execute(string $sql, $parse = false): int|false
     {
         if (!is_bool($parse) && !is_array($parse)) {
             $parse = func_get_args();
