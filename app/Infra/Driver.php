@@ -371,7 +371,6 @@ class Driver
     public function insert($data, $options = array(), $replace = false)
     {
         $values = $fields = array();
-        $this->parseBind(!empty($options['bind']) ? $options['bind'] : array());
         foreach ($data as $key => $val) {
             if (is_array($val) && 'exp' == $val[0]) {
                 $fields[] = $this->parseKey($key);
@@ -406,26 +405,22 @@ class Driver
     }
 
     /**
-     * 参数绑定
-     * @access protected
-     * @param string $name 绑定参数名
-     * @param mixed $value 绑定值
-     * @return void
+     * 参数绑定.
      */
-    protected function bindParam($name, $value)
+    protected function bindParam($name, $value): void
     {
         $this->bind[':' . $name] = $value;
     }
 
     /**
-     * ON DUPLICATE KEY UPDATE 分析
-     * @access protected
-     * @param mixed $duplicate
-     * @return string
+     * ON DUPLICATE KEY UPDATE 分析.
      */
-    protected function parseDuplicate($duplicate){
+    protected function parseDuplicate(mixed $duplicate): string
+    {
         // 布尔值或空则返回空字符串
-        if(is_bool($duplicate) || empty($duplicate)) return '';
+        if(is_bool($duplicate) || empty($duplicate)){
+            return '';
+        }
 
         if(is_string($duplicate)){
             // field1,field2 转数组
@@ -436,12 +431,16 @@ class Driver
         }
         $updates                    = array();
         foreach((array) $duplicate as $key=>$val){
-            if(is_numeric($key)){ // array('field1', 'field2', 'field3') 解析为 ON DUPLICATE KEY UPDATE field1=VALUES(field1), field2=VALUES(field2), field3=VALUES(field3)
+            if(is_numeric($key)){
+                // array('field1', 'field2', 'field3') 解析为 ON DUPLICATE KEY UPDATE field1=VALUES(field1), field2=VALUES(field2), field3=VALUES(field3)
                 $updates[]          = $this->parseKey($val)."=VALUES(".$this->parseKey($val).")";
             }else{
-                if(is_scalar($val)) // 兼容标量传值方式
-                    $val            = array('value', $val);
-                if(!isset($val[1])) continue;
+                if(is_scalar($val)) { // 兼容标量传值方式
+                    $val = array('value', $val);
+                }
+                if(!isset($val[1])) {
+                    continue;
+                }
                 switch($val[0]){
                     case 'exp': // 表达式
                         $updates[]  = $this->parseKey($key)."=($val[1])";
@@ -455,7 +454,11 @@ class Driver
                 }
             }
         }
-        if(empty($updates)) return '';
+
+        if(empty($updates)){
+            return '';
+        }
+
         return " ON DUPLICATE KEY UPDATE ".join(', ', $updates);
     }
 
@@ -477,7 +480,6 @@ class Driver
         if ($fetchSql) {
             return $this->queryStr;
         }
-        $this->executeTimes++;
         $this->bind = array();
         $result = $this->entity::select()->execute($this->queryStr);
         //      if(preg_match("/^\s*(INSERT\s+INTO|REPLACE\s+INTO)\s+/i", $str)) {
@@ -527,7 +529,6 @@ class Driver
      */
     public function selectInsert(string|array $fields, string $table, array $options = array()): int|false
     {
-        $this->parseBind(!empty($options['bind']) ? $options['bind'] : array());
         if (is_string($fields)) {
             $fields = explode(',', $fields);
         }
