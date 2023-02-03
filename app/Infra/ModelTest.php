@@ -2236,4 +2236,62 @@ class ModelTest extends TestCase
                 $data
             ));
     }
+
+    public function testQuerySub142(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_name'] = 'ThinkPHP';
+        $data['brand_logo'] = 'ThinkPHP@gmail.com';
+        $baseBrandModel
+            ->add($data);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO base_brand (brand_name,brand_logo) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub143(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_name'] = 'ThinkPHP';
+        $data['brand_logo'] = 'ThinkPHP@gmail.com';
+        $baseBrandModel
+            ->add($data,[], true);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "REPLACE INTO base_brand (brand_name,brand_logo) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub144(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_name'] = '<b>ThinkPHP</b>';
+        $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
+        $baseBrandModel
+            ->data($data)
+            ->filter('strip_tags')
+            ->add();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO base_brand (brand_name,brand_logo) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub145(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $dataList[] = array('brand_name'=>'thinkphp','brand_logo'=>'thinkphp@gamil.com');
+        $dataList[] = array('brand_name'=>'onethink','brand_logo'=>'onethink@gamil.com');
+        $baseBrandModel
+            ->addAll($dataList);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) SELECT 'thinkphp','thinkphp@gamil.com' UNION ALL SELECT 'onethink','onethink@gamil.com'";
+        $this->assertSame($result, $sql);
+    }
 }

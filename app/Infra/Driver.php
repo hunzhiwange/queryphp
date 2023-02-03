@@ -456,15 +456,19 @@ use PDO;
         $this->bind[':'.$name]  =   $value;
     }
 
-    /**
-     * 字段名分析
-     * @access protected
-     * @param string $key
-     * @return string
-     */
-    protected function parseKey(&$key) {
-        return $key;
-    }
+     /**
+      * 字段和表名处理
+      * @access protected
+      * @param string $key
+      * @return string
+      */
+     protected function parseKey(&$key) {
+         $key   =  trim($key);
+         if(!is_numeric($key) && !preg_match('/[,\'\"\*\(\)`.\s]/',$key)) {
+             $key = '`'.$key.'`';
+         }
+         return $key;
+     }
 
     /**
      * value分析
@@ -907,7 +911,8 @@ use PDO;
         $this->model  =   $options['model'];
         if(!is_array($dataSet[0])) return false;
         $this->parseBind(!empty($options['bind'])?$options['bind']:array());
-        $fields =   array_map(array($this,'parseKey'),array_keys($dataSet[0]));
+        $fields = array_keys($dataSet[0]);
+        array_walk($fields, array($this, 'parseKey'));
         foreach ($dataSet as $data){
             $value   =  array();
             foreach ($data as $key=>$val){
