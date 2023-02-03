@@ -67,7 +67,7 @@ class Driver
     /**
      * 构造函数.
      */
-    public function __construct(Entity $entity = null)
+    public function __construct(Entity $entity)
     {
         $this->entity = $entity;
     }
