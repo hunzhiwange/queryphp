@@ -1913,6 +1913,7 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
+        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->create();
@@ -1935,6 +1936,8 @@ class ModelTest extends TestCase
     public function testQuerySub130(): void
     {
         container()->instance('company_id', 999);
+        http_request()->request->set('brand_name', 'ThinkPHP');
+        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
         $data['brand_name'] = 'ThinkPHP';
         $data['brand_logo'] = 'ThinkPHP@gmail.com';
         $baseBrandModel = BaseBrandModel::make();
@@ -1960,6 +1963,8 @@ class ModelTest extends TestCase
     public function testQuerySub131(): void
     {
         container()->instance('company_id', 999);
+        http_request()->request->set('brand_name', 'ThinkPHP');
+        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
@@ -1986,6 +1991,8 @@ class ModelTest extends TestCase
     public function testQuerySub132(): void
     {
         container()->instance('company_id', 999);
+        http_request()->request->set('brand_name', 'ThinkPHP');
+        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
@@ -2028,6 +2035,8 @@ class ModelTest extends TestCase
     public function testQuerySub133(): void
     {
         container()->instance('company_id', 999);
+        http_request()->request->set('brand_name', 'ThinkPHP');
+        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
@@ -2052,6 +2061,8 @@ class ModelTest extends TestCase
     public function testQuerySub134(): void
     {
         container()->instance('company_id', 999);
+        http_request()->request->set('brand_name', 'ThinkPHP');
+        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
@@ -2077,6 +2088,8 @@ class ModelTest extends TestCase
     public function testQuerySub135(): void
     {
         container()->instance('company_id', 999);
+        http_request()->request->set('brand_name', 'ThinkPHP');
+        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
@@ -2101,6 +2114,8 @@ class ModelTest extends TestCase
     public function testQuerySub136(): void
     {
         container()->instance('company_id', 999);
+        http_request()->request->set('brand_name', 'ThinkPHP');
+        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_id = 1;
         $data->brand_name = 'ThinkPHP';
@@ -2127,6 +2142,8 @@ class ModelTest extends TestCase
     public function testQuerySub137(): void
     {
         container()->instance('company_id', 999);
+        http_request()->request->set('brand_name', 'ThinkPHP');
+        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_id = 1;
         $data->brand_name = 'ThinkPHP';
@@ -2154,6 +2171,8 @@ class ModelTest extends TestCase
     public function testQuerySub138(): void
     {
         container()->instance('company_id', 999);
+        http_request()->request->set('brand_name', 'ThinkPHP');
+        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
         $data = new stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
@@ -2228,6 +2247,8 @@ class ModelTest extends TestCase
     public function testQuerySub141(): void
     {
         container()->instance('company_id', 999);
+        http_request()->request->set('brand_name', 'thinkphp');
+        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
         $data['brand_name'] = 'thinkphp';
         $data['brand_logo'] = 'thinkphp@gmail.com';
         $data['status'] = 1;
