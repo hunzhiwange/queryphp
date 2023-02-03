@@ -460,13 +460,11 @@ class Driver
     }
 
     /**
-     * 执行语句
-     * @access public
-     * @param string $str sql指令
-     * @param boolean $fetchSql 不执行只是获取SQL
-     * @return mixed
+     * 执行语句.
+     *
+     * @todo
      */
-    public function execute($str, $fetchSql = false)
+    public function execute(string $str, bool $fetchSql = false): mixed
     {
         $this->queryStr = $str;
         if (!empty($this->bind)) {
@@ -481,7 +479,11 @@ class Driver
         }
         $this->executeTimes++;
         $this->bind = array();
-        return $this->entity::select()->execute($this->queryStr);
+        $result = $this->entity::select()->execute($this->queryStr);
+        //      if(preg_match("/^\s*(INSERT\s+INTO|REPLACE\s+INTO)\s+/i", $str)) {
+        //          $this->lastInsID = $this->_linkID->lastInsertId();
+        //      }
+        return $result;
     }
 
     /**
