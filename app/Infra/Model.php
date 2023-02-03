@@ -1704,13 +1704,9 @@ abstract class Model
     }
 
     /**
-     * 查询SQL组装 join
-     * @access public
-     * @param mixed $join
-     * @param string $type JOIN类型
-     * @return Model
+     * 查询 SQL 组装 join.
      */
-    public function join($join, $type = 'INNER')
+    public function join(string|array $join, string $type = 'INNER'): static
     {
         $prefix = $this->tablePrefix;
         if (is_array($join)) {
@@ -1722,30 +1718,28 @@ abstract class Model
             }
             $this->options['join'] = $join;
         } elseif (!empty($join)) {
-            //将__TABLE_NAME__字符串替换成带前缀的表名
-            $join = preg_replace_callback("/__([A-Z0-9_-]+)__/sU", function ($match) use ($prefix) {
-                return $prefix . strtolower($match[1]);
-            }, $join);
             $this->options['join'][] = false !== stripos($join, 'JOIN') ? $join : $type . ' JOIN ' . $join;
         }
+
         return $this;
     }
 
     /**
      * 查询 SQL 组装 union.
      */
-    public function union(string|array $union, bool $all = false): static
+    public function union(string|array|object $union, bool $all = false): static
     {
         if (empty($union)) {
             return $this;
         }
+
         if ($all) {
             $this->options['union']['_all'] = true;
         }
         if (is_object($union)) {
             $union = get_object_vars($union);
         }
-        // 转换union表达式
+        // 转换 union 表达式
         if (is_string($union)) {
             $options = $union;
         } else {
