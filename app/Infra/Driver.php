@@ -960,49 +960,38 @@ class Driver
     }
 
     /**
-     * join分析
-     * @access protected
-     * @param mixed $join
-     * @return string
+     * join 分析.
      */
-    protected function parseJoin($join)
+    protected function parseJoin(string|array $join): string
     {
         $joinStr = '';
         if (!empty($join)) {
             $joinStr = ' ' . implode(' ', $join) . ' ';
         }
+
         return $joinStr;
     }
 
     /**
-     * group分析
-     * @access protected
-     * @param mixed $group
-     * @return string
+     * group 分析.
      */
-    protected function parseGroup($group)
+    protected function parseGroup(string $group): string
     {
         return !empty($group) ? ' GROUP BY ' . $group : '';
     }
 
     /**
-     * having分析
-     * @access protected
-     * @param string $having
-     * @return string
+     * having 分析.
      */
-    protected function parseHaving($having)
+    protected function parseHaving(string $having): string
     {
         return !empty($having) ? ' HAVING ' . $having : '';
     }
 
     /**
-     * order分析
-     * @access protected
-     * @param mixed $order
-     * @return string
+     * order 分析.
      */
-    protected function parseOrder($order)
+    protected function parseOrder(array|string $order): string
     {
         if (is_array($order)) {
             $array = array();
@@ -1015,6 +1004,7 @@ class Driver
             }
             $order = implode(',', $array);
         }
+
         return !empty($order) ? ' ORDER BY ' . $order : '';
     }
 
@@ -1045,7 +1035,7 @@ class Driver
     /**
      * index 分析，可在操作链中指定需要强制使用的索引.
      */
-    protected function parseForce(mixed $index): string
+    protected function parseForce(array|string $index): string
     {
         if (empty($index)) {
             return '';
