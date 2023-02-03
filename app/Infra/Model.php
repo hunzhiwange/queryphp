@@ -1662,42 +1662,26 @@ abstract class Model
     }
 
     /**
-     * 指定当前的数据表
-     * @access public
-     * @param mixed $table
-     * @return Model
+     * 指定当前的数据表.
      */
-    public function table($table)
+    public function table(array|string $table): static
     {
-        $prefix = $this->tablePrefix;
         if (is_array($table)) {
             $this->options['table'] = $table;
         } elseif (!empty($table)) {
-            //将__TABLE_NAME__替换成带前缀的表名
-            $table = preg_replace_callback("/__([A-Z0-9_-]+)__/sU", function ($match) use ($prefix) {
-                return $prefix . strtolower($match[1]);
-            }, $table);
             $this->options['table'] = $table;
         }
         return $this;
     }
 
     /**
-     * USING支持 用于多表删除
-     * @access public
-     * @param mixed $using
-     * @return Model
+     * USING 支持用于多表删除.
      */
-    public function using($using)
+    public function using(array|string $using): static
     {
-        $prefix = $this->tablePrefix;
         if (is_array($using)) {
             $this->options['using'] = $using;
         } elseif (!empty($using)) {
-            //将__TABLE_NAME__替换成带前缀的表名
-            $using = preg_replace_callback("/__([A-Z0-9_-]+)__/sU", function ($match) use ($prefix) {
-                return $prefix . strtolower($match[1]);
-            }, $using);
             $this->options['using'] = $using;
         }
         return $this;
@@ -1708,13 +1692,9 @@ abstract class Model
      */
     public function join(string|array $join, string $type = 'INNER'): static
     {
-        $prefix = $this->tablePrefix;
         if (is_array($join)) {
-            foreach ($join as $key => &$_join) {
-                $_join = preg_replace_callback("/__([A-Z0-9_-]+)__/sU", function ($match) use ($prefix) {
-                    return $prefix . strtolower($match[1]);
-                }, $_join);
-                $_join = false !== stripos($_join, 'JOIN') ? $_join : $type . ' JOIN ' . $_join;
+            foreach ($join as &$v) {
+                $v = false !== stripos($v, 'JOIN') ? $v : $type . ' JOIN ' . $v;
             }
             $this->options['join'] = $join;
         } elseif (!empty($join)) {
