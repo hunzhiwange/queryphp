@@ -605,6 +605,7 @@ class Mysql
                 false,
                 $cacheOptions['key'] ?? null,
                 $cacheOptions['expire'] ?? null,
+                $cacheOptions['cache'] ?? null,
             );
         foreach ($result as &$v) {
             $v = (array)$v;

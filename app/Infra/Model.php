@@ -6,6 +6,7 @@ namespace App\Infra;
 
 use Closure;
 use Exception;
+use Leevel\Cache\ICache;
 
 /**
  * ThinkPHP Model 模型类兼容层
@@ -191,7 +192,7 @@ abstract class Model
             if (!empty($this->tableName)) {
                 $tableName .= $this->tableName;
             } else {
-                $tableName .= parse_name($this->name);
+                $tableName .= $this->parseName($this->name);
             }
             $this->trueTableName = strtolower($tableName);
         }
@@ -280,12 +281,12 @@ abstract class Model
             return $this->getField(strtoupper($method) . '(' . $field . ') AS tp_' . $method);
         } elseif (strtolower(substr($method, 0, 5)) == 'getby') {
             // 根据某个字段获取记录
-            $field = parse_name(substr($method, 5));
+            $field = $this->parseName(substr($method, 5));
             $where[$field] = $args[0];
             return $this->where($where)->find();
         } elseif (strtolower(substr($method, 0, 10)) == 'getfieldby') {
             // 根据某个字段获取记录的某个值
-            $name = parse_name(substr($method, 10));
+            $name = $this->parseName(substr($method, 10));
             $where[$name] = $args[0];
             return $this->where($where)->getField($args[1]);
         } elseif (isset($this->_scope[$method])) {// 命名范围的单独调用支持
@@ -742,7 +743,6 @@ abstract class Model
      */
     protected function _facade($data)
     {
-
         // 检查数据字段合法性
         if (!empty($this->fields)) {
             if (!empty($this->options['field'])) {
@@ -1218,11 +1218,6 @@ abstract class Model
             $fields = $this->options['field'];
             unset($this->options['field']);
         }
-        // elseif($type == self::MODEL_INSERT && isset($this->insertFields)) {
-        //     $fields =   $this->insertFields;
-        // }elseif($type == self::MODEL_UPDATE && isset($this->updateFields)) {
-        //     $fields =   $this->updateFields;
-        // }
         if (isset($fields)) {
             if (is_string($fields)) {
                 $fields = explode(',', $fields);
@@ -1465,8 +1460,10 @@ abstract class Model
             'english' => '/^[A-Za-z]+$/',
         );
         // 检查是否有内置的正则表达式
-        if (isset($validate[strtolower($rule)]))
+        if (isset($validate[strtolower($rule)])) {
             $rule = $validate[strtolower($rule)];
+        }
+
         return preg_match($rule, $value) === 1;
     }
 
@@ -1585,15 +1582,11 @@ abstract class Model
     }
 
     /**
-     * 启动事务
-     * @access public
-     * @return void
+     * 启动事务.
      */
-    public function startTrans()
+    public function startTrans(): void
     {
-        //$this->commit();
         $this->db->startTrans();
-        return true;
     }
 
     /**
@@ -1623,24 +1616,19 @@ abstract class Model
     }
 
     /**
-     * 返回模型的错误信息
-     * @access public
-     * @return string
+     * 返回模型的错误信息.
      */
-    public function getError()
+    public function getError(): string
     {
         return $this->error;
     }
 
     /**
-     * 异常跑出来，code 默认不为0，有些页面不弹出来
-     * @param $exception
-     * @param $code
-     * @return mixed
+     * 异常抛出来.
      */
-    public function throwError($exception = 'Exception', $code = 90010000000)
+    public function throw(string $exception = Exception::class, int $code = 0): void
     {
-        throw new $exception($this->error);
+        throw new $exception($this->error, $code);
     }
 
     /**
@@ -1744,15 +1732,13 @@ abstract class Model
     }
 
     /**
-     * 查询SQL组装 union
-     * @access public
-     * @param mixed $union
-     * @param boolean $all
-     * @return Model
+     * 查询 SQL 组装 union.
      */
-    public function union($union, $all = false)
+    public function union(string|array $union, bool $all = false): static
     {
-        if (empty($union)) return $this;
+        if (empty($union)) {
+            return $this;
+        }
         if ($all) {
             $this->options['union']['_all'] = true;
         }
@@ -1761,53 +1747,47 @@ abstract class Model
         }
         // 转换union表达式
         if (is_string($union)) {
-            $prefix = $this->tablePrefix;
-            //将__TABLE_NAME__字符串替换成带前缀的表名
-            $options = preg_replace_callback("/__([A-Z0-9_-]+)__/sU", function ($match) use ($prefix) {
-                return $prefix . strtolower($match[1]);
-            }, $union);
-        } elseif (is_array($union)) {
+            $options = $union;
+        } else {
             if (isset($union[0])) {
                 $this->options['union'] = array_merge($this->options['union'] ?? [], $union);
                 return $this;
-            } else {
-                $options = $union;
             }
-        } else {
-            E(L('_DATA_TYPE_INVALID_'));
+
+            $options = $union;
         }
         $this->options['union'][] = $options;
         return $this;
     }
 
     /**
-     * 查询缓存
-     * @access public
-     * @param mixed $key
-     * @param integer $expire
-     * @param string $type
-     * @return Model
+     * 查询缓存.
+     *
+     * @todo
      */
-    public function cache($key = true, $expire = null, $type = '')
+    public function cache(bool|string $key = true, ?int $expire = null, ICache $cache = null): static
     {
         // 增加快捷调用方式 cache(10) 等同于 cache(true, 10)
-        if (is_numeric($key) && is_null($expire)) {
+        if (is_int($key) && is_null($expire)) {
             $expire = $key;
             $key = true;
         }
-        if (false !== $key)
-            $this->options['cache'] = array('key' => $key, 'expire' => $expire, 'type' => $type);
+        if (false !== $key) {
+            $this->options['cache'] = array(
+                'key' => $key,
+                'expire' => $expire,
+                'cache' => $cache
+            );
+        }
         return $this;
     }
 
     /**
-     * 指定查询字段 支持字段排除
-     * @access public
-     * @param mixed $field
-     * @param boolean $except 是否排除
-     * @return Model
+     * 指定查询字段
+     *
+     * - 支持字段排除.
      */
-    public function field($field = '', $except = false)
+    public function field(string|array|bool $field = '', bool $except = false): static
     {
         if (true === $field) {// 获取全部字段
             $fields = $this->getDbFields();
@@ -1824,13 +1804,9 @@ abstract class Model
     }
 
     /**
-     * 指定查询数量
-     * @access public
-     * @param mixed $offset 起始位置
-     * @param mixed $length 查询数量
-     * @return Model
+     * 指定查询数量.
      */
-    public function limit($offset, $length = null)
+    public function limit(int|string $offset, ?int $length = null): static
     {
         if (is_null($length) && is_string($offset) && strpos($offset, ',')) {
             list($offset, $length) = explode(',', $offset);
@@ -1840,13 +1816,9 @@ abstract class Model
     }
 
     /**
-     * 指定分页
-     * @access public
-     * @param mixed $page 页数
-     * @param mixed $listRows 每页数量
-     * @return Model
+     * 指定分页.
      */
-    public function page($page, $listRows = null)
+    public function page($page, $listRows = null): static
     {
         if (is_null($listRows) && is_string($page) && strpos($page, ',')) {
             list($page, $listRows) = explode(',', $page);
@@ -1856,12 +1828,9 @@ abstract class Model
     }
 
     /**
-     * 查询注释
-     * @access public
-     * @param string $comment 注释
-     * @return Model
+     * 查询注释.
      */
-    public function comment($comment)
+    public function comment(string $comment): static
     {
         $this->options['comment'] = $comment;
         return $this;
@@ -1873,9 +1842,8 @@ abstract class Model
      * - 目前是用于解决阿里云 RDS 读写分离数据查询延迟的问题
      *
      * @see https://help.aliyun.com/document_detail/51225.html
-     * @return Model
      */
-    public function forceMaster()
+    public function forceMaster(): static
     {
         $this->options['force_master'] = true;
 
@@ -1883,71 +1851,27 @@ abstract class Model
     }
 
     /**
-     * 检测是否强制走主库
-     * @return bool
+     * 检测是否强制走主库.
      */
-    public function isForceMaster()
+    public function isForceMaster(): bool
     {
         return isset($this->options['force_master']) && $this->options['force_master'] ? true : false;
     }
 
     /**
-     * 参数绑定
-     * @access public
-     * @param string $key 参数名
-     * @param mixed $value 绑定的变量及绑定参数
-     * @return Model
+     * 字符串命名风格转换.
+     *
+     * - type 0 将Java风格转换为C的风格
+     * - 1 将C风格转换为Java的风格
      */
-    public function bind($key, $value = false)
+    protected function parseName(string $name, int $type = 0): string
     {
-        if (is_array($key)) {
-            $this->options['bind'] = $key;
-        } else {
-            $num = func_num_args();
-            if ($num > 2) {
-                $params = func_get_args();
-                array_shift($params);
-                $this->options['bind'][$key] = $params;
-            } else {
-                $this->options['bind'][$key] = $value;
-            }
+        if ($type) {
+            return ucfirst(preg_replace_callback('/_([a-zA-Z])/', function ($match) {
+                return strtoupper($match[1]);
+            }, $name));
         }
-        return $this;
-    }
 
-    /**
-     * 设置模型的属性值
-     * @access public
-     * @param string $name 名称
-     * @param mixed $value 值
-     * @return Model
-     */
-    public function setProperty($name, $value)
-    {
-        if (property_exists($this, $name))
-            $this->$name = $value;
-        return $this;
-    }
-
-    protected function _after_db()
-    {
-    }
-}
-
-/**
- * 字符串命名风格转换
- * type 0 将Java风格转换为C的风格 1 将C风格转换为Java的风格
- * @param string $name 字符串
- * @param integer $type 转换类型
- * @return string
- */
-function parse_name($name, $type = 0)
-{
-    if ($type) {
-        return ucfirst(preg_replace_callback('/_([a-zA-Z])/', function ($match) {
-            return strtoupper($match[1]);
-        }, $name));
-    } else {
         return strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $name), "_"));
     }
 }
