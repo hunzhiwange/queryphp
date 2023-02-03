@@ -15,8 +15,6 @@ class Driver
 {
     // PDO操作实例
     protected $PDOStatement = null;
-    // 当前操作所属的模型名
-    protected $model = '_think_';
     // 当前SQL指令
     protected $queryStr = '';
     protected $modelSql = array();
@@ -373,7 +371,6 @@ class Driver
     public function insert($data, $options = array(), $replace = false)
     {
         $values = $fields = array();
-        $this->model = $options['model'];
         $this->parseBind(!empty($options['bind']) ? $options['bind'] : array());
         foreach ($data as $key => $val) {
             if (is_array($val) && 'exp' == $val[0]) {
@@ -483,48 +480,24 @@ class Driver
             return $this->queryStr;
         }
         $this->executeTimes++;
-        // foreach ($this->bind as $key => $val) {
-        //     if(is_array($val)){
-        //         $this->PDOStatement->bindValue($key, $val[0], $val[1]);
-        //     }else{
-        //         $this->PDOStatement->bindValue($key, $val);
-        //     }
-        // }
-
         $this->bind = array();
         return $this->entity::select()->execute($this->queryStr);
-
-        // // $result =   $this->PDOStatement->execute();
-        //  if ( false === $result) {
-        //      $this->error();
-        //      return false;
-        //  } else {
-        //      $this->numRows = $this->PDOStatement->rowCount();
-        //      if(preg_match("/^\s*(INSERT\s+INTO|REPLACE\s+INTO)\s+/i", $str)) {
-        //          $this->lastInsID = $this->_linkID->lastInsertId();
-        //      }
-        //      return $this->numRows;
-        //  }
     }
 
     /**
-     * 批量插入记录
-     * @access public
-     * @param mixed $dataSet 数据集
-     * @param array $options 参数表达式
-     * @param boolean $replace 是否replace
-     * @return false | integer
+     * 批量插入记录.
      */
-    public function insertAll($dataSet,$options=array(),$replace=false) {
+    public function insertAll(array $dataSet,array $options=array(),bool $replace=false): int|false
+    {
         $values  =  array();
-        $this->model  =   $options['model'];
-        if(!is_array($dataSet[0])) return false;
-        $this->parseBind(!empty($options['bind'])?$options['bind']:array());
+        if(!is_array($dataSet[0])) {
+            return false;
+        }
         $fields =  array_keys($dataSet[0]);
         array_walk($fields, array($this, 'parseKey'));
         foreach ($dataSet as $data){
             $value   =  array();
-            foreach ($data as $key=>$val){
+            foreach ($data as $val){
                 if(is_array($val) && 'exp' == $val[0]){
                     $value[]   =  $val[1];
                 }elseif(is_scalar($val) || is_null($val)){
@@ -547,21 +520,15 @@ class Driver
         return $this->execute($sql,!empty($options['fetch_sql']) ? true : false);
     }
 
-    // where子单元分析
-
     /**
-     * 通过Select方式插入记录
-     * @access public
-     * @param string $fields 要插入的数据表字段名
-     * @param string $table 要插入的数据表名
-     * @param array $option 查询数据参数
-     * @return false | integer
+     * 通过 Select 方式插入记录.
      */
-    public function selectInsert($fields, $table, $options = array())
+    public function selectInsert(string|array $fields, string $table, array $options = array()): int|false
     {
-        $this->model = $options['model'];
         $this->parseBind(!empty($options['bind']) ? $options['bind'] : array());
-        if (is_string($fields)) $fields = explode(',', $fields);
+        if (is_string($fields)) {
+            $fields = explode(',', $fields);
+        }
         array_walk($fields, array($this, 'parseKey'));
         $sql = 'INSERT INTO ' . $this->parseTable($table) . ' (' . implode(',', $fields) . ') ';
         $sql .= $this->buildSelectSql($options);
@@ -569,16 +536,10 @@ class Driver
     }
 
     /**
-     * 更新记录
-     * @access public
-     * @param mixed $data 数据
-     * @param array $options 表达式
-     * @return false | integer
+     * 更新记录.
      */
-    public function update($data, $options)
+    public function update(array $data, array $options): int|false
     {
-        $this->model = $options['model'];
-        $this->parseBind(!empty($options['bind']) ? $options['bind'] : array());
         $table = $this->parseTable($options['table']);
         $sql = 'UPDATE ' . $table . $this->parseSet($data);
         if (strpos($table, ',')) {// 多表更新支持JOIN操作
@@ -586,7 +547,7 @@ class Driver
         }
         $sql .= $this->parseWhere(!empty($options['where']) ? $options['where'] : '');
         if (!strpos($table, ',')) {
-            //  单表更新支持order和lmit
+            //  单表更新支持 order 和 lmit
             $sql .= $this->parseOrder(!empty($options['order']) ? $options['order'] : '')
                 . $this->parseLimit(!empty($options['limit']) ? $options['limit'] : '');
         }
@@ -595,12 +556,9 @@ class Driver
     }
 
     /**
-     * set分析
-     * @access protected
-     * @param array $data
-     * @return string
+     * set 分析.
      */
-    protected function parseSet($data)
+    protected function parseSet(array $data): string
     {
         foreach ($data as $key => $val) {
             if (is_array($val) && 'exp' == $val[0]) {
@@ -617,22 +575,19 @@ class Driver
                 }
             }
         }
+
         return ' SET ' . implode(',', $set);
     }
 
     /**
-     * 删除记录
-     * @access public
-     * @param array $options 表达式
-     * @return false | integer
+     * 删除记录.
      */
-    public function delete($options = array())
+    public function delete(array $options = array()): int|false
     {
-        $this->model = $options['model'];
         $this->parseBind(!empty($options['bind']) ? $options['bind'] : array());
         $table = $this->parseTable($options['table']);
         $sql = 'DELETE FROM ' . $table;
-        if (strpos($table, ',')) {// 多表删除支持USING和JOIN操作
+        if (strpos($table, ',')) {// 多表删除支持 USING 和 JOIN 操作
             if (!empty($options['using'])) {
                 $sql .= ' USING ' . $this->parseTable($options['using']) . ' ';
             }
@@ -648,41 +603,32 @@ class Driver
         return $this->execute($sql, !empty($options['fetch_sql']) ? true : false);
     }
 
-    public function getFields()
+    /**
+     * 获取数据库字段.
+     */
+    public function getFields(): array
     {
-        $fields = array_keys($this->entity->fields());
-        $primaryKey = $this->entity->primaryKey();
-
         return [
-            'fields' => $fields,
-            'primaryKey' => $primaryKey,
+            'fields' => array_keys($this->entity->fields()),
+            'primaryKey' => $this->entity->primaryKey(),
             'auto' => $this->entity->autoIncrement(),
         ];
     }
 
     /**
-     * 查找记录
-     * @access public
-     * @param array $options 表达式
-     * @return mixed
+     * 查找记录.
      */
-    public function select($options = array())
+    public function select(array $options = array()): mixed
     {
-        $this->model = $options['model'];
         $this->parseBind(!empty($options['bind']) ? $options['bind'] : array());
         $sql = $this->buildSelectSql($options);
-        $result = $this->query($sql, !empty($options['fetch_sql']) ? true : false, $options['cache'] ?? []);
-        return $result;
+        return $this->query($sql, !empty($options['fetch_sql']) ? true : false, $options['cache'] ?? []);
     }
 
     /**
-     * 执行查询 返回数据集
-     * @access public
-     * @param string $str sql指令
-     * @param boolean $fetchSql 不执行只是获取SQL
-     * @return mixed
+     * 执行查询返回数据集.
      */
-    public function query($str, $fetchSql = false, $cacheOptions = [])
+    public function query(string $str, bool $fetchSql = false, array $cacheOptions = []): mixed
     {
         $this->queryStr = $str;
         if (!empty($this->bind)) {
@@ -715,10 +661,6 @@ class Driver
         if ($fetchSql) {
             return $this->queryStr;
         }
-        //释放前次的查询结果
-        $this->queryTimes++;
-
-        $this->bind = array();
 
         $result = $this->entity::select()
             ->query(
@@ -736,53 +678,27 @@ class Driver
     }
 
     /**
-     * 获取最近一次查询的sql语句
-     * @param string $model 模型名
-     * @access public
-     * @return string
+     * 获取最近一次查询的 SQL 语句.
      */
-    public function getLastSql($model = '')
+    public function getLastSql(): ?string
     {
-        return $model && isset($this->modelSql[$model]) ? $this->modelSql[$model] : $this->queryStr;
+        return $this->queryStr;
     }
 
     /**
-     * 获取最近插入的ID
-     * @access public
-     * @return string
+     * 获取最近插入的 ID.
      */
-    public function getLastInsID()
+    public function getLastInsID(): ?string
     {
         return $this->lastInsID;
     }
 
     /**
      * 获取最近的错误信息
-     * @access public
-     * @return string
      */
-    public function getError()
+    public function getError(): string
     {
         return $this->error;
-    }
-
-    /**
-     * 设置当前操作模型
-     * @access public
-     * @param string $model 模型名
-     * @return void
-     */
-    public function setModel($model)
-    {
-        $this->model = $model;
-    }
-
-    /**
-     * 析构方法
-     * @access public
-     */
-    public function __destruct()
-    {
     }
 
     public function __sleep()
@@ -902,17 +818,6 @@ class Driver
             array_walk($tables, array(&$this, 'parseKey'));
         }
         return implode(',', $tables);
-    }
-
-    /**
-     * found_rows分析
-     * @access protected
-     * @param mixed $foundRows
-     * @return string
-     */
-    protected function parseFoundRows($foundRows)
-    {
-        return !empty($foundRows) ? ' SQL_CALC_FOUND_ROWS ' : '';
     }
 
     /**

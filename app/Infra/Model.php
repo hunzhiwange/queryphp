@@ -51,11 +51,11 @@ abstract class Model
     // 数据信息
     protected $options = array();
     // 查询表达式参数
-protected $_validate = array();
+    protected $_validate = array();
     protected $_auto = array();  // 自动验证定义
     protected $_map = array();  // 自动完成定义
     protected $_scope = array();  // 字段映射定义
-        protected $autoCheckFields = true;  // 命名范围定义
+    protected $autoCheckFields = true;  // 命名范围定义
     // 是否自动检测数据表字段信息
     protected $patchValidate = false;
     // 是否批处理验证
@@ -167,7 +167,6 @@ protected $_validate = array();
     public function flush()
     {
         // 缓存不存在则查询数据表信息
-        $this->db->setModel($this->name);
         $fields = $this->db->getFields($this->getTableName());
         if (!$fields) { // 无法获取字段信息
             return false;
@@ -1565,7 +1564,6 @@ protected $_validate = array();
                 return $prefix . strtolower($match[1]);
             }, $sql);
         }
-        $this->db->setModel($this->name);
         return $sql;
     }
 
