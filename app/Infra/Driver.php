@@ -920,43 +920,39 @@ class Driver
     }
 
     /**
-     * distinct分析
-     * @access protected
-     * @param mixed $distinct
-     * @return string
+     * distinct 分析.
      */
-    protected function parseDistinct($distinct)
+    protected function parseDistinct(bool $distinct): string
     {
         return !empty($distinct) ? ' DISTINCT ' : '';
     }
 
     /**
-     * field分析
-     * @access protected
-     * @param mixed $fields
-     * @return string
+     * field 分析.
      */
-    protected function parseField($fields)
+    protected function parseField(string|array $fields): string
     {
         if (is_string($fields) && '' !== $fields) {
             $fields = explode(',', $fields);
         }
-        if (is_array($fields)) {
-            // 完善数组方式传字段名的支持
-            // 支持 'field1'=>'field2' 这样的字段别名定义
-            $array = array();
-            foreach ($fields as $key => $field) {
-                if (!is_numeric($key))
-                    $array[] = $this->parseKey($key) . ' AS ' . $this->parseKey($field);
-                else
-                    $array[] = $this->parseKey($field);
-            }
-            $fieldsStr = implode(',', $array);
-        } else {
-            $fieldsStr = '*';
+
+        if (!is_array($fields)) {
+            return '*';
         }
-        //TODO 如果是查询全部字段，并且是join的方式，那么就把要查的表加个别名，以免字段被覆盖
-        return $fieldsStr;
+
+        // 完善数组方式传字段名的支持
+        // 支持 'field1'=>'field2' 这样的字段别名定义
+        $array = array();
+        foreach ($fields as $key => $field) {
+            if (!is_numeric($key)) {
+                $array[] = $this->parseKey($key) . ' AS ' . $this->parseKey($field);
+            }
+            else {
+                $array[] = $this->parseKey($field);
+            }
+        }
+
+        return implode(',', $array);
     }
 
     /**
