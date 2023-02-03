@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infra;
 
 use App\Domain\Model\BaseBrandModel;
+use Leevel\Http\Request;
 use Tests\TestCase;
 use stdClass;
 
@@ -455,7 +456,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM `base_brand` WHERE ( `brand_id` <> 6 AND `brand_id` > 3  )'";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( `brand_id` <> 6 AND `brand_id` > 3  )";
         $this->assertSame($result, $sql);
     }
 
@@ -967,12 +968,17 @@ class ModelTest extends TestCase
     public function testQuerySub60(): void
     {
         container()->instance('company_id', 999);
+        http_request()->request->set('brand_name', 'hello');
+        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
         $baseBrandModel = BaseBrandModel::make();
-        $baseBrandModel->create(['brand_name' => 'helloworld']);
+        $baseBrandModel
+            ->where(['brand_name' => 'hello'])
+            ->delete();
+        $baseBrandModel->create(['brand_name' => 'hello']);
         $baseBrandModel->add();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "INSERT INTO `base_brand` (`brand_name`,company_id) VALUES ('helloworld','999')";
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`company_id`) VALUES ('hello','999')";
         $this->assertSame($result, $sql);
     }
 
@@ -980,7 +986,11 @@ class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
+        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
         $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where(['brand_name' => 'hello'])
+            ->delete();
         $baseBrandModel->create();
         $baseBrandModel->add();
         $result = $baseBrandModel->getLastSql();
@@ -1276,12 +1286,16 @@ class ModelTest extends TestCase
     public function testQuerySub84(): void
     {
         container()->instance('company_id', 999);
+        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
         http_request()->request->set('status', 'F');
         http_request()->request->set('brand_name', 'hello');
         http_request()->request->set('brand_logo', 'yes');
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('`brand_logo`,`brand_name`')
+            ->where(['brand_name' => 'hello'])
+            ->delete();
+        $baseBrandModel
+            ->field('brand_logo,brand_name')
             ->create();
         $data = $baseBrandModel->data();
         $json = <<<'eot'
