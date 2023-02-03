@@ -227,24 +227,9 @@ use PDO;
      * @access public
      * @return void
      */
-    public function startTrans() {
-       // $this->
-        // $this->initConnect(true);
-        // if (!$this->_linkID) {
-        //     return false;
-        // }
-        // ++$this->transTimes;
-        // if ($this->transTimes == 1) {
-        //     try {
-        //         // 事务本身开启失败会导致嵌套事务层级错误
-        //         // 并非每种数据库都支持事务，如果底层驱动不支持事务，则抛出一个 \PDOException 异常
-        //         $this->_linkID->beginTransaction();
-        //     } catch (Exception $e) {
-        //         $this->transTimes--;
-        //
-        //         throw $e;
-        //     }
-        // }
+    public function startTrans(): void
+    {
+       $this->entity::select()->beginTransaction();
     }
 
     /**
@@ -252,73 +237,17 @@ use PDO;
      * @access public
      * @return boolean
      */
-    public function commit() {
-        // 事务尚未启动就提交
-        // 及时抛出异常通知业务方修正错误用法
-        // ```
-        // $model = new DemoModel();
-        // $model->commit();
-        // ```
-        if (0 === $this->transTimes) {
-            //ConnectionException::noActiveTransaction('Commit faild');
-            CustomLogger::error(CustomLogger::LOG_PDO, '提交事务失败:没有可提交的事务', [
-                'debug_backtrace' => debug_backtrace(),
-            ]);
-        }
-
-        // 参考 doctrine 嵌套事务处理方案
-        // 事务一旦回滚将不允许提交事务，只能一直回滚直到最终真正回滚事务
-        // 事务提交中途是可以允许回滚，滚回后事务不允许提交
-        // ```
-        // $model = new DemoModel();
-        // $model->startTrans();
-        // $model->startTrans();
-        // $model->startTrans();
-        // $model->rollback();
-        // $model->commit();
-        // ```
-        if ($this->isRollbackOnly) {
-            //ConnectionException::rollbackOnly();
-            CustomLogger::error(CustomLogger::LOG_PDO, '提交事务失败:事务已经回滚不能提交', [
-                'debug_backtrace' => debug_backtrace(),
-            ]);
-        }
-
-        if ($this->transTimes == 1) {
-            // beginTransaction 已经做了一些事务是否支持等基础校验
-            $this->_linkID->commit();
-        } 
-        --$this->transTimes;
+    public function commit()
+    {
+        return $this->entity::select()->commit();
     }
 
     /**
      * 事务回滚
-     * @access public
-     * @return boolean
      */
-    public function rollback() {
-        // 事务尚未启动就回滚
-        // 及时抛出异常通知业务方修正错误用法
-        // ```
-        // $model = new DemoModel();
-        // $model->rollback();
-        // ```
-        if (0 === $this->transTimes) {
-            //ConnectionException::noActiveTransaction('Rollback faild');
-            CustomLogger::error(CustomLogger::LOG_PDO, '回滚事务失败:没有可回滚的事务', [
-                'debug_backtrace' => debug_backtrace(),
-            ]);
-        }
-
-        if ($this->transTimes == 1) {
-            $this->transTimes = 0;
-            // beginTransaction 已经做了一些事务是否支持等基础校验
-            $this->_linkID->rollback();
-            $this->isRollbackOnly = false;
-        } else {
-            --$this->transTimes; 
-            $this->isRollbackOnly = true;
-        }
+    public function rollback()
+    {
+        $this->entity::select()->rollBack();
     }
 
     /**

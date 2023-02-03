@@ -2941,4 +2941,34 @@ class ModelTest extends TestCase
             $this->assertSame(true, empty($data));
         }
     }
+
+    public function testQuerySub184(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage(
+            'Error message'
+        );
+
+        $baseBrandModel = BaseBrandModel::make();
+        $id = null;
+        $baseBrandModel->startTrans();
+
+        try {
+            $id = $baseBrandModel
+                ->data(['brand_name' => 'hello'])
+                ->add();
+            throw new \Exception('Error message');
+            $baseBrandModel->commit();
+        } catch (\Throwable $e) {
+            $baseBrandModel->rollBack();
+
+            throw $e;
+        } finally {
+            $data = $baseBrandModel
+                ->forceMaster()
+                ->find($id);
+            $this->assertSame(true, $id>0);
+            $this->assertSame(true, empty($data));
+        }
+    }
 }
