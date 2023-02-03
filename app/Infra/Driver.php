@@ -49,7 +49,7 @@ class Driver
     protected $exp = array('eq' => '=', 'neq' => '<>', 'gt' => '>', 'egt' => '>=', 'lt' => '<', 'elt' => '<=', 'notlike' => 'NOT LIKE', 'like' => 'LIKE', 'in' => 'IN', 'notin' => 'NOT IN', 'not in' => 'NOT IN', 'between' => 'BETWEEN', 'not between' => 'NOT BETWEEN', 'notbetween' => 'NOT BETWEEN');
     // 查询表达式
     // 注释实现阿里云走主库 @see https://help.aliyun.com/document_detail/51225.html
-    protected $selectSql = '%FORCE_MASTER%SELECT %FOUND_ROWS% %DISTINCT% %FIELD% FROM %TABLE%%FORCE%%JOIN%%WHERE%%GROUP%%HAVING%%ORDER%%LIMIT% %UNION%%LOCK%%COMMENT%';
+    protected $selectSql = '%FORCE_MASTER%SELECT %DISTINCT% %FIELD% FROM %TABLE%%FORCE%%JOIN%%WHERE%%GROUP%%HAVING%%ORDER%%LIMIT% %UNION%%LOCK%%COMMENT%';
     // 查询次数
     protected $queryTimes = 0;
     // 执行次数
@@ -785,9 +785,6 @@ class Driver
     {
     }
 
-    /**
-     * You can not serialize objects that can not be serialized. But you tried, so you got the exception. That's basically the whole issue. Just don't tell PHP to serialize objects that can't be serialized.
-     */
     public function __sleep()
     {
         return array();
@@ -858,11 +855,10 @@ class Driver
     public function parseSql($sql, $options = array())
     {
         $sql = str_replace(
-            array('%FORCE_MASTER%', '%TABLE%', '%FOUND_ROWS%', '%DISTINCT%', '%FIELD%', '%JOIN%', '%WHERE%', '%GROUP%', '%HAVING%', '%ORDER%', '%LIMIT%', '%UNION%', '%LOCK%', '%COMMENT%', '%FORCE%'),
+            array('%FORCE_MASTER%', '%TABLE%', '%DISTINCT%', '%FIELD%', '%JOIN%', '%WHERE%', '%GROUP%', '%HAVING%', '%ORDER%', '%LIMIT%', '%UNION%', '%LOCK%', '%COMMENT%', '%FORCE%'),
             array(
                 $this->parseForceMaster(!empty($options['force_master'])),
                 $this->parseTable($options['table']),
-                $this->parseFoundRows(isset($options['found_rows']) ? $options['found_rows'] : false),
                 $this->parseDistinct(isset($options['distinct']) ? $options['distinct'] : false),
                 $this->parseField(!empty($options['field']) ? $options['field'] : '*'),
                 $this->parseJoin(!empty($options['join']) ? $options['join'] : ''),
