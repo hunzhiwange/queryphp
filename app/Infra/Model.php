@@ -1031,34 +1031,6 @@ abstract class Model
     }
 
     /**
-     * 处理字段映射
-     * @access public
-     * @param array $data 当前数据
-     * @param integer $type 类型 0 写入 1 读取
-     * @return array
-     */
-    public function parseFieldsMap($data, $type = 1)
-    {
-        // 检查字段映射
-        if (!empty($this->_map)) {
-            foreach ($this->_map as $key => $val) {
-                if ($type == 1) { // 读取
-                    if (isset($data[$val])) {
-                        $data[$key] = $data[$val];
-                        unset($data[$val]);
-                    }
-                } else {
-                    if (isset($data[$key])) {
-                        $data[$val] = $data[$key];
-                        unset($data[$key]);
-                    }
-                }
-            }
-        }
-        return $data;
-    }
-
-    /**
      * 字段值增长
      * @access public
      * @param string $field 字段名
@@ -1208,7 +1180,7 @@ abstract class Model
         }
 
         // 检测提交字段的合法性
-        if (isset($this->options['field'])) { // $this->field('field1,field2...')->create()
+        if (isset($this->options['field'])) {
             $fields = $this->options['field'];
             unset($this->options['field']);
         }
