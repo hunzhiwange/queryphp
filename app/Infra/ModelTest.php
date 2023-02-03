@@ -1754,4 +1754,386 @@ class ModelTest extends TestCase
     //     $sql = "SELECT   * FROM base_brand WHERE brand_id = 1 LIMIT 1";
     //     $this->assertSame($result, $sql);
     // }
+
+    public function testQuerySub118(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->scope('normal')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE status = 'T'";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub119(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->scope('latest')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand ORDER BY create_date DESC LIMIT 10";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub120(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->scope('normal')
+            ->scope('latest')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE status = 'T' ORDER BY create_date DESC LIMIT 10";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub121(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->scope('normal,latest,new')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE status = 'T' ORDER BY create_date DESC LIMIT 10";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub122(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->scope()
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_logo = 'yes' LIMIT 20";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub123(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->scope('default')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_logo = 'yes' LIMIT 20";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub124(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->scope('default',['order'=>'brand_id DESC'])
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_logo = 'yes' ORDER BY brand_id DESC LIMIT 20";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub125(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->scope('normal,latest',['order'=>'brand_id DESC'])
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE status = 'T' ORDER BY brand_id DESC LIMIT 10";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub126(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->scope(array(
+                'field'=>'brand_id,brand_name',
+                'limit'=>5,
+                'where'=>'status=1',
+                'order'=>'create_date DESC'
+            ))
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   brand_id,brand_name FROM base_brand WHERE status=1 ORDER BY create_date DESC LIMIT 5";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub127(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->limit(8)
+            ->scope('normal')
+            ->order('brand_id desc')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE status = 'T' ORDER BY brand_id desc LIMIT 8";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub128(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->normal(array('limit'=>5))
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE status = 'T' LIMIT 5";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub129(): void
+    {
+        container()->instance('company_id', 999);
+        http_request()->request->set('brand_name', 'hello');
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->create();
+        $data = $baseBrandModel->data();
+        $json = <<<'eot'
+            {
+                "brand_name": "hello",
+                "company_id": 999
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $data
+            )
+        );
+    }
+
+    public function testQuerySub130(): void
+    {
+        container()->instance('company_id', 999);
+        $data['brand_name'] = 'ThinkPHP';
+        $data['brand_logo'] = 'ThinkPHP@gmail.com';
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->create($data);
+        $data = $baseBrandModel->data();
+        $json = <<<'eot'
+            {
+                "brand_name": "ThinkPHP",
+                "brand_logo": "ThinkPHP@gmail.com",
+                "company_id": 999
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $data
+            )
+        );
+    }
+
+    public function testQuerySub131(): void
+    {
+        container()->instance('company_id', 999);
+        $data = new stdClass();
+        $data->brand_name = 'ThinkPHP';
+        $data->brand_logo = 'ThinkPHP@gmail.com';
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->create($data);
+        $data = $baseBrandModel->data();
+        $json = <<<'eot'
+            {
+                "brand_name": "ThinkPHP",
+                "brand_logo": "ThinkPHP@gmail.com",
+                "company_id": 999
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $data
+            )
+        );
+    }
+
+    public function testQuerySub132(): void
+    {
+        container()->instance('company_id', 999);
+        $data = new stdClass();
+        $data->brand_name = 'ThinkPHP';
+        $data->brand_logo = 'ThinkPHP@gmail.com';
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->create($data);
+        $data = $baseBrandModel->data();
+        $json = <<<'eot'
+            {
+                "brand_name": "ThinkPHP",
+                "brand_logo": "ThinkPHP@gmail.com",
+                "company_id": 999
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $data
+            ));
+        $this->assertSame($baseBrandModel->brand_logo, 'ThinkPHP@gmail.com');
+
+        $baseBrandModel->brand_logo = 'new logo';
+        $data = $baseBrandModel->data();
+        $json = <<<'eot'
+            {
+                "brand_name": "ThinkPHP",
+                "brand_logo": "new logo",
+                "company_id": 999
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $data
+            ));
+    }
+
+    public function testQuerySub133(): void
+    {
+        container()->instance('company_id', 999);
+        $data = new stdClass();
+        $data->brand_name = 'ThinkPHP';
+        $data->brand_logo = 'ThinkPHP@gmail.com';
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->create($data,Model::MODEL_UPDATE);
+        $data = $baseBrandModel->data();
+        $json = <<<'eot'
+            {
+                "brand_name": "ThinkPHP",
+                "brand_logo": "ThinkPHP@gmail.com"
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $data
+            ));
+    }
+
+    public function testQuerySub134(): void
+    {
+        container()->instance('company_id', 999);
+        $data = new stdClass();
+        $data->brand_name = 'ThinkPHP';
+        $data->brand_logo = 'ThinkPHP@gmail.com';
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->create($data,Model::MODEL_INSERT);
+        $data = $baseBrandModel->data();
+        $json = <<<'eot'
+            {
+                "brand_name": "ThinkPHP",
+                "brand_logo": "ThinkPHP@gmail.com",
+                "company_id": 999
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $data
+            ));
+    }
+
+    public function testQuerySub135(): void
+    {
+        container()->instance('company_id', 999);
+        $data = new stdClass();
+        $data->brand_name = 'ThinkPHP';
+        $data->brand_logo = 'ThinkPHP@gmail.com';
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->create($data,Model::MODEL_BOTH);
+        $data = $baseBrandModel->data();
+        $json = <<<'eot'
+            {
+                "brand_name": "ThinkPHP",
+                "brand_logo": "ThinkPHP@gmail.com"
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $data
+            ));
+    }
+
+    public function testQuerySub136(): void
+    {
+        container()->instance('company_id', 999);
+        $data = new stdClass();
+        $data->brand_id = 1;
+        $data->brand_name = 'ThinkPHP';
+        $data->brand_logo = 'ThinkPHP@gmail.com';
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->create($data,Model::MODEL_BOTH);
+        $data = $baseBrandModel->data();
+        $json = <<<'eot'
+            {
+                "brand_id": 1,
+                "brand_name": "ThinkPHP",
+                "brand_logo": "ThinkPHP@gmail.com"
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $data
+            ));
+    }
+
+    public function testQuerySub137(): void
+    {
+        container()->instance('company_id', 999);
+        $data = new stdClass();
+        $data->brand_id = 1;
+        $data->brand_name = 'ThinkPHP';
+        $data->brand_logo = 'ThinkPHP@gmail.com';
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->create($data,Model::MODEL_INSERT);
+        $data = $baseBrandModel->data();
+        $json = <<<'eot'
+            {
+                "brand_id": 1,
+                "brand_name": "ThinkPHP",
+                "brand_logo": "ThinkPHP@gmail.com",
+                "company_id": 999
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $data
+            ));
+    }
 }

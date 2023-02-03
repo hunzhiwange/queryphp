@@ -21,8 +21,25 @@ class BaseBrandModel extends Model {
     /** @var string 品牌状态 - 禁用 */
     const STATUS_F = 'F';
 
+    protected $_scope = array(
+        // 命名范围normal
+        'normal'=>array(
+            'where'=>array('status'=>'T'),
+        ),
+        // 命名范围latest
+        'latest'=>array(
+            'order'=>'create_date DESC',
+            'limit'=>10,
+        ),
+        // 默认的命名范围
+        'default'=>array(
+            'where'=>array('brand_logo'=>'yes'),
+            'limit'=>20,
+        ),
+    );
+
     protected $_auto = array(
-        array('company_id','get_company_id',1,'function'),
+        array('company_id','get_company_id',self::MODEL_INSERT,'function'),
     );
 
     protected $_validate = array(
@@ -54,8 +71,6 @@ class BaseBrandModel extends Model {
     /**
      * 检查商品品牌名称是否可用
      * @return bool
-     * @author 小牛
-     * @since 2016-05-04　　
      */
     public function checkName(){
         $arrIn = array('map' => array());
@@ -77,8 +92,6 @@ class BaseBrandModel extends Model {
      * 获取商品品牌列表
      * @param array $arrIn 手动传入的数据
      * @return array 商品品牌信息
-     * @author dyhb
-     * @since 2015-02-06
      */
     public function getList($arrIn = array()) {
         $arrIn = array_merge(array('field' => true, 'map' => array(), 'order' => 'order_num DESC, brand_id ASC', 'limit' => ''), $arrIn);
@@ -104,8 +117,6 @@ class BaseBrandModel extends Model {
      * 添加更新商品品牌信息
      * @paray array $arrIn 手动传入的数据
      * @return boolean fasle 失败 成功返回ID
-     * @author dyhb
-     * @since 2015-02-06
      */
     public function updateInfo($arrIn = array()) {
 
@@ -154,8 +165,6 @@ class BaseBrandModel extends Model {
      * 获取商品品牌信息
      * @param array $arrIn 手动传入的数据
      * @return array 商品品牌信息
-     * @author dyhb
-     * @since 2015-01-27
      */
     public function getInfo($arrIn = array()) {
         $arrIn = array_merge(array('field' => true, 'map' => array()), $arrIn);
@@ -171,8 +180,6 @@ class BaseBrandModel extends Model {
      * 删除一条记录
      * @param array $arrIn 手动传入的数据 brand_id：商品品牌ID
      * @return boolean fasle 失败 ， int  成功 返回完整的数据
-     * @author dyhb
-     * @since 2015-02-06
      */
     public function delInfo($arrIn = array()) {
         $arrIn['company_id'] = get_company_id();
@@ -199,8 +206,6 @@ class BaseBrandModel extends Model {
      * 获取商品品牌列表[搜索下拉条件]
      * @param array $arrIn 手动传入的数据
      * @return array 商品品牌信息
-     * @author 冯朝兵
-     * @since 2015-09-06
      */
     public function getListSelect($arrIn = array()) {
         $arrIn = array_merge(array('field_key' => 'brand_id', 'field_val' => 'brand_name', 'map' => array(), 'order' => 'order_num DESC,brand_id DESC'), $arrIn);
@@ -215,8 +220,6 @@ class BaseBrandModel extends Model {
     /**
      * 获取自动品牌编码
      * @return string 分类编码
-     * @author 小牛New
-     * @since 2016-01-29
      */
     public function getBrandNum() {
         $strNum = get_data_number('base_brand');
@@ -237,8 +240,6 @@ class BaseBrandModel extends Model {
     /**
      * 数据过滤
      * @return 
-     * @author 小牛New
-     * @since 2016-06-28
      */
     protected function _before_write(&$data) {
         isset($data['brand_name']) && $data['brand_name'] = Text::handle($data['brand_name']);
