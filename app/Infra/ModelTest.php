@@ -18,7 +18,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( brand_name = 'QueryPHP' OR brand_num = 'QueryPHP' )";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( `brand_name` = 'QueryPHP' OR brand_num = 'QueryPHP' )";
         $this->assertSame($result, $sql);
     }
 
@@ -32,7 +32,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name = 'QueryPHP' OR brand_num = 'QueryPHP'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` = 'QueryPHP' OR brand_num = 'QueryPHP'";
         $this->assertSame($result, $sql);
     }
 
@@ -42,10 +42,10 @@ class ModelTest extends TestCase
         $map['brand_name|brand_num'] = 'QueryPHP';
         $result = $baseBrandModel
             ->where($map)
-            ->field('SQL_CALC_FOUND_ROWS brand_id,brand_name')
+            ->field('SQL_CALC_FOUND_ROWS `brand_id`,`brand_name`')
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT count(*) as count FROM (SELECT     brand_id,brand_name FROM base_brand WHERE ( brand_name = 'QueryPHP' OR brand_num = 'QueryPHP' ) ) t";
+        $sql = "SELECT count(*) as count FROM (SELECT     `brand_id`,`brand_name` FROM `base_brand` WHERE ( `brand_name` = 'QueryPHP' OR brand_num = 'QueryPHP' ) ) t";
         $count = $baseBrandModel->fetchTotalCount();
         $this->assertSame($result, $sql);
         $this->assertTrue(is_int($count));
@@ -59,7 +59,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( (brand_name = '品牌1') AND (brand_num = '品牌2') )";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( (`brand_name` = '品牌1') AND (brand_num = '品牌2') )";
         $this->assertSame($result, $sql);
     }
 
@@ -72,19 +72,19 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name = '品牌1' AND brand_num = '品牌2'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` = '品牌1' AND brand_num = '品牌2'";
         $this->assertSame($result, $sql);
     }
 
     public function testQuickQuery3(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map['brand_name&brand_num&brand_logo'] =array('1',array('gt','0'),'QueryPHP','_multi'=>true);
+        $map['`brand_name`&brand_num&`brand_logo`'] =array('1',array('gt','0'),'QueryPHP','_multi'=>true);
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( (brand_name = '1') AND (brand_num > '0') AND (brand_logo = 'QueryPHP') )";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( (`brand_name` = '1') AND (brand_num > '0') AND (`brand_logo` = 'QueryPHP') )";
         $this->assertSame($result, $sql);
     }
 
@@ -98,19 +98,19 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name = '1' AND brand_num > 0 AND brand_logo = 'QueryPHP'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` = '1' AND brand_num > 0 AND `brand_logo` = 'QueryPHP'";
         $this->assertSame($result, $sql);
     }
 
     public function testQuery1(): void
     {
         $baseBrandModel = BaseBrandModel::make();
-        $map = "'brand_name='q' AND brand_num='y'";
+        $map = "'`brand_name`='q' AND brand_num='y'";
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( 'brand_name='q' AND brand_num='y' )";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( '`brand_name`='q' AND brand_num='y' )";
         $this->assertSame($result, $sql);
     }
 
@@ -123,7 +123,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name = 'h' AND brand_num = 'y'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` = 'h' AND brand_num = 'y'";
         $this->assertSame($result, $sql);
     }
 
@@ -137,7 +137,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name = 'h' OR brand_num = 'y'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` = 'h' OR brand_num = 'y'";
         $this->assertSame($result, $sql);
     }
 
@@ -151,7 +151,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name = 'hello' AND brand_num = 'world'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` = 'hello' AND brand_num = 'world'";
         $this->assertSame($result, $sql);
     }
 
@@ -165,7 +165,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name = 'h' AND brand_num = 'y'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` = 'h' AND brand_num = 'y'";
         $this->assertSame($result, $sql);
     }
 
@@ -177,7 +177,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name = 'h'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` = 'h'";
         $this->assertSame($result, $sql);
     }
 
@@ -189,7 +189,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name <> 'h'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` <> 'h'";
         $this->assertSame($result, $sql);
     }
 
@@ -201,7 +201,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name > 'h'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` > 'h'";
         $this->assertSame($result, $sql);
     }
 
@@ -213,7 +213,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name >= 'h'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` >= 'h'";
         $this->assertSame($result, $sql);
     }
 
@@ -225,7 +225,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name < 'h'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` < 'h'";
         $this->assertSame($result, $sql);
     }
 
@@ -237,7 +237,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name <= 'h'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` <= 'h'";
         $this->assertSame($result, $sql);
     }
 
@@ -249,7 +249,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name LIKE 'h%'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` LIKE 'h%'";
         $this->assertSame($result, $sql);
     }
 
@@ -261,7 +261,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name NOT LIKE 'h%'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` NOT LIKE 'h%'";
         $this->assertSame($result, $sql);
     }
 
@@ -274,7 +274,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE (brand_name LIKE '%thinkphp%' OR brand_name LIKE '%q') AND (brand_num NOT LIKE '%thinkphp%' AND brand_num NOT LIKE '%q')";
+        $sql = "SELECT   * FROM `base_brand` WHERE (`brand_name` LIKE '%thinkphp%' OR `brand_name` LIKE '%q') AND (brand_num NOT LIKE '%thinkphp%' AND brand_num NOT LIKE '%q')";
         $this->assertSame($result, $sql);
     }
 
@@ -286,7 +286,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_id BETWEEN '1' AND '8'";
+        $sql = "SELECT   * FROM `base_brand` WHERE brand_id BETWEEN '1' AND '8'";
         $this->assertSame($result, $sql);
     }
 
@@ -298,7 +298,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_id BETWEEN '1' AND '8'";
+        $sql = "SELECT   * FROM `base_brand` WHERE brand_id BETWEEN '1' AND '8'";
         $this->assertSame($result, $sql);
     }
 
@@ -310,7 +310,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_id NOT BETWEEN '1' AND '8'";
+        $sql = "SELECT   * FROM `base_brand` WHERE brand_id NOT BETWEEN '1' AND '8'";
         $this->assertSame($result, $sql);
     }
 
@@ -322,7 +322,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_id NOT BETWEEN '1' AND '8'";
+        $sql = "SELECT   * FROM `base_brand` WHERE brand_id NOT BETWEEN '1' AND '8'";
         $this->assertSame($result, $sql);
     }
 
@@ -334,7 +334,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_id NOT IN ('1','5','8')";
+        $sql = "SELECT   * FROM `base_brand` WHERE brand_id NOT IN ('1','5','8')";
         $this->assertSame($result, $sql);
     }
 
@@ -346,7 +346,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_id IN ('1','5','8')";
+        $sql = "SELECT   * FROM `base_brand` WHERE brand_id IN ('1','5','8')";
         $this->assertSame($result, $sql);
     }
 
@@ -358,7 +358,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_id IN ('1','5','8')";
+        $sql = "SELECT   * FROM `base_brand` WHERE brand_id IN ('1','5','8')";
         $this->assertSame($result, $sql);
     }
 
@@ -370,7 +370,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_id IN ('1','5','8')";
+        $sql = "SELECT   * FROM `base_brand` WHERE brand_id IN ('1','5','8')";
         $this->assertSame($result, $sql);
     }
 
@@ -382,7 +382,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_id NOT IN ('1','5','8')";
+        $sql = "SELECT   * FROM `base_brand` WHERE brand_id NOT IN ('1','5','8')";
         $this->assertSame($result, $sql);
     }
 
@@ -394,7 +394,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_id IN ('1','5','8')";
+        $sql = "SELECT   * FROM `base_brand` WHERE brand_id IN ('1','5','8')";
         $this->assertSame($result, $sql);
     }
 
@@ -406,7 +406,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_id  IN (1,3,8)";
+        $sql = "SELECT   * FROM `base_brand` WHERE brand_id  IN (1,3,8)";
         $this->assertSame($result, $sql);
     }
 
@@ -419,7 +419,7 @@ class ModelTest extends TestCase
         $baseBrandModel->where('brand_id=5')->save($data); // 根据条件保存修改的数据
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "UPDATE base_brand SET brand_name='ThinkPHP',company_id=company_id+1 WHERE ( brand_id=5 )";
+        $sql = "UPDATE `base_brand` SET `brand_name`='ThinkPHP',company_id=company_id+1 WHERE ( brand_id=5 )";
         $this->assertSame($result, $sql);
     }
 
@@ -431,7 +431,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( brand_id > 1 AND brand_id < 10  )";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( brand_id > 1 AND brand_id < 10  )";
         $this->assertSame($result, $sql);
     }
 
@@ -443,7 +443,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( brand_id > 3 OR brand_id < 10 )";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( brand_id > 3 OR brand_id < 10 )";
         $this->assertSame($result, $sql);
     }
 
@@ -455,7 +455,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( brand_id <> 6 AND brand_id > 3  )";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( brand_id <> 6 AND brand_id > 3  )";
         $this->assertSame($result, $sql);
     }
 
@@ -467,7 +467,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( brand_id LIKE '%a%' OR brand_id LIKE '%b%' OR brand_id LIKE '%c%' OR brand_id = 'ThinkPHP' )";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( brand_id LIKE '%a%' OR brand_id LIKE '%b%' OR brand_id LIKE '%c%' OR brand_id = 'ThinkPHP' )";
         $this->assertSame($result, $sql);
     }
 
@@ -481,7 +481,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_id <> 1 AND brand_name = 'ok' AND ( company_id=1 AND order_num>10 )";
+        $sql = "SELECT   * FROM `base_brand` WHERE brand_id <> 1 AND `brand_name` = 'ok' AND ( company_id=1 AND order_num>10 )";
         $this->assertSame($result, $sql);
     }
 
@@ -494,7 +494,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_id > '100' AND ( company_id = '1' OR order_num = '100' )";
+        $sql = "SELECT   * FROM `base_brand` WHERE brand_id > '100' AND ( company_id = '1' OR order_num = '100' )";
         $this->assertSame($result, $sql);
     }
 
@@ -510,7 +510,7 @@ class ModelTest extends TestCase
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE (  brand_name LIKE '%thinkphp%' OR order_num LIKE '%thinkphp%' ) AND brand_id > 1";
+        $sql = "SELECT   * FROM `base_brand` WHERE (  `brand_name` LIKE '%thinkphp%' OR order_num LIKE '%thinkphp%' ) AND brand_id > 1";
         $this->assertSame($result, $sql);
     }
 
@@ -518,12 +518,12 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = array('gt',1);
-        $map['_string'] = ' (brand_name like "%thinkphp%")  OR ( order_num like "%thinkphp") ';
+        $map['_string'] = ' (`brand_name` like "%thinkphp%")  OR ( order_num like "%thinkphp") ';
         $result = $baseBrandModel
             ->where($map)
             ->select(['fetch_sql' => true]);
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_id > 1 AND (  (brand_name like \"%thinkphp%\")  OR ( order_num like \"%thinkphp\")  )";
+        $sql = "SELECT   * FROM `base_brand` WHERE brand_id > 1 AND (  (`brand_name` like \"%thinkphp%\")  OR ( order_num like \"%thinkphp\")  )";
         $this->assertSame($result, $sql);
     }
 
@@ -534,7 +534,7 @@ class ModelTest extends TestCase
             ->count();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   COUNT(*) AS tp_count FROM base_brand LIMIT 1";
+        $sql = "SELECT   COUNT(*) AS tp_count FROM `base_brand` LIMIT 1";
         $this->assertSame($result, $sql);
         $this->assertTrue(is_int($count));
     }
@@ -546,7 +546,7 @@ class ModelTest extends TestCase
             ->count('brand_id');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   COUNT(brand_id) AS tp_count FROM base_brand LIMIT 1";
+        $sql = "SELECT   COUNT(brand_id) AS tp_count FROM `base_brand` LIMIT 1";
         $this->assertSame($result, $sql);
         $this->assertTrue(is_int($count));
     }
@@ -558,7 +558,7 @@ class ModelTest extends TestCase
             ->max('brand_id');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   MAX(brand_id) AS tp_max FROM base_brand LIMIT 1";
+        $sql = "SELECT   MAX(brand_id) AS tp_max FROM `base_brand` LIMIT 1";
         $this->assertSame($result, $sql);
         $this->assertTrue(is_int($count));
     }
@@ -570,7 +570,7 @@ class ModelTest extends TestCase
             ->where('brand_id>0')->min('brand_id');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   MIN(brand_id) AS tp_min FROM base_brand WHERE ( brand_id>0 ) LIMIT 1";
+        $sql = "SELECT   MIN(brand_id) AS tp_min FROM `base_brand` WHERE ( brand_id>0 ) LIMIT 1";
         $this->assertSame($result, $sql);
         $this->assertTrue(is_int($count));
     }
@@ -582,7 +582,7 @@ class ModelTest extends TestCase
             ->where('brand_id>0')->avg('brand_id');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   AVG(brand_id) AS tp_avg FROM base_brand WHERE ( brand_id>0 ) LIMIT 1";
+        $sql = "SELECT   AVG(brand_id) AS tp_avg FROM `base_brand` WHERE ( brand_id>0 ) LIMIT 1";
         $this->assertSame($result, $sql);
     }
 
@@ -593,7 +593,7 @@ class ModelTest extends TestCase
             ->where('brand_id>0')->sum('brand_id');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   SUM(brand_id) AS tp_sum FROM base_brand WHERE ( brand_id>0 ) LIMIT 1";
+        $sql = "SELECT   SUM(brand_id) AS tp_sum FROM `base_brand` WHERE ( brand_id>0 ) LIMIT 1";
         $this->assertSame($result, $sql);
     }
 
@@ -601,10 +601,10 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->query("select * from base_brand where brand_id=83");
+            ->query("select * from `base_brand` where brand_id=83");
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "select * from base_brand where brand_id=83";
+        $sql = "select * from `base_brand` where brand_id=83";
         $this->assertSame($result, $sql);
     }
 
@@ -612,10 +612,10 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->execute("update base_brand set brand_name='hello' where brand_id=83");
+            ->execute("update `base_brand` set `brand_name`='hello' where brand_id=83");
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "update base_brand set brand_name='hello' where brand_id=83";
+        $sql = "update `base_brand` set `brand_name`='hello' where brand_id=83";
         $this->assertSame($result, $sql);
     }
 
@@ -626,7 +626,7 @@ class ModelTest extends TestCase
             ->getByBrandName('liu21st');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name = 'liu21st' LIMIT 1";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` = 'liu21st' LIMIT 1";
         $this->assertSame($result, $sql);
     }
 
@@ -637,7 +637,7 @@ class ModelTest extends TestCase
             ->getByBrandLogo('liu21st');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_logo = 'liu21st' LIMIT 1";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_logo` = 'liu21st' LIMIT 1";
         $this->assertSame($result, $sql);
     }
 
@@ -648,7 +648,7 @@ class ModelTest extends TestCase
             ->getFieldByBrandName('Google','brand_id');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_id FROM base_brand WHERE brand_name = 'Google' LIMIT 1";
+        $sql = "SELECT   brand_id FROM `base_brand` WHERE `brand_name` = 'Google' LIMIT 1";
         $this->assertSame($result, $sql);
     }
 
@@ -657,8 +657,8 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $subQuery = $baseBrandModel
-            ->field('brand_id,brand_name')
-            ->table('base_brand')
+            ->field('`brand_id`,`brand_name`')
+            ->table('`base_brand`')
             ->group('brand_name')
             ->where([
                 'brand_id' => 1,
@@ -667,7 +667,7 @@ class ModelTest extends TestCase
             ->select(false);
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_id,brand_name FROM base_brand GROUP BY brand_name ORDER BY brand_id DESC";
+        $sql = "SELECT   `brand_id`,`brand_name` FROM `base_brand` GROUP BY `brand_name` ORDER BY brand_id DESC";
         $this->assertSame($result, $sql);
         $this->assertSame($subQuery, '( '.$sql.'  )');
     }
@@ -676,8 +676,8 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $subQuery = $baseBrandModel
-            ->field('brand_id,brand_name')
-            ->table('base_brand')
+            ->field('`brand_id`,`brand_name`')
+            ->table('`base_brand`')
             ->group('brand_name')
             ->where([
                 'brand_id' => 1,
@@ -686,7 +686,7 @@ class ModelTest extends TestCase
             ->buildSql();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_id,brand_name FROM base_brand GROUP BY brand_name ORDER BY brand_id DESC";
+        $sql = "SELECT   `brand_id`,`brand_name` FROM `base_brand` GROUP BY `brand_name` ORDER BY brand_id DESC";
         $this->assertSame($result, $sql);
         $this->assertSame($subQuery, '( '.$sql.'  )');
     }
@@ -695,8 +695,8 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $subQuery = $baseBrandModel
-            ->field('brand_id,brand_name')
-            ->table('base_brand')
+            ->field('`brand_id`,`brand_name`')
+            ->table('`base_brand`')
             ->group('brand_id')
             ->where([
                 'brand_id' => 1,
@@ -705,20 +705,20 @@ class ModelTest extends TestCase
             ->buildSql();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_id,brand_name FROM base_brand GROUP BY brand_id ORDER BY brand_id DESC";
+        $sql = "SELECT   `brand_id`,`brand_name` FROM `base_brand` GROUP BY brand_id ORDER BY brand_id DESC";
         $this->assertSame($result, $sql);
         $this->assertSame($subQuery, '( '.$sql.'  )');
 
         $baseBrandModel
             ->table($subQuery.' a')
             ->where([
-                'a.brand_name' => '你好',
+                'a.`brand_name`' => '你好',
             ])
             ->order('a.brand_id DESC')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM ( SELECT   brand_id,brand_name FROM base_brand GROUP BY brand_id ORDER BY brand_id DESC  ) a WHERE a.brand_name = '你好' ORDER BY a.brand_id DESC";
+        $sql = "SELECT   * FROM ( SELECT   `brand_id`,`brand_name` FROM `base_brand` GROUP BY brand_id ORDER BY brand_id DESC  ) a WHERE a.`brand_name` = '你好' ORDER BY a.brand_id DESC";
         $this->assertSame($result, $sql);
     }
 
@@ -730,7 +730,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "/*FORCE_MASTER*/ SELECT   * FROM base_brand";
+        $sql = "/*FORCE_MASTER*/ SELECT   * FROM `base_brand`";
         $this->assertSame($result, $sql);
     }
 
@@ -742,7 +742,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand LIMIT 0,5";
+        $sql = "SELECT   * FROM `base_brand` LIMIT 0,5";
         $this->assertSame($result, $sql);
     }
 
@@ -754,7 +754,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand LIMIT 1,5";
+        $sql = "SELECT   * FROM `base_brand` LIMIT 1,5";
         $this->assertSame($result, $sql);
     }
 
@@ -766,7 +766,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand GROUP BY brand_id";
+        $sql = "SELECT   * FROM `base_brand` GROUP BY brand_id";
         $this->assertSame($result, $sql);
     }
 
@@ -778,7 +778,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand ORDER BY brand_id DESC";
+        $sql = "SELECT   * FROM `base_brand` ORDER BY brand_id DESC";
         $this->assertSame($result, $sql);
     }
 
@@ -790,7 +790,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_id FROM base_brand";
+        $sql = "SELECT   brand_id FROM `base_brand`";
         $this->assertSame($result, $sql);
     }
 
@@ -802,7 +802,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand /*注释*/";
+        $sql = "SELECT   * FROM `base_brand` /*注释*/";
         $this->assertSame($result, $sql);
     }
 
@@ -814,7 +814,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand LIMIT 10,5";
+        $sql = "SELECT   * FROM `base_brand` LIMIT 10,5";
         $this->assertSame($result, $sql);
     }
 
@@ -826,7 +826,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand LIMIT 10,5";
+        $sql = "SELECT   * FROM `base_brand` LIMIT 10,5";
         $this->assertSame($result, $sql);
     }
 
@@ -834,11 +834,11 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->where('brand_id=1 AND brand_name=1')
+            ->where('brand_id=1 AND `brand_name`=1')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( brand_id=1 AND brand_name=1 )";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( brand_id=1 AND `brand_name`=1 )";
         $this->assertSame($result, $sql);
     }
 
@@ -846,11 +846,11 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->where("brand_id=%d and brand_name='%s' and brand_logo='%f'",array(1,'hello',0.5))
+            ->where("brand_id=%d and `brand_name`='%s' and `brand_logo`='%f'",array(1,'hello',0.5))
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( brand_id=1 and brand_name='hello' and brand_logo='0.500000' )";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( brand_id=1 and `brand_name`='hello' and `brand_logo`='0.500000' )";
         $this->assertSame($result, $sql);
     }
 
@@ -858,11 +858,11 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->where("brand_id=%d and brand_name='%s' and brand_logo='%f'",1,'hello',0.5)
+            ->where("brand_id=%d and `brand_name`='%s' and `brand_logo`='%f'",1,'hello',0.5)
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( brand_id=1 and brand_name='hello' and brand_logo='0.500000' )";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( brand_id=1 and `brand_name`='hello' and `brand_logo`='0.500000' )";
         $this->assertSame($result, $sql);
     }
 
@@ -876,7 +876,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name = 'thinkphp' AND brand_logo = '1'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` = 'thinkphp' AND `brand_logo` = '1'";
         $this->assertSame($result, $sql);
     }
 
@@ -892,7 +892,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_name = 'thinkphp' AND brand_logo = '1'";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_name` = 'thinkphp' AND `brand_logo` = '1'";
         $this->assertSame($result, $sql);
     }
 
@@ -900,12 +900,12 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->table('base_brand')
+            ->table('`base_brand`')
             ->where('brand_id<2')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( brand_id<2 )";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( brand_id<2 )";
         $this->assertSame($result, $sql);
     }
 
@@ -913,12 +913,12 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->table('test_queryphp.base_brand')
+            ->table('test_queryphp.`base_brand`')
             ->where('brand_id<2')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM test_queryphp.base_brand WHERE ( brand_id<2 )";
+        $sql = "SELECT   * FROM test_queryphp.`base_brand` WHERE ( brand_id<2 )";
         $this->assertSame($result, $sql);
     }
 
@@ -926,13 +926,13 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('brand.brand_name,p.name')
-            ->table('base_brand brand,permission p')
+            ->field('brand.`brand_name`,p.name')
+            ->table('`base_brand` brand,permission p')
             ->limit(10)
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand.brand_name,p.name FROM base_brand brand,permission p LIMIT 10";
+        $sql = "SELECT   brand.`brand_name`,p.name FROM `base_brand` brand,permission p LIMIT 10";
         $this->assertSame($result, $sql);
     }
 
@@ -940,13 +940,13 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('brand.brand_name,p.name')
-            ->table(array('base_brand'=>'brand','permission'=>'p'))
+            ->field('brand.`brand_name`,p.name')
+            ->table(array('`base_brand`'=>'brand','permission'=>'p'))
             ->limit(10)
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand.brand_name,p.name FROM base_brand brand,permission p LIMIT 10";
+        $sql = "SELECT   brand.`brand_name`,p.name FROM `base_brand` brand,permission p LIMIT 10";
         $this->assertSame($result, $sql);
     }
 
@@ -960,7 +960,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand a INNER JOIN permission b ON b.id= a.brand_id  LIMIT 10";
+        $sql = "SELECT   * FROM `base_brand` a INNER JOIN permission b ON b.id= a.brand_id  LIMIT 10";
         $this->assertSame($result, $sql);
     }
 
@@ -972,7 +972,7 @@ class ModelTest extends TestCase
         $baseBrandModel->add();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "INSERT INTO base_brand (brand_name,company_id) VALUES ('helloworld','999')";
+        $sql = "INSERT INTO `base_brand` (`brand_name`,company_id) VALUES ('helloworld','999')";
         $this->assertSame($result, $sql);
     }
 
@@ -985,7 +985,7 @@ class ModelTest extends TestCase
         $baseBrandModel->add();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "INSERT INTO base_brand (brand_name,company_id) VALUES ('hello','999')";
+        $sql = "INSERT INTO `base_brand` (`brand_name`,company_id) VALUES ('hello','999')";
         $this->assertSame($result, $sql);
     }
 
@@ -998,7 +998,7 @@ class ModelTest extends TestCase
         $baseBrandModel->add();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "INSERT INTO base_brand (brand_name) VALUES ('helloworld')";
+        $sql = "INSERT INTO `base_brand` (`brand_name`) VALUES ('helloworld')";
         $this->assertSame($result, $sql);
     }
 
@@ -1011,7 +1011,7 @@ class ModelTest extends TestCase
         $baseBrandModel->data($data)->add();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "INSERT INTO base_brand (brand_name) VALUES ('helloworld')";
+        $sql = "INSERT INTO `base_brand` (`brand_name`) VALUES ('helloworld')";
         $this->assertSame($result, $sql);
     }
 
@@ -1024,7 +1024,7 @@ class ModelTest extends TestCase
         $baseBrandModel->data()->add($data);
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "INSERT INTO base_brand (brand_name) VALUES ('helloworld')";
+        $sql = "INSERT INTO `base_brand` (`brand_name`) VALUES ('helloworld')";
         $this->assertSame($result, $sql);
     }
 
@@ -1038,7 +1038,7 @@ class ModelTest extends TestCase
         $baseBrandModel->data($data)->add();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "INSERT INTO base_brand (brand_name) VALUES ('helloworld')";
+        $sql = "INSERT INTO `base_brand` (`brand_name`) VALUES ('helloworld')";
         $this->assertSame($result, $sql);
     }
 
@@ -1047,11 +1047,11 @@ class ModelTest extends TestCase
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
         $baseBrandModel = BaseBrandModel::make();
-        $data = 'brand_name=hi&brand_logo=hello';
+        $data = '`brand_name`=hi&`brand_logo`=hello';
         $baseBrandModel->data($data)->add();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "INSERT INTO base_brand (brand_name,brand_logo) VALUES ('hi','hello')";
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('hi','hello')";
         $this->assertSame($result, $sql);
     }
 
@@ -1066,7 +1066,7 @@ class ModelTest extends TestCase
         $baseBrandModel->data($data)->save();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "UPDATE base_brand SET brand_name='流年',brand_logo='thinkphp@qq.com' WHERE brand_id = 8";
+        $sql = "UPDATE `base_brand` SET `brand_name`='流年',`brand_logo`='thinkphp@qq.com' WHERE brand_id = 8";
         $this->assertSame($result, $sql);
     }
 
@@ -1081,7 +1081,7 @@ class ModelTest extends TestCase
         $baseBrandModel->data()->save($data);
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "UPDATE base_brand SET brand_name='流年',brand_logo='thinkphp@qq.com' WHERE brand_id = 8";
+        $sql = "UPDATE `base_brand` SET `brand_name`='流年',`brand_logo`='thinkphp@qq.com' WHERE brand_id = 8";
         $this->assertSame($result, $sql);
     }
 
@@ -1097,7 +1097,7 @@ class ModelTest extends TestCase
             ->save($data);
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "UPDATE base_brand SET brand_name='流年',brand_logo='thinkphp@qq.com' WHERE brand_id = 8";
+        $sql = "UPDATE `base_brand` SET `brand_name`='流年',`brand_logo`='thinkphp@qq.com' WHERE brand_id = 8";
         $this->assertSame($result, $sql);
     }
 
@@ -1111,7 +1111,7 @@ class ModelTest extends TestCase
         $id = $baseBrandModel->add($data);
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "INSERT INTO base_brand (brand_name,brand_logo) VALUES ('流年','thinkphp@qq.com')";
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('流年','thinkphp@qq.com')";
         $this->assertSame($result, $sql);
 
         $baseBrandModelNew = BaseBrandModel::make();
@@ -1129,11 +1129,11 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('brand_id,brand_name,brand_logo')
+            ->field('`brand_id`,`brand_name`,`brand_logo`')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_id,brand_name,brand_logo FROM base_brand";
+        $sql = "SELECT   `brand_id`,`brand_name`,`brand_logo` FROM `base_brand`";
         $this->assertSame($result, $sql);
     }
 
@@ -1141,11 +1141,11 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('brand_id,brand_name,brand_logo as logo')
+            ->field('`brand_id`,`brand_name`,`brand_logo` as logo')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_id,brand_name,brand_logo as logo FROM base_brand";
+        $sql = "SELECT   `brand_id`,`brand_name`,`brand_logo` as logo FROM `base_brand`";
         $this->assertSame($result, $sql);
     }
 
@@ -1153,11 +1153,11 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('SUM(brand_id),brand_name,brand_logo as logo')
+            ->field('SUM(brand_id),`brand_name`,`brand_logo` as logo')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   SUM(brand_id),brand_name,brand_logo as logo FROM base_brand";
+        $sql = "SELECT   SUM(brand_id),`brand_name`,`brand_logo` as logo FROM `base_brand`";
         $this->assertSame($result, $sql);
     }
 
@@ -1169,7 +1169,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_id,brand_name,brand_logo FROM base_brand";
+        $sql = "SELECT   `brand_id`,`brand_name`,`brand_logo` FROM `base_brand`";
         $this->assertSame($result, $sql);
     }
 
@@ -1181,7 +1181,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_id,brand_name,brand_logo AS logo2 FROM base_brand";
+        $sql = "SELECT   `brand_id`,`brand_name`,`brand_logo` AS logo2 FROM `base_brand`";
         $this->assertSame($result, $sql);
     }
 
@@ -1191,13 +1191,13 @@ class ModelTest extends TestCase
         $baseBrandModel
             ->field([
                 'brand_id',
-                "concat(brand_name,'-',brand_id)"=>'true_name',
-                'LEFT(brand_logo,7)'=>'sub_logo'
+                "concat(`brand_name`,'-',brand_id)"=>'true_name',
+                'LEFT(`brand_logo`,7)'=>'sub_logo'
             ])
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_id,concat(brand_name,'-',brand_id) AS true_name,LEFT(brand_logo,7) AS sub_logo FROM base_brand";
+        $sql = "SELECT   brand_id,concat(`brand_name`,'-',brand_id) AS true_name,LEFT(`brand_logo`,7) AS sub_logo FROM `base_brand`";
         $this->assertSame($result, $sql);
     }
 
@@ -1209,7 +1209,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand";
+        $sql = "SELECT   * FROM `base_brand`";
         $this->assertSame($result, $sql);
     }
 
@@ -1221,7 +1221,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand";
+        $sql = "SELECT   * FROM `base_brand`";
         $this->assertSame($result, $sql);
     }
 
@@ -1233,7 +1233,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_id,company_id,status,order_num,brand_num,brand_name,brand_logo,brand_about,update_date,create_date,brand_letter,seo_keywords FROM base_brand";
+        $sql = "SELECT   brand_id,company_id,status,order_num,brand_num,`brand_name`,`brand_logo`,brand_about,update_date,create_date,brand_letter,seo_keywords FROM `base_brand`";
         $this->assertSame($result, $sql);
     }
 
@@ -1245,7 +1245,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   company_id,status,order_num,brand_num,brand_name,brand_logo,brand_about,update_date,create_date,brand_letter,seo_keywords FROM base_brand";
+        $sql = "SELECT   company_id,status,order_num,brand_num,`brand_name`,`brand_logo`,brand_about,update_date,create_date,brand_letter,seo_keywords FROM `base_brand`";
         $this->assertSame($result, $sql);
     }
 
@@ -1257,7 +1257,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   status,order_num,brand_num,brand_name,brand_logo,brand_about,update_date,create_date,brand_letter,seo_keywords FROM base_brand";
+        $sql = "SELECT   status,order_num,brand_num,`brand_name`,`brand_logo`,brand_about,update_date,create_date,brand_letter,seo_keywords FROM `base_brand`";
         $this->assertSame($result, $sql);
     }
 
@@ -1269,7 +1269,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   status,order_num,brand_num,brand_name,brand_logo,brand_about,update_date,create_date,brand_letter,seo_keywords FROM base_brand";
+        $sql = "SELECT   status,order_num,brand_num,`brand_name`,`brand_logo`,brand_about,update_date,create_date,brand_letter,seo_keywords FROM `base_brand`";
         $this->assertSame($result, $sql);
     }
 
@@ -1281,7 +1281,7 @@ class ModelTest extends TestCase
         http_request()->request->set('brand_logo', 'yes');
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('brand_logo,brand_name')
+            ->field('`brand_logo`,`brand_name`')
             ->create();
         $data = $baseBrandModel->data();
         $json = <<<'eot'
@@ -1305,7 +1305,7 @@ class ModelTest extends TestCase
         container()->instance('company_id', 999);
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('brand_logo,brand_name')
+            ->field('`brand_logo`,`brand_name`')
             ->where('brand_id=1')
             ->save([
                 'status' => 'F',
@@ -1314,7 +1314,7 @@ class ModelTest extends TestCase
             ]);
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "UPDATE base_brand SET brand_name='hello',brand_logo='yes' WHERE ( brand_id=1 )";
+        $sql = "UPDATE `base_brand` SET `brand_name`='hello',`brand_logo`='yes' WHERE ( brand_id=1 )";
         $this->assertSame($result, $sql);
     }
 
@@ -1328,7 +1328,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( status=1 ) ORDER BY brand_id desc LIMIT 5";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( status=1 ) ORDER BY brand_id desc LIMIT 5";
         $this->assertSame($result, $sql);
     }
 
@@ -1342,7 +1342,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( status=1 ) ORDER BY brand_id desc,status LIMIT 5";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( status=1 ) ORDER BY brand_id desc,status LIMIT 5";
         $this->assertSame($result, $sql);
     }
 
@@ -1356,7 +1356,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( status=1 ) ORDER BY status,brand_id desc LIMIT 5";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( status=1 ) ORDER BY status,brand_id desc LIMIT 5";
         $this->assertSame($result, $sql);
     }
 
@@ -1369,7 +1369,7 @@ class ModelTest extends TestCase
             ->save(array('brand_name'=>'A'));
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "UPDATE base_brand SET brand_name='A' WHERE ( status>1 ) LIMIT 3";
+        $sql = "UPDATE `base_brand` SET `brand_name`='A' WHERE ( status>1 ) LIMIT 3";
         $this->assertSame($result, $sql);
     }
 
@@ -1382,7 +1382,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( status>1 ) LIMIT 10,25";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( status>1 ) LIMIT 10,25";
         $this->assertSame($result, $sql);
     }
 
@@ -1395,7 +1395,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( status>1 ) LIMIT 10,25";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( status>1 ) LIMIT 10,25";
         $this->assertSame($result, $sql);
     }
 
@@ -1408,7 +1408,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( status>1 ) LIMIT 0,10";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( status>1 ) LIMIT 0,10";
         $this->assertSame($result, $sql);
     }
 
@@ -1421,7 +1421,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( status>1 ) LIMIT 10,10";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( status>1 ) LIMIT 10,10";
         $this->assertSame($result, $sql);
     }
 
@@ -1434,7 +1434,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( status>1 ) LIMIT 10,10";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( status>1 ) LIMIT 10,10";
         $this->assertSame($result, $sql);
     }
 
@@ -1448,7 +1448,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( status>1 ) LIMIT 50,25";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( status>1 ) LIMIT 50,25";
         $this->assertSame($result, $sql);
     }
 
@@ -1461,7 +1461,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( status>1 ) LIMIT 50,25";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( status>1 ) LIMIT 50,25";
         $this->assertSame($result, $sql);
     }
 
@@ -1470,12 +1470,12 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
-            ->field('brand_name,max(brand_id)')
+            ->field('`brand_name`,max(brand_id)')
             ->group('brand_logo')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_name,max(brand_id) FROM base_brand WHERE ( status>1 ) GROUP BY brand_logo";
+        $sql = "SELECT   `brand_name`,max(brand_id) FROM `base_brand` WHERE ( status>1 ) GROUP BY `brand_logo`";
         $this->assertSame($result, $sql);
     }
 
@@ -1484,12 +1484,12 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
-            ->field('brand_name,max(brand_id)')
-            ->group('brand_logo,status')
+            ->field('`brand_name`,max(brand_id)')
+            ->group('`brand_logo`,status')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_name,max(brand_id) FROM base_brand WHERE ( status>1 ) GROUP BY brand_logo,status";
+        $sql = "SELECT   `brand_name`,max(brand_id) FROM `base_brand` WHERE ( status>1 ) GROUP BY `brand_logo`,status";
         $this->assertSame($result, $sql);
     }
 
@@ -1498,13 +1498,13 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
-            ->field('brand_name,max(brand_id)')
-            ->group('brand_logo,status')
+            ->field('`brand_name`,max(brand_id)')
+            ->group('`brand_logo`,status')
             ->having('count(status)>3')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_name,max(brand_id) FROM base_brand WHERE ( status>1 ) GROUP BY brand_logo,status HAVING count(status)>3";
+        $sql = "SELECT   `brand_name`,max(brand_id) FROM `base_brand` WHERE ( status>1 ) GROUP BY `brand_logo`,status HAVING count(status)>3";
         $this->assertSame($result, $sql);
     }
 
@@ -1512,12 +1512,12 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->join('permission ON permission.id = base_brand.brand_id')
-            ->join('role ON role.id = base_brand.brand_id')
+            ->join('permission ON permission.id = `base_brand`.brand_id')
+            ->join('role ON role.id = `base_brand`.brand_id')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand INNER JOIN permission ON permission.id = base_brand.brand_id INNER JOIN role ON role.id = base_brand.brand_id";
+        $sql = "SELECT   * FROM `base_brand` INNER JOIN permission ON permission.id = `base_brand`.brand_id INNER JOIN role ON role.id = `base_brand`.brand_id";
         $this->assertSame($result, $sql);
     }
 
@@ -1526,13 +1526,13 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->join([
-                'permission ON permission.id = base_brand.brand_id',
-                'role ON role.id = base_brand.brand_id',
+                'permission ON permission.id = `base_brand`.brand_id',
+                'role ON role.id = `base_brand`.brand_id',
             ])
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand INNER JOIN permission ON permission.id = base_brand.brand_id INNER JOIN role ON role.id = base_brand.brand_id";
+        $sql = "SELECT   * FROM `base_brand` INNER JOIN permission ON permission.id = `base_brand`.brand_id INNER JOIN role ON role.id = `base_brand`.brand_id";
         $this->assertSame($result, $sql);
     }
 
@@ -1540,12 +1540,12 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->join('LEFT JOIN permission ON permission.id = base_brand.brand_id')
-            ->join('LEFT JOIN role ON role.id = base_brand.brand_id')
+            ->join('LEFT JOIN permission ON permission.id = `base_brand`.brand_id')
+            ->join('LEFT JOIN role ON role.id = `base_brand`.brand_id')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand LEFT JOIN permission ON permission.id = base_brand.brand_id LEFT JOIN role ON role.id = base_brand.brand_id";
+        $sql = "SELECT   * FROM `base_brand` LEFT JOIN permission ON permission.id = `base_brand`.brand_id LEFT JOIN role ON role.id = `base_brand`.brand_id";
         $this->assertSame($result, $sql);
     }
 
@@ -1553,12 +1553,12 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->join('RIGHT JOIN permission ON permission.id = base_brand.brand_id')
-            ->join('RIGHT JOIN role ON role.id = base_brand.brand_id')
+            ->join('RIGHT JOIN permission ON permission.id = `base_brand`.brand_id')
+            ->join('RIGHT JOIN role ON role.id = `base_brand`.brand_id')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand RIGHT JOIN permission ON permission.id = base_brand.brand_id RIGHT JOIN role ON role.id = base_brand.brand_id";
+        $sql = "SELECT   * FROM `base_brand` RIGHT JOIN permission ON permission.id = `base_brand`.brand_id RIGHT JOIN role ON role.id = `base_brand`.brand_id";
         $this->assertSame($result, $sql);
     }
 
@@ -1566,14 +1566,14 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('brand_name as name')
-            ->table('base_brand')
+            ->field('`brand_name` as name')
+            ->table('`base_brand`')
             ->union('SELECT name FROM permission')
             ->union('SELECT name FROM role')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_name as name FROM base_brand UNION SELECT name FROM permission UNION SELECT name FROM role";
+        $sql = "SELECT   `brand_name` as name FROM `base_brand` UNION SELECT name FROM permission UNION SELECT name FROM role";
         $this->assertSame($result, $sql);
     }
 
@@ -1581,14 +1581,14 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('brand_name as name')
-            ->table('base_brand')
+            ->field('`brand_name` as name')
+            ->table('`base_brand`')
             ->union(array('field'=>'name','table'=>'permission'))
             ->union(array('field'=>'name','table'=>'role'))
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_name as name FROM base_brand UNION SELECT   name FROM permission  UNION SELECT   name FROM role";
+        $sql = "SELECT   `brand_name` as name FROM `base_brand` UNION SELECT   name FROM permission  UNION SELECT   name FROM role";
         $this->assertSame($result, $sql);
     }
 
@@ -1596,13 +1596,13 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('brand_name as name')
-            ->table('base_brand')
+            ->field('`brand_name` as name')
+            ->table('`base_brand`')
             ->union(array('SELECT name FROM permission','SELECT name FROM role'))
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_name as name FROM base_brand UNION SELECT name FROM permission UNION SELECT name FROM role";
+        $sql = "SELECT   `brand_name` as name FROM `base_brand` UNION SELECT name FROM permission UNION SELECT name FROM role";
         $this->assertSame($result, $sql);
     }
 
@@ -1610,14 +1610,14 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('brand_name as name')
-            ->table('base_brand')
+            ->field('`brand_name` as name')
+            ->table('`base_brand`')
             ->union('SELECT name FROM permission',true)
             ->union('SELECT name FROM role',true)
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_name as name FROM base_brand UNION ALL SELECT name FROM permission UNION ALL SELECT name FROM role";
+        $sql = "SELECT   `brand_name` as name FROM `base_brand` UNION ALL SELECT name FROM permission UNION ALL SELECT name FROM role";
         $this->assertSame($result, $sql);
     }
 
@@ -1625,13 +1625,13 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('brand_name as name')
-            ->table('base_brand')
+            ->field('`brand_name` as name')
+            ->table('`base_brand`')
             ->union(array('SELECT name FROM permission','SELECT name FROM role'), true)
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_name as name FROM base_brand UNION ALL SELECT name FROM permission UNION ALL SELECT name FROM role";
+        $sql = "SELECT   `brand_name` as name FROM `base_brand` UNION ALL SELECT name FROM permission UNION ALL SELECT name FROM role";
         $this->assertSame($result, $sql);
     }
 
@@ -1644,7 +1644,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   DISTINCT  brand_name FROM base_brand";
+        $sql = "SELECT   DISTINCT  `brand_name` FROM `base_brand`";
         $this->assertSame($result, $sql);
     }
 
@@ -1657,7 +1657,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_name FROM base_brand  FOR UPDATE";
+        $sql = "SELECT   `brand_name` FROM `base_brand`  FOR UPDATE";
         $this->assertSame($result, $sql);
     }
 
@@ -1670,7 +1670,7 @@ class ModelTest extends TestCase
             ->find();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( brand_id=83 ) LIMIT 1";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( brand_id=83 ) LIMIT 1";
         $this->assertSame($result, $sql);
     }
 
@@ -1683,7 +1683,7 @@ class ModelTest extends TestCase
             ->find();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( brand_id=83 ) LIMIT 1";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( brand_id=83 ) LIMIT 1";
         $this->assertSame($result, $sql);
     }
 
@@ -1696,7 +1696,7 @@ class ModelTest extends TestCase
             ->find();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( brand_id=83 ) LIMIT 1";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( brand_id=83 ) LIMIT 1";
         $this->assertSame($result, $sql);
     }
 
@@ -1709,7 +1709,7 @@ class ModelTest extends TestCase
             ->find();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE ( brand_id=83 ) LIMIT 1  /*查询考试前十名分数*/";
+        $sql = "SELECT   * FROM `base_brand` WHERE ( brand_id=83 ) LIMIT 1  /*查询考试前十名分数*/";
         $this->assertSame($result, $sql);
     }
 
@@ -1721,7 +1721,7 @@ class ModelTest extends TestCase
             ->find(1);
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_id = 1 LIMIT 1";
+        $sql = "SELECT   * FROM `base_brand` WHERE brand_id = 1 LIMIT 1";
         $this->assertSame($result, $sql);
         $this->assertSame(trim($sqlResult), $sql);
     }
@@ -1751,7 +1751,7 @@ class ModelTest extends TestCase
     //         ->select();
     //     $result = $baseBrandModel->getLastSql();
     //     $result = trim($result);
-    //     $sql = "SELECT   * FROM base_brand WHERE brand_id = 1 LIMIT 1";
+    //     $sql = "SELECT   * FROM `base_brand` WHERE brand_id = 1 LIMIT 1";
     //     $this->assertSame($result, $sql);
     // }
 
@@ -1763,7 +1763,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE status = 'T'";
+        $sql = "SELECT   * FROM `base_brand` WHERE status = 'T'";
         $this->assertSame($result, $sql);
     }
 
@@ -1775,7 +1775,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand ORDER BY create_date DESC LIMIT 10";
+        $sql = "SELECT   * FROM `base_brand` ORDER BY create_date DESC LIMIT 10";
         $this->assertSame($result, $sql);
     }
 
@@ -1788,7 +1788,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE status = 'T' ORDER BY create_date DESC LIMIT 10";
+        $sql = "SELECT   * FROM `base_brand` WHERE status = 'T' ORDER BY create_date DESC LIMIT 10";
         $this->assertSame($result, $sql);
     }
 
@@ -1800,7 +1800,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE status = 'T' ORDER BY create_date DESC LIMIT 10";
+        $sql = "SELECT   * FROM `base_brand` WHERE status = 'T' ORDER BY create_date DESC LIMIT 10";
         $this->assertSame($result, $sql);
     }
 
@@ -1812,7 +1812,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_logo = 'yes' LIMIT 20";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_logo` = 'yes' LIMIT 20";
         $this->assertSame($result, $sql);
     }
 
@@ -1824,7 +1824,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_logo = 'yes' LIMIT 20";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_logo` = 'yes' LIMIT 20";
         $this->assertSame($result, $sql);
     }
 
@@ -1836,7 +1836,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE brand_logo = 'yes' ORDER BY brand_id DESC LIMIT 20";
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_logo` = 'yes' ORDER BY brand_id DESC LIMIT 20";
         $this->assertSame($result, $sql);
     }
 
@@ -1848,7 +1848,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE status = 'T' ORDER BY brand_id DESC LIMIT 10";
+        $sql = "SELECT   * FROM `base_brand` WHERE status = 'T' ORDER BY brand_id DESC LIMIT 10";
         $this->assertSame($result, $sql);
     }
 
@@ -1857,7 +1857,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->scope(array(
-                'field'=>'brand_id,brand_name',
+                'field'=>'`brand_id`,`brand_name`',
                 'limit'=>5,
                 'where'=>'status=1',
                 'order'=>'create_date DESC'
@@ -1865,7 +1865,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   brand_id,brand_name FROM base_brand WHERE status=1 ORDER BY create_date DESC LIMIT 5";
+        $sql = "SELECT   `brand_id`,`brand_name` FROM `base_brand` WHERE status=1 ORDER BY create_date DESC LIMIT 5";
         $this->assertSame($result, $sql);
     }
 
@@ -1879,7 +1879,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE status = 'T' ORDER BY brand_id desc LIMIT 8";
+        $sql = "SELECT   * FROM `base_brand` WHERE status = 'T' ORDER BY brand_id desc LIMIT 8";
         $this->assertSame($result, $sql);
     }
 
@@ -1891,7 +1891,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT   * FROM base_brand WHERE status = 'T' LIMIT 5";
+        $sql = "SELECT   * FROM `base_brand` WHERE `status` = 'T' LIMIT 5";
         $this->assertSame($result, $sql);
     }
 
@@ -2163,7 +2163,7 @@ class ModelTest extends TestCase
         $baseBrandModel->add();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "INSERT INTO base_brand (brand_name,brand_logo) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
         $this->assertSame($result, $sql);
     }
 
@@ -2192,7 +2192,7 @@ class ModelTest extends TestCase
         $baseBrandModel->add();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "INSERT INTO base_brand (brand_name,brand_logo) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
         $this->assertSame($result, $sql);
     }
 
@@ -2207,7 +2207,7 @@ class ModelTest extends TestCase
             ->add();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "INSERT INTO base_brand (brand_name,brand_logo) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
         $this->assertSame($result, $sql);
     }
 
@@ -2247,7 +2247,7 @@ class ModelTest extends TestCase
             ->add($data);
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "INSERT INTO base_brand (brand_name,brand_logo) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
         $this->assertSame($result, $sql);
     }
 
@@ -2261,7 +2261,7 @@ class ModelTest extends TestCase
             ->add($data,[], true);
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "REPLACE INTO base_brand (brand_name,brand_logo) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $sql = "REPLACE INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
         $this->assertSame($result, $sql);
     }
 
@@ -2277,7 +2277,7 @@ class ModelTest extends TestCase
             ->add();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "INSERT INTO base_brand (brand_name,brand_logo) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
         $this->assertSame($result, $sql);
     }
 
