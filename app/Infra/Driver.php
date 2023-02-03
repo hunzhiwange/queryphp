@@ -334,14 +334,6 @@ class Driver
     }
 
     /**
-     * 参数绑定分析.
-     */
-    protected function parseBind(array $bind): void
-    {
-        $this->bind = array_merge($this->bind, $bind);
-    }
-
-    /**
      * 参数绑定.
      */
     protected function bindParam($name, $value): void
@@ -524,7 +516,6 @@ class Driver
      */
     public function delete(array $options = array()): int|false
     {
-        $this->parseBind(!empty($options['bind']) ? $options['bind'] : array());
         $table = $this->parseTable($options['table']);
         $sql = 'DELETE FROM ' . $table;
         if (strpos($table, ',')) {// 多表删除支持 USING 和 JOIN 操作
@@ -560,7 +551,6 @@ class Driver
      */
     public function select(array $options = array()): mixed
     {
-        $this->parseBind(!empty($options['bind']) ? $options['bind'] : array());
         $sql = $this->buildSelectSql($options);
         return $this->query($sql, !empty($options['fetch_sql']) ? true : false, $options['cache'] ?? []);
     }
