@@ -13,55 +13,61 @@ use Think\Log;
 
 class Driver
 {
-    // PDO操作实例
-    protected $PDOStatement = null;
-    // 当前SQL指令
-    protected $queryStr = '';
-    protected $modelSql = array();
-    // 最后插入ID
-    protected $lastInsID = null;
-    // 返回或者影响记录数
-    protected $numRows = 0;
-    // 错误信息
-    protected $error = '';
-    // 数据库连接参数配置
-    protected $config = array(
-        'type' => '',     // 数据库类型
-        'hostname' => '127.0.0.1', // 服务器地址
-        'database' => '',          // 数据库名
-        'username' => '',      // 用户名
-        'password' => '',          // 密码
-        'hostport' => '',        // 端口
-        'dsn' => '', //
-        'params' => array(), // 数据库连接参数
-        'charset' => 'utf8',      // 数据库编码默认采用utf8
-        'prefix' => '',    // 数据库表前缀
-        'debug' => false, // 数据库调试模式
-        'deploy' => 0, // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
-        'rw_separate' => false,       // 数据库读写是否分离 主从式有效
-        'master_num' => 1, // 读写分离后 主服务器数量
-        'slave_no' => '', // 指定从服务器序号
-        'db_like_fields' => '',
+    /**
+     * 当前 SQL 指令.
+     */
+    protected string $queryStr = '';
+
+    /**
+     * 最后插入ID.
+     */
+    protected mixed $lastInsID = null;
+
+    /**
+     * 返回或者影响记录数.
+     */
+    protected int $numRows = 0;
+
+    /**
+     * 数据库表达式.
+     */
+    protected array $exp = array(
+        'eq' => '=',
+        'neq' => '<>',
+        'gt' => '>',
+        'egt' => '>=',
+        'lt' => '<',
+        'elt' => '<=',
+        'notlike' => 'NOT LIKE',
+        'like' => 'LIKE',
+        'in' => 'IN',
+        'notin' => 'NOT IN',
+        'not in' => 'NOT IN',
+        'between' => 'BETWEEN',
+        'not between' => 'NOT BETWEEN',
+        'notbetween' => 'NOT BETWEEN'
     );
-    // 数据库表达式
-    protected $exp = array('eq' => '=', 'neq' => '<>', 'gt' => '>', 'egt' => '>=', 'lt' => '<', 'elt' => '<=', 'notlike' => 'NOT LIKE', 'like' => 'LIKE', 'in' => 'IN', 'notin' => 'NOT IN', 'not in' => 'NOT IN', 'between' => 'BETWEEN', 'not between' => 'NOT BETWEEN', 'notbetween' => 'NOT BETWEEN');
-    // 查询表达式
-    // 注释实现阿里云走主库 @see https://help.aliyun.com/document_detail/51225.html
-    protected $selectSql = '%FORCE_MASTER%SELECT %DISTINCT% %FIELD% FROM %TABLE%%FORCE%%JOIN%%WHERE%%GROUP%%HAVING%%ORDER%%LIMIT% %UNION%%LOCK%%COMMENT%';
-    // 查询次数
-    protected $queryTimes = 0;
-    // 执行次数
-    protected $executeTimes = 0;
-    // PDO连接参数
-    protected $options = array(
-        PDO::ATTR_CASE => PDO::CASE_LOWER,
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_ORACLE_NULLS => PDO::NULL_NATURAL,
-        PDO::ATTR_STRINGIFY_FETCHES => false,
-        PDO::ATTR_TIMEOUT => 7200,
-    );
-    protected $bind = array(); // 参数绑定
-    protected $totalCount = 0;
+
+    /**
+     * 查询表达式.
+     *
+     * - 注释实现阿里云走主库 @see https://help.aliyun.com/document_detail/51225.html
+     */
+    protected string $selectSql = '%FORCE_MASTER%SELECT %DISTINCT% %FIELD% FROM %TABLE%%FORCE%%JOIN%%WHERE%%GROUP%%HAVING%%ORDER%%LIMIT% %UNION%%LOCK%%COMMENT%';
+
+    /**
+     * 参数绑定.
+     */
+    protected array $bind = array();
+
+    /**
+     * 总记录数量.
+     */
+    protected int $totalCount = 0;
+
+    /**
+     * 模型实体.
+     */
     protected Entity $entity;
 
     /**
@@ -621,14 +627,6 @@ class Driver
     public function getLastInsID(): ?string
     {
         return $this->lastInsID;
-    }
-
-    /**
-     * 获取最近的错误信息
-     */
-    public function getError(): string
-    {
-        return $this->error;
     }
 
     public function __sleep()

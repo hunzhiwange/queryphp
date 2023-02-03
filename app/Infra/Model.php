@@ -1644,28 +1644,11 @@ abstract class Model
     }
 
     /**
-     * 返回数据库的错误信息
-     * @access public
-     * @return string
-     */
-    public function getDbError()
-    {
-        return $this->db->getError();
-    }
-
-    public function _sql()
-    {
-        return $this->getLastSql();
-    }
-
-    /**
-     * 返回最后执行的sql语句
-     * @access public
-     * @return string
+     * 返回最后执行的 sql 语句.
      */
     public function getLastSql()
     {
-        return $this->db->getLastSql($this->name);
+        return $this->db->getLastSql();
     }
 
     /**
