@@ -65,39 +65,17 @@ class Driver
     protected Entity $entity;
 
     /**
-     * 架构函数 读取数据库配置信息
-     * @access public
-     * @param array $config 数据库配置数组
-     *
+     * 构造函数.
      */
-    public function __construct($config = '', Entity $entity = null)
+    public function __construct(Entity $entity = null)
     {
         $this->entity = $entity;
-        if (!empty($config)) {
-            $this->config = array_merge($this->config, $config);
-            if (is_array($this->config['params'])) {
-                $this->options = $this->config['params'] + $this->options;
-            }
-        }
-    }
-
-    public function getConfig()
-    {
-        return $this->config;
-    }
-
-    public function parseWhereAlias($where)
-    {
-        return $this->parseWhere($where);
     }
 
     /**
-     * where分析
-     * @access protected
-     * @param mixed $where
-     * @return string
+     * where 分析.
      */
-    protected function parseWhere($where)
+    protected function parseWhere(mixed $where): string
     {
         $whereStr = '';
         if (is_string($where)) {
@@ -121,10 +99,6 @@ class Driver
                     // 解析特殊条件表达式
                     $whereStr .= $this->parseThinkWhere($key, $val);
                 } else {
-                    // 查询字段的安全过滤
-                    // if(!preg_match('/^[A-Z_\|\&\-.a-z0-9\(\)\,]+$/',trim($key))){
-                    //     E(L('_EXPRESS_ERROR_').':'.$key);
-                    // }
                     // 多条件支持
                     $multi = is_array($val) && isset($val['_multi']);
                     $key = trim($key);
@@ -152,17 +126,14 @@ class Driver
             }
             $whereStr = substr($whereStr, 0, -strlen($operate));
         }
+
         return empty($whereStr) ? '' : ' WHERE ' . $whereStr;
     }
 
     /**
-     * 特殊条件分析
-     * @access protected
-     * @param string $key
-     * @param mixed $val
-     * @return string
+     * 特殊条件分析.
      */
-    protected function parseThinkWhere($key, $val)
+    protected function parseThinkWhere(string $key, mixed $val): string
     {
         $whereStr = '';
         switch ($key) {
@@ -189,31 +160,27 @@ class Driver
                 $whereStr = implode($op, $array);
                 break;
         }
+
         return '( ' . $whereStr . ' )';
     }
 
     /**
-     * 字段和表名处理
-     * @access protected
-     * @param string $key
-     * @return string
+     * 字段和表名处理.
      */
-    protected function parseKey(&$key)
+    protected function parseKey(&$key): string
     {
         $key = trim($key);
         if (!is_numeric($key) && !preg_match('/[,\'\"\*\(\)`.\s]/', $key)) {
             $key = '`' . $key . '`';
         }
+
         return $key;
     }
 
     /**
-     * value分析
-     * @access protected
-     * @param mixed $value
-     * @return string
+     * value 分析.
      */
-    protected function parseValue($value)
+    protected function parseValue(mixed $value): mixed
     {
         if (is_string($value)) {
             $value = strpos($value, ':') === 0 && in_array($value, array_keys($this->bind)) ? $this->escapeString($value) : '\'' . $this->escapeString($value) . '\'';
@@ -226,21 +193,19 @@ class Driver
         } elseif (is_null($value)) {
             $value = 'null';
         }
+
         return $value;
     }
 
     /**
-     * SQL指令安全过滤
-     * @access public
-     * @param string $str SQL字符串
-     * @return string
+     * SQL 指令安全过滤.
      */
     public function escapeString(string $str): string
     {
         return addslashes($str);
     }
 
-    protected function parseWhereItem($key, $val)
+    protected function parseWhereItem(string $key, mixed $val): string
     {
         $whereStr = '';
         if (is_array($val)) {
@@ -300,14 +265,9 @@ class Driver
                 $whereStr = '( ' . substr($whereStr, 0, -4) . ' )';
             }
         } else {
-            //对字符串类型字段采用模糊匹配
-            $likeFields = $this->config['db_like_fields'];
-            if ($likeFields && preg_match('/^(' . $likeFields . ')$/i', $key)) {
-                $whereStr .= $key . ' LIKE ' . $this->parseValue('%' . $val . '%');
-            } else {
-                $whereStr .= $key . ' = ' . $this->parseValue($val);
-            }
+            $whereStr .= $key . ' = ' . $this->parseValue($val);
         }
+
         return $whereStr;
     }
 
@@ -346,29 +306,9 @@ class Driver
     }
 
     /**
-     * 数据库错误信息
-     * 并显示当前的SQL语句
-     * @access public
-     * @return string
+     * 插入记录.
      */
-    public function error()
-    {
-        $this->error = !empty($this->PDOStatement) ? $this->PDOStatement->errorInfo()[1] . ':' . $this->PDOStatement->errorInfo()[2] : '';
-        $this->error .= !empty($this->queryStr) ? "\n [ SQL语句 ] : " . $this->queryStr : '';
-        // 记录错误日志
-        trace($this->error, '', 'ERR');
-        return true == $this->config['debug'] ? E($this->error) : $this->error;
-    }
-
-    /**
-     * 插入记录
-     * @access public
-     * @param mixed $data 数据
-     * @param array $options 参数表达式
-     * @param boolean $replace 是否replace
-     * @return false | integer
-     */
-    public function insert($data, $options = array(), $replace = false)
+    public function insert(array $data, array $options = array(), bool $replace = false): int|false
     {
         $values = $fields = array();
         foreach ($data as $key => $val) {
@@ -394,12 +334,9 @@ class Driver
     }
 
     /**
-     * 参数绑定分析
-     * @access protected
-     * @param array $bind
-     * @return array
+     * 参数绑定分析.
      */
-    protected function parseBind($bind)
+    protected function parseBind(array $bind): void
     {
         $this->bind = array_merge($this->bind, $bind);
     }
