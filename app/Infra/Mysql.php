@@ -20,11 +20,15 @@ class Mysql
 
     /**
      * 最后插入ID.
+     *
+     * @todo
      */
     protected mixed $lastInsID = null;
 
     /**
      * 返回或者影响记录数.
+     *
+     * @todo
      */
     protected int $numRows = 0;
 
