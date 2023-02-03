@@ -140,7 +140,7 @@ abstract class Model
     {
         $entity = static::ENTITY;
         $entity = new $entity();
-        $this->db = new Driver($entity);
+        $this->db = new Mysql($entity);
         $this->_checkTableInfo();
         return $this;
     }

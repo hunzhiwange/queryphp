@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace App\Infra;
 
-use Apps\Common\Logger\CustomLogger;
 use Closure;
 use Leevel\Database\Ddd\Entity;
-use PDO;
-use Think\Config;
-use Think\Debug;
-use Think\Log;
 
-class Driver
+/**
+ * ThinkPHP Mysql 驱动类兼容层
+ *
+ * - 基于 ThinkPHP 3.2.3 模型 Think\Db\Driver\Mysql 移植而来
+ */
+class Mysql
 {
     /**
      * 当前 SQL 指令.
@@ -250,7 +250,7 @@ class Driver
                     $data = is_string($val[1]) ? explode(',', $val[1]) : $val[1];
                     $whereStr .= $key . ' ' . $this->exp[$exp] . ' ' . $this->parseValue($data[0]) . ' AND ' . $this->parseValue($data[1]);
                 } else {
-                    E(L('_EXPRESS_ERROR_') . ':' . $val[0]);
+                    E(('L_EXPRESS_ERROR_') . ':' . $val[0]);
                 }
             } else {
                 $count = count($val);
@@ -587,11 +587,7 @@ class Driver
             //移除关键词：SQL_CALC_FOUND_ROWS
             $countSql = sprintf("SELECT count(*) as count FROM (%s) t", preg_replace('/SQL_CALC_FOUND_ROWS/i', ' ', $countSql));
             $count = $this->query($countSql);
-            if ($count === false) {
-                $this->totalCount = false;
-            } else {
-                $this->totalCount = $count['0']['count'];
-            }
+            $this->totalCount = $count['0']['count'];
         }
 
         if ($fetchSql) {
