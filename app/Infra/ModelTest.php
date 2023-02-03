@@ -2549,4 +2549,187 @@ class ModelTest extends TestCase
             )
         );
     }
+
+    public function testQuerySub155(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_name'] = 'ThinkPHP';
+        $data['brand_logo'] = 'ThinkPHP@gmail.com';
+        $id = $baseBrandModel
+            ->where('brand_id=5')
+            ->save($data);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE `base_brand` SET `brand_name`='ThinkPHP',`brand_logo`='ThinkPHP@gmail.com' WHERE ( brand_id=5 )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub156(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel->brand_name = 'ThinkPHP';
+        $baseBrandModel->brand_logo = 'ThinkPHP@gmail.com';
+        $baseBrandModel
+            ->where('brand_id=5')
+            ->save();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE `base_brand` SET `brand_name`='ThinkPHP',`brand_logo`='ThinkPHP@gmail.com' WHERE ( brand_id=5 )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub157(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel->brand_id = 3;
+        $baseBrandModel->brand_name = 'ThinkPHP';
+        $baseBrandModel->brand_logo = 'ThinkPHP@gmail.com';
+        $baseBrandModel
+            ->save();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE `base_brand` SET `brand_name`='ThinkPHP',`brand_logo`='ThinkPHP@gmail.com' WHERE `brand_id` = 3";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub158(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel->brand_name = 'ThinkPHP';
+        $baseBrandModel->brand_logo = 'ThinkPHP@gmail.com';
+        $baseBrandModel
+            ->save();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub159(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_id'] = 3;
+        $data['brand_name'] = '<b>ThinkPHP</b>';
+        $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
+        $baseBrandModel
+            ->data($data)
+            ->filter('strip_tags')
+            ->save();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE `base_brand` SET `brand_name`='ThinkPHP',`brand_logo`='ThinkPHP@gmail.com' WHERE `brand_id` = '3'";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub160(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_name'] = 'ThinkPHP';
+        $data['brand_logo'] = 'ThinkPHP@gmail.com';
+        $baseBrandModel
+            ->where('brand_id=5')
+            ->data($data)
+            ->save();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE `base_brand` SET `brand_name`='ThinkPHP',`brand_logo`='ThinkPHP@gmail.com' WHERE ( brand_id=5 )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub161(): void
+    {
+        container()->instance('company_id', 999);
+        http_request()->server->set('REQUEST_METHOD',Request::METHOD_POST);
+        http_request()->request->set('brand_name', 'hello');
+        http_request()->request->set('brand_id', 1);
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where(['brand_name' => 'hello'])
+            ->delete();
+        $baseBrandModel->create();
+        $baseBrandModel->save();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE `base_brand` SET `brand_name`='hello' WHERE `brand_id` = 1";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub162(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('brand_id=5')
+            ->setField('brand_name','ThinkPHP');
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE `base_brand` SET `brand_name`='ThinkPHP' WHERE ( brand_id=5 )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub163(): void
+    {
+        $data = array('brand_name'=>'ThinkPHP','brand_logo'=>'ThinkPHP@gmail.com');
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('brand_id=5')
+            ->setField($data);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE `base_brand` SET `brand_name`='ThinkPHP',`brand_logo`='ThinkPHP@gmail.com' WHERE ( brand_id=5 )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub164(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('brand_id=5')
+            ->setInc('order_num',3);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE `base_brand` SET `order_num`=order_num+3 WHERE ( brand_id=5 )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub165(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('brand_id=5')
+            ->setInc('order_num');
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE `base_brand` SET `order_num`=order_num+1 WHERE ( brand_id=5 )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub166(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('brand_id=5')
+            ->setDec('order_num', 7);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE `base_brand` SET `order_num`=order_num-7 WHERE ( brand_id=5 )";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub167(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('brand_id=5')
+            ->setDec('order_num');
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE `base_brand` SET `order_num`=order_num-1 WHERE ( brand_id=5 )";
+        $this->assertSame($result, $sql);
+    }
 }
