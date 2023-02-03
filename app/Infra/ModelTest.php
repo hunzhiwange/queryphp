@@ -1686,4 +1686,72 @@ class ModelTest extends TestCase
         $sql = "SELECT   * FROM base_brand WHERE ( brand_id=83 ) LIMIT 1";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub113(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where('brand_id=83')
+            ->cache('sql:hello',60)
+            ->find();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( brand_id=83 ) LIMIT 1";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub114(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->comment('查询考试前十名分数')
+            ->where('brand_id=83')
+            ->find();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE ( brand_id=83 ) LIMIT 1  /*查询考试前十名分数*/";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub115(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $sqlResult = $baseBrandModel
+            ->fetchSql(true)
+            ->find(1);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM base_brand WHERE brand_id = 1 LIMIT 1";
+        $this->assertSame($result, $sql);
+        $this->assertSame(trim($sqlResult), $sql);
+    }
+
+    public function testQuerySub116(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage(
+            'Error query express:[not_found_field=>y]'
+        );
+
+        $baseBrandModel = BaseBrandModel::make();
+        $map['brand_name'] = 'h';
+        $map['brand_num'] = 'y';
+        $map['not_found_field'] = 'y';
+        $baseBrandModel
+            ->strict(true)
+            ->where($map)
+            ->select();
+    }
+
+    // public function testQuerySub117(): void
+    // {
+    //     $baseBrandModel = BaseBrandModel::make();
+    //     $baseBrandModel
+    //         ->index('user')
+    //         ->select();
+    //     $result = $baseBrandModel->getLastSql();
+    //     $result = trim($result);
+    //     $sql = "SELECT   * FROM base_brand WHERE brand_id = 1 LIMIT 1";
+    //     $this->assertSame($result, $sql);
+    // }
 }
