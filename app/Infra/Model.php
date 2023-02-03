@@ -24,9 +24,11 @@ abstract class Model
     const EXISTS_VALIDATE = 0;      // 表单存在字段则验证
     const VALUE_VALIDATE = 2;      // 表单值不为空则验证
 
-    // 当前数据库操作对象
-    /** @var Driver */
-    protected $db = null;
+    /**
+     * Mysql 驱动兼容层.
+     */
+    protected Mysql $mysql;
+
     // 数据库对象池
     protected $pk = 'id';
     // 主键名称
@@ -66,9 +68,7 @@ abstract class Model
      * Example: SELECT SQL_CALC_FOUND_ROWS id, time FROM table_name where conditions='**' LIMIT 0,50
      * refer: http://www.codesec.net/view/192841.html
      */
-    protected $methods = array('strict', 'order', 'alias', 'having', 'group', 'lock', 'distinct', 'auto', 'filter', 'validate', 'result', 'token', 'index', 'force', 'found_rows');
-    // 链操作方法列表
-    private $_db = array();
+    protected $methods = array('strict', 'order', 'alias', 'having', 'group', 'lock', 'distinct', 'auto', 'filter', 'validate', 'result', 'token', 'index', 'force');
 
     /**
      * 架构函数
@@ -141,7 +141,7 @@ abstract class Model
     {
         $entity = static::ENTITY;
         $entity = new $entity();
-        $this->db = new Mysql($entity);
+        $this->mysql = new Mysql($entity);
         $this->_checkTableInfo();
         return $this;
     }
@@ -168,7 +168,7 @@ abstract class Model
     public function flush()
     {
         // 缓存不存在则查询数据表信息
-        $fields = $this->db->getFields($this->getTableName());
+        $fields = $this->mysql->getFields($this->getTableName());
         if (!$fields) { // 无法获取字段信息
             return false;
         }
@@ -321,7 +321,7 @@ abstract class Model
             if (!isset($options['limit'])) {
                 $options['limit'] = is_numeric($sepa) ? $sepa : '';
             }
-            $resultSet = $this->db->select($options);
+            $resultSet = $this->mysql->select($options);
             if (!empty($resultSet)) {
                 $_field = explode(',', $field);
                 $field = array_keys($resultSet[0]);
@@ -347,7 +347,7 @@ abstract class Model
             if (true !== $sepa) {// 当sepa指定为true的时候 返回所有数据
                 $options['limit'] = is_numeric($sepa) ? $sepa : 1;
             }
-            $result = $this->db->select($options);
+            $result = $this->mysql->select($options);
             if (!empty($result)) {
                 if (true !== $sepa && 1 == $options['limit']) {
                     $data = reset($result[0]);
@@ -440,7 +440,7 @@ abstract class Model
                     return false;
                 }
             }
-            $fields = $this->db->getFields($table);
+            $fields = $this->mysql->getFields($table);
             return $fields ? array_keys($fields) : false;
         }
         if ($this->fields) {
@@ -519,7 +519,7 @@ abstract class Model
             $key = is_string($cache['key']) ? $cache['key'] : 'sql:' . md5(serialize($options));
             $options['cache']['key'] = $key;
         }
-        $resultSet = $this->db->select($options);
+        $resultSet = $this->mysql->select($options);
         if (false === $resultSet) {
             return false;
         }
@@ -613,7 +613,7 @@ abstract class Model
                 $parse = func_get_args();
                 array_shift($parse);
             }
-            $parse = array_map(array($this->db, 'escapeString'), $parse);
+            $parse = array_map(array($this->mysql, 'escapeString'), $parse);
             $where = vsprintf($where, $parse);
         } elseif (is_object($where)) {
             $where = get_object_vars($where);
@@ -682,7 +682,7 @@ abstract class Model
      */
     public function fetchTotalCount()
     {
-        return $this->db->getTotalCount();
+        return $this->mysql->getTotalCount();
     }
 
     /**
@@ -714,7 +714,7 @@ abstract class Model
             return false;
         }
         // 写入数据到数据库
-        $result = $this->db->insert($data, $options, $replace);
+        $result = $this->mysql->insert($data, $options, $replace);
         if (false !== $result && is_numeric($result)) {
             $pk = $this->getPk();
             // 增加复合主键支持
@@ -793,7 +793,7 @@ abstract class Model
      */
     public function getLastInsID()
     {
-        return $this->db->getLastInsID();
+        return $this->mysql->getLastInsID();
     }
 
     protected function _after_insert($data, $options)
@@ -815,7 +815,7 @@ abstract class Model
         // 分析表达式
         $options = $this->_parseOptions($options);
         // 写入数据到数据库
-        $result = $this->db->insertAll($dataList, $options, $replace);
+        $result = $this->mysql->insertAll($dataList, $options, $replace);
         if (false !== $result) {
             $insertId = $this->getLastInsID();
             if ($insertId) {
@@ -838,7 +838,7 @@ abstract class Model
         // 分析表达式
         $options = $this->_parseOptions($options);
         // 写入数据到数据库
-        if (false === $result = $this->db->selectInsert($fields ?: $options['field'], $table ?: $this->getTableName(), $options)) {
+        if (false === $result = $this->mysql->selectInsert($fields ?: $options['field'], $table ?: $this->getTableName(), $options)) {
             // 数据库插入操作失败
             $this->error = L('_OPERATION_WRONG_');
             return false;
@@ -904,7 +904,7 @@ abstract class Model
         if (false === $this->_before_delete($options)) {
             return false;
         }
-        $result = $this->db->delete($options);
+        $result = $this->mysql->delete($options);
         if (false !== $result && is_numeric($result)) {
             $data = array();
             if (isset($pkValue)) $data[$pk] = $pkValue;
@@ -972,7 +972,7 @@ abstract class Model
             }
         }
 
-        $resultSet = $this->db->select($options);
+        $resultSet = $this->mysql->select($options);
         if (false === $resultSet) {
             return false;
         }
@@ -1151,7 +1151,7 @@ abstract class Model
         if (false === $this->_before_update($data, $options)) {
             return false;
         }
-        $result = $this->db->update($data, $options);
+        $result = $this->mysql->update($data, $options);
         if (false !== $result && is_numeric($result)) {
             if (isset($pkValue)) $data[$pk] = $pkValue;
             $this->_after_update($data, $options);
@@ -1522,63 +1522,45 @@ abstract class Model
     }
 
     /**
-     * SQL查询
-     * @access public
-     * @param string $sql SQL指令
-     * @param mixed $parse 是否需要解析SQL
-     * @return mixed
+     * SQL 查询.
      */
-    public function query($sql, $parse = false)
+    public function query(string $sql, bool|array|string $parse = false)
     {
         if (!is_bool($parse) && !is_array($parse)) {
             $parse = func_get_args();
             array_shift($parse);
         }
         $sql = $this->parseSql($sql, $parse);
-        return $this->db->query($sql);
+        return $this->mysql->query($sql);
     }
 
     /**
-     * 解析SQL语句
-     * @access public
-     * @param string $sql SQL指令
-     * @param boolean $parse 是否需要解析SQL
-     * @return string
+     * 解析 SQL 语句.
      */
-    protected function parseSql($sql, $parse)
+    protected function parseSql(string $sql, bool|array|string $parse): string
     {
         // 分析表达式
         if (true === $parse) {
             $options = $this->_parseOptions();
-            $sql = $this->db->parseSql($sql, $options);
+            $sql = $this->mysql->parseSql($sql, $options);
         } elseif (is_array($parse)) { // SQL预处理
-            $parse = array_map(array($this->db, 'escapeString'), $parse);
+            $parse = array_map(array($this->mysql, 'escapeString'), $parse);
             $sql = vsprintf($sql, $parse);
-        } else {
-            $sql = strtr($sql, array('__TABLE__' => $this->getTableName(), '__PREFIX__' => $this->tablePrefix));
-            $prefix = $this->tablePrefix;
-            $sql = preg_replace_callback("/__([A-Z0-9_-]+)__/sU", function ($match) use ($prefix) {
-                return $prefix . strtolower($match[1]);
-            }, $sql);
         }
         return $sql;
     }
 
     /**
-     * 执行SQL语句
-     * @access public
-     * @param string $sql SQL指令
-     * @param mixed $parse 是否需要解析SQL
-     * @return false | integer
+     * 执行 SQL 语句.
      */
-    public function execute($sql, $parse = false)
+    public function execute($sql, $parse = false): int|false
     {
         if (!is_bool($parse) && !is_array($parse)) {
             $parse = func_get_args();
             array_shift($parse);
         }
         $sql = $this->parseSql($sql, $parse);
-        return $this->db->execute($sql);
+        return $this->mysql->execute($sql);
     }
 
     /**
@@ -1586,7 +1568,7 @@ abstract class Model
      */
     public function startTrans(): void
     {
-        $this->db->startTrans();
+        $this->mysql->startTrans();
     }
 
     /**
@@ -1594,7 +1576,7 @@ abstract class Model
      */
     public function commit(): void
     {
-        $this->db->commit();
+        $this->mysql->commit();
     }
 
     /**
@@ -1602,7 +1584,7 @@ abstract class Model
      */
     public function rollback(): void
     {
-        $this->db->rollback();
+        $this->mysql->rollback();
     }
 
     /**
@@ -1612,7 +1594,7 @@ abstract class Model
      */
     public function transaction(Closure $businessLogic): mixed
     {
-        return $this->db->transaction($businessLogic);
+        return $this->mysql->transaction($businessLogic);
     }
 
     /**
@@ -1634,28 +1616,24 @@ abstract class Model
     /**
      * 返回最后执行的 sql 语句.
      */
-    public function getLastSql()
+    public function getLastSql(): ?string
     {
-        return $this->db->getLastSql();
+        return $this->mysql->getLastSql();
     }
 
     /**
-     * 设置数据对象值
-     * @access public
-     * @param mixed $data 数据
-     * @return Model
+     * 设置或者获取数据对象值.
      */
-    public function data($data = '')
+    public function data(object|string|array $data = ''): static|array
     {
         if ('' === $data && !empty($this->data)) {
             return $this->data;
         }
+
         if (is_object($data)) {
             $data = get_object_vars($data);
         } elseif (is_string($data)) {
             parse_str($data, $data);
-        } elseif (!is_array($data)) {
-            E(L('_DATA_TYPE_INVALID_'));
         }
         $this->data = $data;
         return $this;
@@ -1835,8 +1813,8 @@ abstract class Model
     /**
      * 字符串命名风格转换.
      *
-     * - type 0 将Java风格转换为C的风格
-     * - 1 将C风格转换为Java的风格
+     * - type 0 将 Java 风格转换为 C 的风格
+     * - 1 将 C 风格转换为 Java 的风格
      */
     protected function parseName(string $name, int $type = 0): string
     {
