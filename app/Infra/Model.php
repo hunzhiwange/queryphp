@@ -1251,26 +1251,22 @@ abstract class Model
     }
 
     /**
-     * 自动表单验证
-     * @access protected
-     * @param array $data 创建数据
-     * @param string $type 创建类型
-     * @return boolean
+     * 自动表单验证.
      */
-    protected function autoValidation($data, $type)
+    protected function autoValidation(array $data, int $type): bool
     {
         if (!empty($this->options['validate'])) {
-            $_validate = $this->options['validate'];
+            $validateData = $this->options['validate'];
             unset($this->options['validate']);
         } elseif (!empty($this->_validate)) {
-            $_validate = $this->_validate;
+            $validateData = $this->_validate;
         }
         // 属性验证
-        if (isset($_validate)) { // 如果设置了数据自动验证则进行数据验证
+        if (isset($validateData)) { // 如果设置了数据自动验证则进行数据验证
             if ($this->patchValidate) { // 重置验证错误信息
                 $this->error = array();
             }
-            foreach ($_validate as $key => $val) {
+            foreach ($validateData as $val) {
                 // 验证因子定义格式
                 // array(field,rule,message,condition,type,when,params)
                 // 判断是否需要执行验证
@@ -1294,36 +1290,36 @@ abstract class Model
                             break;
                         case self::VALUE_VALIDATE:    // 值不为空的时候才验证
                             if (isset($data[$val[0]]) && '' != trim($data[$val[0]]))
-                                if (false === $this->_validationField($data, $val))
+                                if (false === $this->_validationField($data, $val)) {
                                     return false;
+                                }
                             break;
                         default:    // 默认表单存在该字段就验证
                             if (isset($data[$val[0]]))
-                                if (false === $this->_validationField($data, $val))
+                                if (false === $this->_validationField($data, $val)) {
                                     return false;
+                                }
                     }
                 }
             }
             // 批量验证的时候最后返回错误
-            if (!empty($this->error)) return false;
+            if (!empty($this->error)){
+                return false;
+            }
         }
         return true;
     }
 
-    // 数据库切换后回调方法
-
     /**
-     * 验证表单字段 支持批量验证
-     * 如果批量验证返回错误的数组信息
-     * @access protected
-     * @param array $data 创建数据
-     * @param array $val 验证因子
-     * @return boolean
+     * 验证表单字段 支持批量验证.
+     *
+     * - 如果批量验证返回错误的数组信息
      */
-    protected function _validationField($data, $val)
+    protected function _validationField(array $data, array $val): ?bool
     {
-        if ($this->patchValidate && isset($this->error[$val[0]]))
-            return; //当前字段已经有规则验证没有通过
+        if ($this->patchValidate && isset($this->error[$val[0]])){
+            return null; //当前字段已经有规则验证没有通过
+        }
         if (false === $this->_validationFieldItem($data, $val)) {
             if ($this->patchValidate) {
                 $this->error[$val[0]] = $val[2];
@@ -1332,29 +1328,28 @@ abstract class Model
                 return false;
             }
         }
-        return;
+        return null;
     }
 
     /**
-     * 根据验证因子验证字段
-     * @access protected
-     * @param array $data 创建数据
-     * @param array $val 验证因子
-     * @return boolean
+     * 根据验证因子验证字段.
      */
-    protected function _validationFieldItem($data, $val)
+    protected function _validationFieldItem($data, $val): bool
     {
         switch (strtolower(trim($val[4]))) {
             case 'function':// 使用函数进行验证
             case 'callback':// 调用方法进行验证
                 $args = isset($val[6]) ? (array)$val[6] : array();
-                if (is_string($val[0]) && strpos($val[0], ','))
+                if (is_string($val[0]) && strpos($val[0], ',')) {
                     $val[0] = explode(',', $val[0]);
+                }
                 if (is_array($val[0])) {
                     // 支持多个字段验证
-                    foreach ($val[0] as $field)
-                        $_data[$field] = $data[$field];
-                    array_unshift($args, $_data);
+                    $tempData = [];
+                    foreach ($val[0] as $field) {
+                        $tempData[$field] = $data[$field];
+                    }
+                    array_unshift($args, $tempData);
                 } else {
                     array_unshift($args, $data[$val[0]]);
                 }
@@ -1366,13 +1361,15 @@ abstract class Model
             case 'confirm': // 验证两个字段是否相同
                 return $data[$val[0]] == $data[$val[1]];
             case 'unique': // 验证某个值是否唯一
-                if (is_string($val[0]) && strpos($val[0], ','))
+                if (is_string($val[0]) && strpos($val[0], ',')) {
                     $val[0] = explode(',', $val[0]);
+                }
                 $map = array();
                 if (is_array($val[0])) {
                     // 支持多个字段验证
-                    foreach ($val[0] as $field)
+                    foreach ($val[0] as $field) {
                         $map[$field] = $data[$field];
+                    }
                 } else {
                     $map[$val[0]] = $data[$val[0]];
                 }
@@ -1380,7 +1377,9 @@ abstract class Model
                 if (!empty($data[$pk]) && is_string($pk)) { // 完善编辑的时候验证唯一
                     $map[$pk] = array('neq', $data[$pk]);
                 }
-                if ($this->where($map)->find()) return false;
+                if ($this->where($map)->find()){
+                    return false;
+                }
                 return true;
             default:  // 检查附加规则
                 return $this->check($data[$val[0]], $val[1], $val[4]);
@@ -1388,7 +1387,7 @@ abstract class Model
     }
 
     /**
-     * 验证数据 支持 in between equal length regex expire ip_allow ip_deny
+     * 验证数据 支持 in between equal length regex expire ip_allow ip_deny.
      */
     public function check(mixed $value, array|string $rule, string $type = 'regex'): bool
     {
