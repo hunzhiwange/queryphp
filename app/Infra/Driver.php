@@ -433,7 +433,7 @@ use PDO;
             }elseif(is_null($val)){
                 $set[]  =   $this->parseKey($key).'=NULL';
             }elseif(is_scalar($val)) {// 过滤非标量数据
-                if(0===strpos($val,':') && in_array($val,array_keys($this->bind)) ){
+                if(is_string($val) && 0===strpos($val,':') && in_array($val,array_keys($this->bind)) ){
                     $set[]  =   $this->parseKey($key).'='.$this->escapeString($val);
                 }else{
                     $name   =   count($this->bind);

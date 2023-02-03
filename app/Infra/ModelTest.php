@@ -2815,4 +2815,75 @@ class ModelTest extends TestCase
         $sql = "DELETE FROM `base_brand` WHERE ( 1 )";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub175(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->find(8);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_id` = 8 LIMIT 1";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub176(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->select('1,3,8');
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT   * FROM `base_brand` WHERE `brand_id` IN ('1','3','8')";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub177(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $id = $baseBrandModel
+            ->data(['brand_name' => 'hello'])
+            ->add();
+        $baseBrandModel->find($id);
+        $baseBrandModel->brand_name = 'TOPThink';
+        $baseBrandModel->save();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $this->assertTrue(strpos($result,"`brand_name`='TOPThink'") !== false);
+    }
+
+    public function testQuerySub178(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel->brand_id = 1;
+        $baseBrandModel->brand_name = 'TOPThink';
+        $baseBrandModel->save();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $this->assertTrue(strpos($result,"`brand_name`='TOPThink'") !== false);
+    }
+
+    public function testQuerySub179(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $id = $baseBrandModel
+            ->data(['brand_name' => 'hello'])
+            ->add();
+        $baseBrandModel->find($id);
+        $baseBrandModel->delete();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "DELETE FROM `base_brand` WHERE `brand_id` = {$id}";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub180(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel->delete('5,6');
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "DELETE FROM `base_brand` WHERE `brand_id` IN ('5','6')";
+        $this->assertSame($result, $sql);
+    }
 }
