@@ -2886,4 +2886,59 @@ class ModelTest extends TestCase
         $sql = "DELETE FROM `base_brand` WHERE `brand_id` IN ('5','6')";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub181(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->forceMaster()
+            ->find('5,6');
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "/*FORCE_MASTER*/ SELECT   * FROM `base_brand` WHERE `brand_id` = '5,6' LIMIT 1";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub182(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $id = null;
+        $baseBrandModel->transaction(function() use(&$id) {
+            $baseBrandModel = BaseBrandModel::make();
+            $id = $baseBrandModel
+                ->data(['brand_name' => 'hello'])
+                ->add();
+        });
+
+        $data = $baseBrandModel
+            ->forceMaster()
+            ->find($id);
+        $this->assertSame($data['brand_id'], $id);
+    }
+
+    public function testQuerySub183(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage(
+            'Error message'
+        );
+
+        $baseBrandModel = BaseBrandModel::make();
+        $id = null;
+        try {
+            $baseBrandModel->transaction(function() use(&$id) {
+                $baseBrandModel = BaseBrandModel::make();
+                $id = $baseBrandModel
+                    ->data(['brand_name' => 'hello'])
+                    ->add();
+                throw new \Exception('Error message');
+            });
+        } finally {
+            $data = $baseBrandModel
+                ->forceMaster()
+                ->find($id);
+            $this->assertSame(true, $id>0);
+            $this->assertSame(true, empty($data));
+        }
+    }
 }

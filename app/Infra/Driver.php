@@ -228,22 +228,23 @@ use PDO;
      * @return void
      */
     public function startTrans() {
-        $this->initConnect(true);
-        if (!$this->_linkID) {
-            return false;
-        }
-        ++$this->transTimes;
-        if ($this->transTimes == 1) {
-            try {
-                // 事务本身开启失败会导致嵌套事务层级错误
-                // 并非每种数据库都支持事务，如果底层驱动不支持事务，则抛出一个 \PDOException 异常 
-                $this->_linkID->beginTransaction();
-            } catch (Exception $e) {
-                $this->transTimes--;
-
-                throw $e;
-            }
-        } 
+       // $this->
+        // $this->initConnect(true);
+        // if (!$this->_linkID) {
+        //     return false;
+        // }
+        // ++$this->transTimes;
+        // if ($this->transTimes == 1) {
+        //     try {
+        //         // 事务本身开启失败会导致嵌套事务层级错误
+        //         // 并非每种数据库都支持事务，如果底层驱动不支持事务，则抛出一个 \PDOException 异常
+        //         $this->_linkID->beginTransaction();
+        //     } catch (Exception $e) {
+        //         $this->transTimes--;
+        //
+        //         throw $e;
+        //     }
+        // }
     }
 
     /**
@@ -327,34 +328,7 @@ use PDO;
      */
     public function transaction(Closure $businessLogic)
     {
-        $this->startTrans();
-
-        try {
-            $result = $businessLogic($this);
-            $this->commit();
-
-            return $result;
-            // @todo 如果未来升级版本 PHP 7 ，注意需要将这里修改为 \Throwable
-            // 一般来说当脚本结束或连接即将被关闭时，如果尚有一个未完成的事务，那么 PDO 将自动回滚该事务
-            // 对于非常驻的 API 来说，即使没有 rollback 或者 commit，那么系统退出前会自动 rollback
-            // 常驻脚本需要底层嵌套事务更加严格地执行成对的启动事务-回滚-提交操作
-            // 必须通过异常处理，严格执行事务回滚和提交，否则出现事务锁的问题
-            // SQLSTATE[HY000]: General error: 1205 Lock wait timeout exceeded; try restarting transaction
-            // 下面不严谨的用法，在业务中会有一些比如超时等抛出异常导致后续 rollback 和 commit 都没有执行
-            // ```
-            // $model = new DemoModel();
-            // $model->startTrans();
-            // $status = $this->someBusiness();
-            // if (false === $status) {
-            //     $model->rollback();
-            // }
-            // $model->commit();
-            // ```
-        } catch (Exception $e) {
-            $this->rollBack();
-
-            throw $e;
-        }
+        return $this->entity::select()->transaction($businessLogic);
     }
 
     /**

@@ -66,8 +66,8 @@ if (!function_exists('http_request_value')) {
      *
      * 使用方法:
      * <code>
-     * http_request_value('id',0); 获取id参数 自动判断get或者post
-     * http_request_value('post.name','','htmlspecialchars'); 获取$_POST['name']
+     * http_request_value('id',0); 获取 id 参数 自动判断 get 或者 post
+     * http_request_value('post.name','','htmlspecialchars'); 获取 $_POST['name']
      * http_request_value('get.'); 获取$_GET
      * </code>
      * @param string $name 变量的名称 支持指定类型
@@ -76,7 +76,8 @@ if (!function_exists('http_request_value')) {
      * @param mixed $datas 要获取的额外数据源
      * @return mixed
      */
-    function http_request_value($name, $default='', $filter=null, $datas=null) {
+    function http_request_value($name, $default='', $filter=null, $datas=null)
+    {
         $request = http_request();
 
         if(strpos($name,'/')){ // 指定修饰符
