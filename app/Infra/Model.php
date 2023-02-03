@@ -404,7 +404,7 @@ abstract class Model {
         $data       =   $this->_facade($data);
         if(empty($data)){
             // 没有数据则不执行
-            $this->error    =   L('_DATA_TYPE_INVALID_');
+            $this->error    =   '_DATA_TYPE_INVALID_';
             return false;
         }
         // 分析表达式

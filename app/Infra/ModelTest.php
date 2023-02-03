@@ -1319,7 +1319,7 @@ class ModelTest extends TestCase
         container()->instance('company_id', 999);
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->field('`brand_logo`,`brand_name`')
+            ->field('brand_logo,brand_name')
             ->where('brand_id=1')
             ->save([
                 'status' => 'F',
