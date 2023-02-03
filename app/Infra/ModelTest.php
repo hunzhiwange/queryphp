@@ -2136,4 +2136,104 @@ class ModelTest extends TestCase
                 $data
             ));
     }
+
+    public function testQuerySub138(): void
+    {
+        container()->instance('company_id', 999);
+        $data = new stdClass();
+        $data->brand_name = 'ThinkPHP';
+        $data->brand_logo = 'ThinkPHP@gmail.com';
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->create($data,Model::MODEL_BOTH);
+        $data = $baseBrandModel->data();
+        $json = <<<'eot'
+            {
+                "brand_name": "ThinkPHP",
+                "brand_logo": "ThinkPHP@gmail.com"
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $data
+            ));
+
+        $baseBrandModel->add();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO base_brand (brand_name,brand_logo) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub139(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->create();
+        $baseBrandModel->brand_name = 'ThinkPHP';
+        $baseBrandModel->brand_logo = 'ThinkPHP@gmail.com';
+        $data = $baseBrandModel->data();
+        $json = <<<'eot'
+            {
+                "brand_name": "ThinkPHP",
+                "brand_logo": "ThinkPHP@gmail.com"
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $data
+            ));
+
+        $baseBrandModel->add();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO base_brand (brand_name,brand_logo) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub140(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
+        $data['brand_name'] = 'ThinkPHP';
+        $data['brand_logo'] = 'ThinkPHP@gmail.com';
+        $baseBrandModel
+            ->data($data)
+            ->add();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO base_brand (brand_name,brand_logo) VALUES ('ThinkPHP','ThinkPHP@gmail.com')";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub141(): void
+    {
+        container()->instance('company_id', 999);
+        $data['brand_name'] = 'thinkphp';
+        $data['brand_logo'] = 'thinkphp@gmail.com';
+        $data['status'] = 1;
+        $data['test'] = 'test';
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->field('brand_name')
+            ->create($data);
+        $data = $baseBrandModel->data();
+        $json = <<<'eot'
+            {
+                "brand_name": "thinkphp",
+                "company_id": 999
+            }
+            eot;
+
+        $this->assertSame(
+            $json,
+            $this->varJson(
+                $data
+            ));
+    }
 }

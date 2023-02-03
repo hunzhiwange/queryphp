@@ -1006,11 +1006,12 @@ abstract class Model {
         if(isset($this->options['field'])) { // $this->field('field1,field2...')->create()
             $fields =   $this->options['field'];
             unset($this->options['field']);
-        }elseif($type == self::MODEL_INSERT && isset($this->insertFields)) {
-            $fields =   $this->insertFields;
-        }elseif($type == self::MODEL_UPDATE && isset($this->updateFields)) {
-            $fields =   $this->updateFields;
         }
+        // elseif($type == self::MODEL_INSERT && isset($this->insertFields)) {
+        //     $fields =   $this->insertFields;
+        // }elseif($type == self::MODEL_UPDATE && isset($this->updateFields)) {
+        //     $fields =   $this->updateFields;
+        // }
         if(isset($fields)) {
             if(is_string($fields)) {
                 $fields =   explode(',',$fields);
