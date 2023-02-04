@@ -62,34 +62,9 @@ abstract class Model
     protected bool $autoinc = false;
 
     /**
-     * 数据表前缀.
-     */
-    protected ?string $tablePrefix = null;
-
-    /**
      * 模型名称.
      */
     protected string $name = '';
-
-    /**
-     * 数据库名称.
-     */
-    protected string $dbName = '';
-
-    /**
-     * 数据库配置.
-     */
-    protected array|string $connection = '';
-
-    /**
-     * 数据表名（不包含表前缀）.
-     */
-    protected string $tableName = '';
-
-    /**
-     * 实际数据表名（包含表前缀）.
-     */
-    protected string $trueTableName = '';
 
     /**
      * 最近错误信息.
