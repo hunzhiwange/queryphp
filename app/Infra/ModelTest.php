@@ -3112,7 +3112,6 @@ class ModelTest extends TestCase
         $this->expectExceptionMessage(
             'Email格式错误;URL 格式错误;'
         );
-
         $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->patchValidate()

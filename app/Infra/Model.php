@@ -273,7 +273,7 @@ abstract class Model
     /**
      * 获取一条记录的某个字段值.
      */
-    public function getField($field, null|string|bool|int $separator = null): mixed
+    public function getField($field, null|string|bool|int $separator = null): string|array|int|float
     {
         $options['field'] = $field;
         $options = $this->_parseOptions($options);
@@ -298,41 +298,45 @@ abstract class Model
                 $options['limit'] = is_numeric($separator) ? $separator : '';
             }
             $resultSet = $this->mysql->select($options);
-            if (!empty($resultSet)) {
-                $_field = explode(',', $field);
-                $field = array_keys($resultSet[0]);
-                $key1 = array_shift($field);
-                $key2 = array_shift($field);
-                $cols = array();
-                $count = count($_field);
-                foreach ($resultSet as $result) {
-                    $name = $result[$key1];
-                    if (2 == $count) {
-                        $cols[$name] = $result[$key2];
-                    } else {
-                        $cols[$name] = is_string($separator) ? implode($separator, array_slice($result, 1)) : $result;
-                    }
-                }
-                return $cols;
+            if (empty($resultSet)) {
+                return $resultSet;
             }
-        } else {   // 查找一条记录
-            // 返回数据个数
-            if (true !== $separator) {// 当sepa指定为true的时候 返回所有数据
-                $options['limit'] = is_numeric($separator) ? $separator : 1;
-            }
-            $result = $this->mysql->select($options);
-            if (!empty($result)) {
-                if (true !== $separator && 1 == $options['limit']) {
-                    $data = reset($result[0]);
-                    return $data;
+
+            $_field = explode(',', $field);
+            $field = array_keys($resultSet[0]);
+            $key1 = array_shift($field);
+            $key2 = array_shift($field);
+            $cols = array();
+            $count = count($_field);
+            foreach ($resultSet as $result) {
+                $name = $result[$key1];
+                if (2 == $count) {
+                    $cols[$name] = $result[$key2];
+                } else {
+                    $cols[$name] = is_string($separator) ? implode($separator, array_slice($result, 1)) : $result;
                 }
-                foreach ($result as $val) {
-                    $array[] = $val[$field];
-                }
-                return $array;
             }
+            return $cols;
+
         }
-        return null;
+
+        // 查找一条记录
+        // 返回数据个数
+        if (true !== $separator) {// 当 $separator 指定为 true 的时候返回所有数据
+            $options['limit'] = is_numeric($separator) ? $separator : 1;
+        }
+        $result = $this->mysql->select($options);
+        if (!empty($result) && is_array($result)) {
+            if (true !== $separator && 1 == $options['limit']) {
+                return current($result[0]);
+            }
+            foreach ($result as $val) {
+                $array[] = $val[$field];
+            }
+            return $array;
+        }
+
+        return $result;
     }
 
     /**
@@ -871,7 +875,7 @@ abstract class Model
     /**
      * 设置是否获取执行的 SQL 语句.
      */
-    public function fetchSql(bool $fetch): static
+    public function fetchSql(bool $fetch = true): static
     {
         $this->options['fetch_sql'] = $fetch;
         return $this;
