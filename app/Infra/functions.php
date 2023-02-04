@@ -7,6 +7,7 @@ use App\Infra\RoadRunnerDump;
 use Leevel\Database\IDatabase;
 use Leevel\Di\Container;
 use Leevel\Http\Request;
+use Leevel\Database\Proxy\Db;
 
 if (!function_exists('permission')) {
     /**
@@ -254,3 +255,14 @@ if (!function_exists('rr_dump')) {
         return RoadRunnerDump::handle($var, ...$moreVars);
     }
 }
+
+if (!function_exists('transaction')) {
+    /**
+     * 事务处理.
+     */
+    function transaction(Closure $businessLogic): mixed
+    {
+        return Db::transaction($businessLogic);
+    }
+}
+

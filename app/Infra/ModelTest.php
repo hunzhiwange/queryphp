@@ -3177,4 +3177,68 @@ class ModelTest extends TestCase
         $sql = "INSERT INTO `base_brand` (`brand_name`,`company_id`,`brand_num`,`brand_letter`) VALUES ('new2','0',";
         $this->assertSame(true, false !== strpos($result, $sql));
     }
+
+    public function testQuerySub199(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'error'
+        );
+
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandModel::make();
+        $id = $baseBrandModel
+            ->trans1([
+                'first' => 'new1',
+                'second' => 'new2',
+            ]);
+    }
+
+    public function testQuerySub200(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'error'
+        );
+
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandModel::make();
+        $id = transaction(fn() => $baseBrandModel
+            ->trans2([
+                'first' => 'new1',
+                'second' => 'new2',
+            ]));
+    }
+
+    public function testQuerySub201(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'error'
+        );
+
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandModel::make();
+        $id = $baseBrandModel
+            ->trans2([
+                'first' => 'new1',
+                'second' => 'new2',
+            ]);
+    }
+
+    public function testQuerySub202(): void
+    {
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandModel::make();
+        $id = transaction(fn() => $baseBrandModel
+            ->trans3([
+                'first' => 'new1',
+                'second' => 'new2',
+            ]));
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO `base_brand` (`brand_name`) VALUES ('new2')";
+        $this->assertSame($result, $sql);
+        $this->assertSame($id, 'yes');
+    }
 }

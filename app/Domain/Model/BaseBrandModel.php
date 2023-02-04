@@ -214,6 +214,39 @@ class BaseBrandModel extends Model
         $this->error = 'customer error';
     }
 
+    public function trans1(array $in): void
+    {
+        $this->transaction(function() use($in) {
+            $this->brand_name = $in['first'];
+            $this->add();
+
+            $this->brand_name = $in['second'];;
+            $this->add();
+            throw new \Exception('error');
+        });
+    }
+
+    public function trans2(array $in): void
+    {
+        $this->brand_name = $in['first'];
+        $this->add();
+
+        $this->brand_name = $in['second'];;
+        $this->add();
+        throw new \Exception('error');
+    }
+
+    public function trans3(array $in): string
+    {
+        $this->brand_name = $in['first'];
+        $this->add();
+
+        $this->brand_name = $in['second'];;
+        $this->add();
+
+        return 'yes';
+    }
+
     /**
      * 检查商品品牌编号是否可用.
      */
