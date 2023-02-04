@@ -819,7 +819,7 @@ abstract class Model
         // 判断查询缓存
         if (isset($options['cache'])) {
             $cache = $options['cache'];
-            $key = is_string($cache['key']) ? $cache['key'] : 'sql:' . md5($sepa . serialize($options));
+            $key = is_string($cache['key']) ? $cache['key'] : 'sql:' . md5(serialize($options));
             $options['cache']['key'] = $key;
         }
 
@@ -1381,6 +1381,7 @@ abstract class Model
      * 返回模型的错误信息.
      *
      * - 方法不再支持返回错误消息
+     * - 支持抛出异常
      *
      * @throws \Exception;
      * @deprecated
