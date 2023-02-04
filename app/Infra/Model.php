@@ -434,12 +434,9 @@ abstract class Model
     }
 
     /**
-     * 查询数据
-     * @access public
-     * @param mixed $options 表达式参数
-     * @return mixed
+     * 查询数据.
      */
-    public function find($options = array())
+    public function find(array|string|int|float $options = array()): mixed
     {
         if (is_numeric($options) || is_string($options)) {
             $where[$this->getPk()] = $options;
@@ -489,58 +486,27 @@ abstract class Model
         // 读取数据后的处理
         $data = $resultSet[0];
         $this->_after_find($data, $options);
-        if (!empty($this->options['result'])) {
-            return $this->returnResult($data, $this->options['result']);
-        }
-        $this->data = $data;
-
-        return $this->data;
+        return $this->data = $data;
     }
 
-    // 更新数据前的回调方法
-
     /**
-     * 获取主键名称
-     * @access public
-     * @return string
+     * 获取主键名称.
      */
-    public function getPk()
+    public function getPk(): string|array
     {
         return $this->pk;
     }
 
-    protected function _after_find(&$result, $options)
+    protected function _after_find(array &$result, array $options): void
     {
     }
-
-    // 删除数据前的回调方法
-
-    protected function returnResult($data, $type = '')
-    {
-        if ($type) {
-            if (is_callable($type)) {
-                return call_user_func($type, $data);
-            }
-            switch (strtolower($type)) {
-                case 'json':
-                    return json_encode($data);
-                case 'xml':
-                    return xml_encode($data);
-            }
-        }
-        return $data;
-    }
-
-    // 删除成功后的回调方法
 
     /**
-     * 指定查询条件 支持安全过滤
-     * @access public
-     * @param mixed $where 条件表达式
-     * @param mixed $parse 预处理参数
-     * @return Model
+     * 指定查询条件.
+     *
+     * - 支持安全过滤
      */
-    public function where($where, $parse = null)
+    public function where(mixed $where, mixed $parse = null): static
     {
         if (!is_null($parse) && is_string($where)) {
             if (!is_array($parse)) {
@@ -567,13 +533,9 @@ abstract class Model
     }
 
     /**
-     * 调用命名范围
-     * @access public
-     * @param mixed $scope 命名范围名称 支持多个 和直接定义
-     * @param array $args 参数
-     * @return Model
+     * 调用命名范围.
      */
-    public function scope($scope = '', $args = NULL)
+    public function scope($scope = '', $args = NULL): static
     {
         if ('' === $scope) {
             if (isset($this->_scope['default'])) {
@@ -602,32 +564,18 @@ abstract class Model
         return $this;
     }
 
-    // 查询成功后的回调方法
-
     /**
-     * 得到上一次分页查询的总条数
-     * 在分页的前一句插入SQL_CALC_FOUND_ROWS;
-     * Example: SELECT SQL_CALC_FOUND_ROWS id, time FROM table_name where conditions='**' LIMIT 0,50
-     * refer: http://www.codesec.net/view/192841.html
-     *
-     * @return int 总条数
-     * @author yangfan
-     * @since 2016-01-07
+     * 得到上一次分页查询的总条数.
      */
-    public function fetchTotalCount()
+    public function fetchTotalCount(): int
     {
         return $this->mysql->getTotalCount();
     }
 
     /**
-     * 新增数据
-     * @access public
-     * @param mixed $data 数据
-     * @param array $options 表达式
-     * @param boolean $replace 是否replace
-     * @return mixed
+     * 新增数据.
      */
-    public function add($data = '', $options = array(), $replace = false)
+    public function add(mixed $data = '', array $options = array(), bool $replace = false): mixed
     {
         if (empty($data)) {
             // 没有传递数据，获取当前数据对象的值
@@ -636,7 +584,7 @@ abstract class Model
                 // 重置数据
                 $this->data = array();
             } else {
-                $this->error = '_DATA_TYPE_INVALID_';
+                $this->error = 'Data type invalid';
                 return false;
             }
         }
@@ -652,7 +600,9 @@ abstract class Model
         if (false !== $result && is_numeric($result)) {
             $pk = $this->getPk();
             // 增加复合主键支持
-            if (is_array($pk)) return $result;
+            if (is_array($pk)){
+                return $result;
+            }
             $insertId = $this->getLastInsID();
             if ($insertId) {
                 // 自增主键返回插入ID
@@ -670,12 +620,11 @@ abstract class Model
     }
 
     /**
-     * 对保存到数据库的数据进行处理
-     * @access protected
-     * @param mixed $data 要操作的数据
-     * @return boolean
+     * 对保存到数据库的数据进行处理.
+     *
+     * @throws \Exception
      */
-    protected function _facade($data)
+    protected function _facade(array $data): array
     {
         // 检查数据字段合法性
         if (!empty($this->fields)) {
@@ -691,7 +640,7 @@ abstract class Model
             foreach ($data as $key => $val) {
                 if (!in_array($key, $fields, true)) {
                     if (!empty($this->options['strict'])) {
-                        E(L('_DATA_TYPE_INVALID_') . ':[' . $key . '=>' . $val . ']');
+                        throw new Exception('Data type invalid:[' . $key . '=>' . $val . ']');
                     }
                     unset($data[$key]);
                 }
@@ -711,30 +660,26 @@ abstract class Model
     {
     }
 
-    protected function _before_insert(&$data, $options)
+    protected function _before_insert(array &$data, array $options): void
     {
     }
 
     /**
-     * 返回最后插入的ID
-     * @access public
-     * @return string
+     * 返回最后插入的 ID.
      */
-    public function getLastInsID()
+    public function getLastInsID(): null|string|int
     {
         return $this->mysql->getLastInsID();
     }
 
-    protected function _after_insert($data, $options)
+    protected function _after_insert(array $data, array $options): void
     {
     }
 
-    // 查询成功的回调方法
-
-    public function addAll($dataList, $options = array(), $replace = false)
+    public function addAll(array $dataList, array $options = array(), bool $replace = false): mixed
     {
         if (empty($dataList)) {
-            $this->error = L('_DATA_TYPE_INVALID_');
+            $this->error = 'Data type invalid.';
             return false;
         }
         // 数据处理
@@ -755,21 +700,16 @@ abstract class Model
     }
 
     /**
-     * 通过Select方式添加记录
-     * @access public
-     * @param string $fields 要插入的数据表字段名
-     * @param string $table 要插入的数据表名
-     * @param array $options 表达式
-     * @return boolean
+     * 通过 Select 方式添加记录.
      */
-    public function selectAdd($fields = '', $table = '', $options = array())
+    public function selectAdd(array|string $fields = '', string $table = '', array $options = array()): bool
     {
         // 分析表达式
         $options = $this->_parseOptions($options);
         // 写入数据到数据库
         if (false === $result = $this->mysql->selectInsert($fields ?: $options['field'], $table ?: $this->getTableName(), $options)) {
             // 数据库插入操作失败
-            $this->error = L('_OPERATION_WRONG_');
+            $this->error = 'Operation wrong.';
             return false;
         } else {
             // 插入成功
@@ -778,20 +718,18 @@ abstract class Model
     }
 
     /**
-     * 删除数据
-     * @access public
-     * @param mixed $options 表达式
-     * @return mixed
+     * 删除数据.
      */
-    public function delete($options = array())
+    public function delete(int|string|array $options = array()): mixed
     {
         $pk = $this->getPk();
         if (empty($options) && empty($this->options['where'])) {
-            // 如果删除条件为空 则删除当前数据对象所对应的记录
-            if (!empty($this->data) && isset($this->data[$pk]))
+            // 如果删除条件为空，则删除当前数据对象所对应的记录
+            if (!empty($this->data) && isset($this->data[$pk])) {
                 return $this->delete($this->data[$pk]);
-            else
+            } else {
                 return false;
+            }
         }
         if (is_numeric($options) || is_string($options)) {
             // 根据主键删除记录
@@ -823,7 +761,7 @@ abstract class Model
         // 分析表达式
         $options = $this->_parseOptions($options);
         if (empty($options['where'])) {
-            // 如果条件为空 不进行删除操作 除非设置 1=1
+            // 如果条件为空，不进行删除操作，除非设置 1=1
             return false;
         }
         if (is_array($options['where']) && isset($options['where'][$pk])) {
@@ -836,28 +774,27 @@ abstract class Model
         $result = $this->mysql->delete($options);
         if (false !== $result && is_numeric($result)) {
             $data = array();
-            if (isset($pkValue)) $data[$pk] = $pkValue;
+            if (isset($pkValue)) {
+                $data[$pk] = $pkValue;
+            }
             $this->_after_delete($data, $options);
         }
         // 返回删除记录个数
         return $result;
     }
 
-    protected function _before_delete($options)
+    protected function _before_delete(array $options): void
     {
     }
 
-    protected function _after_delete($data, $options)
+    protected function _after_delete(array $data, array $options): void
     {
     }
 
     /**
-     * 查询数据集
-     * @access public
-     * @param array $options 表达式参数
-     * @return mixed
+     * 查询数据集.
      */
-    public function select($options = array())
+    public function select(int|string|array|bool $options = array()): mixed
     {
         $pk = $this->getPk();
         if (is_string($options) || is_numeric($options)) {
@@ -894,11 +831,8 @@ abstract class Model
         // 判断查询缓存
         if (isset($options['cache'])) {
             $cache = $options['cache'];
-            $key = is_string($cache['key']) ? $cache['key'] : md5(serialize($options));
-            $data = S($key, '', $cache);
-            if (false !== $data) {
-                return $data;
-            }
+            $key = is_string($cache['key']) ? $cache['key'] : 'sql:' . md5($sepa .serialize($options));
+            $options['cache']['key'] = $key;
         }
 
         $resultSet = $this->mysql->select($options);
@@ -926,9 +860,7 @@ abstract class Model
             }
             $resultSet = $cols;
         }
-        if (isset($cache)) {
-            S($key, $resultSet, $cache);
-        }
+
         return $resultSet;
     }
 
@@ -1598,8 +1530,6 @@ abstract class Model
 
     /**
      * 查询缓存.
-     *
-     * @todo
      */
     public function cache(bool|string $key = true, ?int $expire = null, ICache $cache = null): static
     {

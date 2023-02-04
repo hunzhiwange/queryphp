@@ -625,7 +625,7 @@ class Mysql
     /**
      * 获取最近插入的 ID.
      */
-    public function getLastInsID(): ?string
+    public function getLastInsID(): null|string|int
     {
         return $this->lastInsID;
     }
