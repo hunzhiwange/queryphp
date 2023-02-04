@@ -39,12 +39,31 @@ class BaseBrandModel extends Model {
     );
 
     protected array $_auto = array(
-        array('company_id','get_company_id',self::MODEL_INSERT,'function'),
+        array(
+            'company_id',
+            'get_company_id',
+            self::MODEL_INSERT,
+            'function'
+        ),
     );
 
     protected array $_validate = array(
-        array('brand_name', 'checkName', '该商品品牌名称已存在,请重新输入!',2,'callback',3),
-        array('brand_num','checkNum','商品品牌编号已存在,请重新输入!',2,'callback',3)
+        array(
+            'brand_name',
+            'checkName',
+            '该商品品牌名称已存在,请重新输入!',
+            self::VALUE_VALIDATE,
+            'callback',
+            self::MODEL_BOTH
+        ),
+        array(
+            'brand_num',
+            'checkNum',
+            '商品品牌编号已存在,请重新输入!',
+            self::VALUE_VALIDATE,
+            'callback',
+            self::MODEL_BOTH
+        )
     );
 
     /**
