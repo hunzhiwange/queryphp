@@ -3130,4 +3130,17 @@ class ModelTest extends TestCase
         $sql = "SELECT  * FROM `base_brand` WHERE `status` = 'T' AND `company_id` = 0 ORDER BY order_num DESC, brand_id ASC LIMIT 0,5";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub196(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->alias('a')
+            ->where('a.brand_id=1')
+            ->select();
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT  * FROM base_brand a WHERE ( a.brand_id=1 )";
+        $this->assertSame($result, $sql);
+    }
 }

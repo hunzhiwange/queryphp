@@ -113,11 +113,6 @@ abstract class Model
     protected bool $patchValidate = false;
 
     /**
-     * 特殊的连贯方法.
-     */
-    protected array $methods = array('strict', 'order', 'alias', 'having', 'group', 'lock', 'distinct', 'auto', 'filter', 'validate', 'result', 'token', 'index', 'force');
-
-    /**
      * 是否为统计查询.
      */
     private bool $shouldCountSelect = false;
@@ -233,6 +228,72 @@ abstract class Model
         unset($this->data[$name]);
     }
 
+    public function strict(bool $strict = true): static
+    {
+        $this->options['strict'] = $strict;
+        return $this;
+    }
+
+    public function order(string|array $order = ''): static
+    {
+        $this->options['order'] = $order;
+        return $this;
+    }
+
+    public function alias(string $alias = ''): static
+    {
+        $this->options['alias'] = $alias;
+        return $this;
+    }
+
+    public function having(string $having = ''): static
+    {
+        $this->options['having'] = $having;
+        return $this;
+    }
+
+    public function group(string $group = ''): static
+    {
+        $this->options['group'] = $group;
+        return $this;
+    }
+
+    public function lock(bool $lock = true): static
+    {
+        $this->options['lock'] = $lock;
+        return $this;
+    }
+
+    public function distinct(bool $distinct = true): static
+    {
+        $this->options['distinct'] = $distinct;
+        return $this;
+    }
+
+    public function auto(array $auto = []): static
+    {
+        $this->options['auto'] = $auto;
+        return $this;
+    }
+
+    public function filter(callable $filter): static
+    {
+        $this->options['filter'] = $filter;
+        return $this;
+    }
+
+    public function validate(array $validate): static
+    {
+        $this->options['validate'] = $validate;
+        return $this;
+    }
+
+    public function index(string $index = ''): static
+    {
+        $this->options['index'] = $index;
+        return $this;
+    }
+
     /**
      * 利用 __call 方法实现一些特殊的 Model 方法.
      *
@@ -240,11 +301,7 @@ abstract class Model
      */
     public function __call(string $method, array $args): mixed
     {
-        if (in_array(strtolower($method), $this->methods, true)) {
-            // 连贯操作的实现
-            $this->options[strtolower($method)] = $args[0];
-            return $this;
-        } elseif (in_array(strtolower($method), array('count', 'sum', 'min', 'max', 'avg'), true)) {
+        if (in_array(strtolower($method), array('count', 'sum', 'min', 'max', 'avg'), true)) {
             // 统计查询的实现
             $field = isset($args[0]) ? $args[0] : '*';
             try {
