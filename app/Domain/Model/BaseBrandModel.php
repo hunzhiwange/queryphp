@@ -16,10 +16,10 @@ class BaseBrandModel extends Model {
     const ENTITY = BaseBrand::class;
 
     /** @var string 品牌状态 - 启用 */
-    const STATUS_T = 'T';
+    public const STATUS_T = 'T';
 
     /** @var string 品牌状态 - 禁用 */
-    const STATUS_F = 'F';
+    public const STATUS_F = 'F';
 
     protected array $_scope = array(
         // 命名范围normal
@@ -38,11 +38,11 @@ class BaseBrandModel extends Model {
         ),
     );
 
-    protected $_auto = array(
+    protected array $_auto = array(
         array('company_id','get_company_id',self::MODEL_INSERT,'function'),
     );
 
-    protected $_validate = array(
+    protected array $_validate = array(
         array('brand_name', 'checkName', '该商品品牌名称已存在,请重新输入!',2,'callback',3),
         array('brand_num','checkNum','商品品牌编号已存在,请重新输入!',2,'callback',3)
     );

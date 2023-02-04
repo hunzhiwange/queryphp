@@ -51,42 +51,75 @@ abstract class Model
      */
     protected Mysql $mysql;
 
-    // 数据库对象池
-    protected $pk = 'id';
-    // 主键名称
-    protected $autoinc = false;
-    // 主键是否自动增长
-    protected $tablePrefix = null;
-    // 数据表前缀
-    protected $name = '';
-    // 模型名称
-    protected $dbName = '';
-    // 数据库名称
-    protected $connection = '';
-    //数据库配置
-    protected $tableName = '';
-    // 数据表名（不包含表前缀）
-    protected $trueTableName = '';
-    // 实际数据表名（包含表前缀）
-    protected $error = '';
-    // 最近错误信息
-    protected $fields = array();
-    // 字段信息
-    protected $data = array();
-    // 数据信息
-    protected $options = array();
-    // 查询表达式参数
-    protected $_validate = array();
+    /**
+     * 自动完成定义.
+     */
+    protected string|array $pk = 'id';
+
+    /**
+     * 主键是否自动增长.
+     */
+    protected bool $autoinc = false;
+
+    /**
+     * 数据表前缀.
+     */
+    protected ?string $tablePrefix = null;
+
+    /**
+     * 模型名称.
+     */
+    protected string $name = '';
+
+    /**
+     * 数据库名称.
+     */
+    protected string $dbName = '';
+
+    /**
+     * 数据库配置.
+     */
+    protected array|string $connection = '';
+
+    /**
+     * 数据表名（不包含表前缀）.
+     */
+    protected string $tableName = '';
+
+    /**
+     * 实际数据表名（包含表前缀）.
+     */
+    protected string $trueTableName = '';
+
+    /**
+     * 最近错误信息.
+     */
+    protected string $error = '';
+
+    /**
+     * 字段信息.
+     */
+    protected array $fields = array();
+
+    /**
+     * 数据信息.
+     */
+    protected array $data = array();
+
+    /**
+     * 查询表达式参数.
+     */
+    protected array $options = array();
 
     /**
      * 自动完成定义.
      */
-    protected $_auto = array();  // 自动验证定义
+    protected array $_validate = array();
 
     /**
      * 自动完成定义.
      */
-    protected array $_map = array();
+    protected array $_auto = array();  // 自动验证定义
 
     /**
      * 命名范围定义.
