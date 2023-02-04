@@ -218,20 +218,11 @@ abstract class Model
     {
         // 错误直接抛出异常，取消以前那种 getError 写法
         if ($name === 'error') {
-            $this->error = $value;
-            $this->throw();
+            $this->getError($value);
         }
 
         // 设置数据对象属性
         $this->data[$name] = $value;
-    }
-
-    /**
-     * 异常抛出来.
-     */
-    public function throw(string $exception = Exception::class, int $code = 0): void
-    {
-        throw new $exception($this->error, $code);
     }
 
     /**
@@ -1388,10 +1379,15 @@ abstract class Model
 
     /**
      * 返回模型的错误信息.
+     *
+     * - 方法不再支持返回错误消息
+     *
+     * @throws \Exception;
+     * @deprecated
      */
-    public function getError(): string|array
+    public function getError(?string $message = null): void
     {
-        return $this->error ?? '';
+        throw new Exception($message ?? 'Method getError is deprecated.');
     }
 
     /**
