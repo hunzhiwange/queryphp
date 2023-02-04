@@ -3283,4 +3283,45 @@ class ModelTest extends TestCase
         $sql = "SELECT  `brand_id`,`brand_name` FROM `base_brand` WHERE `status` = 'T' AND `company_id` = 0 ORDER BY order_num DESC, brand_id ASC LIMIT 0,5";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub206(): void
+    {
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandModel::make();
+        $data = $baseBrandModel
+            ->getBrandNum();
+        $this->assertSame(strlen($data), 5);
+    }
+
+    public function testQuerySub207(): void
+    {
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandModel::make();
+        $id = $baseBrandModel
+            ->add([
+                'brand_name' => 'hello world',
+            ]);
+        $baseBrandModel
+            ->delInfo(['brand_id' => $id]);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE `base_brand` SET `company_id`='0',`status`='F' WHERE `brand_id` = {$id}";
+        $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub208(): void
+    {
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandModel::make();
+        $id = $baseBrandModel
+            ->add([
+                'brand_name' => 'hello world',
+            ]);
+        $baseBrandModel
+            ->delInfoReal(['brand_id' => $id]);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "DELETE FROM `base_brand` WHERE `brand_id` = {$id} AND `company_id` = 0";
+        $this->assertSame($result, $sql);
+    }
 }

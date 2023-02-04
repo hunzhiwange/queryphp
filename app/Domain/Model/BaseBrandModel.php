@@ -168,6 +168,21 @@ class BaseBrandModel extends Model
         }
     }
 
+    public function delInfoReal(array $arrIn): void
+    {
+        $arrIn['company_id'] = get_company_id();
+        $this->create($arrIn, self::MODEL_UPDATE);
+        $arrData = $this->data();
+
+        if (!$arrIn['brand_id']) {
+            throw new Exception('品牌 ID 未指定');
+        } else {
+            $this
+                ->where($arrIn)
+                ->delete();
+        }
+    }
+
     /**
      * 获取商品品牌列表.
      */
