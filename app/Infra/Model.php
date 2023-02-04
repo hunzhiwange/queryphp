@@ -298,24 +298,17 @@ abstract class Model
     }
 
     /**
-     * 获取一条记录的某个字段值
-     * @access public
-     * @param string $field 字段名
-     * @param string $spea 字段数据间隔符号 NULL返回数组
-     * @return mixed
+     * 获取一条记录的某个字段值.
      */
-    public function getField($field, $sepa = null)
+    public function getField($field, null|string|bool|int $sepa = null): mixed
     {
         $options['field'] = $field;
         $options = $this->_parseOptions($options);
         // 判断查询缓存
         if (isset($options['cache'])) {
             $cache = $options['cache'];
-            $key = is_string($cache['key']) ? $cache['key'] : md5($sepa . serialize($options));
-            $data = S($key, '', $cache);
-            if (false !== $data) {
-                return $data;
-            }
+            $key = is_string($cache['key']) ? $cache['key'] : 'sql:' . md5($sepa .serialize($options));
+            $options['cache']['key'] = $key;
         }
         $field = trim($field);
         if (strpos($field, ',') && false !== $sepa) { // 多字段
@@ -338,9 +331,6 @@ abstract class Model
                         $cols[$name] = is_string($sepa) ? implode($sepa, array_slice($result, 1)) : $result;
                     }
                 }
-                if (isset($cache)) {
-                    S($key, $cols, $cache);
-                }
                 return $cols;
             }
         } else {   // 查找一条记录
@@ -352,16 +342,10 @@ abstract class Model
             if (!empty($result)) {
                 if (true !== $sepa && 1 == $options['limit']) {
                     $data = reset($result[0]);
-                    if (isset($cache)) {
-                        S($key, $data, $cache);
-                    }
                     return $data;
                 }
                 foreach ($result as $val) {
                     $array[] = $val[$field];
-                }
-                if (isset($cache)) {
-                    S($key, $array, $cache);
                 }
                 return $array;
             }
@@ -369,25 +353,23 @@ abstract class Model
         return null;
     }
 
-    // 插入数据前的回调方法
-
     /**
-     * 分析表达式
-     * @access protected
-     * @param array $options 表达式参数
-     * @return array
+     * 分析表达式.
+     *
+     * @throws \Exception
      */
-    protected function _parseOptions($options = array())
+    protected function _parseOptions(array $options = array()): array
     {
-        if (is_array($options))
+        if (is_array($options)) {
             $options = array_merge($this->options, $options);
+        }
 
         if (!isset($options['table'])) {
             // 自动获取表名
             $options['table'] = $this->getTableName();
             $fields = $this->fields;
         } else {
-            // 指定数据表 则重新获取字段列表 但不支持类型检测
+            // 指定数据表 则重新获取字段列表，但不支持类型检测
             $fields = $this->getDbFields();
         }
 
@@ -395,19 +377,22 @@ abstract class Model
         if (!empty($options['alias'])) {
             $options['table'] .= ' ' . $options['alias'];
         }
-        // 记录操作的模型名称
-        $options['model'] = $this->name;
 
         // 字段类型验证
-        if (isset($options['where']) && is_array($options['where']) && !empty($fields) && !isset($options['join'])) {
+        if (isset($options['where']) &&
+            is_array($options['where']) &&
+            !empty($fields) &&
+            !isset($options['join'])) {
             // 对数组查询条件进行字段类型检查
             foreach ($options['where'] as $key => $val) {
                 $key = trim($key);
                 if (in_array($key, $fields, true)) {
-                    if (is_scalar($val)) {
-                        $this->_parseType($options['where'], $key);
-                    }
-                } elseif (!is_numeric($key) && '_' != substr($key, 0, 1) && false === strpos($key, '.') && false === strpos($key, '(') && false === strpos($key, '|') && false === strpos($key, '&')) {
+                } elseif (!is_numeric($key) &&
+                    '_' != substr($key, 0, 1) &&
+                    false === strpos($key, '.') &&
+                    false === strpos($key, '(') &&
+                    false === strpos($key, '|') &&
+                    false === strpos($key, '&')) {
                     if (!empty($this->options['strict'])) {
                         throw new Exception(sprintf('Error query express:[%s=>%s]', $key, $val));
                     }
@@ -422,59 +407,29 @@ abstract class Model
         return $options;
     }
 
-    // 插入成功后的回调方法
-
     /**
-     * 获取数据表字段信息
-     * @access public
-     * @return array
+     * 获取数据表字段信息.
      */
-    public function getDbFields()
+    public function getDbFields(): array|false
     {
         if (isset($this->options['table'])) {// 动态指定表名
-            if (is_array($this->options['table'])) {
-                $table = key($this->options['table']);
-            } else {
+            if (!is_array($this->options['table'])) {
                 $table = $this->options['table'];
                 if (strpos($table, ')')) {
                     // 子查询
                     return false;
                 }
             }
-            $fields = $this->mysql->getFields($table);
-            return $fields ? array_keys($fields) : false;
+            $fields = $this->mysql->getFields();
+            return !empty($fields['fields']) ? array_keys($fields['fields']) : false;
         }
         if ($this->fields) {
-            $fields = $this->fields;
-            return $fields;
+            return $this->fields;
         }
         return false;
     }
 
-    /**
-     * 数据类型检测
-     * @access protected
-     * @param mixed $data 数据
-     * @param string $key 字段名
-     * @return void
-     */
-    protected function _parseType(&$data, $key)
-    {
-        if (!isset($this->options['bind'][':' . $key]) && isset($this->fields['_type'][$key])) {
-            $fieldType = strtolower($this->fields['_type'][$key]);
-            if (false !== strpos($fieldType, 'enum')) {
-                // 支持ENUM类型优先检测
-            } elseif (false === strpos($fieldType, 'bigint') && false !== strpos($fieldType, 'int')) {
-                $data[$key] = intval($data[$key]);
-            } elseif (false !== strpos($fieldType, 'float') || false !== strpos($fieldType, 'double')) {
-                $data[$key] = floatval($data[$key]);
-            } elseif (false !== strpos($fieldType, 'bool')) {
-                $data[$key] = (bool)$data[$key];
-            }
-        }
-    }
-
-    protected function _options_filter(&$options)
+    protected function _options_filter(array &$options): void
     {
     }
 
@@ -739,9 +694,6 @@ abstract class Model
                         E(L('_DATA_TYPE_INVALID_') . ':[' . $key . '=>' . $val . ']');
                     }
                     unset($data[$key]);
-                } elseif (is_scalar($val)) {
-                    // 字段类型检查 和 强制转换
-                    $this->_parseType($data, $key);
                 }
             }
         }
