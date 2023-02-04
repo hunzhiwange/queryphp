@@ -174,6 +174,8 @@ abstract class Model
 
     /**
      * 创建数据库连接.
+     *
+     * @throws \Exception
      */
     protected function createConnect(): void
     {
@@ -215,95 +217,60 @@ abstract class Model
     }
 
     /**
-     * 得到完整的数据表名
-     * @access public
-     * @return string
+     * 得到数据表名.
      */
-    public function getTableName()
+    public function getTableName(): string
     {
-        if (empty($this->trueTableName)) {
-            $tableName = !empty($this->tablePrefix) ? $this->tablePrefix : '';
-            if (!empty($this->tableName)) {
-                $tableName .= $this->tableName;
-            } else {
-                $tableName .= $this->parseName($this->name);
-            }
-            $this->trueTableName = strtolower($tableName);
-        }
-        return (!empty($this->dbName) ? $this->dbName . '.' : '') . $this->trueTableName;
+        return $this->parseName($this->name);
     }
 
     /**
-     * 创建一个对象.
-     *
-     * @param string $name
-     * @param string $tablePrefix
-     * @param string $connection
-     * @return static
+     * 创建一个新对象.
      */
-    public static function make($name = '', $tablePrefix = '', $connection = '')
+    public static function make(): static
     {
-        return new static($name, $tablePrefix, $connection);
+        return new static();
     }
 
     /**
-     * 获取数据对象的值
-     * @access public
-     * @param string $name 名称
-     * @return mixed
+     * 获取数据对象的值.
      */
-    public function __get($name)
+    public function __get(string $name): mixed
     {
         return isset($this->data[$name]) ? $this->data[$name] : null;
     }
 
     /**
-     * 设置数据对象的值
-     * @access public
-     * @param string $name 名称
-     * @param mixed $value 值
-     * @return void
+     * 设置数据对象的值.
      */
-    public function __set($name, $value)
+    public function __set(string $name, mixed $value): void
     {
         // 设置数据对象属性
         $this->data[$name] = $value;
     }
 
-    // 回调方法 初始化模型
-
     /**
-     * 检测数据对象的值
-     * @access public
-     * @param string $name 名称
-     * @return boolean
+     * 检测数据对象的值.
      */
-    public function __isset($name)
+    public function __isset(string $name): bool
     {
         return isset($this->data[$name]);
     }
 
     /**
-     * 销毁数据对象的值
-     * @access public
-     * @param string $name 名称
-     * @return void
+     * 销毁数据对象的值.
      */
-    public function __unset($name)
+    public function __unset(string $name): void
     {
         unset($this->data[$name]);
     }
 
-    // 写入数据前的回调方法 包括新增和更新
-
     /**
-     * 利用__call方法实现一些特殊的Model方法
-     * @access public
-     * @param string $method 方法名称
-     * @param array $args 调用参数
-     * @return mixed
+     * 利用 __call 方法实现一些特殊的 Model 方法.
+     *
+     * @throws \Exception
      */
-    public function __call($method, $args)
+    public function __call(string $method, array $args): mixed
     {
         if (in_array(strtolower($method), $this->methods, true)) {
             // 连贯操作的实现
@@ -326,7 +293,7 @@ abstract class Model
         } elseif (isset($this->_scope[$method])) {// 命名范围的单独调用支持
             return $this->scope($method, $args[0]);
         } else {
-            throw new Exception(__CLASS__ . ':' . $method . '_METHOD_NOT_EXIST_');
+            throw new Exception(__CLASS__ . ':' . $method . ' not exist.');
         }
     }
 
