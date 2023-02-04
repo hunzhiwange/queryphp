@@ -865,52 +865,40 @@ abstract class Model
     }
 
     /**
-     * 生成查询SQL 可用于子查询
-     * @access public
-     * @return string
+     * 生成查询 SQL 可用于子查询.
      */
-    public function buildSql()
+    public function buildSql(): string
     {
         return '( ' . $this->fetchSql(true)->select() . ' )';
     }
 
     /**
-     * 获取执行的SQL语句
-     * @access public
-     * @param boolean $fetch 是否返回sql
-     * @return Model
+     * 设置是否获取执行的 SQL 语句.
      */
-    public function fetchSql($fetch)
+    public function fetchSql(bool $fetch): static
     {
         $this->options['fetch_sql'] = $fetch;
         return $this;
     }
 
-    protected function _after_select(&$resultSet, $options)
+    protected function _after_select(array &$resultSet, array $options): void
     {
     }
 
     /**
-     * 字段值增长
-     * @access public
-     * @param string $field 字段名
-     * @param integer $step 增长值
-     * @return boolean
+     * 字段值增长.
      */
-    public function setInc($field, $step = 1)
+    public function setInc(string $field, int $step = 1): bool|int|string
     {
         return $this->setField($field, array('exp', $field . '+' . $step));
     }
 
     /**
-     * 设置记录的某个字段值
-     * 支持使用数据库字段和方法
-     * @access public
-     * @param string|array $field 字段名
-     * @param string $value 字段值
-     * @return boolean
+     * 设置记录的某个字段值.
+     *
+     * - 支持使用数据库字段和方法
      */
-    public function setField($field, $value = '')
+    public function setField(array|string $field, mixed $value = ''): bool|int|string
     {
         if (is_array($field)) {
             $data = $field;
