@@ -3077,4 +3077,19 @@ class ModelTest extends TestCase
         $id = $baseBrandModel
             ->addAll([]);
     }
+
+    public function testQuerySub192(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $id = $baseBrandModel
+            ->where('brand_id>2')
+            ->field('brand_id,brand_name,5')
+            ->limit(3)
+            ->selectAdd('brand_name,brand_logo,brand_about','base_brand');
+
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`,`brand_about`) SELECT  `brand_id`,`brand_name`,5 FROM `base_brand` WHERE ( brand_id>2 ) LIMIT 3";
+        $this->assertSame($result, $sql);
+    }
 }

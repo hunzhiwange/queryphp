@@ -676,7 +676,7 @@ abstract class Model
     /**
      * @throws Exception
      */
-    public function addAll(array $dataList, array $options = array(), bool $replace = false): int
+    public function addAll(array $dataList, array $options = array(), bool $replace = false): int|string
     {
         if (empty($dataList)) {
             throw new Exception('Data type invalid.');
@@ -706,19 +706,12 @@ abstract class Model
     /**
      * 通过 Select 方式添加记录.
      */
-    public function selectAdd(array|string $fields = '', string $table = '', array $options = array()): bool
+    public function selectAdd(array|string $fields = '', string $table = '', array $options = array()): int|string
     {
         // 分析表达式
         $options = $this->_parseOptions($options);
         // 写入数据到数据库
-        if (false === $result = $this->mysql->selectInsert($fields ?: $options['field'], $table ?: $this->getTableName(), $options)) {
-            // 数据库插入操作失败
-            $this->error = 'Operation wrong.';
-            return false;
-        } else {
-            // 插入成功
-            return $result;
-        }
+        return $this->mysql->selectInsert($fields ?: $options['field'], $table ?: $this->getTableName(), $options);
     }
 
     /**

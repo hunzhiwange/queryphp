@@ -321,7 +321,7 @@ class Mysql
     /**
      * 通过 Select 方式插入记录.
      */
-    public function selectInsert(string|array $fields, string $table, array $options = array()): int|false
+    public function selectInsert(string|array $fields, string $table, array $options = array()): int|string
     {
         if (is_string($fields)) {
             $fields = explode(',', $fields);
