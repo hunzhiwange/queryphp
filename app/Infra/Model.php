@@ -59,7 +59,7 @@ abstract class Model
     /**
      * 主键是否自动增长.
      */
-    protected bool $autoinc = false;
+    protected bool $autoing = false;
 
     /**
      * 模型名称.
@@ -193,7 +193,7 @@ abstract class Model
         }
         $this->pk = $pk;
         $this->fields = $fields['fields'];
-        $this->autoinc = !empty($fields['auto']);
+        $this->autoing = !empty($fields['auto']);
     }
 
     /**
