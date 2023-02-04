@@ -12,7 +12,7 @@ use Common\Service\AccountsService;
 use Common\Service\GoodsCollaboratorCheckService;
 
 /**
- * 商品控制器.
+ * 品牌控制器.
  */
 class BaseBrand
 {
