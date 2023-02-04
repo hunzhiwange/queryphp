@@ -323,7 +323,7 @@ abstract class Model
     {
         try {
             $this->shouldCountSelect = true;
-            return $this->getField(strtoupper($method) . '(' . $field . ') AS tp_' . $method);
+            return $this->getField(strtoupper($method) . '(' . $field . ') AS ' . $method);
         } finally {
             $this->shouldCountSelect = false;
         }

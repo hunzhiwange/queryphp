@@ -536,7 +536,7 @@ class ModelTest extends TestCase
             ->count();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT  COUNT(*) AS tp_count FROM `base_brand` LIMIT 1";
+        $sql = "SELECT  COUNT(*) AS count FROM `base_brand` LIMIT 1";
         $this->assertSame($result, $sql);
         $this->assertTrue(is_int($count));
     }
@@ -548,7 +548,7 @@ class ModelTest extends TestCase
             ->count('brand_id');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT  COUNT(brand_id) AS tp_count FROM `base_brand` LIMIT 1";
+        $sql = "SELECT  COUNT(brand_id) AS count FROM `base_brand` LIMIT 1";
         $this->assertSame($result, $sql);
         $this->assertTrue(is_int($count));
     }
@@ -560,7 +560,7 @@ class ModelTest extends TestCase
             ->max('brand_id');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT  MAX(brand_id) AS tp_max FROM `base_brand` LIMIT 1";
+        $sql = "SELECT  MAX(brand_id) AS max FROM `base_brand` LIMIT 1";
         $this->assertSame($result, $sql);
         $this->assertTrue(is_int($count));
     }
@@ -572,7 +572,7 @@ class ModelTest extends TestCase
             ->where('brand_id>0')->min('brand_id');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT  MIN(brand_id) AS tp_min FROM `base_brand` WHERE ( brand_id>0 ) LIMIT 1";
+        $sql = "SELECT  MIN(brand_id) AS min FROM `base_brand` WHERE ( brand_id>0 ) LIMIT 1";
         $this->assertSame($result, $sql);
         $this->assertTrue(is_int($count));
     }
@@ -584,7 +584,7 @@ class ModelTest extends TestCase
             ->where('brand_id>0')->avg('brand_id');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT  AVG(brand_id) AS tp_avg FROM `base_brand` WHERE ( brand_id>0 ) LIMIT 1";
+        $sql = "SELECT  AVG(brand_id) AS avg FROM `base_brand` WHERE ( brand_id>0 ) LIMIT 1";
         $this->assertSame($result, $sql);
     }
 
@@ -596,7 +596,7 @@ class ModelTest extends TestCase
             ->sum('brand_id');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT  SUM(brand_id) AS tp_sum FROM `base_brand` WHERE ( brand_id>0 ) LIMIT 1";
+        $sql = "SELECT  SUM(brand_id) AS sum FROM `base_brand` WHERE ( brand_id>0 ) LIMIT 1";
         $this->assertSame($result, $sql);
     }
 
