@@ -3065,4 +3065,16 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel->defineError();
     }
+
+    public function testQuerySub191(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'Data type invalid.'
+        );
+
+        $baseBrandModel = BaseBrandModel::make();
+        $id = $baseBrandModel
+            ->addAll([]);
+    }
 }

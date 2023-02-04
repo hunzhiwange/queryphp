@@ -5,6 +5,7 @@ namespace App\Infra;
 
 use Closure;
 use Leevel\Database\Ddd\Entity;
+use Exception;
 
 /**
  * ThinkPHP Mysql 驱动类兼容层
@@ -281,12 +282,14 @@ class Mysql
 
     /**
      * 批量插入记录.
+     *
+     * @throws \Exception
      */
-    public function insertAll(array $dataSet, array $options = array(), bool $replace = false): int|false
+    public function insertAll(array $dataSet, array $options = array(), bool $replace = false): int
     {
         $values = array();
         if (!is_array($dataSet[0])) {
-            return false;
+            throw new Exception('Invalid data.');
         }
         $fields = array_keys($dataSet[0]);
         array_walk($fields, array($this, 'parseKey'));

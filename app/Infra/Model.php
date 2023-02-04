@@ -72,6 +72,11 @@ abstract class Model
     //protected string|array $error = '';
 
     /**
+     * 最近错误信息.
+     */
+    protected string|array $currentError = '';
+
+    /**
      * 字段信息.
      */
     protected array $fields = array();
@@ -668,11 +673,13 @@ abstract class Model
     {
     }
 
-    public function addAll(array $dataList, array $options = array(), bool $replace = false): mixed
+    /**
+     * @throws Exception
+     */
+    public function addAll(array $dataList, array $options = array(), bool $replace = false): int
     {
         if (empty($dataList)) {
-            $this->error = 'Data type invalid.';
-            return false;
+            throw new Exception('Data type invalid.');
         }
         // 数据处理
         foreach ($dataList as $key => $data) {
@@ -681,14 +688,7 @@ abstract class Model
         // 分析表达式
         $options = $this->_parseOptions($options);
         // 写入数据到数据库
-        $result = $this->mysql->insertAll($dataList, $options, $replace);
-        if (false !== $result) {
-            $insertId = $this->getLastInsID();
-            if ($insertId) {
-                return $insertId;
-            }
-        }
-        return $result;
+        return $this->mysql->insertAll($dataList, $options, $replace);
     }
 
     /**
@@ -1067,7 +1067,7 @@ abstract class Model
         // 属性验证
         if (isset($validateData)) { // 如果设置了数据自动验证则进行数据验证
             if ($this->patchValidate) { // 重置验证错误信息
-                $this->error = array();
+                $this->currentError = array();
             }
             foreach ($validateData as $val) {
                 // 验证因子定义格式
@@ -1101,7 +1101,7 @@ abstract class Model
                 }
             }
             // 批量验证的时候最后返回错误
-            if (!empty($this->error)) {
+            if (!empty($this->currentError)) {
                 return false;
             }
         }
@@ -1115,14 +1115,14 @@ abstract class Model
      */
     protected function _validationField(array $data, array $val): ?bool
     {
-        if ($this->patchValidate && isset($this->error[$val[0]])) {
+        if ($this->patchValidate && isset($this->currentError[$val[0]])) {
             return null; //当前字段已经有规则验证没有通过
         }
         if (false === $this->_validationFieldItem($data, $val)) {
             if ($this->patchValidate) {
-                $this->error[$val[0]] = $val[2];
+                $this->currentError[$val[0]] = $val[2];
             } else {
-                $this->error = $val[2];
+                $this->currentError = $val[2];
                 return false;
             }
         }
