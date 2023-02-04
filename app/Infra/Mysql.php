@@ -311,7 +311,7 @@ class Mysql
     /**
      * 插入记录.
      */
-    public function insert(array $data, array $options = array(), bool $replace = false): int|false
+    public function insert(array $data, array $options = array(), bool $replace = false): int|string
     {
         $values = $fields = array();
         foreach ($data as $key => $val) {
@@ -396,10 +396,8 @@ class Mysql
 
     /**
      * 执行语句.
-     *
-     * @todo
      */
-    public function execute(string $str, bool $fetchSql = false): mixed
+    public function execute(string $str, bool $fetchSql = false): int|string
     {
         $this->queryStr = $str;
         if (!empty($this->bind)) {

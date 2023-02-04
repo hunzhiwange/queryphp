@@ -126,7 +126,7 @@ abstract class Model
         $this->createConnect();
     }
 
-    protected function _initialize()
+    protected function _initialize(): void
     {
     }
 
@@ -551,7 +551,7 @@ abstract class Model
      *
      * @throws \Exception
      */
-    public function add(mixed $data = '', array $options = array(), bool $replace = false): mixed
+    public function add(mixed $data = '', array $options = array(), bool $replace = false): int|string
     {
         if (empty($data)) {
             // 没有传递数据，获取当前数据对象的值
@@ -570,7 +570,7 @@ abstract class Model
         $this->_before_insert($data, $options);
         // 写入数据到数据库
         $result = $this->mysql->insert($data, $options, $replace);
-        if (false !== $result && is_numeric($result)) {
+        if (is_numeric($result)) {
             $pk = $this->getPk();
             // 增加复合主键支持
             if (is_array($pk)){
@@ -760,7 +760,7 @@ abstract class Model
     {
     }
 
-    protected function _after_delete(array $data, array $options): void
+    protected function _after_delete(array &$data, array $options): void
     {
     }
 
