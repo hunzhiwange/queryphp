@@ -132,7 +132,6 @@ abstract class Model
 
     /**
      * 得到当前的数据对象名称.
-     * @return string
      */
     public function getModelName(): string
     {
@@ -344,7 +343,7 @@ abstract class Model
             $options['table'] = $this->getTableName();
             $fields = $this->fields;
         } else {
-            // 指定数据表 则重新获取字段列表，但不支持类型检测
+            // 指定数据表，则重新获取字段列表，但不支持类型检测
             $fields = $this->getDbFields();
         }
 

@@ -699,7 +699,6 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $subQuery = $baseBrandModel
             ->field('brand_id,brand_name')
-            ->table('base_brand')
             ->group('brand_id')
             ->where([
                 'brand_id' => 1,
@@ -708,7 +707,7 @@ class ModelTest extends TestCase
             ->buildSql();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT  `brand_id`,`brand_name` FROM `base_brand` GROUP BY brand_id ORDER BY brand_id DESC";
+        $sql = "SELECT  `brand_id`,`brand_name` FROM `base_brand` WHERE `brand_id` = 1 GROUP BY brand_id ORDER BY brand_id DESC";
         $this->assertSame($result, $sql);
         $this->assertSame($subQuery, '( ' . $sql . '  )');
 
@@ -721,7 +720,7 @@ class ModelTest extends TestCase
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT  * FROM ( SELECT  `brand_id`,`brand_name` FROM `base_brand` GROUP BY brand_id ORDER BY brand_id DESC  ) a WHERE a.brand_name = '你好' ORDER BY a.brand_id DESC";
+        $sql = "SELECT  * FROM ( SELECT  `brand_id`,`brand_name` FROM `base_brand` WHERE `brand_id` = 1 GROUP BY brand_id ORDER BY brand_id DESC  ) a WHERE a.brand_name = '你好' ORDER BY a.brand_id DESC";
         $this->assertSame($result, $sql);
     }
 
@@ -916,12 +915,12 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->table('test_queryphp.`base_brand`')
+            ->table('base_brand')
             ->where('brand_id<2')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT  * FROM test_queryphp.`base_brand` WHERE ( brand_id<2 )";
+        $sql = "SELECT  * FROM `base_brand` WHERE ( brand_id<2 )";
         $this->assertSame($result, $sql);
     }
 

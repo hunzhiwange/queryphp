@@ -687,8 +687,7 @@ class Mysql
             $offset = $listRows * ($page - 1);
             $options['limit'] = $offset . ',' . $listRows;
         }
-        $sql = $this->parseSql($this->selectSql, $options);
-        return $sql;
+        return $this->parseSql($this->selectSql, $options);
     }
 
     /**
@@ -699,7 +698,7 @@ class Mysql
      */
     public function parseSql($sql, $options = array())
     {
-        $sql = str_replace(
+        return str_replace(
             array('%FORCE_MASTER%', '%TABLE%', '%DISTINCT%', '%FIELD%', '%JOIN%', '%WHERE%', '%GROUP%', '%HAVING%', '%ORDER%', '%LIMIT%', '%UNION%', '%LOCK%', '%COMMENT%', '%FORCE%'),
             array(
                 $this->parseForceMaster(!empty($options['force_master'])),
@@ -717,7 +716,6 @@ class Mysql
                 $this->parseComment(!empty($options['comment']) ? $options['comment'] : ''),
                 $this->parseForce(!empty($options['force']) ? $options['force'] : '')
             ), $sql);
-        return $sql;
     }
 
     protected function parseForceMaster($forceMaster)
@@ -726,12 +724,9 @@ class Mysql
     }
 
     /**
-     * table分析
-     * @access protected
-     * @param mixed $table
-     * @return string
+     * table 分析.
      */
-    protected function parseTable($tables)
+    protected function parseTable(array|string $tables): string
     {
         if (is_array($tables)) {// 支持别名定义
             $array = array();
