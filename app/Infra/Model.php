@@ -331,29 +331,26 @@ abstract class Model
 
     public function findCount(array $in = []): string|int
     {
-        $in = $this->parseInArgs($in);
+        $this->mergeScopeWhere($in);
 
-        return $this
-            ->scope($in)
-            ->count();
+        return $this->count();
     }
 
     public function findList(array $in = []): string|array
     {
-        $in = $this->parseInArgs($in);
+        $this->mergeScopeWhere($in);
 
-        return $this
-            ->scope($in)
-            ->select();
+        return $this->select();
     }
 
     public function findListAndCount(array $in = []): array
     {
-        $in = $this->parseInArgs($in);
+        $this->mergeScopeWhere($in);
+        $countThis = clone $this;
 
         return [
-            'count' => $this->scope($in)->count(),
-            'list' => $this->scope($in)->select(),
+            'count' => $countThis->count(),
+            'list' => $this->select(),
         ];
     }
 
@@ -1734,5 +1731,19 @@ abstract class Model
             unset($in['map']);
         }
         return $in;
+    }
+
+    protected function mergeScopeWhere(array $in): void
+    {
+        $in = $this->parseInArgs($in);
+        $baseWhere = [];
+        if (isset($in['scope'])) {
+            $this->scope($in['scope']);
+            $baseWhere = $this->options['where'];
+        }
+        $this->scope($in);
+        if ($baseWhere) {
+            $this->options['where'] = array_merge($baseWhere, $this->options['where']);
+        }
     }
 }

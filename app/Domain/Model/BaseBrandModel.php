@@ -45,6 +45,10 @@ class BaseBrandModel extends Model
             'where' => array('brand_logo' => 'yes'),
             'limit' => 20,
         ),
+        'list' => array(
+            'where' => array('status' => 'T'),
+            'order' => 'order_num DESC, brand_id ASC',
+        ),
     );
 
     protected array $_auto = array(
@@ -92,12 +96,7 @@ class BaseBrandModel extends Model
      */
     public function getList(array $arrIn = []): array
     {
-        if (!isset($arrIn['map']['status'])) {
-            $arrIn['map']['status'] = 'T';
-        }
-        if (!isset($arrIn['order'])) {
-            $arrIn['order'] = 'order_num DESC, brand_id ASC';
-        }
+        $arrIn['scope'] = 'list';
 
         return $this->findListAndCount($arrIn);
     }
