@@ -393,14 +393,6 @@ abstract class Model
         $options['field'] = $field;
         $options = $this->_parseOptions($options);
 
-        // 统计查询移除掉一些特性
-        if ($this->shouldCountSelect) {
-            // 删除排序功能
-            if (isset($options['order'])) {
-                unset($options['order']);
-            }
-        }
-
         // 判断查询缓存
         if (isset($options['cache'])) {
             $cache = $options['cache'];
@@ -412,7 +404,7 @@ abstract class Model
             if (!isset($options['limit'])) {
                 $options['limit'] = is_numeric($separator) ? $separator : '';
             }
-            $resultSet = $this->mysql->select($options);
+            $resultSet = $this->mysql->select($this->filterOptionsForCountSelect($options));
             if (empty($resultSet)) {
                 return $resultSet;
             }
@@ -439,7 +431,7 @@ abstract class Model
         if (true !== $separator) {// 当 $separator 指定为 true 的时候返回所有数据
             $options['limit'] = is_numeric($separator) ? $separator : 1;
         }
-        $result = $this->mysql->select($options);
+        $result = $this->mysql->select($this->filterOptionsForCountSelect($options));
         if (!empty($result) && is_array($result)) {
             if (true !== $separator && 1 == $options['limit']) {
                 return current($result[0]);
@@ -451,6 +443,24 @@ abstract class Model
         }
 
         return $result;
+    }
+
+    protected function filterOptionsForCountSelect(array $options): array
+    {
+        // 统计查询移除掉一些特性
+        if (!$this->shouldCountSelect) {
+            return $options;
+        }
+
+        foreach (['page', 'order'] as $field) {
+            if (isset($options[$field])) {
+                $options[$field] = '';
+            }
+        }
+
+        $options['limit'] = 1;
+
+        return $options;
     }
 
     /**

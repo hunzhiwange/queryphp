@@ -338,7 +338,7 @@ class Mysql
      */
     public function buildSelectSql($options = array()): string
     {
-        if (isset($options['page'])) {
+        if (!empty($options['page'])) {
             // 根据页数计算 limit
             list($page, $listRows) = $options['page'];
             $page = $page > 0 ? $page : 1;
