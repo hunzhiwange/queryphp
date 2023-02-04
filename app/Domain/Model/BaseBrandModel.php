@@ -21,7 +21,7 @@ class BaseBrandModel extends Model {
     /** @var string 品牌状态 - 禁用 */
     const STATUS_F = 'F';
 
-    protected $_scope = array(
+    protected array $_scope = array(
         // 命名范围normal
         'normal'=>array(
             'where'=>array('status'=>'T'),
@@ -48,10 +48,8 @@ class BaseBrandModel extends Model {
     );
 
     /**
-     * 检查商品品牌编号是否可用
+     * 检查商品品牌编号是否可用.
      * @return bool
-     * @author dyhb
-     * @since 2015-02-06
      */
     public function checkNum(){
         $arrIn = array('map' => array());
@@ -236,17 +234,9 @@ class BaseBrandModel extends Model {
         
         return $strNum;
     }
-    
-    /**
-     * 数据过滤
-     * @return 
-     */
-    protected function _before_write(&$data) {
-        isset($data['brand_name']) && $data['brand_name'] = Text::handle($data['brand_name']);
-    }
-    
-    public static function prepareBase($companyId, array &$data, $fields, $appendField = '')
+
+    protected function _before_write(array &$data): void
     {
-        self::prepareData($companyId, $data, 'brand_id', $fields, $appendField);
+        isset($data['brand_name']) && $data['brand_name'] = Text::handle($data['brand_name']);
     }
 }

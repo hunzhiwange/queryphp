@@ -16,13 +16,35 @@ use Leevel\Cache\ICache;
  */
 abstract class Model
 {
-    // 操作状态
-    const MODEL_INSERT = 1;      //  插入模型数据
-    const MODEL_UPDATE = 2;      //  更新模型数据
-    const MODEL_BOTH = 3;      //  包含上面两种方式
-    const MUST_VALIDATE = 1;      // 必须验证
-    const EXISTS_VALIDATE = 0;      // 表单存在字段则验证
-    const VALUE_VALIDATE = 2;      // 表单值不为空则验证
+    /**
+     * 插入模型数据.
+     */
+    public const MODEL_INSERT = 1;
+
+    /**
+     * 更新模型数据.
+     */
+    public const MODEL_UPDATE = 2;
+
+    /**
+     * 包含上面两种方式.
+     */
+    public const MODEL_BOTH = 3;
+
+    /**
+     * 必须验证.
+     */
+    public const MUST_VALIDATE = 1;
+
+    /**
+     * 表单存在字段则验证.
+     */
+    public const EXISTS_VALIDATE = 0;
+
+    /**
+     * 表单值不为空则验证.
+     */
+    public const VALUE_VALIDATE = 2;
 
     /**
      * Mysql 驱动兼容层.
@@ -55,20 +77,36 @@ abstract class Model
     protected $options = array();
     // 查询表达式参数
     protected $_validate = array();
-    protected $_auto = array();  // 自动验证定义
-    protected $_map = array();  // 自动完成定义
-    protected $_scope = array();  // 字段映射定义
-    protected $autoCheckFields = true;  // 命名范围定义
-    // 是否自动检测数据表字段信息
-    protected $patchValidate = false;
-    // 是否批处理验证
-    /** 得到上一次分页查询的总条数
-     * 2016-10-20 新增一个found_rows 用于查询分页和列表的数据 by 小牛
-     * 在分页的前一句插入SQL_CALC_FOUND_ROWS;
-     * Example: SELECT SQL_CALC_FOUND_ROWS id, time FROM table_name where conditions='**' LIMIT 0,50
-     * refer: http://www.codesec.net/view/192841.html
+
+    /**
+     * 自动完成定义.
      */
-    protected $methods = array('strict', 'order', 'alias', 'having', 'group', 'lock', 'distinct', 'auto', 'filter', 'validate', 'result', 'token', 'index', 'force');
+    protected $_auto = array();  // 自动验证定义
+
+    /**
+     * 自动完成定义.
+     */
+    protected array $_map = array();
+
+    /**
+     * 命名范围定义.
+     */
+    protected array $_scope = array();
+
+    /**
+     * 是否自动检测数据表字段信息.
+     */
+    protected bool $autoCheckFields = true;
+
+    /**
+     * 是否批处理验证.
+     */
+    protected bool $patchValidate = false;
+
+    /**
+     * 特殊的连贯方法.
+     */
+    protected array $methods = array('strict', 'order', 'alias', 'having', 'group', 'lock', 'distinct', 'auto', 'filter', 'validate', 'result', 'token', 'index', 'force');
 
     /**
      * 架构函数
@@ -531,7 +569,7 @@ abstract class Model
         }
 
         // 读取数据后的处理
-        $data = $this->_read_data($resultSet[0]);
+        $data = $resultSet[0];
         $this->_after_find($data, $options);
         if (!empty($this->options['result'])) {
             return $this->returnResult($data, $this->options['result']);
@@ -551,28 +589,6 @@ abstract class Model
     public function getPk()
     {
         return $this->pk;
-    }
-
-    // 更新成功后的回调方法
-
-    /**
-     * 数据读取后的处理
-     * @access protected
-     * @param array $data 当前数据
-     * @return array
-     */
-    protected function _read_data($data)
-    {
-        // 检查字段映射
-        if (!empty($this->_map) && C('READ_DATA_MAP')) {
-            foreach ($this->_map as $key => $val) {
-                if (isset($data[$val])) {
-                    $data[$key] = $data[$val];
-                    unset($data[$val]);
-                }
-            }
-        }
-        return $data;
     }
 
     protected function _after_find(&$result, $options)
@@ -776,9 +792,7 @@ abstract class Model
         return $data;
     }
 
-    // 表达式过滤回调方法
-
-    protected function _before_write(&$data)
+    protected function _before_write(array &$data): void
     {
     }
 
@@ -984,7 +998,6 @@ abstract class Model
             return $resultSet;
         }
 
-        $resultSet = array_map(array($this, '_read_data'), $resultSet);
         $this->_after_select($resultSet, $options);
         if (isset($options['index'])) { // 对数据集进行索引
             $index = explode(',', $options['index']);
@@ -1168,16 +1181,6 @@ abstract class Model
 
         // 状态
         $type = $type ?: (!empty($data[$this->getPk()]) ? self::MODEL_UPDATE : self::MODEL_INSERT);
-
-        // 检查字段映射
-        if (!empty($this->_map)) {
-            foreach ($this->_map as $key => $val) {
-                if (isset($data[$key])) {
-                    $data[$val] = $data[$key];
-                    unset($data[$key]);
-                }
-            }
-        }
 
         // 检测提交字段的合法性
         if (isset($this->options['field'])) {
