@@ -3092,4 +3092,31 @@ class ModelTest extends TestCase
         $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`,`brand_about`) SELECT  `brand_id`,`brand_name`,5 FROM `base_brand` WHERE ( brand_id>2 ) LIMIT 3";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub193(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'Email格式错误'
+        );
+
+        $baseBrandModel = BaseBrandModel::make();
+        $id = $baseBrandModel
+            ->create(['seo_keywords' => 'hello'])
+            ->add();
+    }
+
+    public function testQuerySub194(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'Email格式错误;URL 格式错误;'
+        );
+
+        $baseBrandModel = BaseBrandModel::make();
+        $id = $baseBrandModel
+            ->patchValidate()
+            ->create(['seo_keywords' => 'hello', 'brand_letter' => 'logo'])
+            ->add();
+    }
 }

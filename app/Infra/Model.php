@@ -69,11 +69,6 @@ abstract class Model
     /**
      * 最近错误信息.
      */
-    //protected string|array $error = '';
-
-    /**
-     * 最近错误信息.
-     */
     protected string|array $currentError = '';
 
     /**
@@ -133,6 +128,12 @@ abstract class Model
 
     protected function _initialize(): void
     {
+    }
+
+    public function patchValidate(bool $patchValidate = true): static
+    {
+        $this->patchValidate = $patchValidate;
+        return $this;
     }
 
     /**
@@ -982,7 +983,7 @@ abstract class Model
      *
      * @throws Exception
      */
-    public function create(mixed $data = '', int $type = 0): array
+    public function create(mixed $data = '', int $type = 0): static
     {
         // 如果没有传值默认取POST数据
         if (empty($data)) {
@@ -1016,7 +1017,11 @@ abstract class Model
 
         // 数据自动验证
         if (!$this->autoValidation($data, $type)) {
-            return false;
+            $currentError = $this->currentError;
+            if (is_array($currentError)) {
+                $currentError = $this->formatPatchValidate($currentError);
+            }
+            $this->getError($currentError);
         }
 
         // 验证完成生成数据对象
@@ -1033,8 +1038,17 @@ abstract class Model
         $this->autoOperation($data, $type);
         // 赋值当前数据对象
         $this->data = $data;
-        // 返回创建的数据以供其他调用
-        return $data;
+        return $this;
+    }
+
+    protected function formatPatchValidate(array $currentError): string
+    {
+        $message = [];
+        foreach ($currentError as $v) {
+            $message[] = sprintf('%s;', $v);
+        }
+
+        return implode('', $message);
     }
 
     /**

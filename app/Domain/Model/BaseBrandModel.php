@@ -63,7 +63,19 @@ class BaseBrandModel extends Model {
             self::VALUE_VALIDATE,
             'callback',
             self::MODEL_BOTH
-        )
+        ),
+        array(
+            'seo_keywords',
+            'email',
+            'Email格式错误',
+            self::VALUE_VALIDATE,
+        ),
+        array(
+            'brand_letter',
+            'url',
+            'URL 格式错误',
+            self::VALUE_VALIDATE,
+        ),
     );
 
     /**
