@@ -861,7 +861,7 @@ abstract class Model
     /**
      * 字段值增长.
      */
-    public function setInc(string $field, int $step = 1): bool|int|string
+    public function setInc(string $field, int $step = 1): int
     {
         return $this->setField($field, array('exp', $field . '+' . $step));
     }
@@ -871,7 +871,7 @@ abstract class Model
      *
      * - 支持使用数据库字段和方法
      */
-    public function setField(array|string $field, mixed $value = ''): bool|int|string
+    public function setField(array|string $field, mixed $value = ''): int
     {
         if (is_array($field)) {
             $data = $field;
@@ -955,7 +955,7 @@ abstract class Model
     /**
      * 字段值减少.
      */
-    public function setDec(string $field, int $step = 1): bool|int|string
+    public function setDec(string $field, int $step = 1): int
     {
         return $this->setField($field, array('exp', $field . '-' . $step));
     }
@@ -964,8 +964,10 @@ abstract class Model
      * 创建数据对象.
      *
      * - 但不保存到数据库.
+     *
+     * @throws \Exception
      */
-    public function create(mixed $data = '', int $type = 0): mixed
+    public function create(mixed $data = '', int $type = 0): array
     {
         // 如果没有传值默认取POST数据
         if (empty($data)) {
@@ -975,8 +977,7 @@ abstract class Model
         }
         // 验证数据
         if (empty($data) || !is_array($data)) {
-            $this->error = 'Data type invalid.';
-            return false;
+            throw new Exception('Data type invalid.');
         }
 
         // 状态

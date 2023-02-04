@@ -2201,12 +2201,23 @@ class ModelTest extends TestCase
         $this->assertSame($result, $sql);
     }
 
-    public function testQuerySub139(): void
+    public function testQuerySub139Sub1(): void
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'Data type invalid.'
+        );
+
         container()->instance('company_id', 999);
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->create();
+    }
+
+    public function testQuerySub139(): void
+    {
+        container()->instance('company_id', 999);
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel->brand_name = 'ThinkPHP';
         $baseBrandModel->brand_logo = 'ThinkPHP@gmail.com';
         $data = $baseBrandModel->data();

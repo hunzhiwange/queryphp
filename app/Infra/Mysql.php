@@ -477,7 +477,7 @@ class Mysql
         }
         $sql .= $this->parseWhere(!empty($options['where']) ? $options['where'] : '');
         if (!strpos($table, ',')) {
-            //  单表更新支持 order 和 lmit
+            //  单表更新支持 order 和 limit
             $sql .= $this->parseOrder(!empty($options['order']) ? $options['order'] : '')
                 . $this->parseLimit(!empty($options['limit']) ? $options['limit'] : '');
         }
