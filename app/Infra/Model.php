@@ -7,6 +7,7 @@ namespace App\Infra;
 use Closure;
 use Exception;
 use Leevel\Cache\ICache;
+use Leevel\Database\Ddd\Entity;
 
 /**
  * ThinkPHP Model 模型类兼容层
@@ -62,9 +63,9 @@ abstract class Model
     protected bool $autoing = false;
 
     /**
-     * 模型名称.
+     * 表名称.
      */
-    protected string $name = '';
+    private string $tableName = '';
 
     /**
      * 最近错误信息.
@@ -122,7 +123,6 @@ abstract class Model
     public function __construct()
     {
         $this->_initialize();
-        $this->name = $this->getModelName();
         $this->createConnect();
     }
 
@@ -137,22 +137,6 @@ abstract class Model
     }
 
     /**
-     * 得到当前的数据对象名称.
-     */
-    public function getModelName(): string
-    {
-        if (empty($this->name)) {
-            $name = substr(get_class($this), 0, -strlen('Model'));
-            if ($pos = strrpos($name, '\\')) {
-                $this->name = substr($name, $pos + 1);
-            } else {
-                $this->name = $name;
-            }
-        }
-        return $this->name;
-    }
-
-    /**
      * 创建数据库连接.
      *
      * @throws Exception
@@ -164,8 +148,10 @@ abstract class Model
         }
 
         $entity = constant(static::class . '::ENTITY');
+        /** @var Entity $entity */
         $entity = new $entity();
         $this->mysql = new Mysql($entity);
+        $this->tableName = $entity->table();
         $this->_checkTableInfo();
     }
 
@@ -389,7 +375,7 @@ abstract class Model
      */
     public function getTableName(): string
     {
-        return $this->parseName($this->name);
+        return $this->tableName;
     }
 
     /**
