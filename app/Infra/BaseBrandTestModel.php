@@ -2,18 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Model;
+namespace App\Infra;
 
 use App\Domain\Entity\Product\BaseBrand;
-use App\Infra\Model;
 use Exception;
 use Leevel\Encryption\Helper\Text;
 use Leevel\Support\Str\RandAlpha;
+use function get_company_id;
+use function http_request_value;
 
 /**
  * 商品品牌模型
  */
-class BaseBrandModel extends Model
+class BaseBrandTestModel extends Model
 {
     /**
      * 模型对应的实体.
@@ -221,13 +222,13 @@ class BaseBrandModel extends Model
 
     public function trans1(array $in): void
     {
-        $this->transaction(function() use($in) {
+        $this->transaction(function () use ($in) {
             $this->brand_name = $in['first'];
             $this->add();
 
-            $this->brand_name = $in['second'];;
+            $this->brand_name = $in['second'];
             $this->add();
-            throw new \Exception('error');
+            throw new Exception('error');
         });
     }
 
@@ -236,9 +237,9 @@ class BaseBrandModel extends Model
         $this->brand_name = $in['first'];
         $this->add();
 
-        $this->brand_name = $in['second'];;
+        $this->brand_name = $in['second'];
         $this->add();
-        throw new \Exception('error');
+        throw new Exception('error');
     }
 
     public function trans3(array $in): string
@@ -246,7 +247,7 @@ class BaseBrandModel extends Model
         $this->brand_name = $in['first'];
         $this->add();
 
-        $this->brand_name = $in['second'];;
+        $this->brand_name = $in['second'];
         $this->add();
 
         return 'yes';
