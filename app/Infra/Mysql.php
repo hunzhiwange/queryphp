@@ -809,8 +809,10 @@ class Mysql
                 $cacheOptions['expire'] ?? null,
                 $cacheOptions['cache'] ?? null,
             );
-        foreach ($result as &$v) {
-            $v = (array)$v;
+        if (is_array($result)) {
+            foreach ($result as &$v) {
+                $v = (array)$v;
+            }
         }
 
         return $result;
