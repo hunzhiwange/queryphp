@@ -220,7 +220,7 @@ class BaseBrandModel extends Model
         return $strNum;
     }
 
-    public function defineError()
+    public function defineError(): void
     {
         $this->error = 'customer error';
     }
