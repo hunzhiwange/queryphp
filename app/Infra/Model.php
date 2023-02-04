@@ -142,40 +142,13 @@ abstract class Model
     protected array $methods = array('strict', 'order', 'alias', 'having', 'group', 'lock', 'distinct', 'auto', 'filter', 'validate', 'result', 'token', 'index', 'force');
 
     /**
-     * 架构函数
-     * 取得DB类的实例对象 字段检查
-     * @access public
-     * @param string $name 模型名称
-     * @param string $tablePrefix 表前缀
-     * @param mixed $connection 数据库连接信息
+     * 构造函数.
      */
-    public function __construct($name = '', $tablePrefix = '', $connection = '')
+    public function __construct()
     {
-        // 模型初始化
         $this->_initialize();
-        // 获取模型名称
-        if (!empty($name)) {
-            if (strpos($name, '.')) { // 支持 数据库名.模型名的 定义
-                list($this->dbName, $this->name) = explode('.', $name);
-            } else {
-                $this->name = $name;
-            }
-        } elseif (empty($this->name)) {
-            $this->name = $this->getModelName();
-        }
-        // 设置表前缀
-        if (is_null($tablePrefix)) {// 前缀为Null表示没有前缀
-            $this->tablePrefix = '';
-        } elseif ('' != $tablePrefix) {
-            $this->tablePrefix = $tablePrefix;
-        } elseif (!isset($this->tablePrefix)) {
-            $this->tablePrefix = '';
-        }
-
-        // 数据库初始化操作
-        // 获取数据库操作对象
-        // 当前模型有独立的数据库连接信息
-        $this->db(0, empty($this->connection) ? $connection : $this->connection, true);
+        $this->name = $this->getModelName();
+        $this->createConnect();
     }
 
     protected function _initialize()
@@ -183,15 +156,14 @@ abstract class Model
     }
 
     /**
-     * 得到当前的数据对象名称
-     * @access public
+     * 得到当前的数据对象名称.
      * @return string
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         if (empty($this->name)) {
             $name = substr(get_class($this), 0, -strlen('Model'));
-            if ($pos = strrpos($name, '\\')) {//有命名空间
+            if ($pos = strrpos($name, '\\')) {
                 $this->name = substr($name, $pos + 1);
             } else {
                 $this->name = $name;
@@ -201,28 +173,24 @@ abstract class Model
     }
 
     /**
-     * 切换当前的数据库连接
-     * @access public
-     * @param integer $linkNum 连接序号
-     * @param mixed $config 数据库连接信息
-     * @param boolean $force 强制重新连接
-     * @return Model
+     * 创建数据库连接.
      */
-    public function db($linkNum = '', $config = '', $force = false)
+    protected function createConnect(): void
     {
-        $entity = static::ENTITY;
+        if (!defined(static::class.'::ENTITY')) {
+            throw new Exception(sprintf('Entity of model %s not defined.', static::class));
+        }
+
+        $entity = constant(static::class.'::ENTITY');
         $entity = new $entity();
         $this->mysql = new Mysql($entity);
         $this->_checkTableInfo();
-        return $this;
     }
 
     /**
-     * 自动检测数据表信息
-     * @access protected
-     * @return void
+     * 自动检测数据表信息.
      */
-    protected function _checkTableInfo()
+    protected function _checkTableInfo(): void
     {
         // 如果不是Model类 自动记录数据表信息
         // 只在第一次执行记录
@@ -232,21 +200,16 @@ abstract class Model
     }
 
     /**
-     * 获取字段信息并缓存
-     * @access public
-     * @return void
+     * 获取字段信息并缓存.
      */
-    public function flush()
+    public function flush(): void
     {
-        // 缓存不存在则查询数据表信息
-        $fields = $this->mysql->getFields($this->getTableName());
-        if (!$fields) { // 无法获取字段信息
-            return false;
+        $fields = $this->mysql->getFields();
+        $pk = $fields['primaryKey'];
+        if (is_array($pk) && count($pk) === 1) {
+            $pk = $pk[0];
         }
-        $this->pk = $fields['primaryKey'];
-        if (is_array($this->pk) && count($this->pk) === 1) {
-            $this->pk = $this->pk[0];
-        }
+        $this->pk = $pk;
         $this->fields = $fields['fields'];
         $this->autoinc = !empty($fields['auto']);
     }
