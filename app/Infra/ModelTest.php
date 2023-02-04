@@ -593,7 +593,8 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
-            ->where('brand_id>0')->sum('brand_id');
+            ->where('brand_id>0')
+            ->sum('brand_id');
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
         $sql = "SELECT  SUM(brand_id) AS tp_sum FROM `base_brand` WHERE ( brand_id>0 ) LIMIT 1";

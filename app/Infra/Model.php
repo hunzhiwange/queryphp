@@ -294,6 +294,41 @@ abstract class Model
         return $this;
     }
 
+    public function count(string $field = '*'): string|int
+    {
+        return $this->callStatisticalQuery('count', $field);
+    }
+
+    public function sum(string $field = '*'): string|int|float
+    {
+        return $this->callStatisticalQuery('sum', $field);
+    }
+
+    public function min(string $field = '*'): string|int|float
+    {
+        return $this->callStatisticalQuery('min', $field);
+    }
+
+    public function max(string $field = '*'): string|int|float
+    {
+        return $this->callStatisticalQuery('max', $field);
+    }
+
+    public function avg(string $field = '*'): string|int|float
+    {
+        return $this->callStatisticalQuery('avg', $field);
+    }
+
+    protected function callStatisticalQuery($method, string $field): string|int|float
+    {
+        try {
+            $this->shouldCountSelect = true;
+            return $this->getField(strtoupper($method) . '(' . $field . ') AS tp_' . $method);
+        } finally {
+            $this->shouldCountSelect = false;
+        }
+    }
+
     /**
      * 利用 __call 方法实现一些特殊的 Model 方法.
      *
@@ -301,16 +336,7 @@ abstract class Model
      */
     public function __call(string $method, array $args): mixed
     {
-        if (in_array(strtolower($method), array('count', 'sum', 'min', 'max', 'avg'), true)) {
-            // 统计查询的实现
-            $field = isset($args[0]) ? $args[0] : '*';
-            try {
-                $this->shouldCountSelect = true;
-                return $this->getField(strtoupper($method) . '(' . $field . ') AS tp_' . $method);
-            } finally {
-                $this->shouldCountSelect = false;
-            }
-        } elseif (strtolower(substr($method, 0, 5)) == 'getby') {
+        if (strtolower(substr($method, 0, 5)) == 'getby') {
             // 根据某个字段获取记录
             $field = $this->parseName(substr($method, 5));
             $where[$field] = $args[0];
