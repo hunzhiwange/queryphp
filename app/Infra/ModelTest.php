@@ -3026,7 +3026,21 @@ class ModelTest extends TestCase
         );
 
         $baseBrandModel = BaseBrandModel::make();
-        $row = $baseBrandModel
+        $affectedRow = $baseBrandModel
             ->save();
+    }
+
+    public function testQuerySub189(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $id = $baseBrandModel
+            ->add([
+                'brand_name' => 'hello world',
+            ]);
+
+        $affectedRow = $baseBrandModel
+            ->data(['brand_id' => $id, 'brand_name' => 'new'])
+            ->save();
+        $this->assertSame($affectedRow, 1);
     }
 }

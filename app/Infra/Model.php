@@ -570,13 +570,13 @@ abstract class Model
         $this->_before_insert($data, $options);
         // 写入数据到数据库
         $result = $this->mysql->insert($data, $options, $replace);
-        if (is_numeric($result)) {
+        if (!is_int($result) && ctype_digit($result)) {
             $pk = $this->getPk();
             // 增加复合主键支持
             if (is_array($pk)){
                 return $result;
             }
-            $insertId = $this->getLastInsID();
+            $insertId = $result;
             if ($insertId) {
                 // 自增主键返回插入ID
                 $data[$pk] = $insertId;
@@ -886,7 +886,7 @@ abstract class Model
      *
      * @throws \Exception
      */
-    public function save(mixed $data = '', array $options = array()): bool|int|string
+    public function save(mixed $data = '', array $options = array()): int
     {
         if (empty($data)) {
             // 没有传递数据，获取当前数据对象的值
@@ -936,19 +936,19 @@ abstract class Model
             $pkValue = $options['where'][$pk];
         }
         $this->_before_update($data, $options);
-        $result = $this->mysql->update($data, $options);
-        if (false !== $result && is_numeric($result)) {
+        $affectedRow = $this->mysql->update($data, $options);
+        if ($affectedRow>0) {
             if (isset($pkValue)) $data[$pk] = $pkValue;
             $this->_after_update($data, $options);
         }
-        return $result;
+        return $affectedRow;
     }
 
     protected function _before_update(array &$data, array $options): void
     {
     }
 
-    protected function _after_update(array $data, array $options): void
+    protected function _after_update(array &$data, array $options): void
     {
     }
 

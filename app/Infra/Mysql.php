@@ -468,7 +468,7 @@ class Mysql
     /**
      * 更新记录.
      */
-    public function update(array $data, array $options): int|false
+    public function update(array $data, array $options): int
     {
         $table = $this->parseTable($options['table']);
         $sql = 'UPDATE ' . $table . $this->parseSet($data);
