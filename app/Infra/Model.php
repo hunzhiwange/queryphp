@@ -432,7 +432,6 @@ abstract class Model
                 }
             }
             return $cols;
-
         }
 
         // 查找一条记录
@@ -1464,7 +1463,7 @@ abstract class Model
     /**
      * 执行 SQL 语句.
      */
-    public function execute(string $sql, bool|array|string $parse = false): int|false
+    public function execute(string $sql, bool|array|string $parse = false): int|string
     {
         if (!is_bool($parse) && !is_array($parse)) {
             $parse = func_get_args();

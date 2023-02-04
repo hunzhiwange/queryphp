@@ -285,7 +285,7 @@ class Mysql
      *
      * @throws \Exception
      */
-    public function insertAll(array $dataSet, array $options = array(), bool $replace = false): int
+    public function insertAll(array $dataSet, array $options = array(), bool $replace = false): int|string
     {
         $values = array();
         if (!is_array($dataSet[0])) {
@@ -333,15 +333,13 @@ class Mysql
     }
 
     /**
-     * 生成查询SQL
-     * @access public
-     * @param array $options 表达式
+     * 生成查询 SQL.
      * @return string
      */
-    public function buildSelectSql($options = array())
+    public function buildSelectSql($options = array()): string
     {
         if (isset($options['page'])) {
-            // 根据页数计算limit
+            // 根据页数计算 limit
             list($page, $listRows) = $options['page'];
             $page = $page > 0 ? $page : 1;
             $listRows = $listRows > 0 ? $listRows : (is_numeric($options['limit']) ? $options['limit'] : 20);
@@ -352,12 +350,9 @@ class Mysql
     }
 
     /**
-     * 替换SQL语句中表达式
-     * @access public
-     * @param array $options 表达式
-     * @return string
+     * 替换 SQL 语句中表达式.
      */
-    public function parseSql($sql, $options = array())
+    public function parseSql(string $sql, array $options = array()): string
     {
         return str_replace(
             array('%FORCE_MASTER%', '%TABLE%', '%DISTINCT%', '%FIELD%', '%JOIN%', '%WHERE%', '%GROUP%', '%HAVING%', '%ORDER%', '%LIMIT%', '%UNION%', '%LOCK%', '%COMMENT%', '%FORCE%'),
@@ -379,7 +374,7 @@ class Mysql
             ), $sql);
     }
 
-    protected function parseForceMaster($forceMaster)
+    protected function parseForceMaster(bool $forceMaster): string
     {
         return $forceMaster ? '/*FORCE_MASTER*/ ' : '';
     }
@@ -635,12 +630,9 @@ class Mysql
     }
 
     /**
-     * union分析
-     * @access protected
-     * @param mixed $union
-     * @return string
+     * union 分析.
      */
-    protected function parseUnion($union)
+    protected function parseUnion(array|string $union): string
     {
         if (empty($union)) return '';
         if (isset($union['_all'])) {
@@ -682,7 +674,7 @@ class Mysql
     /**
      * 更新记录.
      */
-    public function update(array $data, array $options): int
+    public function update(array $data, array $options): int|string
     {
         $table = $this->parseTable($options['table']);
         $sql = 'UPDATE ' . $table . $this->parseSet($data);
@@ -726,7 +718,7 @@ class Mysql
     /**
      * 删除记录.
      */
-    public function delete(array $options = array()): int|false
+    public function delete(array $options = array()): int|string
     {
         $table = $this->parseTable($options['table']);
         $sql = 'DELETE FROM ' . $table;

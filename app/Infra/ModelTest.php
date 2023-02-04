@@ -3271,4 +3271,16 @@ class ModelTest extends TestCase
         $this->assertSame($result, $sql);
         $this->assertSame([], $data);
     }
+
+    public function testQuerySub205(): void
+    {
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandModel::make();
+        $data = $baseBrandModel
+            ->getListSelect(['limit'=>'0,5']);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT  `brand_id`,`brand_name` FROM `base_brand` WHERE `status` = 'T' AND `company_id` = 0 ORDER BY order_num DESC, brand_id ASC LIMIT 0,5";
+        $this->assertSame($result, $sql);
+    }
 }

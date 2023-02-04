@@ -171,18 +171,12 @@ class BaseBrandModel extends Model
     /**
      * 获取商品品牌列表.
      */
-    public function getListSelect(array $arrIn): mixed
+    public function getListSelect(array $arrIn): array
     {
-        $arrIn = array_merge(array('field_key' => 'brand_id', 'field_val' => 'brand_name', 'map' => array(), 'order' => 'order_num DESC,brand_id DESC'), $arrIn);
-        if (!isset($arrIn['map']['status'])) {
-            $arrIn['map']['status'] = 'T';
-        }
-        $arrIn['map']['company_id'] = get_company_id();
+        $arrIn['scope'] = 'list';
+        $this->mergeScopeWhere($arrIn);
 
-        return $this
-            ->where($arrIn['map'])
-            ->order($arrIn['order'])
-            ->getField($arrIn['field_key'] . ',' . $arrIn['field_val']);
+        return $this->getField('brand_id,brand_name');
     }
 
     /**
