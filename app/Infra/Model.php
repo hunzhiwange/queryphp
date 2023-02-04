@@ -560,7 +560,7 @@ abstract class Model
                 // 重置数据
                 $this->data = array();
             } else {
-                throw new Exception('Data type invalid');
+                throw new Exception('Data type invalid.');
             }
         }
         // 数据处理
@@ -883,6 +883,8 @@ abstract class Model
 
     /**
      * 保存数据.
+     *
+     * @throws \Exception
      */
     public function save(mixed $data = '', array $options = array()): bool|int|string
     {
@@ -893,16 +895,14 @@ abstract class Model
                 // 重置数据
                 $this->data = array();
             } else {
-                $this->error = 'Data type invalid.';
-                return false;
+                throw new Exception('Data type invalid.');
             }
         }
         // 数据处理
         $data = $this->_facade($data);
         if (empty($data)) {
             // 没有数据则不执行
-            $this->error = 'Data type invalid.';
-            return false;
+            throw new Exception('Data type invalid.');
         }
         // 分析表达式
         $options = $this->_parseOptions($options);
@@ -919,16 +919,14 @@ abstract class Model
                         $where[$field] = $data[$field];
                     } else {
                         // 如果缺少复合主键数据则不执行
-                        $this->error = 'Operation wrong.';
-                        return false;
+                        throw new Exception('Operation wrong.');
                     }
                     unset($data[$field]);
                 }
             }
             if (!isset($where)) {
                 // 如果没有任何更新条件则不执行
-                $this->error = 'Operation wrong.';
-                return false;
+                throw new Exception('Operation wrong.');
             } else {
                 $options['where'] = $where;
             }
@@ -937,9 +935,7 @@ abstract class Model
         if (is_array($options['where']) && isset($options['where'][$pk])) {
             $pkValue = $options['where'][$pk];
         }
-        if (false === $this->_before_update($data, $options)) {
-            return false;
-        }
+        $this->_before_update($data, $options);
         $result = $this->mysql->update($data, $options);
         if (false !== $result && is_numeric($result)) {
             if (isset($pkValue)) $data[$pk] = $pkValue;

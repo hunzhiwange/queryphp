@@ -2598,16 +2598,17 @@ class ModelTest extends TestCase
 
     public function testQuerySub158(): void
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'Operation wrong.'
+        );
+
         container()->instance('company_id', 999);
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel->brand_name = 'ThinkPHP';
         $baseBrandModel->brand_logo = 'ThinkPHP@gmail.com';
         $baseBrandModel
             ->save();
-        $result = $baseBrandModel->getLastSql();
-        $result = trim($result);
-        $sql = "";
-        $this->assertSame($result, $sql);
     }
 
     public function testQuerySub159(): void
@@ -2999,7 +3000,7 @@ class ModelTest extends TestCase
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage(
-            'Data type invalid'
+            'Data type invalid.'
         );
 
         $baseBrandModel = BaseBrandModel::make();
@@ -3015,5 +3016,17 @@ class ModelTest extends TestCase
                 'brand_name' => 'hello world',
             ]);
         $this->assertSame(true, $id>0);
+    }
+
+    public function testQuerySub188(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'Data type invalid.'
+        );
+
+        $baseBrandModel = BaseBrandModel::make();
+        $row = $baseBrandModel
+            ->save();
     }
 }
