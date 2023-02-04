@@ -94,7 +94,7 @@ abstract class Model
     /**
      * 自动完成定义.
      */
-    protected array $_auto = array();  // 自动验证定义
+    protected array $_auto = array();
 
     /**
      * 命名范围定义.

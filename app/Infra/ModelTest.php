@@ -660,8 +660,8 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $subQuery = $baseBrandModel
-            ->field('`brand_id`,`brand_name`')
-            ->table('`base_brand`')
+            ->field('brand_id,brand_name')
+            ->table('base_brand')
             ->group('brand_name')
             ->where([
                 'brand_id' => 1,
@@ -679,8 +679,8 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $subQuery = $baseBrandModel
-            ->field('`brand_id`,`brand_name`')
-            ->table('`base_brand`')
+            ->field('brand_id,brand_name')
+            ->table('base_brand')
             ->group('brand_name')
             ->where([
                 'brand_id' => 1,
@@ -698,8 +698,8 @@ class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandModel::make();
         $subQuery = $baseBrandModel
-            ->field('`brand_id`,`brand_name`')
-            ->table('`base_brand`')
+            ->field('brand_id,brand_name')
+            ->table('base_brand')
             ->group('brand_id')
             ->where([
                 'brand_id' => 1,
@@ -715,13 +715,13 @@ class ModelTest extends TestCase
         $baseBrandModel
             ->table($subQuery . ' a')
             ->where([
-                'a.`brand_name`' => '你好',
+                'a.brand_name' => '你好',
             ])
             ->order('a.brand_id DESC')
             ->select();
         $result = $baseBrandModel->getLastSql();
         $result = trim($result);
-        $sql = "SELECT  * FROM ( SELECT  `brand_id`,`brand_name` FROM `base_brand` GROUP BY brand_id ORDER BY brand_id DESC  ) a WHERE a.`brand_name` = '你好' ORDER BY a.brand_id DESC";
+        $sql = "SELECT  * FROM ( SELECT  `brand_id`,`brand_name` FROM `base_brand` GROUP BY brand_id ORDER BY brand_id DESC  ) a WHERE a.brand_name = '你好' ORDER BY a.brand_id DESC";
         $this->assertSame($result, $sql);
     }
 
@@ -1583,7 +1583,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('`brand_name` as name')
-            ->table('`base_brand`')
+            ->table('base_brand')
             ->union('SELECT name FROM permission')
             ->union('SELECT name FROM role')
             ->select();
@@ -1598,7 +1598,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('`brand_name` as name')
-            ->table('`base_brand`')
+            ->table('base_brand')
             ->union(array('field' => 'name', 'table' => 'permission'))
             ->union(array('field' => 'name', 'table' => 'role'))
             ->select();
@@ -1613,7 +1613,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('`brand_name` as name')
-            ->table('`base_brand`')
+            ->table('base_brand')
             ->union(array('SELECT name FROM permission', 'SELECT name FROM role'))
             ->select();
         $result = $baseBrandModel->getLastSql();
@@ -1627,7 +1627,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('`brand_name` as name')
-            ->table('`base_brand`')
+            ->table('base_brand')
             ->union('SELECT name FROM permission', true)
             ->union('SELECT name FROM role', true)
             ->select();
@@ -1642,7 +1642,7 @@ class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('`brand_name` as name')
-            ->table('`base_brand`')
+            ->table('base_brand')
             ->union(array('SELECT name FROM permission', 'SELECT name FROM role'), true)
             ->select();
         $result = $baseBrandModel->getLastSql();
