@@ -395,7 +395,7 @@ class Mysql
     /**
      * field 分析.
      */
-    protected function parseField(string|array $fields): string
+    protected function parseField(string|array|bool $fields): string
     {
         if (is_string($fields) && '' !== $fields) {
             $fields = explode(',', $fields);

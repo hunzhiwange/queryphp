@@ -3119,4 +3119,16 @@ class ModelTest extends TestCase
             ->create(['seo_keywords' => 'hello', 'brand_letter' => 'logo'])
             ->add();
     }
+
+    public function testQuerySub195(): void
+    {
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandModel::make();
+        $data = $baseBrandModel
+            ->getList(['limit'=>'0,5']);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT  * FROM `base_brand` WHERE `status` = 'T' AND `company_id` = 0 ORDER BY order_num DESC, brand_id ASC LIMIT 0,5";
+        $this->assertSame($result, $sql);
+    }
 }

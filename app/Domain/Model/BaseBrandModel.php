@@ -90,7 +90,7 @@ class BaseBrandModel extends Model
     /**
      * 获取商品品牌列表.
      */
-    public function getList(array $arrIn = array()): mixed
+    public function getList(array $arrIn = []): mixed
     {
         $arrIn = array_merge(array('field' => true, 'map' => array(), 'order' => 'order_num DESC, brand_id ASC', 'limit' => ''), $arrIn);
         if (!isset($arrIn['map']['status'])) {
@@ -101,12 +101,14 @@ class BaseBrandModel extends Model
             $arrIn['map']['company_id'] = get_company_id();
         }
 
-        $arrData['count'] = $this->where($arrIn['map'])->count();
+        $arrIn['where'] = $arrIn['map'];
+        unset($arrIn['map']);
+
+        $arrData['count'] = $this
+            ->scope($arrIn)
+            ->count();
         $arrData['list'] = $this
-            ->where($arrIn['map'])
-            ->field($arrIn['field'])
-            ->order($arrIn['order'])
-            ->limit($arrIn['limit'])
+            ->scope($arrIn)
             ->select();
 
         return $arrData;
@@ -176,7 +178,7 @@ class BaseBrandModel extends Model
         $arrData = $this->data();
 
         if (!$arrIn['brand_id']) {
-            throw new Exception('品牌 ID 不存在');
+            throw new Exception('品牌 ID 未指定');
         } else {
             $arrData['status'] = 'F';
             $this->save($arrData);

@@ -118,6 +118,11 @@ abstract class Model
     protected array $methods = array('strict', 'order', 'alias', 'having', 'group', 'lock', 'distinct', 'auto', 'filter', 'validate', 'result', 'token', 'index', 'force');
 
     /**
+     * 是否为统计查询.
+     */
+    private bool $shouldCountSelect = false;
+
+    /**
      * 构造函数.
      */
     public function __construct()
@@ -242,7 +247,12 @@ abstract class Model
         } elseif (in_array(strtolower($method), array('count', 'sum', 'min', 'max', 'avg'), true)) {
             // 统计查询的实现
             $field = isset($args[0]) ? $args[0] : '*';
-            return $this->getField(strtoupper($method) . '(' . $field . ') AS tp_' . $method);
+            try {
+                $this->shouldCountSelect = true;
+                return $this->getField(strtoupper($method) . '(' . $field . ') AS tp_' . $method);
+            } finally {
+                $this->shouldCountSelect = false;
+            }
         } elseif (strtolower(substr($method, 0, 5)) == 'getby') {
             // 根据某个字段获取记录
             $field = $this->parseName(substr($method, 5));
@@ -263,20 +273,29 @@ abstract class Model
     /**
      * 获取一条记录的某个字段值.
      */
-    public function getField($field, null|string|bool|int $sepa = null): mixed
+    public function getField($field, null|string|bool|int $separator = null): mixed
     {
         $options['field'] = $field;
         $options = $this->_parseOptions($options);
+
+        // 统计查询移除掉一些特性
+        if ($this->shouldCountSelect) {
+            // 删除排序功能
+            if (isset($options['order'])) {
+                unset($options['order']);
+            }
+        }
+
         // 判断查询缓存
         if (isset($options['cache'])) {
             $cache = $options['cache'];
-            $key = is_string($cache['key']) ? $cache['key'] : 'sql:' . md5($sepa . serialize($options));
+            $key = is_string($cache['key']) ? $cache['key'] : 'sql:' . md5($separator . serialize($options));
             $options['cache']['key'] = $key;
         }
         $field = trim($field);
-        if (strpos($field, ',') && false !== $sepa) { // 多字段
+        if (strpos($field, ',') && false !== $separator) { // 多字段
             if (!isset($options['limit'])) {
-                $options['limit'] = is_numeric($sepa) ? $sepa : '';
+                $options['limit'] = is_numeric($separator) ? $separator : '';
             }
             $resultSet = $this->mysql->select($options);
             if (!empty($resultSet)) {
@@ -291,19 +310,19 @@ abstract class Model
                     if (2 == $count) {
                         $cols[$name] = $result[$key2];
                     } else {
-                        $cols[$name] = is_string($sepa) ? implode($sepa, array_slice($result, 1)) : $result;
+                        $cols[$name] = is_string($separator) ? implode($separator, array_slice($result, 1)) : $result;
                     }
                 }
                 return $cols;
             }
         } else {   // 查找一条记录
             // 返回数据个数
-            if (true !== $sepa) {// 当sepa指定为true的时候 返回所有数据
-                $options['limit'] = is_numeric($sepa) ? $sepa : 1;
+            if (true !== $separator) {// 当sepa指定为true的时候 返回所有数据
+                $options['limit'] = is_numeric($separator) ? $separator : 1;
             }
             $result = $this->mysql->select($options);
             if (!empty($result)) {
-                if (true !== $sepa && 1 == $options['limit']) {
+                if (true !== $separator && 1 == $options['limit']) {
                     $data = reset($result[0]);
                     return $data;
                 }
@@ -768,6 +787,8 @@ abstract class Model
 
     /**
      * 查询数据集.
+     *
+     * @throws \Exception
      */
     public function select(int|string|array|bool $options = array()): mixed
     {
@@ -795,7 +816,7 @@ abstract class Model
                 }
                 $options['where'] = $where;
             } else {
-                return false;
+                throw new Exception('Invalid primary where condition.');
             }
         } elseif (false === $options) { // 用于子查询 不查询只返回SQL
             return $this->buildSql();
