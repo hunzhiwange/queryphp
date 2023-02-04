@@ -3026,7 +3026,7 @@ class ModelTest extends TestCase
             ->add([
                 'brand_name' => 'hello world',
             ]);
-        $this->assertSame(true, $id>0);
+        $this->assertSame(true, $id > 0);
     }
 
     public function testQuerySub188(): void
@@ -3053,5 +3053,16 @@ class ModelTest extends TestCase
             ->data(['brand_id' => $id, 'brand_name' => 'new'])
             ->save();
         $this->assertSame($affectedRow, 1);
+    }
+
+    public function testQuerySub190(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'customer error'
+        );
+
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel->defineError();
     }
 }

@@ -69,7 +69,7 @@ abstract class Model
     /**
      * 最近错误信息.
      */
-    protected string|array $error = '';
+    //protected string|array $error = '';
 
     /**
      * 字段信息.
@@ -149,15 +149,15 @@ abstract class Model
     /**
      * 创建数据库连接.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function createConnect(): void
     {
-        if (!defined(static::class.'::ENTITY')) {
+        if (!defined(static::class . '::ENTITY')) {
             throw new Exception(sprintf('Entity of model %s not defined.', static::class));
         }
 
-        $entity = constant(static::class.'::ENTITY');
+        $entity = constant(static::class . '::ENTITY');
         $entity = new $entity();
         $this->mysql = new Mysql($entity);
         $this->_checkTableInfo();
@@ -191,14 +191,6 @@ abstract class Model
     }
 
     /**
-     * 得到数据表名.
-     */
-    public function getTableName(): string
-    {
-        return $this->parseName($this->name);
-    }
-
-    /**
      * 创建一个新对象.
      */
     public static function make(): static
@@ -219,8 +211,22 @@ abstract class Model
      */
     public function __set(string $name, mixed $value): void
     {
+        // 错误直接抛出异常，取消以前那种 getError 写法
+        if ($name === 'error') {
+            $this->error = $value;
+            $this->throw();
+        }
+
         // 设置数据对象属性
         $this->data[$name] = $value;
+    }
+
+    /**
+     * 异常抛出来.
+     */
+    public function throw(string $exception = Exception::class, int $code = 0): void
+    {
+        throw new $exception($this->error, $code);
     }
 
     /**
@@ -242,7 +248,7 @@ abstract class Model
     /**
      * 利用 __call 方法实现一些特殊的 Model 方法.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __call(string $method, array $args): mixed
     {
@@ -281,7 +287,7 @@ abstract class Model
         // 判断查询缓存
         if (isset($options['cache'])) {
             $cache = $options['cache'];
-            $key = is_string($cache['key']) ? $cache['key'] : 'sql:' . md5($sepa .serialize($options));
+            $key = is_string($cache['key']) ? $cache['key'] : 'sql:' . md5($sepa . serialize($options));
             $options['cache']['key'] = $key;
         }
         $field = trim($field);
@@ -330,7 +336,7 @@ abstract class Model
     /**
      * 分析表达式.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function _parseOptions(array $options = array()): array
     {
@@ -379,6 +385,31 @@ abstract class Model
         // 表达式过滤
         $this->_options_filter($options);
         return $options;
+    }
+
+    /**
+     * 得到数据表名.
+     */
+    public function getTableName(): string
+    {
+        return $this->parseName($this->name);
+    }
+
+    /**
+     * 字符串命名风格转换.
+     *
+     * - type 0 将 Java 风格转换为 C 的风格
+     * - 1 将 C 风格转换为 Java 的风格
+     */
+    protected function parseName(string $name, int $type = 0): string
+    {
+        if ($type) {
+            return ucfirst(preg_replace_callback('/_([a-zA-Z])/', function ($match) {
+                return strtoupper($match[1]);
+            }, $name));
+        }
+
+        return strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $name), "_"));
     }
 
     /**
@@ -549,7 +580,7 @@ abstract class Model
     /**
      * 新增数据.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function add(mixed $data = '', array $options = array(), bool $replace = false): int|string
     {
@@ -573,7 +604,7 @@ abstract class Model
         if (!is_int($result) && ctype_digit($result)) {
             $pk = $this->getPk();
             // 增加复合主键支持
-            if (is_array($pk)){
+            if (is_array($pk)) {
                 return $result;
             }
             $insertId = $result;
@@ -591,7 +622,7 @@ abstract class Model
     /**
      * 对保存到数据库的数据进行处理.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function _facade(array $data): array
     {
@@ -633,18 +664,6 @@ abstract class Model
     {
     }
 
-    /**
-     * 返回最后插入的 ID.
-     */
-    public function getLastInsID(): null|string|int
-    {
-        $lastInsID = $this->mysql->getLastInsID();
-        if (ctype_digit($lastInsID)) {
-            $lastInsID = (int) $lastInsID;
-        }
-        return $lastInsID;
-    }
-
     protected function _after_insert(array &$data, array $options): void
     {
     }
@@ -670,6 +689,18 @@ abstract class Model
             }
         }
         return $result;
+    }
+
+    /**
+     * 返回最后插入的 ID.
+     */
+    public function getLastInsID(): null|string|int
+    {
+        $lastInsID = $this->mysql->getLastInsID();
+        if (ctype_digit($lastInsID)) {
+            $lastInsID = (int)$lastInsID;
+        }
+        return $lastInsID;
     }
 
     /**
@@ -804,7 +835,7 @@ abstract class Model
         // 判断查询缓存
         if (isset($options['cache'])) {
             $cache = $options['cache'];
-            $key = is_string($cache['key']) ? $cache['key'] : 'sql:' . md5($sepa .serialize($options));
+            $key = is_string($cache['key']) ? $cache['key'] : 'sql:' . md5($sepa . serialize($options));
             $options['cache']['key'] = $key;
         }
 
@@ -884,7 +915,7 @@ abstract class Model
     /**
      * 保存数据.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function save(mixed $data = '', array $options = array()): int
     {
@@ -937,7 +968,7 @@ abstract class Model
         }
         $this->_before_update($data, $options);
         $affectedRow = $this->mysql->update($data, $options);
-        if ($affectedRow>0) {
+        if ($affectedRow > 0) {
             if (isset($pkValue)) $data[$pk] = $pkValue;
             $this->_after_update($data, $options);
         }
@@ -965,7 +996,7 @@ abstract class Model
      *
      * - 但不保存到数据库.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function create(mixed $data = '', int $type = 0): array
     {
@@ -1070,7 +1101,7 @@ abstract class Model
                 }
             }
             // 批量验证的时候最后返回错误
-            if (!empty($this->error)){
+            if (!empty($this->error)) {
                 return false;
             }
         }
@@ -1084,7 +1115,7 @@ abstract class Model
      */
     protected function _validationField(array $data, array $val): ?bool
     {
-        if ($this->patchValidate && isset($this->error[$val[0]])){
+        if ($this->patchValidate && isset($this->error[$val[0]])) {
             return null; //当前字段已经有规则验证没有通过
         }
         if (false === $this->_validationFieldItem($data, $val)) {
@@ -1144,7 +1175,7 @@ abstract class Model
                 if (!empty($data[$pk]) && is_string($pk)) { // 完善编辑的时候验证唯一
                     $map[$pk] = array('neq', $data[$pk]);
                 }
-                if ($this->where($map)->find()){
+                if ($this->where($map)->find()) {
                     return false;
                 }
                 return true;
@@ -1186,10 +1217,10 @@ abstract class Model
                 }
             case 'expire':
                 list($start, $end) = explode(',', $rule);
-                if (!is_numeric($start)){
+                if (!is_numeric($start)) {
                     $start = strtotime($start);
                 }
-                if (!is_numeric($end)){
+                if (!is_numeric($end)) {
                     $end = strtotime($end);
                 }
                 return time() >= $start && time() <= $end;
@@ -1269,7 +1300,7 @@ abstract class Model
                             $data[$auto[0]] = $data[$auto[1]];
                             break;
                         case 'ignore': // 为空忽略
-                            if ($auto[1] === $data[$auto[0]]){
+                            if ($auto[1] === $data[$auto[0]]) {
                                 unset($data[$auto[0]]);
                             }
                             break;
@@ -1277,7 +1308,7 @@ abstract class Model
                         default: // 默认作为字符串填充
                             $data[$auto[0]] = $auto[1];
                     }
-                    if (isset($data[$auto[0]]) && false === $data[$auto[0]]){
+                    if (isset($data[$auto[0]]) && false === $data[$auto[0]]) {
                         unset($data[$auto[0]]);
                     }
                 }
@@ -1318,7 +1349,7 @@ abstract class Model
     /**
      * 执行 SQL 语句.
      */
-    public function execute(string $sql, $parse = false): int|false
+    public function execute(string $sql, bool|array|string $parse = false): int|false
     {
         if (!is_bool($parse) && !is_array($parse)) {
             $parse = func_get_args();
@@ -1367,21 +1398,13 @@ abstract class Model
      */
     public function getError(): string|array
     {
-        return $this->error;
-    }
-
-    /**
-     * 异常抛出来.
-     */
-    public function throw(string $exception = Exception::class, int $code = 0): void
-    {
-        throw new $exception($this->error, $code);
+        return $this->error ?? '';
     }
 
     /**
      * 返回最后执行的 sql 语句.
      */
-    public function getLastSql(): null|string|int
+    public function getLastSql(): null|string
     {
         return $this->mysql->getLastSql();
     }
@@ -1571,22 +1594,5 @@ abstract class Model
     public function isForceMaster(): bool
     {
         return isset($this->options['force_master']) && $this->options['force_master'] ? true : false;
-    }
-
-    /**
-     * 字符串命名风格转换.
-     *
-     * - type 0 将 Java 风格转换为 C 的风格
-     * - 1 将 C 风格转换为 Java 的风格
-     */
-    protected function parseName(string $name, int $type = 0): string
-    {
-        if ($type) {
-            return ucfirst(preg_replace_callback('/_([a-zA-Z])/', function ($match) {
-                return strtoupper($match[1]);
-            }, $name));
-        }
-
-        return strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $name), "_"));
     }
 }

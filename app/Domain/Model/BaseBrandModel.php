@@ -254,6 +254,11 @@ class BaseBrandModel extends Model {
         return $strNum;
     }
 
+    public function defineError()
+    {
+        $this->error = 'customer error';
+    }
+
     protected function _before_write(array &$data): void
     {
         isset($data['brand_name']) && $data['brand_name'] = Text::handle($data['brand_name']);

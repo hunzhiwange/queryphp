@@ -19,13 +19,6 @@ class Mysql
     protected string $queryStr = '';
 
     /**
-     * 返回或者影响记录数.
-     *
-     * @todo
-     */
-    protected int $numRows = 0;
-
-    /**
      * 数据库表达式.
      */
     protected array $exp = array(
@@ -73,6 +66,367 @@ class Mysql
     public function __construct(Entity $entity)
     {
         $this->entity = $entity;
+    }
+
+    /**
+     * 启动事务.
+     */
+    public function startTrans(): void
+    {
+        $this->entity::select()->beginTransaction();
+    }
+
+    /**
+     * 用于非自动提交状态下面的查询提交.
+     */
+    public function commit(): void
+    {
+        $this->entity::select()->commit();
+    }
+
+    /**
+     * 事务回滚.
+     */
+    public function rollback(): void
+    {
+        $this->entity::select()->rollBack();
+    }
+
+    /**
+     * 事务处理
+     *
+     * - 大多数框架都封装这种用法，简化调用
+     */
+    public function transaction(Closure $businessLogic): mixed
+    {
+        return $this->entity::select()->transaction($businessLogic);
+    }
+
+    /**
+     * 插入记录.
+     */
+    public function insert(array $data, array $options = array(), bool $replace = false): int|string
+    {
+        $values = $fields = array();
+        foreach ($data as $key => $val) {
+            if (is_array($val) && 'exp' == $val[0]) {
+                $fields[] = $this->parseKey($key);
+                $values[] = $val[1];
+            } elseif (is_scalar($val)) { // 过滤非标量数据
+                $fields[] = $this->parseKey($key);
+                if (is_string($val) && 0 === strpos($val, ':') && in_array($val, array_keys($this->bind))) {
+                    $values[] = $this->parseValue($val);
+                } else {
+                    $name = count($this->bind);
+                    $values[] = ':' . $name;
+                    $this->bindParam($name, $val);
+                }
+            }
+        }
+        // 兼容数字传入方式
+        $replace = (is_numeric($replace) && $replace > 0) ? true : $replace;
+        $sql = (true === $replace ? 'REPLACE' : 'INSERT') . ' INTO ' . $this->parseTable($options['table']) . ' (' . implode(',', $fields) . ') VALUES (' . implode(',', $values) . ')' . $this->parseDuplicate($replace);
+        $sql .= $this->parseComment(!empty($options['comment']) ? $options['comment'] : '');
+        return $this->execute($sql, !empty($options['fetch_sql']) ? true : false);
+    }
+
+    /**
+     * 字段和表名处理.
+     */
+    protected function parseKey(&$key): string
+    {
+        $key = trim($key);
+        if (!is_numeric($key) && !preg_match('/[,\'\"\*\(\)`.\s]/', $key)) {
+            $key = '`' . $key . '`';
+        }
+
+        return $key;
+    }
+
+    /**
+     * value 分析.
+     */
+    protected function parseValue(mixed $value): mixed
+    {
+        if (is_string($value)) {
+            $value = strpos($value, ':') === 0 && in_array($value, array_keys($this->bind)) ? $this->escapeString($value) : '\'' . $this->escapeString($value) . '\'';
+        } elseif (isset($value[0]) && is_string($value[0]) && strtolower($value[0]) == 'exp') {
+            $value = $this->escapeString($value[1]);
+        } elseif (is_array($value)) {
+            $value = array_map(array($this, 'parseValue'), $value);
+        } elseif (is_bool($value)) {
+            $value = $value ? '1' : '0';
+        } elseif (is_null($value)) {
+            $value = 'null';
+        }
+
+        return $value;
+    }
+
+    /**
+     * SQL 指令安全过滤.
+     */
+    public function escapeString(string $str): string
+    {
+        return addslashes($str);
+    }
+
+    /**
+     * 参数绑定.
+     */
+    protected function bindParam($name, $value): void
+    {
+        $this->bind[':' . $name] = $value;
+    }
+
+    /**
+     * table 分析.
+     */
+    protected function parseTable(array|string $tables): string
+    {
+        if (is_array($tables)) {// 支持别名定义
+            $array = array();
+            foreach ($tables as $table => $alias) {
+                if (!is_numeric($table))
+                    $array[] = $this->parseKey($table) . ' ' . $this->parseKey($alias);
+                else
+                    $array[] = $this->parseKey($alias);
+            }
+            $tables = $array;
+        } elseif (is_string($tables)) {
+            $tables = explode(',', $tables);
+            array_walk($tables, array(&$this, 'parseKey'));
+        }
+        return implode(',', $tables);
+    }
+
+    /**
+     * ON DUPLICATE KEY UPDATE 分析.
+     */
+    protected function parseDuplicate(mixed $duplicate): string
+    {
+        // 布尔值或空则返回空字符串
+        if (is_bool($duplicate) || empty($duplicate)) {
+            return '';
+        }
+
+        if (is_string($duplicate)) {
+            // field1,field2 转数组
+            $duplicate = explode(',', $duplicate);
+        } elseif (is_object($duplicate)) {
+            // 对象转数组
+            $duplicate = get_class_vars($duplicate);
+        }
+        $updates = array();
+        foreach ((array)$duplicate as $key => $val) {
+            if (is_numeric($key)) {
+                // array('field1', 'field2', 'field3') 解析为 ON DUPLICATE KEY UPDATE field1=VALUES(field1), field2=VALUES(field2), field3=VALUES(field3)
+                $updates[] = $this->parseKey($val) . "=VALUES(" . $this->parseKey($val) . ")";
+            } else {
+                if (is_scalar($val)) { // 兼容标量传值方式
+                    $val = array('value', $val);
+                }
+                if (!isset($val[1])) {
+                    continue;
+                }
+                switch ($val[0]) {
+                    case 'exp': // 表达式
+                        $updates[] = $this->parseKey($key) . "=($val[1])";
+                        break;
+                    case 'value': // 值
+                    default:
+                        $name = count($this->bind);
+                        $updates[] = $this->parseKey($key) . "=:" . $name;
+                        $this->bindParam($name, $val[1]);
+                        break;
+                }
+            }
+        }
+
+        if (empty($updates)) {
+            return '';
+        }
+
+        return " ON DUPLICATE KEY UPDATE " . join(', ', $updates);
+    }
+
+    /**
+     * comment 分析.
+     */
+    protected function parseComment(string $comment): string
+    {
+        return !empty($comment) ? '/*' . $comment . '*/' : '';
+    }
+
+    /**
+     * 执行语句.
+     */
+    public function execute(string $str, bool $fetchSql = false): int|string
+    {
+        $this->queryStr = $str;
+        if (!empty($this->bind)) {
+            $that = $this;
+            $this->queryStr = strtr($this->queryStr, array_map(function ($val) use ($that) {
+                return '\'' . (is_string($val) ? $that->escapeString($val) : $val) . '\'';
+            }, $this->bind));
+        }
+
+        if ($fetchSql) {
+            return $this->queryStr;
+        }
+
+        $this->bind = array();
+        return $this->entity::select()->execute($this->queryStr);
+    }
+
+    /**
+     * 批量插入记录.
+     */
+    public function insertAll(array $dataSet, array $options = array(), bool $replace = false): int|false
+    {
+        $values = array();
+        if (!is_array($dataSet[0])) {
+            return false;
+        }
+        $fields = array_keys($dataSet[0]);
+        array_walk($fields, array($this, 'parseKey'));
+        foreach ($dataSet as $data) {
+            $value = array();
+            foreach ($data as $val) {
+                if (is_array($val) && 'exp' == $val[0]) {
+                    $value[] = $val[1];
+                } elseif (is_scalar($val) || is_null($val)) {
+                    if (0 === strpos($val, ':') && in_array($val, array_keys($this->bind))) {
+                        $value[] = $this->parseValue($val);
+                    } else {
+                        $name = count($this->bind);
+                        $value[] = ':' . $name;
+                        $this->bindParam($name, $val);
+                    }
+                }
+            }
+            $values[] = '(' . implode(',', $value) . ')';
+        }
+        // 兼容数字传入方式
+        $replace = (is_numeric($replace) && $replace > 0) ? true : $replace;
+        $sql = (true === $replace ? 'REPLACE' : 'INSERT') . ' INTO ' . $this->parseTable($options['table']) . ' (' . implode(',', $fields) . ') VALUES ' . implode(',', $values) . $this->parseDuplicate($replace);
+        $sql .= $this->parseComment(!empty($options['comment']) ? $options['comment'] : '');
+
+        return $this->execute($sql, !empty($options['fetch_sql']) ? true : false);
+    }
+
+    /**
+     * 通过 Select 方式插入记录.
+     */
+    public function selectInsert(string|array $fields, string $table, array $options = array()): int|false
+    {
+        if (is_string($fields)) {
+            $fields = explode(',', $fields);
+        }
+        array_walk($fields, array($this, 'parseKey'));
+        $sql = 'INSERT INTO ' . $this->parseTable($table) . ' (' . implode(',', $fields) . ') ';
+        $sql .= $this->buildSelectSql($options);
+        return $this->execute($sql, !empty($options['fetch_sql']) ? true : false);
+    }
+
+    /**
+     * 生成查询SQL
+     * @access public
+     * @param array $options 表达式
+     * @return string
+     */
+    public function buildSelectSql($options = array())
+    {
+        if (isset($options['page'])) {
+            // 根据页数计算limit
+            list($page, $listRows) = $options['page'];
+            $page = $page > 0 ? $page : 1;
+            $listRows = $listRows > 0 ? $listRows : (is_numeric($options['limit']) ? $options['limit'] : 20);
+            $offset = $listRows * ($page - 1);
+            $options['limit'] = $offset . ',' . $listRows;
+        }
+        return $this->parseSql($this->selectSql, $options);
+    }
+
+    /**
+     * 替换SQL语句中表达式
+     * @access public
+     * @param array $options 表达式
+     * @return string
+     */
+    public function parseSql($sql, $options = array())
+    {
+        return str_replace(
+            array('%FORCE_MASTER%', '%TABLE%', '%DISTINCT%', '%FIELD%', '%JOIN%', '%WHERE%', '%GROUP%', '%HAVING%', '%ORDER%', '%LIMIT%', '%UNION%', '%LOCK%', '%COMMENT%', '%FORCE%'),
+            array(
+                $this->parseForceMaster(!empty($options['force_master'])),
+                $this->parseTable($options['table']),
+                $this->parseDistinct(isset($options['distinct']) ? $options['distinct'] : false),
+                $this->parseField(!empty($options['field']) ? $options['field'] : '*'),
+                $this->parseJoin(!empty($options['join']) ? $options['join'] : ''),
+                $this->parseWhere(!empty($options['where']) ? $options['where'] : ''),
+                $this->parseGroup(!empty($options['group']) ? $options['group'] : ''),
+                $this->parseHaving(!empty($options['having']) ? $options['having'] : ''),
+                $this->parseOrder(!empty($options['order']) ? $options['order'] : ''),
+                $this->parseLimit(!empty($options['limit']) ? $options['limit'] : ''),
+                $this->parseUnion(!empty($options['union']) ? $options['union'] : ''),
+                $this->parseLock(isset($options['lock']) ? $options['lock'] : false),
+                $this->parseComment(!empty($options['comment']) ? $options['comment'] : ''),
+                $this->parseForce(!empty($options['force']) ? $options['force'] : '')
+            ), $sql);
+    }
+
+    protected function parseForceMaster($forceMaster)
+    {
+        return $forceMaster ? '/*FORCE_MASTER*/ ' : '';
+    }
+
+    /**
+     * distinct 分析.
+     */
+    protected function parseDistinct(bool $distinct): string
+    {
+        return !empty($distinct) ? ' DISTINCT ' : '';
+    }
+
+    /**
+     * field 分析.
+     */
+    protected function parseField(string|array $fields): string
+    {
+        if (is_string($fields) && '' !== $fields) {
+            $fields = explode(',', $fields);
+        }
+
+        if (!is_array($fields)) {
+            return '*';
+        }
+
+        // 完善数组方式传字段名的支持
+        // 支持 'field1'=>'field2' 这样的字段别名定义
+        $array = array();
+        foreach ($fields as $key => $field) {
+            if (!is_numeric($key)) {
+                $array[] = $this->parseKey($key) . ' AS ' . $this->parseKey($field);
+            } else {
+                $array[] = $this->parseKey($field);
+            }
+        }
+
+        return implode(',', $array);
+    }
+
+    /**
+     * join 分析.
+     */
+    protected function parseJoin(string|array $join): string
+    {
+        $joinStr = '';
+        if (!empty($join)) {
+            $joinStr = ' ' . implode(' ', $join) . ' ';
+        }
+
+        return $joinStr;
     }
 
     /**
@@ -167,47 +521,6 @@ class Mysql
         return '( ' . $whereStr . ' )';
     }
 
-    /**
-     * 字段和表名处理.
-     */
-    protected function parseKey(&$key): string
-    {
-        $key = trim($key);
-        if (!is_numeric($key) && !preg_match('/[,\'\"\*\(\)`.\s]/', $key)) {
-            $key = '`' . $key . '`';
-        }
-
-        return $key;
-    }
-
-    /**
-     * value 分析.
-     */
-    protected function parseValue(mixed $value): mixed
-    {
-        if (is_string($value)) {
-            $value = strpos($value, ':') === 0 && in_array($value, array_keys($this->bind)) ? $this->escapeString($value) : '\'' . $this->escapeString($value) . '\'';
-        } elseif (isset($value[0]) && is_string($value[0]) && strtolower($value[0]) == 'exp') {
-            $value = $this->escapeString($value[1]);
-        } elseif (is_array($value)) {
-            $value = array_map(array($this, 'parseValue'), $value);
-        } elseif (is_bool($value)) {
-            $value = $value ? '1' : '0';
-        } elseif (is_null($value)) {
-            $value = 'null';
-        }
-
-        return $value;
-    }
-
-    /**
-     * SQL 指令安全过滤.
-     */
-    public function escapeString(string $str): string
-    {
-        return addslashes($str);
-    }
-
     protected function parseWhereItem(string $key, mixed $val): string
     {
         $whereStr = '';
@@ -275,194 +588,92 @@ class Mysql
     }
 
     /**
-     * 启动事务.
+     * group 分析.
      */
-    public function startTrans(): void
+    protected function parseGroup(string $group): string
     {
-        $this->entity::select()->beginTransaction();
+        return !empty($group) ? ' GROUP BY ' . $group : '';
     }
 
     /**
-     * 用于非自动提交状态下面的查询提交.
+     * having 分析.
      */
-    public function commit(): void
+    protected function parseHaving(string $having): string
     {
-        $this->entity::select()->commit();
+        return !empty($having) ? ' HAVING ' . $having : '';
     }
 
     /**
-     * 事务回滚.
+     * order 分析.
      */
-    public function rollback(): void
+    protected function parseOrder(array|string $order): string
     {
-        $this->entity::select()->rollBack();
-    }
-
-    /**
-     * 事务处理
-     *
-     * - 大多数框架都封装这种用法，简化调用
-     */
-    public function transaction(Closure $businessLogic): mixed
-    {
-        return $this->entity::select()->transaction($businessLogic);
-    }
-
-    /**
-     * 插入记录.
-     */
-    public function insert(array $data, array $options = array(), bool $replace = false): int|string
-    {
-        $values = $fields = array();
-        foreach ($data as $key => $val) {
-            if (is_array($val) && 'exp' == $val[0]) {
-                $fields[] = $this->parseKey($key);
-                $values[] = $val[1];
-            } elseif (is_scalar($val)) { // 过滤非标量数据
-                $fields[] = $this->parseKey($key);
-                if (is_string($val) && 0 === strpos($val, ':') && in_array($val, array_keys($this->bind))) {
-                    $values[] = $this->parseValue($val);
+        if (is_array($order)) {
+            $array = array();
+            foreach ($order as $key => $val) {
+                if (is_numeric($key)) {
+                    $array[] = $this->parseKey($val);
                 } else {
-                    $name = count($this->bind);
-                    $values[] = ':' . $name;
-                    $this->bindParam($name, $val);
+                    $array[] = $this->parseKey($key) . ' ' . $val;
                 }
             }
+            $order = implode(',', $array);
         }
-        // 兼容数字传入方式
-        $replace = (is_numeric($replace) && $replace > 0) ? true : $replace;
-        $sql = (true === $replace ? 'REPLACE' : 'INSERT') . ' INTO ' . $this->parseTable($options['table']) . ' (' . implode(',', $fields) . ') VALUES (' . implode(',', $values) . ')' . $this->parseDuplicate($replace);
-        $sql .= $this->parseComment(!empty($options['comment']) ? $options['comment'] : '');
-        return $this->execute($sql, !empty($options['fetch_sql']) ? true : false);
+
+        return !empty($order) ? ' ORDER BY ' . $order : '';
     }
 
     /**
-     * 参数绑定.
+     * limit 分析.
      */
-    protected function bindParam($name, $value): void
+    protected function parseLimit(int|string $limit): string
     {
-        $this->bind[':' . $name] = $value;
+        return !empty($limit) ? ' LIMIT ' . $limit . ' ' : '';
     }
 
     /**
-     * ON DUPLICATE KEY UPDATE 分析.
+     * union分析
+     * @access protected
+     * @param mixed $union
+     * @return string
      */
-    protected function parseDuplicate(mixed $duplicate): string
+    protected function parseUnion($union)
     {
-        // 布尔值或空则返回空字符串
-        if(is_bool($duplicate) || empty($duplicate)){
+        if (empty($union)) return '';
+        if (isset($union['_all'])) {
+            $str = 'UNION ALL ';
+            unset($union['_all']);
+        } else {
+            $str = 'UNION ';
+        }
+        foreach ($union as $u) {
+            $sql[] = $str . (is_array($u) ? $this->buildSelectSql($u) : $u);
+        }
+        return implode(' ', $sql);
+    }
+
+    /**
+     * 设置锁机制.
+     */
+    protected function parseLock(bool $lock = false): string
+    {
+        return $lock ? ' FOR UPDATE ' : '';
+    }
+
+    /**
+     * index 分析，可在操作链中指定需要强制使用的索引.
+     */
+    protected function parseForce(array|string $index): string
+    {
+        if (empty($index)) {
             return '';
         }
 
-        if(is_string($duplicate)){
-            // field1,field2 转数组
-            $duplicate = explode(',', $duplicate);
-        }elseif(is_object($duplicate)){
-            // 对象转数组
-            $duplicate = get_class_vars($duplicate);
-        }
-        $updates                    = array();
-        foreach((array) $duplicate as $key=>$val){
-            if(is_numeric($key)){
-                // array('field1', 'field2', 'field3') 解析为 ON DUPLICATE KEY UPDATE field1=VALUES(field1), field2=VALUES(field2), field3=VALUES(field3)
-                $updates[]          = $this->parseKey($val)."=VALUES(".$this->parseKey($val).")";
-            }else{
-                if(is_scalar($val)) { // 兼容标量传值方式
-                    $val = array('value', $val);
-                }
-                if(!isset($val[1])) {
-                    continue;
-                }
-                switch($val[0]){
-                    case 'exp': // 表达式
-                        $updates[]  = $this->parseKey($key)."=($val[1])";
-                        break;
-                    case 'value': // 值
-                    default:
-                        $name       = count($this->bind);
-                        $updates[]  = $this->parseKey($key)."=:".$name;
-                        $this->bindParam($name, $val[1]);
-                        break;
-                }
-            }
+        if (is_array($index)) {
+            $index = join(",", $index);
         }
 
-        if(empty($updates)){
-            return '';
-        }
-
-        return " ON DUPLICATE KEY UPDATE ".join(', ', $updates);
-    }
-
-    /**
-     * 执行语句.
-     */
-    public function execute(string $str, bool $fetchSql = false): int|string
-    {
-        $this->queryStr = $str;
-        if (!empty($this->bind)) {
-            $that = $this;
-            $this->queryStr = strtr($this->queryStr, array_map(function ($val) use ($that) {
-                return '\'' . (is_string($val) ? $that->escapeString($val) : $val) . '\'';
-            }, $this->bind));
-        }
-
-        if ($fetchSql) {
-            return $this->queryStr;
-        }
-
-        $this->bind = array();
-        return $this->entity::select()->execute($this->queryStr);
-    }
-
-    /**
-     * 批量插入记录.
-     */
-    public function insertAll(array $dataSet,array $options=array(),bool $replace=false): int|false
-    {
-        $values  =  array();
-        if(!is_array($dataSet[0])) {
-            return false;
-        }
-        $fields =  array_keys($dataSet[0]);
-        array_walk($fields, array($this, 'parseKey'));
-        foreach ($dataSet as $data){
-            $value   =  array();
-            foreach ($data as $val){
-                if(is_array($val) && 'exp' == $val[0]){
-                    $value[]   =  $val[1];
-                }elseif(is_scalar($val) || is_null($val)){
-                    if(0===strpos($val,':') && in_array($val,array_keys($this->bind))){
-                        $value[]   =   $this->parseValue($val);
-                    }else{
-                        $name       =   count($this->bind);
-                        $value[]   =   ':'.$name;
-                        $this->bindParam($name,$val);
-                    }
-                }
-            }
-            $values[]    = '('.implode(',', $value).')';
-        }
-        // 兼容数字传入方式
-        $replace= (is_numeric($replace) && $replace>0)?true:$replace;
-        $sql    =  (true===$replace?'REPLACE':'INSERT').' INTO '.$this->parseTable($options['table']).' ('.implode(',', $fields).') VALUES '.implode(',',$values).$this->parseDuplicate($replace);
-        $sql    .= $this->parseComment(!empty($options['comment'])?$options['comment']:'');
-
-        return $this->execute($sql,!empty($options['fetch_sql']) ? true : false);
-    }
-
-    /**
-     * 通过 Select 方式插入记录.
-     */
-    public function selectInsert(string|array $fields, string $table, array $options = array()): int|false
-    {
-        if (is_string($fields)) {
-            $fields = explode(',', $fields);
-        }
-        array_walk($fields, array($this, 'parseKey'));
-        $sql = 'INSERT INTO ' . $this->parseTable($table) . ' (' . implode(',', $fields) . ') ';
-        $sql .= $this->buildSelectSql($options);
-        return $this->execute($sql, !empty($options['fetch_sql']) ? true : false);
+        return sprintf(" FORCE INDEX ( %s ) ", $index);
     }
 
     /**
@@ -636,224 +847,5 @@ class Mysql
         }
 
         return $this->totalCount;
-    }
-
-    /**
-     * union分析
-     * @access protected
-     * @param mixed $union
-     * @return string
-     */
-    protected function parseUnion($union)
-    {
-        if (empty($union)) return '';
-        if (isset($union['_all'])) {
-            $str = 'UNION ALL ';
-            unset($union['_all']);
-        } else {
-            $str = 'UNION ';
-        }
-        foreach ($union as $u) {
-            $sql[] = $str . (is_array($u) ? $this->buildSelectSql($u) : $u);
-        }
-        return implode(' ', $sql);
-    }
-
-    /**
-     * 生成查询SQL
-     * @access public
-     * @param array $options 表达式
-     * @return string
-     */
-    public function buildSelectSql($options = array())
-    {
-        if (isset($options['page'])) {
-            // 根据页数计算limit
-            list($page, $listRows) = $options['page'];
-            $page = $page > 0 ? $page : 1;
-            $listRows = $listRows > 0 ? $listRows : (is_numeric($options['limit']) ? $options['limit'] : 20);
-            $offset = $listRows * ($page - 1);
-            $options['limit'] = $offset . ',' . $listRows;
-        }
-        return $this->parseSql($this->selectSql, $options);
-    }
-
-    /**
-     * 替换SQL语句中表达式
-     * @access public
-     * @param array $options 表达式
-     * @return string
-     */
-    public function parseSql($sql, $options = array())
-    {
-        return str_replace(
-            array('%FORCE_MASTER%', '%TABLE%', '%DISTINCT%', '%FIELD%', '%JOIN%', '%WHERE%', '%GROUP%', '%HAVING%', '%ORDER%', '%LIMIT%', '%UNION%', '%LOCK%', '%COMMENT%', '%FORCE%'),
-            array(
-                $this->parseForceMaster(!empty($options['force_master'])),
-                $this->parseTable($options['table']),
-                $this->parseDistinct(isset($options['distinct']) ? $options['distinct'] : false),
-                $this->parseField(!empty($options['field']) ? $options['field'] : '*'),
-                $this->parseJoin(!empty($options['join']) ? $options['join'] : ''),
-                $this->parseWhere(!empty($options['where']) ? $options['where'] : ''),
-                $this->parseGroup(!empty($options['group']) ? $options['group'] : ''),
-                $this->parseHaving(!empty($options['having']) ? $options['having'] : ''),
-                $this->parseOrder(!empty($options['order']) ? $options['order'] : ''),
-                $this->parseLimit(!empty($options['limit']) ? $options['limit'] : ''),
-                $this->parseUnion(!empty($options['union']) ? $options['union'] : ''),
-                $this->parseLock(isset($options['lock']) ? $options['lock'] : false),
-                $this->parseComment(!empty($options['comment']) ? $options['comment'] : ''),
-                $this->parseForce(!empty($options['force']) ? $options['force'] : '')
-            ), $sql);
-    }
-
-    protected function parseForceMaster($forceMaster)
-    {
-        return $forceMaster ? '/*FORCE_MASTER*/ ' : '';
-    }
-
-    /**
-     * table 分析.
-     */
-    protected function parseTable(array|string $tables): string
-    {
-        if (is_array($tables)) {// 支持别名定义
-            $array = array();
-            foreach ($tables as $table => $alias) {
-                if (!is_numeric($table))
-                    $array[] = $this->parseKey($table) . ' ' . $this->parseKey($alias);
-                else
-                    $array[] = $this->parseKey($alias);
-            }
-            $tables = $array;
-        } elseif (is_string($tables)) {
-            $tables = explode(',', $tables);
-            array_walk($tables, array(&$this, 'parseKey'));
-        }
-        return implode(',', $tables);
-    }
-
-    /**
-     * distinct 分析.
-     */
-    protected function parseDistinct(bool $distinct): string
-    {
-        return !empty($distinct) ? ' DISTINCT ' : '';
-    }
-
-    /**
-     * field 分析.
-     */
-    protected function parseField(string|array $fields): string
-    {
-        if (is_string($fields) && '' !== $fields) {
-            $fields = explode(',', $fields);
-        }
-
-        if (!is_array($fields)) {
-            return '*';
-        }
-
-        // 完善数组方式传字段名的支持
-        // 支持 'field1'=>'field2' 这样的字段别名定义
-        $array = array();
-        foreach ($fields as $key => $field) {
-            if (!is_numeric($key)) {
-                $array[] = $this->parseKey($key) . ' AS ' . $this->parseKey($field);
-            }
-            else {
-                $array[] = $this->parseKey($field);
-            }
-        }
-
-        return implode(',', $array);
-    }
-
-    /**
-     * join 分析.
-     */
-    protected function parseJoin(string|array $join): string
-    {
-        $joinStr = '';
-        if (!empty($join)) {
-            $joinStr = ' ' . implode(' ', $join) . ' ';
-        }
-
-        return $joinStr;
-    }
-
-    /**
-     * group 分析.
-     */
-    protected function parseGroup(string $group): string
-    {
-        return !empty($group) ? ' GROUP BY ' . $group : '';
-    }
-
-    /**
-     * having 分析.
-     */
-    protected function parseHaving(string $having): string
-    {
-        return !empty($having) ? ' HAVING ' . $having : '';
-    }
-
-    /**
-     * order 分析.
-     */
-    protected function parseOrder(array|string $order): string
-    {
-        if (is_array($order)) {
-            $array = array();
-            foreach ($order as $key => $val) {
-                if (is_numeric($key)) {
-                    $array[] = $this->parseKey($val);
-                } else {
-                    $array[] = $this->parseKey($key) . ' ' . $val;
-                }
-            }
-            $order = implode(',', $array);
-        }
-
-        return !empty($order) ? ' ORDER BY ' . $order : '';
-    }
-
-    /**
-     * limit 分析.
-     */
-    protected function parseLimit(int|string $limit): string
-    {
-        return !empty($limit) ? ' LIMIT ' . $limit . ' ' : '';
-    }
-
-    /**
-     * 设置锁机制.
-     */
-    protected function parseLock(bool $lock = false): string
-    {
-        return $lock ? ' FOR UPDATE ' : '';
-    }
-
-    /**
-     * comment 分析.
-     */
-    protected function parseComment(string $comment): string
-    {
-        return !empty($comment) ? '/*' . $comment . '*/' : '';
-    }
-
-    /**
-     * index 分析，可在操作链中指定需要强制使用的索引.
-     */
-    protected function parseForce(array|string $index): string
-    {
-        if (empty($index)) {
-            return '';
-        }
-
-        if (is_array($index)) {
-            $index = join(",", $index);
-        }
-
-        return sprintf(" FORCE INDEX ( %s ) ", $index);
     }
 }
