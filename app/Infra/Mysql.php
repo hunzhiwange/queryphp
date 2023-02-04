@@ -761,7 +761,7 @@ class Mysql
     /**
      * 查找记录.
      */
-    public function select(array $options = array()): mixed
+    public function select(array $options = array()): string|array
     {
         $sql = $this->buildSelectSql($options);
         return $this->query($sql, !empty($options['fetch_sql']) ? true : false, $options['cache'] ?? []);
@@ -770,7 +770,7 @@ class Mysql
     /**
      * 执行查询返回数据集.
      */
-    public function query(string $str, bool $fetchSql = false, array $cacheOptions = []): mixed
+    public function query(string $str, bool $fetchSql = false, array $cacheOptions = []): string|array
     {
         $this->queryStr = $str;
         if (!empty($this->bind)) {

@@ -794,7 +794,7 @@ abstract class Model
      *
      * @throws \Exception
      */
-    public function select(int|string|array|bool $options = array()): mixed
+    public function select(int|string|array|bool $options = array()): array|string
     {
         $pk = $this->getPk();
         if (is_string($options) || is_numeric($options)) {
@@ -836,13 +836,6 @@ abstract class Model
         }
 
         $resultSet = $this->mysql->select($options);
-        if (false === $resultSet) {
-            return false;
-        }
-        if (empty($resultSet)) { // 查询结果为空
-            return null;
-        }
-
         if (is_string($resultSet)) {
             return $resultSet;
         }
@@ -1329,7 +1322,7 @@ abstract class Model
     /**
      * SQL 查询.
      */
-    public function query(string $sql, bool|array|string $parse = false): mixed
+    public function query(string $sql, bool|array|string $parse = false): array|string
     {
         if (!is_bool($parse) && !is_array($parse)) {
             $parse = func_get_args();
