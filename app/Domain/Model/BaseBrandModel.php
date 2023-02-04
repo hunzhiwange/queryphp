@@ -104,7 +104,7 @@ class BaseBrandModel extends Model
     /**
      * 添加更新商品品牌信息.
      */
-    public function updateInfo(array $arrIn): bool
+    public function updateInfo(array $arrIn): int
     {
         $this->create($arrIn);
         $arrData = $this->data();

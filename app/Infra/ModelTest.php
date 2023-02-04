@@ -3144,4 +3144,37 @@ class ModelTest extends TestCase
         $sql = "SELECT  * FROM base_brand a WHERE ( a.brand_id=1 )";
         $this->assertSame($result, $sql);
     }
+
+    public function testQuerySub197(): void
+    {
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandModel::make();
+        $id = $baseBrandModel
+            ->add([
+                'brand_name' => 'hello world',
+            ]);
+        $id = $baseBrandModel
+            ->updateInfo([
+                'brand_id'=>$id,
+                'brand_name' => 'new',
+            ]);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "UPDATE `base_brand` SET `brand_name`='new'";
+        $this->assertSame(true, false !== strpos($result, $sql));
+    }
+
+    public function testQuerySub198(): void
+    {
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandModel::make();
+        $id = $baseBrandModel
+            ->updateInfo([
+                'brand_name' => 'new2',
+            ]);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`company_id`,`brand_num`,`brand_letter`) VALUES ('new2','0',";
+        $this->assertSame(true, false !== strpos($result, $sql));
+    }
 }
