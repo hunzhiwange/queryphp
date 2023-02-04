@@ -90,28 +90,16 @@ class BaseBrandModel extends Model
     /**
      * 获取商品品牌列表.
      */
-    public function getList(array $arrIn = []): mixed
+    public function getList(array $arrIn = []): array
     {
-        $arrIn = array_merge(array('field' => true, 'map' => array(), 'order' => 'order_num DESC, brand_id ASC', 'limit' => ''), $arrIn);
         if (!isset($arrIn['map']['status'])) {
             $arrIn['map']['status'] = 'T';
         }
-
-        if (empty($arrIn['map']['company_id'])) {
-            $arrIn['map']['company_id'] = get_company_id();
+        if (!isset($arrIn['order'])) {
+            $arrIn['order'] = 'order_num DESC, brand_id ASC';
         }
 
-        $arrIn['where'] = $arrIn['map'];
-        unset($arrIn['map']);
-
-        $arrData['count'] = $this
-            ->scope($arrIn)
-            ->count();
-        $arrData['list'] = $this
-            ->scope($arrIn)
-            ->select();
-
-        return $arrData;
+        return $this->findListAndCount($arrIn);
     }
 
     /**

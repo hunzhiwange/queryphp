@@ -329,6 +329,34 @@ abstract class Model
         }
     }
 
+    public function findCount(array $in = []): string|int
+    {
+        $in = $this->parseInArgs($in);
+
+        return $this
+            ->scope($in)
+            ->count();
+    }
+
+    public function findList(array $in = []): string|array
+    {
+        $in = $this->parseInArgs($in);
+
+        return $this
+            ->scope($in)
+            ->select();
+    }
+
+    public function findListAndCount(array $in = []): array
+    {
+        $in = $this->parseInArgs($in);
+
+        return [
+            'count' => $this->scope($in)->count(),
+            'list' => $this->scope($in)->select(),
+        ];
+    }
+
     /**
      * 利用 __call 方法实现一些特殊的 Model 方法.
      *
@@ -1685,5 +1713,26 @@ abstract class Model
     public function isForceMaster(): bool
     {
         return isset($this->options['force_master']) && $this->options['force_master'] ? true : false;
+    }
+
+    /**
+     * @param array $in
+     * @return array
+     */
+    protected function parseInArgs(array $in): array
+    {
+        if (in_array('company_id', $this->fields, true)) {
+            if (!isset($in['map']['company_id'])) {
+                $in['map']['company_id'] = get_company_id();
+            } elseif (false === $in['map']['company_id']) {
+                unset($in['map']['company_id']);
+            }
+        }
+
+        if (isset($in['map'])) {
+            $in['where'] = $in['map'];
+            unset($in['map']);
+        }
+        return $in;
     }
 }
