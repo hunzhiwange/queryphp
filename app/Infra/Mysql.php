@@ -19,13 +19,6 @@ class Mysql
     protected string $queryStr = '';
 
     /**
-     * 最后插入ID.
-     *
-     * @todo
-     */
-    protected mixed $lastInsID = null;
-
-    /**
      * 返回或者影响记录数.
      *
      * @todo
@@ -419,12 +412,9 @@ class Mysql
         if ($fetchSql) {
             return $this->queryStr;
         }
+
         $this->bind = array();
-        $result = $this->entity::select()->execute($this->queryStr);
-        //      if(preg_match("/^\s*(INSERT\s+INTO|REPLACE\s+INTO)\s+/i", $str)) {
-        //          $this->lastInsID = $this->_linkID->lastInsertId();
-        //      }
-        return $result;
+        return $this->entity::select()->execute($this->queryStr);
     }
 
     /**
@@ -625,9 +615,9 @@ class Mysql
     /**
      * 获取最近插入的 ID.
      */
-    public function getLastInsID(): null|string|int
+    public function getLastInsID(): string
     {
-        return $this->lastInsID;
+        return $this->entity::select()->lastInsertId();
     }
 
     public function __sleep()

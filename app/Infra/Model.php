@@ -548,6 +548,8 @@ abstract class Model
 
     /**
      * 新增数据.
+     *
+     * @throws \Exception
      */
     public function add(mixed $data = '', array $options = array(), bool $replace = false): mixed
     {
@@ -558,17 +560,14 @@ abstract class Model
                 // 重置数据
                 $this->data = array();
             } else {
-                $this->error = 'Data type invalid';
-                return false;
+                throw new Exception('Data type invalid');
             }
         }
         // 数据处理
         $data = $this->_facade($data);
         // 分析表达式
         $options = $this->_parseOptions($options);
-        if (false === $this->_before_insert($data, $options)) {
-            return false;
-        }
+        $this->_before_insert($data, $options);
         // 写入数据到数据库
         $result = $this->mysql->insert($data, $options, $replace);
         if (false !== $result && is_numeric($result)) {
@@ -581,14 +580,10 @@ abstract class Model
             if ($insertId) {
                 // 自增主键返回插入ID
                 $data[$pk] = $insertId;
-                if (false === $this->_after_insert($data, $options)) {
-                    return false;
-                }
+                $this->_after_insert($data, $options);
                 return $insertId;
             }
-            if (false === $this->_after_insert($data, $options)) {
-                return false;
-            }
+            $this->_after_insert($data, $options);
         }
         return $result;
     }
@@ -643,10 +638,14 @@ abstract class Model
      */
     public function getLastInsID(): null|string|int
     {
-        return $this->mysql->getLastInsID();
+        $lastInsID = $this->mysql->getLastInsID();
+        if (ctype_digit($lastInsID)) {
+            $lastInsID = (int) $lastInsID;
+        }
+        return $lastInsID;
     }
 
-    protected function _after_insert(array $data, array $options): void
+    protected function _after_insert(array &$data, array $options): void
     {
     }
 
@@ -1390,7 +1389,7 @@ abstract class Model
     /**
      * 返回最后执行的 sql 语句.
      */
-    public function getLastSql(): ?string
+    public function getLastSql(): null|string|int
     {
         return $this->mysql->getLastSql();
     }

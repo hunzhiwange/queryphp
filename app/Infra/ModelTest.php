@@ -2994,4 +2994,26 @@ class ModelTest extends TestCase
             $this->assertSame($data['brand_id'], $id);
         }
     }
+
+    public function testQuerySub186(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'Data type invalid'
+        );
+
+        $baseBrandModel = BaseBrandModel::make();
+        $id = $baseBrandModel
+            ->add();
+    }
+
+    public function testQuerySub187(): void
+    {
+        $baseBrandModel = BaseBrandModel::make();
+        $id = $baseBrandModel
+            ->add([
+                'brand_name' => 'hello world',
+            ]);
+        $this->assertSame(true, $id>0);
+    }
 }
