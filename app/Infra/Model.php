@@ -599,16 +599,17 @@ abstract class Model
             $options['cache']['key'] = $key;
         }
         $resultSet = $this->mysql->select($options);
-        if (empty($resultSet)) {// 查询结果为空
-            return null;
-        }
         if (is_string($resultSet)) {
             return $resultSet;
         }
 
         // 读取数据后的处理
-        $data = $resultSet[0];
-        $this->_after_find($data, $options);
+        if ($resultSet) {
+            $data = $resultSet[0];
+            $this->_after_find($data, $options);
+        } else {
+            $data = $resultSet;
+        }
         return $this->data = $data;
     }
 

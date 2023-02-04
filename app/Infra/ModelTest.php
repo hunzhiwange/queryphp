@@ -3258,4 +3258,17 @@ class ModelTest extends TestCase
         $this->assertSame($result, $sql);
         $this->assertSame($data['brand_id'], $id);
     }
+
+    public function testQuerySub204(): void
+    {
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandModel::make();
+        $data = $baseBrandModel
+            ->getInfo(['map' => ['brand_id' => 'not_found']]);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "SELECT  * FROM `base_brand` WHERE `status` = 'T' AND `brand_id` = 'not_found' AND `company_id` = 0 LIMIT 1";
+        $this->assertSame($result, $sql);
+        $this->assertSame([], $data);
+    }
 }
