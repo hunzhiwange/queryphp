@@ -354,6 +354,13 @@ abstract class Model
         ];
     }
 
+    public function findOne(array $in = []): string|array
+    {
+        $this->mergeScopeWhere($in);
+
+        return $this->find();
+    }
+
     /**
      * 利用 __call 方法实现一些特殊的 Model 方法.
      *
@@ -555,7 +562,7 @@ abstract class Model
     /**
      * 查询数据.
      */
-    public function find(array|string|int|float $options = array()): mixed
+    public function find(array|string|int|float $options = array()): array|string
     {
         if (is_numeric($options) || is_string($options)) {
             $where[$this->getPk()] = $options;
@@ -578,7 +585,7 @@ abstract class Model
                 }
                 $options['where'] = $where;
             } else {
-                return false;
+                throw new Exception('Invalid primary where condition.');
             }
         }
         // 总是查找一条记录
@@ -592,9 +599,6 @@ abstract class Model
             $options['cache']['key'] = $key;
         }
         $resultSet = $this->mysql->select($options);
-        if (false === $resultSet) {
-            return false;
-        }
         if (empty($resultSet)) {// 查询结果为空
             return null;
         }
@@ -861,7 +865,7 @@ abstract class Model
                 }
                 $options['where'] = $where;
             } else {
-                return false;
+                throw new Exception('Invalid primary where condition.');
             }
         }
         // 分析表达式

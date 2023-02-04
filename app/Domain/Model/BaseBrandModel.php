@@ -49,6 +49,9 @@ class BaseBrandModel extends Model
             'where' => array('status' => 'T'),
             'order' => 'order_num DESC, brand_id ASC',
         ),
+        'one' => array(
+            'where' => array('status' => 'T'),
+        ),
     );
 
     protected array $_auto = array(
@@ -143,16 +146,9 @@ class BaseBrandModel extends Model
      */
     public function getInfo(array $arrIn): mixed
     {
-        $arrIn = array_merge(array('field' => true, 'map' => array()), $arrIn);
-        if (!isset($arrIn['map']['status'])) {
-            $arrIn['map']['status'] = 'T';
-        }
-        $arrIn['map']['company_id'] = get_company_id();
+        $arrIn['scope'] = 'one';
 
-        return $this
-            ->where($arrIn['map'])
-            ->field($arrIn['field'])
-            ->find();
+        return $this->findOne($arrIn);
     }
 
     /**
