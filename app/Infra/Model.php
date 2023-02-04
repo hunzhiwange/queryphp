@@ -94,7 +94,7 @@ abstract class Model
     /**
      * 最近错误信息.
      */
-    protected string $error = '';
+    protected string|array $error = '';
 
     /**
      * 字段信息.
@@ -909,13 +909,9 @@ abstract class Model
     }
 
     /**
-     * 保存数据
-     * @access public
-     * @param mixed $data 数据
-     * @param array $options 表达式
-     * @return boolean
+     * 保存数据.
      */
-    public function save($data = '', $options = array())
+    public function save(mixed $data = '', array $options = array()): bool|int|string
     {
         if (empty($data)) {
             // 没有传递数据，获取当前数据对象的值
@@ -924,7 +920,7 @@ abstract class Model
                 // 重置数据
                 $this->data = array();
             } else {
-                $this->error = '_DATA_TYPE_INVALID_';
+                $this->error = 'Data type invalid.';
                 return false;
             }
         }
@@ -932,7 +928,7 @@ abstract class Model
         $data = $this->_facade($data);
         if (empty($data)) {
             // 没有数据则不执行
-            $this->error = '_DATA_TYPE_INVALID_';
+            $this->error = 'Data type invalid.';
             return false;
         }
         // 分析表达式
@@ -950,7 +946,7 @@ abstract class Model
                         $where[$field] = $data[$field];
                     } else {
                         // 如果缺少复合主键数据则不执行
-                        $this->error = L('_OPERATION_WRONG_');
+                        $this->error = 'Operation wrong.';
                         return false;
                     }
                     unset($data[$field]);
@@ -958,7 +954,7 @@ abstract class Model
             }
             if (!isset($where)) {
                 // 如果没有任何更新条件则不执行
-                $this->error = '_OPERATION_WRONG_';
+                $this->error = 'Operation wrong.';
                 return false;
             } else {
                 $options['where'] = $where;
@@ -990,7 +986,7 @@ abstract class Model
     /**
      * 字段值减少.
      */
-    public function setDec($field, int $step = 1): bool|int|string
+    public function setDec(string $field, int $step = 1): bool|int|string
     {
         return $this->setField($field, array('exp', $field . '-' . $step));
     }
@@ -1140,7 +1136,7 @@ abstract class Model
     /**
      * 根据验证因子验证字段.
      */
-    protected function _validationFieldItem($data, $val): bool
+    protected function _validationFieldItem(array $data, array $val): bool
     {
         switch (strtolower(trim($val[4]))) {
             case 'function':// 使用函数进行验证
@@ -1404,7 +1400,7 @@ abstract class Model
     /**
      * 返回模型的错误信息.
      */
-    public function getError(): string
+    public function getError(): string|array
     {
         return $this->error;
     }
