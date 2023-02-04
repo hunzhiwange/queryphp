@@ -2809,13 +2809,13 @@ class ModelTest extends TestCase
 
     public function testQuerySub173(): void
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'Invalid delete condition.'
+        );
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->delete();
-        $result = $baseBrandModel->getLastSql();
-        $result = trim($result);
-        $sql = "";
-        $this->assertSame($result, $sql);
     }
 
     public function testQuerySub174(): void
@@ -3323,5 +3323,31 @@ class ModelTest extends TestCase
         $result = trim($result);
         $sql = "DELETE FROM `base_brand` WHERE `brand_id` = {$id} AND `company_id` = 0";
         $this->assertSame($result, $sql);
+    }
+
+    public function testQuerySub209(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'Invalid delete condition.'
+        );
+
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->delete();
+    }
+
+    public function testQuerySub210(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'Empty where condition.'
+        );
+
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->delete(['b_id' => 5]);
     }
 }

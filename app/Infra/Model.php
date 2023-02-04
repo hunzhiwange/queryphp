@@ -829,8 +829,10 @@ abstract class Model
 
     /**
      * 删除数据.
+     *
+     * @throws \Exception
      */
-    public function delete(int|string|array $options = array()): mixed
+    public function delete(int|string|array $options = array()): int|string
     {
         $pk = $this->getPk();
         if (empty($options) && empty($this->options['where'])) {
@@ -838,7 +840,7 @@ abstract class Model
             if (!empty($this->data) && isset($this->data[$pk])) {
                 return $this->delete($this->data[$pk]);
             } else {
-                return false;
+                throw new Exception('Invalid delete condition.');
             }
         }
         if (is_numeric($options) || is_string($options)) {
@@ -872,17 +874,15 @@ abstract class Model
         $options = $this->_parseOptions($options);
         if (empty($options['where'])) {
             // 如果条件为空，不进行删除操作，除非设置 1=1
-            return false;
+            throw new Exception('Empty where condition.');
         }
         if (is_array($options['where']) && isset($options['where'][$pk])) {
             $pkValue = $options['where'][$pk];
         }
 
-        if (false === $this->_before_delete($options)) {
-            return false;
-        }
+        $this->_before_delete($options);
         $result = $this->mysql->delete($options);
-        if (false !== $result && is_numeric($result)) {
+        if (is_numeric($result)) {
             $data = array();
             if (isset($pkValue)) {
                 $data[$pk] = $pkValue;
