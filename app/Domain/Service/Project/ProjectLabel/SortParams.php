@@ -33,7 +33,7 @@ class SortParams extends ParamsDto
         }
 
         $projectLabelIds = $this->projectLabelIds->toArray();
-        if (count($projectLabelIds) !== count(array_unique($projectLabelIds))) {
+        if (\count($projectLabelIds) !== \count(array_unique($projectLabelIds))) {
             throw new ProjectBusinessException(ProjectErrorCode::PROJECT_LABEL_SORT_PROJECT_LABEL_IDS_EXISTS_SAME_ID);
         }
     }

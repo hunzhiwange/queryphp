@@ -84,7 +84,7 @@ class Project extends Entity
     public const STRUCT = [
         'id' => [
             self::COLUMN_NAME => 'ID',
-            self::READONLY    => true,
+            self::READONLY => true,
         ],
         'company_id' => [
             self::COLUMN_NAME => '公司 ID',
@@ -97,7 +97,7 @@ class Project extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
-            self::ENUM_CLASS  => ProjectStatusEnum::class,
+            self::ENUM_CLASS => ProjectStatusEnum::class,
         ],
         'progress' => [
             self::COLUMN_NAME => '进度条(最大值 10000，需要除以 100 表示实际进度)',
@@ -121,15 +121,15 @@ class Project extends Entity
             self::COLUMN_NAME => '更新时间',
         ],
         'delete_at' => [
-            self::COLUMN_NAME     => '删除时间 0=未删除;大于0=删除时间;',
+            self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
             self::SHOW_PROP_BLACK => true,
         ],
         'create_account' => [
-            self::COLUMN_NAME     => '创建账号',
+            self::COLUMN_NAME => '创建账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'update_account' => [
-            self::COLUMN_NAME     => '更新账号',
+            self::COLUMN_NAME => '更新账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'version' => [

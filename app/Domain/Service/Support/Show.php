@@ -37,6 +37,7 @@ trait Show
     {
         return $this->w
             ->repository($this->entityClass)
-            ->findOrFail($id);
+            ->findOrFail($id)
+        ;
     }
 }

@@ -46,9 +46,10 @@ class Resource
     {
         return $this->w
             ->repository(EntityPermissionResource::class)
-            ->findAll(function (Select $select) use ($permissionId) {
+            ->findAll(function (Select $select) use ($permissionId): void {
                 $select->where('permission_id', $permissionId);
-            });
+            })
+        ;
     }
 
     /**
@@ -96,7 +97,7 @@ class Resource
     {
         return new EntityPermissionResource([
             'permission_id' => $permissionId,
-            'resource_id'   => $resourceId,
+            'resource_id' => $resourceId,
         ]);
     }
 }

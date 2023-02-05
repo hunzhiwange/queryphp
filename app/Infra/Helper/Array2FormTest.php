@@ -6,7 +6,12 @@ namespace App\Infra\Helper;
 
 use Tests\TestCase;
 
-class Array2FormTest extends TestCase
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
+final class Array2FormTest extends TestCase
 {
     public function testBaseUse(): void
     {
@@ -23,7 +28,7 @@ class Array2FormTest extends TestCase
             ]
             eot;
 
-        $this->assertSame(
+        static::assertSame(
             $json,
             $this->varJson(
                 $result
@@ -35,9 +40,9 @@ class Array2FormTest extends TestCase
     {
         $data = [
             'company_id' => 311,
-            'title'      => 'foo title',
-            'content'    => 'bar content',
-            'status'     => 1,
+            'title' => 'foo title',
+            'content' => 'bar content',
+            'status' => 1,
         ];
 
         $result = explode(PHP_EOL, Array2Form::handle($data));
@@ -52,7 +57,7 @@ class Array2FormTest extends TestCase
             ]
             eot;
 
-        $this->assertSame(
+        static::assertSame(
             $json,
             $this->varJson(
                 $result
@@ -76,7 +81,7 @@ class Array2FormTest extends TestCase
             ]
             eot;
 
-        $this->assertSame(
+        static::assertSame(
             $json,
             $this->varJson(
                 $result
@@ -100,7 +105,7 @@ class Array2FormTest extends TestCase
             ]
             eot;
 
-        $this->assertSame(
+        static::assertSame(
             $json,
             $this->varJson(
                 $result
@@ -126,7 +131,7 @@ class Array2FormTest extends TestCase
             ]
             eot;
 
-        $this->assertSame(
+        static::assertSame(
             $json,
             $this->varJson(
                 $result
@@ -150,7 +155,7 @@ class Array2FormTest extends TestCase
             ]
             eot;
 
-        $this->assertSame(
+        static::assertSame(
             $json,
             $this->varJson(
                 $result

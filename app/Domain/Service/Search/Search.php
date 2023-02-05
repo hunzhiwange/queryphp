@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Search;
 
-use Leevel;
-use RuntimeException;
-
 /**
  * 搜索项.
  */
@@ -30,7 +27,7 @@ class Search
     {
         $result = [];
         foreach ($input as $service => $method) {
-            if (!is_array($method)) {
+            if (!\is_array($method)) {
                 continue;
             }
 
@@ -45,25 +42,25 @@ class Search
             $serviceClass = $this->topNamespace.'\\Service\\Search\\'.$convertService.'\\';
 
             foreach ($method as $v) {
-                $convertMethod = $this->convertService($subService ? $subService : $v);
+                $convertMethod = $this->convertService($subService ?: $v);
                 $serviceHandle = $serviceClass.$convertMethod;
                 if (!class_exists($serviceHandle)) {
                     $e = sprintf('Search condition `%s` was not found.', $serviceHandle);
 
-                    throw new RuntimeException($e);
+                    throw new \RuntimeException($e);
                 }
 
-                $serviceObj = Leevel::make($serviceHandle);
-                if (!is_object($serviceObj) || !is_callable([$serviceObj, 'handle'])) {
+                $serviceObj = \Leevel::make($serviceHandle);
+                if (!\is_object($serviceObj) || !\is_callable([$serviceObj, 'handle'])) {
                     $e = sprintf('Search condition `%s:%s` was invalid.', $serviceHandle, 'handle');
 
-                    throw new RuntimeException($e);
+                    throw new \RuntimeException($e);
                 }
 
                 if ($subService) {
-                    $result[$service][$subService][$v] = Leevel::call([$serviceObj, 'handle'], [$v, $input]);
+                    $result[$service][$subService][$v] = \Leevel::call([$serviceObj, 'handle'], [$v, $input]);
                 } else {
-                    $result[$service][$v] = Leevel::call([$serviceObj, 'handle'], [$v, $input]);
+                    $result[$service][$v] = \Leevel::call([$serviceObj, 'handle'], [$v, $input]);
                 }
             }
         }
@@ -76,11 +73,11 @@ class Search
      */
     private function convertService(string $service): string
     {
-        if (false !== strpos($service, '-')) {
+        if (str_contains($service, '-')) {
             $service = str_replace('-', '_', $service);
         }
 
-        if (false !== strpos($service, '_')) {
+        if (str_contains($service, '_')) {
             $service = '_'.str_replace('_', ' ', $service);
             $service = ltrim(str_replace(' ', '', ucwords($service)), '_');
         }

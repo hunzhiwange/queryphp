@@ -59,9 +59,9 @@ class Resource implements IValidator
     public function rules(): array
     {
         return [
-            'id'     => 'required|type:int|gt:0',
-            'name'   => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
-            'num'    => ['required', $this->uniqueRule],
+            'id' => 'required|type:int|gt:0',
+            'name' => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
+            'num' => ['required', $this->uniqueRule],
             'status' => [
                 ['in', ResourceStatusEnum::values()],
             ],

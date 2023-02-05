@@ -18,11 +18,15 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * 原生 PHPUnit 示例.
+ *
+ * @internal
+ *
+ * @coversNothing
  */
-class PHPUnitTest extends TestCase
+final class PHPUnitTest extends TestCase
 {
     public function testBaseUse(): void
     {
-        $this->assertSame('QueryPHP', 'QueryPHP');
+        static::assertSame('QueryPHP', 'QueryPHP');
     }
 }

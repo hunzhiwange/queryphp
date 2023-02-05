@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 项目版本完成状态值枚举.
  */
-enum ProjectReleaseCompletedEnum:int
+enum ProjectReleaseCompletedEnum: int
 {
     use Enum;
 

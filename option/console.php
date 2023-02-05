@@ -16,7 +16,7 @@ return [
              * {{file_title}}.
              */
             EOT,
-        'file_name'    => '',
+        'file_name' => '',
     ],
 
     /*

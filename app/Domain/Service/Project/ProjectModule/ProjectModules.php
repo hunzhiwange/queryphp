@@ -6,7 +6,6 @@ namespace App\Domain\Service\Project\ProjectModule;
 
 use App\Domain\Entity\Project\ProjectModule;
 use App\Domain\Service\Support\Read;
-use Closure;
 use Leevel\Database\Ddd\Select;
 
 /**
@@ -18,9 +17,9 @@ class ProjectModules
 
     protected string $entityClass = ProjectModule::class;
 
-    private function conditionCall(ProjectModulesParams $params): ?Closure
+    private function conditionCall(ProjectModulesParams $params): ?\Closure
     {
-        return function (Select $select) {
+        return function (Select $select): void {
             $select->eager([
                 'project',
             ]);

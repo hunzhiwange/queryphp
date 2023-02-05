@@ -17,7 +17,7 @@ class Permission extends Repository
      */
     public function hasChildren(int $id): bool
     {
-        return $this->findCount(function (Select $select) use ($id) {
+        return $this->findCount(function (Select $select) use ($id): void {
             $select->where('pid', $id);
         }) > 0;
     }

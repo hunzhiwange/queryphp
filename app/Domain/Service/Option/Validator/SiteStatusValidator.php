@@ -17,12 +17,12 @@ class SiteStatusValidator extends Validator
         $validator = Validate::make(
             [$key => $value],
             [
-                'site_status'  => [
+                'site_status' => [
                     ['in', StatusEnum::values()],
                 ],
             ],
             [
-                'site_status'  => __('站点状态'),
+                'site_status' => __('站点状态'),
             ]
         );
 

@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 项目用户数据类型枚举.
  */
-enum ProjectUserDataTypeEnum:int
+enum ProjectUserDataTypeEnum: int
 {
     use Enum;
 

@@ -7,7 +7,6 @@ namespace App\Domain\Service\Project\ProjectRelease;
 use App\Domain\Entity\Project\ProjectRelease;
 use App\Domain\Service\Support\Read;
 use App\Domain\Service\Support\Spec\Project\ProjectIds;
-use Closure;
 use Leevel\Database\Ddd\Select;
 
 /**
@@ -15,14 +14,14 @@ use Leevel\Database\Ddd\Select;
  */
 class ProjectReleases
 {
-    use Read;
     use ProjectIds;
+    use Read;
 
     protected string $entityClass = ProjectRelease::class;
 
-    private function conditionCall(ProjectReleasesParams $params): ?Closure
+    private function conditionCall(ProjectReleasesParams $params): ?\Closure
     {
-        return function (Select $select) {
+        return function (Select $select): void {
             $select->eager([
                 'project',
             ]);

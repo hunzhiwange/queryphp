@@ -47,12 +47,12 @@ return [
 
             // 连接参数
             'options' => [
-                PDO::ATTR_PERSISTENT        => false,
-                PDO::ATTR_CASE              => PDO::CASE_NATURAL,
-                PDO::ATTR_ORACLE_NULLS      => PDO::NULL_NATURAL,
+                PDO::ATTR_PERSISTENT => false,
+                PDO::ATTR_CASE => PDO::CASE_NATURAL,
+                PDO::ATTR_ORACLE_NULLS => PDO::NULL_NATURAL,
                 PDO::ATTR_STRINGIFY_FETCHES => false,
-                PDO::ATTR_EMULATE_PREPARES  => false,
-                PDO::ATTR_TIMEOUT           => 30,
+                PDO::ATTR_EMULATE_PREPARES => false,
+                PDO::ATTR_TIMEOUT => 30,
             ],
 
             // 数据库读写是否分离

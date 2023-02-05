@@ -33,7 +33,7 @@ class StoreParams extends CommonStoreParams
     {
         $uniqueRule = UniqueRule::rule(
             $this->entityClass,
-            additional:['project_id' => $this->projectId]
+            additional: ['project_id' => $this->projectId]
         );
 
         return [$uniqueRule];

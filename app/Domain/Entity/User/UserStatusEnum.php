@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 用户状态值枚举.
  */
-enum UserStatusEnum:int
+enum UserStatusEnum: int
 {
     use Enum;
 

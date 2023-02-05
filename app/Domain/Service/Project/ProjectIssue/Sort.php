@@ -48,20 +48,23 @@ class Sort
                 ->where('id', '<>', $params->prevIssueId)
                 ->where('sort', '>', $nextIssue->sort)
                 ->orderBy('sort DESC')
-                ->findEntity();
+                ->findEntity()
+            ;
 
             if ($nextPreIssue->id) {
                 $newSort = (int) (($nextIssue->sort + $nextPreIssue->sort) / 2);
             } else {
                 $maxSort = $issueRepository
                     ->where('project_id', $params->projectId)
-                    ->findMax('sort');
+                    ->findMax('sort')
+                ;
                 $newSort = $maxSort + ProjectIssue::SORT_INTERVAL;
             }
         } else {
             $minSort = $issueRepository
-            ->where('project_id', $params->projectId)
-             ->findMin('sort');
+                ->where('project_id', $params->projectId)
+                ->findMin('sort')
+            ;
             $newSort = (int) (($minSort + 0) / 2);
         }
 
@@ -74,7 +77,7 @@ class Sort
             $this->w->persist($preIssue);
             $this->w->flush();
         } else {
-            //小于安全值
+            // 小于安全值
             $this->resetSort($params->projectId);
             $this->sort($params);
         }
@@ -83,13 +86,14 @@ class Sort
     public function resetSort(int $projectId): void
     {
         $w = clone $this->w;
-        $w->persist(function () use ($projectId) {
+        $w->persist(function () use ($projectId): void {
             $issueRepository = ProjectIssue::repository();
             $issueRepository->execute('SET @num=1');
             $issueRepository
                 ->where('project_id', $projectId)
                 ->orderBy('sort ASC,id ASC')
-                ->update(['sort' => Condition::raw(sprintf('@num := @num + %d', ProjectIssue::SORT_INTERVAL))]);
+                ->update(['sort' => Condition::raw(sprintf('@num := @num + %d', ProjectIssue::SORT_INTERVAL))])
+            ;
         });
         $w->flush();
     }

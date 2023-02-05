@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Exception;
-
 trait PrepareCodeAndMessage
 {
     /**
@@ -18,9 +16,9 @@ trait PrepareCodeAndMessage
     ) {
         $message = $overrideMessage ? $message :
                     $this->getErrorMessage($code).($message ? ': '.$message : '');
-        if (is_object($code)) {
-            if (!enum_exists($codeEnumClass = get_class($code))) {
-                throw new Exception(sprintf('Enum %s is not exists.', $codeEnumClass));
+        if (\is_object($code)) {
+            if (!enum_exists($codeEnumClass = $code::class)) {
+                throw new \Exception(sprintf('Enum %s is not exists.', $codeEnumClass));
             }
             $code = $code->value;
         }

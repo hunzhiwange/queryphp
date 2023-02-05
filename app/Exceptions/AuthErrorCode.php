@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 认证业务错误码.
  */
-enum AuthErrorCode:int
+enum AuthErrorCode: int
 {
     use Enum;
 

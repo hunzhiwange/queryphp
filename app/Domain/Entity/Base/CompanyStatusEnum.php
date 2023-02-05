@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 公司状态值枚举.
  */
-enum CompanyStatusEnum:int
+enum CompanyStatusEnum: int
 {
     use Enum;
 

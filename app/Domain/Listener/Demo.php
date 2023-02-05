@@ -18,9 +18,9 @@ class Demo extends Listener
     /**
      * 监听器响应.
      */
-    public function handle()
+    public function handle(): void
     {
-        $args = func_get_args();
+        $args = \func_get_args();
         $event = array_shift($args);
         print_r($event);
         print_r($args);

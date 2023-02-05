@@ -21,7 +21,8 @@ class Options
     {
         $options = $this->w
             ->repository(OptionEntity::class)
-            ->findAll();
+            ->findAll()
+        ;
         $result = $options->toArray();
         $result = $result ? array_column($result, 'value', 'name') : [];
         foreach ($result as &$v) {

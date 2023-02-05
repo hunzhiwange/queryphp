@@ -12,11 +12,10 @@ use App\Domain\Service\Support\Update as CommonUpdate;
  */
 class Update
 {
-    private ?ProjectRelease $entity = null;
-
     use CommonUpdate;
 
     protected string $entityClass = ProjectRelease::class;
+    private ?ProjectRelease $entity = null;
 
     public function beforeHandle(UpdateParams $params): void
     {
@@ -40,6 +39,7 @@ class Update
         return $params
             ->except(['id'])
             ->withoutNull()
-            ->toArray();
+            ->toArray()
+        ;
     }
 }

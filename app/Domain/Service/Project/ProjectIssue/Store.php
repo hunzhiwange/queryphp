@@ -34,11 +34,11 @@ class Store
     private function save(StoreParams $params): ProjectIssue
     {
         $this->w->persist($entity = $this->entity($params));
-        $this->w->on($entity, function (ProjectIssue $entity) {
+        $this->w->on($entity, function (ProjectIssue $entity): void {
             $projectContentEntity = new ProjectContent([
-                'project_id'       => $entity->projectId,
+                'project_id' => $entity->projectId,
                 'project_issue_id' => $entity->id,
-                'content'          => '',
+                'content' => '',
             ]);
             $this->w->persist($projectContentEntity);
         });
@@ -68,7 +68,8 @@ class Store
     {
         $maxSort = ProjectIssue::repository()
             ->where('project_id', $params->projectId)
-            ->findMax('sort');
+            ->findMax('sort')
+        ;
         $newSort = $maxSort + ProjectIssue::SORT_INTERVAL;
 
         $data = $params->toArray();

@@ -28,7 +28,7 @@ class ChangePassword
     {
         $params = new ChangePasswordParams($this->input($request));
 
-        return \success($service->handle($params), __('修改密码后你需要从新登陆'));
+        return success($service->handle($params), __('修改密码后你需要从新登陆'));
     }
 
     private function extendInput(): array

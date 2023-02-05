@@ -46,10 +46,10 @@ class Store
     private function data(StoreParams $params): array
     {
         return [
-            'name'       => $params->name,
-            'num'        => $params->num,
-            'status'     => $params->status,
-            'password'   => $this->createPassword($params->password),
+            'name' => $params->name,
+            'num' => $params->num,
+            'status' => $params->status,
+            'password' => $this->createPassword($params->password),
         ];
     }
 }

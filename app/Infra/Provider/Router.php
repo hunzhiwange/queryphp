@@ -40,8 +40,8 @@ class Router extends RouterProvider
      * - 例外在应用执行结束后响应环节也会调用 HTTP 中间件.
      */
     protected array $middlewareAlias = [
-        'auth'       => Auth::class,
-        'session'    => Session::class,
+        'auth' => Auth::class,
+        'session' => Session::class,
     ];
 
     /**
@@ -60,9 +60,9 @@ class Router extends RouterProvider
      * 分组.
      */
     protected array $groups = [
-        'pet'     => [],
-        'store'   => [],
-        'user'    => [],
+        'pet' => [],
+        'store' => [],
+        'user' => [],
         '/api/v1' => [
             'middlewares' => 'api',
         ],

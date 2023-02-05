@@ -23,7 +23,7 @@ class Store
         }
     }
 
-    private function validatePidData(int $pid)
+    private function validatePidData(int $pid): void
     {
         $this->find($pid);
     }

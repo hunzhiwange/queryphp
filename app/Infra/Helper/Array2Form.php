@@ -17,7 +17,7 @@ class Array2Form
 
         array_walk(
             $query,
-            function (&$v) {
+            function (&$v): void {
                 $v = urldecode(str_replace('=', ':', $v));
             },
         );

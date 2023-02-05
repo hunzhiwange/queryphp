@@ -38,9 +38,9 @@ class UpdateParams extends CommonUpdateParams
      */
     protected function beforeValidate(): void
     {
-        if (ProjectReleaseCompletedEnum::PUBLISHED->value === $this->completed &&
-            !isset($params->completedDate)) {
-            $this->completedDate = \get_current_date();
+        if (ProjectReleaseCompletedEnum::PUBLISHED->value === $this->completed
+            && !isset($params->completedDate)) {
+            $this->completedDate = get_current_date();
         }
     }
 
@@ -51,8 +51,8 @@ class UpdateParams extends CommonUpdateParams
     {
         $uniqueRule = UniqueRule::rule(
             $this->entityClass,
-            exceptId:$this->id,
-            additional:['project_id' => $this->projectId]
+            exceptId: $this->id,
+            additional: ['project_id' => $this->projectId]
         );
 
         return [$uniqueRule];
