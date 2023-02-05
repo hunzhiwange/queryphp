@@ -115,7 +115,7 @@ class Database
                 $values[] = $val[1];
             } elseif (is_scalar($val)) { // 过滤非标量数据
                 $fields[] = $this->parseKey($key);
-                if (is_string($val) && 0 === strpos($val, ':') && in_array($val, array_keys($this->bind))) {
+                if (is_string($val) && str_starts_with($val, ':') && in_array($val, array_keys($this->bind))) {
                     $values[] = $this->parseValue($val);
                 } else {
                     $name = count($this->bind);
@@ -128,7 +128,7 @@ class Database
         $replace = (is_numeric($replace) && $replace > 0) ? true : $replace;
         $sql = (true === $replace ? 'REPLACE' : 'INSERT') . ' INTO ' . $this->parseTable($options['table']) . ' (' . implode(',', $fields) . ') VALUES (' . implode(',', $values) . ')' . $this->parseDuplicate($replace);
         $sql .= $this->parseComment(!empty($options['comment']) ? $options['comment'] : '');
-        return $this->execute($sql, !empty($options['fetch_sql']) ? true : false);
+        return $this->execute($sql, !empty($options['fetch_sql']));
     }
 
     /**
@@ -137,7 +137,7 @@ class Database
     protected function parseKey(&$key): string
     {
         $key = trim($key);
-        if (!is_numeric($key) && !preg_match('/[,\'\"\*\(\)`.\s]/', $key)) {
+        if (!is_numeric($key) && !preg_match('/[,\'\"*()`.\s]/', $key)) {
             $key = '`' . $key . '`';
         }
 
@@ -150,7 +150,7 @@ class Database
     protected function parseValue(mixed $value): mixed
     {
         if (is_string($value)) {
-            $value = strpos($value, ':') === 0 && in_array($value, array_keys($this->bind)) ? $this->escapeString($value) : '\'' . $this->escapeString($value) . '\'';
+            $value = str_starts_with($value, ':') && in_array($value, array_keys($this->bind)) ? $this->escapeString($value) : '\'' . $this->escapeString($value) . '\'';
         } elseif (isset($value[0]) && is_string($value[0]) && strtolower($value[0]) == 'exp') {
             $value = $this->escapeString($value[1]);
         } elseif (is_array($value)) {
@@ -283,7 +283,7 @@ class Database
     /**
      * 批量插入记录.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function insertAll(array $dataSet, array $options = array(), bool $replace = false): int|string
     {
@@ -299,7 +299,7 @@ class Database
                 if (is_array($val) && 'exp' == $val[0]) {
                     $value[] = $val[1];
                 } elseif (is_scalar($val) || is_null($val)) {
-                    if (0 === strpos($val, ':') && in_array($val, array_keys($this->bind))) {
+                    if (str_starts_with($val, ':') && in_array($val, array_keys($this->bind))) {
                         $value[] = $this->parseValue($val);
                     } else {
                         $name = count($this->bind);
@@ -315,7 +315,7 @@ class Database
         $sql = (true === $replace ? 'REPLACE' : 'INSERT') . ' INTO ' . $this->parseTable($options['table']) . ' (' . implode(',', $fields) . ') VALUES ' . implode(',', $values) . $this->parseDuplicate($replace);
         $sql .= $this->parseComment(!empty($options['comment']) ? $options['comment'] : '');
 
-        return $this->execute($sql, !empty($options['fetch_sql']) ? true : false);
+        return $this->execute($sql, !empty($options['fetch_sql']));
     }
 
     /**
@@ -329,12 +329,11 @@ class Database
         array_walk($fields, array($this, 'parseKey'));
         $sql = 'INSERT INTO ' . $this->parseTable($table) . ' (' . implode(',', $fields) . ') ';
         $sql .= $this->buildSelectSql($options);
-        return $this->execute($sql, !empty($options['fetch_sql']) ? true : false);
+        return $this->execute($sql, !empty($options['fetch_sql']));
     }
 
     /**
      * 生成查询 SQL.
-     * @return string
      */
     public function buildSelectSql($options = array()): string
     {
@@ -359,7 +358,7 @@ class Database
             array(
                 $this->parseForceMaster(!empty($options['force_master'])),
                 $this->parseTable($options['table']),
-                $this->parseDistinct(isset($options['distinct']) ? $options['distinct'] : false),
+                $this->parseDistinct($options['distinct'] ?? false),
                 $this->parseField(!empty($options['field']) ? $options['field'] : '*'),
                 $this->parseJoin(!empty($options['join']) ? $options['join'] : ''),
                 $this->parseWhere(!empty($options['where']) ? $options['where'] : ''),
@@ -368,7 +367,7 @@ class Database
                 $this->parseOrder(!empty($options['order']) ? $options['order'] : ''),
                 $this->parseLimit(!empty($options['limit']) ? $options['limit'] : ''),
                 $this->parseUnion(!empty($options['union']) ? $options['union'] : ''),
-                $this->parseLock(isset($options['lock']) ? $options['lock'] : false),
+                $this->parseLock($options['lock'] ?? false),
                 $this->parseComment(!empty($options['comment']) ? $options['comment'] : ''),
                 $this->parseForce(!empty($options['force']) ? $options['force'] : '')
             ), $sql);
@@ -450,7 +449,7 @@ class Database
                 if (is_numeric($key)) {
                     $key = '_complex';
                 }
-                if (0 === strpos($key, '_')) {
+                if (str_starts_with($key, '_')) {
                     // 解析特殊条件表达式
                     $whereStr .= $this->parseThinkWhere($key, $val);
                 } else {
@@ -641,6 +640,7 @@ class Database
         } else {
             $str = 'UNION ';
         }
+        $sql = [];
         foreach ($union as $u) {
             $sql[] = $str . (is_array($u) ? $this->buildSelectSql($u) : $u);
         }
@@ -688,7 +688,7 @@ class Database
                 . $this->parseLimit(!empty($options['limit']) ? $options['limit'] : '');
         }
         $sql .= $this->parseComment(!empty($options['comment']) ? $options['comment'] : '');
-        return $this->execute($sql, !empty($options['fetch_sql']) ? true : false);
+        return $this->execute($sql, !empty($options['fetch_sql']));
     }
 
     /**
@@ -696,13 +696,14 @@ class Database
      */
     protected function parseSet(array $data): string
     {
+        $set = [];
         foreach ($data as $key => $val) {
             if (is_array($val) && 'exp' == $val[0]) {
                 $set[] = $this->parseKey($key) . '=' . $val[1];
             } elseif (is_null($val)) {
                 $set[] = $this->parseKey($key) . '=NULL';
             } elseif (is_scalar($val)) {// 过滤非标量数据
-                if (is_string($val) && 0 === strpos($val, ':') && in_array($val, array_keys($this->bind))) {
+                if (is_string($val) && str_starts_with($val, ':') && in_array($val, array_keys($this->bind))) {
                     $set[] = $this->parseKey($key) . '=' . $this->escapeString($val);
                 } else {
                     $name = count($this->bind);
@@ -735,7 +736,7 @@ class Database
                 . $this->parseLimit(!empty($options['limit']) ? $options['limit'] : '');
         }
         $sql .= $this->parseComment(!empty($options['comment']) ? $options['comment'] : '');
-        return $this->execute($sql, !empty($options['fetch_sql']) ? true : false);
+        return $this->execute($sql, !empty($options['fetch_sql']));
     }
 
     /**
@@ -756,7 +757,7 @@ class Database
     public function select(array $options = array()): string|array
     {
         $sql = $this->buildSelectSql($options);
-        return $this->query($sql, !empty($options['fetch_sql']) ? true : false, $options['cache'] ?? []);
+        return $this->query($sql, !empty($options['fetch_sql']), $options['cache'] ?? []);
     }
 
     /**
