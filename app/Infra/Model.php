@@ -61,66 +61,54 @@ abstract class Model
      * 主键是否自动增长.
      */
     protected bool $autoing = false;
-
-    /**
-     * 表名称.
-     */
-    private string $tableName = '';
-
     /**
      * 最近错误信息.
      */
     protected string|array $currentError = '';
-
     /**
      * 字段信息.
      */
     protected array $fields = array();
-
     /**
      * 数据信息.
      */
     protected array $data = array();
-
     /**
      * 查询表达式参数.
      */
     protected array $options = array();
-
     /**
      * 自动完成定义.
      */
     protected array $_validate = array();
-
     /**
      * 自动完成定义.
      */
     protected array $_auto = array();
-
     /**
      * 命名范围定义.
      */
     protected array $_scope = array();
-
     /**
      * 是否自动检测数据表字段信息.
      */
     protected bool $autoCheckFields = true;
-
     /**
      * 是否批处理验证.
      */
     protected bool $patchValidate = false;
-
-    /**
-     * 是否为统计查询.
-     */
-    private bool $shouldCountSelect = false;
-
     /**
      * 总记录数量.
      */
     protected int $totalCount = 0;
+    /**
+     * 表名称.
+     */
+    private string $tableName = '';
+    /**
+     * 是否为统计查询.
+     */
+    private bool $shouldCountSelect = false;
 
     /**
      * 构造函数.
@@ -133,12 +121,6 @@ abstract class Model
 
     protected function _initialize(): void
     {
-    }
-
-    public function patchValidate(bool $patchValidate = true): static
-    {
-        $this->patchValidate = $patchValidate;
-        return $this;
     }
 
     /**
@@ -195,6 +177,12 @@ abstract class Model
         return new static();
     }
 
+    public function patchValidate(bool $patchValidate = true): static
+    {
+        $this->patchValidate = $patchValidate;
+        return $this;
+    }
+
     /**
      * 获取数据对象的值.
      */
@@ -215,6 +203,20 @@ abstract class Model
 
         // 设置数据对象属性
         $this->data[$name] = $value;
+    }
+
+    /**
+     * 返回模型的错误信息.
+     *
+     * - 方法不再支持返回错误消息
+     * - 支持抛出异常
+     *
+     * @throws Exception
+     * @deprecated
+     */
+    public function getError(?string $message = null): void
+    {
+        throw new Exception($message ?? 'Method getError is deprecated.');
     }
 
     /**
@@ -299,29 +301,9 @@ abstract class Model
         return $this;
     }
 
-    public function count(string $field = '*'): string|int
-    {
-        return $this->totalCount = $this->callStatisticalQuery('count', $field);
-    }
-
     public function sum(string $field = '*'): string|int|float
     {
         return $this->callStatisticalQuery('sum', $field);
-    }
-
-    public function min(string $field = '*'): string|int|float
-    {
-        return $this->callStatisticalQuery('min', $field);
-    }
-
-    public function max(string $field = '*'): string|int|float
-    {
-        return $this->callStatisticalQuery('max', $field);
-    }
-
-    public function avg(string $field = '*'): string|int|float
-    {
-        return $this->callStatisticalQuery('avg', $field);
     }
 
     protected function callStatisticalQuery($method, string $field): string|int|float
@@ -331,62 +313,6 @@ abstract class Model
             return $this->getField(strtoupper($method) . '(' . $field . ') AS ' . $method);
         } finally {
             $this->shouldCountSelect = false;
-        }
-    }
-
-    public function findCount(array $in = []): string|int
-    {
-        $this->mergeScopeWhere($in);
-
-        return $this->count();
-    }
-
-    public function findList(array $in = []): string|array
-    {
-        $this->mergeScopeWhere($in);
-
-        return $this->select();
-    }
-
-    public function findListAndCount(array $in = []): array
-    {
-        $this->mergeScopeWhere($in);
-        $countThis = clone $this;
-
-        return [
-            'count' => $this->totalCount = $countThis->count(),
-            'list' => $this->select(),
-        ];
-    }
-
-    public function findOne(array $in = []): string|array
-    {
-        $this->mergeScopeWhere($in);
-
-        return $this->find();
-    }
-
-    /**
-     * 利用 __call 方法实现一些特殊的 Model 方法.
-     *
-     * @throws Exception
-     */
-    public function __call(string $method, array $args): mixed
-    {
-        if (strtolower(substr($method, 0, 5)) == 'getby') {
-            // 根据某个字段获取记录
-            $field = $this->parseName(substr($method, 5));
-            $where[$field] = $args[0];
-            return $this->where($where)->find();
-        } elseif (strtolower(substr($method, 0, 10)) == 'getfieldby') {
-            // 根据某个字段获取记录的某个值
-            $name = $this->parseName(substr($method, 10));
-            $where[$name] = $args[0];
-            return $this->where($where)->getField($args[1]);
-        } elseif (isset($this->_scope[$method])) {// 命名范围的单独调用支持
-            return $this->scope($method, $args[0]);
-        } else {
-            throw new Exception(__CLASS__ . ':' . $method . ' not exist.');
         }
     }
 
@@ -449,24 +375,6 @@ abstract class Model
         }
 
         return $result;
-    }
-
-    protected function filterOptionsForCountSelect(array $options): array
-    {
-        // 统计查询移除掉一些特性
-        if (!$this->shouldCountSelect) {
-            return $options;
-        }
-
-        foreach (['page', 'order'] as $field) {
-            if (isset($options[$field])) {
-                $options[$field] = '';
-            }
-        }
-
-        $options['limit'] = 1;
-
-        return $options;
     }
 
     /**
@@ -532,23 +440,6 @@ abstract class Model
     }
 
     /**
-     * 字符串命名风格转换.
-     *
-     * - type 0 将 Java 风格转换为 C 的风格
-     * - 1 将 C 风格转换为 Java 的风格
-     */
-    protected function parseName(string $name, int $type = 0): string
-    {
-        if ($type) {
-            return ucfirst(preg_replace_callback('/_([a-zA-Z])/', function ($match) {
-                return strtoupper($match[1]);
-            }, $name));
-        }
-
-        return strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $name), "_"));
-    }
-
-    /**
      * 获取数据表字段信息.
      */
     public function getDbFields(): array|false
@@ -572,6 +463,238 @@ abstract class Model
 
     protected function _options_filter(array &$options): void
     {
+    }
+
+    protected function filterOptionsForCountSelect(array $options): array
+    {
+        // 统计查询移除掉一些特性
+        if (!$this->shouldCountSelect) {
+            return $options;
+        }
+
+        foreach (['page', 'order'] as $field) {
+            if (isset($options[$field])) {
+                $options[$field] = '';
+            }
+        }
+
+        $options['limit'] = 1;
+
+        return $options;
+    }
+
+    public function min(string $field = '*'): string|int|float
+    {
+        return $this->callStatisticalQuery('min', $field);
+    }
+
+    public function max(string $field = '*'): string|int|float
+    {
+        return $this->callStatisticalQuery('max', $field);
+    }
+
+    public function avg(string $field = '*'): string|int|float
+    {
+        return $this->callStatisticalQuery('avg', $field);
+    }
+
+    public function findCount(array $in = []): string|int
+    {
+        $this->mergeScopeWhere($in);
+
+        return $this->count();
+    }
+
+    protected function mergeScopeWhere(array $in): void
+    {
+        $in = $this->parseInArgs($in);
+        $baseWhere = [];
+        if (isset($in['scope'])) {
+            $this->scope($in['scope']);
+            $baseWhere = $this->options['where'];
+        }
+        $this->scope($in);
+        if ($baseWhere) {
+            $this->options['where'] = array_merge($baseWhere, $this->options['where']);
+        }
+    }
+
+    protected function parseInArgs(array $in): array
+    {
+        if (in_array('company_id', $this->fields, true)) {
+            if (!isset($in['map']['company_id'])) {
+                $in['map']['company_id'] = get_company_id();
+            } elseif (false === $in['map']['company_id']) {
+                unset($in['map']['company_id']);
+            }
+        }
+
+        if (isset($in['map'])) {
+            $in['where'] = $in['map'];
+            unset($in['map']);
+        }
+        return $in;
+    }
+
+    /**
+     * 调用命名范围.
+     */
+    public function scope(string|array $scope = '', ?array $args = NULL): static
+    {
+        if ('' === $scope) {
+            if (isset($this->_scope['default'])) {
+                // 默认的命名范围
+                $options = $this->_scope['default'];
+            } else {
+                return $this;
+            }
+        } elseif (is_string($scope)) { // 支持多个命名范围调用 用逗号分割
+            $scopes = explode(',', $scope);
+            $options = array();
+            foreach ($scopes as $name) {
+                if (!isset($this->_scope[$name])) continue;
+                $options = array_merge($options, $this->_scope[$name]);
+            }
+            if (!empty($args)) {
+                $options = array_merge($options, $args);
+            }
+        } elseif (is_array($scope)) { // 直接传入命名范围定义
+            $options = $scope;
+        }
+
+        if (is_array($options) && !empty($options)) {
+            $this->options = array_merge($this->options, array_change_key_case($options));
+        }
+        return $this;
+    }
+
+    public function count(string $field = '*'): string|int
+    {
+        return $this->totalCount = $this->callStatisticalQuery('count', $field);
+    }
+
+    public function findList(array $in = []): string|array
+    {
+        $this->mergeScopeWhere($in);
+
+        return $this->select();
+    }
+
+    /**
+     * 查询数据集.
+     *
+     * @throws Exception
+     */
+    public function select(int|string|array|bool $options = array()): array|string
+    {
+        $pk = $this->getPk();
+        $where = [];
+        if (is_string($options) || is_numeric($options)) {
+            // 根据主键查询
+            if (strpos($options, ',')) {
+                $where[$pk] = array('IN', $options);
+            } else {
+                $where[$pk] = $options;
+            }
+            $options = array();
+            $options['where'] = $where;
+        } elseif (is_array($options) && $options && is_array($pk)) {
+            // 根据复合主键查询
+            $count = 0;
+            foreach (array_keys($options) as $key) {
+                if (is_int($key)) $count++;
+            }
+            if ($count == count($pk)) {
+                $i = 0;
+                foreach ($pk as $field) {
+                    $where[$field] = $options[$i];
+                    unset($options[$i++]);
+                }
+                $options['where'] = $where;
+            } else {
+                throw new Exception('Invalid primary where condition.');
+            }
+        } elseif (false === $options) { // 用于子查询 不查询只返回SQL
+            return $this->buildSql();
+        }
+
+        // 分析表达式
+        $options = $this->_parseOptions($options);
+        // 判断查询缓存
+        if (isset($options['cache'])) {
+            $cache = $options['cache'];
+            $key = is_string($cache['key']) ? $cache['key'] : 'sql:' . md5(serialize($options));
+            $options['cache']['key'] = $key;
+        }
+
+        $resultSet = $this->database->select($options);
+        if (is_string($resultSet)) {
+            return $resultSet;
+        }
+
+        $this->_after_select($resultSet, $options);
+        if (isset($options['index'])) { // 对数据集进行索引
+            $index = explode(',', $options['index']);
+            $cols = [];
+            foreach ($resultSet as $result) {
+                $_key = $result[$index[0]];
+                if (isset($index[1]) && isset($result[$index[1]])) {
+                    $cols[$_key] = $result[$index[1]];
+                } else {
+                    $cols[$_key] = $result;
+                }
+            }
+            $resultSet = $cols;
+        }
+
+        return $resultSet;
+    }
+
+    /**
+     * 获取主键名称.
+     */
+    public function getPk(): string|array
+    {
+        return $this->pk;
+    }
+
+    /**
+     * 生成查询 SQL 可用于子查询.
+     */
+    public function buildSql(): string
+    {
+        return '( ' . $this->fetchSql(true)->select() . ' )';
+    }
+
+    /**
+     * 设置是否获取执行的 SQL 语句.
+     */
+    public function fetchSql(bool $fetch = true): static
+    {
+        $this->options['fetch_sql'] = $fetch;
+        return $this;
+    }
+
+    protected function _after_select(array &$resultSet, array $options): void
+    {
+    }
+
+    public function findListAndCount(array $in = []): array
+    {
+        $this->mergeScopeWhere($in);
+        $countThis = clone $this;
+
+        return [
+            'count' => $this->totalCount = $countThis->count(),
+            'list' => $this->select(),
+        ];
+    }
+
+    public function findOne(array $in = []): string|array
+    {
+        $this->mergeScopeWhere($in);
+
+        return $this->find();
     }
 
     /**
@@ -629,16 +752,49 @@ abstract class Model
         return $this->data = $data;
     }
 
-    /**
-     * 获取主键名称.
-     */
-    public function getPk(): string|array
-    {
-        return $this->pk;
-    }
-
     protected function _after_find(array &$result, array $options): void
     {
+    }
+
+    /**
+     * 利用 __call 方法实现一些特殊的 Model 方法.
+     *
+     * @throws Exception
+     */
+    public function __call(string $method, array $args): mixed
+    {
+        if (strtolower(substr($method, 0, 5)) == 'getby') {
+            // 根据某个字段获取记录
+            $field = $this->parseName(substr($method, 5));
+            $where[$field] = $args[0];
+            return $this->where($where)->find();
+        } elseif (strtolower(substr($method, 0, 10)) == 'getfieldby') {
+            // 根据某个字段获取记录的某个值
+            $name = $this->parseName(substr($method, 10));
+            $where[$name] = $args[0];
+            return $this->where($where)->getField($args[1]);
+        } elseif (isset($this->_scope[$method])) {// 命名范围的单独调用支持
+            return $this->scope($method, $args[0]);
+        } else {
+            throw new Exception(__CLASS__ . ':' . $method . ' not exist.');
+        }
+    }
+
+    /**
+     * 字符串命名风格转换.
+     *
+     * - type 0 将 Java 风格转换为 C 的风格
+     * - 1 将 C 风格转换为 Java 的风格
+     */
+    protected function parseName(string $name, int $type = 0): string
+    {
+        if ($type) {
+            return ucfirst(preg_replace_callback('/_([a-zA-Z])/', function ($match) {
+                return strtoupper($match[1]);
+            }, $name));
+        }
+
+        return strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $name), "_"));
     }
 
     /**
@@ -669,38 +825,6 @@ abstract class Model
             $this->options['where'] = $where;
         }
 
-        return $this;
-    }
-
-    /**
-     * 调用命名范围.
-     */
-    public function scope(string|array $scope = '', ?array $args = NULL): static
-    {
-        if ('' === $scope) {
-            if (isset($this->_scope['default'])) {
-                // 默认的命名范围
-                $options = $this->_scope['default'];
-            } else {
-                return $this;
-            }
-        } elseif (is_string($scope)) { // 支持多个命名范围调用 用逗号分割
-            $scopes = explode(',', $scope);
-            $options = array();
-            foreach ($scopes as $name) {
-                if (!isset($this->_scope[$name])) continue;
-                $options = array_merge($options, $this->_scope[$name]);
-            }
-            if (!empty($args)) {
-                $options = array_merge($options, $args);
-            }
-        } elseif (is_array($scope)) { // 直接传入命名范围定义
-            $options = $scope;
-        }
-
-        if (is_array($options) && !empty($options)) {
-            $this->options = array_merge($this->options, array_change_key_case($options));
-        }
         return $this;
     }
 
@@ -920,97 +1044,6 @@ abstract class Model
     }
 
     /**
-     * 查询数据集.
-     *
-     * @throws Exception
-     */
-    public function select(int|string|array|bool $options = array()): array|string
-    {
-        $pk = $this->getPk();
-        $where = [];
-        if (is_string($options) || is_numeric($options)) {
-            // 根据主键查询
-            if (strpos($options, ',')) {
-                $where[$pk] = array('IN', $options);
-            } else {
-                $where[$pk] = $options;
-            }
-            $options = array();
-            $options['where'] = $where;
-        } elseif (is_array($options) && $options && is_array($pk)) {
-            // 根据复合主键查询
-            $count = 0;
-            foreach (array_keys($options) as $key) {
-                if (is_int($key)) $count++;
-            }
-            if ($count == count($pk)) {
-                $i = 0;
-                foreach ($pk as $field) {
-                    $where[$field] = $options[$i];
-                    unset($options[$i++]);
-                }
-                $options['where'] = $where;
-            } else {
-                throw new Exception('Invalid primary where condition.');
-            }
-        } elseif (false === $options) { // 用于子查询 不查询只返回SQL
-            return $this->buildSql();
-        }
-
-        // 分析表达式
-        $options = $this->_parseOptions($options);
-        // 判断查询缓存
-        if (isset($options['cache'])) {
-            $cache = $options['cache'];
-            $key = is_string($cache['key']) ? $cache['key'] : 'sql:' . md5(serialize($options));
-            $options['cache']['key'] = $key;
-        }
-
-        $resultSet = $this->database->select($options);
-        if (is_string($resultSet)) {
-            return $resultSet;
-        }
-
-        $this->_after_select($resultSet, $options);
-        if (isset($options['index'])) { // 对数据集进行索引
-            $index = explode(',', $options['index']);
-            $cols = [];
-            foreach ($resultSet as $result) {
-                $_key = $result[$index[0]];
-                if (isset($index[1]) && isset($result[$index[1]])) {
-                    $cols[$_key] = $result[$index[1]];
-                } else {
-                    $cols[$_key] = $result;
-                }
-            }
-            $resultSet = $cols;
-        }
-
-        return $resultSet;
-    }
-
-    /**
-     * 生成查询 SQL 可用于子查询.
-     */
-    public function buildSql(): string
-    {
-        return '( ' . $this->fetchSql(true)->select() . ' )';
-    }
-
-    /**
-     * 设置是否获取执行的 SQL 语句.
-     */
-    public function fetchSql(bool $fetch = true): static
-    {
-        $this->options['fetch_sql'] = $fetch;
-        return $this;
-    }
-
-    protected function _after_select(array &$resultSet, array $options): void
-    {
-    }
-
-    /**
      * 字段值增长.
      */
     public function setInc(string $field, int $step = 1): int
@@ -1175,16 +1208,6 @@ abstract class Model
         // 赋值当前数据对象
         $this->data = $data;
         return $this;
-    }
-
-    protected function formatPatchValidate(array $currentError): string
-    {
-        $message = [];
-        foreach ($currentError as $v) {
-            $message[] = sprintf('%s;', $v);
-        }
-
-        return implode('', $message);
     }
 
     /**
@@ -1389,6 +1412,16 @@ abstract class Model
         return preg_match($rule, $value) === 1;
     }
 
+    protected function formatPatchValidate(array $currentError): string
+    {
+        $message = [];
+        foreach ($currentError as $v) {
+            $message[] = sprintf('%s;', $v);
+        }
+
+        return implode('', $message);
+    }
+
     /**
      * 自动表单处理.
      */
@@ -1520,20 +1553,6 @@ abstract class Model
     public function transaction(Closure $businessLogic): mixed
     {
         return $this->database->transaction($businessLogic);
-    }
-
-    /**
-     * 返回模型的错误信息.
-     *
-     * - 方法不再支持返回错误消息
-     * - 支持抛出异常
-     *
-     * @throws Exception
-     * @deprecated
-     */
-    public function getError(?string $message = null): void
-    {
-        throw new Exception($message ?? 'Method getError is deprecated.');
     }
 
     /**
@@ -1729,36 +1748,5 @@ abstract class Model
     public function isForceMaster(): bool
     {
         return isset($this->options['force_master']) && $this->options['force_master'];
-    }
-
-    protected function parseInArgs(array $in): array
-    {
-        if (in_array('company_id', $this->fields, true)) {
-            if (!isset($in['map']['company_id'])) {
-                $in['map']['company_id'] = get_company_id();
-            } elseif (false === $in['map']['company_id']) {
-                unset($in['map']['company_id']);
-            }
-        }
-
-        if (isset($in['map'])) {
-            $in['where'] = $in['map'];
-            unset($in['map']);
-        }
-        return $in;
-    }
-
-    protected function mergeScopeWhere(array $in): void
-    {
-        $in = $this->parseInArgs($in);
-        $baseWhere = [];
-        if (isset($in['scope'])) {
-            $this->scope($in['scope']);
-            $baseWhere = $this->options['where'];
-        }
-        $this->scope($in);
-        if ($baseWhere) {
-            $this->options['where'] = array_merge($baseWhere, $this->options['where']);
-        }
     }
 }
