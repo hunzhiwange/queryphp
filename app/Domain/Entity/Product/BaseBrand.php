@@ -33,41 +33,41 @@ class BaseBrand extends Entity
      * Entity struct.
      *
      * - brand_id
-     *                 comment: ID  type: int(10) unsigned  null: false  
+     *                 comment: ID  type: int(10) unsigned  null: false
      *                 key: PRI  default: null  extra: auto_increment
      * - company_id
-     *                 comment: 公司ID  type: int(10) unsigned  null: false  
-     *                 key: MUL  default: null  extra: 
+     *                 comment: 公司ID  type: int(10) unsigned  null: false
+     *                 key: MUL  default: null  extra:
      * - status
-     *                 comment: 状态  type: enum('T','F')  null: false  
-     *                 key:   default: T  extra: 
+     *                 comment: 状态  type: enum('T','F')  null: false
+     *                 key:   default: T  extra:
      * - order_num
-     *                 comment: 排序  type: int(8) unsigned  null: false  
-     *                 key: MUL  default: 500  extra: 
+     *                 comment: 排序  type: int(8) unsigned  null: false
+     *                 key: MUL  default: 500  extra:
      * - brand_num
-     *                 comment: 编号  type: varchar(30)  null: false  
-     *                 key: MUL  default:   extra: 
+     *                 comment: 编号  type: varchar(30)  null: false
+     *                 key: MUL  default:   extra:
      * - brand_name
-     *                 comment: 名称  type: varchar(30)  null: false  
-     *                 key:   default:   extra: 
+     *                 comment: 名称  type: varchar(30)  null: false
+     *                 key:   default:   extra:
      * - brand_logo
-     *                 comment: LOGO  type: varchar(130)  null: false  
-     *                 key:   default:   extra: 
+     *                 comment: LOGO  type: varchar(130)  null: false
+     *                 key:   default:   extra:
      * - brand_about
-     *                 comment: 介绍  type: text  null: false  
-     *                 key:   default: null  extra: 
+     *                 comment: 介绍  type: text  null: false
+     *                 key:   default: null  extra:
      * - update_date
-     *                 comment: 更新时间  type: timestamp  null: false  
+     *                 comment: 更新时间  type: timestamp  null: false
      *                 key:   default: CURRENT_TIMESTAMP  extra: on update CURRENT_TIMESTAMP
      * - create_date
-     *                 comment: 创建时间  type: timestamp  null: false  
-     *                 key:   default: CURRENT_TIMESTAMP  extra: 
+     *                 comment: 创建时间  type: timestamp  null: false
+     *                 key:   default: CURRENT_TIMESTAMP  extra:
      * - brand_letter
-     *                 comment: 品牌首字母  type: varchar(30)  null: false  
-     *                 key:   default:   extra: 
+     *                 comment: 品牌首字母  type: varchar(30)  null: false
+     *                 key:   default:   extra:
      * - seo_keywords
-     *                 comment: SEO关键字  type: varchar(30)  null: false  
-     *                 key:   default: null  extra: 
+     *                 comment: SEO关键字  type: varchar(30)  null: false
+     *                 key:   default: null  extra:
      */
     public const STRUCT = [
         'brand_id' => [
@@ -108,5 +108,4 @@ class BaseBrand extends Entity
             self::COLUMN_NAME => 'SEO关键字',
         ],
     ]; // END STRUCT
-
 }

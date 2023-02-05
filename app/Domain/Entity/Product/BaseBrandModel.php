@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace App\Domain\Entity\Product;
 
 use App\Infra\Model;
-use Exception;
 use Leevel\Encryption\Helper\Text;
 use Leevel\Support\Str\RandAlpha;
 
 /**
- * 商品品牌模型
+ * 商品品牌模型.
  */
 class BaseBrandModel extends Model
 {
@@ -29,69 +28,69 @@ class BaseBrandModel extends Model
      */
     public const STATUS_F = 'F';
 
-    protected array $_scope = array(
+    protected array $_scope = [
         // 命名范围normal
-        'normal' => array(
-            'where' => array('status' => 'T'),
-        ),
+        'normal' => [
+            'where' => ['status' => 'T'],
+        ],
         // 命名范围latest
-        'latest' => array(
+        'latest' => [
             'order' => 'create_date DESC',
             'limit' => 10,
-        ),
+        ],
         // 默认的命名范围
-        'default' => array(
-            'where' => array('brand_logo' => 'yes'),
+        'default' => [
+            'where' => ['brand_logo' => 'yes'],
             'limit' => 20,
-        ),
-        'list' => array(
-            'where' => array('status' => 'T'),
+        ],
+        'list' => [
+            'where' => ['status' => 'T'],
             'order' => 'order_num DESC, brand_id ASC',
-        ),
-        'one' => array(
-            'where' => array('status' => 'T'),
-        ),
-    );
+        ],
+        'one' => [
+            'where' => ['status' => 'T'],
+        ],
+    ];
 
-    protected array $_auto = array(
-        array(
+    protected array $_auto = [
+        [
             'company_id',
             'get_company_id',
             self::MODEL_INSERT,
-            'function'
-        ),
-    );
+            'function',
+        ],
+    ];
 
-    protected array $_validate = array(
-        array(
+    protected array $_validate = [
+        [
             'brand_name',
             'checkName',
             '该商品品牌名称已存在,请重新输入!',
             self::VALUE_VALIDATE,
             'callback',
-            self::MODEL_BOTH
-        ),
-        array(
+            self::MODEL_BOTH,
+        ],
+        [
             'brand_num',
             'checkNum',
             '商品品牌编号已存在,请重新输入!',
             self::VALUE_VALIDATE,
             'callback',
-            self::MODEL_BOTH
-        ),
-        array(
+            self::MODEL_BOTH,
+        ],
+        [
             'seo_keywords',
             'email',
             'Email格式错误',
             self::VALUE_VALIDATE,
-        ),
-        array(
+        ],
+        [
             'brand_letter',
             'url',
             'URL 格式错误',
             self::VALUE_VALIDATE,
-        ),
-    );
+        ],
+    ];
 
     /**
      * 获取商品品牌列表.
@@ -114,12 +113,12 @@ class BaseBrandModel extends Model
         if (empty($arrData['brand_id'])) {
             // 验证编码重复问题
             $obj = new self();
-            $arrIn2 = array();
+            $arrIn2 = [];
             $arrIn2['map']['company_id'] = get_company_id();
             if (empty($arrData['brand_num'])) {
                 $this->brand_num = RandAlpha::handle(10);
             } else {
-                //验证编号是否重复
+                // 验证编号是否重复
                 $arrIn2['map']['brand_num'] = $arrData['brand_num'];
                 $arrIn2['map']['status'] = 'T';
                 $count = $obj->where($arrIn2['map'])->count();
@@ -160,11 +159,10 @@ class BaseBrandModel extends Model
         $arrData = $this->data();
 
         if (!$arrIn['brand_id']) {
-            throw new Exception('品牌 ID 未指定');
-        } else {
-            $arrData['status'] = 'F';
-            $this->save($arrData);
+            throw new \Exception('品牌 ID 未指定');
         }
+        $arrData['status'] = 'F';
+        $this->save($arrData);
     }
 
     public function delInfoReal(array $arrIn): void
@@ -174,12 +172,12 @@ class BaseBrandModel extends Model
         $arrData = $this->data();
 
         if (!$arrIn['brand_id']) {
-            throw new Exception('品牌 ID 未指定');
-        } else {
-            $this
-                ->where($arrIn)
-                ->delete();
+            throw new \Exception('品牌 ID 未指定');
         }
+        $this
+            ->where($arrIn)
+            ->delete()
+        ;
     }
 
     /**
@@ -202,7 +200,7 @@ class BaseBrandModel extends Model
 
         $obj = new self();
 
-        $arrIn = array();
+        $arrIn = [];
         $arrIn['map']['company_id'] = get_company_id();
         $arrIn['map']['brand_num'] = $strNum;
         $arrLast = $obj->where($arrIn['map'])->field('brand_id')->order('brand_id DESC')->find();
@@ -220,13 +218,14 @@ class BaseBrandModel extends Model
 
     public function trans1(array $in): void
     {
-        $this->transaction(function () use ($in) {
+        $this->transaction(function () use ($in): void {
             $this->brand_name = $in['first'];
             $this->add();
 
             $this->brand_name = $in['second'];
             $this->add();
-            throw new Exception('error');
+
+            throw new \Exception('error');
         });
     }
 
@@ -237,7 +236,8 @@ class BaseBrandModel extends Model
 
         $this->brand_name = $in['second'];
         $this->add();
-        throw new Exception('error');
+
+        throw new \Exception('error');
     }
 
     public function trans3(array $in): string
@@ -256,18 +256,18 @@ class BaseBrandModel extends Model
      */
     public function checkNum(): bool
     {
-        $arrIn = array('map' => array());
-        $arrIn['map'] = array(
+        $arrIn = ['map' => []];
+        $arrIn['map'] = [
             'company_id' => get_company_id(),
             'brand_num' => http_request_value('brand_num', '', 'trim'),
-            'status' => 'T'
-        );
+            'status' => 'T',
+        ];
 
         if (http_request_value('brand_id', '', 'intval')) {
-            $arrIn['map']['brand_id'] = array('neq', http_request_value('brand_id', '', 'intval'));
+            $arrIn['map']['brand_id'] = ['neq', http_request_value('brand_id', '', 'intval')];
         }
 
-        return $this->where($arrIn['map'])->count() == 0;
+        return 0 === $this->where($arrIn['map'])->count();
     }
 
     /**
@@ -275,17 +275,18 @@ class BaseBrandModel extends Model
      */
     public function checkName(): bool
     {
-        $arrIn = array('map' => array());
+        $arrIn = ['map' => []];
 
-        $arrIn['map'] = array(
+        $arrIn['map'] = [
             'company_id' => get_company_id(),
             'brand_name' => http_request_value('brand_name', '', 'trim'),
             'status' => 'T',
-        );
+        ];
 
         if (http_request_value('brand_id', '', 'intval')) {
-            $arrIn['map']['brand_id'] = array('neq', http_request_value('brand_id', '', 'intval'));
+            $arrIn['map']['brand_id'] = ['neq', http_request_value('brand_id', '', 'intval')];
         }
+
         return $this->where($arrIn['map'])->count() < 1;
     }
 

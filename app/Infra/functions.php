@@ -5,9 +5,9 @@ declare(strict_types=1);
 use App\Infra\Proxy\Permission;
 use App\Infra\RoadRunnerDump;
 use Leevel\Database\IDatabase;
+use Leevel\Database\Proxy\Db;
 use Leevel\Di\Container;
 use Leevel\Http\Request;
-use Leevel\Database\Proxy\Db;
 
 if (!function_exists('permission')) {
     /**
@@ -29,7 +29,7 @@ if (!function_exists('sql_listener')) {
             ->register(IDatabase::SQL_EVENT, function (string $event, string $sql) use ($call): void {
                 $call($event, $sql);
             })
-    ;
+        ;
     }
 }
 
@@ -72,119 +72,148 @@ if (!function_exists('http_request_value')) {
      * http_request_value('post.name','','htmlspecialchars'); 获取 $_POST['name']
      * http_request_value('get.'); 获取$_GET
      * </code>
-     * @param string $name 变量的名称 支持指定类型
-     * @param mixed $default 不存在的时候默认值
-     * @param mixed $filter 参数过滤方法
-     * @param mixed $datas 要获取的额外数据源
+     *
+     * @param string $name    变量的名称 支持指定类型
+     * @param mixed  $default 不存在的时候默认值
+     * @param mixed  $filter  参数过滤方法
+     * @param mixed  $datas   要获取的额外数据源
+     *
      * @return mixed
      */
-    function http_request_value($name, $default='', $filter=null, $datas=null)
+    function http_request_value($name, $default = '', $filter = null, $datas = null)
     {
         $request = http_request();
 
-        if(strpos($name,'/')){ // 指定修饰符
-            list($name,$type) 	=	explode('/',$name,2);
+        if (strpos($name, '/')) { // 指定修饰符
+            [$name, $type] = explode('/', $name, 2);
         }
-        if(strpos($name,'.')) { // 指定参数来源
-            list($method,$name) =   explode('.',$name,2);
-        }else{ // 默认为自动判断
-            $method =   'param';
+        if (strpos($name, '.')) { // 指定参数来源
+            [$method, $name] = explode('.', $name, 2);
+        } else { // 默认为自动判断
+            $method = 'param';
         }
-        switch(strtolower($method)) {
+
+        switch (strtolower($method)) {
             case 'get'    :
                 $input = $request->query->all();
+
                 break;
+
             case 'post'    :
                 $input = $request->request->all();
+
                 break;
+
             case 'param'   :
-                switch($request->server->get('REQUEST_METHOD')) {
+                switch ($request->server->get('REQUEST_METHOD')) {
                     case Request::METHOD_POST:
-                        $input  =  $request->request->all();
+                        $input = $request->request->all();
+
                         break;
+
                     default:
-                        $input  =  $request->query->all();
+                        $input = $request->query->all();
                 }
+
                 break;
+
             case 'request' :
                 $input = $request->request->all();
+
                 break;
+
             case 'session' :
                 $input = $request->getSession()->all();
+
                 break;
+
             case 'cookie'  :
                 $input = $request->cookies->all();
+
                 break;
+
             case 'server'  :
                 $input = $request->server->all();
+
                 break;
+
             case 'data'    :
                 $input = $datas;
+
                 break;
+
             default:
                 return null;
         }
-        if(''==$name) { // 获取全部变量
-            $data       =   $input;
-            $filters    =   isset($filter)?$filter:[];
-            if($filters) {
-                if(is_string($filters)){
-                    $filters    =   explode(',',$filters);
+        if ('' === $name) { // 获取全部变量
+            $data = $input;
+            $filters = $filter ?? [];
+            if ($filters) {
+                if (is_string($filters)) {
+                    $filters = explode(',', $filters);
                 }
-                foreach($filters as $filter){
-                    $data   =   array_map_recursive($filter,$data); // 参数过滤
+                foreach ($filters as $filter) {
+                    $data = array_map_recursive($filter, $data); // 参数过滤
                 }
             }
-        }elseif(isset($input[$name])) { // 取值操作
-            $data       =   $input[$name];
-            $filters    =   isset($filter)?$filter:[];
-            if($filters) {
-                if(is_string($filters)){
-                    if(0 === strpos($filters,'/') && 1 !== preg_match($filters,(string)$data)){
+        } elseif (isset($input[$name])) { // 取值操作
+            $data = $input[$name];
+            $filters = $filter ?? [];
+            if ($filters) {
+                if (is_string($filters)) {
+                    if (str_starts_with($filters, '/') && 1 !== preg_match($filters, (string) $data)) {
                         // 支持正则验证
-                        return   isset($default) ? $default : null;
-                    }else{
-                        $filters    =   explode(',',$filters);
+                        return $default ?? null;
                     }
-                }elseif(is_int($filters)){
-                    $filters    =   array($filters);
+                    $filters = explode(',', $filters);
+                } elseif (is_int($filters)) {
+                    $filters = [$filters];
                 }
 
-                if(is_array($filters)){
-                    foreach($filters as $filter){
-                        if(function_exists($filter)) {
-                            $data   =   is_array($data) ? array_map_recursive($filter,$data) : $filter($data); // 参数过滤
-                        }else{
-                            $data   =   filter_var($data,is_int($filter) ? $filter : filter_id($filter));
-                            if(false === $data) {
-                                return   isset($default) ? $default : null;
+                if (is_array($filters)) {
+                    foreach ($filters as $filter) {
+                        if (function_exists($filter)) {
+                            $data = is_array($data) ? array_map_recursive($filter, $data) : $filter($data); // 参数过滤
+                        } else {
+                            $data = filter_var($data, is_int($filter) ? $filter : filter_id($filter));
+                            if (false === $data) {
+                                return $default ?? null;
                             }
                         }
                     }
                 }
             }
-            if(!empty($type)){
-                switch(strtolower($type)){
+            if (!empty($type)) {
+                switch (strtolower($type)) {
                     case 'a':	// 数组
-                        $data 	=	(array)$data;
+                        $data = (array) $data;
+
                         break;
+
                     case 'd':	// 数字
-                        $data 	=	(int)$data;
+                        $data = (int) $data;
+
                         break;
+
                     case 'f':	// 浮点
-                        $data 	=	(float)$data;
+                        $data = (float) $data;
+
                         break;
+
                     case 'b':	// 布尔
-                        $data 	=	(boolean)$data;
+                        $data = (bool) $data;
+
                         break;
+
                     case 's':   // 字符串
                     default:
-                        $data   =   (string)$data;
+                        $data = (string) $data;
                 }
             }
-        }else{ // 变量默认值
-            $data       =    isset($default)?$default:null;
+        } else { // 变量默认值
+            $data = $default ?? null;
         }
+
         return $data;
     }
 }
@@ -266,4 +295,3 @@ if (!function_exists('transaction')) {
         return Db::transaction($businessLogic);
     }
 }
-
