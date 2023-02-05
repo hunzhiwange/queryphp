@@ -87,36 +87,6 @@ class BaseBrand
     }
 
     /**
-     * 快捷添加商品品牌名.
-     */
-    public function addBrandName(): void
-    {
-        $brand_name = trim($this->in['brand_name']) ?: $this->apiJsonReturn('', 'fail', '参数错误!');
-        $brand_num = get_data_number('base_brand', 1);
-        $brand_letter = strtoupper(build_py_first($this->in['brand_name']));
-        $company_id = get_company_id();
-        // 实例化模型
-        $base_brand_model = D('BaseBrand');
-        // 检查品牌名|品牌编号是否重复
-        $is_exist = $base_brand_model
-            ->where(['company_id' => $company_id, 'brand_name' => $brand_name, 'status' => 'T'])
-            ->count(1)
-        ;
-        if ($is_exist > 0) {
-            $this->apiJsonReturn('', 'fail', '品牌名称已存在!');
-        }
-        // 添加到数据库
-        $base_brand_add_res = $base_brand_model
-            ->add(['company_id' => $company_id, 'brand_name' => $brand_name, 'brand_num' => $brand_num, 'brand_letter' => $brand_letter])
-        ;
-        cache('goodsbrand[company]', 'delete');
-        if (false === $base_brand_add_res) {
-            $this->apiJsonReturn('', 'fail', '添加失败!');
-        }
-        $this->apiJsonReturn();
-    }
-
-    /**
      * 获取公司商品品牌.
      *
      * @see http://127.0.0.1:9527/base_brand/get_brand?id=2
