@@ -70,7 +70,6 @@ class BaseBrand
 
         $hello = [
             'x' => 'y',
-
             'xx' => 'xx23423422222',
         ];
 
