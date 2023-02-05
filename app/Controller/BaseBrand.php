@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Domain\Entity\Product\BaseBrandModel;
-use Common\Helper\Prepare\Collaborator;
 use Common\Model\LogBrandSynRecvModel;
 use Common\Service\GoodsCollaboratorCheckService;
 
@@ -238,102 +237,42 @@ class BaseBrand
 
     /**
      * 删除公司商品品牌.
+     *
+     * @see http://127.0.0.1:9527/base_brand/del_brand?id=1
      */
-    public function delBrand(): void
+    public function delBrand(): array
     {
-        $objGoods = D('BaseGoods');
-        $objBrand = D('BaseBrand');
-        $arrIn = ['return' => []];
+        $objBrand = BaseBrandModel::make();
 
         if (empty($this->in['id'])) {
-            $this->ajaxReturn(['status' => 'fail', 'message' => L('is_error')]);
-        } else {
-            // 2018/9/4 xiaochuan
-            $brandIds = $this->getAgencyBrandIds();
-            if (\in_array($this->in['id'], $brandIds, true)) {
-                $arrIn['return']['status'] = 'fail';
-                $arrIn['return']['message'] = '分销商品品牌不能删除';
-                $this->ajaxReturn($arrIn['return']);
-            }
-
-            /*
-             * 判断 目标品牌 是否已使用，如果已使用，则不能删除
-             *   2016/01/22 by zjb
-             */
-            $map['brand_id'] = $this->in['id'];
-            $objGoodsCount = $objGoods->getListCount(
-                [
-                    'map' => $map,
-                ]
-            );
-
-            if ($objGoodsCount > 0) {
-                $arrIn['return']['status'] = 'fail';
-                $arrIn['return']['message'] = '该品牌已被使用，无法删除！';
-                $this->ajaxReturn($arrIn['return']);
-            }
-
-            $config = get_app_config_by_name('HomePageSetting');
-            if (!empty($config)) {
-                if (\in_array($this->in['id'], $config['brand_select'], true)) {
-                    $this->ajaxReturn(['status' => 'fail', 'message' => '自定义app首页中的品牌不能删除']);
-                }
-            }
+            throw new \InvalidArgumentException('品牌 ID 不能为空');
         }
 
-        if ($objBrand->delInfo(['brand_id' => (int) $this->in['id']])) {
-            $arrIn['return']['status'] = 'success';
-            $arrIn['return']['message'] = L('is_success_jump');
-            // 编辑品牌的时候，同步到运营商Alex 2017-01-09  start
-            if (is_company_ver()) {
-                $checkService = new GoodsCollaboratorCheckService();
-                $i = $checkService->updateBrandSet(get_company_id());
-                if ('error' === $i['status']) {
-                    $arrIn['return']['status'] = 'fail';
-                    $arrIn['return']['message'] = $i['message'];
-                }
-            }
-            // 编辑品牌的时候，同步到运营商Alex 2017-01-09  end
-            cache('goodsbrand[company]', 'delete');
-        } else {
-            $arrIn['return']['status'] = 'fail';
-            $arrIn['return']['message'] = $objBrand->getError() ?: L('is_fail');
-        }
+        $objBrand->delInfo(['brand_id' => (int) $this->in['id']]);
 
-        $this->ajaxReturn($arrIn['return']);
+        return [];
     }
 
-    public function getBrandsForSelectComponent(): void
+    /**
+     * @see http://127.0.0.1:9527/base_brand/get_brands_for_select_component
+     */
+    public function getBrandsForSelectComponent(): array
     {
         $companyId = get_company_id();
-        $brandData = D('BaseBrand')
-            ->field('brand_id,brand_name,brand_letter,collaborator_id')
+        $brandData = BaseBrandModel::make()
+            ->field('brand_id,brand_name,brand_letter')
             ->where([
                 'company_id' => $companyId,
                 'status' => BaseBrandModel::STATUS_T,
             ])
             ->select()
         ;
-        foreach ($brandData as $key => &$item) {
+        foreach ($brandData as &$item) {
             $item['brand_letter'] = mb_substr($item['brand_letter'], 0, 1);
         }
-        if (empty($brandData)) {
-            $brandData = [];
-        }
+        unset($item);
 
-        // 只有联营版才需要查询联营相关信息
-        if ($brandData && is_collaborate_ver()) {
-            $collaboratorId = array_filter(array_column($brandData, 'collaborator_id'));
-            if ($collaboratorId) {
-                Collaborator::handle($brandData, null, ['field' => 'collaborator_id']);
-            }
-        } else {
-            foreach ($brandData as &$brand) {
-                $brand['collaborator_id'] = '0';
-            }
-        }
-
-        $this->ajaxReturn($brandData);
+        return $brandData;
     }
 
     /**
@@ -346,12 +285,5 @@ class BaseBrand
         if ($this->in['size'] > $maxPageSize) {
             $this->in['size'] = $maxPageSize;
         }
-    }
-
-    private function getAgencyBrandIds()
-    {
-        $synBrand = new LogBrandSynRecvModel();
-
-        return $synBrand->where(['company_id' => get_company_id()])->getField('brand_id', true);
     }
 }
