@@ -128,7 +128,7 @@ class BaseBrandModel extends Model
             $this->brand_letter = strtoupper(RandAlpha::handle(5));
             $intID = $this->add();
         } else {
-            $intID = $arrData['brand_id'];
+            $intID = (int) $arrData['brand_id'];
             $brand_name = $arrData['brand_name'];
             if (!empty($brand_name)) {
                 $arrData['brand_letter'] = strtoupper(RandAlpha::handle(5));

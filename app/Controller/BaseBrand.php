@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Domain\Entity\Product\BaseBrandModel;
-use Common\Model\LogBrandSynRecvModel;
-use Common\Service\GoodsCollaboratorCheckService;
 
 /**
  * 品牌控制器.
@@ -166,73 +164,36 @@ class BaseBrand
 
     /**
      * 公司商品品牌更新保存.
+     *
+     * @see http://127.0.0.1:9527/base_brand/save_edit_brand?brand_id=1&brand_name=hello2&brand_logo=world&_ajax=1
      */
-    public function saveEditBrand(): void
+    public function saveEditBrand(): array
     {
-        $brandIds = $this->getAgencyBrandIds();
-        if (\in_array($this->in['brand_id'], $brandIds, true)) {
-            $arrIn['return']['status'] = 'fail';
-            $arrIn['return']['message'] = '分销商品品牌不能编辑';
-            $this->ajaxReturn($arrIn['return']);
+        if (empty($this->in['brand_id'])) {
+            throw new \Exception('品牌 ID 未设置');
         }
+        // 保存品牌
+        $objBrand = BaseBrandModel::make();
+        $objBrand->updateInfo($this->in);
 
-        $this->saveAddBrand();
+        return [];
     }
 
     /**
      * 公司商品品牌添加保存.
+     *
+     * @see http://127.0.0.1:9527/base_brand/save_add_brand?brand_name=hello&brand_logo=world&_ajax=1
      */
-    public function saveAddBrand(): void
+    public function saveAddBrand(): array
     {
-        $objBrand = D('BaseBrand');
-        $arrIn = ['return' => []];
-
-        // 保存品牌
-        if (IS_POST) {
-            if ($objBrand->getBrandNum() === $this->in['brand_num']) {
-                get_data_number('base_brand', 1);
-            }
-
-            if (($rstBrandID = $objBrand->updateInfo()) !== false) {
-                $arrIn['return']['status'] = 'success';
-                $arrIn['return']['bid'] = $rstBrandID;
-                $arrIn['return']['letter'] = strtoupper(build_py_first($this->in['brand_name']));
-                if (empty($this->in['brand_id'])) {
-                    $arrIn['return']['new_brand_num'] = get_data_number('base_brand', 1);
-                } else {
-                    // 编辑品牌的时候，同步到运营商Alex 2017-01-09  start
-                    if (is_company_ver()) {
-                        $checkService = new GoodsCollaboratorCheckService();
-                        $i = $checkService->updateBrandSet(get_company_id());
-                        if ('error' === $i['status']) {
-                            $arrIn['return']['status'] = 'fail';
-                            $arrIn['return']['message'] = $i['message'];
-                        }
-                    }
-                    // 编辑品牌的时候，同步到运营商Alex 2017-01-09  end
-                }
-                cache('goodsbrand[company]', 'delete');
-
-                $arrIn['return']['message'] = L('is_success_jump');
-            } else {
-                $arrIn['return']['status'] = 'fail';
-                $arrIn['return']['message'] = $objBrand->getError() ?: L('is_fail');
-            }
-
-            // 集团版本 供货端 修改商品需要同步数据到下游分销商
-            // 2018/8/29
-            if ('success' === $arrIn['return']['status'] && is_group_ver()) {
-                $type = $this->in['brand_id'] ? 'update' : 'add';
-                $syncBrand = new LogBrandSynRecvModel();
-                send_group_ali_msg($syncBrand, 'brand', $type, [$arrIn['return']['bid']]);
-            }
-
-            $this->ajaxReturn($arrIn['return']);
-        } else {
-            $arrIn['return']['status'] = 'fail';
-            $arrIn['return']['message'] = L('is_error');
-            $this->ajaxReturn($arrIn['return']);
+        if (!empty($this->in['brand_id'])) {
+            throw new \Exception('新增品牌不能传品牌 ID');
         }
+        // 保存品牌
+        $objBrand = BaseBrandModel::make();
+        $rstBrandID = $objBrand->updateInfo($this->in);
+
+        return ['bid' => $rstBrandID];
     }
 
     /**
