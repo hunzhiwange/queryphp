@@ -48,9 +48,9 @@ abstract class Model
     public const VALUE_VALIDATE = 2;
 
     /**
-     * Mysql 驱动兼容层.
+     * 数据库驱动兼容层.
      */
-    protected Mysql $mysql;
+    protected Database $database;
 
     /**
      * 自动完成定义.
@@ -150,7 +150,7 @@ abstract class Model
         $entity = constant(static::class . '::ENTITY');
         /** @var Entity $entity */
         $entity = new $entity();
-        $this->mysql = new Mysql($entity);
+        $this->database = new Database($entity);
         $this->tableName = $entity->table();
         $this->_checkTableInfo();
     }
@@ -172,7 +172,7 @@ abstract class Model
      */
     public function flush(): void
     {
-        $fields = $this->mysql->getFields();
+        $fields = $this->database->getFields();
         $pk = $fields['primaryKey'];
         if (is_array($pk) && count($pk) === 1) {
             $pk = $pk[0];
@@ -404,7 +404,7 @@ abstract class Model
             if (!isset($options['limit'])) {
                 $options['limit'] = is_numeric($separator) ? $separator : '';
             }
-            $resultSet = $this->mysql->select($this->filterOptionsForCountSelect($options));
+            $resultSet = $this->database->select($this->filterOptionsForCountSelect($options));
             if (empty($resultSet)) {
                 return $resultSet;
             }
@@ -431,7 +431,7 @@ abstract class Model
         if (true !== $separator) {// 当 $separator 指定为 true 的时候返回所有数据
             $options['limit'] = is_numeric($separator) ? $separator : 1;
         }
-        $result = $this->mysql->select($this->filterOptionsForCountSelect($options));
+        $result = $this->database->select($this->filterOptionsForCountSelect($options));
         if (!empty($result) && is_array($result)) {
             if (true !== $separator && 1 == $options['limit']) {
                 return current($result[0]);
@@ -555,7 +555,7 @@ abstract class Model
                     return false;
                 }
             }
-            $fields = $this->mysql->getFields();
+            $fields = $this->database->getFields();
             return !empty($fields['fields']) ? array_keys($fields['fields']) : false;
         }
         if ($this->fields) {
@@ -607,7 +607,7 @@ abstract class Model
             $key = is_string($cache['key']) ? $cache['key'] : 'sql:' . md5(serialize($options));
             $options['cache']['key'] = $key;
         }
-        $resultSet = $this->mysql->select($options);
+        $resultSet = $this->database->select($options);
         if (is_string($resultSet)) {
             return $resultSet;
         }
@@ -646,7 +646,7 @@ abstract class Model
                 $parse = func_get_args();
                 array_shift($parse);
             }
-            $parse = array_map(array($this->mysql, 'escapeString'), $parse);
+            $parse = array_map(array($this->database, 'escapeString'), $parse);
             $where = vsprintf($where, $parse);
         } elseif (is_object($where)) {
             $where = get_object_vars($where);
@@ -702,7 +702,7 @@ abstract class Model
      */
     public function fetchTotalCount(): int
     {
-        return $this->mysql->getTotalCount();
+        return $this->database->getTotalCount();
     }
 
     /**
@@ -728,7 +728,7 @@ abstract class Model
         $options = $this->_parseOptions($options);
         $this->_before_insert($data, $options);
         // 写入数据到数据库
-        $result = $this->mysql->insert($data, $options, $replace);
+        $result = $this->database->insert($data, $options, $replace);
         if (!is_int($result) && ctype_digit($result)) {
             $pk = $this->getPk();
             // 增加复合主键支持
@@ -811,7 +811,7 @@ abstract class Model
         // 分析表达式
         $options = $this->_parseOptions($options);
         // 写入数据到数据库
-        return $this->mysql->insertAll($dataList, $options, $replace);
+        return $this->database->insertAll($dataList, $options, $replace);
     }
 
     /**
@@ -819,7 +819,7 @@ abstract class Model
      */
     public function getLastInsID(): null|string|int
     {
-        $lastInsID = $this->mysql->getLastInsID();
+        $lastInsID = $this->database->getLastInsID();
         if (ctype_digit($lastInsID)) {
             $lastInsID = (int)$lastInsID;
         }
@@ -834,7 +834,7 @@ abstract class Model
         // 分析表达式
         $options = $this->_parseOptions($options);
         // 写入数据到数据库
-        return $this->mysql->selectInsert($fields ?: $options['field'], $table ?: $this->getTableName(), $options);
+        return $this->database->selectInsert($fields ?: $options['field'], $table ?: $this->getTableName(), $options);
     }
 
     /**
@@ -891,7 +891,7 @@ abstract class Model
         }
 
         $this->_before_delete($options);
-        $result = $this->mysql->delete($options);
+        $result = $this->database->delete($options);
         if (is_numeric($result)) {
             $data = array();
             if (isset($pkValue)) {
@@ -957,7 +957,7 @@ abstract class Model
             $options['cache']['key'] = $key;
         }
 
-        $resultSet = $this->mysql->select($options);
+        $resultSet = $this->database->select($options);
         if (is_string($resultSet)) {
             return $resultSet;
         }
@@ -1078,7 +1078,7 @@ abstract class Model
             $pkValue = $options['where'][$pk];
         }
         $this->_before_update($data, $options);
-        $affectedRow = $this->mysql->update($data, $options);
+        $affectedRow = $this->database->update($data, $options);
         if ($affectedRow > 0) {
             if (isset($pkValue)) $data[$pk] = $pkValue;
             $this->_after_update($data, $options);
@@ -1451,7 +1451,7 @@ abstract class Model
             array_shift($parse);
         }
         $sql = $this->parseSql($sql, $parse);
-        return $this->mysql->query($sql);
+        return $this->database->query($sql);
     }
 
     /**
@@ -1462,9 +1462,9 @@ abstract class Model
         // 分析表达式
         if (true === $parse) {
             $options = $this->_parseOptions();
-            $sql = $this->mysql->parseSql($sql, $options);
+            $sql = $this->database->parseSql($sql, $options);
         } elseif (is_array($parse)) { // SQL预处理
-            $parse = array_map(array($this->mysql, 'escapeString'), $parse);
+            $parse = array_map(array($this->database, 'escapeString'), $parse);
             $sql = vsprintf($sql, $parse);
         }
         return $sql;
@@ -1480,7 +1480,7 @@ abstract class Model
             array_shift($parse);
         }
         $sql = $this->parseSql($sql, $parse);
-        return $this->mysql->execute($sql);
+        return $this->database->execute($sql);
     }
 
     /**
@@ -1488,7 +1488,7 @@ abstract class Model
      */
     public function startTrans(): void
     {
-        $this->mysql->startTrans();
+        $this->database->startTrans();
     }
 
     /**
@@ -1496,7 +1496,7 @@ abstract class Model
      */
     public function commit(): void
     {
-        $this->mysql->commit();
+        $this->database->commit();
     }
 
     /**
@@ -1504,7 +1504,7 @@ abstract class Model
      */
     public function rollback(): void
     {
-        $this->mysql->rollback();
+        $this->database->rollback();
     }
 
     /**
@@ -1514,7 +1514,7 @@ abstract class Model
      */
     public function transaction(Closure $businessLogic): mixed
     {
-        return $this->mysql->transaction($businessLogic);
+        return $this->database->transaction($businessLogic);
     }
 
     /**
@@ -1523,7 +1523,7 @@ abstract class Model
      * - 方法不再支持返回错误消息
      * - 支持抛出异常
      *
-     * @throws \Exception;
+     * @throws \Exception
      * @deprecated
      */
     public function getError(?string $message = null): void
@@ -1536,7 +1536,7 @@ abstract class Model
      */
     public function getLastSql(): null|string
     {
-        return $this->mysql->getLastSql();
+        return $this->database->getLastSql();
     }
 
     /**

@@ -8,11 +8,11 @@ use Leevel\Database\Ddd\Entity;
 use Exception;
 
 /**
- * ThinkPHP Mysql 驱动类兼容层
+ * ThinkPHP 数据库驱动类兼容层
  *
  * - 基于 ThinkPHP 3.2.3 模型 Think\Db\Driver\Mysql 移植而来
  */
-class Mysql
+class Database
 {
     /**
      * 当前 SQL 指令.
