@@ -71,7 +71,7 @@ class BaseBrand
         $hello = [
             'x'    => 'y',
 
-            'xx' => 'xx234234',
+            'xx' => 'xx234234222',
         ];
 
         $objBrand = BaseBrandModel::make();
