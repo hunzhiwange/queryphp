@@ -40,16 +40,38 @@ class ModelTest extends TestCase
 
     public function testQuickQueryAndTotal(): void
     {
+        container()->instance('company_id', 0);
+
         $baseBrandModel = BaseBrandTestModel::make();
         $map['brand_name|brand_num'] = 'QueryPHP';
-        $result = $baseBrandModel
+        $data = $baseBrandModel
             ->where($map)
-            ->field('SQL_CALC_FOUND_ROWS brand_id,brand_name')
-            ->select(['fetch_sql' => true]);
-        $result = trim($result);
-        $sql = "SELECT count(*) as count FROM (SELECT    brand_id,`brand_name` FROM `base_brand` WHERE ( `brand_name` = 'QueryPHP' OR `brand_num` = 'QueryPHP' ) ) t";
-        $count = $baseBrandModel->fetchTotalCount();
+            ->field('brand_id,brand_name')
+            ->limit(5)
+            ->select();
+        $result = trim($baseBrandModel->getLastSql());
+        $sql = "SELECT  `brand_id`,`brand_name` FROM `base_brand` WHERE ( `brand_name` = 'QueryPHP' OR `brand_num` = 'QueryPHP' ) LIMIT 5";
         $this->assertSame($result, $sql);
+
+        $data = $baseBrandModel
+            ->where($map)
+            ->field('brand_id,brand_name')
+            ->limit(5)
+            ->count();
+        $result = trim($baseBrandModel->getLastSql());
+        $sql = "SELECT  COUNT(*) AS count FROM `base_brand` WHERE ( `brand_name` = 'QueryPHP' OR `brand_num` = 'QueryPHP' ) LIMIT 1";
+        $this->assertSame($result, $sql);
+
+        $data = $baseBrandModel
+            ->where($map)
+            ->field('brand_id,brand_name')
+            ->limit(5)
+            ->findListAndCount();
+        $result = trim($baseBrandModel->getLastSql());
+        $sql = "SELECT  `brand_id`,`brand_name` FROM `base_brand` WHERE `company_id` = 0 LIMIT 5";
+        $this->assertSame($result, $sql);
+
+        $count = $baseBrandModel->fetchTotalCount();
         $this->assertTrue(is_int($count));
     }
 

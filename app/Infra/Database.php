@@ -52,11 +52,6 @@ class Database
     protected array $bind = array();
 
     /**
-     * 总记录数量.
-     */
-    protected int $totalCount = 0;
-
-    /**
      * 模型实体.
      */
     protected Entity $entity;
@@ -518,6 +513,9 @@ class Database
         return '( ' . $whereStr . ' )';
     }
 
+    /**
+     * @throws \Exception
+     */
     protected function parseWhereItem(string $key, mixed $val): string
     {
         $whereStr = '';
@@ -557,7 +555,7 @@ class Database
                     $data = is_string($val[1]) ? explode(',', $val[1]) : $val[1];
                     $whereStr .= $key . ' ' . $this->exp[$exp] . ' ' . $this->parseValue($data[0]) . ' AND ' . $this->parseValue($data[1]);
                 } else {
-                    E(('L_EXPRESS_ERROR_') . ':' . $val[0]);
+                    throw new \Exception(sprintf('Where express error:%s.', $val[0]));
                 }
             } else {
                 $count = count($val);
@@ -773,22 +771,6 @@ class Database
             }, $this->bind));
         }
 
-        if (preg_match('/SQL_CALC_FOUND_ROWS/i', $this->queryStr)) {
-            $countSql = $this->queryStr;
-            //移除最后一个的ORDER BY(理想情况是移除最外层的)
-            if (preg_match('/\s+ORDER\s+BY\s+/i', $countSql, $matches)) {
-                $countSql = removeLastStr($countSql, $matches[0]);
-            }
-            //移除最后一个的LIMIT(理想情况是移除最外层的)
-            if (preg_match('/\s+LIMIT\s+/i', $countSql, $matches)) {
-                $countSql = removeLastStr($countSql, $matches[0]);
-            }
-            //移除关键词：SQL_CALC_FOUND_ROWS
-            $countSql = sprintf("SELECT count(*) as count FROM (%s) t", preg_replace('/SQL_CALC_FOUND_ROWS/i', ' ', $countSql));
-            $count = $this->query($countSql);
-            $this->totalCount = $count['0']['count'];
-        }
-
         if ($fetchSql) {
             return $this->queryStr;
         }
@@ -835,15 +817,5 @@ class Database
     public function __wakeup()
     {
         return array();
-    }
-
-    public function getTotalCount()
-    {
-        if ($this->totalCount === false) {
-            $data = $this->query('SELECT FOUND_ROWS() AS count');
-            $this->totalCount = $data[0]['count'];
-        }
-
-        return $this->totalCount;
     }
 }

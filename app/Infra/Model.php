@@ -118,6 +118,11 @@ abstract class Model
     private bool $shouldCountSelect = false;
 
     /**
+     * 总记录数量.
+     */
+    protected int $totalCount = 0;
+
+    /**
      * 构造函数.
      */
     public function __construct()
@@ -296,7 +301,7 @@ abstract class Model
 
     public function count(string $field = '*'): string|int
     {
-        return $this->callStatisticalQuery('count', $field);
+        return $this->totalCount = $this->callStatisticalQuery('count', $field);
     }
 
     public function sum(string $field = '*'): string|int|float
@@ -349,7 +354,7 @@ abstract class Model
         $countThis = clone $this;
 
         return [
-            'count' => $countThis->count(),
+            'count' => $this->totalCount = $countThis->count(),
             'list' => $this->select(),
         ];
     }
@@ -702,7 +707,7 @@ abstract class Model
      */
     public function fetchTotalCount(): int
     {
-        return $this->database->getTotalCount();
+        return $this->totalCount;
     }
 
     /**
