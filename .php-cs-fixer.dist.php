@@ -72,6 +72,9 @@ return (new PhpCsFixer\Config())
         '@PHPUnit100Migration:risky' => true,
         '@PhpCsFixer' => true,
         '@PhpCsFixer:risky' => true,
+        '@PHP81Migration' => true,
+        '@PHP80Migration:risky' => true,
+        'heredoc_indentation' => false,
         'general_phpdoc_annotation_remove' => ['annotations' => ['expectedDeprecation']], // one should use PHPUnit built-in method instead
         // 'header_comment' => ['header' => $header],
         'heredoc_indentation' => false, // TODO switch on when # of PR's is lower
