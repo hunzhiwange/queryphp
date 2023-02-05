@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Infra;
 
 use Closure;
+use Exception;
 use InvalidArgumentException;
 use Leevel\Database\Ddd\Entity;
 
@@ -514,7 +515,7 @@ class Database
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function parseWhereItem(string $key, mixed $val): string
     {
@@ -555,7 +556,7 @@ class Database
                     $data = is_string($val[1]) ? explode(',', $val[1]) : $val[1];
                     $whereStr .= $key . ' ' . $this->exp[$exp] . ' ' . $this->parseValue($data[0]) . ' AND ' . $this->parseValue($data[1]);
                 } else {
-                    throw new \Exception(sprintf('Where express error:%s.', $val[0]));
+                    throw new Exception(sprintf('Where express error:%s.', $val[0]));
                 }
             } else {
                 $count = count($val);

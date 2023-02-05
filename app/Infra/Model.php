@@ -200,7 +200,7 @@ abstract class Model
      */
     public function __get(string $name): mixed
     {
-        return isset($this->data[$name]) ? $this->data[$name] : null;
+        return $this->data[$name] ?? null;
     }
 
     /**
@@ -441,6 +441,7 @@ abstract class Model
             if (true !== $separator && 1 == $options['limit']) {
                 return current($result[0]);
             }
+            $array = [];
             foreach ($result as $val) {
                 $array[] = $val[$field];
             }
@@ -503,11 +504,11 @@ abstract class Model
                 $key = trim($key);
                 if (in_array($key, $fields, true)) {
                 } elseif (!is_numeric($key) &&
-                    '_' != substr($key, 0, 1) &&
-                    false === strpos($key, '.') &&
-                    false === strpos($key, '(') &&
-                    false === strpos($key, '|') &&
-                    false === strpos($key, '&')) {
+                    !str_starts_with($key, '_') &&
+                    !str_contains($key, '.') &&
+                    !str_contains($key, '(') &&
+                    !str_contains($key, '|') &&
+                    !str_contains($key, '&')) {
                     if (!empty($this->options['strict'])) {
                         throw new Exception(sprintf('Error query express:[%s=>%s]', $key, $val));
                     }
@@ -578,6 +579,7 @@ abstract class Model
      */
     public function find(array|string|int|float $options = array()): array|string
     {
+        $where = [];
         if (is_numeric($options) || is_string($options)) {
             $where[$this->getPk()] = $options;
             $options = array();
@@ -585,7 +587,7 @@ abstract class Model
         }
         // 根据复合主键查找记录
         $pk = $this->getPk();
-        if (is_array($options) && (count($options) > 0) && is_array($pk)) {
+        if (is_array($options) && $options && is_array($pk)) {
             // 根据复合主键查询
             $count = 0;
             foreach (array_keys($options) as $key) {
@@ -673,7 +675,7 @@ abstract class Model
     /**
      * 调用命名范围.
      */
-    public function scope($scope = '', $args = NULL): static
+    public function scope(string|array $scope = '', ?array $args = NULL): static
     {
         if ('' === $scope) {
             if (isset($this->_scope['default'])) {
@@ -689,7 +691,7 @@ abstract class Model
                 if (!isset($this->_scope[$name])) continue;
                 $options = array_merge($options, $this->_scope[$name]);
             }
-            if (!empty($args) && is_array($args)) {
+            if (!empty($args)) {
                 $options = array_merge($options, $args);
             }
         } elseif (is_array($scope)) { // 直接传入命名范围定义
@@ -858,6 +860,7 @@ abstract class Model
                 throw new Exception('Invalid delete condition.');
             }
         }
+        $where = [];
         if (is_numeric($options) || is_string($options)) {
             // 根据主键删除记录
             if (is_string($options) && strpos($options, ',')) {
@@ -869,7 +872,7 @@ abstract class Model
             $options['where'] = $where;
         }
         // 根据复合主键删除记录
-        if (is_array($options) && (count($options) > 0) && is_array($pk)) {
+        if (is_array($options) && $options && is_array($pk)) {
             $count = 0;
             foreach (array_keys($options) as $key) {
                 if (is_int($key)) $count++;
@@ -1207,8 +1210,8 @@ abstract class Model
                         // 支持提示信息的多语言 使用 {%语言定义} 方式
                         $val[2] = substr($val[2], 2, -1);
 
-                    $val[3] = isset($val[3]) ? $val[3] : self::EXISTS_VALIDATE;
-                    $val[4] = isset($val[4]) ? $val[4] : 'regex';
+                    $val[3] = $val[3] ?? self::EXISTS_VALIDATE;
+                    $val[4] = $val[4] ?? 'regex';
                     // 判断验证条件
                     switch ($val[3]) {
                         case self::MUST_VALIDATE:   // 必须验证 不管表单是否有设置该字段
@@ -1380,7 +1383,7 @@ abstract class Model
             'double' => '/^[-\+]?\d+(\.\d+)?$/',
             'english' => '/^[A-Za-z]+$/',
         );
-        // 检查是否有内置的正则表达式
+        // 检查是否有内置得正则表达式
         if (isset($validate[strtolower($rule)])) {
             $rule = $validate[strtolower($rule)];
         }
@@ -1391,7 +1394,7 @@ abstract class Model
     /**
      * 自动表单处理.
      */
-    private function autoOperation(array &$data, int $type): array
+    private function autoOperation(array &$data, int $type): void
     {
         if (!empty($this->options['auto'])) {
             $autoData = $this->options['auto'];
@@ -1443,7 +1446,6 @@ abstract class Model
                 }
             }
         }
-        return $data;
     }
 
     /**
@@ -1556,7 +1558,9 @@ abstract class Model
         if (is_object($data)) {
             $data = get_object_vars($data);
         } elseif (is_string($data)) {
-            parse_str($data, $data);
+            $oldData = $data;
+            $data = [];
+            parse_str($oldData, $data);
         }
         $this->data = $data;
         return $this;
@@ -1621,16 +1625,14 @@ abstract class Model
             $union = get_object_vars($union);
         }
         // 转换 union 表达式
-        if (is_string($union)) {
-            $options = $union;
-        } else {
+        if (!is_string($union)) {
             if (isset($union[0])) {
                 $this->options['union'] = array_merge($this->options['union'] ?? [], $union);
                 return $this;
             }
 
-            $options = $union;
         }
+        $options = $union;
         $this->options['union'][] = $options;
         return $this;
     }
@@ -1728,7 +1730,7 @@ abstract class Model
      */
     public function isForceMaster(): bool
     {
-        return isset($this->options['force_master']) && $this->options['force_master'] ? true : false;
+        return isset($this->options['force_master']) && $this->options['force_master'];
     }
 
     protected function parseInArgs(array $in): array
