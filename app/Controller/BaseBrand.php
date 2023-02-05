@@ -72,7 +72,7 @@ class BaseBrand
     /**
      * 商品品牌编号唯一性验证.
      *
-     * http://127.0.0.1:9527/base_brand/check_brand_num?brand_num=hello1
+     * @link http://127.0.0.1:9527/base_brand/check_brand_num?brand_num=hello1
      */
     public function checkBrandNum(): array
     {
@@ -86,19 +86,17 @@ class BaseBrand
 
     /**
      * 商品品牌名字唯一性验证.
+     *
+     * @link http://127.0.0.1:9527/base_brand/check_brand_name?brand_name=hello1
      */
-    private function _checkBrandname()
+    public function checkBrandName()
     {
-        if (!trim($this->in['brand_name'])) {
-            exit('true');
+        if (!isset($this->in['brand_name'])) {
+            return ['verify' => true];
         }
 
-        $objBrand = D('BaseBrand');
-        if ($objBrand->checkName()) {
-            exit('true');
-        } else {
-            exit('false');
-        }
+        $objBrand = BaseBrandModel::make();
+        return ['verify' => $objBrand->checkName()];
     }
 
     /**
