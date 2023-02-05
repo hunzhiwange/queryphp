@@ -60,7 +60,7 @@ then
 
         #result=`~/.composer/vendor/bin/php-cs-fixer fix $FILE --config=.php-cs-fixer.dist`
         #result=`php-cs-fixer fix $FILE --config=.php-cs-fixer.dist`
-        result=`php $phpcsfixer_path fix $FILE --config=.php_cs.dist`
+        result=`php $phpcsfixer_path fix $FILE --config=.php-cs-fixer.dist`
 
         if [ "$result" != "" ]
         then
