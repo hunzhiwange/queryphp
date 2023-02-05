@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Infra;
 
 use Closure;
+use InvalidArgumentException;
 use Leevel\Database\Ddd\Entity;
-use Exception;
 
 /**
  * ThinkPHP 数据库驱动类兼容层
@@ -283,13 +283,13 @@ class Database
     /**
      * 批量插入记录.
      *
-     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function insertAll(array $dataSet, array $options = array(), bool $replace = false): int|string
     {
         $values = array();
         if (!is_array($dataSet[0])) {
-            throw new Exception('Invalid data.');
+            throw new InvalidArgumentException('Invalid data.');
         }
         $fields = array_keys($dataSet[0]);
         array_walk($fields, array($this, 'parseKey'));
