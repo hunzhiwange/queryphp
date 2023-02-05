@@ -1358,10 +1358,6 @@ abstract class Model
                     $end = strtotime($end);
                 }
                 return time() >= $start && time() <= $end;
-            case 'ip_allow': // IP 操作许可验证
-                return in_array(get_client_ip(), explode(',', $rule));
-            case 'ip_deny': // IP 操作禁止验证
-                return !in_array(get_client_ip(), explode(',', $rule));
             case 'regex':
             default:    // 默认使用正则验证 可以使用验证类中定义的验证名称
                 // 检查附加规则
