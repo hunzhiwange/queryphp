@@ -68,6 +68,10 @@ class BaseBrand
             return ['verify' => true];
         }
 
+        $hello = [
+            'x'    => 'y'
+        ];
+
         $objBrand = BaseBrandModel::make();
 
         return ['verify' => $objBrand->checkNum()];
