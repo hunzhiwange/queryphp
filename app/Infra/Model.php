@@ -847,7 +847,7 @@ abstract class Model
     /**
      * 删除数据.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function delete(int|string|array $options = array()): int|string
     {
@@ -922,11 +922,12 @@ abstract class Model
     /**
      * 查询数据集.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function select(int|string|array|bool $options = array()): array|string
     {
         $pk = $this->getPk();
+        $where = [];
         if (is_string($options) || is_numeric($options)) {
             // 根据主键查询
             if (strpos($options, ',')) {
@@ -936,7 +937,7 @@ abstract class Model
             }
             $options = array();
             $options['where'] = $where;
-        } elseif (is_array($options) && (count($options) > 0) && is_array($pk)) {
+        } elseif (is_array($options) && $options && is_array($pk)) {
             // 根据复合主键查询
             $count = 0;
             foreach (array_keys($options) as $key) {
@@ -973,6 +974,7 @@ abstract class Model
         $this->_after_select($resultSet, $options);
         if (isset($options['index'])) { // 对数据集进行索引
             $index = explode(',', $options['index']);
+            $cols = [];
             foreach ($resultSet as $result) {
                 $_key = $result[$index[0]];
                 if (isset($index[1]) && isset($result[$index[1]])) {
@@ -1530,7 +1532,7 @@ abstract class Model
      * - 方法不再支持返回错误消息
      * - 支持抛出异常
      *
-     * @throws \Exception
+     * @throws Exception
      * @deprecated
      */
     public function getError(?string $message = null): void
