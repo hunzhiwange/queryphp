@@ -22,7 +22,7 @@ http:
     # How many worker processes will be started. Zero (or nothing) means the number of logical CPUs.
     #
     # Default: 0
-    num_workers: 0
+    num_workers: 1
 
     # Maximal count of worker executions. Zero (or nothing) means no limit.
     #
