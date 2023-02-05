@@ -24,6 +24,8 @@ class BaseBrand
 
     /**
      * 商品品牌.
+     *
+     * @link http://127.0.0.1:9527/base_brand/index?page=1&size=3&brand_name=Northside
      */
     public function index(): array
     {
@@ -56,48 +58,30 @@ class BaseBrand
 
     /**
      * 公司商品品牌界面.
+     *
+     * @link http://127.0.0.1:9527/base_brand/add_brand
      */
-    public function addBrand()
+    public function addBrand(): array
     {
-        if (!empty($this->in['ajax'])) {
-            switch ($this->in['ajax']) {
-                case 'checkBrandnum':
-                    $this->_checkBrandnum();
-                    break;
-                case 'checkBrandname':
-                    $this->_checkBrandname();
-                    break;
-                default:
-                    exit('错误参数');
-                    break;
-            }
-
-            exit();
-        }
-
         // 载入商品品牌的num
         $arrTpl = array();
-        $arrTpl['brand_num'] = D('BaseBrand')->getBrandNum();
-
-        $this->assign($arrTpl);
-        $this->display('dialog+' . ACTION_NAME);
+        $arrTpl['brand_num'] = BaseBrandModel::make()->getBrandNum();
+        return $arrTpl;
     }
 
     /**
      * 商品品牌编号唯一性验证.
+     *
+     * http://127.0.0.1:9527/base_brand/check_brand_num?brand_num=hello1
      */
-    private function _checkBrandnum()
+    public function checkBrandNum(): array
     {
-        if (!trim($this->in['brand_num'])) {
-            exit('true');
+        if (!isset($this->in['brand_num'])) {
+            return ['verify' => true];
         }
 
-        $objBrand = D('BaseBrand');
-        if ($objBrand->checkNum()) {
-            exit('true');
-        } else {
-            exit('false');
-        }
+        $objBrand = BaseBrandModel::make();
+        return ['verify' => $objBrand->checkNum()];
     }
 
     /**

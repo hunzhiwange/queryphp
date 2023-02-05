@@ -266,7 +266,7 @@ class BaseBrandTestModel extends Model
     /**
      * 检查商品品牌编号是否可用.
      */
-    protected function checkNum(): bool
+    public function checkNum(): bool
     {
         $arrIn = array('map' => array());
         $arrIn['map'] = array(
@@ -285,7 +285,7 @@ class BaseBrandTestModel extends Model
     /**
      * 检查商品品牌名称是否可用.
      */
-    protected function checkName(): bool
+    public function checkName(): bool
     {
         $arrIn = array('map' => array());
 
