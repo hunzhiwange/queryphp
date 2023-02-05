@@ -11,7 +11,7 @@ class Foo
         return [
             'foo' => [
                 'hello' => 'world',
-                'foo'   => 'bar',
+                'foo' => 'bar',
             ],
         ];
     }

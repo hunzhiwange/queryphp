@@ -28,7 +28,8 @@ if (!function_exists('sql_listener')) {
         \App::make('event')
             ->register(IDatabase::SQL_EVENT, function (string $event, string $sql) use ($call): void {
                 $call($event, $sql);
-            });
+            })
+    ;
     }
 }
 
@@ -234,10 +235,10 @@ if (!function_exists('success')) {
         // throw_message 立刻抛出后端消息
         // type 正确消息模板类型
         $success = [
-            'code'          => $code,
-            'message'       => $message ?: __('操作成功'),
+            'code' => $code,
+            'message' => $message ?: __('操作成功'),
             'throw_message' => true,
-            'type'          => 'default',
+            'type' => 'default',
         ];
         $success = array_merge($success, $extend);
         $data['success'] = $success;

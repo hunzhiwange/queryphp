@@ -48,9 +48,9 @@ class Favor
         $this->findProject($params->projectId);
         $this->findProjectUser($params);
         $projectUser = new ProjectUser([
-            'user_id'   => $params->userId,
-            'type'      => ProjectUserTypeEnum::FAVOR->value,
-            'data_id'   => $params->projectId,
+            'user_id' => $params->userId,
+            'type' => ProjectUserTypeEnum::FAVOR->value,
+            'data_id' => $params->projectId,
             'data_type' => ProjectUserDataTypeEnum::PROJECT->value,
         ]);
         $projectUser->userId = $projectUser->userId;
@@ -64,16 +64,17 @@ class Favor
     private function findProjectUser(FavorParams $params): ProjectUser
     {
         $map = [
-            'user_id'   => $params->userId,
-            'type'      => ProjectUserTypeEnum::FAVOR->value,
-            'data_id'   => $params->projectId,
+            'user_id' => $params->userId,
+            'type' => ProjectUserTypeEnum::FAVOR->value,
+            'data_id' => $params->projectId,
             'data_type' => ProjectUserDataTypeEnum::PROJECT->value,
         ];
 
         $entity = $this->w
             ->repository(ProjectUser::class)
             ->where($map)
-            ->findOne();
+            ->findOne()
+        ;
         if ($entity->id) {
             throw new ProjectBusinessException(ProjectErrorCode::PROJECT_USER_FAVOR_ALREADY_EXIST);
         }
@@ -88,7 +89,8 @@ class Favor
     {
         return $this->w
             ->repository(Project::class)
-            ->findOrFail($id);
+            ->findOrFail($id)
+        ;
     }
 
     /**

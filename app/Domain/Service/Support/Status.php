@@ -51,12 +51,13 @@ trait Status
         /** @var \Leevel\Support\Collection $entities */
         $entities = $this->w
             ->repository($this->entityClass)
-            ->findAll(function (Select $select) use ($ids) {
+            ->findAll(function (Select $select) use ($ids): void {
                 $primaryId = $this->entityClass::ID;
                 $select->whereIn($primaryId, $ids->toArray());
-            });
+            })
+        ;
 
-        if (0 === count($entities)) {
+        if (0 === \count($entities)) {
             throw new BusinessException(ErrorCode::BATCH_MODIFICATION_STATUS_NO_DATA_FOUND);
         }
 

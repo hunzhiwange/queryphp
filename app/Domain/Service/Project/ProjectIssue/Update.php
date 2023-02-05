@@ -41,21 +41,22 @@ class Update
             $this->saveContent($params);
         }
 
-        if (isset($params->completed) &&
-            ProjectIssueCompletedEnum::TRUE->value === $params->completed &&
-            !isset($params->completedDate)) {
-            $params->completedDate = \get_current_date();
+        if (isset($params->completed)
+            && ProjectIssueCompletedEnum::TRUE->value === $params->completed
+            && !isset($params->completedDate)) {
+            $params->completedDate = get_current_date();
         }
 
         return $this->save($params)->toArray();
     }
 
-    private function saveContent(UpdateParams $params)
+    private function saveContent(UpdateParams $params): void
     {
         $projectContent = $this->w
             ->repository(ProjectContent::class)
             ->where('project_issue_id', $params->id)
-            ->findOne();
+            ->findOne()
+        ;
         if (!$projectContent->id) {
             throw new ProjectBusinessException(0, 'xx');
         }
@@ -63,129 +64,132 @@ class Update
         $this->w->update($projectContent);
     }
 
-    private function tags(UpdateParams $params)
+    private function tags(UpdateParams $params): void
     {
-        $this->w->persist(function () use ($params) {
+        $this->w->persist(function () use ($params): void {
             $old = $this->w
                 ->repository(ProjectIssueTag::class)
-                ->findAll(function (Select $select) use ($params) {
+                ->findAll(function (Select $select) use ($params): void {
                     $select->where('project_issue_id', $params->id);
-                });
+                })
+            ;
             $oldIds = array_column($old->toArray(), 'id', 'project_tag_id');
             $old = array_column($old->toArray(), 'project_tag_id');
             $now = $params->tags->toArray();
             $del = array_diff($old, $now);
             $updateData = [];
             foreach ($params->tags as $projectTagId) {
-                if (in_array($projectTagId, $old)) {
+                if (\in_array($projectTagId, $old, true)) {
                     $updateData[] = [
-                        'id'               => $oldIds[$projectTagId],
+                        'id' => $oldIds[$projectTagId],
                         'project_issue_id' => $params->id,
-                        'project_tag_id'   => $projectTagId,
-                        'delete_at'        => 0,
+                        'project_tag_id' => $projectTagId,
+                        'delete_at' => 0,
                     ];
                 } else {
                     $updateData[] = [
-                        'id'               => 0,
+                        'id' => 0,
                         'project_issue_id' => $params->id,
-                        'project_tag_id'   => $projectTagId,
-                        'delete_at'        => 0,
+                        'project_tag_id' => $projectTagId,
+                        'delete_at' => 0,
                     ];
                 }
             }
             foreach ($del as $id) {
                 $updateData[] = [
-                    'id'               => $oldIds[$id],
+                    'id' => $oldIds[$id],
                     'project_issue_id' => $params->id,
-                    'project_tag_id'   => $id,
-                    'delete_at'        => time(),
+                    'project_tag_id' => $id,
+                    'delete_at' => time(),
                 ];
             }
-            ProjectIssueTag::repository()->insertAll($updateData, replace:['delete_at']);
+            ProjectIssueTag::repository()->insertAll($updateData, replace: ['delete_at']);
         });
     }
 
-    private function releases(UpdateParams $params)
+    private function releases(UpdateParams $params): void
     {
-        $this->w->persist(function () use ($params) {
+        $this->w->persist(function () use ($params): void {
             $old = $this->w
                 ->repository(ProjectIssueRelease::class)
-                ->findAll(function (Select $select) use ($params) {
+                ->findAll(function (Select $select) use ($params): void {
                     $select->where('project_issue_id', $params->id);
-                });
+                })
+            ;
             $oldIds = array_column($old->toArray(), 'id', 'project_release_id');
             $old = array_column($old->toArray(), 'project_release_id');
             $now = $params->releases->toArray();
             $del = array_diff($old, $now);
             $updateData = [];
             foreach ($params->releases as $projectReleaseId) {
-                if (in_array($projectReleaseId, $old)) {
+                if (\in_array($projectReleaseId, $old, true)) {
                     $updateData[] = [
-                        'id'                 => $oldIds[$projectReleaseId],
-                        'project_issue_id'   => $params->id,
+                        'id' => $oldIds[$projectReleaseId],
+                        'project_issue_id' => $params->id,
                         'project_release_id' => $projectReleaseId,
-                        'delete_at'          => 0,
+                        'delete_at' => 0,
                     ];
                 } else {
                     $updateData[] = [
-                        'id'                 => 0,
-                        'project_issue_id'   => $params->id,
+                        'id' => 0,
+                        'project_issue_id' => $params->id,
                         'project_release_id' => $projectReleaseId,
-                        'delete_at'          => 0,
+                        'delete_at' => 0,
                     ];
                 }
             }
             foreach ($del as $id) {
                 $updateData[] = [
-                    'id'                 => $oldIds[$id],
-                    'project_issue_id'   => $params->id,
+                    'id' => $oldIds[$id],
+                    'project_issue_id' => $params->id,
                     'project_release_id' => $id,
-                    'delete_at'          => time(),
+                    'delete_at' => time(),
                 ];
             }
-            ProjectIssueRelease::repository()->insertAll($updateData, replace:['delete_at']);
+            ProjectIssueRelease::repository()->insertAll($updateData, replace: ['delete_at']);
         });
     }
 
-    private function modules(UpdateParams $params)
+    private function modules(UpdateParams $params): void
     {
-        $this->w->persist(function () use ($params) {
+        $this->w->persist(function () use ($params): void {
             $old = $this->w
                 ->repository(ProjectIssueModule::class)
-                ->findAll(function (Select $select) use ($params) {
+                ->findAll(function (Select $select) use ($params): void {
                     $select->where('project_issue_id', $params->id);
-                });
+                })
+            ;
             $oldIds = array_column($old->toArray(), 'id', 'project_module_id');
             $old = array_column($old->toArray(), 'project_module_id');
             $now = $params->modules->toArray();
             $del = array_diff($old, $now);
             $updateData = [];
             foreach ($params->modules as $projectModuleId) {
-                if (in_array($projectModuleId, $old)) {
+                if (\in_array($projectModuleId, $old, true)) {
                     $updateData[] = [
-                        'id'                => $oldIds[$projectModuleId],
-                        'project_issue_id'  => $params->id,
+                        'id' => $oldIds[$projectModuleId],
+                        'project_issue_id' => $params->id,
                         'project_module_id' => $projectModuleId,
-                        'delete_at'         => 0,
+                        'delete_at' => 0,
                     ];
                 } else {
                     $updateData[] = [
-                        'id'                => 0,
-                        'project_issue_id'  => $params->id,
+                        'id' => 0,
+                        'project_issue_id' => $params->id,
                         'project_module_id' => $projectModuleId,
-                        'delete_at'         => 0,
+                        'delete_at' => 0,
                     ];
                 }
             }
             foreach ($del as $id) {
                 $updateData[] = [
-                    'id'                => $oldIds[$id],
-                    'project_issue_id'  => $params->id,
+                    'id' => $oldIds[$id],
+                    'project_issue_id' => $params->id,
                     'project_module_id' => $id,
-                    'delete_at'         => time(),
+                    'delete_at' => time(),
                 ];
             }
-            ProjectIssueModule::repository()->insertAll($updateData, replace:['delete_at']);
+            ProjectIssueModule::repository()->insertAll($updateData, replace: ['delete_at']);
         });
     }
 
@@ -196,7 +200,8 @@ class Update
     {
         $this->w
             ->persist($entity = $this->entity($params))
-            ->flush();
+            ->flush()
+        ;
         $entity->refresh();
 
         return $entity;
@@ -220,7 +225,8 @@ class Update
     {
         return $this->w
             ->repository(ProjectIssue::class)
-            ->findOrFail($id);
+            ->findOrFail($id)
+        ;
     }
 
     /**
@@ -237,6 +243,7 @@ class Update
                 'content',
             ])
             ->withoutNull()
-            ->toArray();
+            ->toArray()
+        ;
     }
 }

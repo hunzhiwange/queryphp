@@ -71,7 +71,7 @@ class Permission extends Entity
     public const STRUCT = [
         'id' => [
             self::COLUMN_NAME => 'ID',
-            self::READONLY    => true,
+            self::READONLY => true,
         ],
         'pid' => [
             self::COLUMN_NAME => '父级 ID',
@@ -84,37 +84,37 @@ class Permission extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
-            self::ENUM_CLASS  => PermissionStatusEnum::class,
+            self::ENUM_CLASS => PermissionStatusEnum::class,
         ],
         'create_at' => [
             self::COLUMN_NAME => '创建时间',
         ],
         'update_at' => [
-            self::COLUMN_NAME     => '更新时间',
+            self::COLUMN_NAME => '更新时间',
         ],
         'delete_at' => [
-            self::COLUMN_NAME     => '删除时间 0=未删除;大于0=删除时间;',
+            self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
             self::SHOW_PROP_BLACK => true,
         ],
         'create_account' => [
-            self::COLUMN_NAME     => '创建账号',
+            self::COLUMN_NAME => '创建账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'update_account' => [
-            self::COLUMN_NAME     => '更新账号',
+            self::COLUMN_NAME => '更新账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'version' => [
             self::COLUMN_NAME => '操作版本号',
         ],
-        'resource'      => [
-            self::MANY_MANY              => Resource::class,
-            self::MIDDLE_ENTITY          => PermissionResource::class,
-            self::SOURCE_KEY             => 'id',
-            self::TARGET_KEY             => 'id',
-            self::MIDDLE_SOURCE_KEY      => 'permission_id',
-            self::MIDDLE_TARGET_KEY      => 'resource_id',
-            self::RELATION_SCOPE         => 'resource',
+        'resource' => [
+            self::MANY_MANY => Resource::class,
+            self::MIDDLE_ENTITY => PermissionResource::class,
+            self::SOURCE_KEY => 'id',
+            self::TARGET_KEY => 'id',
+            self::MIDDLE_SOURCE_KEY => 'permission_id',
+            self::MIDDLE_TARGET_KEY => 'resource_id',
+            self::RELATION_SCOPE => 'resource',
         ],
     ]; // END STRUCT
 
@@ -135,6 +135,7 @@ class Permission extends Entity
     {
         $relation
             ->where('status', ResourceStatusEnum::ENABLE->value)
-            ->setColumns(['id', 'name', 'num', 'status']);
+            ->setColumns(['id', 'name', 'num', 'status'])
+        ;
     }
 }

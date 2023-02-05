@@ -52,9 +52,10 @@ class Role
     {
         return $this->w
             ->repository(EntityUserRole::class)
-            ->findAll(function (Select $select) use ($userId) {
+            ->findAll(function (Select $select) use ($userId): void {
                 $select->where('user_id', $userId);
-            });
+            })
+        ;
     }
 
     /**

@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 资源状态值枚举.
  */
-enum ResourceStatusEnum:int
+enum ResourceStatusEnum: int
 {
     use Enum;
 

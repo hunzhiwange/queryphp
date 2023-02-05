@@ -31,7 +31,7 @@ class Status implements IValidator
     public function names(): array
     {
         return [
-            'ids'    => 'ID',
+            'ids' => 'ID',
             'status' => __('状态值'),
         ];
     }
@@ -50,7 +50,7 @@ class Status implements IValidator
     public function rules(): array
     {
         return [
-            'ids'    => 'required|is_array',
+            'ids' => 'required|is_array',
             'status' => [
                 ['in', StatusEnum::values()],
             ],

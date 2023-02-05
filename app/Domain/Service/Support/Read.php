@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Support;
 
-use Closure;
 use Leevel\Database\Ddd\Repository;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Support\Collection;
 use Leevel\Support\Str\Camelize;
-use  Leevel\Support\TypedStringArray;
+use Leevel\Support\TypedStringArray;
 
 /**
  * 查询.
@@ -24,6 +23,11 @@ trait Read
     public function handle(ReadParams $params): array
     {
         return $this->findLists($params, $this->entityClass);
+    }
+
+    public function findLists(ReadParams $params, string $entityClass): array
+    {
+        return $this->findPage($params, $this->w->repository($entityClass));
     }
 
     /**
@@ -71,7 +75,7 @@ trait Read
     private function keySpec(Select $select, mixed $value, ReadParams $params): void
     {
         $value = str_replace(' ', '%', $value);
-        $select->where(function ($select) use ($value, $params) {
+        $select->where(function ($select) use ($value, $params): void {
             foreach ($params->keyColumn as $v) {
                 $select->orWhere($v, 'like', '%'.$value.'%');
             }
@@ -130,12 +134,7 @@ trait Read
         return $page;
     }
 
-    public function findLists(ReadParams $params, string $entityClass): array
-    {
-        return $this->findPage($params, $this->w->repository($entityClass));
-    }
-
-    private function condition(ReadParams $params): Closure
+    private function condition(ReadParams $params): \Closure
     {
         return $this->baseCondition(
             $params,
@@ -143,14 +142,14 @@ trait Read
         );
     }
 
-    private function conditionCall(ReadParams $params): ?Closure
+    private function conditionCall(ReadParams $params): ?\Closure
     {
         return null;
     }
 
-    private function baseCondition(ReadParams $params, ?Closure $call = null): Closure
+    private function baseCondition(ReadParams $params, ?\Closure $call = null): \Closure
     {
-        return function (Select $select) use ($params, $call) {
+        return function (Select $select) use ($params, $call): void {
             $this->spec($select, $params);
             if ($call) {
                 $call($select);

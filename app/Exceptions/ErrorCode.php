@@ -27,7 +27,7 @@ use Leevel\Support\Enum;
  *
  * @see https://zhuanlan.zhihu.com/p/152115647
  */
-enum ErrorCode:int
+enum ErrorCode: int
 {
     use Enum;
 

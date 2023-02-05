@@ -67,7 +67,7 @@ class Role extends Entity
     public const STRUCT = [
         'id' => [
             self::COLUMN_NAME => 'ID',
-            self::READONLY    => true,
+            self::READONLY => true,
         ],
         'name' => [
             self::COLUMN_NAME => '角色名字',
@@ -77,37 +77,37 @@ class Role extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
-            self::ENUM_CLASS  => RoleStatusEnum::class,
+            self::ENUM_CLASS => RoleStatusEnum::class,
         ],
         'create_at' => [
             self::COLUMN_NAME => '创建时间',
         ],
         'update_at' => [
-            self::COLUMN_NAME     => '更新时间',
+            self::COLUMN_NAME => '更新时间',
         ],
         'delete_at' => [
-            self::COLUMN_NAME     => '删除时间 0=未删除;大于0=删除时间;',
+            self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
             self::SHOW_PROP_BLACK => true,
         ],
         'create_account' => [
-            self::COLUMN_NAME     => '创建账号',
+            self::COLUMN_NAME => '创建账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'update_account' => [
-            self::COLUMN_NAME     => '更新账号',
+            self::COLUMN_NAME => '更新账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'version' => [
             self::COLUMN_NAME => '操作版本号',
         ],
-        'permission'      => [
-            self::MANY_MANY              => Permission::class,
-            self::MIDDLE_ENTITY          => RolePermission::class,
-            self::SOURCE_KEY             => 'id',
-            self::TARGET_KEY             => 'id',
-            self::MIDDLE_SOURCE_KEY      => 'role_id',
-            self::MIDDLE_TARGET_KEY      => 'permission_id',
-            self::RELATION_SCOPE         => 'permission',
+        'permission' => [
+            self::MANY_MANY => Permission::class,
+            self::MIDDLE_ENTITY => RolePermission::class,
+            self::SOURCE_KEY => 'id',
+            self::TARGET_KEY => 'id',
+            self::MIDDLE_SOURCE_KEY => 'role_id',
+            self::MIDDLE_TARGET_KEY => 'permission_id',
+            self::RELATION_SCOPE => 'permission',
         ],
     ]; // END STRUCT
 
@@ -123,6 +123,7 @@ class Role extends Entity
     {
         $relation
             ->where('status', PermissionStatusEnum::ENABLE->value)
-            ->setColumns(['id', 'name']);
+            ->setColumns(['id', 'name'])
+        ;
     }
 }

@@ -76,7 +76,7 @@ class ProjectTag extends Entity
     public const STRUCT = [
         'id' => [
             self::COLUMN_NAME => 'ID',
-            self::READONLY    => true,
+            self::READONLY => true,
         ],
         'company_id' => [
             self::COLUMN_NAME => '公司 ID',
@@ -86,7 +86,7 @@ class ProjectTag extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
-            self::ENUM_CLASS  => ProjectTagStatusEnum::class,
+            self::ENUM_CLASS => ProjectTagStatusEnum::class,
         ],
         'color' => [
             self::COLUMN_NAME => '标签颜色',
@@ -104,25 +104,25 @@ class ProjectTag extends Entity
             self::COLUMN_NAME => '更新时间',
         ],
         'delete_at' => [
-            self::COLUMN_NAME     => '删除时间 0=未删除;大于0=删除时间;',
+            self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
             self::SHOW_PROP_BLACK => true,
         ],
         'create_account' => [
-            self::COLUMN_NAME     => '创建账号',
+            self::COLUMN_NAME => '创建账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'update_account' => [
-            self::COLUMN_NAME     => '更新账号',
+            self::COLUMN_NAME => '更新账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'version' => [
             self::COLUMN_NAME => '操作版本号',
         ],
-        'project'      => [
-            self::BELONGS_TO             => Project::class,
-            self::SOURCE_KEY             => 'project_id',
-            self::TARGET_KEY             => 'id',
-            self::RELATION_SCOPE         => 'project',
+        'project' => [
+            self::BELONGS_TO => Project::class,
+            self::SOURCE_KEY => 'project_id',
+            self::TARGET_KEY => 'id',
+            self::RELATION_SCOPE => 'project',
         ],
     ]; // END STRUCT
 

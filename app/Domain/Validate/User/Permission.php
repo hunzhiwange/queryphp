@@ -61,10 +61,10 @@ class Permission implements IValidator
     public function rules(): array
     {
         return [
-            'id'     => 'required|type:int|gt:0',
-            'pid'    => 'required|type:int|egt:0',
-            'name'   => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
-            'num'    => ['required|alpha_dash', $this->uniqueRule],
+            'id' => 'required|type:int|gt:0',
+            'pid' => 'required|type:int|egt:0',
+            'name' => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
+            'num' => ['required|alpha_dash', $this->uniqueRule],
             'status' => [
                 ['in', PermissionStatusEnum::values()],
             ],

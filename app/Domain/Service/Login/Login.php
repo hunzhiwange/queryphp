@@ -74,7 +74,8 @@ class Login
     {
         return $this
             ->appRepository()
-            ->findAppSecretByKey($appKey);
+            ->findAppSecretByKey($appKey)
+        ;
     }
 
     private function appRepository(): AppRepository

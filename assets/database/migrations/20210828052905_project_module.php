@@ -44,7 +44,6 @@ final class ProjectModule extends AbstractMigration
 
     private function seed(): void
     {
-
         /*
         $sql = <<<'EOT'
             EOT;

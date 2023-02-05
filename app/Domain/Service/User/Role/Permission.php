@@ -46,9 +46,10 @@ class Permission
     {
         return $this->w
             ->repository(EntityRolePermission::class)
-            ->findAll(function (Select $select) use ($roleId) {
+            ->findAll(function (Select $select) use ($roleId): void {
                 $select->where('role_id', $roleId);
-            });
+            })
+        ;
     }
 
     /**
@@ -95,8 +96,8 @@ class Permission
     private function entityRolePermission(int $roleId, int $permissionId): EntityRolePermission
     {
         return new EntityRolePermission([
-            'role_id'         => $roleId,
-            'permission_id'   => $permissionId,
+            'role_id' => $roleId,
+            'permission_id' => $permissionId,
         ]);
     }
 }

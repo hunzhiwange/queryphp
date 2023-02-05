@@ -14,7 +14,6 @@ use App\Infra\Helper\CreateSignature;
 use App\Infra\Lock;
 use App\Infra\Proxy\Permission;
 use App\Infra\Repository\Base\App as BaseApp;
-use Closure;
 use Leevel\Auth\AuthException;
 use Leevel\Auth\Manager;
 use Leevel\Auth\Middleware\Auth as BaseAuth;
@@ -83,10 +82,10 @@ class Auth extends BaseAuth
      *
      * @throws \App\Exceptions\UnauthorizedHttpException
      */
-    public function handle(Closure $next, Request $request): Response
+    public function handle(\Closure $next, Request $request): Response
     {
-        if ($request::METHOD_OPTIONS === $request->getMethod() ||
-            $this->isIgnoreRouter($request)) {
+        if ($request::METHOD_OPTIONS === $request->getMethod()
+            || $this->isIgnoreRouter($request)) {
             return $next($request);
         }
 
@@ -153,13 +152,13 @@ class Auth extends BaseAuth
         });
 
         // 批量插入数据自动添加 company_id
-        Event::register(Repository::INSERT_ALL_EVENT, function (object|string $event, Repository $repository) {
+        Event::register(Repository::INSERT_ALL_EVENT, function (object|string $event, Repository $repository): void {
             if (!$repository->entity()->hasField('company_id')) {
                 return;
             }
 
-            $repository->insertAllBoot(function (&$data) {
-                \inject_company($data);
+            $repository->insertAllBoot(function (&$data): void {
+                inject_company($data);
             });
         });
     }
@@ -176,7 +175,7 @@ class Auth extends BaseAuth
             throw new AuthBusinessException(AuthErrorCode::AUTH_FORMAT_CANNOT_BE_EMPTY);
         }
 
-        if (!in_array($format, ['json'], true)) {
+        if (!\in_array($format, ['json'], true)) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_FORMAT_NOT_SUPPORT);
         }
     }
@@ -202,8 +201,9 @@ class Auth extends BaseAuth
     private function findAppSecret(string $appKey): string
     {
         return $this
-            ->appRepository()
-            ->findAppSecretByKey($appKey);
+            ->appReposity()
+            ->findAppSecretByKey($appKey)
+        ;
     }
 
     private function appRepository(): BaseApp
@@ -244,7 +244,7 @@ class Auth extends BaseAuth
         if (empty($params['signature_method'])) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_METHOD_CANNOT_BE_EMPTY);
         }
-        if (!in_array($params['signature_method'], ['hmac_sha256'], true)) {
+        if (!\in_array($params['signature_method'], ['hmac_sha256'], true)) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_SIGNATURE_METHOD_NOT_SUPPORT);
         }
 
@@ -290,8 +290,8 @@ class Auth extends BaseAuth
      */
     private function validateLock(Request $request, string $token): void
     {
-        if (!\in_array($this->getPathInfo($request), $this->ignoreLockPathInfo, true) &&
-            $token && (new Lock())->has($token)) {
+        if (!\in_array($this->getPathInfo($request), $this->ignoreLockPathInfo, true)
+            && $token && (new Lock())->has($token)) {
             throw new LockException(AuthErrorCode::MANAGEMENT_SYSTEM_LOCKED);
         }
     }

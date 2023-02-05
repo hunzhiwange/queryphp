@@ -75,6 +75,7 @@ class ChangePassword
     {
         return $this->w
             ->repository(User::class)
-            ->findOrFail($id);
+            ->findOrFail($id)
+        ;
     }
 }

@@ -6,7 +6,6 @@ namespace App\Domain\Service\Project\ProjectTag;
 
 use App\Domain\Entity\Project\ProjectTag;
 use App\Domain\Service\Support\Read;
-use Closure;
 use Leevel\Database\Ddd\Select;
 
 /**
@@ -18,9 +17,9 @@ class ProjectTags
 
     protected string $entityClass = ProjectTag::class;
 
-    private function conditionCall(ProjectTagsParams $params): ?Closure
+    private function conditionCall(ProjectTagsParams $params): ?\Closure
     {
-        return function (Select $select) {
+        return function (Select $select): void {
             $select->eager([
                 'project',
             ]);

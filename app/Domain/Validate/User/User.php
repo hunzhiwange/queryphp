@@ -26,9 +26,9 @@ class User implements IValidator
         return [
             'update' => [
                 'id',
-                ':num'      => ValidateIValidator::OPTIONAL,
+                ':num' => ValidateIValidator::OPTIONAL,
                 ':password' => ValidateIValidator::OPTIONAL,
-                ':status'   => ValidateIValidator::OPTIONAL,
+                ':status' => ValidateIValidator::OPTIONAL,
                 'email',
                 'mobile',
             ],
@@ -70,12 +70,12 @@ class User implements IValidator
         $baseNames = UserUser::columnNames();
 
         return array_merge($baseNames, [
-            'old_pwd'      => __('旧密码'),
-            'new_pwd'      => __('新密码'),
-            'confirm_pwd'  => __('确认密码'),
-            'app_key'      => __('应用 KEY'),
-            'code'         => __('校验码'),
-            'remember'     => __('保持登陆'),
+            'old_pwd' => __('旧密码'),
+            'new_pwd' => __('新密码'),
+            'confirm_pwd' => __('确认密码'),
+            'app_key' => __('应用 KEY'),
+            'code' => __('校验码'),
+            'remember' => __('保持登陆'),
         ]);
     }
 
@@ -93,22 +93,22 @@ class User implements IValidator
     public function rules(): array
     {
         return [
-            'id'       => 'required|type:int|gt:0',
-            'name'     => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
-            'num'      => ['required|alpha_dash', $this->uniqueRule],
+            'id' => 'required|type:int|gt:0',
+            'name' => ['required|chinese_alpha_num|max_length:50', $this->uniqueRule],
+            'num' => ['required|alpha_dash', $this->uniqueRule],
             'password' => 'required|min_length:6,max_length:30',
-            'status'   => [
+            'status' => [
                 ['in', UserStatusEnum::values()],
             ],
-            'email'        => 'email|'.ValidateIValidator::OPTIONAL,
-            'mobile'       => 'mobile|'.ValidateIValidator::OPTIONAL,
-            'token'        => 'required',
-            'old_pwd'      => 'required|min_length:6,max_length:30',
-            'new_pwd'      => 'required|min_length:6,max_length:30',
-            'confirm_pwd'  => 'required|min_length:6,max_length:30|equal_to:new_pwd',
-            'app_key'      => 'required|alpha_dash',
-            'code'         => 'required',
-            'remember'     => 'required',
+            'email' => 'email|'.ValidateIValidator::OPTIONAL,
+            'mobile' => 'mobile|'.ValidateIValidator::OPTIONAL,
+            'token' => 'required',
+            'old_pwd' => 'required|min_length:6,max_length:30',
+            'new_pwd' => 'required|min_length:6,max_length:30',
+            'confirm_pwd' => 'required|min_length:6,max_length:30|equal_to:new_pwd',
+            'app_key' => 'required|alpha_dash',
+            'code' => 'required',
+            'remember' => 'required',
         ];
     }
 }

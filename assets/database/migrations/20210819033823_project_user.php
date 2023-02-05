@@ -43,7 +43,6 @@ final class ProjectUser extends AbstractMigration
 
     private function seed(): void
     {
-
         /*
         $sql = <<<'EOT'
             EOT;

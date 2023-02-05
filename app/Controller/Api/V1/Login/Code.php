@@ -18,8 +18,8 @@ use Leevel\Http\Response;
  */
 class Code
 {
-    use Controller;
     use CloseDebug;
+    use Controller;
 
     public function handle(Request $request, Service $service): Response
     {

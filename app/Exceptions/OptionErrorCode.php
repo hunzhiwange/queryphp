@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 配置业务错误码.
  */
-enum OptionErrorCode:int
+enum OptionErrorCode: int
 {
     use Enum;
 

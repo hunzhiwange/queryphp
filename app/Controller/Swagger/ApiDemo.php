@@ -13,15 +13,18 @@ class ApiDemo
      * @OA\Get(
      *     path="/swagger/api/v1/demo/{name}/",
      *     summary="Just test the router",
+     *
      *     @OA\Parameter(
      *         name="name",
      *         in="path",
      *         description="name test",
      *         required=true,
+     *
      *         @OA\Schema(
      *             type="string",
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=405,
      *         description="Invalid input"

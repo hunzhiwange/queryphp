@@ -14,9 +14,9 @@ class Update
 {
     use CommonUpdate;
 
-    private ?ProjectLabel $entity = null;
-
     protected string $entityClass = ProjectLabel::class;
+
+    private ?ProjectLabel $entity = null;
 
     public function beforeHandle(UpdateParams $params): void
     {

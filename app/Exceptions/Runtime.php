@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Leevel;
 use Leevel\Http\Request;
 use Leevel\Kernel\Exceptions\HttpException;
 use Leevel\Kernel\Exceptions\Runtime as ExceptionRuntime;
 use Symfony\Component\HttpFoundation\Response;
-use Throwable;
 
 /**
  * 异常运行时.
@@ -19,7 +17,7 @@ class Runtime extends ExceptionRuntime
     /**
      * {@inheritDoc}
      */
-    public function report(Throwable $e): void
+    public function report(\Throwable $e): void
     {
         parent::report($e);
     }
@@ -27,7 +25,7 @@ class Runtime extends ExceptionRuntime
     /**
      * {@inheritDoc}
      */
-    public function render(Request $request, Throwable $e): Response
+    public function render(Request $request, \Throwable $e): Response
     {
         return parent::render($request, $e);
     }
@@ -37,7 +35,7 @@ class Runtime extends ExceptionRuntime
      */
     public function getHttpExceptionView(HttpException $e): string
     {
-        return Leevel::path(sprintf('assets/exceptions/%d.php', $e->getStatusCode()));
+        return \Leevel::path(sprintf('assets/exceptions/%d.php', $e->getStatusCode()));
     }
 
     /**
@@ -45,7 +43,7 @@ class Runtime extends ExceptionRuntime
      */
     public function getDefaultHttpExceptionView(): string
     {
-        return Leevel::path('assets/exceptions/default.php');
+        return \Leevel::path('assets/exceptions/default.php');
     }
 
     /**
@@ -53,17 +51,17 @@ class Runtime extends ExceptionRuntime
      */
     public function getJsonExceptionView(HttpException $e): string
     {
-        return Leevel::path(sprintf('assets/exceptions/%d.php', $e->getStatusCode()));
+        return \Leevel::path(sprintf('assets/exceptions/%d.php', $e->getStatusCode()));
     }
 
     /**
      * 获取 JSON 状态的默认异常结果.
      */
-    public function getDefaultJsonExceptionData(Throwable $e): array
+    public function getDefaultJsonExceptionData(\Throwable $e): array
     {
         return [
             'error' => [
-                'code'    => $e->getCode(),
+                'code' => $e->getCode(),
                 'message' => $e->getMessage(),
             ],
         ];

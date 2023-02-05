@@ -35,7 +35,8 @@ trait Store
     {
         $this->w
             ->persist($entity = $this->entity($params))
-            ->flush();
+            ->flush()
+        ;
         $entity->refresh();
 
         return $entity;

@@ -24,3 +24,4 @@ www/debugbar
 /static
 /apis
 /attachments
+.php-cs-fixer.cache

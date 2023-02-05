@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 用户业务错误码.
  */
-enum UserErrorCode:int
+enum UserErrorCode: int
 {
     use Enum;
 

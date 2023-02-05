@@ -32,8 +32,8 @@ class AddUsers
         $this->verifyUsers($params->userIds);
 
         $baseData = [
-            'type'      => ProjectUserTypeEnum::MEMBER->value,
-            'data_id'   => $params->projectId,
+            'type' => ProjectUserTypeEnum::MEMBER->value,
+            'data_id' => $params->projectId,
             'data_type' => ProjectUserDataTypeEnum::PROJECT->value,
         ];
         $existUserIds = $this->findExistUserIds($baseData);
@@ -58,7 +58,8 @@ class AddUsers
             ->repository(ProjectUser::class)
             ->where($baseData)
             ->setColumns('user_id')
-            ->findAll();
+            ->findAll()
+        ;
 
         return array_column($users->toArray(), 'user_id');
     }
@@ -67,7 +68,8 @@ class AddUsers
     {
         return $this->w
             ->repository(Project::class)
-            ->findOrFail($projectId);
+            ->findOrFail($projectId)
+        ;
     }
 
     private function verifyUsers(TypedIntArray $userIds): void

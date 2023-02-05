@@ -26,7 +26,7 @@ class OptionUpdate
         return [];
     }
 
-    private function validateParams(OptionUpdateParams $params)
+    private function validateParams(OptionUpdateParams $params): void
     {
         foreach ($params->all() as $k => $v) {
             $validatorClass = __NAMESPACE__.'\\Validator\\'.ucfirst(Str::camelize($k)).'Validator';

@@ -63,19 +63,18 @@ class Permission
         return false;
     }
 
+    protected function getPermissionData(): array
+    {
+        return $this->permissionCache->get($this->token);
+    }
+
     /**
      * 通配符正则.
      */
     private function prepareRegexForWildcard(string $regex): string
     {
         $regex = preg_quote($regex, '/');
-        $regex = '/^'.str_replace('\*', '(\S*)', $regex).'$/';
 
-        return $regex;
-    }
-
-    protected function getPermissionData(): array
-    {
-        return $this->permissionCache->get($this->token);
+        return '/^'.str_replace('\*', '(\S*)', $regex).'$/';
     }
 }

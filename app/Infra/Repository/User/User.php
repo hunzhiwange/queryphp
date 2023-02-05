@@ -8,7 +8,6 @@ use App\Domain\Entity\User\User as EntityUser;
 use App\Domain\Entity\User\UserStatusEnum;
 use App\Exceptions\UserBusinessException;
 use App\Exceptions\UserErrorCode;
-use Closure;
 use Leevel\Auth\Hash;
 use Leevel\Database\Ddd\Repository;
 use Leevel\Database\Ddd\Select;
@@ -45,12 +44,13 @@ class User extends Repository
      *
      * @throws \App\Exceptions\UserBusinessException
      */
-    public function findValidUserByCondition(Closure $condition, string $column = '*'): EntityUser
+    public function findValidUserByCondition(\Closure $condition, string $column = '*'): EntityUser
     {
         $select = $this->entity
             ->select()
             ->where('status', UserStatusEnum::ENABLE->value)
-            ->columns($column);
+            ->columns($column)
+        ;
         $condition($select);
         $user = $select->findOne();
         if (!$user->id) {
@@ -85,7 +85,7 @@ class User extends Repository
      *
      * @throws \App\Exceptions\UserBusinessException
      */
-    public function verifyUsersByIds(array $userIds, ?Closure $condition = null): void
+    public function verifyUsersByIds(array $userIds, ?\Closure $condition = null): void
     {
         $userIds = array_unique($userIds);
         $select = $this->whereIn('id', $userIds);
@@ -93,7 +93,7 @@ class User extends Repository
             $condition($select);
         }
         $users = $select->findAll();
-        if (count($userIds) !== count($users)) {
+        if (\count($userIds) !== \count($users)) {
             throw new UserBusinessException(UserErrorCode::SOME_USERS_DOES_NOT_EXIST);
         }
     }

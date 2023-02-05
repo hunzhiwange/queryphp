@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 项目问题优先级别枚举.
  */
-enum ProjectIssueLevelEnum:int
+enum ProjectIssueLevelEnum: int
 {
     use Enum;
 

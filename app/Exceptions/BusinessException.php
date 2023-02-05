@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use App;
 use Leevel\Kernel\Exceptions\BusinessException as BaseBusinessException;
 use Throwable;
 
@@ -22,9 +21,9 @@ class BusinessException extends BaseBusinessException
         int|object $code = 0,
         string $message = '',
         bool $overrideMessage = false,
-        Throwable $previous = null
+        \Throwable $previous = null
     ) {
-        list($code, $message) = $this->prepareCodeAndMessage($code, $message, $overrideMessage);
+        [$code, $message] = $this->prepareCodeAndMessage($code, $message, $overrideMessage);
         parent::__construct($message, $code, $previous);
     }
 
@@ -59,7 +58,7 @@ class BusinessException extends BaseBusinessException
     {
         try {
             /** @var \Leevel\Log\ILog $log */
-            $log = App::make('log');
+            $log = \App::make('log');
             $log->error($this->getMessage(), ['exception' => (string) $this]);
             $log->flush();
         } catch (Throwable) {

@@ -19,11 +19,11 @@ class Apis
         return [
             [
                 'name' => 'Web',
-                'url'  => '/swagger/web',
+                'url' => '/swagger/web',
             ],
             [
                 'name' => 'API',
-                'url'  => '/swagger',
+                'url' => '/swagger',
             ],
         ];
     }

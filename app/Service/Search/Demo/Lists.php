@@ -11,7 +11,7 @@ class Lists
         return [
             'speciallists' => [
                 'hello' => 'world',
-                'foo'   => 'bar',
+                'foo' => 'bar',
             ],
         ];
     }

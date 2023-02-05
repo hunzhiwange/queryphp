@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Dto;
 
 use App\Domain\Validate\ValidateParams;
-use Leevel;
 use Leevel\Support\Dto;
 
 class ParamsDto extends Dto
@@ -25,7 +24,7 @@ class ParamsDto extends Dto
 
         if ($this->validatorClass) {
             $validatorClass = $this->validatorClass;
-            $validator = Leevel::make($validatorClass, $this->validatorArgs());
+            $validator = \Leevel::make($validatorClass, $this->validatorArgs());
 
             $this->baseValidate(
                 $validator,

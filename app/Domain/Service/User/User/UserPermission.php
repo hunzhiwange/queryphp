@@ -32,7 +32,7 @@ class UserPermission
     {
         $permission = ['static' => [], 'dynamic' => []];
         foreach ($data as $v) {
-            if ('*' !== $v && false !== strpos($v, '*')) {
+            if ('*' !== $v && str_contains($v, '*')) {
                 $permission['dynamic'][] = $v;
             } else {
                 $permission['static'][] = $v;
@@ -73,6 +73,7 @@ class UserPermission
             ->repository(User::class)
             ->eager(['role.permission.resource'])
             ->where('status', UserStatusEnum::ENABLE->value)
-            ->findOrFail($id);
+            ->findOrFail($id)
+        ;
     }
 }

@@ -17,8 +17,8 @@ use Leevel\Http\Request;
  */
 class Upload
 {
-    use Controller;
     use CloseDebug;
+    use Controller;
 
     public function handle(Request $request, AttachmentUpload $service): array
     {

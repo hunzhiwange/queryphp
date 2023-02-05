@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 项目业务错误码.
  */
-enum ProjectErrorCode:int
+enum ProjectErrorCode: int
 {
     use Enum;
 

@@ -19,10 +19,10 @@ trait Helper
         $tmp = explode('\\', static::class);
         array_shift($tmp);
         $className = array_pop($tmp);
-        $traceDir = dirname(__DIR__).'/storage/app/tests/'.implode('/', $tmp);
+        $traceDir = \dirname(__DIR__).'/storage/app/tests/'.implode('/', $tmp);
 
         if (!is_dir($traceDir)) {
-            mkdir($traceDir, 0777, true);
+            mkdir($traceDir, 0o777, true);
         }
 
         return [$traceDir, $className];
@@ -36,7 +36,7 @@ trait Helper
         $test = str_replace('\\', '', $test);
 
         // 判断是否存在
-        $file = dirname(__DIR__).'/database/seeds/'.$test.'.php';
+        $file = \dirname(__DIR__).'/database/seeds/'.$test.'.php';
 
         if (!is_file($file)) {
             // 创建 seed

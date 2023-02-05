@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 项目标签状态值枚举.
  */
-enum ProjectTagStatusEnum:int
+enum ProjectTagStatusEnum: int
 {
     use Enum;
 

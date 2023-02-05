@@ -9,7 +9,6 @@ use App\Domain\Entity\Project\ProjectUserDataTypeEnum;
 use App\Domain\Entity\Project\ProjectUserExtendTypeEnum;
 use App\Domain\Entity\Project\ProjectUserTypeEnum;
 use App\Domain\Service\Support\Read;
-use Closure;
 use Leevel\Database\Condition;
 use Leevel\Database\Ddd\Select;
 use Leevel\Support\TypedIntArray;
@@ -47,32 +46,39 @@ class Projects
         switch ($value) {
             case 'favor':
                 $select->where('project_user.type', ProjectUserTypeEnum::FAVOR->value);
+
                 break;
+
             case 'administrator':
                 $select->where('project_user.type', ProjectUserTypeEnum::MEMBER->value);
                 $select->where('project_user.extend_type', ProjectUserExtendTypeEnum::ADMINISTRATOR->value);
+
                 break;
+
             default:
                 // member
                 $select->where('project_user.type', ProjectUserTypeEnum::MEMBER->value);
+
                 break;
         }
     }
 
-    private function conditionCall(ProjectsParams $params): ?Closure
+    private function conditionCall(ProjectsParams $params): ?\Closure
     {
         if (!$params->userId && !$params->type) {
             return null;
         }
 
-        return function (Select $select) {
+        return function (Select $select): void {
             $select
-                ->leftJoin('project_user', '', function (Condition $select) {
+                ->leftJoin('project_user', '', function (Condition $select): void {
                     $select
                         ->where('delete_at', 0)
                         ->where('data_id', Condition::raw('[project.id]'))
-                        ->where('data_type', ProjectUserDataTypeEnum::PROJECT->value);
-                });
+                        ->where('data_type', ProjectUserDataTypeEnum::PROJECT->value)
+                    ;
+                })
+            ;
         };
     }
 }

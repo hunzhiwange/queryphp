@@ -32,15 +32,15 @@ class Sort
         $projectLabelIds = $params->projectLabelIds->toArray();
         ProjectLabel::repository()->validateDataExists($projectLabelIds);
 
-        $this->w->persist(function () use ($projectLabelIds) {
+        $this->w->persist(function () use ($projectLabelIds): void {
             $updateData = [];
             foreach ($projectLabelIds as $k => $projectLabelId) {
                 $updateData[] = [
-                    'id'   => $projectLabelId,
+                    'id' => $projectLabelId,
                     'sort' => $k,
                 ];
             }
-            ProjectLabel::repository()->insertAll($updateData, replace:['id', 'sort']);
+            ProjectLabel::repository()->insertAll($updateData, replace: ['id', 'sort']);
         });
 
         $this->w->flush();
