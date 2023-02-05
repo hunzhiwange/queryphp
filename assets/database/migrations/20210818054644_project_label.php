@@ -43,7 +43,6 @@ final class ProjectLabel extends AbstractMigration
 
     private function seed(): void
     {
-
         /*
         $sql = <<<'EOT'
             EOT;

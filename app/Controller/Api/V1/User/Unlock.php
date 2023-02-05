@@ -33,7 +33,7 @@ class Unlock
     private function extendInput(Request $request): array
     {
         return [
-            'id'    => $this->userId(),
+            'id' => $this->userId(),
             'token' => $this->token(),
         ];
     }

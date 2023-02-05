@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Swagger;
 
 use App\Infra\Helper\ForceCloseDebug;
-use Exception;
-use Leevel;
+
 use function OpenApi\scan;
 
 /**
@@ -23,11 +22,11 @@ class Index
      */
     public function handle(): string
     {
-        if (!function_exists('OpenApi\\scan')) {
+        if (!\function_exists('OpenApi\\scan')) {
             $message = 'Swagger PHP do not support `composer dump-autoload --no-dev`, '.
                 'because `zircote/swagger-php` is in `require-dev` of  composer.json';
 
-            throw new Exception($message);
+            throw new \Exception($message);
         }
 
         // 扫描路径
@@ -46,8 +45,8 @@ class Index
     protected function path(): array
     {
         return [
-            Leevel::appPath('app/Controller'),
-            Leevel::appPath('admin/Controller'),
+            \Leevel::appPath('app/Controller'),
+            \Leevel::appPath('admin/Controller'),
         ];
     }
 
@@ -57,7 +56,7 @@ class Index
     protected function basePath(): array
     {
         return [
-            Leevel::path('assets/swagger'),
+            \Leevel::path('assets/swagger'),
         ];
     }
 

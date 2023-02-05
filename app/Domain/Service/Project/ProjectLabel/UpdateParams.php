@@ -29,8 +29,8 @@ class UpdateParams extends CommonUpdateParams
     {
         $uniqueRule = UniqueRule::rule(
             $this->entityClass,
-            exceptId:$this->id,
-            additional:['project_id' => $this->projectId]
+            exceptId: $this->id,
+            additional: ['project_id' => $this->projectId]
         );
 
         return [$uniqueRule];

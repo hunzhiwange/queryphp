@@ -8,7 +8,12 @@ use App\Domain\Entity\User\ResourceStatusEnum;
 use Leevel\Database\Proxy\Db;
 use Tests\TestCase;
 
-class ResourcesTest extends TestCase
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
+final class ResourcesTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -26,10 +31,10 @@ class ResourcesTest extends TestCase
     {
         $service = $this->app->container()->make(Resources::class);
         $result = $service->handle(new ResourcesParams([
-            'key'    => null,
+            'key' => null,
             'status' => null,
-            'page'   => 1,
-            'size'   => 10,
+            'page' => 1,
+            'size' => 10,
         ]));
 
         $data = <<<'eot'
@@ -44,14 +49,14 @@ class ResourcesTest extends TestCase
             }
             eot;
 
-        $this->assertSame(
+        static::assertSame(
             $data,
             $this->varJson(
                 $result['page']
             )
         );
 
-        $this->assertSame([], $result['data']);
+        static::assertSame([], $result['data']);
     }
 
     public function testWithData(): void
@@ -60,10 +65,10 @@ class ResourcesTest extends TestCase
 
         $service = $this->app->container()->make(Resources::class);
         $result = $service->handle(new ResourcesParams([
-            'key'    => null,
+            'key' => null,
             'status' => null,
-            'page'   => 1,
-            'size'   => 10,
+            'page' => 1,
+            'size' => 10,
         ]));
 
         $data = <<<'eot'
@@ -78,7 +83,7 @@ class ResourcesTest extends TestCase
             }
             eot;
 
-        $this->assertSame(
+        static::assertSame(
             $data,
             $this->varJson(
                 $result['page']
@@ -87,24 +92,24 @@ class ResourcesTest extends TestCase
 
         $first = $result['data'][0];
 
-        $this->assertCount(1, $result['data']);
-        $this->assertSame(1, $first['id']);
-        $this->assertSame('foo', $first['name']);
-        $this->assertSame('bar', $first['num']);
-        $this->assertSame(1, $first['status']);
+        static::assertCount(1, $result['data']);
+        static::assertSame(1, $first['id']);
+        static::assertSame('foo', $first['name']);
+        static::assertSame('bar', $first['num']);
+        static::assertSame(1, $first['status']);
     }
 
-    protected function clear()
+    protected function clear(): void
     {
         $this->truncateDatabase(['resource']);
     }
 
-    protected function createResource()
+    protected function createResource(): void
     {
-        $this->assertSame(1, Db::table('resource')->insert([
-            'name'     => 'foo',
-            'num'      => 'bar',
-            'status'   => ResourceStatusEnum::ENABLE->value,
+        static::assertSame(1, Db::table('resource')->insert([
+            'name' => 'foo',
+            'num' => 'bar',
+            'status' => ResourceStatusEnum::ENABLE->value,
         ]));
     }
 }

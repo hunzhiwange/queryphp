@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 权限状态值枚举.
  */
-enum PermissionStatusEnum:int
+enum PermissionStatusEnum: int
 {
     use Enum;
 

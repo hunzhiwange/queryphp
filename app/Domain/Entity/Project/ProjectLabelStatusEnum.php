@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 项目分类状态值枚举.
  */
-enum ProjectLabelStatusEnum:int
+enum ProjectLabelStatusEnum: int
 {
     use Enum;
 

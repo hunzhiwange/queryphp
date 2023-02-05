@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Exceptions;
 
 use Leevel\Kernel\Exceptions\UnauthorizedHttpException as BaseUnauthorizedHttpException;
-use Throwable;
 
 class UnauthorizedHttpException extends BaseUnauthorizedHttpException
 {
@@ -18,9 +17,9 @@ class UnauthorizedHttpException extends BaseUnauthorizedHttpException
         int|object $code = 0,
         string $message = '',
         bool $overrideMessage = false,
-        Throwable $previous = null
+        \Throwable $previous = null
     ) {
-        list($code, $message) = $this->prepareCodeAndMessage($code, $message, $overrideMessage);
+        [$code, $message] = $this->prepareCodeAndMessage($code, $message, $overrideMessage);
         parent::__construct($message, $code, $previous);
     }
 

@@ -120,7 +120,7 @@ class Company extends Entity
     public const STRUCT = [
         'id' => [
             self::COLUMN_NAME => '公司 ID',
-            self::READONLY    => true,
+            self::READONLY => true,
         ],
         'name' => [
             self::COLUMN_NAME => '名称',
@@ -133,7 +133,7 @@ class Company extends Entity
         ],
         'status' => [
             self::COLUMN_NAME => '状态 0=禁用;1=启用;',
-            self::ENUM_CLASS  => CompanyStatusEnum::class,
+            self::ENUM_CLASS => CompanyStatusEnum::class,
         ],
         'business_license' => [
             self::COLUMN_NAME => '营业执照号',
@@ -190,18 +190,18 @@ class Company extends Entity
             self::COLUMN_NAME => '创建时间',
         ],
         'update_at' => [
-            self::COLUMN_NAME     => '更新时间',
+            self::COLUMN_NAME => '更新时间',
         ],
         'delete_at' => [
-            self::COLUMN_NAME     => '删除时间 0=未删除;大于0=删除时间;',
+            self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
             self::SHOW_PROP_BLACK => true,
         ],
         'create_account' => [
-            self::COLUMN_NAME     => '创建账号',
+            self::COLUMN_NAME => '创建账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'update_account' => [
-            self::COLUMN_NAME     => '更新账号',
+            self::COLUMN_NAME => '更新账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'version' => [

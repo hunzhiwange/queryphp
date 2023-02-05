@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infra\Helper;
 
-use UnexpectedValueException;
-
 /**
  * 签名生成.
  */
@@ -23,7 +21,7 @@ class CreateSignature
         ksort($params);
         $tmpParams = [$appSecret];
         foreach ($params as $k => $v) {
-            if (!is_array($v)) {
+            if (!\is_array($v)) {
                 $tmpParams[] = $k.$v;
             } else {
                 $tmpParams[] = $k.self::handle($signatureMethod, $v, $appSecret);
@@ -36,6 +34,6 @@ class CreateSignature
                 return base64_encode(hash_hmac('sha256', implode('', $tmpParams), $appSecret, true));
         }
 
-        throw new UnexpectedValueException(sprintf('Signature method (%s) not supported.', $signatureMethod));
+        throw new \UnexpectedValueException(sprintf('Signature method (%s) not supported.', $signatureMethod));
     }
 }

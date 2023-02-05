@@ -29,7 +29,7 @@ class Destroy implements IValidator
     public function names(): array
     {
         return [
-            'id'    => 'ID',
+            'id' => 'ID',
         ];
     }
 

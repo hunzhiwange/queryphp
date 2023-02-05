@@ -28,7 +28,7 @@ class Content
     {
         $params = new UpdateParams($this->input($request));
 
-        return \success($service->handle($params), __('内容保存成功'));
+        return success($service->handle($params), __('内容保存成功'));
     }
 
     private function extendInput(Request $request): array

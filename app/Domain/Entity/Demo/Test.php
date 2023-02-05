@@ -9,8 +9,12 @@ use Leevel\Database\Ddd\GetterSetter;
 
 /**
  * 测试.
+ *
+ * @internal
+ *
+ * @coversNothing
  */
-class Test extends Entity
+final class Test extends Entity
 {
     use GetterSetter;
 
@@ -60,32 +64,32 @@ class Test extends Entity
     public const STRUCT = [
         'id' => [
             self::COLUMN_NAME => 'ID',
-            self::READONLY    => true,
+            self::READONLY => true,
         ],
         'name' => [
             self::COLUMN_NAME => '测试名',
-            self::READONLY    => true,
+            self::READONLY => true,
         ],
         'create_at' => [
             self::COLUMN_NAME => '创建时间',
-            self::READONLY    => true,
+            self::READONLY => true,
         ],
         'update_at' => [
-            self::COLUMN_NAME     => '更新时间',
-            self::READONLY        => true,
+            self::COLUMN_NAME => '更新时间',
+            self::READONLY => true,
         ],
         'delete_at' => [
-            self::COLUMN_NAME     => '删除时间 0=未删除;大于0=删除时间;',
-            self::READONLY        => true,
+            self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
+            self::READONLY => true,
             self::SHOW_PROP_BLACK => true,
         ],
         'create_account' => [
-            self::COLUMN_NAME     => '创建账号',
-            self::READONLY        => true,
+            self::COLUMN_NAME => '创建账号',
+            self::READONLY => true,
             self::SHOW_PROP_BLACK => true,
         ],
         'update_account' => [
-            self::COLUMN_NAME     => '更新账号',
+            self::COLUMN_NAME => '更新账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'version' => [

@@ -26,7 +26,8 @@ class Tree
             ->where('status', $params->status)
             ->fi()
             ->setColumns('id,pid,name,num,status,create_at')
-            ->findAll();
+            ->findAll()
+        ;
 
         return $this->normalizeTree($permission);
     }
@@ -40,7 +41,8 @@ class Tree
             ->createTree($entitys)
             ->toArray(function (array $item) {
                 return array_merge(['id' => $item['value'], 'expand' => true], $item['data']);
-            });
+            })
+        ;
     }
 
     /**

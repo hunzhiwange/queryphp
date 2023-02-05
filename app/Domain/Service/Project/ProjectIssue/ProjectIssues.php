@@ -10,7 +10,6 @@ use App\Domain\Entity\Project\ProjectUserExtendTypeEnum;
 use App\Domain\Entity\Project\ProjectUserTypeEnum;
 use App\Domain\Service\Support\Read;
 use App\Domain\Service\Support\Spec\Project\ProjectIds;
-use Closure;
 use Leevel\Database\Condition;
 use Leevel\Database\Ddd\Select;
 
@@ -19,8 +18,8 @@ use Leevel\Database\Ddd\Select;
  */
 class ProjectIssues
 {
-    use Read;
     use ProjectIds;
+    use Read;
 
     protected string $entityClass = ProjectIssue::class;
 
@@ -40,19 +39,24 @@ class ProjectIssues
         switch ($value) {
             case 'favor':
                 $select->where('project_user.type', ProjectUserTypeEnum::FAVOR->value);
+
                 break;
+
             case 'administrator':
                 $select->where('project_user.type', ProjectUserTypeEnum::MEMBER->value);
                 $select->where('project_user.extend_type', ProjectUserExtendTypeEnum::ADMINISTRATOR->value);
+
                 break;
+
             default:
                 // member
                 $select->where('project_user.type', ProjectUserTypeEnum::MEMBER->value);
+
                 break;
         }
     }
 
-    private function conditionCall(ProjectIssuesParams $params): ?Closure
+    private function conditionCall(ProjectIssuesParams $params): ?\Closure
     {
         return function (Select $select) use ($params) {
             $select->eager([
@@ -69,12 +73,14 @@ class ProjectIssues
             }
 
             $select
-                ->leftJoin('project_user', '', function (Condition $select) {
+                ->leftJoin('project_user', '', function (Condition $select): void {
                     $select
                         ->where('delete_at', 0)
                         ->where('data_id', Condition::raw('[project_issue.id]'))
-                        ->where('data_type', ProjectUserDataTypeEnum::ISSUE->value);
-                });
+                        ->where('data_type', ProjectUserDataTypeEnum::ISSUE->value)
+                    ;
+                })
+            ;
         };
     }
 }

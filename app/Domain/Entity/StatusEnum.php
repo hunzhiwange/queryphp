@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 公共状态值枚举.
  */
-enum StatusEnum:int
+enum StatusEnum: int
 {
     use Enum;
 

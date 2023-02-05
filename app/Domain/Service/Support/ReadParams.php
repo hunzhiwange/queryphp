@@ -24,7 +24,7 @@ class ReadParams extends Dto
 
     protected function columnTransformValue(array|string $value): TypedStringArray
     {
-        if (is_string($value)) {
+        if (\is_string($value)) {
             $value = explode(',', $value);
         }
 

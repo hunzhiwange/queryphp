@@ -7,7 +7,6 @@ namespace App\Infra;
 use Dotenv\Dotenv;
 use Leevel\Kernel\IApp;
 use Leevel\Option\Env;
-use RuntimeException;
 
 /**
  * 载入 Phinx 配置.
@@ -42,7 +41,7 @@ class PhinxLoad
      *
      * @throws \RuntimeException
      */
-    private function checkRuntimeEnv(IApp $app)
+    private function checkRuntimeEnv(IApp $app): void
     {
         if (!getenv('RUNTIME_ENVIRONMENT')) {
             return;
@@ -52,7 +51,7 @@ class PhinxLoad
         if (!is_file($fullFile = $app->envPath().'/'.$file)) {
             $e = sprintf('Env file `%s` was not found.', $fullFile);
 
-            throw new RuntimeException($e);
+            throw new \RuntimeException($e);
         }
 
         $app->setEnvFile($file);

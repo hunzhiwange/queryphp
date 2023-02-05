@@ -8,11 +8,15 @@ use Tests\TestCase;
 
 /**
  * 继承框架基础示例.
+ *
+ * @internal
+ *
+ * @coversNothing
  */
-class ExampleTest extends TestCase
+final class ExampleTest extends TestCase
 {
     public function testBaseUse(): void
     {
-        $this->assertSame('QueryPHP', 'QueryPHP');
+        static::assertSame('QueryPHP', 'QueryPHP');
     }
 }

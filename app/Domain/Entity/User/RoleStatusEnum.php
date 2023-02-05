@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 角色状态值枚举.
  */
-enum RoleStatusEnum:int
+enum RoleStatusEnum: int
 {
     use Enum;
 

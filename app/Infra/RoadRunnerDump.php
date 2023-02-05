@@ -30,7 +30,7 @@ class RoadRunnerDump
             $dumper->dump($v);
         }
 
-        if (func_num_args() > 1) {
+        if (\func_num_args() > 1) {
             array_unshift($moreVars, $var);
 
             return $moreVars;

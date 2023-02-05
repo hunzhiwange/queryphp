@@ -75,7 +75,7 @@ class ProjectUser extends Entity
     public const STRUCT = [
         'id' => [
             self::COLUMN_NAME => 'ID',
-            self::READONLY    => true,
+            self::READONLY => true,
         ],
         'company_id' => [
             self::COLUMN_NAME => '公司 ID',
@@ -85,15 +85,15 @@ class ProjectUser extends Entity
         ],
         'type' => [
             self::COLUMN_NAME => '类型 1=成员;2=收藏;3=关注;',
-            self::ENUM_CLASS  => ProjectUserTypeEnum::class,
+            self::ENUM_CLASS => ProjectUserTypeEnum::class,
         ],
         'extend_type' => [
             self::COLUMN_NAME => '扩展类型 1=成员;2=管理员;',
-            self::ENUM_CLASS  => ProjectUserExtendTypeEnum::class,
+            self::ENUM_CLASS => ProjectUserExtendTypeEnum::class,
         ],
         'data_type' => [
             self::COLUMN_NAME => '数据类型 1=项目;2=问题;',
-            self::ENUM_CLASS  => ProjectUserDataTypeEnum::class,
+            self::ENUM_CLASS => ProjectUserDataTypeEnum::class,
         ],
         'data_id' => [
             self::COLUMN_NAME => '数据 ID',
@@ -105,15 +105,15 @@ class ProjectUser extends Entity
             self::COLUMN_NAME => '更新时间',
         ],
         'delete_at' => [
-            self::COLUMN_NAME     => '删除时间 0=未删除;大于0=删除时间;',
+            self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
             self::SHOW_PROP_BLACK => true,
         ],
         'create_account' => [
-            self::COLUMN_NAME     => '创建账号',
+            self::COLUMN_NAME => '创建账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'update_account' => [
-            self::COLUMN_NAME     => '更新账号',
+            self::COLUMN_NAME => '更新账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'version' => [

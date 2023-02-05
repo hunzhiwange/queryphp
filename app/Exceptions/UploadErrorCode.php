@@ -9,7 +9,7 @@ use Leevel\Support\Enum;
 /**
  * 上传业务错误码.
  */
-enum UploadErrorCode:int
+enum UploadErrorCode: int
 {
     use Enum;
 

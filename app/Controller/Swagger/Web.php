@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\Swagger;
 
-use Leevel;
-
 /**
  * Web 文档测试.
  *
@@ -22,7 +20,7 @@ class Web extends Index
     protected function path(): array
     {
         return [
-            Leevel::appPath('app/Controller/Swagger/WebDemo.php'),
+            \Leevel::appPath('app/Controller/Swagger/WebDemo.php'),
         ];
     }
 }

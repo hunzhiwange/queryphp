@@ -22,7 +22,8 @@ class ProjectIssue extends Repository
             ->where('project_id', $projectId)
             ->columns('num')
             ->orderBy('id DESC')
-            ->findOne();
+            ->findOne()
+        ;
         if (!$projectIssue->num) {
             return 1;
         }

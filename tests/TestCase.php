@@ -12,7 +12,7 @@ use Leevel\Kernel\Testing\TestCase as TestCases;
  */
 abstract class TestCase extends TestCases
 {
-    use Helper;
     use App;
     use Database;
+    use Helper;
 }

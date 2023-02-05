@@ -45,7 +45,6 @@ final class ProjectAttachement extends AbstractMigration
 
     private function seed(): void
     {
-
         /*
         $sql = <<<'EOT'
             EOT;

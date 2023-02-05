@@ -57,16 +57,17 @@ class DeleteUser
     private function findProjectUser(DeleteUserParams $params): ProjectUser
     {
         $map = [
-            'user_id'   => $params->userId,
-            'type'      => ProjectUserTypeEnum::MEMBER->value,
-            'data_id'   => $params->projectId,
+            'user_id' => $params->userId,
+            'type' => ProjectUserTypeEnum::MEMBER->value,
+            'data_id' => $params->projectId,
             'data_type' => ProjectUserDataTypeEnum::PROJECT->value,
         ];
 
         $entity = $this->w
             ->repository(ProjectUser::class)
             ->where($map)
-            ->findOne();
+            ->findOne()
+        ;
         if (!$entity->id) {
             throw new ProjectBusinessException(ProjectErrorCode::PROJECT_USER_MEMBER_NOT_EXIST);
         }
@@ -81,7 +82,8 @@ class DeleteUser
     {
         return $this->w
             ->repository(Project::class)
-            ->findOrFail($id);
+            ->findOrFail($id)
+        ;
     }
 
     /**

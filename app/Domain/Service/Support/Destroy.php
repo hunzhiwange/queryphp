@@ -37,7 +37,8 @@ trait Destroy
         $this->w
             ->persist($entity)
             ->delete($entity)
-            ->flush();
+            ->flush()
+        ;
     }
 
     /**
@@ -47,6 +48,7 @@ trait Destroy
     {
         return $this->w
             ->repository($this->entityClass)
-            ->findOrFail($id);
+            ->findOrFail($id)
+        ;
     }
 }

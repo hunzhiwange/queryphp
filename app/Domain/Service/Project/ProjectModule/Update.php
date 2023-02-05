@@ -12,11 +12,10 @@ use App\Domain\Service\Support\Update as CommonUpdate;
  */
 class Update
 {
-    private ?ProjectModule $entity = null;
-
     use CommonUpdate;
 
     protected string $entityClass = ProjectModule::class;
+    private ?ProjectModule $entity = null;
 
     public function beforeHandle(UpdateParams $params): void
     {

@@ -6,7 +6,12 @@ namespace App\Domain\Service\Search;
 
 use Tests\TestCase;
 
-class SearchTest extends TestCase
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
+final class SearchTest extends TestCase
 {
     public function testBaseUse(): void
     {
@@ -36,7 +41,7 @@ class SearchTest extends TestCase
             }
             eot;
 
-        $this->assertSame(
+        static::assertSame(
             $json,
             $this->varJson(
                 $result
@@ -57,7 +62,7 @@ class SearchTest extends TestCase
             []
             eot;
 
-        $this->assertSame(
+        static::assertSame(
             $json,
             $this->varJson(
                 $result
@@ -88,7 +93,7 @@ class SearchTest extends TestCase
             }
             eot;
 
-        $this->assertSame(
+        static::assertSame(
             $json,
             $this->varJson(
                 $result
@@ -124,7 +129,7 @@ class SearchTest extends TestCase
             }
             eot;
 
-        $this->assertSame(
+        static::assertSame(
             $json,
             $this->varJson(
                 $result

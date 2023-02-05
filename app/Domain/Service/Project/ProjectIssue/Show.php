@@ -20,9 +20,8 @@ class Show
     public function handle(ShowParams $params): array
     {
         $entity = $this->find($params->num);
-        $result = $entity->toArray();
 
-        return $result;
+        return $entity->toArray();
     }
 
     private function find(string $num): ProjectIssue
@@ -40,6 +39,7 @@ class Show
             ])
             ->findOrFail(function (Condition $select) use ($num): void {
                 $select->where('num', $num);
-            });
+            })
+        ;
     }
 }

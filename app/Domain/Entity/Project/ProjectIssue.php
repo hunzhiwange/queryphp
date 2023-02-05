@@ -126,7 +126,7 @@ class ProjectIssue extends Entity
     public const STRUCT = [
         'id' => [
             self::COLUMN_NAME => 'ID',
-            self::READONLY    => true,
+            self::READONLY => true,
         ],
         'title' => [
             self::COLUMN_NAME => '标题',
@@ -160,11 +160,11 @@ class ProjectIssue extends Entity
         ],
         'level' => [
             self::COLUMN_NAME => '优先级别：1~5',
-            self::ENUM_CLASS  => ProjectIssueLevelEnum::class,
+            self::ENUM_CLASS => ProjectIssueLevelEnum::class,
         ],
         'completed' => [
             self::COLUMN_NAME => '是否完成：1=未完成;2=已完成;',
-            self::ENUM_CLASS  => ProjectIssueCompletedEnum::class,
+            self::ENUM_CLASS => ProjectIssueCompletedEnum::class,
         ],
         'completed_date' => [
             self::COLUMN_NAME => '完成时间',
@@ -203,67 +203,67 @@ class ProjectIssue extends Entity
             self::COLUMN_NAME => '更新时间',
         ],
         'delete_at' => [
-            self::COLUMN_NAME     => '删除时间 0=未删除;大于0=删除时间;',
+            self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
             self::SHOW_PROP_BLACK => true,
         ],
         'create_account' => [
-            self::COLUMN_NAME     => '创建账号',
+            self::COLUMN_NAME => '创建账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'update_account' => [
-            self::COLUMN_NAME     => '更新账号',
+            self::COLUMN_NAME => '更新账号',
             self::SHOW_PROP_BLACK => true,
         ],
         'version' => [
             self::COLUMN_NAME => '操作版本号',
         ],
-        'project'      => [
-            self::BELONGS_TO             => Project::class,
-            self::SOURCE_KEY             => 'project_id',
-            self::TARGET_KEY             => 'id',
+        'project' => [
+            self::BELONGS_TO => Project::class,
+            self::SOURCE_KEY => 'project_id',
+            self::TARGET_KEY => 'id',
         ],
-        'project_label'      => [
-            self::BELONGS_TO             => ProjectLabel::class,
-            self::SOURCE_KEY             => 'project_label_id',
-            self::TARGET_KEY             => 'id',
+        'project_label' => [
+            self::BELONGS_TO => ProjectLabel::class,
+            self::SOURCE_KEY => 'project_label_id',
+            self::TARGET_KEY => 'id',
         ],
-        'project_type'      => [
-            self::HAS_ONE                => ProjectType::class,
-            self::SOURCE_KEY             => 'project_type_id',
-            self::TARGET_KEY             => 'id',
-            self::RELATION_SCOPE         => 'projectType',
+        'project_type' => [
+            self::HAS_ONE => ProjectType::class,
+            self::SOURCE_KEY => 'project_type_id',
+            self::TARGET_KEY => 'id',
+            self::RELATION_SCOPE => 'projectType',
         ],
-        'project_releases'      => [
-            self::MANY_MANY              => ProjectRelease::class,
-            self::MIDDLE_ENTITY          => ProjectIssueRelease::class,
-            self::SOURCE_KEY             => 'id',
-            self::TARGET_KEY             => 'id',
-            self::MIDDLE_SOURCE_KEY      => 'project_issue_id',
-            self::MIDDLE_TARGET_KEY      => 'project_release_id',
-            self::RELATION_SCOPE         => 'projectReleases',
+        'project_releases' => [
+            self::MANY_MANY => ProjectRelease::class,
+            self::MIDDLE_ENTITY => ProjectIssueRelease::class,
+            self::SOURCE_KEY => 'id',
+            self::TARGET_KEY => 'id',
+            self::MIDDLE_SOURCE_KEY => 'project_issue_id',
+            self::MIDDLE_TARGET_KEY => 'project_release_id',
+            self::RELATION_SCOPE => 'projectReleases',
         ],
-        'project_tags'      => [
-            self::MANY_MANY              => ProjectTag::class,
-            self::MIDDLE_ENTITY          => ProjectIssueTag::class,
-            self::SOURCE_KEY             => 'id',
-            self::TARGET_KEY             => 'id',
-            self::MIDDLE_SOURCE_KEY      => 'project_issue_id',
-            self::MIDDLE_TARGET_KEY      => 'project_tag_id',
-            self::RELATION_SCOPE         => 'projectTags',
+        'project_tags' => [
+            self::MANY_MANY => ProjectTag::class,
+            self::MIDDLE_ENTITY => ProjectIssueTag::class,
+            self::SOURCE_KEY => 'id',
+            self::TARGET_KEY => 'id',
+            self::MIDDLE_SOURCE_KEY => 'project_issue_id',
+            self::MIDDLE_TARGET_KEY => 'project_tag_id',
+            self::RELATION_SCOPE => 'projectTags',
         ],
-        'project_modules'      => [
-            self::MANY_MANY              => ProjectModule::class,
-            self::MIDDLE_ENTITY          => ProjectIssueModule::class,
-            self::SOURCE_KEY             => 'id',
-            self::TARGET_KEY             => 'id',
-            self::MIDDLE_SOURCE_KEY      => 'project_issue_id',
-            self::MIDDLE_TARGET_KEY      => 'project_module_id',
-            self::RELATION_SCOPE         => 'projectModules',
+        'project_modules' => [
+            self::MANY_MANY => ProjectModule::class,
+            self::MIDDLE_ENTITY => ProjectIssueModule::class,
+            self::SOURCE_KEY => 'id',
+            self::TARGET_KEY => 'id',
+            self::MIDDLE_SOURCE_KEY => 'project_issue_id',
+            self::MIDDLE_TARGET_KEY => 'project_module_id',
+            self::RELATION_SCOPE => 'projectModules',
         ],
-        'project_content'      => [
-            self::HAS_ONE                => ProjectContent::class,
-            self::SOURCE_KEY             => 'id',
-            self::TARGET_KEY             => 'project_issue_id',
+        'project_content' => [
+            self::HAS_ONE => ProjectContent::class,
+            self::SOURCE_KEY => 'id',
+            self::TARGET_KEY => 'project_issue_id',
         ],
     ]; // END STRUCT
 

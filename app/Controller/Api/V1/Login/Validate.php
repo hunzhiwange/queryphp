@@ -30,6 +30,6 @@ class Validate
     {
         $params = new LoginParams($request->toArray());
 
-        return \success($service->handle($params), __('登陆成功'));
+        return success($service->handle($params), __('登陆成功'));
     }
 }
