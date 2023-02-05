@@ -18,14 +18,14 @@ class BaseBrand
 {
     public function __construct()
     {
-        $this->in = http_request()->query->all();
+        $this->in = http_request()->all();
         container()->instance('company_id', 0);
     }
 
     /**
      * 商品品牌.
      */
-    public function index()
+    public function index(): array
     {
         $objBrand = BaseBrandModel::make();
         $arrIn = array();

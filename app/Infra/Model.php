@@ -1726,10 +1726,6 @@ abstract class Model
         return isset($this->options['force_master']) && $this->options['force_master'] ? true : false;
     }
 
-    /**
-     * @param array $in
-     * @return array
-     */
     protected function parseInArgs(array $in): array
     {
         if (in_array('company_id', $this->fields, true)) {

@@ -3349,4 +3349,36 @@ class ModelTest extends TestCase
         $baseBrandModel
             ->delete(['b_id' => 5]);
     }
+
+    public function testQuerySub211(): void
+    {
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandTestModel::make();
+        $id = $baseBrandModel
+            ->trans4([
+                'first' => 'new1',
+                'second' => 'new2',
+            ]);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO `base_brand` (`brand_name`) VALUES ('new2')";
+        $this->assertSame($result, $sql);
+        $this->assertSame($id, 'yes');
+    }
+
+    public function testQuerySub212(): void
+    {
+        container()->instance('company_id', 0);
+        $baseBrandModel = BaseBrandTestModel::make();
+        $id = $baseBrandModel
+            ->trans5([
+                'first' => 'new1',
+                'second' => 'new2',
+            ]);
+        $result = $baseBrandModel->getLastSql();
+        $result = trim($result);
+        $sql = "INSERT INTO `base_brand` (`brand_name`) VALUES ('new2')";
+        $this->assertSame($result, $sql);
+        $this->assertSame($id, 'yes');
+    }
 }
