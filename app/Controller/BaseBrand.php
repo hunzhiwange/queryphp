@@ -117,49 +117,21 @@ class BaseBrand
     }
 
     /**
-     * 编辑公司商品品牌.
+     * 获取公司商品品牌.
+     *
+     * @see http://127.0.0.1:9527/base_brand/get_brand?id=2
      */
-    public function editBrand(): void
+    public function getBrand(): array
     {
-        if (!empty($this->in['ajax'])) {
-            switch ($this->in['ajax']) {
-                case 'checkBrandnum':
-                    $this->_checkBrandnum();
-
-                    break;
-
-                case 'checkBrandname':
-                    $this->_checkBrandname();
-
-                    break;
-
-                default:
-                    exit('错误参数');
-
-                    break;
-            }
-
-            exit;
-        }
-
-        $objBrand = D('BaseBrand');
-        $arrTpl = ['info' => []];
-
         if (empty($this->in['id'])) {
-            exit('');
+            throw new \Exception('品牌 ID 不存在');
         }
 
+        $objBrand = BaseBrandModel::make();
+        $arrIn = [];
         $arrIn['map'] = ['brand_id' => (int) $this->in['id']];
-        $arrTpl['info'] = $objBrand->getInfo($arrIn);
-        if ($arrTpl['info']) {
-            if ($arrTpl['info']['collaborator_id']) {
-                $this->errorMessage('不能编辑联营商品牌', 'BaseBrand/index');
-            }
-            $this->assign($arrTpl);
-            $this->display('dialog+addBrand');
-        } else {
-            exit('');
-        }
+
+        return ['info' => $objBrand->getInfo($arrIn)];
     }
 
     /**
