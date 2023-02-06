@@ -97,7 +97,13 @@ class CartItemPriceDto extends ParamsDto
     public function updatePrice(): void
     {
         // 寻找大于 0 的最低价
-        $allPrice = $this->all();
+        $allPrice = $this->only([
+            'salesPrice',
+            'productDiscountPrice',
+            'clientStarDiscountPrice',
+            'clientDiscountPrice',
+            'promotionPrice',
+        ])->toArray();
         $minPrice = min(array_filter($allPrice));
 
         $this->purchasePrice = $minPrice;
