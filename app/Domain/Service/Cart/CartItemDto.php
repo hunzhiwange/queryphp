@@ -54,6 +54,11 @@ class CartItemDto extends ParamsDto
         $this->calculatePrice();
     }
 
+    public function setPromotionFavorableTotalPrice(int $promotionId, float $favorableTotalPrice): void
+    {
+        $this->price->promotions->get($promotionId)->favorableTotalPrice = $favorableTotalPrice;
+    }
+
     public function calculatePrice(): void
     {
         $this->price->updatePromotionPrice($this->number);

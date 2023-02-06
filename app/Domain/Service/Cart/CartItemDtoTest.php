@@ -371,7 +371,6 @@ final class CartItemDtoTest extends TestCase
             'promotion_id' => 1,
             'promotion_name' => '满10减5',
         ]));
-        $cartItemDto->price->updatePurchaseAndSettlementPrice();
 
         // 参与满减金额的部分商品总金额
         $abTotalPrice = $cartItemDto->getPurchaseTotalPrice();
@@ -391,22 +390,8 @@ final class CartItemDtoTest extends TestCase
         $ordersTotalPrice = $allTotalPrice - $manJian + $yunfei;
         static::assertSame($ordersTotalPrice, 10.0);
 
-        // 计算总价
-        $settleTotal = $allTotalPrice - $manJian;
-        $settlePrice = bcdiv((string) $settleTotal, (string) $cartItemDto->number, 2);
-        $cartItemDto->price->settlementPrice = (float) $settlePrice;
-
-        $avgPrice = 5 / $abTotalPrice;
-        $avgPrice = bcmul((string) $avgPrice, '1', 2);
-        $avgPrice = (float) $avgPrice;
-        static::assertSame($avgPrice, 0.33);
-
-        // 满减分摊单价
-        $aManjianPrice = bcmul((string) $avgPrice, (string) $cartItemDto->price->purchasePrice, 2);
-        $aManjianPrice = (float) $aManjianPrice;
-        static::assertSame($aManjianPrice, 1.65);
-
-        $cartItemDto->price->promotions->get(1)->favorablePrice = $aManjianPrice;
+        $cartItemDto->setPromotionFavorableTotalPrice(1, $manJian);
+        $cartItemDto->calculatePrice();
         static::assertSame($cartItemDto->price->settlementPrice, 3.33);
 
         // 订单金额
@@ -414,7 +399,8 @@ final class CartItemDtoTest extends TestCase
         // Σ结算价x购买数量 + 运费 = 3.35*3 =10.05元
         // 优惠价格除不尽造成了结算价偏高了，导致出现了总价偏高的问题
         $ordersTotalPrice = $cartItemDto->getSettlementTotalPrice() + $yunfei;
-        static::assertSame($ordersTotalPrice, 9.99);
+        static::assertSame($ordersTotalPrice, 10.0);
+        static::assertSame($cartItemDto->getSettlementRemainTotalPrice(), 0.01);
     }
 
     public function test6(): void
@@ -441,14 +427,14 @@ final class CartItemDtoTest extends TestCase
         // 参与满减金额的部分商品总金额
         $abTotalPrice = $cartItemDto->getPurchaseTotalPrice();
         static::assertSame($abTotalPrice, 15.0);
-        //
+
         // 总商品金额
         $allTotalPrice = $cartItemDto->getPurchaseTotalPrice();
         static::assertSame($abTotalPrice, 15.0);
 
         // 满10减5
         $manJian = 5;
-        $cartItemDto->price->promotions->get(1)->favorableTotalPrice = $manJian;
+        $cartItemDto->setPromotionFavorableTotalPrice(1, $manJian);
         $cartItemDto->calculatePrice();
 
         // 运费
