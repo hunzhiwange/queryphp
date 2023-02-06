@@ -36,8 +36,7 @@ final class CartItemDtoTest extends TestCase
             'promotion_price' => 8,
         ]));
 
-        $cartItemDto->price->updatePromotionPrice();
-        $cartItemDto->price->updatePurchaseAndSettlementPrice();
+        $cartItemDto->calculatePrice();
         static::assertSame($cartItemDto->getPurchaseTotalPrice(), 24.0);
     }
 

@@ -61,7 +61,7 @@ class CartItemDto extends ParamsDto
 
     public function calculatePrice(): void
     {
-        $this->price->updatePromotionPrice($this->number);
+        $this->price->calculatePrice($this->number);
     }
 
     public function getPurchaseTotalPrice(): float

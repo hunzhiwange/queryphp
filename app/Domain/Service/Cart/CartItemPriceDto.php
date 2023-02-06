@@ -103,7 +103,7 @@ class CartItemPriceDto extends ParamsDto
      */
     public float $promotionPrice = 0;
 
-    public function updatePromotionPrice(float $number): void
+    public function calculatePrice(float $number): void
     {
         if (!$number) {
             return;
