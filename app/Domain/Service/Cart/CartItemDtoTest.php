@@ -614,4 +614,157 @@ final class CartItemDtoTest extends TestCase
         $ordersTotalPrice = $cartItemDto->getSettlementTotalPrice() + $cartItemDto2->getSettlementTotalPrice() + $cartItemDto3->getSettlementTotalPrice() + $yunfei;
         static::assertSame($ordersTotalPrice, 145.0);
     }
+
+    public function test11(): void
+    {
+        // 包含活动价、满减、优惠券等多种活动。
+        // 案例：商品A销售价20元，参与秒杀活动，秒杀价10元，购买2件；商品B销售价30元，购买2件；商品C销售价50元，购买1件。
+        // 其中只有商品A和商品B参加“满49减20”活动，商品C不参加。
+        // 商品B和商品C可使用1张“满100减11”的优惠券。运费10元。三种营销活动优惠可叠加。
+        $cartItemDto = new CartItemDto([
+            'inventory_id' => 1,
+            'number' => 2,
+            'price' => new CartItemPriceDto([
+                'sales_price' => 20,
+            ]),
+            'product' => new CartItemProductDto([
+                'product_id' => 3,
+                'product_name' => '商品A',
+            ]),
+        ]);
+        $cartItemDto->price->promotions->set(1, new CartItemPromotionDto([
+            'promotion_id' => 1,
+            'promotion_name' => '秒杀活动',
+            'promotion_price' => 10,
+        ]));
+        $cartItemDto->price->promotions->set(2, new CartItemPromotionDto([
+            'promotion_id' => 2,
+            'promotion_name' => '满49减20',
+        ]));
+        $cartItemDto->calculatePrice();
+
+        $cartItemDto2 = new CartItemDto([
+            'inventory_id' => 3,
+            'number' => 2,
+            'price' => new CartItemPriceDto([
+                'sales_price' => 30,
+            ]),
+            'product' => new CartItemProductDto([
+                'product_id' => 4,
+                'product_name' => '商品B',
+            ]),
+        ]);
+
+        $cartItemDto2->price->promotions->set(2, new CartItemPromotionDto([
+            'promotion_id' => 2,
+            'promotion_name' => '满49减20',
+        ]));
+        $cartItemDto2->price->promotions->set(3, new CartItemPromotionDto([
+            'promotion_id' => 3,
+            'promotion_name' => '满100减11的优惠券',
+        ]));
+
+        $cartItemDto3 = new CartItemDto([
+            'inventory_id' => 5,
+            'number' => 1,
+            'price' => new CartItemPriceDto([
+                'sales_price' => 50,
+            ]),
+            'product' => new CartItemProductDto([
+                'product_id' => 5,
+                'product_name' => '商品C',
+            ]),
+        ]);
+
+        $cartItemDto3->price->promotions->set(3, new CartItemPromotionDto([
+            'promotion_id' => 3,
+            'promotion_name' => '满100减11的优惠券',
+        ]));
+
+        // 成交价格
+        static::assertSame($cartItemDto->price->purchasePrice, 10.0);
+        static::assertSame($cartItemDto2->price->purchasePrice, 30.0);
+        static::assertSame($cartItemDto3->price->purchasePrice, 50.0);
+
+        // 参与满49减20的部分商品总金额
+        $abTotalPrice = $cartItemDto->getPurchaseTotalPrice() + $cartItemDto2->getPurchaseTotalPrice();
+        static::assertSame($abTotalPrice, 80.0);
+
+        // 参与满100减11的优惠券的部分商品总金额
+        $bcTotalPrice = $cartItemDto2->getPurchaseTotalPrice() + $cartItemDto3->getPurchaseTotalPrice();
+        static::assertSame($bcTotalPrice, 110.0);
+
+        // 总商品金额
+        $allTotalPrice = $cartItemDto->getPurchaseTotalPrice() + $cartItemDto2->getPurchaseTotalPrice() + $cartItemDto3->getPurchaseTotalPrice();
+        static::assertSame($allTotalPrice, 130.0);
+
+        // 满减优惠：-20元
+        $manJian = 20;
+
+        // 优惠券优惠: 11元
+        $youhuijuan = 11;
+
+        // 运费
+        $yunfei = 10;
+
+        // 订单金额
+        $ordersTotalPrice = $allTotalPrice - $manJian - $youhuijuan + $yunfei;
+        static::assertSame($ordersTotalPrice, 109.0);
+
+        // 下面计算各优惠项的分摊金额。满减部分总80元分摊20元，相当于每1元成交价分摊0.25元。优惠券部分总110元分摊11元，相当于每1元成交价分摊0.10元。得出下表：
+        $avgPrice = 20 / $abTotalPrice;
+        static::assertSame($avgPrice, 0.25);
+        $aManjian = 20 * ($cartItemDto->getPurchaseTotalPrice() / $abTotalPrice);
+        $bManjian = 20 * ($cartItemDto2->getPurchaseTotalPrice() / $abTotalPrice);
+        static::assertSame($aManjian, 5.0);
+        static::assertSame($bManjian, 15.0);
+        $source = [
+            'a' => $cartItemDto->getPurchaseTotalPrice(),
+            'b' => $cartItemDto2->getPurchaseTotalPrice(),
+        ];
+        $result = CalculatePriceProportionHelper::handle($source, 20);
+        static::assertSame($result['a'], 5.0);
+        static::assertSame($result['b'], 15.0);
+
+        $avgPrice2 = 11 / $bcTotalPrice;
+        static::assertSame($avgPrice2, 0.1);
+        $bYouhuijuan = 11 * ($cartItemDto2->getPurchaseTotalPrice() / $bcTotalPrice);
+        $cYouhuijuan = 11 * ($cartItemDto3->getPurchaseTotalPrice() / $bcTotalPrice);
+        static::assertSame($bYouhuijuan, 6.0);
+        static::assertSame($cYouhuijuan, 5.0);
+        $source = [
+            'b' => $cartItemDto2->getPurchaseTotalPrice(),
+            'c' => $cartItemDto3->getPurchaseTotalPrice(),
+        ];
+        $result = CalculatePriceProportionHelper::handle($source, 11);
+        static::assertSame($result['b'], 6.0);
+        static::assertSame($result['c'], 5.0);
+
+        // 满减分摊单价
+        $aManjianPrice = $avgPrice * $cartItemDto->price->purchasePrice;
+        $bManjianPrice = $avgPrice * $cartItemDto2->price->purchasePrice;
+        static::assertSame($aManjianPrice, 2.5);
+        static::assertSame($bManjianPrice, 7.5);
+
+        // 优惠券分摊单价
+        $bYouhuijuanPrice = $avgPrice2 * $cartItemDto2->price->purchasePrice;
+        $cYouhuijuanPrice = $avgPrice2 * $cartItemDto3->price->purchasePrice;
+        static::assertSame($bYouhuijuanPrice, 3.0);
+        static::assertSame($cYouhuijuanPrice, 5.0);
+
+        // 更新结算价
+        $cartItemDto->setPromotionFavorableTotalPrice(2, $aManjian);
+        $cartItemDto->calculatePrice();
+        $cartItemDto2->setPromotionFavorableTotalPrice(2, $bManjian);
+        $cartItemDto2->setPromotionFavorableTotalPrice(3, $bYouhuijuan);
+        $cartItemDto2->calculatePrice();
+        $cartItemDto3->setPromotionFavorableTotalPrice(3, $cYouhuijuan);
+        $cartItemDto3->calculatePrice();
+
+        // 订单金额
+        // 订单总价=Σ成交价x购买数量 - 优惠项减免金额 + 运费 = 109
+        // Σ结算价x购买数量 + 运费 = 7.5x2+19.5x2+45x1+10=109
+        $ordersTotalPrice = $cartItemDto->getSettlementTotalPrice() + $cartItemDto2->getSettlementTotalPrice() + $cartItemDto3->getSettlementTotalPrice() + $yunfei;
+        static::assertSame($ordersTotalPrice, 109.0);
+    }
 }

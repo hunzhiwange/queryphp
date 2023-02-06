@@ -9,12 +9,12 @@ namespace App\Domain\Service\Cart;
  */
 class CalculatePriceProportionHelper
 {
-    public static function handle(array &$data, float $favorableTotalPrice, int $remainAccurate = 2): array
+    public static function handle(array &$prices, float $favorableTotalPrice, int $remainAccurate = 2): array
     {
         // 原始数据必须保持相同保留位数
         $favorableTotalPrice = bcadd_compatibility($favorableTotalPrice, 0, $remainAccurate);
         $allTotalPrice = 0;
-        foreach ($data as $v) {
+        foreach ($prices as $v) {
             $v = bcadd_compatibility($v, 0, $remainAccurate);
             $allTotalPrice = bcadd_compatibility($allTotalPrice, $v, $remainAccurate);
         }
@@ -25,12 +25,12 @@ class CalculatePriceProportionHelper
         }
 
         $result = [];
-        foreach ($data as $k => $v) {
+        foreach ($prices as $k => $v) {
             // 原始数据必须保持相同保留位数
-            $data[$k] = $v = bcadd_compatibility($data[$k], 0, $remainAccurate);
-            // 占比留长一点精确些
-            $result[$k] = bcmul_compatibility(bcdiv_compatibility($v, $allTotalPrice, 12), $favorableTotalPrice, $remainAccurate);
-            $data[$k] = bcsub_compatibility($v, $result[$k], $remainAccurate);
+            $prices[$k] = $v = bcadd_compatibility($prices[$k], 0, $remainAccurate);
+            // 先乘再除避免除不尽
+            $result[$k] = bcdiv_compatibility(bcmul_compatibility($v, $favorableTotalPrice), $allTotalPrice);
+            $prices[$k] = bcsub_compatibility($v, $result[$k], $remainAccurate);
         }
 
         // 补差价
@@ -42,11 +42,11 @@ class CalculatePriceProportionHelper
         if (-1 === bccomp_compatibility($splitTotalNumber, $favorableTotalPrice, $remainAccurate)) {
             $subTotal = bcsub_compatibility($favorableTotalPrice, $splitTotalNumber, $remainAccurate);
             foreach ($result as $k => $v) {
-                if (1 === bccomp_compatibility($data[$k], 0, $remainAccurate)) {
-                    $subPrice = 1 === bccomp_compatibility($data[$k], $subTotal, $remainAccurate) ? $subTotal : $data[$k];
+                if (1 === bccomp_compatibility($prices[$k], 0, $remainAccurate)) {
+                    $subPrice = 1 === bccomp_compatibility($prices[$k], $subTotal, $remainAccurate) ? $subTotal : $prices[$k];
                     $subTotal = bcsub_compatibility($subTotal, $subPrice, $remainAccurate);
                     $result[$k] = bcadd_compatibility($result[$k], $subPrice, $remainAccurate);
-                    $data[$k] = bcsub_compatibility($data[$k], $subPrice, $remainAccurate);
+                    $prices[$k] = bcsub_compatibility($prices[$k], $subPrice, $remainAccurate);
                 }
                 if (0 === bccomp_compatibility($subTotal, 0, $remainAccurate)) {
                     break;
