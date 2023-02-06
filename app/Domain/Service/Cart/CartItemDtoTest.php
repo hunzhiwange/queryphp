@@ -307,7 +307,6 @@ final class CartItemDtoTest extends TestCase
             'promotion_id' => 1,
             'promotion_name' => '满10减5',
         ]));
-        $cartItemDto->price->updatePurchaseAndSettlementPrice();
 
         // 参与满减金额的部分商品总金额
         $abTotalPrice = $cartItemDto->getPurchaseTotalPrice();
@@ -338,16 +337,16 @@ final class CartItemDtoTest extends TestCase
         static::assertSame($aManjianPrice, 1.65);
 
         // 更新结算价
-        $cartItemDto->price->promotions->get(1)->favorablePrice = $aManjianPrice;
-        $cartItemDto->price->updatePromotionPrice();
-        static::assertSame($cartItemDto->price->settlementPrice, 3.35);
+        $cartItemDto->setPromotionFavorableTotalPrice(1, $manJian);
+        $cartItemDto->calculatePrice();
+        static::assertSame($cartItemDto->price->settlementPrice, 3.33);
 
         // 订单金额
         // 订单总价=Σ成交价x购买数量 - 优惠项减免金额 + 运费 = 10元
         // Σ结算价x购买数量 + 运费 = 3.35*3 =10.05元
         // 优惠价格除不尽造成了结算价偏高了，导致出现了总价偏高的问题
         $ordersTotalPrice = $cartItemDto->getSettlementTotalPrice() + $yunfei;
-        static::assertSame($ordersTotalPrice, 10.05);
+        static::assertSame($ordersTotalPrice, 10.0);
     }
 
     public function test5(): void
@@ -381,16 +380,16 @@ final class CartItemDtoTest extends TestCase
         static::assertSame($abTotalPrice, 15.0);
 
         // 满10减5
-        $manJian = 5;
+        $mianJian = 5;
 
         // 运费
-        $yunfei = 0;
+        $yunFei = 0;
 
         // 订单金额
-        $ordersTotalPrice = $allTotalPrice - $manJian + $yunfei;
+        $ordersTotalPrice = $allTotalPrice - $mianJian + $yunFei;
         static::assertSame($ordersTotalPrice, 10.0);
 
-        $cartItemDto->setPromotionFavorableTotalPrice(1, $manJian);
+        $cartItemDto->setPromotionFavorableTotalPrice(1, $mianJian);
         $cartItemDto->calculatePrice();
         static::assertSame($cartItemDto->price->settlementPrice, 3.33);
 
@@ -398,7 +397,7 @@ final class CartItemDtoTest extends TestCase
         // 订单总价=Σ成交价x购买数量 - 优惠项减免金额 + 运费 = 10元
         // Σ结算价x购买数量 + 运费 = 3.35*3 =10.05元
         // 优惠价格除不尽造成了结算价偏高了，导致出现了总价偏高的问题
-        $ordersTotalPrice = $cartItemDto->getSettlementTotalPrice() + $yunfei;
+        $ordersTotalPrice = $cartItemDto->getSettlementTotalPrice() + $yunFei;
         static::assertSame($ordersTotalPrice, 10.0);
         static::assertSame($cartItemDto->getSettlementRemainTotalPrice(), 0.01);
     }
