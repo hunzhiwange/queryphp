@@ -295,3 +295,6 @@ if (!function_exists('transaction')) {
         return Db::transaction($businessLogic);
     }
 }
+//
+//
+// function bcdiv(string $num1, string $num2, ?int $scale = 0): string {}

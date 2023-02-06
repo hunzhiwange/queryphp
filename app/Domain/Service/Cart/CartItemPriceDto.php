@@ -14,6 +14,11 @@ use App\Domain\Dto\ParamsDto;
 class CartItemPriceDto extends ParamsDto
 {
     /**
+     * 商品数量.
+     */
+    public float $number = 0;
+
+    /**
      * 成交价.
      *
      * - 成交价指商品进入订单结算环节的价格。
@@ -31,6 +36,13 @@ class CartItemPriceDto extends ParamsDto
      * - 需要注意的一点是，结算价不仅仅用于商品，存在运费的订单，运费单独计算结算价，叫“运费结算价”，只不过运费项目往往只存在1项，就没有必要单独去讲它的结算价了。
      */
     public float $settlementPrice = 0;
+
+    /**
+     * 结算金额除不尽剩余金额.
+     *
+     * - 由于金额可能除不尽，所以会有几分的情况，利用结算金额退款的时候，全部退款可以从这里读取。
+     */
+    public float $settlementRemainTotalPrice = 0;
 
     /**
      * 优惠价.
@@ -107,37 +119,48 @@ class CartItemPriceDto extends ParamsDto
             'promotionPrice',
         ])->toArray();
         $this->purchasePrice = min(array_filter($allPrice));
-        $this->updateSettlementPrice();
     }
 
-    public function updatePromotionPrice(): void
+    public function updatePromotionPrice(float $number): void
     {
-        $favorablePrice = 0;
-        $promotionPrices = [];
+        if (!$number) {
+            return;
+        }
 
+        $promotionPrices = [];
+        $favorableTotalPrice = 0;
+
+        // debug($this->promotionPrice);
         /** @var CartItemPromotionDto $promotion */
         foreach ($this->promotions as $promotion) {
             // 活动分摊价格累加
-            if ($promotion->favorablePrice) {
-                $favorablePrice += $promotion->favorablePrice;
+            if ($promotion->favorableTotalPrice) {
+                $favorablePrice = bcdiv((string) $promotion->favorableTotalPrice, (string) $number, 2);
+                $promotion->favorablePrice = (float) $favorablePrice;
+                $favorableTotalPrice += $promotion->favorableTotalPrice;
             }
             // 寻找最小的商品活动价
             if ($promotion->promotionPrice > 0) {
                 $promotionPrices[] = $promotion->promotionPrice;
             }
         }
-        $this->favorablePrice = $favorablePrice;
+        $this->favorablePrice = $favorableTotalPrice;
         $this->promotionPrice = $promotionPrices ? min($promotionPrices) : 0;
-        $this->updateSettlementPrice();
+
+        // dump($favorableTotalPrice);
+        // 计算总价
+        // if ($favorableTotalPrice) {
+        $settleTotal = $number * $this->purchasePrice - $favorableTotalPrice;
+        $settlePrice = bcdiv((string) $settleTotal, (string) $number, 2);
+        //  dump($settlePrice);
+        $this->settlementPrice = (float) $settlePrice;
+        $settlementRemainTotalPrice = bcsub((string) $settleTotal, bcmul($settlePrice, (string) $number, 2), 2);
+        $this->settlementRemainTotalPrice = (float) $settlementRemainTotalPrice;
+        // }
     }
 
     protected function promotionsDefaultValue(): CartItemPromotionCollection
     {
         return new CartItemPromotionCollection([]);
-    }
-
-    protected function updateSettlementPrice(): void
-    {
-        $this->settlementPrice = $this->purchasePrice - $this->favorablePrice;
     }
 }

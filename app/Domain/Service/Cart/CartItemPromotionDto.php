@@ -22,6 +22,18 @@ class CartItemPromotionDto extends ParamsDto
     public string $promotionName = '';
 
     /**
+     * 商品数量.
+     */
+    public float $number = 0;
+
+    /**
+     * 分摊优惠总价.
+     *
+     * - 可能存在除不尽的问题
+     */
+    public float $favorableTotalPrice = 0;
+
+    /**
      * 分摊优惠价.
      *
      * - 成交价和结算价之间的差价，可能由多种优惠构成。

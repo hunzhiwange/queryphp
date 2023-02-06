@@ -43,14 +43,22 @@ class CartItemDto extends ParamsDto
     // public float $totalPrice = 0;
 
     /**
-     * 活动.
-     */
-    // public CartItemPromotionDto $promotion;
-
-    /**
      * 产品.
      */
     public CartItemProductDto $product;
+
+    public function __construct(array $data = [], bool $ignoreMissingValues = true)
+    {
+        parent::__construct($data, $ignoreMissingValues);
+
+        $this->calculatePrice();
+    }
+
+    public function calculatePrice(): void
+    {
+        $this->price->updatePromotionPrice($this->number);
+        $this->price->updatePurchaseAndSettlementPrice();
+    }
 
     public function getPurchaseTotalPrice(): float
     {
@@ -62,15 +70,15 @@ class CartItemDto extends ParamsDto
         return $this->number * $this->price->settlementPrice;
     }
 
+    public function getSettlementRemainTotalPrice(): float
+    {
+        return $this->getPurchaseTotalPrice();
+    }
+
     protected function priceDefaultValue(): CartItemPriceDto
     {
         return new CartItemPriceDto();
     }
-
-    // protected function promotionDefaultValue(): CartItemPromotionDto
-    // {
-    //     return new CartItemPromotionDto();
-    // }
 
     protected function productDefaultValue(): CartItemProductDto
     {
