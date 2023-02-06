@@ -45,7 +45,7 @@ class CartItemDto extends ParamsDto
     /**
      * 活动.
      */
-    public CartItemPromotionDto $promotion;
+    // public CartItemPromotionDto $promotion;
 
     /**
      * 产品.
@@ -67,10 +67,10 @@ class CartItemDto extends ParamsDto
         return new CartItemPriceDto();
     }
 
-    protected function promotionDefaultValue(): CartItemPromotionDto
-    {
-        return new CartItemPromotionDto();
-    }
+    // protected function promotionDefaultValue(): CartItemPromotionDto
+    // {
+    //     return new CartItemPromotionDto();
+    // }
 
     protected function productDefaultValue(): CartItemProductDto
     {

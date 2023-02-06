@@ -24,18 +24,19 @@ final class CartItemDtoTest extends TestCase
             'number' => 3,
             'price' => new CartItemPriceDto([
                 'sales_price' => 10,
-                'promotion_price' => 8,
             ]),
             'product' => new CartItemProductDto([
                 'product_id' => 3,
                 'product_name' => '商品A',
             ]),
-            'promotion' => new CartItemPromotionDto([
-                'promotion_id' => 5,
-                'promotion_name' => '秒杀活动',
-            ]),
         ]);
+        $cartItemDto->price->promotions->set(1, new CartItemPromotionDto([
+            'promotion_id' => 1,
+            'promotion_name' => '秒杀活动',
+            'promotion_price' => 8,
+        ]));
 
+        $cartItemDto->price->updatePromotionPrice();
         $cartItemDto->price->updatePurchaseAndSettlementPrice();
         static::assertSame($cartItemDto->getPurchaseTotalPrice(), 24.0);
     }
@@ -56,12 +57,12 @@ final class CartItemDtoTest extends TestCase
                 'product_id' => 3,
                 'product_name' => '商品A',
             ]),
-            'promotion' => new CartItemPromotionDto([
-                'promotion_id' => 5,
-                'promotion_name' => '满减活动',
-            ]),
         ]);
 
+        $cartItemDto->price->promotions->set(1, new CartItemPromotionDto([
+            'promotion_id' => 1,
+            'promotion_name' => '满减活动',
+        ]));
         $cartItemDto->price->updatePurchaseAndSettlementPrice();
 
         $cartItemDto2 = new CartItemDto([
@@ -79,7 +80,10 @@ final class CartItemDtoTest extends TestCase
                 'promotion_name' => '满减活动',
             ]),
         ]);
-
+        $cartItemDto2->price->promotions->set(1, new CartItemPromotionDto([
+            'promotion_id' => 1,
+            'promotion_name' => '满减活动',
+        ]));
         $cartItemDto2->price->updatePurchaseAndSettlementPrice();
 
         $cartItemDto3 = new CartItemDto([
@@ -129,8 +133,10 @@ final class CartItemDtoTest extends TestCase
         static::assertSame($bManjianPrice, 6.0);
 
         // 更新结算价
-        $cartItemDto->price->updatePromotionPrice($aManjianPrice);
-        $cartItemDto2->price->updatePromotionPrice($bManjianPrice);
+        $cartItemDto->price->promotions->get(1)->favorablePrice = $aManjianPrice;
+        $cartItemDto->price->updatePromotionPrice();
+        $cartItemDto2->price->promotions->get(1)->favorablePrice = $bManjianPrice;
+        $cartItemDto2->price->updatePromotionPrice();
 
         // 订单金额
         // 订单总价=Σ成交价x购买数量 - 优惠项减免金额 + 运费 = 140元
