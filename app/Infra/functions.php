@@ -323,3 +323,10 @@ if (!function_exists('bcsub_compatibility')) {
         return (float) bcsub((string) $num1, (string) $num2, $scale);
     }
 }
+
+if (!function_exists('bccomp_compatibility')) {
+    function bccomp_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): int
+    {
+        return bccomp((string) $num1, (string) $num2, $scale);
+    }
+}
