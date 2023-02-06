@@ -75,7 +75,7 @@ class CartItemDto extends ParamsDto
 
     public function getSettlementRemainTotalPrice(): float
     {
-        return $this->getPurchaseTotalPrice();
+        return $this->price->settlementRemainTotalPrice;
     }
 
     protected function priceDefaultValue(): CartItemPriceDto
