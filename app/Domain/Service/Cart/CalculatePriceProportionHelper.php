@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\Cart;
 
 /**
- * 根据占比计算数量.
+ * 根据占比计算价格分摊.
  */
 class CalculatePriceProportionHelper
 {
