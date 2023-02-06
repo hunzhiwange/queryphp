@@ -32,6 +32,7 @@ class CartItemPromotionDto extends ParamsDto
      * 分摊优惠价.
      *
      * - 成交价和结算价之间的差价，可能由多种优惠构成。
+     * - 除不尽的时候会存在一个差价
      */
     public float $favorablePrice = 0;
 
