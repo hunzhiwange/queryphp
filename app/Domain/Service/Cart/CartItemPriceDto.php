@@ -103,19 +103,6 @@ class CartItemPriceDto extends ParamsDto
      */
     public float $promotionPrice = 0;
 
-    public function updatePurchaseAndSettlementPrice(): void
-    {
-        // 寻找大于 0 的最低价
-        $allPrice = $this->only([
-            'salesPrice',
-            'productDiscountPrice',
-            'clientStarDiscountPrice',
-            'clientDiscountPrice',
-            'promotionPrice',
-        ])->toArray();
-        $this->purchasePrice = min(array_filter($allPrice));
-    }
-
     public function updatePromotionPrice(float $number): void
     {
         if (!$number) {
@@ -138,13 +125,28 @@ class CartItemPriceDto extends ParamsDto
             }
         }
         $this->favorablePrice = $favorableTotalPrice;
+        // 活动价计算完成后计算成交价
         $this->promotionPrice = $promotionPrices ? min($promotionPrices) : 0;
+        $this->updatePurchaseAndSettlementPrice();
 
         // 计算结算价和结算金额除不尽剩余金额
         $settleTotal = bcmul_compatibility($number, $this->purchasePrice);
         $settleTotal = bcsub_compatibility($settleTotal, $favorableTotalPrice);
         $this->settlementPrice = bcdiv_compatibility($settleTotal, $number);
         $this->settlementRemainTotalPrice = bcsub_compatibility($settleTotal, bcmul_compatibility($this->settlementPrice, $number));
+    }
+
+    protected function updatePurchaseAndSettlementPrice(): void
+    {
+        // 寻找大于 0 的最低价
+        $allPrice = $this->only([
+            'salesPrice',
+            'productDiscountPrice',
+            'clientStarDiscountPrice',
+            'clientDiscountPrice',
+            'promotionPrice',
+        ])->toArray();
+        $this->purchasePrice = min(array_filter($allPrice));
     }
 
     protected function promotionsDefaultValue(): CartItemPromotionCollection
