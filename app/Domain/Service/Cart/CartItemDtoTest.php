@@ -349,4 +349,72 @@ final class CartItemDtoTest extends TestCase
         $ordersTotalPrice = $cartItemDto->getSettlementTotalPrice() + $yunfei;
         static::assertSame($ordersTotalPrice, 10.05);
     }
+
+    public function test5(): void
+    {
+        // 上面的讨论从数学的角度是没问题的，但是一旦涉及到“金额”，就会有一个突出问题，那就是金额的小数位只能到分，不允许存在例如“0.1111111”形式的金额，因此我们可能会遇到以下这种情况：
+        // 商品A单价5元，购买3件，使用一张“满10减5”的优惠券，实际支付10元，但在计算结算价时，正确的应该是“3.33333.....”，但显然这不是一个正确的金额，因此只能记为“3.33”，但在相加时，总金额为“9.99”元，少于实付金额。
+        // 针对以上场景，一般有两种解决方案。方案一是结算价仍记为3.33，仅在退款环节做判断，如果存在全部商品退款的情况，少的0.01元于最后补上。方案二是将商品分成两行记录，一行为购买2件，结算价3.33，第二行为购买1件，结算价3.34。这两种方案都是可行的，需要根据其他环节的业务实施情况选择更容易处理的方案。
+        $cartItemDto = new CartItemDto([
+            'inventory_id' => 1,
+            'number' => 3,
+            'price' => new CartItemPriceDto([
+                'sales_price' => 5,
+            ]),
+            'product' => new CartItemProductDto([
+                'product_id' => 3,
+                'product_name' => '商品A',
+            ]),
+        ]);
+
+        $cartItemDto->price->promotions->set(1, new CartItemPromotionDto([
+            'promotion_id' => 1,
+            'promotion_name' => '满10减5',
+        ]));
+        $cartItemDto->price->updatePurchaseAndSettlementPrice();
+
+        // 参与满减金额的部分商品总金额
+        $abTotalPrice = $cartItemDto->getPurchaseTotalPrice();
+        static::assertSame($abTotalPrice, 15.0);
+
+        // 总商品金额
+        $allTotalPrice = $cartItemDto->getPurchaseTotalPrice();
+        static::assertSame($abTotalPrice, 15.0);
+
+        // 满10减5
+        $manJian = 5;
+
+        // 运费
+        $yunfei = 0;
+
+        // 订单金额
+        $ordersTotalPrice = $allTotalPrice - $manJian + $yunfei;
+        static::assertSame($ordersTotalPrice, 10.0);
+
+        // 计算总价
+        $settleTotal = $allTotalPrice - $manJian;
+        $settlePrice = bcdiv((string) $settleTotal, (string) $cartItemDto->number, 2);
+        $cartItemDto->price->settlementPrice = (float) $settlePrice;
+        dump($settlePrice);
+
+        $avgPrice = 5 / $abTotalPrice;
+        $avgPrice = bcmul((string) $avgPrice, '1', 2);
+        $avgPrice = (float) $avgPrice;
+        static::assertSame($avgPrice, 0.33);
+
+        // 满减分摊单价
+        $aManjianPrice = bcmul((string) $avgPrice, (string) $cartItemDto->price->purchasePrice, 2);
+        $aManjianPrice = (float) $aManjianPrice;
+        static::assertSame($aManjianPrice, 1.65);
+
+        $cartItemDto->price->promotions->get(1)->favorablePrice = $aManjianPrice;
+        static::assertSame($cartItemDto->price->settlementPrice, 3.33);
+
+        // 订单金额
+        // 订单总价=Σ成交价x购买数量 - 优惠项减免金额 + 运费 = 10元
+        // Σ结算价x购买数量 + 运费 = 3.35*3 =10.05元
+        // 优惠价格除不尽造成了结算价偏高了，导致出现了总价偏高的问题
+        $ordersTotalPrice = $cartItemDto->getSettlementTotalPrice() + $yunfei;
+        static::assertSame($ordersTotalPrice, 9.99);
+    }
 }
