@@ -296,6 +296,13 @@ if (!function_exists('transaction')) {
     }
 }
 
+if (!function_exists('bcadd_compatibility')) {
+    function bcadd_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): float
+    {
+        return (float) bcadd((string) $num1, (string) $num2, $scale);
+    }
+}
+
 if (!function_exists('bcdiv_compatibility')) {
     function bcdiv_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): float
     {

@@ -134,12 +134,11 @@ class CartItemPriceDto extends ParamsDto
         foreach ($this->promotions as $promotion) {
             // 活动分摊价格累加
             if ($promotion->favorableTotalPrice) {
-                $favorablePrice = bcdiv_compatibility($promotion->favorableTotalPrice, $number);
-                $promotion->favorablePrice = (float) $favorablePrice;
-                $favorableTotalPrice += $promotion->favorableTotalPrice;
+                $promotion->favorablePrice = bcdiv_compatibility($promotion->favorableTotalPrice, $number);
+                $favorableTotalPrice = bcadd_compatibility($favorableTotalPrice, $promotion->favorableTotalPrice);
             }
             // 寻找最小的商品活动价
-            if ($promotion->promotionPrice > 0) {
+            if ($promotion->promotionPrice) {
                 $promotionPrices[] = $promotion->promotionPrice;
             }
         }
