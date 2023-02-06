@@ -14,11 +14,6 @@ use App\Domain\Dto\ParamsDto;
 class CartItemPriceDto extends ParamsDto
 {
     /**
-     * 商品数量.
-     */
-    public float $number = 0;
-
-    /**
      * 成交价.
      *
      * - 成交价指商品进入订单结算环节的价格。

@@ -22,11 +22,6 @@ class CartItemPromotionDto extends ParamsDto
     public string $promotionName = '';
 
     /**
-     * 商品数量.
-     */
-    public float $number = 0;
-
-    /**
      * 分摊优惠总价.
      *
      * - 可能存在除不尽的问题

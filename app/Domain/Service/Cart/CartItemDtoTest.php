@@ -167,9 +167,7 @@ final class CartItemDtoTest extends TestCase
             'promotion_id' => 2,
             'promotion_name' => '满49减20',
         ]));
-
-        $cartItemDto->price->updatePromotionPrice();
-        $cartItemDto->price->updatePurchaseAndSettlementPrice();
+        $cartItemDto->calculatePrice();
 
         $cartItemDto2 = new CartItemDto([
             'inventory_id' => 3,
@@ -192,8 +190,6 @@ final class CartItemDtoTest extends TestCase
             'promotion_name' => '满100减11的优惠券',
         ]));
 
-        $cartItemDto2->price->updatePurchaseAndSettlementPrice();
-
         $cartItemDto3 = new CartItemDto([
             'inventory_id' => 5,
             'number' => 1,
@@ -205,8 +201,6 @@ final class CartItemDtoTest extends TestCase
                 'product_name' => '商品C',
             ]),
         ]);
-
-        $cartItemDto3->price->updatePurchaseAndSettlementPrice();
 
         $cartItemDto3->price->promotions->set(3, new CartItemPromotionDto([
             'promotion_id' => 3,
@@ -271,13 +265,13 @@ final class CartItemDtoTest extends TestCase
         static::assertSame($cYouhuijuanPrice, 5.0);
 
         // 更新结算价
-        $cartItemDto->price->promotions->get(2)->favorablePrice = $aManjianPrice;
-        $cartItemDto->price->updatePromotionPrice();
-        $cartItemDto2->price->promotions->get(2)->favorablePrice = $bManjianPrice;
-        $cartItemDto2->price->promotions->get(3)->favorablePrice = $bYouhuijuanPrice;
-        $cartItemDto2->price->updatePromotionPrice();
-        $cartItemDto3->price->promotions->get(3)->favorablePrice = $cYouhuijuanPrice;
-        $cartItemDto3->price->updatePromotionPrice();
+        $cartItemDto->setPromotionFavorableTotalPrice(2, $aManjian);
+        $cartItemDto->calculatePrice();
+        $cartItemDto2->setPromotionFavorableTotalPrice(2, $bManjian);
+        $cartItemDto2->setPromotionFavorableTotalPrice(3, $bYouhuijuan);
+        $cartItemDto2->calculatePrice();
+        $cartItemDto3->setPromotionFavorableTotalPrice(3, $cYouhuijuan);
+        $cartItemDto3->calculatePrice();
 
         // 订单金额
         // 订单总价=Σ成交价x购买数量 - 优惠项减免金额 + 运费 = 109
