@@ -39,6 +39,8 @@ class CartItemPriceDto extends ParamsDto
      */
     public float $favorablePrice = 0;
 
+    public CartItemPromotionCollection $promotions;
+
     /**
      * 参考价.
      *
@@ -94,7 +96,7 @@ class CartItemPriceDto extends ParamsDto
      */
     public float $promotionPrice = 0;
 
-    public function updatePrice(): void
+    public function updatePurchaseAndSettlementPrice(): void
     {
         // 寻找大于 0 的最低价
         $allPrice = $this->only([
@@ -104,16 +106,34 @@ class CartItemPriceDto extends ParamsDto
             'clientDiscountPrice',
             'promotionPrice',
         ])->toArray();
-        $minPrice = min(array_filter($allPrice));
-
-        $this->purchasePrice = $minPrice;
+        $this->purchasePrice = min(array_filter($allPrice));
         $this->updateSettlementPrice();
     }
 
-    public function updateFavorablePrice(float $favorablePrice): void
+    public function updatePromotionPrice(): void
     {
+        $favorablePrice = 0;
+        $promotionPrices = [];
+
+        /** @var CartItemPromotionDto $promotion */
+        foreach ($this->promotions as $promotion) {
+            // 活动分摊价格累加
+            if ($promotion->favorablePrice) {
+                $favorablePrice += $promotion->favorablePrice;
+            }
+            // 寻找最小的商品活动价
+            if ($promotion->promotionPrice > 0) {
+                $promotionPrices[] = $promotion->promotionPrice;
+            }
+        }
         $this->favorablePrice = $favorablePrice;
+        $this->promotionPrice = $promotionPrices ? min($promotionPrices) : 0;
         $this->updateSettlementPrice();
+    }
+
+    protected function promotionsDefaultValue(): CartItemPromotionCollection
+    {
+        return new CartItemPromotionCollection([]);
     }
 
     protected function updateSettlementPrice(): void
