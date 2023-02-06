@@ -444,4 +444,86 @@ final class CartItemDtoTest extends TestCase
         $remainAmount = bcsub_compatibility($ordersTotalPrice, $ordersTotalPrice2);
         static::assertSame($remainAmount, $cartItemDto->price->settlementRemainTotalPrice);
     }
+
+    public function test7(): void
+    {
+        $cartItemDto = new CartItemDto([
+            'inventory_id' => 999,
+            'number' => 3,
+            'price' => new CartItemPriceDto([
+                'sales_price' => 10,
+            ]),
+            'product' => new CartItemProductDto([
+                'product_id' => 3,
+                'product_name' => '商品A',
+            ]),
+        ]);
+        $cartItemDto->calculatePrice();
+        static::assertSame($cartItemDto->getPurchaseTotalPrice(), 30.0);
+    }
+
+    public function test8(): void
+    {
+        $cartItemDto = new CartItemDto([
+            'inventory_id' => 999,
+            'number' => 3,
+            'price' => new CartItemPriceDto([
+                'sales_price' => 10,
+            ]),
+            'product' => new CartItemProductDto([
+                'product_id' => 3,
+                'product_name' => '商品A',
+            ]),
+        ]);
+        $cartItemDto->price->promotions->set(1, new CartItemPromotionDto([
+            'promotion_id' => 1,
+            'promotion_name' => '秒杀活动',
+            'promotion_price' => 8,
+        ]));
+
+        $cartItemDto->price->promotions->set(2, new CartItemPromotionDto([
+            'promotion_id' => 2,
+            'promotion_name' => '秒杀活动2',
+            'promotion_price' => 6,
+        ]));
+
+        $cartItemDto->calculatePrice();
+        static::assertSame($cartItemDto->getPurchaseTotalPrice(), 18.0);
+    }
+
+    public function test9(): void
+    {
+        $cartItemDto = new CartItemDto([
+            'inventory_id' => 999,
+            'number' => 3,
+            'price' => new CartItemPriceDto([
+                'sales_price' => 10,
+            ]),
+            'product' => new CartItemProductDto([
+                'product_id' => 3,
+                'product_name' => '商品A',
+            ]),
+        ]);
+
+        $cartItemDto->price->promotions->set(2, new CartItemPromotionDto([
+            'promotion_id' => 2,
+            'promotion_name' => '秒杀活动2',
+            'promotion_price' => 6,
+        ]));
+
+        $cartItemDto->price->promotions->set(3, new CartItemPromotionDto([
+            'promotion_id' => 1,
+            'promotion_name' => '秒杀活动3',
+            'promotion_price' => 4,
+        ]));
+
+        $cartItemDto->price->promotions->set(2, new CartItemPromotionDto([
+            'promotion_id' => 2,
+            'promotion_name' => '秒杀活动2',
+            'promotion_price' => 6,
+        ]));
+
+        $cartItemDto->calculatePrice();
+        static::assertSame($cartItemDto->getPurchaseTotalPrice(), 12.0);
+    }
 }
