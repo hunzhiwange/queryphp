@@ -462,7 +462,7 @@ final class CartItemDtoTest extends TestCase
         // 订单总价=Σ成交价x购买数量 - 优惠项减免金额 + 运费 = 10元
         // Σ结算价x购买数量 + 运费 = 3.35*3 = 0.99元
         // 优惠价格除不尽造成了结算价偏高了，导致出现了总价偏高的问题
-        $ordersTotalPrice2 = $cartItemDto->getSettlementTotalPrice() + $yunFei;
+        $ordersTotalPrice2 = $cartItemDto->number * $cartItemDto->price->settlementPrice + $yunFei;
         static::assertSame($ordersTotalPrice2, 9.99);
         $remainAmount = bcsub_compatibility($ordersTotalPrice, $ordersTotalPrice2);
         static::assertSame($remainAmount, $cartItemDto->price->settlementRemainTotalPrice);

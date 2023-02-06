@@ -67,7 +67,10 @@ class CartItemDto extends ParamsDto
 
     public function getSettlementTotalPrice(): float
     {
-        return bcmul_compatibility($this->number, $this->price->settlementPrice);
+        return bcadd_compatibility(
+            bcmul_compatibility($this->number, $this->price->settlementPrice),
+            $this->price->settlementRemainTotalPrice
+        );
     }
 
     public function getSettlementRemainTotalPrice(): float
