@@ -297,21 +297,21 @@ if (!function_exists('transaction')) {
 }
 
 if (!function_exists('bcdiv_compatibility')) {
-    function bcdiv_compatibility(float|int|string $num1, float|int|string $num2, ?int $scale = 0): float
+    function bcdiv_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): float
     {
         return (float) bcdiv((string) $num1, (string) $num2, $scale);
     }
 }
 
 if (!function_exists('bcmul_compatibility')) {
-    function bcmul_compatibility(float|int|string $num1, float|int|string $num2, ?int $scale = 0): float
+    function bcmul_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): float
     {
         return (float) bcmul((string) $num1, (string) $num2, $scale);
     }
 }
 
 if (!function_exists('bcsub_compatibility')) {
-    function bcsub_compatibility(float|int|string $num1, float|int|string $num2, ?int $scale = 0): float
+    function bcsub_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): float
     {
         return (float) bcsub((string) $num1, (string) $num2, $scale);
     }
