@@ -135,7 +135,7 @@ class CartItemPriceDto extends ParamsDto
         foreach ($this->promotions as $promotion) {
             // 活动分摊价格累加
             if ($promotion->favorableTotalPrice) {
-                $favorablePrice = bcdiv((string) $promotion->favorableTotalPrice, (string) $number, 2);
+                $favorablePrice = bcdiv_compatibility($promotion->favorableTotalPrice, $number, 2);
                 $promotion->favorablePrice = (float) $favorablePrice;
                 $favorableTotalPrice += $promotion->favorableTotalPrice;
             }
@@ -147,16 +147,12 @@ class CartItemPriceDto extends ParamsDto
         $this->favorablePrice = $favorableTotalPrice;
         $this->promotionPrice = $promotionPrices ? min($promotionPrices) : 0;
 
-        // dump($favorableTotalPrice);
-        // 计算总价
-        // if ($favorableTotalPrice) {
+        // 计算结算总价
         $settleTotal = $number * $this->purchasePrice - $favorableTotalPrice;
-        $settlePrice = bcdiv((string) $settleTotal, (string) $number, 2);
-        //  dump($settlePrice);
+        $settlePrice = bcdiv_compatibility($settleTotal, $number, 2);
         $this->settlementPrice = (float) $settlePrice;
-        $settlementRemainTotalPrice = bcsub((string) $settleTotal, bcmul($settlePrice, (string) $number, 2), 2);
+        $settlementRemainTotalPrice = bcsub_compatibility($settleTotal, bcmul_compatibility($settlePrice, $number, 2), 2);
         $this->settlementRemainTotalPrice = (float) $settlementRemainTotalPrice;
-        // }
     }
 
     protected function promotionsDefaultValue(): CartItemPromotionCollection
