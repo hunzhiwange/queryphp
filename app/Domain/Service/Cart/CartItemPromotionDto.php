@@ -68,6 +68,8 @@ class CartItemPromotionDto extends ParamsDto
     public float $activePurchaseTotalPrice = 0;
     public array $activePurchaseTotalPriceDetail = [];
     public array $activePurchaseTotalPriceDetailAfter = [];
+    public bool $needChouDan = false;
+    public string $needChouDanMessage = '';
 
     public function getActivePurchaseTotalPrice(): float
     {
@@ -99,8 +101,19 @@ class CartItemPromotionDto extends ParamsDto
         $this->getActivePurchaseTotalPrice();
 
         if (!$this->shouldMeetThreshold()) {
+            $this->needChouDan = true;
+            $this->needChouDanMessage = sprintf(
+                '已经购买金额 %.2f 元，再购 %.2f 元可减少 %.2f 元',
+                $this->activePurchaseTotalPrice,
+                bcsub_compatibility($this->meetThreshold, $this->activePurchaseTotalPrice),
+                $this->allFavorableTotalPrice
+            );
+
             return [];
         }
+
+        $this->needChouDan = false;
+        $this->needChouDanMessage = '';
 
         $this->activePurchaseTotalPriceDetailAfter = $this->activePurchaseTotalPriceDetail;
 
