@@ -157,7 +157,7 @@ class CartDto extends ParamsDto
         /** @var CartItemPromotionEntity $promotion */
         foreach ($this->promotions as $promotion) {
             if ($promotion->isMeetThresholdType() && $promotion->cartItems->count()) {
-                $promotion->roportionResult();
+                $promotion->calculatePriceAllocationResult();
             }
         }
 

@@ -111,7 +111,7 @@ class CartItemPromotionEntity extends Dto
     /**
      * 活动商品价格分摊.
      */
-    public function roportionResult(): array
+    public function calculatePriceAllocationResult(): array
     {
         if (!$this->cartItems->count()) {
             return [];
