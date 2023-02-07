@@ -65,4 +65,53 @@ class CartItemPromotionDto extends ParamsDto
     public float $allFavorableTotalPrice = 0;
 
     public array $roportionResult = [];
+
+    public CartItemCollection $cartItems;
+
+    public float $activePurchaseTotalPrice = 0;
+    public array $activePurchaseTotalPriceDetail = [];
+    public array $activePurchaseTotalPriceDetailAfter = [];
+
+    public function getActivePurchaseTotalPrice(): float
+    {
+        $activePurchaseTotalPrice = 0;
+        $activePurchaseTotalPriceDetail = [];
+
+        /** @var CartItemDto $cartItem */
+        foreach ($this->cartItems as $cartItem) {
+            $tempTotalPrice = $cartItem->getActivePurchaseTotalPrice();
+            $activePurchaseTotalPrice = bcadd_compatibility($activePurchaseTotalPrice, $tempTotalPrice);
+            $activePurchaseTotalPriceDetail[$cartItem->getHash()] = $tempTotalPrice;
+        }
+        $this->activePurchaseTotalPriceDetail = $activePurchaseTotalPriceDetail;
+
+        return $this->activePurchaseTotalPrice = $activePurchaseTotalPrice;
+    }
+
+    public function shouldMeetThreshold(): bool
+    {
+        return bccomp_compatibility($this->activePurchaseTotalPrice, $this->meetThreshold) >= 0;
+    }
+
+    public function roportionResult(): array
+    {
+        if (!$this->cartItems->count()) {
+            return [];
+        }
+
+        $this->getActivePurchaseTotalPrice();
+
+        if (!$this->shouldMeetThreshold()) {
+            return [];
+        }
+
+        $this->activePurchaseTotalPriceDetailAfter = $this->activePurchaseTotalPriceDetail;
+
+        return $this->roportionResult = CalculatePriceProportionHelper::handle($this->activePurchaseTotalPriceDetailAfter, $this->allFavorableTotalPrice);
+    }
+
+    protected function cartItemsDefaultValue(): CartItemCollection
+    {
+        return new CartItemCollection([]);
+    }
 }

@@ -147,45 +147,21 @@ class CartDto extends ParamsDto
 
     public function setCouponCartItem(CartItemPromotionDto $coupon, CartItemDto $cartItemDto): void
     {
+        $coupon->cartItems->set($cartItemDto->getHash(), $cartItemDto);
         $this->addCoupon($coupon);
-        $cartItemDto->price->promotions->set($coupon->promotionId, $coupon);
     }
 
     public function update1(): void
     {
-        // 第一步分析活动商品满减明细
-        $result = [];
-        $resultDetail = [];
-
         /** @var CartItemPromotionDto $promotion */
         foreach ($this->promotions as $promotion) {
-            /** @var CartItemDto $cartItem */
-            foreach ($this->cartItems as $cartItem) {
-                /** @var CartItemPromotionDto $cartItemPromotion */
-                foreach ($cartItem->price->promotions as $cartItemPromotion) {
-                    if ($promotion->promotionId === $cartItemPromotion->promotionId) {
-                        $result[$promotion->promotionId] = bcadd_compatibility($result[$promotion->promotionId] ?? 0, $cartItem->getActivePurchaseTotalPrice());
-                        $resultDetail[$promotion->promotionId][$cartItem->getHash()] = $cartItem->getActivePurchaseTotalPrice();
-                    }
-                }
-            }
-        }
-
-        // 第二步分析活动的满减门槛是否达到，如果达到则计算分摊价格
-        /** @var CartItemPromotionDto $promotion */
-        foreach ($this->promotions as $promotion) {
-            if (isset($result[$promotion->promotionId])
-                && 1 === bccomp_compatibility($result[$promotion->promotionId], 0)
-            ) {
-                if (bccomp_compatibility($result[$promotion->promotionId], $promotion->meetThreshold) >= 0) {
-                    $promotion->roportionResult = CalculatePriceProportionHelper::handle($resultDetail[$promotion->promotionId], $promotion->allFavorableTotalPrice);
-                } else {
-                    echo '还差多少钱满足最低门槛';
-                }
+            if ($promotion->cartItems->count()) {
+                $promotion->roportionResult();
             }
         }
 
         // 通知价格更新
+        // @todo 只通知一部分受价格影响的商品更新价格
         /** @var CartItemDto $cartItem */
         foreach ($this->cartItems as $cartItem) {
             // 遍历购物车项目计算价格
