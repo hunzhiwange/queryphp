@@ -48,11 +48,8 @@ class CartItemPromotionDto extends ParamsDto
 
     /**
      * 活动类型.
-     *
-     * - 0：作用于商品的活动
-     * - 1：多个商品分摊的活动
      */
-    public int $promotionType = 0;
+    public CartItemPromotionTypeEnum $promotionType = CartItemPromotionTypeEnum::SPECIAL;
 
     /**
      * 满足门槛.
@@ -112,7 +109,7 @@ class CartItemPromotionDto extends ParamsDto
 
     public function isMeetThresholdType(): bool
     {
-        return 1 === $this->promotionType;
+        return CartItemPromotionTypeEnum::FULL_DISCOUNT === $this->promotionType;
     }
 
     protected function cartItemsDefaultValue(): CartItemCollection

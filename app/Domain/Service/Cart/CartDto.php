@@ -143,9 +143,12 @@ class CartDto extends ParamsDto
         $this->promotions->set($coupon->promotionId, $coupon);
     }
 
-    public function setCouponCartItem(CartItemPromotionDto $coupon, CartItemDto $cartItemDto): void
+    public function setCouponCartItem(CartItemPromotionDto $coupon, CartItemDto $cartItemDto, ...$moreCartItemDto): void
     {
         $coupon->cartItems->set($cartItemDto->getHash(), $cartItemDto);
+        foreach ($moreCartItemDto as $v) {
+            $coupon->cartItems->set($v->getHash(), $v);
+        }
         $this->addCoupon($coupon);
     }
 
