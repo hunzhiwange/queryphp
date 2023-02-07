@@ -101,9 +101,9 @@ class CartItemPriceEntity extends Dto
      */
     public float $promotionPrice = 0;
 
-    public function calculatePrice(CartItemEntity $cartItemDto, ?CartItemPromotionEntityCollection $cartItemPromotionCollection = null): void
+    public function calculatePrice(CartItemEntity $cartItemEntity, ?CartItemPromotionEntityCollection $cartItemPromotionCollection = null): void
     {
-        $number = $cartItemDto->number;
+        $number = $cartItemEntity->number;
         if (!$number) {
             return;
         }
@@ -118,7 +118,7 @@ class CartItemPriceEntity extends Dto
                     // 活动分摊价格累加
                     if ($promotion->priceAllocationResult) {
                         foreach ($promotion->priceAllocationResult as $cartItemHash => $roportionResultItem) {
-                            if ($cartItemHash === $cartItemDto->getHash()) {
+                            if ($cartItemHash === $cartItemEntity->getHash()) {
                                 $favorableTotalPrice = bcadd_compatibility($favorableTotalPrice, $roportionResultItem);
                             }
                         }

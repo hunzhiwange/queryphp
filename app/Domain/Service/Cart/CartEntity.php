@@ -41,12 +41,12 @@ class CartEntity extends Dto
      */
     public function getItem(string $itemHash): CartItemEntity
     {
-        $cartItemDto = $this->cartItems->get($itemHash);
-        if (!$cartItemDto) {
+        $cartItemEntity = $this->cartItems->get($itemHash);
+        if (!$cartItemEntity) {
             throw new \Exception(sprintf('Cart item %s not found', $itemHash));
         }
 
-        return $cartItemDto;
+        return $cartItemEntity;
     }
 
     /**
@@ -164,9 +164,9 @@ class CartEntity extends Dto
         return $count;
     }
 
-    public function addPromotion(CartItemPromotionEntity $coupon, CartItemEntity ...$moreCartItemDto): void
+    public function addPromotion(CartItemPromotionEntity $coupon, CartItemEntity ...$moreCartItemEntity): void
     {
-        foreach ($moreCartItemDto as $v) {
+        foreach ($moreCartItemEntity as $v) {
             $coupon->cartItems->set($v->getHash(), $v);
         }
         $this->promotions->set($coupon->promotionId, $coupon);
