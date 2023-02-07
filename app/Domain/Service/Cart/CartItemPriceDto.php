@@ -114,12 +114,12 @@ class CartItemPriceDto extends ParamsDto
         $favorableTotalPrice = 0;
 
         if ($cartItemPromotionCollection) {
-            /** @var CartItemPromotionDto $promotion */
+            /** @var CartItemPromotionEntity $promotion */
             foreach ($cartItemPromotionCollection as $promotion) {
                 if ($promotion->isMeetThresholdType()) {
                     // 活动分摊价格累加
-                    if ($promotion->roportionResult) {
-                        foreach ($promotion->roportionResult as $cartItemHash => $roportionResultItem) {
+                    if ($promotion->priceAllocationResult) {
+                        foreach ($promotion->priceAllocationResult as $cartItemHash => $roportionResultItem) {
                             if ($cartItemHash === $cartItemDto->getHash()) {
                                 $favorableTotalPrice = bcadd_compatibility($favorableTotalPrice, $roportionResultItem);
                             }

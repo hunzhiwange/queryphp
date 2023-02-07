@@ -4,37 +4,22 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Cart;
 
-use App\Domain\Dto\ParamsDto;
+use Leevel\Support\Dto;
 
 /**
  * 购物车活动项目.
  */
-class CartItemPromotionDto extends ParamsDto
+class CartItemPromotionEntity extends Dto
 {
     /**
      * 活动 ID.
      */
-    public int $promotionId = 0;
+    public int|string $promotionId = 0;
 
     /**
      * 活动名字.
      */
     public string $promotionName = '';
-
-    /**
-     * 分摊优惠总价.
-     *
-     * - 可能存在除不尽的问题
-     */
-    public float $favorableTotalPrice = 0;
-
-    /**
-     * 分摊优惠价.
-     *
-     * - 成交价和结算价之间的差价，可能由多种优惠构成。
-     * - 除不尽的时候会存在一个差价
-     */
-    public float $favorablePrice = 0;
 
     /**
      * 活动价.
@@ -61,16 +46,44 @@ class CartItemPromotionDto extends ParamsDto
      */
     public float $allFavorableTotalPrice = 0;
 
-    public array $roportionResult = [];
+    /**
+     * 商品分摊结果.
+     */
+    public array $priceAllocationResult = [];
 
+    /**
+     * 活动包含的商品
+     */
     public CartItemCollection $cartItems;
 
+    /**
+     * 选中的商品总成交价.
+     */
     public float $activePurchaseTotalPrice = 0;
+
+    /**
+     * 优惠抵扣后前金额.
+     */
     public array $activePurchaseTotalPriceDetail = [];
+
+    /**
+     * 优惠抵扣后金额.
+     */
     public array $activePurchaseTotalPriceDetailAfter = [];
+
+    /**
+     * 是否需要凑单.
+     */
     public bool $needChouDan = false;
+
+    /**
+     * 凑单消息格式化消息.
+     */
     public string $needChouDanMessage = '';
 
+    /**
+     * 获取活动商品结算总价和明细.
+     */
     public function getActivePurchaseTotalPrice(): float
     {
         $activePurchaseTotalPrice = 0;
@@ -87,11 +100,17 @@ class CartItemPromotionDto extends ParamsDto
         return $this->activePurchaseTotalPrice = $activePurchaseTotalPrice;
     }
 
+    /**
+     * 活动商品是否满足门槛.
+     */
     public function shouldMeetThreshold(): bool
     {
         return bccomp_compatibility($this->activePurchaseTotalPrice, $this->meetThreshold) >= 0;
     }
 
+    /**
+     * 活动商品价格分摊.
+     */
     public function roportionResult(): array
     {
         if (!$this->cartItems->count()) {
@@ -117,14 +136,20 @@ class CartItemPromotionDto extends ParamsDto
 
         $this->activePurchaseTotalPriceDetailAfter = $this->activePurchaseTotalPriceDetail;
 
-        return $this->roportionResult = CalculatePriceProportionHelper::handle($this->activePurchaseTotalPriceDetailAfter, $this->allFavorableTotalPrice);
+        return $this->priceAllocationResult = CalculatePriceAllocation::handle($this->activePurchaseTotalPriceDetailAfter, $this->allFavorableTotalPrice);
     }
 
+    /**
+     * 是否为满足门槛类型活动.
+     */
     public function isMeetThresholdType(): bool
     {
         return CartItemPromotionTypeEnum::FULL_DISCOUNT === $this->promotionType;
     }
 
+    /**
+     * 活动商品默认值
+     */
     protected function cartItemsDefaultValue(): CartItemCollection
     {
         return new CartItemCollection([]);

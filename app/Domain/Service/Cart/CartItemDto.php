@@ -102,11 +102,6 @@ class CartItemDto extends ParamsDto
         $this->number = bcsub_compatibility($this->number, $number);
     }
 
-    public function setPromotionFavorableTotalPrice(int $promotionId, float $favorableTotalPrice): void
-    {
-        $this->price->promotions->get($promotionId)->favorableTotalPrice = $favorableTotalPrice;
-    }
-
     public function calculatePrice(?CartItemPromotionCollection $cartItemPromotionCollection = null): void
     {
         $this->price->calculatePrice($this, $cartItemPromotionCollection);

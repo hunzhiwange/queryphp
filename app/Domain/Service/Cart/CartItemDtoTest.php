@@ -30,7 +30,7 @@ final class CartItemDtoTest extends TestCase
                 'product_name' => '商品A',
             ]),
         ]);
-        $cartItemDto->price->promotions->set(1, new CartItemPromotionDto([
+        $cartItemDto->price->promotions->set(1, new CartItemPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动',
             'promotion_price' => 8,
@@ -58,7 +58,7 @@ final class CartItemDtoTest extends TestCase
             ]),
         ]);
 
-        $cartItemDto->price->promotions->set(1, new CartItemPromotionDto([
+        $cartItemDto->price->promotions->set(1, new CartItemPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满减活动',
         ]));
@@ -74,7 +74,7 @@ final class CartItemDtoTest extends TestCase
                 'product_name' => '商品B',
             ]),
         ]);
-        $cartItemDto2->price->promotions->set(1, new CartItemPromotionDto([
+        $cartItemDto2->price->promotions->set(1, new CartItemPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满减活动',
         ]));
@@ -153,12 +153,12 @@ final class CartItemDtoTest extends TestCase
                 'product_name' => '商品A',
             ]),
         ]);
-        $cartItemDto->price->promotions->set(1, new CartItemPromotionDto([
+        $cartItemDto->price->promotions->set(1, new CartItemPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动',
             'promotion_price' => 10,
         ]));
-        $cartItemDto->price->promotions->set(2, new CartItemPromotionDto([
+        $cartItemDto->price->promotions->set(2, new CartItemPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '满49减20',
         ]));
@@ -176,11 +176,11 @@ final class CartItemDtoTest extends TestCase
             ]),
         ]);
 
-        $cartItemDto2->price->promotions->set(2, new CartItemPromotionDto([
+        $cartItemDto2->price->promotions->set(2, new CartItemPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '满49减20',
         ]));
-        $cartItemDto2->price->promotions->set(3, new CartItemPromotionDto([
+        $cartItemDto2->price->promotions->set(3, new CartItemPromotionEntity([
             'promotion_id' => 3,
             'promotion_name' => '满100减11的优惠券',
         ]));
@@ -197,7 +197,7 @@ final class CartItemDtoTest extends TestCase
             ]),
         ]);
 
-        $cartItemDto3->price->promotions->set(3, new CartItemPromotionDto([
+        $cartItemDto3->price->promotions->set(3, new CartItemPromotionEntity([
             'promotion_id' => 3,
             'promotion_name' => '满100减11的优惠券',
         ]));
@@ -292,7 +292,7 @@ final class CartItemDtoTest extends TestCase
             ]),
         ]);
 
-        $cartItemDto->price->promotions->set(1, new CartItemPromotionDto([
+        $cartItemDto->price->promotions->set(1, new CartItemPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满10减5',
         ]));
@@ -355,7 +355,7 @@ final class CartItemDtoTest extends TestCase
             ]),
         ]);
 
-        $cartItemDto->price->promotions->set(1, new CartItemPromotionDto([
+        $cartItemDto->price->promotions->set(1, new CartItemPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满10减5',
         ]));
@@ -401,7 +401,7 @@ final class CartItemDtoTest extends TestCase
             'number' => 3,
             'price' => new CartItemPriceDto([
                 'sales_price' => 5,
-                'promotions' => new CartItemPromotionCollection([1 => new CartItemPromotionDto([
+                'promotions' => new CartItemPromotionCollection([1 => new CartItemPromotionEntity([
                     'promotion_id' => 1,
                     'promotion_name' => '满10减5',
                 ])]),
@@ -474,13 +474,13 @@ final class CartItemDtoTest extends TestCase
                 'product_name' => '商品A',
             ]),
         ]);
-        $cartItemDto->price->promotions->set(1, new CartItemPromotionDto([
+        $cartItemDto->price->promotions->set(1, new CartItemPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动',
             'promotion_price' => 8,
         ]));
 
-        $cartItemDto->price->promotions->set(2, new CartItemPromotionDto([
+        $cartItemDto->price->promotions->set(2, new CartItemPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '秒杀活动2',
             'promotion_price' => 6,
@@ -504,19 +504,19 @@ final class CartItemDtoTest extends TestCase
             ]),
         ]);
 
-        $cartItemDto->price->promotions->set(2, new CartItemPromotionDto([
+        $cartItemDto->price->promotions->set(2, new CartItemPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '秒杀活动2',
             'promotion_price' => 6,
         ]));
 
-        $cartItemDto->price->promotions->set(3, new CartItemPromotionDto([
+        $cartItemDto->price->promotions->set(3, new CartItemPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动3',
             'promotion_price' => 4,
         ]));
 
-        $cartItemDto->price->promotions->set(2, new CartItemPromotionDto([
+        $cartItemDto->price->promotions->set(2, new CartItemPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '秒杀活动2',
             'promotion_price' => 6,
@@ -540,7 +540,7 @@ final class CartItemDtoTest extends TestCase
             ]),
         ]);
 
-        $cartItemDto->price->promotions->set(1, new CartItemPromotionDto([
+        $cartItemDto->price->promotions->set(1, new CartItemPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满减活动',
         ]));
@@ -556,7 +556,7 @@ final class CartItemDtoTest extends TestCase
                 'product_name' => '商品B',
             ]),
         ]);
-        $cartItemDto2->price->promotions->set(1, new CartItemPromotionDto([
+        $cartItemDto2->price->promotions->set(1, new CartItemPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满减活动',
         ]));
@@ -595,7 +595,7 @@ final class CartItemDtoTest extends TestCase
             'a' => $cartItemDto->getPurchaseTotalPrice(),
             'b' => $cartItemDto2->getPurchaseTotalPrice(),
         ];
-        $result = CalculatePriceProportionHelper::handle($source, 20);
+        $result = CalculatePriceAllocation::handle($source, 20);
         static::assertSame($result['a'], 2.86);
         static::assertSame($result['b'], 17.14);
 
@@ -632,12 +632,12 @@ final class CartItemDtoTest extends TestCase
                 'product_name' => '商品A',
             ]),
         ]);
-        $cartItemDto->price->promotions->set(1, new CartItemPromotionDto([
+        $cartItemDto->price->promotions->set(1, new CartItemPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动',
             'promotion_price' => 10,
         ]));
-        $cartItemDto->price->promotions->set(2, new CartItemPromotionDto([
+        $cartItemDto->price->promotions->set(2, new CartItemPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '满49减20',
         ]));
@@ -655,11 +655,11 @@ final class CartItemDtoTest extends TestCase
             ]),
         ]);
 
-        $cartItemDto2->price->promotions->set(2, new CartItemPromotionDto([
+        $cartItemDto2->price->promotions->set(2, new CartItemPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '满49减20',
         ]));
-        $cartItemDto2->price->promotions->set(3, new CartItemPromotionDto([
+        $cartItemDto2->price->promotions->set(3, new CartItemPromotionEntity([
             'promotion_id' => 3,
             'promotion_name' => '满100减11的优惠券',
         ]));
@@ -676,7 +676,7 @@ final class CartItemDtoTest extends TestCase
             ]),
         ]);
 
-        $cartItemDto3->price->promotions->set(3, new CartItemPromotionDto([
+        $cartItemDto3->price->promotions->set(3, new CartItemPromotionEntity([
             'promotion_id' => 3,
             'promotion_name' => '满100减11的优惠券',
         ]));
@@ -722,7 +722,7 @@ final class CartItemDtoTest extends TestCase
             'a' => $cartItemDto->getPurchaseTotalPrice(),
             'b' => $cartItemDto2->getPurchaseTotalPrice(),
         ];
-        $result = CalculatePriceProportionHelper::handle($source, 20);
+        $result = CalculatePriceAllocation::handle($source, 20);
         static::assertSame($result['a'], 5.0);
         static::assertSame($result['b'], 15.0);
 
@@ -736,7 +736,7 @@ final class CartItemDtoTest extends TestCase
             'b' => $cartItemDto2->getPurchaseTotalPrice(),
             'c' => $cartItemDto3->getPurchaseTotalPrice(),
         ];
-        $result = CalculatePriceProportionHelper::handle($source, 11);
+        $result = CalculatePriceAllocation::handle($source, 11);
         static::assertSame($result['b'], 6.0);
         static::assertSame($result['c'], 5.0);
 

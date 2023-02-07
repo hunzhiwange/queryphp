@@ -138,12 +138,12 @@ class CartDto extends ParamsDto
         return $count;
     }
 
-    public function addCoupon(CartItemPromotionDto $coupon): void
+    public function addCoupon(CartItemPromotionEntity $coupon): void
     {
         $this->promotions->set($coupon->promotionId, $coupon);
     }
 
-    public function setCouponCartItem(CartItemPromotionDto $coupon, CartItemDto $cartItemDto, ...$moreCartItemDto): void
+    public function setCouponCartItem(CartItemPromotionEntity $coupon, CartItemDto $cartItemDto, ...$moreCartItemDto): void
     {
         $coupon->cartItems->set($cartItemDto->getHash(), $cartItemDto);
         foreach ($moreCartItemDto as $v) {
@@ -154,7 +154,7 @@ class CartDto extends ParamsDto
 
     public function update1(): void
     {
-        /** @var CartItemPromotionDto $promotion */
+        /** @var CartItemPromotionEntity $promotion */
         foreach ($this->promotions as $promotion) {
             if ($promotion->isMeetThresholdType() && $promotion->cartItems->count()) {
                 $promotion->roportionResult();

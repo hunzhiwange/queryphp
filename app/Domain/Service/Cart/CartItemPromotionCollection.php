@@ -19,7 +19,7 @@ class CartItemPromotionCollection extends Collection
     /**
      * 值类型.
      */
-    protected array $valueTypes = [CartItemPromotionDto::class];
+    protected array $valueTypes = [CartItemPromotionEntity::class];
 
     /**
      * 构造函数.
@@ -32,7 +32,7 @@ class CartItemPromotionCollection extends Collection
     /**
      * 获取活动.
      */
-    public function get(int $promotionId): ?CartItemPromotionDto
+    public function get(int|string $promotionId): ?CartItemPromotionEntity
     {
         return $this->__get($promotionId);
     }
@@ -40,12 +40,12 @@ class CartItemPromotionCollection extends Collection
     /**
      * 设置活动.
      */
-    public function set(int $promotionId, CartItemPromotionDto $cartItemPromotion): void
+    public function set(int|string $promotionId, CartItemPromotionEntity $cartItemPromotion): void
     {
         $this->__set($promotionId, $cartItemPromotion);
     }
 
-    public function remove(int $promotionId): void
+    public function remove(int|string $promotionId): void
     {
         $this->__unset($promotionId);
     }

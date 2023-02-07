@@ -7,7 +7,7 @@ namespace App\Domain\Service\Cart;
 /**
  * 根据占比计算价格分摊.
  */
-class CalculatePriceProportionHelper
+class CalculatePriceAllocation
 {
     public static function handle(array &$prices, float $favorableTotalPrice, int $remainAccurate = 2): array
     {
