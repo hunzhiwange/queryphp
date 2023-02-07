@@ -12,8 +12,6 @@ class CartDto extends ParamsDto
 
     public CartItemPromotionCollection $promotions;
 
-    protected array $couponMap = [];
-
     public function addItem(CartItemDto $cartItem): CartItemDto
     {
         $itemHash = $cartItem->generateHash();
@@ -155,7 +153,7 @@ class CartDto extends ParamsDto
     {
         /** @var CartItemPromotionDto $promotion */
         foreach ($this->promotions as $promotion) {
-            if ($promotion->cartItems->count()) {
+            if ($promotion->isMeetThresholdType() && $promotion->cartItems->count()) {
                 $promotion->roportionResult();
             }
         }

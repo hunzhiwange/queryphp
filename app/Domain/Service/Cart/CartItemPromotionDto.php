@@ -110,6 +110,11 @@ class CartItemPromotionDto extends ParamsDto
         return $this->roportionResult = CalculatePriceProportionHelper::handle($this->activePurchaseTotalPriceDetailAfter, $this->allFavorableTotalPrice);
     }
 
+    public function isMeetThresholdType(): bool
+    {
+        return 1 === $this->promotionType;
+    }
+
     protected function cartItemsDefaultValue(): CartItemCollection
     {
         return new CartItemCollection([]);

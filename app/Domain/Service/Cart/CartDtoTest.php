@@ -30,17 +30,17 @@ final class CartDtoTest extends TestCase
                 'product_name' => '商品A',
             ]),
         ]);
-        $cartItemDto->price->promotions->set(1, new CartItemPromotionDto([
-            'promotion_id' => 1,
-            'promotion_name' => '秒杀活动',
-            'promotion_price' => 8,
-        ]));
-
-        $cartItemDto->calculatePrice();
-        static::assertSame($cartItemDto->getPurchaseTotalPrice(), 24.0);
 
         $cartDto = new CartDto();
         $cartDto->addItem($cartItemDto);
+        $cartDto->setCouponCartItem(new CartItemPromotionDto([
+            'promotion_id' => 1,
+            'promotion_name' => '秒杀活动',
+            'promotion_price' => 8,
+        ]), $cartItemDto);
+        $cartDto->update1();
+        static::assertSame($cartItemDto->getPurchaseTotalPrice(), 24.0);
+
         static::assertSame($cartDto->getActivePurchaseTotalPrice(), 24.0);
         static::assertSame($cartDto->getPurchaseTotalPrice(), 24.0);
         $cartItemDto->disable();

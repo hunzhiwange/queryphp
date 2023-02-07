@@ -116,21 +116,20 @@ class CartItemPriceDto extends ParamsDto
         if ($cartItemPromotionCollection) {
             /** @var CartItemPromotionDto $promotion */
             foreach ($cartItemPromotionCollection as $promotion) {
-                // 活动分摊价格累加
-                if ($promotion->favorableTotalPrice) {
-                    echo 1;
-                    $promotion->favorablePrice = bcdiv_compatibility($promotion->favorableTotalPrice, $number);
-                    $favorableTotalPrice = bcadd_compatibility($favorableTotalPrice, $promotion->favorableTotalPrice);
-                } elseif ($promotion->roportionResult) {
-                    foreach ($promotion->roportionResult as $cartItemHash => $roportionResultItem) {
-                        if ($cartItemHash === $cartItemDto->getHash()) {
-                            $favorableTotalPrice = bcadd_compatibility($favorableTotalPrice, $roportionResultItem);
+                if ($promotion->isMeetThresholdType()) {
+                    // 活动分摊价格累加
+                    if ($promotion->roportionResult) {
+                        foreach ($promotion->roportionResult as $cartItemHash => $roportionResultItem) {
+                            if ($cartItemHash === $cartItemDto->getHash()) {
+                                $favorableTotalPrice = bcadd_compatibility($favorableTotalPrice, $roportionResultItem);
+                            }
                         }
                     }
-                }
-                // 寻找最小的商品活动价
-                if ($promotion->promotionPrice) {
-                    $promotionPrices[] = $promotion->promotionPrice;
+                } else {
+                    // 寻找最小的商品活动价
+                    if ($promotion->promotionPrice) {
+                        $promotionPrices[] = $promotion->promotionPrice;
+                    }
                 }
             }
         }
