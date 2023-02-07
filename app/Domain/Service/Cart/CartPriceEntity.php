@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Cart;
 
-use App\Domain\Dto\ParamsDto;
+use Leevel\Support\Dto;
 
 /**
  * 购物车计算.
  */
-class CartPriceEntity extends ParamsDto
+class CartPriceEntity extends Dto
 {
     /**
      * 订单结算金额.

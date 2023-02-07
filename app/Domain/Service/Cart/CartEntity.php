@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Cart;
 
-use App\Domain\Dto\ParamsDto;
+use Leevel\Support\Dto;
 
-class CartEntity extends ParamsDto
+class CartEntity extends Dto
 {
     /**
      * 购物车商品

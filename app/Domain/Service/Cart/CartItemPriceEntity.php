@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Cart;
 
-use App\Domain\Dto\ParamsDto;
+use Leevel\Support\Dto;
 
 /**
  * 购物车价格项目.
  *
  * @see 参考了一下文章 https://blog.csdn.net/y0ungroc/article/details/122586302
  */
-class CartItemPriceEntity extends ParamsDto
+class CartItemPriceEntity extends Dto
 {
     /**
      * 成交价.
