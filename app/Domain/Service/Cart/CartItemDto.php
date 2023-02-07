@@ -47,11 +47,60 @@ class CartItemDto extends ParamsDto
      */
     public CartItemProductDto $product;
 
+    /**
+     * 是否选中.
+     */
+    public bool $active = true;
+
+    protected ?string $itemHash = null;
+
     public function __construct(array $data = [], bool $ignoreMissingValues = true)
     {
         parent::__construct($data, $ignoreMissingValues);
 
         $this->calculatePrice();
+    }
+
+    public function generateHash(bool $force = false): string
+    {
+        if (!$force && $this->itemHash) {
+            return $this->itemHash;
+        }
+
+        $cartItemArray = [
+            'inventory_id' => $this->inventoryId,
+        ];
+        ksort($cartItemArray);
+
+        return $this->itemHash = md5(json_encode($cartItemArray));
+    }
+
+    public function getHash(): string
+    {
+        return $this->itemHash;
+    }
+
+    public function disable(): void
+    {
+        $this->active = false;
+    }
+
+    public function enable(): void
+    {
+        $this->active = true;
+    }
+
+    public function addNumber(float $number): void
+    {
+        $this->number = bcadd_compatibility($this->number, $number);
+    }
+
+    public function subNumber(float $number): void
+    {
+        if (bccomp_compatibility($this->number, $number) < 1) {
+            throw new \Exception('Not enough number');
+        }
+        $this->number = bcsub_compatibility($this->number, $number);
     }
 
     public function setPromotionFavorableTotalPrice(int $promotionId, float $favorableTotalPrice): void
@@ -66,6 +115,15 @@ class CartItemDto extends ParamsDto
 
     public function getPurchaseTotalPrice(): float
     {
+        return bcmul_compatibility($this->number, $this->price->purchasePrice);
+    }
+
+    public function getActivePurchaseTotalPrice(): float
+    {
+        if (!$this->active) {
+            return 0;
+        }
+
         return bcmul_compatibility($this->number, $this->price->purchasePrice);
     }
 

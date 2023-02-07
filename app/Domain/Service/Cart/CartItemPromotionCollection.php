@@ -32,7 +32,7 @@ class CartItemPromotionCollection extends Collection
     /**
      * 获取活动.
      */
-    public function get(int $promotionId): CartItemPromotionDto
+    public function get(int $promotionId): ?CartItemPromotionDto
     {
         return $this->__get($promotionId);
     }
