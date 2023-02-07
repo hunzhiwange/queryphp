@@ -9,11 +9,11 @@ use Leevel\Support\Dto;
 class CartItemEntity extends Dto
 {
     /**
-     * 库存 ID.
+     * 库存唯一值.
      *
      * - 库存中包含 SKU 和仓库信息
      */
-    public int $inventoryId = 0;
+    public int|string $inventoryId = 0;
 
     /**
      * 商品数量.

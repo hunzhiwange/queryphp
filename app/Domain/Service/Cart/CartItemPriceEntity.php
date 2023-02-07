@@ -43,6 +43,7 @@ class CartItemPriceEntity extends Dto
      * 优惠价.
      *
      * - 成交价和结算价之间的差价，可能由多种优惠构成。
+     * - 优惠价仅仅作为展示，并不参与逻辑计算
      */
     public float $favorablePrice = 0;
 
@@ -51,6 +52,7 @@ class CartItemPriceEntity extends Dto
      *
      * - 参考价指商家设置用于和“销售价”形成对比，以便使销售价看起来优惠的价格，这几乎也是参考价的唯一用途了
      * - 参考价常以“划线价”的形式呈现（需要注意，不是所有的划线价都是参考价）。参考价其他常见的叫法还有：门市价、吊牌价、专柜价、指导价等等
+     * - 优惠价仅仅作为展示，并不参与逻辑计算
      */
     public float $referencePrice = 0;
 
@@ -110,7 +112,6 @@ class CartItemPriceEntity extends Dto
 
         $promotionPrices = [];
         $favorableTotalPrice = 0;
-
         if ($cartItemPromotionCollection) {
             /** @var CartItemPromotionEntity $promotion */
             foreach ($cartItemPromotionCollection as $promotion) {
@@ -124,15 +125,17 @@ class CartItemPriceEntity extends Dto
                         }
                     }
                 } else {
-                    // 寻找最小的商品活动价
+                    // 收集所有商品活动价（特价、秒杀等等）
                     if ($promotion->promotionPrice) {
                         $promotionPrices[] = $promotion->promotionPrice;
                     }
                 }
             }
         }
-        $this->favorablePrice = $favorableTotalPrice;
+
+        // 寻找最低商品活动价
         // 活动价计算完成后计算成交价
+        $this->favorablePrice = bcdiv_compatibility($favorableTotalPrice, $number);
         $this->promotionPrice = $promotionPrices ? min($promotionPrices) : 0;
         $this->updatePurchaseAndSettlementPrice();
 

@@ -12,7 +12,9 @@ use Leevel\Support\Dto;
 class CartItemPromotionEntity extends Dto
 {
     /**
-     * 活动 ID.
+     * 活动标识符.
+     *
+     * - 活动唯一值，如果同一个活动多种满足规格，可以通过设置不同的活动标识符（活动+规则值）
      */
     public int|string $promotionId = 0;
 

@@ -12,9 +12,9 @@ use Leevel\Support\Dto;
 class CartItemProductEntity extends Dto
 {
     /**
-     * 产品 ID.
+     * 产品标识符.
      */
-    public int $productId = 0;
+    public int|string $productId = 0;
 
     /**
      * 产品名字.
