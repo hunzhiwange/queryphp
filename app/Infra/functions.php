@@ -8,6 +8,7 @@ use Leevel\Database\IDatabase;
 use Leevel\Database\Proxy\Db;
 use Leevel\Di\Container;
 use Leevel\Http\Request;
+use Leevel\Support\Arr\Only;
 
 if (!function_exists('permission')) {
     /**
@@ -328,5 +329,19 @@ if (!function_exists('bccomp_compatibility')) {
     function bccomp_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): int
     {
         return bccomp((string) $num1, (string) $num2, $scale);
+    }
+}
+
+if (!function_exists('create_data_id')) {
+    function create_data_id(array $data, array $keys = []): string
+    {
+        if (empty($keys)) {
+            $keys = array_keys($data);
+        }
+
+        $data = Only::handle($data, $keys);
+        ksort($data);
+
+        return http_build_query($data);
     }
 }

@@ -53,4 +53,16 @@ class CartItemPromotionDto extends ParamsDto
      * - 1：多个商品分摊的活动
      */
     public int $promotionType = 0;
+
+    /**
+     * 满足门槛.
+     */
+    public float $meetThreshold = 0;
+
+    /**
+     * 优惠总价.
+     */
+    public float $allFavorableTotalPrice = 0;
+
+    public array $roportionResult = [];
 }

@@ -44,4 +44,9 @@ class CartItemPromotionCollection extends Collection
     {
         $this->__set($promotionId, $cartItemPromotion);
     }
+
+    public function remove(int $promotionId): void
+    {
+        $this->__unset($promotionId);
+    }
 }

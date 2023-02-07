@@ -103,8 +103,9 @@ class CartItemPriceDto extends ParamsDto
      */
     public float $promotionPrice = 0;
 
-    public function calculatePrice(float $number): void
+    public function calculatePrice(CartItemDto $cartItemDto, ?CartItemPromotionCollection $cartItemPromotionCollection = null): void
     {
+        $number = $cartItemDto->number;
         if (!$number) {
             return;
         }
@@ -112,16 +113,25 @@ class CartItemPriceDto extends ParamsDto
         $promotionPrices = [];
         $favorableTotalPrice = 0;
 
-        /** @var CartItemPromotionDto $promotion */
-        foreach ($this->promotions as $promotion) {
-            // 活动分摊价格累加
-            if ($promotion->favorableTotalPrice) {
-                $promotion->favorablePrice = bcdiv_compatibility($promotion->favorableTotalPrice, $number);
-                $favorableTotalPrice = bcadd_compatibility($favorableTotalPrice, $promotion->favorableTotalPrice);
-            }
-            // 寻找最小的商品活动价
-            if ($promotion->promotionPrice) {
-                $promotionPrices[] = $promotion->promotionPrice;
+        if ($cartItemPromotionCollection) {
+            /** @var CartItemPromotionDto $promotion */
+            foreach ($cartItemPromotionCollection as $promotion) {
+                // 活动分摊价格累加
+                if ($promotion->favorableTotalPrice) {
+                    echo 1;
+                    $promotion->favorablePrice = bcdiv_compatibility($promotion->favorableTotalPrice, $number);
+                    $favorableTotalPrice = bcadd_compatibility($favorableTotalPrice, $promotion->favorableTotalPrice);
+                } elseif ($promotion->roportionResult) {
+                    foreach ($promotion->roportionResult as $cartItemHash => $roportionResultItem) {
+                        if ($cartItemHash === $cartItemDto->getHash()) {
+                            $favorableTotalPrice = bcadd_compatibility($favorableTotalPrice, $roportionResultItem);
+                        }
+                    }
+                }
+                // 寻找最小的商品活动价
+                if ($promotion->promotionPrice) {
+                    $promotionPrices[] = $promotion->promotionPrice;
+                }
             }
         }
         $this->favorablePrice = $favorableTotalPrice;

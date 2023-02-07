@@ -161,6 +161,111 @@ final class CartDtoTest extends TestCase
         static::assertSame($cartPriceDto->calculateFinalTotalPrice(), 140.0);
     }
 
+    public function test2Sub1(): void
+    {
+        $cartDto = new CartDto();
+        // 商品参加满减活动
+        // 案例：商品A销售价20元，购买2件；商品B销售价30元，购买2件；商品C销售价50元，购买1件。其中只有商品A和商品B参加“满49减20”活动，商品C不参加。运费10元。
+        // - 分析：首先，由于满减活动属于“以优惠项方式减免金额”，因此不存在活动价，所有的“成交价”都取“销售价”。
+        // 判断是否达到“满减条件”，则需要计算订单中参与活动的商品的“部分商品总价”，已知商品A和商品B参与该满减活动，得部分商品总价=20x2+30x2=100元，该金额大于满减门槛，因此可使用“满减”优惠。
+        $cartItemDto = new CartItemDto([
+            'inventory_id' => 1,
+            'number' => 2,
+            'price' => new CartItemPriceDto([
+                'sales_price' => 20,
+            ]),
+            'product' => new CartItemProductDto([
+                'product_id' => 3,
+                'product_name' => '商品A',
+            ]),
+        ]);
+
+        $cartItemDto2 = new CartItemDto([
+            'inventory_id' => 3,
+            'number' => 2,
+            'price' => new CartItemPriceDto([
+                'sales_price' => 30,
+            ]),
+            'product' => new CartItemProductDto([
+                'product_id' => 4,
+                'product_name' => '商品B',
+            ]),
+        ]);
+
+        $cartItemDto3 = new CartItemDto([
+            'inventory_id' => 5,
+            'number' => 1,
+            'price' => new CartItemPriceDto([
+                'sales_price' => 50,
+            ]),
+            'product' => new CartItemProductDto([
+                'product_id' => 5,
+                'product_name' => '商品C',
+            ]),
+        ]);
+
+        $cartDto->addItem($cartItemDto);
+        $cartDto->addItem($cartItemDto2);
+        $cartDto->addItem($cartItemDto3);
+
+        $cartItemPromotionDto = new CartItemPromotionDto([
+            'promotion_id' => 1,
+            'promotion_name' => '满减活动',
+            'promotion_type' => 1,
+            'meet_threshold' => 90.0,
+            'all_favorable_total_price' => 20,
+        ]);
+        $cartDto->setCouponCartItem($cartItemPromotionDto, $cartItemDto);
+        $cartDto->setCouponCartItem($cartItemPromotionDto, $cartItemDto2);
+        $cartDto->update1();
+
+        // 参与满减金额的部分商品总金额
+        $abTotalPrice = $cartItemDto->getPurchaseTotalPrice() + $cartItemDto2->getPurchaseTotalPrice();
+        static::assertSame($abTotalPrice, 100.0);
+
+        // 总商品金额
+        $allTotalPrice = $cartItemDto->getPurchaseTotalPrice() + $cartItemDto2->getPurchaseTotalPrice() + $cartItemDto3->getPurchaseTotalPrice();
+        static::assertSame($allTotalPrice, 150.0);
+
+        // 满减优惠：-20元
+        $manJian = 20;
+
+        // 运费
+        $yunfei = 10;
+
+        // 订单金额
+        $ordersTotalPrice = $allTotalPrice - $manJian + $yunfei;
+        static::assertSame($ordersTotalPrice, 140.0);
+
+        // 因此订单总价=150-20+10=140元，买家应该为这一笔订单支付140元。下面计算商品结算价，满减优惠的20元需要分摊到对应商品上，运费不参与分摊。
+        $avgPrice = 20 / $abTotalPrice;
+        static::assertSame($avgPrice, 0.2);
+        $aManjian = 20 * ($cartItemDto->getPurchaseTotalPrice() / $abTotalPrice);
+        $bManjian = 20 * ($cartItemDto2->getPurchaseTotalPrice() / $abTotalPrice);
+        static::assertSame($aManjian, 8.0);
+        static::assertSame($bManjian, 12.0);
+
+        // 满减分摊单价
+        $aManjianPrice = $avgPrice * $cartItemDto->price->purchasePrice;
+        $bManjianPrice = $avgPrice * $cartItemDto2->price->purchasePrice;
+        static::assertSame($aManjianPrice, 4.0);
+        static::assertSame($bManjianPrice, 6.0);
+
+        // 订单金额
+        // 订单总价=Σ成交价x购买数量 - 优惠项减免金额 + 运费 = 140元
+        // Σ结算价x购买数量 + 运费 = 16x2+24x2+50x1+10=140元
+        $ordersTotalPrice = $cartItemDto->getSettlementTotalPrice() + $cartItemDto2->getSettlementTotalPrice() + $cartItemDto3->getSettlementTotalPrice() + $yunfei;
+        static::assertSame($ordersTotalPrice, 140.0);
+
+        static::assertSame($cartDto->getActivePurchaseTotalPrice(), 150.0);
+        static::assertSame($cartDto->getPurchaseTotalPrice(), 150.0);
+
+        $cartPriceDto = new CartPriceDto();
+        $cartPriceDto->purchaseTotalPrice = $cartDto->getActivePurchaseTotalPrice();
+        $cartPriceDto->couponFavorableTotalPrice = 10;
+        static::assertSame($cartPriceDto->calculateFinalTotalPrice(), 140.0);
+    }
+
     public function test3(): void
     {
         // 包含活动价、满减、优惠券等多种活动。

@@ -70,9 +70,8 @@ class CartItemDto extends ParamsDto
         $cartItemArray = [
             'inventory_id' => $this->inventoryId,
         ];
-        ksort($cartItemArray);
 
-        return $this->itemHash = md5(json_encode($cartItemArray));
+        return $this->itemHash = create_data_id($cartItemArray);
     }
 
     public function getHash(): string
@@ -108,9 +107,9 @@ class CartItemDto extends ParamsDto
         $this->price->promotions->get($promotionId)->favorableTotalPrice = $favorableTotalPrice;
     }
 
-    public function calculatePrice(): void
+    public function calculatePrice(?CartItemPromotionCollection $cartItemPromotionCollection = null): void
     {
-        $this->price->calculatePrice($this->number);
+        $this->price->calculatePrice($this, $cartItemPromotionCollection);
     }
 
     public function getPurchaseTotalPrice(): float
