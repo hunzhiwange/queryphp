@@ -136,6 +136,11 @@ class CartDto extends ParamsDto
         return $count;
     }
 
+    public function addCoupon(CartItemPromotionDto $coupon): void
+    {
+        // $this->cart->coupons[$coupon->code] = $coupon;
+    }
+
     protected function cartItemsDefaultValue(): CartItemCollection
     {
         return new CartItemCollection([]);

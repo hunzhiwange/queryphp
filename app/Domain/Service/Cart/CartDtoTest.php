@@ -147,6 +147,18 @@ final class CartDtoTest extends TestCase
         // Σ结算价x购买数量 + 运费 = 16x2+24x2+50x1+10=140元
         $ordersTotalPrice = $cartItemDto->getSettlementTotalPrice() + $cartItemDto2->getSettlementTotalPrice() + $cartItemDto3->getSettlementTotalPrice() + $yunfei;
         static::assertSame($ordersTotalPrice, 140.0);
+
+        $cartDto = new CartDto();
+        $cartDto->addItem($cartItemDto);
+        $cartDto->addItem($cartItemDto2);
+        $cartDto->addItem($cartItemDto3);
+        static::assertSame($cartDto->getActivePurchaseTotalPrice(), 150.0);
+        static::assertSame($cartDto->getPurchaseTotalPrice(), 150.0);
+
+        $cartPriceDto = new CartPriceDto();
+        $cartPriceDto->purchaseTotalPrice = $cartDto->getActivePurchaseTotalPrice();
+        $cartPriceDto->couponFavorableTotalPrice = 10;
+        static::assertSame($cartPriceDto->calculateFinalTotalPrice(), 140.0);
     }
 
     public function test3(): void

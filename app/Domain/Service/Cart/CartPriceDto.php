@@ -84,7 +84,7 @@ class CartPriceDto extends ParamsDto
     /**
      * 计算订单结算价.
      */
-    public function calculateFinalTotalPrice()
+    public function calculateFinalTotalPrice(): float
     {
         if (-1 === bccomp_compatibility($this->purchaseTotalPrice, 0, 4)) {
             $this->purchaseTotalPrice = 0;

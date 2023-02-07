@@ -45,4 +45,12 @@ class CartItemPromotionDto extends ParamsDto
      * - 销售价和活动价本质上是一回事，区别就在于是否参加活动引起的叫法不同。
      */
     public float $promotionPrice = 0;
+
+    /**
+     * 活动类型.
+     *
+     * - 0：作用于商品的活动
+     * - 1：多个商品分摊的活动
+     */
+    public int $promotionType = 0;
 }
