@@ -9,7 +9,7 @@ use Leevel\Support\Collection;
 /**
  * 购物车项集合.
  */
-class CartItemCollection extends Collection
+class CartItemEntityCollection extends Collection
 {
     /**
      * 键类型.
@@ -19,7 +19,7 @@ class CartItemCollection extends Collection
     /**
      * 值类型.
      */
-    protected array $valueTypes = [CartItemDto::class];
+    protected array $valueTypes = [CartItemEntity::class];
 
     /**
      * 构造函数.
@@ -29,18 +29,35 @@ class CartItemCollection extends Collection
         parent::__construct($data);
     }
 
-    public function get(string $itemHash): ?CartItemDto
+    /**
+     * 获取购物车商品
+     */
+    public function get(string $itemHash): ?CartItemEntity
     {
         return $this->__get($itemHash);
     }
 
-    public function set(string $itemHash, CartItemDto $cartItem): void
+    /**
+     * 设置购物车商品
+     */
+    public function set(string $itemHash, CartItemEntity $cartItem): void
     {
         $this->__set($itemHash, $cartItem);
     }
 
+    /**
+     * 删除购物车商品
+     */
     public function remove(string $itemHash): void
     {
         $this->__unset($itemHash);
+    }
+
+    /**
+     * 是否存在购物车商品
+     */
+    public function has(string $itemHash): bool
+    {
+        return $this->__isset($itemHash);
     }
 }

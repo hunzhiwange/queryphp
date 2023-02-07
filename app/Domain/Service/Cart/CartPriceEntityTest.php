@@ -11,11 +11,11 @@ use Tests\TestCase;
  *
  * @coversNothing
  */
-final class CartPriceDtoTest extends TestCase
+final class CartPriceEntityTest extends TestCase
 {
     public function test1(): void
     {
-        $foo = new CartPriceDto();
+        $foo = new CartPriceEntity();
         $foo->calculateFinalTotalPrice();
         $json = <<<'eot'
             {
@@ -43,7 +43,7 @@ final class CartPriceDtoTest extends TestCase
 
     public function test2(): void
     {
-        $foo = new CartPriceDto([
+        $foo = new CartPriceEntity([
             'purchase_total_price' => 5,
         ]);
         $foo->calculateFinalTotalPrice();
@@ -73,7 +73,7 @@ final class CartPriceDtoTest extends TestCase
 
     public function test3(): void
     {
-        $foo = new CartPriceDto([
+        $foo = new CartPriceEntity([
             'purchase_total_price' => 5,
             'freight' => 1,
         ]);
@@ -104,7 +104,7 @@ final class CartPriceDtoTest extends TestCase
 
     public function test4(): void
     {
-        $foo = new CartPriceDto([
+        $foo = new CartPriceEntity([
             'purchase_total_price' => 5,
             'freight' => 1,
             'invoice_type' => 1,
@@ -137,7 +137,7 @@ final class CartPriceDtoTest extends TestCase
 
     public function test5(): void
     {
-        $foo = new CartPriceDto([
+        $foo = new CartPriceEntity([
             'purchase_total_price' => 5,
             'freight' => 1,
             'invoice_type' => 1,
@@ -172,7 +172,7 @@ final class CartPriceDtoTest extends TestCase
 
     public function test7(): void
     {
-        $foo = new CartPriceDto([
+        $foo = new CartPriceEntity([
             'purchase_total_price' => 7,
             'coupon_favorable_total_price' => 1,
             'rebate_favorable_total_price' => 1,
@@ -205,7 +205,7 @@ final class CartPriceDtoTest extends TestCase
 
     public function test8(): void
     {
-        $foo = new CartPriceDto([
+        $foo = new CartPriceEntity([
             'purchase_total_price' => 7,
             'coupon_favorable_total_price' => 1,
             'rebate_favorable_total_price' => 1,

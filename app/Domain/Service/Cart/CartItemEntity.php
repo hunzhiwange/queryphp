@@ -6,7 +6,7 @@ namespace App\Domain\Service\Cart;
 
 use App\Domain\Dto\ParamsDto;
 
-class CartItemDto extends ParamsDto
+class CartItemEntity extends ParamsDto
 {
     /**
      * 库存 ID.
@@ -32,20 +32,12 @@ class CartItemDto extends ParamsDto
     /**
      * 商品价格.
      */
-    public CartItemPriceDto $price;
-
-    /**
-     * 商品总价.
-     *
-     * - 商品总价分为“全部商品总价”和“部分商品总价”，两者区分仅在于计算时是否将所有商品全都算进去。
-     * - 商品总价=Σ成交价x数量
-     */
-    // public float $totalPrice = 0;
+    public CartItemPriceEntity $price;
 
     /**
      * 产品.
      */
-    public CartItemProductDto $product;
+    public CartItemProductEntity $product;
 
     /**
      * 是否选中.
@@ -102,7 +94,7 @@ class CartItemDto extends ParamsDto
         $this->number = bcsub_compatibility($this->number, $number);
     }
 
-    public function calculatePrice(?CartItemPromotionCollection $cartItemPromotionCollection = null): void
+    public function calculatePrice(?CartItemPromotionEntityCollection $cartItemPromotionCollection = null): void
     {
         $this->price->calculatePrice($this, $cartItemPromotionCollection);
     }
@@ -134,13 +126,13 @@ class CartItemDto extends ParamsDto
         return $this->price->settlementRemainTotalPrice;
     }
 
-    protected function priceDefaultValue(): CartItemPriceDto
+    protected function priceDefaultValue(): CartItemPriceEntity
     {
-        return new CartItemPriceDto();
+        return new CartItemPriceEntity();
     }
 
-    protected function productDefaultValue(): CartItemProductDto
+    protected function productDefaultValue(): CartItemProductEntity
     {
-        return new CartItemProductDto();
+        return new CartItemProductEntity();
     }
 }

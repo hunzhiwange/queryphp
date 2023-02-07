@@ -9,7 +9,7 @@ use Leevel\Support\Collection;
 /**
  * 活动集合.
  */
-class CartItemPromotionCollection extends Collection
+class CartItemPromotionEntityCollection extends Collection
 {
     /**
      * 键类型.
@@ -45,8 +45,19 @@ class CartItemPromotionCollection extends Collection
         $this->__set($promotionId, $cartItemPromotion);
     }
 
+    /**
+     * 删除活动.
+     */
     public function remove(int|string $promotionId): void
     {
         $this->__unset($promotionId);
+    }
+
+    /**
+     * 是否存在活动.
+     */
+    public function has(int|string $promotionId): bool
+    {
+        return $this->__isset($promotionId);
     }
 }

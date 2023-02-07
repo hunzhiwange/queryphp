@@ -6,17 +6,26 @@ namespace App\Domain\Service\Cart;
 
 use App\Domain\Dto\ParamsDto;
 
-class CartDto extends ParamsDto
+class CartEntity extends ParamsDto
 {
-    public CartItemCollection $cartItems;
+    /**
+     * 购物车商品
+     */
+    public CartItemEntityCollection $cartItems;
 
-    public CartItemPromotionCollection $promotions;
+    /**
+     * 购物车活动.
+     */
+    public CartItemPromotionEntityCollection $promotions;
 
-    public function addItem(CartItemDto $cartItem): CartItemDto
+    /**
+     * 新增一项商品到购物车.
+     */
+    public function addItem(CartItemEntity $cartItem): CartItemEntity
     {
         $itemHash = $cartItem->generateHash();
 
-        if ($this->getItem($itemHash)) {
+        if ($this->hasItem($itemHash)) {
             $this->getItem($itemHash)->addNumber($cartItem->number);
         } else {
             $this->cartItems->set($itemHash, $cartItem);
@@ -25,13 +34,30 @@ class CartDto extends ParamsDto
         return $cartItem;
     }
 
-    public function getItem(string $itemHash): ?CartItemDto
+    /**
+     * 获取购物车项.
+     *
+     * @throws \Exception
+     */
+    public function getItem(string $itemHash): CartItemEntity
     {
-        // @todo 不存在直接抛出异常
-        return $this->cartItems->get($itemHash);
+        $cartItemDto = $this->cartItems->get($itemHash);
+        if (!$cartItemDto) {
+            throw new \Exception(sprintf('Cart item %s not found', $itemHash));
+        }
+
+        return $cartItemDto;
     }
 
-    public function increment(string $itemHash, float $step = 1.0): ?CartItemDto
+    /**
+     * 是否存在购物车项.
+     */
+    public function hasItem(string $itemHash): bool
+    {
+        return $this->cartItems->has($itemHash);
+    }
+
+    public function increment(string $itemHash, float $step = 1.0): ?CartItemEntity
     {
         $item = $this->getItem($itemHash);
         $item->addNumber($step);
@@ -39,7 +65,7 @@ class CartDto extends ParamsDto
         return $item;
     }
 
-    public function decrement(string $itemHash, float $step = 1.0): ?CartItemDto
+    public function decrement(string $itemHash, float $step = 1.0): ?CartItemEntity
     {
         $item = $this->getItem($itemHash);
         if (1 === bccomp_compatibility($item->number, $step)) {
@@ -68,7 +94,7 @@ class CartDto extends ParamsDto
             return $total;
         }
 
-        /** @var CartItemDto $item */
+        /** @var CartItemEntity $item */
         foreach ($this->cartItems as $item) {
             $total = bcadd_compatibility($total, $item->getPurchaseTotalPrice());
         }
@@ -83,7 +109,7 @@ class CartDto extends ParamsDto
             return $total;
         }
 
-        /** @var CartItemDto $item */
+        /** @var CartItemEntity $item */
         foreach ($this->cartItems as $item) {
             if ($item->active) {
                 $total = bcadd_compatibility($total, $item->getActivePurchaseTotalPrice());
@@ -102,7 +128,7 @@ class CartDto extends ParamsDto
     {
         $count = 0;
 
-        /** @var CartItemDto $item */
+        /** @var CartItemEntity $item */
         foreach ($this->cartItems as $item) {
             if ($item->active) {
                 ++$count;
@@ -116,7 +142,7 @@ class CartDto extends ParamsDto
     {
         $count = 0;
 
-        /** @var CartItemDto $item */
+        /** @var CartItemEntity $item */
         foreach ($this->cartItems as $item) {
             $count = bcadd_compatibility($count, $item->number);
         }
@@ -128,7 +154,7 @@ class CartDto extends ParamsDto
     {
         $count = 0;
 
-        /** @var CartItemDto $item */
+        /** @var CartItemEntity $item */
         foreach ($this->cartItems as $item) {
             if ($item->active) {
                 $count = bcadd_compatibility($count, $item->number);
@@ -138,21 +164,18 @@ class CartDto extends ParamsDto
         return $count;
     }
 
-    public function addCoupon(CartItemPromotionEntity $coupon): void
+    public function addPromotion(CartItemPromotionEntity $coupon, CartItemEntity ...$moreCartItemDto): void
     {
-        $this->promotions->set($coupon->promotionId, $coupon);
-    }
-
-    public function setCouponCartItem(CartItemPromotionEntity $coupon, CartItemDto $cartItemDto, ...$moreCartItemDto): void
-    {
-        $coupon->cartItems->set($cartItemDto->getHash(), $cartItemDto);
         foreach ($moreCartItemDto as $v) {
             $coupon->cartItems->set($v->getHash(), $v);
         }
-        $this->addCoupon($coupon);
+        $this->promotions->set($coupon->promotionId, $coupon);
     }
 
-    public function update1(): void
+    /**
+     * 计算价格
+     */
+    public function calculatePrice(): void
     {
         /** @var CartItemPromotionEntity $promotion */
         foreach ($this->promotions as $promotion) {
@@ -163,20 +186,20 @@ class CartDto extends ParamsDto
 
         // 通知价格更新
         // @todo 只通知一部分受价格影响的商品更新价格
-        /** @var CartItemDto $cartItem */
+        /** @var CartItemEntity $cartItem */
         foreach ($this->cartItems as $cartItem) {
             // 遍历购物车项目计算价格
             $cartItem->calculatePrice($this->promotions);
         }
     }
 
-    protected function cartItemsDefaultValue(): CartItemCollection
+    protected function cartItemsDefaultValue(): CartItemEntityCollection
     {
-        return new CartItemCollection([]);
+        return new CartItemEntityCollection([]);
     }
 
-    protected function promotionsDefaultValue(): CartItemPromotionCollection
+    protected function promotionsDefaultValue(): CartItemPromotionEntityCollection
     {
-        return new CartItemPromotionCollection([]);
+        return new CartItemPromotionEntityCollection([]);
     }
 }

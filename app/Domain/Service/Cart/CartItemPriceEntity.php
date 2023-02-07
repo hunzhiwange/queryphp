@@ -11,7 +11,7 @@ use App\Domain\Dto\ParamsDto;
  *
  * @see 参考了一下文章 https://blog.csdn.net/y0ungroc/article/details/122586302
  */
-class CartItemPriceDto extends ParamsDto
+class CartItemPriceEntity extends ParamsDto
 {
     /**
      * 成交价.
@@ -45,8 +45,6 @@ class CartItemPriceDto extends ParamsDto
      * - 成交价和结算价之间的差价，可能由多种优惠构成。
      */
     public float $favorablePrice = 0;
-
-    public CartItemPromotionCollection $promotions;
 
     /**
      * 参考价.
@@ -103,7 +101,7 @@ class CartItemPriceDto extends ParamsDto
      */
     public float $promotionPrice = 0;
 
-    public function calculatePrice(CartItemDto $cartItemDto, ?CartItemPromotionCollection $cartItemPromotionCollection = null): void
+    public function calculatePrice(CartItemEntity $cartItemDto, ?CartItemPromotionEntityCollection $cartItemPromotionCollection = null): void
     {
         $number = $cartItemDto->number;
         if (!$number) {
@@ -156,10 +154,5 @@ class CartItemPriceDto extends ParamsDto
             'promotionPrice',
         ])->toArray();
         $this->purchasePrice = min(array_filter($allPrice));
-    }
-
-    protected function promotionsDefaultValue(): CartItemPromotionCollection
-    {
-        return new CartItemPromotionCollection([]);
     }
 }

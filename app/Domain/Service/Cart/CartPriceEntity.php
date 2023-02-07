@@ -9,7 +9,7 @@ use App\Domain\Dto\ParamsDto;
 /**
  * 购物车计算.
  */
-class CartPriceDto extends ParamsDto
+class CartPriceEntity extends ParamsDto
 {
     /**
      * 订单结算金额.

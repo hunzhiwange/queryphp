@@ -54,7 +54,7 @@ class CartItemPromotionEntity extends Dto
     /**
      * 活动包含的商品
      */
-    public CartItemCollection $cartItems;
+    public CartItemEntityCollection $cartItems;
 
     /**
      * 选中的商品总成交价.
@@ -89,7 +89,7 @@ class CartItemPromotionEntity extends Dto
         $activePurchaseTotalPrice = 0;
         $activePurchaseTotalPriceDetail = [];
 
-        /** @var CartItemDto $cartItem */
+        /** @var CartItemEntity $cartItem */
         foreach ($this->cartItems as $cartItem) {
             $tempTotalPrice = $cartItem->getActivePurchaseTotalPrice();
             $activePurchaseTotalPrice = bcadd_compatibility($activePurchaseTotalPrice, $tempTotalPrice);
@@ -150,8 +150,8 @@ class CartItemPromotionEntity extends Dto
     /**
      * 活动商品默认值
      */
-    protected function cartItemsDefaultValue(): CartItemCollection
+    protected function cartItemsDefaultValue(): CartItemEntityCollection
     {
-        return new CartItemCollection([]);
+        return new CartItemEntityCollection([]);
     }
 }

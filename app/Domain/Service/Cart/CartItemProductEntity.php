@@ -9,7 +9,7 @@ use App\Domain\Dto\ParamsDto;
 /**
  * 购物车产品项目.
  */
-class CartItemProductDto extends ParamsDto
+class CartItemProductEntity extends ParamsDto
 {
     /**
      * 产品 ID.
