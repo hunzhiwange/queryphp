@@ -118,16 +118,21 @@ class CartItemPriceEntity extends Dto
                 if ($promotion->isMeetThresholdType()) {
                     // 活动分摊价格累加
                     if ($promotion->priceAllocationResult) {
-                        foreach ($promotion->priceAllocationResult as $cartItemHash => $roportionResultItem) {
+                        foreach ($promotion->priceAllocationResult as $cartItemHash => $priceAllocationResult) {
                             if ($cartItemHash === $cartItemEntity->getHash()) {
-                                $favorableTotalPrice = bcadd_compatibility($favorableTotalPrice, $roportionResultItem);
+                                $favorableTotalPrice = bcadd_compatibility($favorableTotalPrice, $priceAllocationResult);
                             }
                         }
                     }
                 } else {
                     // 收集所有商品活动价（特价、秒杀等等）
                     if ($promotion->promotionPrice) {
-                        $promotionPrices[] = $promotion->promotionPrice;
+                        /** @var CartItemEntity $promotionCartItem */
+                        foreach ($promotion->cartItems as $promotionCartItem) {
+                            if ($promotionCartItem->getHash() === $cartItemEntity->getHash()) {
+                                $promotionPrices[] = $promotion->promotionPrice;
+                            }
+                        }
                     }
                 }
             }
@@ -135,15 +140,21 @@ class CartItemPriceEntity extends Dto
 
         // 寻找最低商品活动价
         // 活动价计算完成后计算成交价
-        $this->favorablePrice = bcdiv_compatibility($favorableTotalPrice, $number);
         $this->promotionPrice = $promotionPrices ? min($promotionPrices) : 0;
         $this->updatePurchaseAndSettlementPrice();
 
         // 计算结算价和结算金额除不尽剩余金额
-        $settleTotal = bcmul_compatibility($number, $this->purchasePrice);
-        $settleTotal = bcsub_compatibility($settleTotal, $favorableTotalPrice);
-        $this->settlementPrice = bcdiv_compatibility($settleTotal, $number);
-        $this->settlementRemainTotalPrice = bcsub_compatibility($settleTotal, bcmul_compatibility($this->settlementPrice, $number));
+        if ($favorableTotalPrice) {
+            $this->favorablePrice = bcdiv_compatibility($favorableTotalPrice, $number);
+            $settleTotal = bcmul_compatibility($number, $this->purchasePrice);
+            $settleTotal = bcsub_compatibility($settleTotal, $favorableTotalPrice);
+            $this->settlementPrice = bcdiv_compatibility($settleTotal, $number);
+            $this->settlementRemainTotalPrice = bcsub_compatibility($settleTotal, bcmul_compatibility($this->settlementPrice, $number));
+        } else {
+            $this->favorablePrice = 0;
+            $this->settlementPrice = $this->purchasePrice;
+            $this->settlementRemainTotalPrice = 0;
+        }
     }
 
     protected function updatePurchaseAndSettlementPrice(): void
