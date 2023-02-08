@@ -1387,13 +1387,13 @@ final class CartEntityTest extends TestCase
             'promotion_name' => '满100减20',
             'meet_threshold' => 99.0,
             'all_favorable_total_price' => 20,
-            'priority' => 50,
+            'priority' => 3,
         ]), $cartItemEntity, $cartItemEntity2);
         $cartEntity->addPromotion(new CartItemSpecialPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动',
             'promotion_price' => 10,
-            'priority' => 60,
+            'priority' => 40,
         ]), $cartItemEntity);
 
         // 成交价格

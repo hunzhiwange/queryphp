@@ -193,18 +193,18 @@ class CartEntity extends Dto
         foreach ($this->promotions as $promotion) {
             if ($promotion->cartItems->count()) {
                 $newPromotions[] = [
-                    'promotion' => $promotion,
                     'priority' => $promotion->priority(),
+                    'promotion_id' => $promotion->promotionId,
                 ];
             }
         }
-        if ($newPromotions) {
-            $newPromotions = array_key_sort($newPromotions, 'priority');
-            $newPromotions = array_column($newPromotions, 'promotion');
+        if (!$newPromotions) {
+            return;
         }
 
-        /** @var CartItemPromotionEntity $promotion */
-        foreach ($newPromotions as $promotion) {
+        $newPromotions = array_key_sort($newPromotions, 'priority');
+        foreach ($newPromotions as $promotionItem) {
+            $promotion = $this->promotions->get($promotionItem['promotion_id']);
             if ($promotion->cartItems->count()) {
                 $promotion->calculatePrice();
                 if (!$calculateIndependently) {
