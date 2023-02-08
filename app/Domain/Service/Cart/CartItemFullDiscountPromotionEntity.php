@@ -32,7 +32,7 @@ class CartItemFullDiscountPromotionEntity extends CartItemPromotionEntity
     /**
      * 选中的商品总成交价.
      */
-    public float $activePurchaseTotalPrice = 0;
+    public int|float $activePurchaseTotalPrice = 0;
 
     /**
      * 优惠总价.
@@ -63,10 +63,24 @@ class CartItemFullDiscountPromotionEntity extends CartItemPromotionEntity
         $this->calculatePriceAllocationResult();
     }
 
+    public function discount(CartItemEntity $cartItemEntity): float
+    {
+        if (!$this->canApply()) {
+            return 0;
+        }
+
+        return $this->priceAllocationResult[$cartItemEntity->getHash()] ?? 0;
+    }
+
+    public function displayValue(): string
+    {
+        return sprintf('优惠总价 %.2f 元', $this->allFavorableTotalPrice);
+    }
+
     /**
      * 活动商品价格分摊.
      */
-    public function calculatePriceAllocationResult(): array
+    protected function calculatePriceAllocationResult(): array
     {
         if (!$this->cartItems->count()) {
             return [];
@@ -100,17 +114,30 @@ class CartItemFullDiscountPromotionEntity extends CartItemPromotionEntity
         return $this->priceAllocationResult;
     }
 
-    public function discount(CartItemEntity $cartItemEntity): float
+    /**
+     * 活动商品是否满足门槛.
+     */
+    protected function shouldMeetThreshold(): bool
     {
-        if (!$this->canApply()) {
-            return 0;
-        }
-
-        return $this->priceAllocationResult[$cartItemEntity->getHash()] ?? 0;
+        return bccomp_compatibility($this->activePurchaseTotalPrice, $this->meetThreshold) >= 0;
     }
 
-    public function displayValue(): string
+    /**
+     * 获取活动商品结算总价和明细.
+     */
+    protected function getActivePurchaseTotalPrice(): float
     {
-        return sprintf('优惠总价 %.2f 元', $this->allFavorableTotalPrice);
+        $activePurchaseTotalPrice = 0;
+        $activePurchaseTotalPriceDetail = [];
+
+        /** @var CartItemEntity $cartItem */
+        foreach ($this->cartItems as $cartItem) {
+            $tempTotalPrice = $cartItem->getActivePurchaseTotalPrice();
+            $activePurchaseTotalPrice = bcadd_compatibility($activePurchaseTotalPrice, $tempTotalPrice);
+            $activePurchaseTotalPriceDetail[$cartItem->getHash()] = $tempTotalPrice;
+        }
+        $this->activePurchaseTotalPriceDetail = $activePurchaseTotalPriceDetail;
+
+        return $this->activePurchaseTotalPrice = $activePurchaseTotalPrice;
     }
 }

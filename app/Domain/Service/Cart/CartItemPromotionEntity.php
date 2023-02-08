@@ -38,44 +38,9 @@ abstract class CartItemPromotionEntity extends Dto
 
     abstract public function discount(CartItemEntity $cartItemEntity): float;
 
-    /**
-     * 获取活动商品结算总价和明细.
-     */
-    public function getActivePurchaseTotalPrice(): float
-    {
-        $activePurchaseTotalPrice = 0;
-        $activePurchaseTotalPriceDetail = [];
-
-        /** @var CartItemEntity $cartItem */
-        foreach ($this->cartItems as $cartItem) {
-            $tempTotalPrice = $cartItem->getActivePurchaseTotalPrice();
-            $activePurchaseTotalPrice = bcadd_compatibility($activePurchaseTotalPrice, $tempTotalPrice);
-            $activePurchaseTotalPriceDetail[$cartItem->getHash()] = $tempTotalPrice;
-        }
-        $this->activePurchaseTotalPriceDetail = $activePurchaseTotalPriceDetail;
-
-        return $this->activePurchaseTotalPrice = $activePurchaseTotalPrice;
-    }
-
-    /**
-     * 活动商品是否满足门槛.
-     */
-    public function shouldMeetThreshold(): bool
-    {
-        return bccomp_compatibility($this->activePurchaseTotalPrice, $this->meetThreshold) >= 0;
-    }
-
     abstract public function calculatePrice(): void;
 
     abstract public function displayValue(): string;
-
-    /**
-     * 是否为满足门槛类型活动.
-     */
-    public function isMeetThresholdType(): bool
-    {
-        return CartItemPromotionTypeEnum::SPECIAL !== $this->promotionType;
-    }
 
     /**
      * 活动商品默认值
