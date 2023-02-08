@@ -110,7 +110,7 @@ class CartItemEntity extends Dto
             return 0;
         }
 
-        return bcmul_compatibility($this->number, $this->price->purchasePrice);
+        return $this->getPurchaseTotalPrice();
     }
 
     public function getSettlementTotalPrice(): float
@@ -121,9 +121,27 @@ class CartItemEntity extends Dto
         );
     }
 
+    public function getActiveSettlementTotalPrice(): float
+    {
+        if (!$this->active) {
+            return 0;
+        }
+
+        return $this->getSettlementTotalPrice();
+    }
+
     public function getSettlementRemainTotalPrice(): float
     {
         return $this->price->settlementRemainTotalPrice;
+    }
+
+    public function getActiveSettlementRemainTotalPrice(): float
+    {
+        if (!$this->active) {
+            return 0;
+        }
+
+        return $this->getSettlementRemainTotalPrice();
     }
 
     protected function priceDefaultValue(): CartItemPriceEntity

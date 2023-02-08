@@ -812,7 +812,7 @@ final class CartEntityTest extends TestCase
             'all_favorable_total_price' => 20.0,
         ]), $cartItemEntity, $cartItemEntity2);
         $cartEntity->addPromotion(new CartItemPromotionEntity([
-            'promotion_id' => 2,
+            'promotion_id' => 3,
             'promotion_name' => '满100减11的优惠券',
             'promotion_type' => CartItemPromotionTypeEnum::FULL_DISCOUNT,
             'meet_threshold' => 100.0,
@@ -890,15 +890,6 @@ final class CartEntityTest extends TestCase
         $cYouhuijuanPrice = $avgPrice2 * $cartItemEntity3->price->purchasePrice;
         static::assertSame($bYouhuijuanPrice, 3.0);
         static::assertSame($cYouhuijuanPrice, 5.0);
-
-        // 更新结算价
-        $cartItemEntity->setPromotionFavorableTotalPrice(2, $aManjian);
-        $cartItemEntity->calculatePrice();
-        $cartItemEntity2->setPromotionFavorableTotalPrice(2, $bManjian);
-        $cartItemEntity2->setPromotionFavorableTotalPrice(3, $bYouhuijuan);
-        $cartItemEntity2->calculatePrice();
-        $cartItemEntity3->setPromotionFavorableTotalPrice(3, $cYouhuijuan);
-        $cartItemEntity3->calculatePrice();
 
         // 订单金额
         // 订单总价=Σ成交价x购买数量 - 优惠项减免金额 + 运费 = 109
