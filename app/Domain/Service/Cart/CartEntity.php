@@ -177,6 +177,12 @@ class CartEntity extends Dto
      */
     public function calculatePrice(): void
     {
+        // 清理一下价格信息
+        /** @var CartItemEntity $cartItem */
+        foreach ($this->cartItems as $cartItem) {
+            $cartItem->price->clearPrice();
+        }
+
         /** @var CartItemPromotionEntity $promotion */
         foreach ($this->promotions as $promotion) {
             if ($promotion->cartItems->count()) {
@@ -185,11 +191,10 @@ class CartEntity extends Dto
         }
 
         // 通知价格更新
-        // @todo 只通知一部分受价格影响的商品更新价格
         /** @var CartItemEntity $cartItem */
         foreach ($this->cartItems as $cartItem) {
             // 遍历购物车项目计算价格
-            $cartItem->calculatePrice($this->promotions);
+            $cartItem->calculatePrice();
         }
     }
 

@@ -94,9 +94,9 @@ class CartItemEntity extends Dto
         $this->number = bcsub_compatibility($this->number, $number);
     }
 
-    public function calculatePrice(?CartItemPromotionEntityCollection $cartItemPromotionCollection = null): void
+    public function calculatePrice(): void
     {
-        $this->price->calculatePrice($this, $cartItemPromotionCollection);
+        $this->price->calculatePrice($this);
     }
 
     public function getPurchaseTotalPrice(): float

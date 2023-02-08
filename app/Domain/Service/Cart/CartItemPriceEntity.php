@@ -122,7 +122,17 @@ class CartItemPriceEntity extends Dto
         ];
     }
 
-    public function calculatePrice(CartItemEntity $cartItemEntity, ?CartItemPromotionEntityCollection $cartItemPromotionCollection = null): void
+    public function clearPrice(): void
+    {
+        $this->promotionPriceArray = [];
+        $this->favorableTotalPriceArray = [];
+        // $this->purchasePrice  = 0;
+        // $this->settlementPrice = 0;
+        // $this->settlementRemainTotalPrice = 0;
+        // $this->promotionPrice = 0;
+    }
+
+    public function calculatePrice(CartItemEntity $cartItemEntity): void
     {
         $number = $cartItemEntity->number;
         if (!$number) {
@@ -132,8 +142,9 @@ class CartItemPriceEntity extends Dto
         // 寻找最低商品活动价
         // 活动价计算完成后计算成交价
         if ($this->promotionPriceArray) {
-            $this->promotionPriceArray = array_key_sort($this->promotionPriceArray, 'priority');
-            $this->promotionPrice = min(array_column($this->promotionPriceArray, 'promotion_price'));
+            $promotionPriceArray = $this->promotionPriceArray;
+            $promotionPriceArray = array_key_sort($promotionPriceArray, 'priority');
+            $this->promotionPrice = min(array_column($promotionPriceArray, 'promotion_price'));
         } else {
             $this->promotionPrice = 0;
         }
@@ -142,8 +153,9 @@ class CartItemPriceEntity extends Dto
         // 计算结算价和结算金额除不尽剩余金额
         if ($this->favorableTotalPriceArray) {
             $favorableTotalPrice = 0;
-            $this->favorableTotalPriceArray = array_key_sort($this->favorableTotalPriceArray, 'priority');
-            foreach ($this->favorableTotalPriceArray as $v) {
+            $favorableTotalPriceArray = $this->favorableTotalPriceArray;
+            $favorableTotalPriceArray = array_key_sort($favorableTotalPriceArray, 'priority');
+            foreach ($favorableTotalPriceArray as $v) {
                 $favorableTotalPrice = bcadd_compatibility($favorableTotalPrice, $v['promotion_price']);
             }
             $this->favorablePrice = bcdiv_compatibility($favorableTotalPrice, $number);
