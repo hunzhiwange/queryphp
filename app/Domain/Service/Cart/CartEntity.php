@@ -175,7 +175,7 @@ class CartEntity extends Dto
     /**
      * 计算价格
      */
-    public function calculatePrice(): void
+    public function calculatePrice(bool $calculateIndependently = true): void
     {
         // 清理一下价格信息
         /** @var CartItemEntity $cartItem */
@@ -187,14 +187,24 @@ class CartEntity extends Dto
         foreach ($this->promotions as $promotion) {
             if ($promotion->cartItems->count()) {
                 $promotion->calculatePrice();
+                if (!$calculateIndependently) {
+                    // 通知价格更新
+                    /** @var CartItemEntity $cartItem */
+                    foreach ($promotion->cartItems as $cartItem) {
+                        // 遍历购物车项目计算价格
+                        $cartItem->calculatePrice();
+                    }
+                }
             }
         }
 
-        // 通知价格更新
-        /** @var CartItemEntity $cartItem */
-        foreach ($this->cartItems as $cartItem) {
-            // 遍历购物车项目计算价格
-            $cartItem->calculatePrice();
+        if ($calculateIndependently) {
+            // 通知价格更新
+            /** @var CartItemEntity $cartItem */
+            foreach ($this->cartItems as $cartItem) {
+                // 遍历购物车项目计算价格
+                $cartItem->calculatePrice();
+            }
         }
     }
 
