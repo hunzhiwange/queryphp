@@ -18,4 +18,9 @@ class CartItemFullDiscountCouponPromotionEntity extends CartItemPromotionEntity
     {
         return $this->priceAllocationResult[$cartItemEntity->getHash()] ?? 0;
     }
+
+    public function displayValue(): string
+    {
+        return sprintf('优惠总价 %.2f 元', $this->allFavorableTotalPrice);
+    }
 }

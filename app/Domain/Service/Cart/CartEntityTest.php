@@ -40,6 +40,7 @@ final class CartEntityTest extends TestCase
         ]);
         $cartEntity->addPromotion($cartItemPromotionEntity, $cartItemEntity);
         $cartEntity->calculatePrice();
+        static::assertSame($cartItemPromotionEntity->displayValue(), '优惠单价 8.00 元');
         static::assertSame($cartItemEntity->getPurchaseTotalPrice(), 24.0);
 
         static::assertSame($cartEntity->getActivePurchaseTotalPrice(), 24.0);
@@ -109,6 +110,8 @@ final class CartEntityTest extends TestCase
         ]);
         $cartEntity->addPromotion($cartItemPromotionEntity, $cartItemEntity, $cartItemEntity2);
         $cartEntity->calculatePrice();
+
+        static::assertSame($cartItemPromotionEntity->displayValue(), '优惠总价 20.00 元');
 
         // 参与满减金额的部分商品总金额
         $abTotalPrice = $cartItemEntity->getPurchaseTotalPrice() + $cartItemEntity2->getPurchaseTotalPrice();

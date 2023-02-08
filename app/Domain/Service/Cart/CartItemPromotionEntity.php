@@ -136,6 +136,8 @@ abstract class CartItemPromotionEntity extends Dto
         }
     }
 
+    abstract public function displayValue(): string;
+
     /**
      * 活动商品价格分摊.
      */

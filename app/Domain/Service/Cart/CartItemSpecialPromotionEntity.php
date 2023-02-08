@@ -18,4 +18,9 @@ class CartItemSpecialPromotionEntity extends CartItemPromotionEntity
     {
         return $this->promotionPrice;
     }
+
+    public function displayValue(): string
+    {
+        return sprintf('优惠单价 %.2f 元', $this->promotionPrice);
+    }
 }
