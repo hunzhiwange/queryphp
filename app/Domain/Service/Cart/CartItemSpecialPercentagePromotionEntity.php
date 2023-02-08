@@ -6,6 +6,9 @@ namespace App\Domain\Service\Cart;
 
 /**
  * 百分比特价活动.
+ *
+ * - 商品直接根据原件优惠多少比例
+ * - 这里可以根据不同商品实现不同的特价
  */
 class CartItemSpecialPercentagePromotionEntity extends CartItemSpecialPromotionEntity
 {

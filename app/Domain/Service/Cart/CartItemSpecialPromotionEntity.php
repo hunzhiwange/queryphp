@@ -6,11 +6,14 @@ namespace App\Domain\Service\Cart;
 
 /**
  * 普通特价活动.
+ *
+ * - 商品直接指定多少钱
+ * - 这里可以根据不同商品实现不同的特价
  */
 class CartItemSpecialPromotionEntity extends CartItemPromotionEntity
 {
     /**
-     * 活动价.
+     * 活动价或者折扣.
      *
      * - 动价指商品在参与营销活动时的售卖价格。
      * - 例如参与“秒杀活动”的商品价格，常常会称之为“秒杀价”，这里的“秒杀价”就是商品参与“秒杀活动”的“活动价”。

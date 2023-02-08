@@ -1072,4 +1072,172 @@ final class CartEntityTest extends TestCase
         $ordersTotalPrice = $cartItemEntity->getActiveSettlementTotalPrice() + $cartItemEntity2->getActiveSettlementTotalPrice() + $cartItemEntity3->getActiveSettlementTotalPrice();
         static::assertSame($ordersTotalPrice, 60.0);
     }
+
+    public function test15(): void
+    {
+        $cartItemEntity = new CartItemEntity([
+            'inventory_id' => 1,
+            'number' => 2,
+            'price' => new CartItemPriceEntity([
+                'sales_price' => 20,
+            ]),
+            'product' => new CartItemProductEntity([
+                'product_id' => 3,
+                'product_name' => '商品A',
+            ]),
+        ]);
+
+        $cartItemEntity2 = new CartItemEntity([
+            'inventory_id' => 3,
+            'number' => 2,
+            'price' => new CartItemPriceEntity([
+                'sales_price' => 30,
+            ]),
+            'product' => new CartItemProductEntity([
+                'product_id' => 4,
+                'product_name' => '商品B',
+            ]),
+        ]);
+
+        $cartEntity = new CartEntity();
+        $cartEntity->addItem($cartItemEntity);
+        $cartEntity->addItem($cartItemEntity2);
+        $cartEntity->addPromotion(new CartItemSpecialPromotionEntity([
+            'promotion_id' => 1,
+            'promotion_name' => '秒杀活动',
+            'promotion_price' => 10,
+        ]), $cartItemEntity);
+        $cartEntity->addPromotion(new CartItemFullDiscountPromotionEntity([
+            'promotion_id' => 2,
+            'promotion_name' => '满49减20',
+            'meet_threshold' => 49.0,
+            'all_favorable_total_price' => 20,
+        ]), $cartItemEntity, $cartItemEntity2);
+
+        // 成交价格
+        static::assertSame($cartItemEntity->price->purchasePrice, 0.0);
+        static::assertSame($cartItemEntity2->price->purchasePrice, 0.0);
+        static::assertSame($cartItemEntity->price->salesPrice, 20.0);
+        static::assertSame($cartItemEntity2->price->salesPrice, 30.0);
+
+        $cartEntity->calculatePrice();
+
+        static::assertSame($cartItemEntity->price->purchasePrice, 10.0);
+        static::assertSame($cartItemEntity2->price->purchasePrice, 30.0);
+
+        $ordersTotalPrice = $cartItemEntity->getSettlementTotalPrice() + $cartItemEntity2->getSettlementTotalPrice();
+        static::assertSame($ordersTotalPrice, 60.0);
+    }
+
+    public function test16(): void
+    {
+        $cartItemEntity = new CartItemEntity([
+            'inventory_id' => 1,
+            'number' => 2,
+            'price' => new CartItemPriceEntity([
+                'sales_price' => 20,
+            ]),
+            'product' => new CartItemProductEntity([
+                'product_id' => 3,
+                'product_name' => '商品A',
+            ]),
+        ]);
+
+        $cartItemEntity2 = new CartItemEntity([
+            'inventory_id' => 3,
+            'number' => 2,
+            'price' => new CartItemPriceEntity([
+                'sales_price' => 30,
+            ]),
+            'product' => new CartItemProductEntity([
+                'product_id' => 4,
+                'product_name' => '商品B',
+            ]),
+        ]);
+
+        $cartEntity = new CartEntity();
+        $cartEntity->addItem($cartItemEntity);
+        $cartEntity->addItem($cartItemEntity2);
+        $cartEntity->addPromotion(new CartItemSpecialPromotionEntity([
+            'promotion_id' => 1,
+            'promotion_name' => '秒杀活动',
+            'promotion_price' => 10,
+        ]), $cartItemEntity);
+        $cartEntity->addPromotion(new CartItemFullDiscountPromotionEntity([
+            'promotion_id' => 2,
+            'promotion_name' => '满100减20',
+            'meet_threshold' => 101.0,
+            'all_favorable_total_price' => 20,
+        ]), $cartItemEntity, $cartItemEntity2);
+
+        // 成交价格
+        static::assertSame($cartItemEntity->price->purchasePrice, 0.0);
+        static::assertSame($cartItemEntity2->price->purchasePrice, 0.0);
+        static::assertSame($cartItemEntity->price->salesPrice, 20.0);
+        static::assertSame($cartItemEntity2->price->salesPrice, 30.0);
+
+        $cartEntity->calculatePrice();
+
+        static::assertSame($cartItemEntity->price->purchasePrice, 10.0);
+        static::assertSame($cartItemEntity2->price->purchasePrice, 30.0);
+
+        $ordersTotalPrice = $cartItemEntity->getSettlementTotalPrice() + $cartItemEntity2->getSettlementTotalPrice();
+        static::assertSame($ordersTotalPrice, 80.0);
+    }
+
+    public function test17(): void
+    {
+        $cartItemEntity = new CartItemEntity([
+            'inventory_id' => 1,
+            'number' => 2,
+            'price' => new CartItemPriceEntity([
+                'sales_price' => 20,
+            ]),
+            'product' => new CartItemProductEntity([
+                'product_id' => 3,
+                'product_name' => '商品A',
+            ]),
+        ]);
+
+        $cartItemEntity2 = new CartItemEntity([
+            'inventory_id' => 3,
+            'number' => 2,
+            'price' => new CartItemPriceEntity([
+                'sales_price' => 30,
+            ]),
+            'product' => new CartItemProductEntity([
+                'product_id' => 4,
+                'product_name' => '商品B',
+            ]),
+        ]);
+
+        $cartEntity = new CartEntity();
+        $cartEntity->addItem($cartItemEntity);
+        $cartEntity->addItem($cartItemEntity2);
+        $cartEntity->addPromotion(new CartItemSpecialPromotionEntity([
+            'promotion_id' => 1,
+            'promotion_name' => '秒杀活动',
+            'promotion_price' => 10,
+        ]), $cartItemEntity);
+        $cartEntity->addPromotion(new CartItemFullDiscountPromotionEntity([
+            'promotion_id' => 2,
+            'promotion_name' => '满100减20',
+            'meet_threshold' => 100.0,
+            'all_favorable_total_price' => 20,
+        ]), $cartItemEntity, $cartItemEntity2);
+
+        // 成交价格
+        static::assertSame($cartItemEntity->price->purchasePrice, 0.0);
+        static::assertSame($cartItemEntity2->price->purchasePrice, 0.0);
+        static::assertSame($cartItemEntity->price->salesPrice, 20.0);
+        static::assertSame($cartItemEntity2->price->salesPrice, 30.0);
+
+        $cartEntity->calculatePrice();
+
+        static::assertSame($cartItemEntity->price->purchasePrice, 10.0);
+        static::assertSame($cartItemEntity2->price->purchasePrice, 30.0);
+
+        $ordersTotalPrice = $cartItemEntity->getSettlementTotalPrice() + $cartItemEntity2->getSettlementTotalPrice();
+        static::assertSame($ordersTotalPrice, 60.0);
+    }
 }
