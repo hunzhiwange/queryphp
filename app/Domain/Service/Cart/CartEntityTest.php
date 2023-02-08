@@ -417,10 +417,16 @@ final class CartEntityTest extends TestCase
             ]),
         ]);
 
-        $cartItemEntity->price->promotions->set(1, new CartItemPromotionEntity([
+        $cartEntity = new CartEntity();
+        $cartEntity->addItem($cartItemEntity);
+        $cartEntity->addPromotion(new CartItemPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满10减5',
-        ]));
+            'promotion_type' => CartItemPromotionTypeEnum::FULL_DISCOUNT,
+            'meet_threshold' => 10.0,
+            'all_favorable_total_price' => 5.0,
+        ]), $cartItemEntity);
+        $cartEntity->calculatePrice();
 
         // 参与满减金额的部分商品总金额
         $abTotalPrice = $cartItemEntity->getPurchaseTotalPrice();
@@ -450,9 +456,6 @@ final class CartEntityTest extends TestCase
         $aManjianPrice = (float) $aManjianPrice;
         static::assertSame($aManjianPrice, 1.65);
 
-        // 更新结算价
-        $cartItemEntity->setPromotionFavorableTotalPrice(1, $manJian);
-        $cartItemEntity->calculatePrice();
         static::assertSame($cartItemEntity->price->settlementPrice, 3.33);
 
         // 订单金额
@@ -480,10 +483,16 @@ final class CartEntityTest extends TestCase
             ]),
         ]);
 
-        $cartItemEntity->price->promotions->set(1, new CartItemPromotionEntity([
+        $cartEntity = new CartEntity();
+        $cartEntity->addItem($cartItemEntity);
+        $cartEntity->addPromotion(new CartItemPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满10减5',
-        ]));
+            'promotion_type' => CartItemPromotionTypeEnum::FULL_DISCOUNT,
+            'meet_threshold' => 10.0,
+            'all_favorable_total_price' => 5.0,
+        ]), $cartItemEntity);
+        $cartEntity->calculatePrice();
 
         // 参与满减金额的部分商品总金额
         $abTotalPrice = $cartItemEntity->getPurchaseTotalPrice();
@@ -503,8 +512,6 @@ final class CartEntityTest extends TestCase
         $ordersTotalPrice = $allTotalPrice - $mianJian + $yunFei;
         static::assertSame($ordersTotalPrice, 10.0);
 
-        $cartItemEntity->setPromotionFavorableTotalPrice(1, $mianJian);
-        $cartItemEntity->calculatePrice();
         static::assertSame($cartItemEntity->price->settlementPrice, 3.33);
 
         // 订单金额
@@ -526,16 +533,23 @@ final class CartEntityTest extends TestCase
             'number' => 3,
             'price' => new CartItemPriceEntity([
                 'sales_price' => 5,
-                'promotions' => new CartItemPromotionEntityCollection([1 => new CartItemPromotionEntity([
-                    'promotion_id' => 1,
-                    'promotion_name' => '满10减5',
-                ])]),
             ]),
             'product' => new CartItemProductEntity([
                 'product_id' => 3,
                 'product_name' => '商品A',
             ]),
         ]);
+
+        $cartEntity = new CartEntity();
+        $cartEntity->addItem($cartItemEntity);
+        $cartEntity->addPromotion(new CartItemPromotionEntity([
+            'promotion_id' => 1,
+            'promotion_name' => '满10减5',
+            'promotion_type' => CartItemPromotionTypeEnum::FULL_DISCOUNT,
+            'meet_threshold' => 10.0,
+            'all_favorable_total_price' => 5.0,
+        ]), $cartItemEntity);
+        $cartEntity->calculatePrice();
 
         // 参与满减金额的部分商品总金额
         $abTotalPrice = $cartItemEntity->getPurchaseTotalPrice();
@@ -547,8 +561,6 @@ final class CartEntityTest extends TestCase
 
         // 满10减5
         $manJian = 5;
-        $cartItemEntity->setPromotionFavorableTotalPrice(1, $manJian);
-        $cartItemEntity->calculatePrice();
 
         // 运费
         $yunFei = 0;
@@ -582,7 +594,9 @@ final class CartEntityTest extends TestCase
                 'product_name' => '商品A',
             ]),
         ]);
-        $cartItemEntity->calculatePrice();
+        $cartEntity = new CartEntity();
+        $cartEntity->addItem($cartItemEntity);
+        $cartEntity->calculatePrice();
         static::assertSame($cartItemEntity->getPurchaseTotalPrice(), 30.0);
     }
 
@@ -599,19 +613,21 @@ final class CartEntityTest extends TestCase
                 'product_name' => '商品A',
             ]),
         ]);
-        $cartItemEntity->price->promotions->set(1, new CartItemPromotionEntity([
+
+        $cartEntity = new CartEntity();
+        $cartEntity->addItem($cartItemEntity);
+        $cartEntity->addPromotion(new CartItemPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动',
             'promotion_price' => 8,
-        ]));
-
-        $cartItemEntity->price->promotions->set(2, new CartItemPromotionEntity([
+        ]), $cartItemEntity);
+        $cartEntity->addPromotion(new CartItemPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '秒杀活动2',
             'promotion_price' => 6,
-        ]));
+        ]), $cartItemEntity);
+        $cartEntity->calculatePrice();
 
-        $cartItemEntity->calculatePrice();
         static::assertSame($cartItemEntity->getPurchaseTotalPrice(), 18.0);
     }
 
@@ -629,25 +645,25 @@ final class CartEntityTest extends TestCase
             ]),
         ]);
 
-        $cartItemEntity->price->promotions->set(2, new CartItemPromotionEntity([
-            'promotion_id' => 2,
-            'promotion_name' => '秒杀活动2',
-            'promotion_price' => 6,
-        ]));
-
-        $cartItemEntity->price->promotions->set(3, new CartItemPromotionEntity([
+        $cartEntity = new CartEntity();
+        $cartEntity->addItem($cartItemEntity);
+        $cartEntity->addPromotion(new CartItemPromotionEntity([
             'promotion_id' => 1,
-            'promotion_name' => '秒杀活动3',
-            'promotion_price' => 4,
-        ]));
-
-        $cartItemEntity->price->promotions->set(2, new CartItemPromotionEntity([
+            'promotion_name' => '秒杀活动1',
+            'promotion_price' => 6,
+        ]), $cartItemEntity);
+        $cartEntity->addPromotion(new CartItemPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '秒杀活动2',
-            'promotion_price' => 6,
-        ]));
+            'promotion_price' => 4,
+        ]), $cartItemEntity);
+        $cartEntity->addPromotion(new CartItemPromotionEntity([
+            'promotion_id' => 3,
+            'promotion_name' => '秒杀活动3',
+            'promotion_price' => 8,
+        ]), $cartItemEntity);
+        $cartEntity->calculatePrice();
 
-        $cartItemEntity->calculatePrice();
         static::assertSame($cartItemEntity->getPurchaseTotalPrice(), 12.0);
     }
 
@@ -665,11 +681,6 @@ final class CartEntityTest extends TestCase
             ]),
         ]);
 
-        $cartItemEntity->price->promotions->set(1, new CartItemPromotionEntity([
-            'promotion_id' => 1,
-            'promotion_name' => '满减活动',
-        ]));
-
         $cartItemEntity2 = new CartItemEntity([
             'inventory_id' => 3,
             'number' => 3,
@@ -681,11 +692,6 @@ final class CartEntityTest extends TestCase
                 'product_name' => '商品B',
             ]),
         ]);
-        $cartItemEntity2->price->promotions->set(1, new CartItemPromotionEntity([
-            'promotion_id' => 1,
-            'promotion_name' => '满减活动',
-        ]));
-
         $cartItemEntity3 = new CartItemEntity([
             'inventory_id' => 5,
             'number' => 1,
@@ -697,6 +703,19 @@ final class CartEntityTest extends TestCase
                 'product_name' => '商品C',
             ]),
         ]);
+
+        $cartEntity = new CartEntity();
+        $cartEntity->addItem($cartItemEntity);
+        $cartEntity->addItem($cartItemEntity2);
+        $cartEntity->addItem($cartItemEntity3);
+        $cartEntity->addPromotion(new CartItemPromotionEntity([
+            'promotion_id' => 1,
+            'promotion_name' => '满减活动',
+            'promotion_type' => CartItemPromotionTypeEnum::FULL_DISCOUNT,
+            'meet_threshold' => 90.0,
+            'all_favorable_total_price' => 20.0,
+        ]), $cartItemEntity, $cartItemEntity2);
+        $cartEntity->calculatePrice();
 
         // 参与满减金额的部分商品总金额
         $abTotalPrice = $cartItemEntity->getPurchaseTotalPrice() + $cartItemEntity2->getPurchaseTotalPrice();
@@ -723,12 +742,6 @@ final class CartEntityTest extends TestCase
         $result = CalculatePriceAllocation::handle($source, 20);
         static::assertSame($result['a'], 2.86);
         static::assertSame($result['b'], 17.14);
-
-        // 更新结算价
-        $cartItemEntity->setPromotionFavorableTotalPrice(1, $result['a']);
-        $cartItemEntity->calculatePrice();
-        $cartItemEntity2->setPromotionFavorableTotalPrice(1, $result['b']);
-        $cartItemEntity2->calculatePrice();
 
         static::assertSame($cartItemEntity->price->settlementPrice, 4.04);
         static::assertSame($cartItemEntity2->price->settlementPrice, 24.28);
