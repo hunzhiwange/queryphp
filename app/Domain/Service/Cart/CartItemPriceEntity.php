@@ -126,10 +126,10 @@ class CartItemPriceEntity extends Dto
     {
         $this->promotionPriceArray = [];
         $this->favorableTotalPriceArray = [];
-        // $this->purchasePrice  = 0;
-        // $this->settlementPrice = 0;
-        // $this->settlementRemainTotalPrice = 0;
-        // $this->promotionPrice = 0;
+        $this->settlementPrice = 0;
+        $this->settlementRemainTotalPrice = 0;
+        $this->promotionPrice = 0;
+        $this->updatePurchaseAndSettlementPrice();
     }
 
     public function calculatePrice(CartItemEntity $cartItemEntity): void
@@ -148,6 +148,7 @@ class CartItemPriceEntity extends Dto
         } else {
             $this->promotionPrice = 0;
         }
+
         $this->updatePurchaseAndSettlementPrice();
 
         // 计算结算价和结算金额除不尽剩余金额

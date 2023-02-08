@@ -46,13 +46,6 @@ class CartItemEntity extends Dto
 
     protected ?string $itemHash = null;
 
-    public function __construct(array $data = [], bool $ignoreMissingValues = true)
-    {
-        parent::__construct($data, $ignoreMissingValues);
-
-        $this->calculatePrice();
-    }
-
     public function generateHash(bool $force = false): string
     {
         if (!$force && $this->itemHash) {

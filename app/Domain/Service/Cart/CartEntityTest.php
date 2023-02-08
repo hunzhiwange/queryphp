@@ -329,9 +329,12 @@ final class CartEntityTest extends TestCase
         ]), $cartItemEntity2, $cartItemEntity3);
 
         // 成交价格
-        static::assertSame($cartItemEntity->price->purchasePrice, 20.0);
-        static::assertSame($cartItemEntity2->price->purchasePrice, 30.0);
-        static::assertSame($cartItemEntity3->price->purchasePrice, 50.0);
+        static::assertSame($cartItemEntity->price->purchasePrice, 0.0);
+        static::assertSame($cartItemEntity2->price->purchasePrice, 0.0);
+        static::assertSame($cartItemEntity3->price->purchasePrice, 0.0);
+        static::assertSame($cartItemEntity->price->salesPrice, 20.0);
+        static::assertSame($cartItemEntity2->price->salesPrice, 30.0);
+        static::assertSame($cartItemEntity3->price->salesPrice, 50.0);
 
         $cartEntity->calculatePrice();
 
