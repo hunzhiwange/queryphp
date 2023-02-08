@@ -29,6 +29,13 @@ abstract class CartItemPromotionEntity extends Dto
     public CartItemEntityCollection $cartItems;
 
     /**
+     * 活动优先级.
+     *
+     * - 活动执行优先级
+     */
+    public int $priority = 500;
+
+    /**
      * 能否使用优惠.
      */
     public function canApply(): bool
@@ -41,6 +48,11 @@ abstract class CartItemPromotionEntity extends Dto
     abstract public function calculatePrice(): void;
 
     abstract public function displayValue(): string;
+
+    public function priority(): int
+    {
+        return $this->priority;
+    }
 
     /**
      * 活动商品默认值

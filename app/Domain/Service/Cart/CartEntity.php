@@ -183,8 +183,28 @@ class CartEntity extends Dto
             $cartItem->price->clearPrice();
         }
 
+        if (!$this->promotions) {
+            return;
+        }
+
+        $newPromotions = [];
+
         /** @var CartItemPromotionEntity $promotion */
         foreach ($this->promotions as $promotion) {
+            if ($promotion->cartItems->count()) {
+                $newPromotions[] = [
+                    'promotion' => $promotion,
+                    'priority' => $promotion->priority(),
+                ];
+            }
+        }
+        if ($newPromotions) {
+            $newPromotions = array_key_sort($newPromotions, 'priority');
+            $newPromotions = array_column($newPromotions, 'promotion');
+        }
+
+        /** @var CartItemPromotionEntity $promotion */
+        foreach ($newPromotions as $promotion) {
             if ($promotion->cartItems->count()) {
                 $promotion->calculatePrice();
                 if (!$calculateIndependently) {
