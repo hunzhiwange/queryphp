@@ -9,7 +9,7 @@ use Leevel\Support\Dto;
 /**
  * 购物车活动项目.
  */
-class CartItemPromotionEntity extends Dto
+abstract class CartItemPromotionEntity extends Dto
 {
     /**
      * 活动标识符.
@@ -84,6 +84,14 @@ class CartItemPromotionEntity extends Dto
     public string $needChouDanMessage = '';
 
     /**
+     * 能否使用优惠.
+     */
+    public function canApply(): bool
+    {
+        return true;
+    }
+
+    /**
      * 获取活动商品结算总价和明细.
      */
     public function getActivePurchaseTotalPrice(): float
@@ -146,7 +154,7 @@ class CartItemPromotionEntity extends Dto
      */
     public function isMeetThresholdType(): bool
     {
-        return CartItemPromotionTypeEnum::FULL_DISCOUNT === $this->promotionType;
+        return CartItemPromotionTypeEnum::SPECIAL !== $this->promotionType;
     }
 
     /**

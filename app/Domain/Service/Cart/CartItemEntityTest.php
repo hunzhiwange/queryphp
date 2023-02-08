@@ -30,7 +30,7 @@ final class CartItemEntityTest extends TestCase
                 'product_name' => '商品A',
             ]),
         ]);
-        $cartItemEntity->price->promotions->set(1, new CartItemPromotionEntity([
+        $cartItemEntity->price->promotions->set(1, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动',
             'promotion_price' => 8,
@@ -58,7 +58,7 @@ final class CartItemEntityTest extends TestCase
             ]),
         ]);
 
-        $cartItemEntity->price->promotions->set(1, new CartItemPromotionEntity([
+        $cartItemEntity->price->promotions->set(1, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满减活动',
         ]));
@@ -74,7 +74,7 @@ final class CartItemEntityTest extends TestCase
                 'product_name' => '商品B',
             ]),
         ]);
-        $cartItemEntity2->price->promotions->set(1, new CartItemPromotionEntity([
+        $cartItemEntity2->price->promotions->set(1, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满减活动',
         ]));
@@ -153,12 +153,12 @@ final class CartItemEntityTest extends TestCase
                 'product_name' => '商品A',
             ]),
         ]);
-        $cartItemEntity->price->promotions->set(1, new CartItemPromotionEntity([
+        $cartItemEntity->price->promotions->set(1, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动',
             'promotion_price' => 10,
         ]));
-        $cartItemEntity->price->promotions->set(2, new CartItemPromotionEntity([
+        $cartItemEntity->price->promotions->set(2, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '满49减20',
         ]));
@@ -176,11 +176,11 @@ final class CartItemEntityTest extends TestCase
             ]),
         ]);
 
-        $cartItemEntity2->price->promotions->set(2, new CartItemPromotionEntity([
+        $cartItemEntity2->price->promotions->set(2, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '满49减20',
         ]));
-        $cartItemEntity2->price->promotions->set(3, new CartItemPromotionEntity([
+        $cartItemEntity2->price->promotions->set(3, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 3,
             'promotion_name' => '满100减11的优惠券',
         ]));
@@ -197,7 +197,7 @@ final class CartItemEntityTest extends TestCase
             ]),
         ]);
 
-        $cartItemEntity3->price->promotions->set(3, new CartItemPromotionEntity([
+        $cartItemEntity3->price->promotions->set(3, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 3,
             'promotion_name' => '满100减11的优惠券',
         ]));
@@ -292,7 +292,7 @@ final class CartItemEntityTest extends TestCase
             ]),
         ]);
 
-        $cartItemEntity->price->promotions->set(1, new CartItemPromotionEntity([
+        $cartItemEntity->price->promotions->set(1, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满10减5',
         ]));
@@ -355,7 +355,7 @@ final class CartItemEntityTest extends TestCase
             ]),
         ]);
 
-        $cartItemEntity->price->promotions->set(1, new CartItemPromotionEntity([
+        $cartItemEntity->price->promotions->set(1, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满10减5',
         ]));
@@ -401,7 +401,7 @@ final class CartItemEntityTest extends TestCase
             'number' => 3,
             'price' => new CartItemPriceEntity([
                 'sales_price' => 5,
-                'promotions' => new CartItemPromotionEntityCollection([1 => new CartItemPromotionEntity([
+                'promotions' => new CartItemPromotionEntityCollection([1 => new CartItemFullDiscountPromotionEntity([
                     'promotion_id' => 1,
                     'promotion_name' => '满10减5',
                 ])]),
@@ -474,13 +474,13 @@ final class CartItemEntityTest extends TestCase
                 'product_name' => '商品A',
             ]),
         ]);
-        $cartItemEntity->price->promotions->set(1, new CartItemPromotionEntity([
+        $cartItemEntity->price->promotions->set(1, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动',
             'promotion_price' => 8,
         ]));
 
-        $cartItemEntity->price->promotions->set(2, new CartItemPromotionEntity([
+        $cartItemEntity->price->promotions->set(2, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '秒杀活动2',
             'promotion_price' => 6,
@@ -504,19 +504,19 @@ final class CartItemEntityTest extends TestCase
             ]),
         ]);
 
-        $cartItemEntity->price->promotions->set(2, new CartItemPromotionEntity([
+        $cartItemEntity->price->promotions->set(2, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '秒杀活动2',
             'promotion_price' => 6,
         ]));
 
-        $cartItemEntity->price->promotions->set(3, new CartItemPromotionEntity([
+        $cartItemEntity->price->promotions->set(3, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动3',
             'promotion_price' => 4,
         ]));
 
-        $cartItemEntity->price->promotions->set(2, new CartItemPromotionEntity([
+        $cartItemEntity->price->promotions->set(2, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '秒杀活动2',
             'promotion_price' => 6,
@@ -540,7 +540,7 @@ final class CartItemEntityTest extends TestCase
             ]),
         ]);
 
-        $cartItemEntity->price->promotions->set(1, new CartItemPromotionEntity([
+        $cartItemEntity->price->promotions->set(1, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满减活动',
         ]));
@@ -556,7 +556,7 @@ final class CartItemEntityTest extends TestCase
                 'product_name' => '商品B',
             ]),
         ]);
-        $cartItemEntity2->price->promotions->set(1, new CartItemPromotionEntity([
+        $cartItemEntity2->price->promotions->set(1, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满减活动',
         ]));
@@ -632,12 +632,12 @@ final class CartItemEntityTest extends TestCase
                 'product_name' => '商品A',
             ]),
         ]);
-        $cartItemEntity->price->promotions->set(1, new CartItemPromotionEntity([
+        $cartItemEntity->price->promotions->set(1, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动',
             'promotion_price' => 10,
         ]));
-        $cartItemEntity->price->promotions->set(2, new CartItemPromotionEntity([
+        $cartItemEntity->price->promotions->set(2, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '满49减20',
         ]));
@@ -655,11 +655,11 @@ final class CartItemEntityTest extends TestCase
             ]),
         ]);
 
-        $cartItemEntity2->price->promotions->set(2, new CartItemPromotionEntity([
+        $cartItemEntity2->price->promotions->set(2, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '满49减20',
         ]));
-        $cartItemEntity2->price->promotions->set(3, new CartItemPromotionEntity([
+        $cartItemEntity2->price->promotions->set(3, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 3,
             'promotion_name' => '满100减11的优惠券',
         ]));
@@ -676,7 +676,7 @@ final class CartItemEntityTest extends TestCase
             ]),
         ]);
 
-        $cartItemEntity3->price->promotions->set(3, new CartItemPromotionEntity([
+        $cartItemEntity3->price->promotions->set(3, new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 3,
             'promotion_name' => '满100减11的优惠券',
         ]));

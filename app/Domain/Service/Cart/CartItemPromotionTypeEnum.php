@@ -16,6 +16,9 @@ enum CartItemPromotionTypeEnum: int
     #[msg('特价')]
     case SPECIAL = 1;
 
-    #[msg('满减')]
+    #[msg('普通满减')]
     case FULL_DISCOUNT = 2;
+
+    #[msg('满减优惠券')]
+    case FULL_DISCOUNT_COUPON = 3;
 }

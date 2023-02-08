@@ -33,7 +33,7 @@ final class CartEntityTest extends TestCase
 
         $cartEntity = new CartEntity();
         $cartEntity->addItem($cartItemEntity);
-        $cartItemPromotionEntity = new CartItemPromotionEntity([
+        $cartItemPromotionEntity = new CartItemSpecialPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动',
             'promotion_price' => 8,
@@ -101,10 +101,9 @@ final class CartEntityTest extends TestCase
         $cartEntity->addItem($cartItemEntity2);
         $cartEntity->addItem($cartItemEntity3);
 
-        $cartItemPromotionEntity = new CartItemPromotionEntity([
+        $cartItemPromotionEntity = new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满减活动',
-            'promotion_type' => CartItemPromotionTypeEnum::FULL_DISCOUNT,
             'meet_threshold' => 90.0,
             'all_favorable_total_price' => 20,
         ]);
@@ -205,10 +204,9 @@ final class CartEntityTest extends TestCase
         $cartEntity->addItem($cartItemEntity2);
         $cartEntity->addItem($cartItemEntity3);
 
-        $cartItemPromotionEntity = new CartItemPromotionEntity([
+        $cartItemPromotionEntity = new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满减活动',
-            'promotion_type' => CartItemPromotionTypeEnum::FULL_DISCOUNT,
             'meet_threshold' => 90.0,
             'all_favorable_total_price' => 20,
         ]);
@@ -309,22 +307,20 @@ final class CartEntityTest extends TestCase
         $cartEntity->addItem($cartItemEntity);
         $cartEntity->addItem($cartItemEntity2);
         $cartEntity->addItem($cartItemEntity3);
-        $cartEntity->addPromotion(new CartItemPromotionEntity([
+        $cartEntity->addPromotion(new CartItemSpecialPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动',
             'promotion_price' => 10,
         ]), $cartItemEntity);
-        $cartEntity->addPromotion(new CartItemPromotionEntity([
+        $cartEntity->addPromotion(new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '满49减20',
-            'promotion_type' => CartItemPromotionTypeEnum::FULL_DISCOUNT,
             'meet_threshold' => 49.0,
             'all_favorable_total_price' => 20,
         ]), $cartItemEntity, $cartItemEntity2);
-        $cartEntity->addPromotion(new CartItemPromotionEntity([
+        $cartEntity->addPromotion(new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 3,
             'promotion_name' => '满100减11的优惠券',
-            'promotion_type' => CartItemPromotionTypeEnum::FULL_DISCOUNT,
             'meet_threshold' => 100.0,
             'all_favorable_total_price' => 11.0,
         ]), $cartItemEntity2, $cartItemEntity3);
@@ -419,10 +415,9 @@ final class CartEntityTest extends TestCase
 
         $cartEntity = new CartEntity();
         $cartEntity->addItem($cartItemEntity);
-        $cartEntity->addPromotion(new CartItemPromotionEntity([
+        $cartEntity->addPromotion(new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满10减5',
-            'promotion_type' => CartItemPromotionTypeEnum::FULL_DISCOUNT,
             'meet_threshold' => 10.0,
             'all_favorable_total_price' => 5.0,
         ]), $cartItemEntity);
@@ -485,10 +480,9 @@ final class CartEntityTest extends TestCase
 
         $cartEntity = new CartEntity();
         $cartEntity->addItem($cartItemEntity);
-        $cartEntity->addPromotion(new CartItemPromotionEntity([
+        $cartEntity->addPromotion(new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满10减5',
-            'promotion_type' => CartItemPromotionTypeEnum::FULL_DISCOUNT,
             'meet_threshold' => 10.0,
             'all_favorable_total_price' => 5.0,
         ]), $cartItemEntity);
@@ -542,10 +536,9 @@ final class CartEntityTest extends TestCase
 
         $cartEntity = new CartEntity();
         $cartEntity->addItem($cartItemEntity);
-        $cartEntity->addPromotion(new CartItemPromotionEntity([
+        $cartEntity->addPromotion(new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满10减5',
-            'promotion_type' => CartItemPromotionTypeEnum::FULL_DISCOUNT,
             'meet_threshold' => 10.0,
             'all_favorable_total_price' => 5.0,
         ]), $cartItemEntity);
@@ -616,12 +609,12 @@ final class CartEntityTest extends TestCase
 
         $cartEntity = new CartEntity();
         $cartEntity->addItem($cartItemEntity);
-        $cartEntity->addPromotion(new CartItemPromotionEntity([
+        $cartEntity->addPromotion(new CartItemSpecialPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动',
             'promotion_price' => 8,
         ]), $cartItemEntity);
-        $cartEntity->addPromotion(new CartItemPromotionEntity([
+        $cartEntity->addPromotion(new CartItemSpecialPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '秒杀活动2',
             'promotion_price' => 6,
@@ -647,17 +640,17 @@ final class CartEntityTest extends TestCase
 
         $cartEntity = new CartEntity();
         $cartEntity->addItem($cartItemEntity);
-        $cartEntity->addPromotion(new CartItemPromotionEntity([
+        $cartEntity->addPromotion(new CartItemSpecialPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动1',
             'promotion_price' => 6,
         ]), $cartItemEntity);
-        $cartEntity->addPromotion(new CartItemPromotionEntity([
+        $cartEntity->addPromotion(new CartItemSpecialPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '秒杀活动2',
             'promotion_price' => 4,
         ]), $cartItemEntity);
-        $cartEntity->addPromotion(new CartItemPromotionEntity([
+        $cartEntity->addPromotion(new CartItemSpecialPromotionEntity([
             'promotion_id' => 3,
             'promotion_name' => '秒杀活动3',
             'promotion_price' => 8,
@@ -708,10 +701,9 @@ final class CartEntityTest extends TestCase
         $cartEntity->addItem($cartItemEntity);
         $cartEntity->addItem($cartItemEntity2);
         $cartEntity->addItem($cartItemEntity3);
-        $cartEntity->addPromotion(new CartItemPromotionEntity([
+        $cartEntity->addPromotion(new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '满减活动',
-            'promotion_type' => CartItemPromotionTypeEnum::FULL_DISCOUNT,
             'meet_threshold' => 90.0,
             'all_favorable_total_price' => 20.0,
         ]), $cartItemEntity, $cartItemEntity2);
@@ -799,22 +791,20 @@ final class CartEntityTest extends TestCase
         $cartEntity->addItem($cartItemEntity);
         $cartEntity->addItem($cartItemEntity2);
         $cartEntity->addItem($cartItemEntity3);
-        $cartEntity->addPromotion(new CartItemPromotionEntity([
+        $cartEntity->addPromotion(new CartItemSpecialPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动',
             'promotion_price' => 10,
         ]), $cartItemEntity);
-        $cartEntity->addPromotion(new CartItemPromotionEntity([
+        $cartEntity->addPromotion(new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 2,
             'promotion_name' => '满49减20',
-            'promotion_type' => CartItemPromotionTypeEnum::FULL_DISCOUNT,
             'meet_threshold' => 49.0,
             'all_favorable_total_price' => 20.0,
         ]), $cartItemEntity, $cartItemEntity2);
-        $cartEntity->addPromotion(new CartItemPromotionEntity([
+        $cartEntity->addPromotion(new CartItemFullDiscountPromotionEntity([
             'promotion_id' => 3,
             'promotion_name' => '满100减11的优惠券',
-            'promotion_type' => CartItemPromotionTypeEnum::FULL_DISCOUNT,
             'meet_threshold' => 100.0,
             'all_favorable_total_price' => 11.0,
         ]), $cartItemEntity2, $cartItemEntity3);
