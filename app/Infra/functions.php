@@ -345,3 +345,19 @@ if (!function_exists('create_data_id')) {
         return http_build_query($data);
     }
 }
+
+if (!function_exists('array_key_sort')) {
+    /**
+     * 二维数组根据某个字段排序.
+     */
+    function array_key_sort(array $array, string $key, int $sort = SORT_DESC): array
+    {
+        $keyValue = [];
+        foreach ($array as $k => $v) {
+            $keyValue[$k] = $v[$key];
+        }
+        array_multisort($keyValue, $sort, $array);
+
+        return $array;
+    }
+}

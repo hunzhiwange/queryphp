@@ -118,6 +118,22 @@ abstract class CartItemPromotionEntity extends Dto
         return bccomp_compatibility($this->activePurchaseTotalPrice, $this->meetThreshold) >= 0;
     }
 
+    public function xx(): void
+    {
+        if (!$this->cartItems->count()) {
+            return;
+        }
+
+        if ($this->isMeetThresholdType()) {
+            $this->calculatePriceAllocationResult();
+        } else {
+            /** @var CartItemEntity $cartItem */
+            foreach ($this->cartItems as $cartItem) {
+                $cartItem->price->setPromotionPriceArray($this->promotionId, $this->promotionPrice, random_int(100, 500));
+            }
+        }
+    }
+
     /**
      * 活动商品价格分摊.
      */

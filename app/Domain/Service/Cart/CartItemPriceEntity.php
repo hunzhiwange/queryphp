@@ -103,6 +103,16 @@ class CartItemPriceEntity extends Dto
      */
     public float $promotionPrice = 0;
 
+    public array $promotionPriceArray = [];
+
+    public function setPromotionPriceArray(string|int $promotionId, float $promotionPrice, int $priority = 500): void
+    {
+        $this->promotionPriceArray[$promotionId] = [
+            'promotion_price' => $promotionPrice,
+            'priority' => $priority,
+        ];
+    }
+
     public function calculatePrice(CartItemEntity $cartItemEntity, ?CartItemPromotionEntityCollection $cartItemPromotionCollection = null): void
     {
         $number = $cartItemEntity->number;
@@ -140,7 +150,12 @@ class CartItemPriceEntity extends Dto
 
         // 寻找最低商品活动价
         // 活动价计算完成后计算成交价
-        $this->promotionPrice = $promotionPrices ? min($promotionPrices) : 0;
+        if ($this->promotionPriceArray) {
+            $promotionPriceArray = array_key_sort($this->promotionPriceArray, 'priority');
+            $this->promotionPrice = min(array_column($promotionPriceArray, 'promotion_price'));
+        } else {
+            $this->promotionPrice = 0;
+        }
         $this->updatePurchaseAndSettlementPrice();
 
         // 计算结算价和结算金额除不尽剩余金额
