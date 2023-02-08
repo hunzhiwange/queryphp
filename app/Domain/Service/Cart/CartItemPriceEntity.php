@@ -104,10 +104,19 @@ class CartItemPriceEntity extends Dto
     public float $promotionPrice = 0;
 
     public array $promotionPriceArray = [];
+    public array $favorableTotalPriceArray = [];
 
     public function setPromotionPriceArray(string|int $promotionId, float $promotionPrice, int $priority = 500): void
     {
         $this->promotionPriceArray[$promotionId] = [
+            'promotion_price' => $promotionPrice,
+            'priority' => $priority,
+        ];
+    }
+
+    public function setFavorableTotalPrice(string|int $promotionId, float $promotionPrice, int $priority = 500): void
+    {
+        $this->favorableTotalPriceArray[$promotionId] = [
             'promotion_price' => $promotionPrice,
             'priority' => $priority,
         ];
@@ -120,46 +129,23 @@ class CartItemPriceEntity extends Dto
             return;
         }
 
-        $promotionPrices = [];
-        $favorableTotalPrice = 0;
-        if ($cartItemPromotionCollection) {
-            /** @var CartItemPromotionEntity $promotion */
-            foreach ($cartItemPromotionCollection as $promotion) {
-                if ($promotion->isMeetThresholdType()) {
-                    // 活动分摊价格累加
-                    if ($promotion->priceAllocationResult) {
-                        foreach ($promotion->priceAllocationResult as $cartItemHash => $priceAllocationResult) {
-                            if ($cartItemHash === $cartItemEntity->getHash()) {
-                                $favorableTotalPrice = bcadd_compatibility($favorableTotalPrice, $priceAllocationResult);
-                            }
-                        }
-                    }
-                } else {
-                    // 收集所有商品活动价（特价、秒杀等等）
-                    if ($promotion->promotionPrice) {
-                        /** @var CartItemEntity $promotionCartItem */
-                        foreach ($promotion->cartItems as $promotionCartItem) {
-                            if ($promotionCartItem->getHash() === $cartItemEntity->getHash()) {
-                                $promotionPrices[] = $promotion->promotionPrice;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         // 寻找最低商品活动价
         // 活动价计算完成后计算成交价
         if ($this->promotionPriceArray) {
-            $promotionPriceArray = array_key_sort($this->promotionPriceArray, 'priority');
-            $this->promotionPrice = min(array_column($promotionPriceArray, 'promotion_price'));
+            $this->promotionPriceArray = array_key_sort($this->promotionPriceArray, 'priority');
+            $this->promotionPrice = min(array_column($this->promotionPriceArray, 'promotion_price'));
         } else {
             $this->promotionPrice = 0;
         }
         $this->updatePurchaseAndSettlementPrice();
 
         // 计算结算价和结算金额除不尽剩余金额
-        if ($favorableTotalPrice) {
+        if ($this->favorableTotalPriceArray) {
+            $favorableTotalPrice = 0;
+            $this->favorableTotalPriceArray = array_key_sort($this->favorableTotalPriceArray, 'priority');
+            foreach ($this->favorableTotalPriceArray as $v) {
+                $favorableTotalPrice = bcadd_compatibility($favorableTotalPrice, $v['promotion_price']);
+            }
             $this->favorablePrice = bcdiv_compatibility($favorableTotalPrice, $number);
             $settleTotal = bcmul_compatibility($number, $this->purchasePrice);
             $settleTotal = bcsub_compatibility($settleTotal, $favorableTotalPrice);

@@ -161,8 +161,14 @@ abstract class CartItemPromotionEntity extends Dto
         $this->needChouDanMessage = '';
 
         $this->activePurchaseTotalPriceDetailAfter = $this->activePurchaseTotalPriceDetail;
+        $this->priceAllocationResult = CalculatePriceAllocation::handle($this->activePurchaseTotalPriceDetailAfter, $this->allFavorableTotalPrice);
 
-        return $this->priceAllocationResult = CalculatePriceAllocation::handle($this->activePurchaseTotalPriceDetailAfter, $this->allFavorableTotalPrice);
+        /** @var CartItemEntity $cartItem */
+        foreach ($this->cartItems as $cartItem) {
+            $cartItem->price->setFavorableTotalPrice($this->promotionId, $this->priceAllocationResult[$cartItem->getHash()] ?? 0, random_int(100, 500));
+        }
+
+        return $this->priceAllocationResult;
     }
 
     /**
