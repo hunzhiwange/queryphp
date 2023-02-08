@@ -24,64 +24,9 @@ abstract class CartItemPromotionEntity extends Dto
     public string $promotionName = '';
 
     /**
-     * 活动价.
-     *
-     * - 动价指商品在参与营销活动时的售卖价格。
-     * - 例如参与“秒杀活动”的商品价格，常常会称之为“秒杀价”，这里的“秒杀价”就是商品参与“秒杀活动”的“活动价”。
-     * - 可以简单的将“活动价”认为是“商品参与活动时的销售价”。
-     * - 销售价和活动价本质上是一回事，区别就在于是否参加活动引起的叫法不同。
-     */
-    public float $promotionPrice = 0;
-
-    /**
-     * 活动类型.
-     */
-    public CartItemPromotionTypeEnum $promotionType = CartItemPromotionTypeEnum::SPECIAL;
-
-    /**
-     * 满足门槛.
-     */
-    public float $meetThreshold = 0;
-
-    /**
-     * 优惠总价.
-     */
-    public float $allFavorableTotalPrice = 0;
-
-    /**
-     * 商品分摊结果.
-     */
-    public array $priceAllocationResult = [];
-
-    /**
      * 活动包含的商品
      */
     public CartItemEntityCollection $cartItems;
-
-    /**
-     * 选中的商品总成交价.
-     */
-    public float $activePurchaseTotalPrice = 0;
-
-    /**
-     * 优惠抵扣后前金额.
-     */
-    public array $activePurchaseTotalPriceDetail = [];
-
-    /**
-     * 优惠抵扣后金额.
-     */
-    public array $activePurchaseTotalPriceDetailAfter = [];
-
-    /**
-     * 是否需要凑单.
-     */
-    public bool $needChouDan = false;
-
-    /**
-     * 凑单消息格式化消息.
-     */
-    public string $needChouDanMessage = '';
 
     /**
      * 能否使用优惠.
@@ -120,60 +65,9 @@ abstract class CartItemPromotionEntity extends Dto
         return bccomp_compatibility($this->activePurchaseTotalPrice, $this->meetThreshold) >= 0;
     }
 
-    public function xx(): void
-    {
-        if (!$this->cartItems->count()) {
-            return;
-        }
-
-        if ($this->isMeetThresholdType()) {
-            $this->calculatePriceAllocationResult();
-        } else {
-            /** @var CartItemEntity $cartItem */
-            foreach ($this->cartItems as $cartItem) {
-                $cartItem->price->setPromotionPriceArray($this->promotionId, $this->discount($cartItem), random_int(100, 500));
-            }
-        }
-    }
+    abstract public function calculatePrice(): void;
 
     abstract public function displayValue(): string;
-
-    /**
-     * 活动商品价格分摊.
-     */
-    public function calculatePriceAllocationResult(): array
-    {
-        if (!$this->cartItems->count()) {
-            return [];
-        }
-
-        $this->getActivePurchaseTotalPrice();
-
-        if (!$this->shouldMeetThreshold()) {
-            $this->needChouDan = true;
-            $this->needChouDanMessage = sprintf(
-                '已经购买金额 %.2f 元，再购 %.2f 元可减少 %.2f 元',
-                $this->activePurchaseTotalPrice,
-                bcsub_compatibility($this->meetThreshold, $this->activePurchaseTotalPrice),
-                $this->allFavorableTotalPrice
-            );
-
-            return [];
-        }
-
-        $this->needChouDan = false;
-        $this->needChouDanMessage = '';
-
-        $this->activePurchaseTotalPriceDetailAfter = $this->activePurchaseTotalPriceDetail;
-        $this->priceAllocationResult = CalculatePriceAllocation::handle($this->activePurchaseTotalPriceDetailAfter, $this->allFavorableTotalPrice);
-
-        /** @var CartItemEntity $cartItem */
-        foreach ($this->cartItems as $cartItem) {
-            $cartItem->price->setFavorableTotalPrice($this->promotionId, $this->discount($cartItem), random_int(100, 500));
-        }
-
-        return $this->priceAllocationResult;
-    }
 
     /**
      * 是否为满足门槛类型活动.

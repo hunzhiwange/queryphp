@@ -7,7 +7,7 @@ namespace App\Domain\Service\Cart;
 /**
  * 满减优惠券活动.
  */
-class CartItemFullDiscountCouponPromotionEntity extends CartItemPromotionEntity
+class CartItemFullDiscountCouponPromotionEntity extends CartItemFullDiscountPromotionEntity
 {
     /**
      * 活动类型.
@@ -16,6 +16,10 @@ class CartItemFullDiscountCouponPromotionEntity extends CartItemPromotionEntity
 
     public function discount(CartItemEntity $cartItemEntity): float
     {
+        if (!$this->canApply()) {
+            return 0;
+        }
+
         return $this->priceAllocationResult[$cartItemEntity->getHash()] ?? 0;
     }
 

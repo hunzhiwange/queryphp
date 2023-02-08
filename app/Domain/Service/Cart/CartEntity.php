@@ -180,7 +180,7 @@ class CartEntity extends Dto
         /** @var CartItemPromotionEntity $promotion */
         foreach ($this->promotions as $promotion) {
             if ($promotion->cartItems->count()) {
-                $promotion->xx();
+                $promotion->calculatePrice();
             }
         }
 

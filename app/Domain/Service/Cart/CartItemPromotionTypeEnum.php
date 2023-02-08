@@ -13,12 +13,15 @@ enum CartItemPromotionTypeEnum: int
 {
     use Enum;
 
-    #[msg('特价')]
+    #[msg('普通特价')]
     case SPECIAL = 1;
 
+    #[msg('特价百分比')]
+    case SPECIAL_PERCENTAGE = 2;
+
     #[msg('普通满减')]
-    case FULL_DISCOUNT = 2;
+    case FULL_DISCOUNT = 3;
 
     #[msg('满减优惠券')]
-    case FULL_DISCOUNT_COUPON = 3;
+    case FULL_DISCOUNT_COUPON = 4;
 }
