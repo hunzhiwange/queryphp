@@ -91,6 +91,8 @@ abstract class CartItemPromotionEntity extends Dto
         return true;
     }
 
+    abstract public function discount(CartItemEntity $cartItemEntity): float;
+
     /**
      * 获取活动商品结算总价和明细.
      */
@@ -129,7 +131,7 @@ abstract class CartItemPromotionEntity extends Dto
         } else {
             /** @var CartItemEntity $cartItem */
             foreach ($this->cartItems as $cartItem) {
-                $cartItem->price->setPromotionPriceArray($this->promotionId, $this->promotionPrice, random_int(100, 500));
+                $cartItem->price->setPromotionPriceArray($this->promotionId, $this->discount($cartItem), random_int(100, 500));
             }
         }
     }
@@ -165,7 +167,7 @@ abstract class CartItemPromotionEntity extends Dto
 
         /** @var CartItemEntity $cartItem */
         foreach ($this->cartItems as $cartItem) {
-            $cartItem->price->setFavorableTotalPrice($this->promotionId, $this->priceAllocationResult[$cartItem->getHash()] ?? 0, random_int(100, 500));
+            $cartItem->price->setFavorableTotalPrice($this->promotionId, $this->discount($cartItem), random_int(100, 500));
         }
 
         return $this->priceAllocationResult;

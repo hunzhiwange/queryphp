@@ -13,4 +13,9 @@ class CartItemFullDiscountCouponPromotionEntity extends CartItemPromotionEntity
      * 活动类型.
      */
     public CartItemPromotionTypeEnum $promotionType = CartItemPromotionTypeEnum::FULL_DISCOUNT_COUPON;
+
+    public function discount(CartItemEntity $cartItemEntity): float
+    {
+        return $this->priceAllocationResult[$cartItemEntity->getHash()] ?? 0;
+    }
 }
