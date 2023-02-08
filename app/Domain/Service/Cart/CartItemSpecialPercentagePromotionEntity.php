@@ -25,6 +25,6 @@ class CartItemSpecialPercentagePromotionEntity extends CartItemSpecialPromotionE
 
     public function displayValue(): string
     {
-        return sprintf('优惠比例 %.2f%', bcmul_compatibility($this->promotionPrice, 100));
+        return sprintf('优惠比例 %.2f', bcmul_compatibility($this->promotionPrice, 100)).'%';
     }
 }

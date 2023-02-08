@@ -96,6 +96,7 @@ class CartItemFullDiscountPromotionEntity extends CartItemPromotionEntity
                 bcsub_compatibility($this->meetThreshold, $this->activePurchaseTotalPrice),
                 $this->allFavorableTotalPrice
             );
+            $this->priceAllocationResult = [];
 
             return [];
         }

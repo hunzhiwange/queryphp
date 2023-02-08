@@ -890,4 +890,31 @@ final class CartEntityTest extends TestCase
         $ordersTotalPrice = $cartItemEntity->getSettlementTotalPrice() + $cartItemEntity2->getSettlementTotalPrice() + $cartItemEntity3->getSettlementTotalPrice() + $yunfei;
         static::assertSame($ordersTotalPrice, 109.0);
     }
+
+    public function test13(): void
+    {
+        $cartItemEntity = new CartItemEntity([
+            'inventory_id' => 999,
+            'number' => 3,
+            'price' => new CartItemPriceEntity([
+                'sales_price' => 10,
+            ]),
+            'product' => new CartItemProductEntity([
+                'product_id' => 3,
+                'product_name' => '商品A',
+            ]),
+        ]);
+
+        $cartEntity = new CartEntity();
+        $cartEntity->addItem($cartItemEntity);
+        $cartEntity->addPromotion(new CartItemSpecialPercentagePromotionEntity([
+            'promotion_id' => 3,
+            'promotion_name' => '7折扣活动',
+            'promotion_price' => 0.7,
+        ]), $cartItemEntity);
+        $cartEntity->calculatePrice();
+
+        static::assertSame($cartItemEntity->getPurchaseTotalPrice(), 21.0);
+        static::assertSame($cartEntity->promotions->get(3)->displayValue(), '优惠比例 70.00%');
+    }
 }
