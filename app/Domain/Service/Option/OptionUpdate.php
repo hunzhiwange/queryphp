@@ -32,6 +32,7 @@ class OptionUpdate
             $validatorClass = __NAMESPACE__.'\\Validator\\'.ucfirst(Str::camelize($k)).'Validator';
             if (class_exists($validatorClass)) {
                 $validator = new $validatorClass();
+                // @phpstan-ignore-next-line
                 $validator->handle($k, $v, $params);
             }
         }

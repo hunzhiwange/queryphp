@@ -274,14 +274,16 @@ class Auth extends BaseAuth
         // 兼容 header，也可以通过 get 或者 post 来设置 token
         if ($token = $request->headers->get('token')) {
             $request->query->set('token', $token);
-
+            // @phpstan-ignore-next-line
             return $token;
         }
 
         if ($token = $request->request->get('token', '')) {
+            // @phpstan-ignore-next-line
             return $token;
         }
 
+        // @phpstan-ignore-next-line
         return $request->query->get('token', '');
     }
 

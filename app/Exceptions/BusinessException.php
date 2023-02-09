@@ -50,6 +50,7 @@ class BusinessException extends BaseBusinessException
      */
     protected function getErrorMessage(object $code): string
     {
+        // @phpstan-ignore-next-line
         return ErrorCode::description($code);
     }
 

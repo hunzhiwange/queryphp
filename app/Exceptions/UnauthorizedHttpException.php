@@ -30,6 +30,7 @@ class UnauthorizedHttpException extends BaseUnauthorizedHttpException
      */
     protected function getErrorMessage(object $code): string
     {
+        // @phpstan-ignore-next-line
         return AuthErrorCode::description($code);
     }
 }

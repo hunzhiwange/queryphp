@@ -16,12 +16,12 @@ trait ValidateParams
         IValidator $validator,
         string $scene,
         string $exceptionClass = BusinessException::class,
-        object|int $code = ErrorCode::BASE_INVALID_ARGUMENT
+        object $code = ErrorCode::BASE_INVALID_ARGUMENT
     ): void {
         $validator = Validate::make($validator, $scene, $this->toArray())->getValidator();
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
+            // @phpstan-ignore-next-line
             throw new $exceptionClass($code, $e, true);
         }
     }

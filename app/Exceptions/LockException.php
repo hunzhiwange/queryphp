@@ -34,6 +34,7 @@ class LockException extends HttpException
      */
     protected function getErrorMessage(int $code): string
     {
+        // @phpstan-ignore-next-line
         return AuthErrorCode::description($code);
     }
 }

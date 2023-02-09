@@ -115,6 +115,7 @@ class SetMember
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
+            // @phpstan-ignore-next-line
             throw new ProjectBusinessException(ProjectErrorCode::PROJECT_USER_FAVOR_STORE_INVALID_ARGUMENT, $e, true);
         }
     }

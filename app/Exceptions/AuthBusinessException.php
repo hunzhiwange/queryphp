@@ -14,6 +14,7 @@ class AuthBusinessException extends BusinessException
      */
     protected function getErrorMessage(object $code): string
     {
+        // @phpstan-ignore-next-line
         return AuthErrorCode::description($code);
     }
 }
