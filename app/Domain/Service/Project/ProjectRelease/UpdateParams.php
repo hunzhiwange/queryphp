@@ -15,7 +15,7 @@ use Leevel\Validate\UniqueRule;
  */
 class UpdateParams extends CommonUpdateParams
 {
-    public int $id;
+    public int $id = 0;
 
     public ?int $sort = null;
 
@@ -39,7 +39,7 @@ class UpdateParams extends CommonUpdateParams
     protected function beforeValidate(): void
     {
         if (ProjectReleaseCompletedEnum::PUBLISHED->value === $this->completed
-            && !isset($params->completedDate)) {
+            && !isset($this->completedDate)) {
             $this->completedDate = get_current_date();
         }
     }

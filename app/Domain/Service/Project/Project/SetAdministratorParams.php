@@ -11,7 +11,7 @@ use Leevel\Support\Dto;
  */
 class SetAdministratorParams extends Dto
 {
-    public int $userId;
+    public int $userId = 0;
 
-    public int $projectId;
+    public int $projectId = 0;
 }

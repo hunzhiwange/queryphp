@@ -25,6 +25,9 @@ class Sort
         'project_label_id',
     ];
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Request $request, Service $service): array
     {
         $params = new SortParams($this->input($request));

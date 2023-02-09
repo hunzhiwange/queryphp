@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Entity\Project;
 
 use Leevel\Support\Enum;
+use Leevel\Support\Msg;
 
 /**
  * 项目用户数据类型枚举.
@@ -13,9 +14,9 @@ enum ProjectUserDataTypeEnum: int
 {
     use Enum;
 
-    #[msg('项目')]
+    #[Msg('项目')]
     case PROJECT = 1;
 
-    #[msg('问题')]
+    #[Msg('问题')]
     case ISSUE = 2;
 }

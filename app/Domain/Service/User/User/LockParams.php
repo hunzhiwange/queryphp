@@ -12,7 +12,7 @@ use App\Domain\Validate\User\User as UserValidate;
  */
 class LockParams extends ParamsDto
 {
-    public string $token;
+    public string $token = '';
 
     protected string $validatorClass = UserValidate::class;
 

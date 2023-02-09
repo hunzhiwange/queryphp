@@ -23,11 +23,15 @@ class RoadRunnerServer
 {
     /**
      * 响应命令.
+     *
+     * @throws \Exception|\JsonException
      */
     public function handle(IApp $app): void
     {
         $this->checkEnvironment();
         $this->setDisplayErrors();
+
+        /** @var IKernel $kernel */
         $kernel = $app->container()->make(IKernel::class);
         $httpFoundationFactory = new HttpFoundationFactory();
         $psr17Factory = new Psr17Factory();

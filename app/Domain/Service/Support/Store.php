@@ -47,6 +47,7 @@ trait Store
      */
     private function entity(StoreParams $params): Entity
     {
+        // @phpstan-ignore-next-line
         return new $this->entityClass($this->data($params));
     }
 

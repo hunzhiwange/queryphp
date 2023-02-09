@@ -12,6 +12,8 @@ class UnauthorizedHttpException extends BaseUnauthorizedHttpException
 
     /**
      * 构造函数.
+     *
+     * @throws \Exception
      */
     public function __construct(
         int|object $code = 0,
@@ -28,6 +30,7 @@ class UnauthorizedHttpException extends BaseUnauthorizedHttpException
      */
     protected function getErrorMessage(object $code): string
     {
+        // @phpstan-ignore-next-line
         return AuthErrorCode::description($code);
     }
 }

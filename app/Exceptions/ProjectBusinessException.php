@@ -14,6 +14,7 @@ class ProjectBusinessException extends BusinessException
      */
     protected function getErrorMessage(object $code): string
     {
+        // @phpstan-ignore-next-line
         return ProjectErrorCode::description($code);
     }
 }

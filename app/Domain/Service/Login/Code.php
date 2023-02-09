@@ -16,6 +16,9 @@ class Code
     {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(CodeParams $params): string
     {
         // Mac 自带 PHP 有问题

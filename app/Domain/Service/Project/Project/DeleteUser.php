@@ -24,6 +24,9 @@ class DeleteUser
     ) {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(DeleteUserParams $params): array
     {
         $this->validateArgs($params);
@@ -33,6 +36,8 @@ class DeleteUser
 
     /**
      * 保存.
+     *
+     * @throws \Exception
      */
     private function save(DeleteUserParams $params): ProjectUser
     {
@@ -44,6 +49,9 @@ class DeleteUser
         return $entity;
     }
 
+    /**
+     * @throws \Exception
+     */
     private function entity(DeleteUserParams $params): ProjectUser
     {
         $this->findProject($params->projectId);
@@ -52,7 +60,8 @@ class DeleteUser
     }
 
     /**
-     * @throws \App\Exceptions\UserBusinessException
+     * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \Exception
      */
     private function findProjectUser(DeleteUserParams $params): ProjectUser
     {
@@ -90,6 +99,7 @@ class DeleteUser
      * 校验基本参数.
      *
      * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \Exception
      */
     private function validateArgs(DeleteUserParams $params): void
     {
@@ -101,6 +111,7 @@ class DeleteUser
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
+            // @phpstan-ignore-next-line
             throw new ProjectBusinessException(ProjectErrorCode::PROJECT_USER_FAVOR_STORE_INVALID_ARGUMENT, $e, true);
         }
     }

@@ -17,7 +17,7 @@ class ProjectTags
 
     protected string $entityClass = ProjectTag::class;
 
-    private function conditionCall(ProjectTagsParams $params): ?\Closure
+    private function conditionCall(ProjectTagsParams $params): \Closure
     {
         return function (Select $select): void {
             $select->eager([

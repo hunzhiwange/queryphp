@@ -12,9 +12,9 @@ use Leevel\Support\TypedIntArray;
  */
 class ResourceParams extends Dto
 {
-    public int $id;
+    public int $id = 0;
 
-    public TypedIntArray $resourceId;
+    public ?TypedIntArray $resourceId = null;
 
     protected function resourceIdDefaultValue(): TypedIntArray
     {

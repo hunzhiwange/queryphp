@@ -25,6 +25,9 @@ class SetAdministrator
     ) {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(SetAdministratorParams $params): array
     {
         $this->validateArgs($params);
@@ -34,6 +37,8 @@ class SetAdministrator
 
     /**
      * 保存.
+     *
+     * @throws \Exception
      */
     private function save(SetAdministratorParams $params): ProjectUser
     {
@@ -44,6 +49,9 @@ class SetAdministrator
         return $entity;
     }
 
+    /**
+     * @throws \Exception
+     */
     private function entity(SetAdministratorParams $params): ProjectUser
     {
         $this->findProject($params->projectId);
@@ -52,7 +60,7 @@ class SetAdministrator
     }
 
     /**
-     * @throws \App\Exceptions\UserBusinessException
+     * @throws \App\Exceptions\ProjectBusinessException|\Exception
      */
     private function findProjectUser(SetAdministratorParams $params): ProjectUser
     {
@@ -84,9 +92,9 @@ class SetAdministrator
     /**
      * 查找实体.
      */
-    private function findProject(int $id): Project
+    private function findProject(int $id): void
     {
-        return $this->w
+        $this->w
             ->repository(Project::class)
             ->findOrFail($id)
         ;
@@ -96,6 +104,7 @@ class SetAdministrator
      * 校验基本参数.
      *
      * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \Exception
      */
     private function validateArgs(SetAdministratorParams $params): void
     {
@@ -106,7 +115,7 @@ class SetAdministrator
         $validator = Validate::make(new ProjectProjectUser(), 'delete', $input)->getValidator();
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
-
+            // @phpstan-ignore-next-line
             throw new ProjectBusinessException(ProjectErrorCode::PROJECT_USER_FAVOR_STORE_INVALID_ARGUMENT, $e, true);
         }
     }

@@ -30,7 +30,7 @@ class UpdateInfo
         return $service->handle($params);
     }
 
-    private function extendInput(): array
+    private function extendInput(Request $request): array
     {
         return ['id' => $this->userId()];
     }

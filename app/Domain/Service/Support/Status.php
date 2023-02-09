@@ -20,6 +20,9 @@ trait Status
     {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(StatusParams $params): array
     {
         $params->validate();
@@ -44,7 +47,7 @@ trait Status
     /**
      * 查询符合条件的数据.
      *
-     * @throws \App\Exceptions\BusinessException
+     * @throws \App\Exceptions\BusinessException|\Exception
      */
     private function findAll(TypedIntArray $ids): Collection
     {

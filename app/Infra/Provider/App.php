@@ -57,6 +57,7 @@ class App extends Provider
             $request = $container->make('request');
             $token = $request->query->get('token', $request->request->get('token', ''));
 
+            // @phpstan-ignore-next-line
             return new Permission($container->make(PermissionCache::class), $token);
         });
     }

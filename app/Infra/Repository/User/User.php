@@ -19,6 +19,8 @@ class User extends Repository
 {
     /**
      * 通过用户名查找可用用户.
+     *
+     * @throws \Exception
      */
     public function findValidUserByName(string $name, string $column = '*'): EntityUser
     {
@@ -30,6 +32,8 @@ class User extends Repository
 
     /**
      * 通过用户 ID 查找可用用户.
+     *
+     * @throws \Exception
      */
     public function findValidUserById(int $id, string $column = '*'): EntityUser
     {
@@ -42,7 +46,7 @@ class User extends Repository
     /**
      * 通过条件查找可用用户.
      *
-     * @throws \App\Exceptions\UserBusinessException
+     * @throws \App\Exceptions\UserBusinessException|\Exception
      */
     public function findValidUserByCondition(\Closure $condition, string $column = '*'): EntityUser
     {
@@ -57,13 +61,14 @@ class User extends Repository
             throw new UserBusinessException(UserErrorCode::ACCOUNT_NOT_EXIST_OR_DISABLED);
         }
 
+        // @phpstan-ignore-next-line
         return $user;
     }
 
     /**
      * 校验密码.
      *
-     * @throws \App\Exceptions\UserBusinessException
+     * @throws \App\Exceptions\UserBusinessException|\Exception
      */
     public function verifyPassword(string $password, string $hash): void
     {
@@ -83,7 +88,7 @@ class User extends Repository
     /**
      * 校验用户.
      *
-     * @throws \App\Exceptions\UserBusinessException
+     * @throws \App\Exceptions\UserBusinessException|\Exception
      */
     public function verifyUsersByIds(array $userIds, ?\Closure $condition = null): void
     {
@@ -93,6 +98,7 @@ class User extends Repository
             $condition($select);
         }
         $users = $select->findAll();
+        // @phpstan-ignore-next-line
         if (\count($userIds) !== \count($users)) {
             throw new UserBusinessException(UserErrorCode::SOME_USERS_DOES_NOT_EXIST);
         }

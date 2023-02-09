@@ -17,6 +17,9 @@ class ChangePassword
     {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(ChangePasswordParams $params): array
     {
         $params->validate();
@@ -28,6 +31,8 @@ class ChangePassword
 
     /**
      * 校验用户.
+     *
+     * @throws \Exception
      */
     private function validateUser(ChangePasswordParams $params): void
     {

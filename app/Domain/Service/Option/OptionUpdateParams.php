@@ -11,7 +11,7 @@ class OptionUpdateParams extends Dto
 {
     public string $siteName = '';
 
-    public int $siteStatus;
+    public int $siteStatus = 0;
 
     protected function siteStatusDefaultValue(): int
     {

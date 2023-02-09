@@ -18,9 +18,9 @@ class ReadParams extends Dto
 
     public ?string $key = null;
 
-    public TypedStringArray $column;
+    public ?TypedStringArray $column = null;
 
-    public TypedStringArray $keyColumn;
+    public ?TypedStringArray $keyColumn = null;
 
     protected function columnTransformValue(array|string $value): TypedStringArray
     {

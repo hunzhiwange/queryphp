@@ -23,6 +23,9 @@ class DeleteUser
         'user_id',
     ];
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Request $request, Service $service): array
     {
         $params = new DeleteUserParams($this->input($request));

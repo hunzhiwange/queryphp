@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Exceptions;
 
 use Leevel\Support\Enum;
+use Leevel\Support\Msg;
 
 /**
  * 通用业务错误码.
@@ -31,18 +32,18 @@ enum ErrorCode: int
 {
     use Enum;
 
-    #[msg('删除数据参数错误')]
+    #[Msg('删除数据参数错误')]
     case DESTROY_DATA_INVALID_ARGUMENT = 1000000000;
 
-    #[msg('批量修改状态参数错误')]
+    #[Msg('批量修改状态参数错误')]
     case BATCH_MODIFICATION_STATUS_INVALID_ARGUMENT = 1000000001;
 
-    #[msg('未发现数据')]
+    #[Msg('未发现数据')]
     case BATCH_MODIFICATION_STATUS_NO_DATA_FOUND = 1000000002;
 
-    #[msg('应用无法找到')]
+    #[Msg('应用无法找到')]
     case APP_NOT_FOUND = 1000000003;
 
-    #[msg('参数错误')]
+    #[Msg('参数错误')]
     case BASE_INVALID_ARGUMENT = 1000000005;
 }

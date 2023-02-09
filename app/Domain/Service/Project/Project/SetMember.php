@@ -25,6 +25,9 @@ class SetMember
     ) {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(SetMemberParams $params): array
     {
         $this->validateArgs($params);
@@ -34,6 +37,8 @@ class SetMember
 
     /**
      * 保存.
+     *
+     * @throws \Exception
      */
     private function save(SetMemberParams $params): ProjectUser
     {
@@ -44,6 +49,9 @@ class SetMember
         return $entity;
     }
 
+    /**
+     * @throws \Exception
+     */
     private function entity(SetMemberParams $params): ProjectUser
     {
         $this->findProject($params->projectId);
@@ -52,7 +60,7 @@ class SetMember
     }
 
     /**
-     * @throws \App\Exceptions\UserBusinessException
+     * @throws \App\Exceptions\ProjectBusinessException|\Exception
      */
     private function findProjectUser(SetMemberParams $params): ProjectUser
     {
@@ -95,7 +103,7 @@ class SetMember
     /**
      * 校验基本参数.
      *
-     * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \App\Exceptions\ProjectBusinessException|\Exception
      */
     private function validateArgs(SetMemberParams $params): void
     {
@@ -107,6 +115,7 @@ class SetMember
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
 
+            // @phpstan-ignore-next-line
             throw new ProjectBusinessException(ProjectErrorCode::PROJECT_USER_FAVOR_STORE_INVALID_ARGUMENT, $e, true);
         }
     }

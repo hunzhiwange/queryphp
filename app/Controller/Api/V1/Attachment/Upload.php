@@ -20,6 +20,9 @@ class Upload
     use CloseDebug;
     use Controller;
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Request $request, AttachmentUpload $service): array
     {
         $this->closeDebug();

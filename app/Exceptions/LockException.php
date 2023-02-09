@@ -16,6 +16,8 @@ class LockException extends HttpException
 
     /**
      * 构造函数.
+     *
+     * @throws \Exception
      */
     public function __construct(
         int|object $code = 0,
@@ -32,6 +34,7 @@ class LockException extends HttpException
      */
     protected function getErrorMessage(int $code): string
     {
+        // @phpstan-ignore-next-line
         return AuthErrorCode::description($code);
     }
 }

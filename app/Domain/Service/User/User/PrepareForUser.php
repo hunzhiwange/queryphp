@@ -19,7 +19,7 @@ class PrepareForUser
     /**
      * 批量处理.
      */
-    public function handleMulti(iterable $data): array
+    public function handleMulti(iterable $data): array // @phpstan-ignore-line
     {
         $result = [];
         foreach ($data as $v) {

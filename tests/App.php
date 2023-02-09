@@ -31,6 +31,7 @@ trait App
         $container = Container::singletons();
         $container->singleton(IContainer::class, $container);
 
+        // @phpstan-ignore-next-line
         $container->singleton('app', $app = new KernelApp($container, realpath(__DIR__.'/..')));
         $container->alias('app', [IApp::class, KernelApp::class]);
 
@@ -40,6 +41,7 @@ trait App
 
         $container->instance('request', Request::createFromGlobals());
         $container->alias('request', [Request::class, Request::class]);
+        // @phpstan-ignore-next-line
         $container->make(IKernelConsole::class)->bootstrap();
 
         return $app;

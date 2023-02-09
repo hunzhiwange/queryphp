@@ -56,6 +56,7 @@ class Store
     {
         $entity = new ProjectIssue($this->data($params));
         $maxId = ProjectIssue::repository()->findNextIssueNum($params->projectId);
+        // @phpstan-ignore-next-line
         $entity->num = strtoupper($this->project->num).'-'.$maxId;
 
         return $entity;

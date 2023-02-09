@@ -65,7 +65,7 @@ class Auth extends BaseAuth
     /**
      * 应用秘钥.
      */
-    private string $appSecret;
+    private string $appSecret = '';
 
     /**
      * 构造函数.
@@ -80,7 +80,7 @@ class Auth extends BaseAuth
     /**
      * 请求.
      *
-     * @throws \App\Exceptions\UnauthorizedHttpException
+     * @throws \App\Exceptions\UnauthorizedHttpException|\Exception
      */
     public function handle(\Closure $next, Request $request): Response
     {
@@ -166,7 +166,7 @@ class Auth extends BaseAuth
     /**
      * 校验格式化.
      *
-     * @throws \App\Exceptions\AuthBusinessException
+     * @throws \App\Exceptions\AuthBusinessException|\Exception
      */
     private function validateFormat(Request $request): void
     {
@@ -183,7 +183,7 @@ class Auth extends BaseAuth
     /**
      * 校验应用 KEY.
      *
-     * @throws \App\Exceptions\AuthBusinessException
+     * @throws \App\Exceptions\AuthBusinessException|\Exception
      */
     private function validateAppKey(Request $request): void
     {
@@ -197,11 +197,13 @@ class Auth extends BaseAuth
 
     /**
      * 查找应用秘钥.
+     *
+     * @throws \Exception
      */
     private function findAppSecret(string $appKey): string
     {
         return $this
-            ->appReposity()
+            ->appRepository()
             ->findAppSecretByKey($appKey)
         ;
     }
@@ -214,7 +216,7 @@ class Auth extends BaseAuth
     /**
      * 校验是否过期.
      *
-     * @throws \App\Exceptions\AuthBusinessException
+     * @throws \App\Exceptions\AuthBusinessException|\Exception
      */
     private function validateExpired(Request $request): void
     {
@@ -232,7 +234,7 @@ class Auth extends BaseAuth
     /**
      * 校验签名.
      *
-     * @throws \App\Exceptions\AuthBusinessException
+     * @throws \App\Exceptions\AuthBusinessException|\Exception
      */
     private function validateSignature(Request $request, string $appSecret): void
     {
@@ -272,21 +274,23 @@ class Auth extends BaseAuth
         // 兼容 header，也可以通过 get 或者 post 来设置 token
         if ($token = $request->headers->get('token')) {
             $request->query->set('token', $token);
-
+            // @phpstan-ignore-next-line
             return $token;
         }
 
         if ($token = $request->request->get('token', '')) {
+            // @phpstan-ignore-next-line
             return $token;
         }
 
+        // @phpstan-ignore-next-line
         return $request->query->get('token', '');
     }
 
     /**
      * 验证是否锁定.
      *
-     * @throws \App\Exceptions\LockException
+     * @throws \App\Exceptions\LockException|\Exception
      */
     private function validateLock(Request $request, string $token): void
     {
@@ -307,7 +311,7 @@ class Auth extends BaseAuth
     /**
      * 权限校验.
      *
-     * @throws \App\Exceptions\AuthBusinessException
+     * @throws \App\Exceptions\AuthBusinessException|\Exception
      */
     private function validatePermission(Request $request): void
     {
@@ -321,6 +325,7 @@ class Auth extends BaseAuth
     private function getPathInfo(Request $request): string
     {
         // 去掉前缀
+        // @phpstan-ignore-next-line
         return preg_replace('/^api\/v([0-9])+:/', '', trim($request->getPathInfo(), '/'));
     }
 }

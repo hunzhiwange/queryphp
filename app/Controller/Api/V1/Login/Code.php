@@ -21,6 +21,9 @@ class Code
     use CloseDebug;
     use Controller;
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Request $request, Service $service): Response
     {
         $this->closeDebug();

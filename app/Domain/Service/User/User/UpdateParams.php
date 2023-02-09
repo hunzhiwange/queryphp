@@ -13,7 +13,7 @@ use App\Domain\Validate\User\User as UserValidate;
  */
 class UpdateParams extends CommonUpdateParams
 {
-    public int $id;
+    public int $id = 0;
 
     public ?string $num = null;
 

@@ -26,6 +26,9 @@ class Validate
         'code',
     ];
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Request $request, Service $service): array
     {
         $params = new LoginParams($request->toArray());

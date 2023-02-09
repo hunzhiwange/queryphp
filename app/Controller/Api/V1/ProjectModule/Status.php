@@ -23,6 +23,9 @@ class Status
         'status',
     ];
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Request $request, Service $service): array
     {
         $params = new StatusParams($this->input($request));

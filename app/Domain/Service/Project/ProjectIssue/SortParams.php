@@ -13,16 +13,19 @@ use App\Exceptions\ProjectErrorCode;
  */
 class SortParams extends ParamsDto
 {
-    public int $projectId;
+    public int $projectId = 0;
 
-    public int $prevIssueId;
+    public int $prevIssueId = 0;
 
     public ?int $nextIssueId = null;
 
-    public int $projectLabelId;
+    public int $projectLabelId = 0;
 
     /**
      * {@inheritDoc}
+     *
+     * @throws \Exception
+     * @throws ProjectBusinessException
      */
     protected function beforeValidate(): void
     {

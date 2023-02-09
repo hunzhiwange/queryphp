@@ -23,6 +23,9 @@ class Update
     {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(UpdateParams $params): array
     {
         if (isset($params->tags)) {
@@ -50,6 +53,9 @@ class Update
         return $this->save($params)->toArray();
     }
 
+    /**
+     * @throws \Exception|ProjectBusinessException
+     */
     private function saveContent(UpdateParams $params): void
     {
         $projectContent = $this->w

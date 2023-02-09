@@ -16,7 +16,7 @@ class UpdateParams extends CommonUpdateParams
 {
     use BaseStoreUpdateParams;
 
-    public int $id;
+    public int $id = 0;
 
     protected string $validatorClass = ProjectLabelValidate::class;
 

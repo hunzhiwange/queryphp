@@ -19,7 +19,7 @@ class ProjectReleases
 
     protected string $entityClass = ProjectRelease::class;
 
-    private function conditionCall(ProjectReleasesParams $params): ?\Closure
+    private function conditionCall(ProjectReleasesParams $params): \Closure
     {
         return function (Select $select): void {
             $select->eager([

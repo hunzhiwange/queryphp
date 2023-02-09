@@ -19,6 +19,9 @@ class Sort
     {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(SortParams $params): array
     {
         $params->validate();
@@ -29,6 +32,7 @@ class Sort
 
     /**
      * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \Exception
      */
     public function sort(SortParams $params): void
     {

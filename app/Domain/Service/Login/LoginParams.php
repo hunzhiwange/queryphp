@@ -9,13 +9,13 @@ use App\Domain\Validate\User\User as UserValidate;
 
 class LoginParams extends ParamsDto
 {
-    public string $appKey;
+    public string $appKey = '';
 
-    public string $name;
+    public string $name = '';
 
-    public string $password;
+    public string $password = '';
 
-    public string $code;
+    public string $code = '';
 
     public int $remember = 0;
 

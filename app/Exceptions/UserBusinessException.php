@@ -14,6 +14,7 @@ class UserBusinessException extends BusinessException
      */
     protected function getErrorMessage(object $code): string
     {
+        // @phpstan-ignore-next-line
         return UserErrorCode::description($code);
     }
 }

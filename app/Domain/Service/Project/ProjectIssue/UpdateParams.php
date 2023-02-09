@@ -12,7 +12,7 @@ use Leevel\Support\TypedIntArray;
  */
 class UpdateParams extends Dto
 {
-    public int $id;
+    public int $id = 0;
 
     public ?string $title = null;
 

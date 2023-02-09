@@ -9,6 +9,8 @@ use Leevel\Di\Container;
 
 /**
  * 代理 Permission.
+ *
+ *  @method static bool  handle(string $resource, ?string $method = null)
  */
 class Permission
 {
@@ -27,6 +29,7 @@ class Permission
      */
     public static function proxy(): AdminPermisson
     {
+        // @phpstan-ignore-next-line
         return Container::singletons()->make('permission');
     }
 }

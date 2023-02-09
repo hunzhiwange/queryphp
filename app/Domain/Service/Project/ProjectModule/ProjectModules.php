@@ -17,7 +17,7 @@ class ProjectModules
 
     protected string $entityClass = ProjectModule::class;
 
-    private function conditionCall(ProjectModulesParams $params): ?\Closure
+    private function conditionCall(ProjectModulesParams $params): \Closure
     {
         return function (Select $select): void {
             $select->eager([

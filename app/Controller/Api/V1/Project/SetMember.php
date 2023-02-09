@@ -22,6 +22,9 @@ class SetMember
         'project_id',
     ];
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Request $request, Service $service): array
     {
         $params = new SetMemberParams($this->input($request));

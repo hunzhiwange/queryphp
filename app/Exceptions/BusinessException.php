@@ -16,6 +16,8 @@ class BusinessException extends BaseBusinessException
 
     /**
      * 构造函数.
+     *
+     * @throws \Exception
      */
     public function __construct(
         int|object $code = 0,
@@ -48,6 +50,7 @@ class BusinessException extends BaseBusinessException
      */
     protected function getErrorMessage(object $code): string
     {
+        // @phpstan-ignore-next-line
         return ErrorCode::description($code);
     }
 

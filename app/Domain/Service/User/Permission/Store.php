@@ -27,4 +27,15 @@ class Store
     {
         $this->find($pid);
     }
+
+    /**
+     * 查找实体.
+     */
+    private function find(int $id): Permission
+    {
+        return $this->w
+            ->repository($this->entityClass)
+            ->findOrFail($id)
+        ;
+    }
 }
