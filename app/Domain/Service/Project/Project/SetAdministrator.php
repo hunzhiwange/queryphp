@@ -34,6 +34,8 @@ class SetAdministrator
 
     /**
      * 保存.
+     *
+     * @throws \Exception
      */
     private function save(SetAdministratorParams $params): ProjectUser
     {
@@ -52,7 +54,7 @@ class SetAdministrator
     }
 
     /**
-     * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \App\Exceptions\ProjectBusinessException|\Exception
      */
     private function findProjectUser(SetAdministratorParams $params): ProjectUser
     {

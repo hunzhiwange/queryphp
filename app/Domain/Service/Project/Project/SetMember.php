@@ -25,6 +25,9 @@ class SetMember
     ) {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(SetMemberParams $params): array
     {
         $this->validateArgs($params);
@@ -44,6 +47,9 @@ class SetMember
         return $entity;
     }
 
+    /**
+     * @throws \Exception
+     */
     private function entity(SetMemberParams $params): ProjectUser
     {
         $this->findProject($params->projectId);
