@@ -12,11 +12,11 @@ use App\Domain\Validate\User\User as UserValidate;
  */
 class UnlockParams extends ParamsDto
 {
-    public int $id;
+    public int $id = 0;
 
-    public string $token;
+    public string $token = '';
 
-    public string $password;
+    public string $password = '';
 
     protected string $validatorClass = UserValidate::class;
 

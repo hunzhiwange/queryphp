@@ -4,7 +4,6 @@ parameters:
 		- api
 		- app
 		- assets/database
-		- tests
 	bootstrapFiles:
 		- %currentWorkingDirectory%/assets/phpstan/bootstrap.php
 	cache:
@@ -12,6 +11,7 @@ parameters:
 	checkUninitializedProperties: true
 	checkMissingCallableSignature: true
 	excludePaths:
+		- %currentWorkingDirectory%/*Test.php
 		- ../src/Reflection/SignatureMap/functionMap.php
 		- ../src/Reflection/SignatureMap/functionMetadata.php
 		- ../tests/*/data/*
@@ -59,24 +59,5 @@ parameters:
 		check:
 			missingCheckedExceptionInThrows: true
 			tooWideThrowType: true
-	ignoreErrors:
-		- '#^Dynamic call to static method PHPUnit\\Framework\\\S+\(\)\.$#'
-		- '#should be contravariant with parameter \$node \(PhpParser\\Node\) of method PHPStan\\Rules\\Rule<PhpParser\\Node>::processNode\(\)$#'
-		- '#Variable property access on PhpParser\\Node#'
-		- '#Test::data[a-zA-Z0-9_]+\(\) return type has no value type specified in iterable type#'
-		-
-			message: '#Fetching class constant class of deprecated class DeprecatedAnnotations\\DeprecatedFoo.#'
-			path: ../tests/PHPStan/Reflection/Annotations/DeprecatedAnnotationsTest.php
-		-
-			message: '#Fetching class constant class of deprecated class DeprecatedAnnotations\\DeprecatedWithMultipleTags.#'
-			path: ../tests/PHPStan/Reflection/Annotations/DeprecatedAnnotationsTest.php
-		-
-			message: '#^Variable property access on PHPStan\\Rules\\RuleError\.$#'
-			path: ../src/Rules/RuleErrorBuilder.php
-		-
-			message: "#^Parameter \\#1 (?:\\$argument|\\$objectOrClass) of class ReflectionClass constructor expects class\\-string\\<PHPStan\\\\ExtensionInstaller\\\\GeneratedConfig\\>\\|PHPStan\\\\ExtensionInstaller\\\\GeneratedConfig, string given\\.$#"
-			count: 1
-			path: ../src/Command/CommandHelper.php
-		- '#^Parameter \#1 \$offsetType of class PHPStan\\Type\\Accessory\\HasOffsetType constructor expects PHPStan\\Type\\Constant\\ConstantIntegerType\|PHPStan\\Type\\Constant\\ConstantStringType#'
 	reportStaticMethodSignatures: true
 	tmpDir: %rootDir%/../../storage/phpstan

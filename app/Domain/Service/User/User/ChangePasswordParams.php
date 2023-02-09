@@ -12,13 +12,13 @@ use App\Domain\Validate\User\User as UserValidate;
  */
 class ChangePasswordParams extends ParamsDto
 {
-    public int $id;
+    public int $id = 0;
 
-    public string $oldPwd;
+    public string $oldPwd = '';
 
-    public string $newPwd;
+    public string $newPwd = '';
 
-    public string $confirmPwd;
+    public string $confirmPwd = '';
 
     protected string $validatorClass = UserValidate::class;
 

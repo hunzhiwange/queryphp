@@ -11,9 +11,9 @@ use Leevel\Support\Dto;
  */
 class PermissionParams extends Dto
 {
-    public int $id;
+    public int $id = 0;
 
-    public string $token;
+    public string $token = '';
 
-    public int $refresh;
+    public int $refresh = 0;
 }

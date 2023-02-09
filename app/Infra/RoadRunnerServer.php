@@ -23,6 +23,8 @@ class RoadRunnerServer
 {
     /**
      * 响应命令.
+     *
+     * @throws \Exception|\JsonException
      */
     public function handle(IApp $app): void
     {

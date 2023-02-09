@@ -13,13 +13,13 @@ use App\Domain\Validate\User\User as UserValidate;
  */
 class StoreParams extends CommonStoreParams
 {
-    public string $num;
+    public string $num = '';
 
-    public int $status;
+    public int $status = 0;
 
-    public string $name;
+    public string $name = '';
 
-    public string $password;
+    public string $password = '';
 
     protected string $validatorClass = UserValidate::class;
 

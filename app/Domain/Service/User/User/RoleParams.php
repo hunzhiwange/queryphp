@@ -12,9 +12,9 @@ use Leevel\Support\TypedIntArray;
  */
 class RoleParams extends Dto
 {
-    public int $id;
+    public int $id = 0;
 
-    public TypedIntArray $roleId;
+    public ?TypedIntArray $roleId = null;
 
     protected function roleIdDefaultValue(): TypedIntArray
     {

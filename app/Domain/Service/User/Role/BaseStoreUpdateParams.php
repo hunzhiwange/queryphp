@@ -6,9 +6,9 @@ namespace App\Domain\Service\User\Role;
 
 trait BaseStoreUpdateParams
 {
-    public string $num;
+    public string $num = '';
 
-    public string $name;
+    public string $name = '';
 
-    public int $status;
+    public int $status = 0;
 }

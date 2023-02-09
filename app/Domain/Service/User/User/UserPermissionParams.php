@@ -11,5 +11,5 @@ use Leevel\Support\Dto;
  */
 class UserPermissionParams extends Dto
 {
-    public int $userId;
+    public int $userId = 0;
 }
