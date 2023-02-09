@@ -52,7 +52,7 @@ class SetMember
     }
 
     /**
-     * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \App\Exceptions\ProjectBusinessException|\Exception
      */
     private function findProjectUser(SetMemberParams $params): ProjectUser
     {
@@ -95,7 +95,7 @@ class SetMember
     /**
      * 校验基本参数.
      *
-     * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \App\Exceptions\ProjectBusinessException|\Exception
      */
     private function validateArgs(SetMemberParams $params): void
     {
