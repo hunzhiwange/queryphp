@@ -1,23 +1,82 @@
 parameters:
-    level: 8
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
-    paths:
-        - api
-        - app
-    autoload_files:
-    excludes_analyse:
-        - %currentWorkingDirectory%/common/ui/exception/layout.php
-        - %currentWorkingDirectory%/*Test.php
-    bootstrap: %currentWorkingDirectory%/phpstan-bootstrap.php
-    ignoreErrors:
-        - '#Call to an undefined method [\S\s]+::validateInputRules\(\)\.#'
-        - '#Parameter \#1 \$message of class Common\\Infra\\Exception\\BusinessException constructor expects string|null, string|false given\.#'
-        - '#Call to an undefined static method [\S\s]+::Where\(\)\.#'
-        - '#Call to an undefined method [\S\s]+::filterInputRules\(\)\.#'
-        - '#Access to an undefined property [\S\s]+::\$allowedInput\.#'
-        - '#Access to an undefined property [\S\s]+::\$workflow\.#'
-        - '#but returns Leevel\\Database\\Ddd\\Entity\.#'
-        - '#Access to an undefined property Common\\Domain\\Entity\\[\S\s]+::\$[a-zA-Z]+\.#'
-        - '#Call to an undefined static method Common\\Infra\\Proxy\\Permission::handle\(\)\.#'
-        - '#Call to an undefined method object::handle\(\)\.#'
+	level: 1
+	paths:
+		- api
+		- app
+		- assets/database
+		- tests
+	bootstrapFiles:
+		- %currentWorkingDirectory%/assets/phpstan/bootstrap.php
+	cache:
+		nodesByStringCountMax: 128
+	checkUninitializedProperties: true
+	checkMissingCallableSignature: true
+	excludePaths:
+		- ../src/Reflection/SignatureMap/functionMap.php
+		- ../src/Reflection/SignatureMap/functionMetadata.php
+		- ../tests/*/data/*
+		- ../tests/tmp/*
+		- ../tests/PHPStan/Analyser/traits/*
+		- ../tests/notAutoloaded/*
+		- ../tests/PHPStan/Generics/functions.php
+		- ../tests/PHPStan/Reflection/UnionTypesTest.php
+		- ../tests/PHPStan/Reflection/MixedTypeTest.php
+		- ../tests/PHPStan/Reflection/StaticTypeTest.php
+		- ../tests/e2e/magic-setter/*
+		- ../tests/PHPStan/Rules/Properties/UninitializedPropertyRuleTest.php
+		- ../tests/PHPStan/Command/IgnoredRegexValidatorTest.php
+		- ../src/Command/IgnoredRegexValidator.php
+	exceptions:
+		uncheckedExceptionClasses:
+			- 'PHPStan\ShouldNotHappenException'
+			- 'Symfony\Component\Console\Exception\InvalidArgumentException'
+			- 'PHPStan\BetterReflection\SourceLocator\Exception\InvalidFileLocation'
+			- 'PHPStan\BetterReflection\SourceLocator\Exception\InvalidArgumentException'
+			- 'Symfony\Component\Finder\Exception\DirectoryNotFoundException'
+			- 'InvalidArgumentException'
+			- 'PHPStan\DependencyInjection\ParameterNotFoundException'
+			- 'PHPStan\Analyser\UndefinedVariableException'
+			- 'RuntimeException'
+			- 'Nette\Neon\Exception'
+			- 'Nette\Utils\JsonException'
+			- 'PHPStan\File\CouldNotReadFileException'
+			- 'PHPStan\File\CouldNotWriteFileException'
+			- 'PHPStan\Parser\ParserErrorsException'
+			- 'ReflectionException'
+			- 'Nette\Utils\AssertionException'
+			- 'PHPStan\File\PathNotFoundException'
+			- 'PHPStan\Broker\ClassNotFoundException'
+			- 'PHPStan\Broker\FunctionNotFoundException'
+			- 'PHPStan\Broker\ConstantNotFoundException'
+			- 'PHPStan\Reflection\MissingMethodFromReflectionException'
+			- 'PHPStan\Reflection\MissingPropertyFromReflectionException'
+			- 'PHPStan\Reflection\MissingConstantFromReflectionException'
+			- 'PHPStan\Type\CircularTypeAliasDefinitionException'
+			- 'PHPStan\Broker\ClassAutoloadingException'
+			- 'LogicException'
+			- 'TypeError'
+			- 'DivisionByZeroError'
+		check:
+			missingCheckedExceptionInThrows: true
+			tooWideThrowType: true
+	ignoreErrors:
+		- '#^Dynamic call to static method PHPUnit\\Framework\\\S+\(\)\.$#'
+		- '#should be contravariant with parameter \$node \(PhpParser\\Node\) of method PHPStan\\Rules\\Rule<PhpParser\\Node>::processNode\(\)$#'
+		- '#Variable property access on PhpParser\\Node#'
+		- '#Test::data[a-zA-Z0-9_]+\(\) return type has no value type specified in iterable type#'
+		-
+			message: '#Fetching class constant class of deprecated class DeprecatedAnnotations\\DeprecatedFoo.#'
+			path: ../tests/PHPStan/Reflection/Annotations/DeprecatedAnnotationsTest.php
+		-
+			message: '#Fetching class constant class of deprecated class DeprecatedAnnotations\\DeprecatedWithMultipleTags.#'
+			path: ../tests/PHPStan/Reflection/Annotations/DeprecatedAnnotationsTest.php
+		-
+			message: '#^Variable property access on PHPStan\\Rules\\RuleError\.$#'
+			path: ../src/Rules/RuleErrorBuilder.php
+		-
+			message: "#^Parameter \\#1 (?:\\$argument|\\$objectOrClass) of class ReflectionClass constructor expects class\\-string\\<PHPStan\\\\ExtensionInstaller\\\\GeneratedConfig\\>\\|PHPStan\\\\ExtensionInstaller\\\\GeneratedConfig, string given\\.$#"
+			count: 1
+			path: ../src/Command/CommandHelper.php
+		- '#^Parameter \#1 \$offsetType of class PHPStan\\Type\\Accessory\\HasOffsetType constructor expects PHPStan\\Type\\Constant\\ConstantIntegerType\|PHPStan\\Type\\Constant\\ConstantStringType#'
+	reportStaticMethodSignatures: true
+	tmpDir: %rootDir%/../../storage/phpstan

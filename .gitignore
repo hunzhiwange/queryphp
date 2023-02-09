@@ -25,3 +25,4 @@ www/debugbar
 /apis
 /attachments
 .php-cs-fixer.cache
+storage/phpstan

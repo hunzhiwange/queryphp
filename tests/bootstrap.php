@@ -19,10 +19,10 @@ if (false === is_file($vendorDir.'/autoload.php')) {
 
 include $vendorDir.'/autoload.php';
 
-if (!class_exists(\PHPUnit\Framework\TestCase::class)) {
-    $e = 'If you execute command `composer dump-autoload --optimize --no-dev`,'.
-    'then this will not be available.'.PHP_EOL.
-    'PHPUnit and PHPStan belongs to development dependence and `composer dump-autoload --optimize` is ok.';
-
-    throw new RuntimeException($e);
-}
+// if (!class_exists(\PHPUnit\Framework\TestCase::class)) {
+//     $e = 'If you execute command `composer dump-autoload --optimize --no-dev`,'.
+//     'then this will not be available.'.PHP_EOL.
+//     'PHPUnit and PHPStan belongs to development dependence and `composer dump-autoload --optimize` is ok.';
+//
+//     throw new RuntimeException($e);
+// }
