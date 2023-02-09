@@ -3,7 +3,9 @@ parameters:
 	paths:
 		- api
 		- app
+		- option
 		- assets/database
+		- tests
 	bootstrapFiles:
 		- %currentWorkingDirectory%/assets/phpstan/bootstrap.php
 	cache:
@@ -12,20 +14,6 @@ parameters:
 	checkMissingCallableSignature: true
 	excludePaths:
 		- %currentWorkingDirectory%/*Test.php
-		- ../src/Reflection/SignatureMap/functionMap.php
-		- ../src/Reflection/SignatureMap/functionMetadata.php
-		- ../tests/*/data/*
-		- ../tests/tmp/*
-		- ../tests/PHPStan/Analyser/traits/*
-		- ../tests/notAutoloaded/*
-		- ../tests/PHPStan/Generics/functions.php
-		- ../tests/PHPStan/Reflection/UnionTypesTest.php
-		- ../tests/PHPStan/Reflection/MixedTypeTest.php
-		- ../tests/PHPStan/Reflection/StaticTypeTest.php
-		- ../tests/e2e/magic-setter/*
-		- ../tests/PHPStan/Rules/Properties/UninitializedPropertyRuleTest.php
-		- ../tests/PHPStan/Command/IgnoredRegexValidatorTest.php
-		- ../src/Command/IgnoredRegexValidator.php
 	exceptions:
 		uncheckedExceptionClasses:
 			- 'PHPStan\ShouldNotHappenException'
@@ -37,6 +25,7 @@ parameters:
 			- 'PHPStan\DependencyInjection\ParameterNotFoundException'
 			- 'PHPStan\Analyser\UndefinedVariableException'
 			- 'RuntimeException'
+			- 'Exception'
 			- 'Nette\Neon\Exception'
 			- 'Nette\Utils\JsonException'
 			- 'PHPStan\File\CouldNotReadFileException'
