@@ -1,5 +1,5 @@
 parameters:
-	level: 2
+	level: 3
 	paths:
 		- api
 		- app
@@ -16,6 +16,8 @@ parameters:
 		- %currentWorkingDirectory%/*Test.php
 	ignoreErrors:
 		- '#Access to an undefined property [\S\s]+::\$[\S\s]+\.#'
+		- '#should return [\S\s]+ but returns Leevel\\Database\\Ddd\\Entity\.#'
+		- '#should return [\S\s]+ but returns Leevel\\Database\\Ddd\\Repository\.#'
 	exceptions:
 		uncheckedExceptionClasses:
 			- 'PHPStan\ShouldNotHappenException'
@@ -52,3 +54,4 @@ parameters:
 			tooWideThrowType: true
 	reportStaticMethodSignatures: true
 	tmpDir: %rootDir%/../../storage/phpstan
+	reportUnmatchedIgnoredErrors: false
