@@ -16,7 +16,7 @@ class RoadRunnerDump
     /**
      * 调试 RoadRunner 变量.
      */
-    public static function handle(mixed $var, ...$moreVars): mixed
+    public static function handle(mixed $var, mixed ...$moreVars): mixed
     {
         static $dumper;
 

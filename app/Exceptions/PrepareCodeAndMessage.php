@@ -13,7 +13,7 @@ trait PrepareCodeAndMessage
         int|object $code = 0,
         string $message = '',
         bool $overrideMessage = false
-    ) {
+    ): array {
         $message = $overrideMessage ? $message :
                     $this->getErrorMessage($code).($message ? ': '.$message : '');
         if (\is_object($code)) {

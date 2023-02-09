@@ -26,7 +26,7 @@ if (!function_exists('sql_listener')) {
             ->register(IDatabase::SQL_EVENT, function (string $event, string $sql) use ($call): void {
                 $call($event, $sql);
             })
-    ;
+        ;
     }
 }
 
@@ -51,7 +51,7 @@ if (!function_exists('get_current_date')) {
     /**
      * 获取当前时间.
      */
-    function get_current_date()
+    function get_current_date(): string
     {
         return date('Y-m-d H:i:s');
     }
@@ -89,7 +89,7 @@ if (!function_exists('rr_dump')) {
     /**
      * 调试 RoadRunner 变量.
      */
-    function rr_dump(mixed $var, ...$moreVars): mixed
+    function rr_dump(mixed $var, mixed ...$moreVars): mixed
     {
         return RoadRunnerDump::handle($var, ...$moreVars);
     }
