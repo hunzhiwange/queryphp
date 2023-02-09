@@ -1,5 +1,5 @@
 parameters:
-	level: 1
+	level: 2
 	paths:
 		- api
 		- app
@@ -14,6 +14,8 @@ parameters:
 	checkMissingCallableSignature: true
 	excludePaths:
 		- %currentWorkingDirectory%/*Test.php
+	ignoreErrors:
+		- '#Access to an undefined property [\S\s]+::\$[\S\s]+\.#'
 	exceptions:
 		uncheckedExceptionClasses:
 			- 'PHPStan\ShouldNotHappenException'
