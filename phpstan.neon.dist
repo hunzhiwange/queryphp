@@ -18,6 +18,7 @@ parameters:
 		- '#Access to an undefined property [\S\s]+::\$[\S\s]+\.#'
 		- '#should return [\S\s]+ but returns Leevel\\Database\\Ddd\\Entity\.#'
 		- '#should return [\S\s]+ but returns Leevel\\Database\\Ddd\\Repository\.#'
+		- '#Property [\S\s]+ does not accept Leevel\\Database\\Ddd\\Entity\.#'
 	exceptions:
 		uncheckedExceptionClasses:
 			- 'PHPStan\ShouldNotHappenException'
