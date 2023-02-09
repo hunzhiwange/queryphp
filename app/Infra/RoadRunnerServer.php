@@ -30,6 +30,8 @@ class RoadRunnerServer
     {
         $this->checkEnvironment();
         $this->setDisplayErrors();
+
+        /** @var IKernel $kernel */
         $kernel = $app->container()->make(IKernel::class);
         $httpFoundationFactory = new HttpFoundationFactory();
         $psr17Factory = new Psr17Factory();

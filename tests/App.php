@@ -41,6 +41,7 @@ trait App
 
         $container->instance('request', Request::createFromGlobals());
         $container->alias('request', [Request::class, Request::class]);
+        // @phpstan-ignore-next-line
         $container->make(IKernelConsole::class)->bootstrap();
 
         return $app;

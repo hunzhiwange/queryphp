@@ -22,6 +22,7 @@ if (!function_exists('sql_listener')) {
      */
     function sql_listener(Closure $call): void
     {
+        // @phpstan-ignore-next-line
         \App::make('event')
             ->register(IDatabase::SQL_EVENT, function (string $event, string $sql) use ($call): void {
                 $call($event, $sql);

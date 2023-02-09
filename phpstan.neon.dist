@@ -1,5 +1,5 @@
 parameters:
-	level: 8
+	level: 9
 	paths:
 		- api
 		- app
@@ -26,6 +26,9 @@ parameters:
 		- '#Cannot call method withProps\(\) on [\S\s]+\|null\.#'
 		- '#Argument of an invalid type Leevel\\Support\\TypedIntArray\|null supplied for foreach, only iterables are supported\.#'
 		- '#Cannot access property \$[\S\s]+ on [\S\s]+\|null\.#'
+		- '#Cannot access offset [\S\s]+ on mixed\.#'
+		- '#Cannot cast mixed to[\S\s]+\.#'
+		- '#Cannot access property [\S\s]+ on mixed\.#'
 	exceptions:
 		uncheckedExceptionClasses:
 			- 'PHPStan\ShouldNotHappenException'
