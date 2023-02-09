@@ -23,6 +23,9 @@ class SortParams extends ParamsDto
 
     /**
      * {@inheritDoc}
+     *
+     * @throws \Exception
+     * @throws ProjectBusinessException
      */
     protected function beforeValidate(): void
     {

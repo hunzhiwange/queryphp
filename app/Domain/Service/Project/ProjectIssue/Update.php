@@ -23,6 +23,9 @@ class Update
     {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(UpdateParams $params): array
     {
         if (isset($params->tags)) {
