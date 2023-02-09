@@ -25,6 +25,8 @@ class SortParams extends ParamsDto
 
     /**
      * {@inheritDoc}
+     *
+     * @throws \Exception
      */
     protected function beforeValidate(): void
     {
