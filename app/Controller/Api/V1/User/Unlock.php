@@ -23,6 +23,9 @@ class Unlock
         'password',
     ];
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Request $request, Service $service): array
     {
         $params = new UnlockParams($this->input($request));

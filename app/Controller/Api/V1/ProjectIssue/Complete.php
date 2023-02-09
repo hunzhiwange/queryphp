@@ -23,6 +23,9 @@ class Complete
         'completed',
     ];
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Request $request, Service $service): array
     {
         $params = new UpdateParams($this->input($request));

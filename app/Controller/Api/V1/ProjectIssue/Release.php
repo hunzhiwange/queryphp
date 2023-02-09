@@ -23,6 +23,9 @@ class Release
         'releases',
     ];
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Request $request, Service $service): array
     {
         $input = $this->input($request);

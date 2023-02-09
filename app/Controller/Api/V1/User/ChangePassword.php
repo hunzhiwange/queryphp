@@ -24,6 +24,9 @@ class ChangePassword
         'confirm_pwd',
     ];
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Request $request, Service $service): array
     {
         $params = new ChangePasswordParams($this->input($request));

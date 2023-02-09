@@ -22,6 +22,9 @@ class CancelFavor
         'project_id',
     ];
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Request $request, Service $service): array
     {
         $params = new CancelFavorParams($this->input($request));

@@ -23,6 +23,9 @@ class AddUsers
         'user_ids',
     ];
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Request $request, Service $service): array
     {
         $params = new AddUsersParams($this->input($request));
