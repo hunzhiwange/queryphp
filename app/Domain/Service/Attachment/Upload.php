@@ -56,7 +56,9 @@ class Upload
      */
     private function saveFile(string $sourcePath, string $savePath): void
     {
-        if (false === Filesystem::write($savePath, file_get_contents($sourcePath))) {
+        try {
+            Filesystem::write($savePath, file_get_contents($sourcePath));
+        } catch (\Throwable) {
             throw new UploadBusinessException(UploadErrorCode::FILE_UPLOAD_WRITE_FAILED);
         }
     }

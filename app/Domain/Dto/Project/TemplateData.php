@@ -11,9 +11,9 @@ use Leevel\Support\Dto;
  */
 class TemplateData extends Dto
 {
-    public string $title;
+    public string $title = '';
 
-    public string $tag;
+    public string $tag = '';
 
-    public string $description;
+    public string $description = '';
 }

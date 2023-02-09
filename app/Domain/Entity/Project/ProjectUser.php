@@ -127,9 +127,6 @@ class ProjectUser extends Entity
         ],
     ]; // END STRUCT
 
-    #[type('收藏')]
-    public const TYPE_FAVOR = 2;
-
     /**
      * Soft delete column.
      */

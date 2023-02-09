@@ -6,6 +6,7 @@ namespace App\Domain\Service\User\User;
 
 use App\Domain\Entity\User\User;
 use App\Domain\Service\Support\Read;
+use App\Domain\Service\Support\ReadParams;
 use Leevel\Database\Ddd\Select;
 
 /**
@@ -17,7 +18,7 @@ class Users
 
     protected string $entityClass = User::class;
 
-    private function conditionCall(): ?\Closure
+    private function conditionCall(ReadParams $params): ?\Closure
     {
         return fn (Select $select) => $select->eager(['role']);
     }
