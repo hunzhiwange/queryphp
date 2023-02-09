@@ -19,6 +19,8 @@ class User extends Repository
 {
     /**
      * 通过用户名查找可用用户.
+     *
+     * @throws \Exception
      */
     public function findValidUserByName(string $name, string $column = '*'): EntityUser
     {
@@ -30,6 +32,8 @@ class User extends Repository
 
     /**
      * 通过用户 ID 查找可用用户.
+     *
+     * @throws \Exception
      */
     public function findValidUserById(int $id, string $column = '*'): EntityUser
     {
@@ -42,7 +46,7 @@ class User extends Repository
     /**
      * 通过条件查找可用用户.
      *
-     * @throws \App\Exceptions\UserBusinessException
+     * @throws \App\Exceptions\UserBusinessException|\Exception
      */
     public function findValidUserByCondition(\Closure $condition, string $column = '*'): EntityUser
     {
@@ -63,7 +67,7 @@ class User extends Repository
     /**
      * 校验密码.
      *
-     * @throws \App\Exceptions\UserBusinessException
+     * @throws \App\Exceptions\UserBusinessException|\Exception
      */
     public function verifyPassword(string $password, string $hash): void
     {
@@ -83,7 +87,7 @@ class User extends Repository
     /**
      * 校验用户.
      *
-     * @throws \App\Exceptions\UserBusinessException
+     * @throws \App\Exceptions\UserBusinessException|\Exception
      */
     public function verifyUsersByIds(array $userIds, ?\Closure $condition = null): void
     {

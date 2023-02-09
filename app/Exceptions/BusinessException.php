@@ -16,6 +16,8 @@ class BusinessException extends BaseBusinessException
 
     /**
      * 构造函数.
+     *
+     * @throws \Exception
      */
     public function __construct(
         int|object $code = 0,

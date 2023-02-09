@@ -18,6 +18,9 @@ class Unlock
     {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(UnlockParams $params): array
     {
         $params->validate();
@@ -37,6 +40,8 @@ class Unlock
 
     /**
      * 校验用户.
+     *
+     * @throws \Exception
      */
     private function validateUser(int $id, string $password): void
     {

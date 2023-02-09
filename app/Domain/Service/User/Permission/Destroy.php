@@ -21,6 +21,8 @@ class Destroy
 
     /**
      * 校验.
+     *
+     * @throws \Exception
      */
     private function validate(DestroyParams $params): void
     {
@@ -30,7 +32,7 @@ class Destroy
     /**
      * 判断是否存在子项.
      *
-     * @throws \App\Exceptions\UserBusinessException
+     * @throws \App\Exceptions\UserBusinessException|\Exception
      */
     private function checkChildren(int $id): void
     {
