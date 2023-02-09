@@ -9,5 +9,5 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadParams extends Dto
 {
-    public UploadedFile $file;
+    public ?UploadedFile $file = null;
 }

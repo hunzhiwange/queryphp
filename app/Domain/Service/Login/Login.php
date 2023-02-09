@@ -28,6 +28,9 @@ class Login
     ) {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(LoginParams $params): array
     {
         $params->validate();
@@ -69,6 +72,8 @@ class Login
 
     /**
      * 查找应用秘钥.
+     *
+     * @throws \Exception
      */
     private function findAppSecret(string $appKey): string
     {

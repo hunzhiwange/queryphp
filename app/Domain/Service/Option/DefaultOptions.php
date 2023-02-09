@@ -20,7 +20,7 @@ class DefaultOptions extends Dto
     /**
      * 站点状态.
      */
-    public int $siteStatus;
+    public int $siteStatus = 0;
 
     protected function siteStatusDefaultValue(): int
     {
