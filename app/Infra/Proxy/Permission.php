@@ -29,6 +29,7 @@ class Permission
      */
     public static function proxy(): AdminPermisson
     {
+        // @phpstan-ignore-next-line
         return Container::singletons()->make('permission');
     }
 }

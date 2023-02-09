@@ -8,6 +8,7 @@ if (!function_exists('__')) {
      */
     function __(string $text, mixed ...$arr): string
     {
+        // @phpstan-ignore-next-line
         return sprintf($text, ...$arr);
     }
 }

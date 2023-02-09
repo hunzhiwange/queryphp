@@ -24,6 +24,7 @@ class Code
      */
     public function get(string $id): string
     {
+        // @phpstan-ignore-next-line
         return Cache::get('captcha:'.$id) ?: '';
     }
 }

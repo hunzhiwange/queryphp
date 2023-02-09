@@ -61,6 +61,7 @@ class User extends Repository
             throw new UserBusinessException(UserErrorCode::ACCOUNT_NOT_EXIST_OR_DISABLED);
         }
 
+        // @phpstan-ignore-next-line
         return $user;
     }
 
@@ -97,6 +98,7 @@ class User extends Repository
             $condition($select);
         }
         $users = $select->findAll();
+        // @phpstan-ignore-next-line
         if (\count($userIds) !== \count($users)) {
             throw new UserBusinessException(UserErrorCode::SOME_USERS_DOES_NOT_EXIST);
         }

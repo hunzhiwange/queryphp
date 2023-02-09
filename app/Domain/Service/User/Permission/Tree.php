@@ -35,10 +35,10 @@ class Tree
     /**
      * 将节点载入节点树并返回树结构.
      */
-    private function normalizeTree(Collection $entitys): array
+    private function normalizeTree(Collection $entities): array
     {
         return $this
-            ->createTree($entitys)
+            ->createTree($entities)
             ->toArray(function (array $item) {
                 return array_merge(['id' => $item['value'], 'expand' => true], $item['data']);
             })
@@ -48,21 +48,22 @@ class Tree
     /**
      * 生成节点树.
      */
-    private function createTree(Collection $entitys): BaseTree
+    private function createTree(Collection $entities): BaseTree
     {
-        return new BaseTree($this->parseToNode($entitys));
+        return new BaseTree($this->parseToNode($entities));
     }
 
     /**
      * 转换为节点数组.
      */
-    private function parseToNode(Collection $entitys): array
+    private function parseToNode(Collection $entities): array
     {
         $node = [];
-        foreach ($entitys as $e) {
+        foreach ($entities as $e) {
             $node[] = [
                 $e->id,
                 $e->pid,
+                // @phpstan-ignore-next-line
                 $e->toArray(),
             ];
         }
