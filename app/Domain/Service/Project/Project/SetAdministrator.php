@@ -104,6 +104,7 @@ class SetAdministrator
      * 校验基本参数.
      *
      * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \Exception
      */
     private function validateArgs(SetAdministratorParams $params): void
     {

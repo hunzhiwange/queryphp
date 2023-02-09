@@ -24,6 +24,9 @@ class CancelFavor
     ) {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(CancelFavorParams $params): array
     {
         $this->validateArgs($params);
@@ -33,6 +36,8 @@ class CancelFavor
 
     /**
      * 保存.
+     *
+     * @throws \Exception
      */
     private function save(CancelFavorParams $params): ProjectUser
     {
@@ -44,6 +49,9 @@ class CancelFavor
         return $entity;
     }
 
+    /**
+     * @throws \Exception
+     */
     private function entity(CancelFavorParams $params): ProjectUser
     {
         $this->findProject($params->projectId);
@@ -53,6 +61,7 @@ class CancelFavor
 
     /**
      * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \Exception
      */
     private function findProjectUser(CancelFavorParams $params): ProjectUser
     {
@@ -90,6 +99,7 @@ class CancelFavor
      * 校验基本参数.
      *
      * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \Exception
      */
     private function validateArgs(CancelFavorParams $params): void
     {

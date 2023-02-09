@@ -37,6 +37,8 @@ class SetMember
 
     /**
      * 保存.
+     *
+     * @throws \Exception
      */
     private function save(SetMemberParams $params): ProjectUser
     {

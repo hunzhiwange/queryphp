@@ -25,6 +25,7 @@ class AddUsers
 
     /**
      * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \Exception
      */
     public function handle(AddUsersParams $params): array
     {
@@ -72,6 +73,9 @@ class AddUsers
         ;
     }
 
+    /**
+     * @throws \Exception
+     */
     private function verifyUsers(TypedIntArray $userIds): void
     {
         User::repository()->verifyUsersByIds($userIds->toArray());

@@ -24,6 +24,9 @@ class Favor
     ) {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(FavorParams $params): array
     {
         $this->validateArgs($params);
@@ -33,6 +36,8 @@ class Favor
 
     /**
      * 保存.
+     *
+     * @throws \Exception
      */
     private function save(FavorParams $params): ProjectUser
     {
@@ -43,6 +48,9 @@ class Favor
         return $entity;
     }
 
+    /**
+     * @throws \Exception
+     */
     private function entity(FavorParams $params): ProjectUser
     {
         $this->findProject($params->projectId);
@@ -60,6 +68,7 @@ class Favor
 
     /**
      * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \Exception
      */
     private function findProjectUser(FavorParams $params): ProjectUser
     {
@@ -97,6 +106,7 @@ class Favor
      * 校验基本参数.
      *
      * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \Exception
      */
     private function validateArgs(FavorParams $params): void
     {
