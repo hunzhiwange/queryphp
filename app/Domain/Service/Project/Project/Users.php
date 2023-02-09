@@ -35,7 +35,7 @@ class Users
         $select->where('type', ProjectUserTypeEnum::MEMBER->value);
     }
 
-    private function conditionCall(UsersParams $params): ?\Closure
+    private function conditionCall(UsersParams $params): \Closure
     {
         return function (Select $select): void {
             $select

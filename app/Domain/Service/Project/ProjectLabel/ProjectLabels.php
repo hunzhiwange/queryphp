@@ -19,7 +19,7 @@ class ProjectLabels
 
     protected string $entityClass = ProjectLabel::class;
 
-    private function conditionCall(ProjectLabelsParams $params): ?\Closure
+    private function conditionCall(ProjectLabelsParams $params): \Closure
     {
         return function (Select $select): void {
             $select->eager([

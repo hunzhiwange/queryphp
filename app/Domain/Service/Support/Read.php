@@ -142,18 +142,16 @@ trait Read
         );
     }
 
-    private function conditionCall(ReadParams $params): ?\Closure
+    private function conditionCall(ReadParams $params): \Closure
     {
-        return null;
+        return function (): void {};
     }
 
-    private function baseCondition(ReadParams $params, ?\Closure $call = null): \Closure
+    private function baseCondition(ReadParams $params, \Closure $call): \Closure
     {
         return function (Select $select) use ($params, $call): void {
             $this->spec($select, $params);
-            if ($call) {
-                $call($select);
-            }
+            $call($select);
         };
     }
 

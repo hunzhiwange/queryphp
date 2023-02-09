@@ -18,7 +18,7 @@ class Users
 
     protected string $entityClass = User::class;
 
-    private function conditionCall(ReadParams $params): ?\Closure
+    private function conditionCall(ReadParams $params): \Closure
     {
         return fn (Select $select) => $select->eager(['role']);
     }

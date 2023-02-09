@@ -56,7 +56,7 @@ class ProjectIssues
         }
     }
 
-    private function conditionCall(ProjectIssuesParams $params): ?\Closure
+    private function conditionCall(ProjectIssuesParams $params): \Closure
     {
         return function (Select $select) use ($params) {
             $select->eager([
@@ -69,7 +69,7 @@ class ProjectIssues
             ]);
 
             if (!$params->userId && !$params->type) {
-                return null;
+                return function (): void {};
             }
 
             $select

@@ -63,10 +63,10 @@ class Projects
         }
     }
 
-    private function conditionCall(ProjectsParams $params): ?\Closure
+    private function conditionCall(ProjectsParams $params): \Closure
     {
         if (!$params->userId && !$params->type) {
-            return null;
+            return function (): void {};
         }
 
         return function (Select $select): void {
