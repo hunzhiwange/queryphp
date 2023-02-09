@@ -12,6 +12,9 @@ use Leevel\Validate\Validator;
 
 class SiteStatusValidator extends Validator
 {
+    /**
+     * @throws \Exception
+     */
     public function handle(string $key, int $value): void
     {
         $validator = Validate::make(

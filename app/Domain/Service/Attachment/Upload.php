@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Upload
 {
+    /**
+     * @throws \Exception
+     */
     public function handle(UploadParams $params): array
     {
         return $this->save($params->file);
@@ -25,6 +28,7 @@ class Upload
      * 保存文件.
      *
      * @throws \App\Exceptions\UploadBusinessException
+     * @throws \Exception
      */
     private function save(UploadedFile $file): array
     {
@@ -53,6 +57,7 @@ class Upload
      * 保存文件到服务器.
      *
      * @throws \App\Exceptions\UploadBusinessException
+     * @throws \Exception
      */
     private function saveFile(string $sourcePath, string $savePath): void
     {
