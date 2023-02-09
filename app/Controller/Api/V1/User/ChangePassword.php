@@ -31,7 +31,7 @@ class ChangePassword
         return success($service->handle($params), __('修改密码后你需要从新登陆'));
     }
 
-    private function extendInput(): array
+    private function extendInput(Request $request): array
     {
         return ['id' => $this->userId()];
     }

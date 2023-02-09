@@ -25,6 +25,9 @@ class SetAdministrator
     ) {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(SetAdministratorParams $params): array
     {
         $this->validateArgs($params);
@@ -46,6 +49,9 @@ class SetAdministrator
         return $entity;
     }
 
+    /**
+     * @throws \Exception
+     */
     private function entity(SetAdministratorParams $params): ProjectUser
     {
         $this->findProject($params->projectId);
@@ -86,9 +92,9 @@ class SetAdministrator
     /**
      * 查找实体.
      */
-    private function findProject(int $id): Project
+    private function findProject(int $id): void
     {
-        return $this->w
+        $this->w
             ->repository(Project::class)
             ->findOrFail($id)
         ;
