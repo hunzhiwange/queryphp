@@ -1345,6 +1345,7 @@ final class CartEntityTest extends TestCase
         static::assertSame($cartItemEntity2->price->salesPrice, 30.0);
 
         $cartEntity->calculatePrice(false);
+
         static::assertSame($cartItemEntity->price->purchasePrice, 10.0);
         static::assertSame($cartItemEntity2->price->purchasePrice, 30.0);
 
@@ -1387,13 +1388,13 @@ final class CartEntityTest extends TestCase
             'promotion_name' => '满100减20',
             'meet_threshold' => 99.0,
             'all_favorable_total_price' => 20,
-            'priority' => 3,
+            'priority' => 40,
         ]), $cartItemEntity, $cartItemEntity2);
         $cartEntity->addPromotion(new CartItemSpecialPromotionEntity([
             'promotion_id' => 1,
             'promotion_name' => '秒杀活动',
             'promotion_price' => 10,
-            'priority' => 40,
+            'priority' => 3,
         ]), $cartItemEntity);
 
         // 成交价格

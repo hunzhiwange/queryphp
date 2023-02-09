@@ -192,27 +192,26 @@ class CartEntity extends Dto
         /** @var CartItemPromotionEntity $promotion */
         foreach ($this->promotions as $promotion) {
             if ($promotion->cartItems->count()) {
-                $newPromotions[] = [
-                    'priority' => $promotion->priority(),
-                    'promotion_id' => $promotion->promotionId,
-                ];
+                $newPromotions[$promotion->priority()][] = $promotion->promotionId;
             }
         }
         if (!$newPromotions) {
             return;
         }
 
-        $newPromotions = array_key_sort($newPromotions, 'priority');
-        foreach ($newPromotions as $promotionItem) {
-            $promotion = $this->promotions->get($promotionItem['promotion_id']);
-            if ($promotion->cartItems->count()) {
-                $promotion->calculatePrice();
-                if (!$calculateIndependently) {
-                    // 通知价格更新
-                    /** @var CartItemEntity $cartItem */
-                    foreach ($promotion->cartItems as $cartItem) {
-                        // 遍历购物车项目计算价格
-                        $cartItem->calculatePrice();
+        ksort($newPromotions);
+        foreach ($newPromotions as $promotionIds) {
+            foreach ($promotionIds as $promotionId) {
+                $promotion = $this->promotions->get($promotionId);
+                if ($promotion->cartItems->count()) {
+                    $promotion->calculatePrice();
+                    if (!$calculateIndependently) {
+                        // 通知价格更新
+                        /** @var CartItemEntity $cartItem */
+                        foreach ($promotion->cartItems as $cartItem) {
+                            // 遍历购物车项目计算价格
+                            $cartItem->calculatePrice();
+                        }
                     }
                 }
             }
