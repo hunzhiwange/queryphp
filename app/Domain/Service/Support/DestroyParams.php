@@ -9,7 +9,7 @@ use App\Domain\Validate\Support\Destroy;
 
 class DestroyParams extends ParamsDto
 {
-    public int $id;
+    public int $id = 0;
 
     protected string $validatorClass = Destroy::class;
 }

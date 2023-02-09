@@ -52,7 +52,7 @@ class SetAdministrator
     }
 
     /**
-     * @throws \App\Exceptions\UserBusinessException
+     * @throws \App\Exceptions\ProjectBusinessException
      */
     private function findProjectUser(SetAdministratorParams $params): ProjectUser
     {

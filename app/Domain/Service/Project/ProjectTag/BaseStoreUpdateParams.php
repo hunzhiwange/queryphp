@@ -8,11 +8,11 @@ trait BaseStoreUpdateParams
 {
     public int $sort = 0;
 
-    public string $name;
+    public string $name = '';
 
-    public int $status;
+    public int $status = 0;
 
-    public string $color;
+    public string $color = '';
 
     public int $projectId = 0;
 }

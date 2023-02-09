@@ -52,7 +52,7 @@ class CancelFavor
     }
 
     /**
-     * @throws \App\Exceptions\UserBusinessException
+     * @throws \App\Exceptions\ProjectBusinessException
      */
     private function findProjectUser(CancelFavorParams $params): ProjectUser
     {

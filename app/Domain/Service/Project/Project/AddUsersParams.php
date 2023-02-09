@@ -12,9 +12,9 @@ use Leevel\Support\TypedIntArray;
  */
 class AddUsersParams extends Dto
 {
-    public int $projectId;
+    public int $projectId = 0;
 
-    public TypedIntArray $userIds;
+    public ?TypedIntArray $userIds = null;
 
     protected function userIdsDefaultValue(): TypedIntArray
     {

@@ -6,11 +6,11 @@ namespace App\Domain\Service\User\Permission;
 
 trait BaseStoreUpdateParams
 {
-    public string $num;
+    public string $num = '';
 
-    public string $name;
+    public string $name = '';
 
-    public int $status;
+    public int $status = 0;
 
-    public int $pid;
+    public int $pid = 0;
 }

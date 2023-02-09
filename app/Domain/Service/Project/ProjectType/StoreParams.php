@@ -15,7 +15,7 @@ class StoreParams extends CommonStoreParams
 {
     use BaseStoreUpdateParams;
 
-    public int $contentType;
+    public int $contentType = 0;
 
     protected string $entityClass = ProjectType::class;
 

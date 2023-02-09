@@ -12,9 +12,9 @@ use Leevel\Support\TypedIntArray;
  */
 class PermissionParams extends Dto
 {
-    public int $id;
+    public int $id = 0;
 
-    public TypedIntArray $permissionId;
+    public ?TypedIntArray $permissionId = null;
 
     protected function permissionIdDefaultValue(): TypedIntArray
     {

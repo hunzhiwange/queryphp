@@ -10,9 +10,9 @@ use Leevel\Support\TypedIntArray;
 
 class StatusParams extends ParamsDto
 {
-    public TypedIntArray $ids;
+    public ?TypedIntArray $ids = null;
 
-    public int $status;
+    public int $status = 0;
 
     protected string $validatorClass = Status::class;
 

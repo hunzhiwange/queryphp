@@ -11,5 +11,5 @@ use Leevel\Support\Dto;
  */
 class ShowParams extends Dto
 {
-    public int $id;
+    public int $id = 0;
 }

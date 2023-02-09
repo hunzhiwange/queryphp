@@ -14,9 +14,9 @@ use Leevel\Support\TypedIntArray;
  */
 class SortParams extends ParamsDto
 {
-    public int $projectId;
+    public int $projectId = 0;
 
-    public TypedIntArray $projectLabelIds;
+    public ?TypedIntArray $projectLabelIds = null;
 
     protected function projectLabelIdsTransformValue(string|array $value): TypedIntArray
     {

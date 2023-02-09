@@ -11,5 +11,5 @@ use Leevel\Support\Dto;
  */
 class ShowParams extends Dto
 {
-    public string $num;
+    public string $num = '';
 }

@@ -59,7 +59,7 @@ class Favor
     }
 
     /**
-     * @throws \App\Exceptions\UserBusinessException
+     * @throws \App\Exceptions\ProjectBusinessException
      */
     private function findProjectUser(FavorParams $params): ProjectUser
     {
