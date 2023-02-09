@@ -6,7 +6,7 @@ if (!function_exists('__')) {
     /**
      * lang.
      */
-    function __(string $text, ...$arr): string
+    function __(string $text, mixed ...$arr): string
     {
         return sprintf($text, ...$arr);
     }

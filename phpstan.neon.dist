@@ -1,5 +1,5 @@
 parameters:
-	level: 4
+	level: 6
 	paths:
 		- api
 		- app
@@ -19,6 +19,9 @@ parameters:
 		- '#should return [\S\s]+ but returns Leevel\\Database\\Ddd\\Entity\.#'
 		- '#should return [\S\s]+ but returns Leevel\\Database\\Ddd\\Repository\.#'
 		- '#Property [\S\s]+ does not accept Leevel\\Database\\Ddd\\Entity\.#'
+		- '#Parameter [\S\s]+ of method [\S\s]+ expects [\S\s]+, [\S\s]+ given\.#'
+		- '#has no value type specified in iterable type array\.#'
+		- '#with no value type specified in iterable type array\.#'
 	exceptions:
 		uncheckedExceptionClasses:
 			- 'PHPStan\ShouldNotHappenException'
