@@ -26,6 +26,7 @@ class Store
         if ($params->template->key) {
             $this->w->on($entity, function (Project $entity) use ($params): void {
                 // 保存模板
+                // @phpstan-ignore-next-line
                 foreach ($params->template->data as $key => $item) {
                     $projectLabel = new ProjectLabel([
                         'project_id' => $entity->id,

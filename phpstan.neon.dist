@@ -1,5 +1,5 @@
 parameters:
-	level: 7
+	level: 8
 	paths:
 		- api
 		- app
@@ -22,6 +22,10 @@ parameters:
 		- '#Parameter [\S\s]+ of method [\S\s]+ expects [\S\s]+, [\S\s]+ given\.#'
 		- '#no value type specified in iterable type array\.#'
 		- '#no signature specified for Closure\.#'
+		- '#Cannot call method [\S\s]+ on Leevel\\Support\\[\S\s]+\|null\.#'
+		- '#Cannot call method withProps\(\) on [\S\s]+\|null\.#'
+		- '#Argument of an invalid type Leevel\\Support\\TypedIntArray\|null supplied for foreach, only iterables are supported\.#'
+		- '#Cannot access property \$[\S\s]+ on [\S\s]+\|null\.#'
 	exceptions:
 		uncheckedExceptionClasses:
 			- 'PHPStan\ShouldNotHappenException'

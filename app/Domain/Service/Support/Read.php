@@ -76,6 +76,7 @@ trait Read
     {
         $value = str_replace(' ', '%', $value);
         $select->where(function ($select) use ($value, $params): void {
+            // @phpstan-ignore-next-line
             foreach ($params->keyColumn as $v) {
                 $select->orWhere($v, 'like', '%'.$value.'%');
             }

@@ -325,6 +325,7 @@ class Auth extends BaseAuth
     private function getPathInfo(Request $request): string
     {
         // 去掉前缀
+        // @phpstan-ignore-next-line
         return preg_replace('/^api\/v([0-9])+:/', '', trim($request->getPathInfo(), '/'));
     }
 }
