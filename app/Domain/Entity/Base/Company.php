@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Entity\Base;
 
 use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\GetterSetter;
 
 /**
  * 公司.
  */
 class Company extends Entity
 {
-    use GetterSetter;
-
     /**
      * Database table.
      */

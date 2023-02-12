@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Entity\User;
 
 use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\GetterSetter;
 
 /**
  * 资源.
  */
 class Resource extends Entity
 {
-    use GetterSetter;
-
     /**
      * Database table.
      */

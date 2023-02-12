@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Entity\Project;
 
 use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\GetterSetter;
 use Leevel\Database\Ddd\Relation\BelongsTo;
 
 /**
@@ -13,8 +12,6 @@ use Leevel\Database\Ddd\Relation\BelongsTo;
  */
 class ProjectModule extends Entity
 {
-    use GetterSetter;
-
     /**
      * Database table.
      */

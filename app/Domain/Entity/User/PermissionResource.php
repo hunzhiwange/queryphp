@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Entity\User;
 
 use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\GetterSetter;
 
 /**
  * 权限资源关联.
  */
 class PermissionResource extends Entity
 {
-    use GetterSetter;
-
     /**
      * Database table.
      */
