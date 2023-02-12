@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Entity\Product;
 
 use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\GetterSetter;
 
 /**
  * base_brand.
  */
 class BaseBrand extends Entity
 {
-    use GetterSetter;
-
     /**
      * Database table.
      */
