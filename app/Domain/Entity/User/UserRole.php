@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Entity\User;
 
 use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\GetterSetter;
 
 /**
  * 用户角色.
  */
 class UserRole extends Entity
 {
-    use GetterSetter;
-
     /**
      * Database table.
      */

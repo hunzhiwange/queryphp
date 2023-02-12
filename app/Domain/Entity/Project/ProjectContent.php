@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Entity\Project;
 
 use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\GetterSetter;
 
 /**
  * 项目问题内容.
  */
 class ProjectContent extends Entity
 {
-    use GetterSetter;
-
     /**
      * Database table.
      */

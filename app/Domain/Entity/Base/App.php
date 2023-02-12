@@ -6,15 +6,12 @@ namespace App\Domain\Entity\Base;
 
 use App\Infra\Repository\Base\App as RepositoryApp;
 use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\GetterSetter;
 
 /**
  * 应用.
  */
 class App extends Entity
 {
-    use GetterSetter;
-
     /**
      * Database table.
      */

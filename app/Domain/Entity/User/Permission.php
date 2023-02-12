@@ -6,7 +6,6 @@ namespace App\Domain\Entity\User;
 
 use App\Infra\Repository\User\Permission as RepositoryPermission;
 use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\GetterSetter;
 use Leevel\Database\Ddd\Relation\ManyMany;
 
 /**
@@ -14,8 +13,6 @@ use Leevel\Database\Ddd\Relation\ManyMany;
  */
 class Permission extends Entity
 {
-    use GetterSetter;
-
     /**
      * Database table.
      */

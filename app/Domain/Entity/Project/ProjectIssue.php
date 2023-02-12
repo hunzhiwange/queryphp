@@ -6,7 +6,6 @@ namespace App\Domain\Entity\Project;
 
 use App\Infra\Repository\Project\ProjectIssue as ProjectProjectIssue;
 use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\GetterSetter;
 use Leevel\Database\Ddd\Relation\HasOne;
 use Leevel\Database\Ddd\Relation\ManyMany;
 
@@ -15,8 +14,6 @@ use Leevel\Database\Ddd\Relation\ManyMany;
  */
 class ProjectIssue extends Entity
 {
-    use GetterSetter;
-
     /**
      * Database table.
      */

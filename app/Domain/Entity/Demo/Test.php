@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Entity\Demo;
 
 use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\GetterSetter;
 
 /**
  * 测试.
@@ -16,7 +15,7 @@ use Leevel\Database\Ddd\GetterSetter;
  */
 final class Test extends Entity
 {
-    use GetterSetter;
+    public const CONNECT = 'mysql_test2';
 
     /**
      * Database table.

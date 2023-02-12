@@ -6,7 +6,6 @@ namespace App\Domain\Entity\User;
 
 use App\Infra\Repository\User\User as RepositoryUser;
 use Leevel\Database\Ddd\Entity;
-use Leevel\Database\Ddd\GetterSetter;
 use Leevel\Database\Ddd\Relation\ManyMany;
 
 /**
@@ -14,8 +13,6 @@ use Leevel\Database\Ddd\Relation\ManyMany;
  */
 class User extends Entity
 {
-    use GetterSetter;
-
     /**
      * Database table.
      */
