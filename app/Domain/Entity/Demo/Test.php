@@ -15,8 +15,6 @@ use Leevel\Database\Ddd\Entity;
  */
 final class Test extends Entity
 {
-    public const CONNECT = 'mysql_test2';
-
     /**
      * Database table.
      */
