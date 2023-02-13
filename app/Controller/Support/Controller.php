@@ -38,8 +38,3 @@ trait Controller
         return Auth::getLogin()['id'];
     }
 }
-
-function xx(): array
-{
-    return [];
-}
