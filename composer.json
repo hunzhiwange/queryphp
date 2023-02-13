@@ -18,6 +18,7 @@
         "ext-openssl": "*",
         "composer-runtime-api": ">=2.1",
         "hunzhiwange/framework": "^1.1",
+        "league/csv": "^9.8",
         "nesbot/carbon": "^2.66",
         "nyholm/psr7": "^1.5",
         "s1syphos/php-simple-captcha": "^2.2",
