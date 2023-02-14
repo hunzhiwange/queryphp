@@ -82,7 +82,7 @@ class Favor
         $entity = $this->w
             ->repository(ProjectUser::class)
             ->where($map)
-            ->findOne()
+            ->findEntity()
         ;
         if ($entity->id) {
             throw new ProjectBusinessException(ProjectErrorCode::PROJECT_USER_FAVOR_ALREADY_EXIST);

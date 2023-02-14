@@ -29,6 +29,7 @@ parameters:
 		- '#Cannot access offset [\S\s]+ on mixed\.#'
 		- '#Cannot cast mixed to[\S\s]+\.#'
 		- '#Cannot access property [\S\s]+ on mixed\.#'
+		- '#[\S\s]+ throws checked exception Error but [\S\s]+ missing from the PHPDoc @throws tag\.#'
 	exceptions:
 		uncheckedExceptionClasses:
 			- 'PHPStan\ShouldNotHappenException'

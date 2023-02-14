@@ -72,7 +72,7 @@ trait Read
     /**
      * 关键字条件.
      */
-    private function keySpec(Select $select, mixed $value, ReadParams $params): void
+    private function keySpec(Select $select, string $value, ReadParams $params): void
     {
         $value = str_replace(' ', '%', $value);
         $select->where(function ($select) use ($value, $params): void {
@@ -102,7 +102,7 @@ trait Read
     /**
      * 查询条数限制.
      */
-    private function limitSpec(Select $select, mixed $value): void
+    private function limitSpec(Select $select, array $value): void
     {
         $value = array_map(function ($v) {
             return (int) $v;
