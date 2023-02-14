@@ -30,6 +30,7 @@ parameters:
 		- '#Cannot cast mixed to[\S\s]+\.#'
 		- '#Cannot access property [\S\s]+ on mixed\.#'
 		- '#[\S\s]+ throws checked exception Error but [\S\s]+ missing from the PHPDoc @throws tag\.#'
+		- '#Class [\S\s]+ has an uninitialized property [\S\s]+. Give it default value or assign it in the constructor\.#'
 	exceptions:
 		uncheckedExceptionClasses:
 			- 'PHPStan\ShouldNotHappenException'

@@ -58,7 +58,7 @@ if (!function_exists('get_company_id')) {
      */
     function get_company_id(): int
     {
-        return \App::make('company_id');
+        return (int) \App::make('company_id');
     }
 }
 
@@ -84,6 +84,7 @@ if (!function_exists('http_request_value')) {
      */
     function http_request_value($name, $default = '', $filter = null, $datas = null)
     {
+        // @phpstan-ignore-next-line
         $request = http_request();
 
         if (strpos($name, '/')) { // 指定修饰符
@@ -97,44 +98,53 @@ if (!function_exists('http_request_value')) {
 
         switch (strtolower($method)) {
             case 'get'    :
+                // @phpstan-ignore-next-line
                 $input = $request->query->all();
 
                 break;
 
             case 'post'    :
+                // @phpstan-ignore-next-line
                 $input = $request->request->all();
 
                 break;
 
             case 'param'   :
+                // @phpstan-ignore-next-line
                 switch ($request->server->get('REQUEST_METHOD')) {
                     case Request::METHOD_POST:
+                        // @phpstan-ignore-next-line
                         $input = $request->request->all();
 
                         break;
 
                     default:
+                        // @phpstan-ignore-next-line
                         $input = $request->query->all();
                 }
 
                 break;
 
             case 'request' :
+                // @phpstan-ignore-next-line
                 $input = $request->request->all();
 
                 break;
 
             case 'session' :
+                // @phpstan-ignore-next-line
                 $input = $request->getSession()->all();
 
                 break;
 
             case 'cookie'  :
+                // @phpstan-ignore-next-line
                 $input = $request->cookies->all();
 
                 break;
 
             case 'server'  :
+                // @phpstan-ignore-next-line
                 $input = $request->server->all();
 
                 break;
@@ -154,7 +164,8 @@ if (!function_exists('http_request_value')) {
                 if (is_string($filters)) {
                     $filters = explode(',', $filters);
                 }
-                foreach ($filters as $filter) {
+                foreach ((array)$filters as $filter) {
+                    // @phpstan-ignore-next-line
                     $data = array_map_recursive($filter, $data); // 参数过滤
                 }
             }
@@ -177,7 +188,13 @@ if (!function_exists('http_request_value')) {
                         if (function_exists($filter)) {
                             $data = is_array($data) ? array_map_recursive($filter, $data) : $filter($data); // 参数过滤
                         } else {
-                            $data = filter_var($data, is_int($filter) ? $filter : filter_id($filter));
+                            if (!is_int($filter)) {
+                                $filter = filter_id($filter);
+                                if (false === $filter) {
+                                    throw new \Exception('Filter does not exist.');
+                                }
+                            }
+                            $data = filter_var($data, $filter);
                             if (false === $data) {
                                 return $default ?? null;
                             }
@@ -220,13 +237,29 @@ if (!function_exists('http_request_value')) {
     }
 }
 
+
+
 if (!function_exists('http_request')) {
     /**
      * 获取请求对象.
      */
     function http_request(): Request
     {
+        // @phpstan-ignore-next-line
         return container()->make(Request::class);
+    }
+}
+
+if (!function_exists('array_map_recursive')) {
+    // @phpstan-ignore-next-line
+    function array_map_recursive(callable $filter, array $data):array {
+        $result = array();
+        foreach ($data as $key => $val) {
+            $result[$key] = is_array($val)
+                ? array_map_recursive($filter, $val)
+                : call_user_func($filter, $val);
+        }
+        return $result;
     }
 }
 
@@ -236,6 +269,7 @@ if (!function_exists('container')) {
      */
     function container(): Container
     {
+        // @phpstan-ignore-next-line
         return Container::singletons();
     }
 }

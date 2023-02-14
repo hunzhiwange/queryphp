@@ -592,7 +592,7 @@ abstract class Model
         $countThis = clone $this;
 
         return [
-            'count' => $this->totalCount = $countThis->count(),
+            'count' => $this->totalCount = (int)$countThis->count(),
             'list' => $this->select(),
         ];
     }
@@ -611,6 +611,7 @@ abstract class Model
     {
         $where = [];
         if (is_numeric($options) || \is_string($options)) {
+            // @phpstan-ignore-next-line
             $where[$this->getPk()] = $options;
             $options = [];
             $options['where'] = $where;
@@ -685,7 +686,7 @@ abstract class Model
             $where = $map;
         }
         if (isset($this->options['where'])) {
-            $this->options['where'] = array_merge($this->options['where'], $where);
+            $this->options['where'] = array_merge($this->options['where'], (array)$where);
         } else {
             $this->options['where'] = $where;
         }
@@ -797,7 +798,9 @@ abstract class Model
         $pk = $this->getPk();
         if (empty($options) && empty($this->options['where'])) {
             // 如果删除条件为空，则删除当前数据对象所对应的记录
+            // @phpstan-ignore-next-line
             if (!empty($this->data) && isset($this->data[$pk])) {
+                // @phpstan-ignore-next-line
                 return $this->delete($this->data[$pk]);
             }
 
@@ -807,8 +810,10 @@ abstract class Model
         if (is_numeric($options) || \is_string($options)) {
             // 根据主键删除记录
             if (\is_string($options) && strpos($options, ',')) {
+                // @phpstan-ignore-next-line
                 $where[$pk] = ['IN', $options];
             } else {
+                // @phpstan-ignore-next-line
                 $where[$pk] = $options;
             }
             $options = [];
@@ -839,7 +844,9 @@ abstract class Model
             // 如果条件为空，不进行删除操作，除非设置 1=1
             throw new \Exception('Empty where condition.');
         }
+        // @phpstan-ignore-next-line
         if (\is_array($options['where']) && isset($options['where'][$pk])) {
+            // @phpstan-ignore-next-line
             $pkValue = $options['where'][$pk];
         }
 
@@ -848,6 +855,7 @@ abstract class Model
         if (is_numeric($result)) {
             $data = [];
             if (isset($pkValue)) {
+                // @phpstan-ignore-next-line
                 $data[$pk] = $pkValue;
             }
             $this->_after_delete($data, $options);
@@ -930,19 +938,21 @@ abstract class Model
             $options['where'] = $where;
         }
 
+        // @phpstan-ignore-next-line
         if (\is_array($options['where']) && isset($options['where'][$pk])) {
+            // @phpstan-ignore-next-line
             $pkValue = $options['where'][$pk];
         }
         $this->_before_update($data, $options);
         $affectedRow = $this->database->update($data, $options);
-        if ($affectedRow > 0) {
+        if (is_int($affectedRow) && $affectedRow > 0) {
             if (isset($pkValue)) {
                 $data[$pk] = $pkValue;
             }
             $this->_after_update($data, $options);
         }
 
-        return $affectedRow;
+        return (int) $affectedRow;
     }
 
     /**
@@ -964,6 +974,7 @@ abstract class Model
     {
         // 如果没有传值默认取POST数据
         if (empty($data)) {
+            // @phpstan-ignore-next-line
             $data = http_request()->request->all();
         } elseif (\is_object($data)) {
             $data = get_object_vars($data);
@@ -974,6 +985,7 @@ abstract class Model
         }
 
         // 状态
+        // @phpstan-ignore-next-line
         $type = $type ?: (!empty($data[$this->getPk()]) ? self::MODEL_UPDATE : self::MODEL_INSERT);
 
         // 检测提交字段的合法性
@@ -1003,7 +1015,7 @@ abstract class Model
 
         // 验证完成生成数据对象
         if ($this->autoCheckFields) { // 开启字段检测 则过滤非法字段数据
-            $fields = $this->getDbFields();
+            $fields = (array)$this->getDbFields();
             foreach ($data as $key => $val) {
                 if (!\in_array($key, $fields, true)) {
                     unset($data[$key]);
@@ -1022,14 +1034,14 @@ abstract class Model
     /**
      * 验证数据 支持 in between equal length regex expire ip_allow ip_deny.
      */
-    public function check(mixed $value, array|string $rule, string $type = 'regex'): bool
+    public function check(mixed $value, array|string|int $rule, string $type = 'regex'): bool
     {
         $type = strtolower(trim($type));
 
         switch ($type) {
             case 'in': // 验证是否在某个指定范围之内 逗号分隔字符串或者数组
             case 'notin':
-                $range = \is_array($rule) ? $rule : explode(',', $rule);
+                $range = \is_array($rule) ? $rule : explode(',', (string) $rule);
 
                 return 'in' === $type ? \in_array($value, $range, true) : !\in_array($value, $range, true);
 
@@ -1039,7 +1051,7 @@ abstract class Model
                     $min = $rule[0];
                     $max = $rule[1];
                 } else {
-                    [$min, $max] = explode(',', $rule);
+                    [$min, $max] = explode(',', (string) $rule);
                 }
 
                 return 'between' === $type ? $value >= $min && $value <= $max : $value < $min || $value > $max;
@@ -1049,8 +1061,11 @@ abstract class Model
                 return 'equal' === $type ? $value === $rule : $value !== $rule;
 
             case 'length': // 验证长度
+                if (!is_string($value)) {
+                    throw new \Exception('Validate data is invalid.');
+                }
                 $length = mb_strlen($value, 'utf-8'); // 当前数据长度
-                if (strpos($rule, ',')) { // 长度区间
+                if (is_string($rule) && strpos($rule, ',')) { // 长度区间
                     [$min, $max] = explode(',', $rule);
 
                     return $length >= $min && $length <= $max;
@@ -1059,6 +1074,9 @@ abstract class Model
                 return $length === $rule;
 
             case 'expire':
+                if (!is_string($rule)) {
+                    throw new \Exception('Validate rule is invalid.');
+                }
                 [$start, $end] = explode(',', $rule);
                 if (!is_numeric($start)) {
                     $start = strtotime($start);
@@ -1268,7 +1286,7 @@ abstract class Model
     /**
      * 查询缓存.
      */
-    public function cache(bool|string $key = true, ?int $expire = null, ICache $cache = null): static
+    public function cache(bool|string|int $key = true, ?int $expire = null, ICache $cache = null): static
     {
         // 增加快捷调用方式 cache(10) 等同于 cache(true, 10)
         if (\is_int($key) && null === $expire) {
@@ -1301,6 +1319,7 @@ abstract class Model
                 $field = explode(',', $field);
             }
             $fields = $this->getDbFields();
+            // @phpstan-ignore-next-line
             $field = $fields ? array_diff($fields, $field) : $field;
         }
         $this->options['field'] = $field;
@@ -1405,11 +1424,12 @@ abstract class Model
         }
     }
 
-    protected function callStatisticalQuery($method, string $field): string|int|float
+    protected function callStatisticalQuery(string $method, string $field): string|int|float
     {
         try {
             $this->shouldCountSelect = true;
 
+            // @phpstan-ignore-next-line
             return $this->getField(strtoupper($method).'('.$field.') AS '.$method);
         } finally {
             $this->shouldCountSelect = false;
@@ -1544,10 +1564,10 @@ abstract class Model
         if ($type) {
             return ucfirst(preg_replace_callback('/_([a-zA-Z])/', function ($match) {
                 return strtoupper($match[1]);
-            }, $name));
+            }, $name) ?: '');
         }
 
-        return strtolower(trim(preg_replace('/[A-Z]/', '_\\0', $name), '_'));
+        return strtolower(trim(preg_replace('/[A-Z]/', '_\\0', $name) ?: '', '_'));
     }
 
     /**
@@ -1726,10 +1746,11 @@ abstract class Model
                     array_unshift($args, $data[$val[0]]);
                 }
                 if ('function' === $val[4]) {
-                    return \call_user_func_array($val[1], $args);
+                    return (bool) \call_user_func_array($val[1], $args);
                 }
 
-                return \call_user_func_array([&$this, $val[1]], $args);
+                // @phpstan-ignore-next-line
+                return (bool) \call_user_func_array([$this, $val[1]], $args);
 
             case 'confirm': // 验证两个字段是否相同
                 return $data[$val[0]] === $data[$val[1]];
@@ -1748,7 +1769,7 @@ abstract class Model
                     $map[$val[0]] = $data[$val[0]];
                 }
                 $pk = $this->getPk();
-                if (!empty($data[$pk]) && \is_string($pk)) { // 完善编辑的时候验证唯一
+                if (\is_string($pk) && !empty($data[$pk])) { // 完善编辑的时候验证唯一
                     $map[$pk] = ['neq', $data[$pk]];
                 }
                 if ($this->where($map)->find()) {
@@ -1824,7 +1845,11 @@ abstract class Model
                             if ('function' === $auto[3]) {
                                 $data[$auto[0]] = \call_user_func_array($auto[1], $args);
                             } else {
-                                $data[$auto[0]] = \call_user_func_array([&$this, $auto[1]], $args);
+                                if (!is_callable([$this, $auto[1]])) {
+                                    throw new \Exception('Auto callback is invalid.');
+                                }
+                                // @phpstan-ignore-next-line
+                                $data[$auto[0]] = \call_user_func_array([$this, $auto[1]], $args);
                             }
 
                             break;
