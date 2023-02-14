@@ -31,6 +31,8 @@ parameters:
 		- '#Cannot access property [\S\s]+ on mixed\.#'
 		- '#[\S\s]+ throws checked exception Error but [\S\s]+ missing from the PHPDoc @throws tag\.#'
 		- '#Class [\S\s]+ has an uninitialized property [\S\s]+. Give it default value or assign it in the constructor\.#'
+		- '#[\S\s]+ with no signature specified for callable\.#'
+		- '#Unsafe usage of new static\(\)\.#'
 	exceptions:
 		uncheckedExceptionClasses:
 			- 'PHPStan\ShouldNotHappenException'

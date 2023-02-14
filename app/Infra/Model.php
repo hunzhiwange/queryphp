@@ -200,6 +200,7 @@ abstract class Model
      */
     public function flush(): void
     {
+        /** @phpstan-ignore-next-line */
         $fields = $this->database->getFields();
         $pk = $fields['primaryKey'];
         if (\is_array($pk) && 1 === \count($pk)) {
@@ -324,10 +325,8 @@ abstract class Model
 
     /**
      * 获取一条记录的某个字段值.
-     *
-     * @param mixed $field
      */
-    public function getField($field, null|string|bool|int $separator = null): string|array|int|float
+    public function getField(string $field, null|string|bool|int $separator = null): string|array|int|float
     {
         $options['field'] = $field;
         $options = $this->_parseOptions($options);
@@ -344,7 +343,7 @@ abstract class Model
                 $options['limit'] = is_numeric($separator) ? $separator : '';
             }
             $resultSet = $this->database->select($this->filterOptionsForCountSelect($options));
-            if (empty($resultSet)) {
+            if (empty($resultSet) || !\is_array($resultSet)) {
                 return $resultSet;
             }
 
@@ -476,9 +475,9 @@ abstract class Model
         return $this;
     }
 
-    public function count(string $field = '*'): string|int
+    public function count(string $field = '*'): int
     {
-        return $this->totalCount = $this->callStatisticalQuery('count', $field);
+        return $this->totalCount = (int) $this->callStatisticalQuery('count', $field);
     }
 
     public function findList(array $in = []): string|array
@@ -497,9 +496,9 @@ abstract class Model
     {
         $pk = $this->getPk();
         $where = [];
-        if (\is_string($options) || is_numeric($options)) {
+        if (\is_string($pk) && (\is_string($options) || is_numeric($options))) {
             // 根据主键查询
-            if (strpos($options, ',')) {
+            if (\is_string($options) && strpos($options, ',')) {
                 $where[$pk] = ['IN', $options];
             } else {
                 $where[$pk] = $options;
