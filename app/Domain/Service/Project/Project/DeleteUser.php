@@ -75,7 +75,7 @@ class DeleteUser
         $entity = $this->w
             ->repository(ProjectUser::class)
             ->where($map)
-            ->findOne()
+            ->findEntity()
         ;
         if (!$entity->id) {
             throw new ProjectBusinessException(ProjectErrorCode::PROJECT_USER_MEMBER_NOT_EXIST);

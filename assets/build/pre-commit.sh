@@ -33,6 +33,33 @@ do
     FILES="$FILES $PROJECT/$FILE"
 done
 
+phpstan_path=$(cd `dirname $0`; pwd)"/../../assets/build/phpstan"
+
+if [ "$FILES" != "" ]
+then
+    echo "Running Code PHPstan Check..."
+
+    isCheck=""
+
+    for FILE in $SFILES
+    do
+        result=`php $phpstan_path analyse $FILE`
+        if [[ $result == *"[OK] No errors"* ]]
+        then
+            isCheck=""
+        else
+            echo $result
+            isCheck=$result
+        fi
+    done
+
+    if [ "$isCheck" != "" ]
+    then
+        echo "PHPstan error found."
+        exit 1
+    fi
+fi
+
 phpcsfixer_path=$(cd `dirname $0`; pwd)"/../../assets/build/php-cs-fixer"
 
 # format code style

@@ -59,7 +59,7 @@ class AddUsers
             ->repository(ProjectUser::class)
             ->where($baseData)
             ->setColumns('user_id')
-            ->findAll()
+            ->findMany()
         ;
 
         return array_column($users->toArray(), 'user_id');
