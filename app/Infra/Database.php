@@ -133,7 +133,7 @@ class Database
         $sql = (true === $replace ? 'REPLACE' : 'INSERT').' INTO '.$this->parseTable($options['table']).' ('.implode(',', $fields).') VALUES ('.implode(',', $values).')'.$this->parseDuplicate($replace);
         $sql .= $this->parseComment(!empty($options['comment']) ? $options['comment'] : '');
 
-        return $this->execute($sql, !empty($options['fetch_sql']));
+        return $this->execute($sql);
     }
 
     /**
@@ -147,7 +147,7 @@ class Database
     /**
      * 执行语句.
      */
-    public function execute(string $str, bool $fetchSql = false): int|string
+    public function execute(string $str): int|string
     {
         $this->queryStr = $str;
         if (!empty($this->bind)) {
@@ -155,10 +155,6 @@ class Database
             $this->queryStr = strtr($this->queryStr, array_map(function ($val) use ($that) {
                 return '\''.(\is_string($val) ? $that->escapeString($val) : $val).'\'';
             }, $this->bind));
-        }
-
-        if ($fetchSql) {
-            return $this->queryStr;
         }
 
         $this->bind = [];
@@ -201,7 +197,7 @@ class Database
         $sql = (true === $replace ? 'REPLACE' : 'INSERT').' INTO '.$this->parseTable($options['table']).' ('.implode(',', $fields).') VALUES '.implode(',', $values).$this->parseDuplicate($replace);
         $sql .= $this->parseComment(!empty($options['comment']) ? $options['comment'] : '');
 
-        return $this->execute($sql, !empty($options['fetch_sql']));
+        return $this->execute($sql);
     }
 
     /**
@@ -216,7 +212,7 @@ class Database
         $sql = 'INSERT INTO '.$this->parseTable($table).' ('.implode(',', $fields).') ';
         $sql .= $this->buildSelectSql($options);
 
-        return $this->execute($sql, !empty($options['fetch_sql']));
+        return $this->execute($sql);
     }
 
     /**
@@ -268,7 +264,7 @@ class Database
     /**
      * 更新记录.
      */
-    public function update(array $data, array $options): int|string
+    public function update(array $data, array $options): int
     {
         $table = $this->parseTable($options['table']);
         $sql = 'UPDATE '.$table.$this->parseSet($data);
@@ -283,13 +279,13 @@ class Database
         }
         $sql .= $this->parseComment(!empty($options['comment']) ? $options['comment'] : '');
 
-        return $this->execute($sql, !empty($options['fetch_sql']));
+        return $this->execute($sql);
     }
 
     /**
      * 删除记录.
      */
-    public function delete(array $options = []): int|string
+    public function delete(array $options = []): int
     {
         $table = $this->parseTable($options['table']);
         $sql = 'DELETE FROM '.$table;
@@ -307,7 +303,7 @@ class Database
         }
         $sql .= $this->parseComment(!empty($options['comment']) ? $options['comment'] : '');
 
-        return $this->execute($sql, !empty($options['fetch_sql']));
+        return $this->execute($sql);
     }
 
     /**
@@ -329,25 +325,23 @@ class Database
     {
         $sql = $this->buildSelectSql($options);
 
-        return $this->query($sql, !empty($options['fetch_sql']), $options['cache'] ?? []);
+        return $this->query($sql, $options['cache'] ?? []);
+    }
+
+    public function buildSelectSqlForSelect(array $options = []): string
+    {
+        $sql = $this->buildSelectSql($options);
+        $this->parseQuerySql($sql);
+
+        return $this->queryStr;
     }
 
     /**
      * 执行查询返回数据集.
      */
-    public function query(string $str, bool $fetchSql = false, array $cacheOptions = []): string|array
+    public function query(string $str, array $cacheOptions = []): array
     {
-        $this->queryStr = $str;
-        if (!empty($this->bind)) {
-            $that = $this;
-            $this->queryStr = strtr($this->queryStr, array_map(function ($val) use ($that) {
-                return '\''.$that->escapeString($val).'\'';
-            }, $this->bind));
-        }
-
-        if ($fetchSql) {
-            return $this->queryStr;
-        }
+        $this->parseQuerySql($str);
 
         $result = $this->entity::select()
             ->query(
@@ -849,5 +843,16 @@ class Database
         }
 
         return ' SET '.implode(',', $set);
+    }
+
+    protected function parseQuerySql(string $str): void
+    {
+        $this->queryStr = $str;
+        if (!empty($this->bind)) {
+            $that = $this;
+            $this->queryStr = strtr($this->queryStr, array_map(function ($val) use ($that) {
+                return '\''.$that->escapeString($val).'\'';
+            }, $this->bind));
+        }
     }
 }

@@ -14,6 +14,19 @@ use Tests\TestCase;
  */
 final class ModelTest extends TestCase
 {
+    public function test2(): void
+    {
+        $baseBrandModel = BaseBrandTestModel::make();
+        $map['brand_name|brand_num'] = 'QueryPHP';
+        $result = $baseBrandModel
+            ->where($map)
+            ->buildSql()
+        ;
+        $result = trim($result);
+        $sql = "( SELECT  * FROM `base_brand` WHERE ( `brand_name` = 'QueryPHP' OR `brand_num` = 'QueryPHP' )  )";
+        static::assertSame($result, $sql);
+    }
+
     public function testQuickQuery1(): void
     {
         $baseBrandModel = BaseBrandTestModel::make();
@@ -1877,14 +1890,11 @@ final class ModelTest extends TestCase
     {
         $baseBrandModel = BaseBrandTestModel::make();
         $sqlResult = $baseBrandModel
-            ->fetchSql(true)
             ->find(1)
         ;
-        $result = $baseBrandModel->getLastSql();
         $result = trim($baseBrandModel->getLastSql());
         $sql = 'SELECT  * FROM `base_brand` WHERE `brand_id` = 1 LIMIT 1';
         static::assertSame($result, $sql);
-        static::assertSame(trim($sqlResult), $sql);
     }
 
     public function testQuerySub116(): void
