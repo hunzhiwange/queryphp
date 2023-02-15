@@ -13,6 +13,7 @@ class BaseBrand
 {
     public function __construct()
     {
+        // @phpstan-ignore-next-line
         $this->in = http_request()->all();
         container()->instance('company_id', 0);
     }
@@ -75,7 +76,7 @@ class BaseBrand
      *
      * @see http://127.0.0.1:9527/base_brand/check_brand_name?brand_name=hello1
      */
-    public function checkBrandName()
+    public function checkBrandName(): array
     {
         if (!isset($this->in['brand_name'])) {
             return ['verify' => true];
@@ -184,6 +185,7 @@ class BaseBrand
     protected function page(int $maxPageSize = 30): void
     {
         $this->in['page'] = abs((int) ($this->in['page'] ?? 1));
+        // @phpstan-ignore-next-line
         $this->in['size'] = abs((int) ($this->in['size'] ?? 30));
         if ($this->in['size'] > $maxPageSize) {
             $this->in['size'] = $maxPageSize;

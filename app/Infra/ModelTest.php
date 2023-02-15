@@ -754,7 +754,7 @@ final class ModelTest extends TestCase
                 'brand_id' => 1,
             ])
             ->order('brand_id DESC')
-            ->select(false)
+            ->buildSql()
         ;
         $result = $baseBrandModel->getLastSql();
         $result = trim($baseBrandModel->getLastSql());

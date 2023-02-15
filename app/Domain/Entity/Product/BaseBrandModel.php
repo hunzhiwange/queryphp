@@ -126,7 +126,7 @@ class BaseBrandModel extends Model
             }
             $this->company_id = get_company_id();
             $this->brand_letter = strtoupper(RandAlpha::handle(5));
-            $intID = $this->add();
+            $intID = (int) $this->add();
         } else {
             $intID = (int) $arrData['brand_id'];
             $brand_name = $arrData['brand_name'];
@@ -161,6 +161,7 @@ class BaseBrandModel extends Model
         if (!$arrIn['brand_id']) {
             throw new \Exception('品牌 ID 未指定');
         }
+        // @phpstan-ignore-next-line
         $arrData['status'] = 'F';
         $this->save($arrData);
     }
@@ -188,7 +189,7 @@ class BaseBrandModel extends Model
         $arrIn['scope'] = 'list';
         $this->mergeScopeWhere($arrIn);
 
-        return $this->getField('brand_id,brand_name');
+        return (array) $this->getField('brand_id,brand_name');
     }
 
     /**

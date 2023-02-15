@@ -492,7 +492,7 @@ abstract class Model
      *
      * @throws \Exception
      */
-    public function select(int|string|array|bool $options = []): array|string
+    public function select(int|string|array $options = []): array
     {
         $pk = $this->getPk();
         $where = [];
@@ -523,8 +523,6 @@ abstract class Model
             } else {
                 throw new \Exception('Invalid primary where condition.');
             }
-        } elseif (false === $options) { // 用于子查询 不查询只返回SQL
-            return $this->buildSql();
         }
 
         // 分析表达式
@@ -537,9 +535,6 @@ abstract class Model
         }
 
         $resultSet = $this->database->select($options);
-        if (\is_string($resultSet)) {
-            return $resultSet;
-        }
 
         $this->_after_select($resultSet, $options);
         if (isset($options['index'])) { // 对数据集进行索引
