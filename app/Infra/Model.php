@@ -743,7 +743,7 @@ abstract class Model
     /**
      * @throws \Exception
      */
-    public function addAll(array $dataList, array $options = [], bool|string $replace = false): int|string
+    public function addAll(array $dataList, array $options = [], bool|string|array $replace = false): int|string
     {
         if (empty($dataList)) {
             throw new \Exception('Data type invalid.');

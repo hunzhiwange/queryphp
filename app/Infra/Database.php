@@ -157,7 +157,7 @@ class Database
      *
      * @throws \InvalidArgumentException
      */
-    public function insertAll(array $dataSet, array $options = [], bool|string $replace = false): int|string
+    public function insertAll(array $dataSet, array $options = [], bool|string|array $replace = false): int|string
     {
         $values = [];
         if (!\is_array($dataSet[0])) {
@@ -435,7 +435,7 @@ class Database
     /**
      * ON DUPLICATE KEY UPDATE 分析.
      */
-    protected function parseDuplicate(bool|string $duplicate): string
+    protected function parseDuplicate(bool|string|array $duplicate): string
     {
         // 布尔值或空则返回空字符串
         if (\is_bool($duplicate) || empty($duplicate)) {
@@ -443,36 +443,38 @@ class Database
         }
 
         // field1,field2 转数组
-        $duplicate = explode(',', $duplicate);
+        if (\is_string($duplicate)) {
+            $duplicate = explode(',', $duplicate);
+        }
 
         $updates = [];
         foreach ($duplicate as $key => $val) {
-            // if (is_numeric($key)) {
+            if (is_numeric($key)) {
                 // array('field1', 'field2', 'field3') 解析为 ON DUPLICATE KEY UPDATE field1=VALUES(field1), field2=VALUES(field2), field3=VALUES(field3)
-                // $updates[] = $this->parseKey($val).'=VALUES('.$this->parseKey($val).')';
-            // } else {
-            if (\is_scalar($val)) { // 兼容标量传值方式
-                $val = ['value', $val];
-            }
+                $updates[] = $this->parseKey($val).'=VALUES('.$this->parseKey($val).')';
+            } else {
+                if (\is_scalar($val)) { // 兼容标量传值方式
+                    $val = ['value', $val];
+                }
 
-            switch ($val[0]) {
-                case 'exp': // 表达式
-                    $key = (string) $key;
-                    $val[1] = (string) $val[1];
-                    $updates[] = $this->parseKey($key)."=({$val[1]})";
+                switch ($val[0]) {
+                    case 'exp': // 表达式
+                        $key = (string) $key;
+                        $val[1] = (string) $val[1];
+                        $updates[] = $this->parseKey($key)."=({$val[1]})";
 
-                    break;
+                        break;
 
-                case 'value': // 值
-                default:
-                    $name = \count($this->bind);
-                    $updates[] = $this->parseKey($key).'=:'.$name;
-                    $this->bindParam($name, $val[1]);
+                    case 'value': // 值
+                    default:
+                        $name = \count($this->bind);
+                        $updates[] = $this->parseKey($key).'=:'.$name;
+                        $this->bindParam($name, $val[1]);
 
-                    break;
+                        break;
+                }
             }
         }
-        // }
 
         return ' ON DUPLICATE KEY UPDATE '.implode(', ', $updates);
     }
