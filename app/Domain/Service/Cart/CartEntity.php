@@ -180,7 +180,7 @@ class CartEntity extends Dto
      */
     public function calculatePrice(bool $calculateIndependently = true): void
     {
-        $this->clearCartItemsPrice();
+        $this->initCartItemsPrice();
 
         foreach ($this->normalizeSortedPromotions($this->promotions) as $promotion) {
             $promotion->calculatePrice();
@@ -207,11 +207,11 @@ class CartEntity extends Dto
     /**
      * 清理一下价格信息.
      */
-    protected function clearCartItemsPrice(): void
+    protected function initCartItemsPrice(): void
     {
         /** @var CartItemEntity $cartItem */
         foreach ($this->cartItems as $cartItem) {
-            $cartItem->price->clearPrice();
+            $cartItem->price->initPrice();
         }
     }
 

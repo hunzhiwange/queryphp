@@ -122,7 +122,7 @@ class CartItemPriceEntity extends Dto
         ];
     }
 
-    public function clearPrice(): void
+    public function initPrice(): void
     {
         $this->promotionPriceArray = [];
         $this->favorableTotalPriceArray = [];
