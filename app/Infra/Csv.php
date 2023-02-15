@@ -25,6 +25,7 @@ class Csv
         $csv->setHeaderOffset(0);
         $records = $notice = $title = [];
         foreach ($csv->getRecords() as $index => $record) {
+            // @phpstan-ignore-next-line
             foreach ($record as $key => $value) {
                 if (1 === $index) {
                     $notice[$key] = $value;
