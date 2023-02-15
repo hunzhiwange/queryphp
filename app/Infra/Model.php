@@ -701,7 +701,7 @@ abstract class Model
      *
      * @throws \Exception
      */
-    public function add(mixed $data = '', array $options = [], bool $replace = false): int|string
+    public function add(mixed $data = '', array $options = [], bool|string $replace = false): int|string
     {
         if (empty($data)) {
             // 没有传递数据，获取当前数据对象的值
@@ -743,7 +743,7 @@ abstract class Model
     /**
      * @throws \Exception
      */
-    public function addAll(array $dataList, array $options = [], bool $replace = false): int|string
+    public function addAll(array $dataList, array $options = [], bool|string $replace = false): int|string
     {
         if (empty($dataList)) {
             throw new \Exception('Data type invalid.');
@@ -761,7 +761,7 @@ abstract class Model
     /**
      * 返回最后插入的 ID.
      */
-    public function getLastInsID(): null|string|int
+    public function getLastInsID(): string|int
     {
         $lastInsID = $this->database->getLastInsID();
         if (ctype_digit($lastInsID)) {
@@ -787,7 +787,7 @@ abstract class Model
      *
      * @throws \Exception
      */
-    public function delete(int|string|array $options = []): int|string
+    public function delete(int|string|array $options = []): int
     {
         $pk = $this->getPk();
         if (empty($options) && empty($this->options['where'])) {
@@ -845,15 +845,13 @@ abstract class Model
         }
 
         $this->_before_delete($options);
-        $result = $this->database->delete($options);
-        if (is_numeric($result)) {
-            $data = [];
-            if (isset($pkValue)) {
-                // @phpstan-ignore-next-line
-                $data[$pk] = $pkValue;
-            }
-            $this->_after_delete($data, $options);
+        $result = (int) $this->database->delete($options);
+        $data = [];
+        if (isset($pkValue)) {
+            // @phpstan-ignore-next-line
+            $data[$pk] = $pkValue;
         }
+        $this->_after_delete($data, $options);
         // 返回删除记录个数
         return $result;
     }
@@ -1180,7 +1178,7 @@ abstract class Model
     /**
      * 返回最后执行的 sql 语句.
      */
-    public function getLastSql(): null|string
+    public function getLastSql(): string
     {
         return $this->database->getLastSql();
     }
