@@ -63,14 +63,13 @@ class Database
         $this->entity = $entity;
     }
 
-    public function __sleep()
+    public function __sleep(): array
     {
         return [];
     }
 
-    public function __wakeup()
+    public function __wakeup(): void
     {
-        return [];
     }
 
     /**
@@ -129,7 +128,7 @@ class Database
             }
         }
         // 兼容数字传入方式
-        $replace = (is_numeric($replace) && $replace > 0) ? true : $replace;
+        $replace = is_numeric($replace) && $replace > 0 ? true : $replace;
         $sql = (true === $replace ? 'REPLACE' : 'INSERT').' INTO '.$this->parseTable($options['table']).' ('.implode(',', $fields).') VALUES ('.implode(',', $values).')'.$this->parseDuplicate($replace);
         $sql .= $this->parseComment(!empty($options['comment']) ? $options['comment'] : '');
 
@@ -149,15 +148,7 @@ class Database
      */
     public function execute(string $str): int|string
     {
-        $this->queryStr = $str;
-        if (!empty($this->bind)) {
-            $that = $this;
-            $this->queryStr = strtr($this->queryStr, array_map(function ($val) use ($that) {
-                return '\''.(\is_string($val) ? $that->escapeString($val) : $val).'\'';
-            }, $this->bind));
-        }
-
-        $this->bind = [];
+        $this->parseQuerySql($str);
 
         return $this->entity::select()->execute($this->queryStr);
     }
@@ -193,7 +184,7 @@ class Database
             $values[] = '('.implode(',', $value).')';
         }
         // 兼容数字传入方式
-        $replace = (is_numeric($replace) && $replace > 0) ? true : $replace;
+        $replace = is_numeric($replace) && $replace > 0 ? true : $replace;
         $sql = (true === $replace ? 'REPLACE' : 'INSERT').' INTO '.$this->parseTable($options['table']).' ('.implode(',', $fields).') VALUES '.implode(',', $values).$this->parseDuplicate($replace);
         $sql .= $this->parseComment(!empty($options['comment']) ? $options['comment'] : '');
 
@@ -222,7 +213,7 @@ class Database
      */
     public function buildSelectSql($options = []): string
     {
-        if (!empty($options['page'])) {
+        if (!empty($options['page']) && is_array($options['page'])) {
             // 根据页数计算 limit
             [$page, $listRows] = $options['page'];
             $page = $page > 0 ? $page : 1;
@@ -279,7 +270,7 @@ class Database
         }
         $sql .= $this->parseComment(!empty($options['comment']) ? $options['comment'] : '');
 
-        return $this->execute($sql);
+        return (int)$this->execute($sql);
     }
 
     /**
@@ -303,7 +294,7 @@ class Database
         }
         $sql .= $this->parseComment(!empty($options['comment']) ? $options['comment'] : '');
 
-        return $this->execute($sql);
+        return (int)$this->execute($sql);
     }
 
     /**
@@ -343,7 +334,7 @@ class Database
     {
         $this->parseQuerySql($str);
 
-        $result = $this->entity::select()
+        $result = (array) $this->entity::select()
             ->query(
                 $this->queryStr,
                 [],
@@ -353,10 +344,8 @@ class Database
                 $cacheOptions['cache'] ?? null,
             )
         ;
-        if (\is_array($result)) {
-            foreach ($result as &$v) {
-                $v = (array) $v;
-            }
+        foreach ($result as &$v) {
+            $v = (array) $v;
         }
 
         return $result;
@@ -365,7 +354,7 @@ class Database
     /**
      * 获取最近一次查询的 SQL 语句.
      */
-    public function getLastSql(): ?string
+    public function getLastSql(): string
     {
         return $this->queryStr;
     }
@@ -380,10 +369,8 @@ class Database
 
     /**
      * 字段和表名处理.
-     *
-     * @param mixed $key
      */
-    protected function parseKey(&$key): string
+    protected function parseKey(string &$key): string
     {
         $key = trim($key);
         if (!is_numeric($key) && !preg_match('/[,\'\"*()`.\s]/', $key)) {
@@ -462,7 +449,7 @@ class Database
             $duplicate = explode(',', $duplicate);
         } elseif (\is_object($duplicate)) {
             // 对象转数组
-            $duplicate = get_class_vars($duplicate);
+            $duplicate = get_class_vars(get_class($duplicate));
         }
         $updates = [];
         foreach ((array) $duplicate as $key => $val) {
@@ -479,6 +466,8 @@ class Database
 
                 switch ($val[0]) {
                     case 'exp': // 表达式
+                        $key = (string) $key;
+                        $val[1] = (string) $val[1];
                         $updates[] = $this->parseKey($key)."=({$val[1]})";
 
                         break;
@@ -554,8 +543,12 @@ class Database
      */
     protected function parseJoin(string|array $join): string
     {
+        if (is_string($join)) {
+            return $join;
+        }
+
         $joinStr = '';
-        if (!empty($join)) {
+        if ($join) {
             $joinStr = ' '.implode(' ', $join).' ';
         }
 
@@ -572,7 +565,7 @@ class Database
             // 直接使用字符串条件
             $whereStr = $where;
         } else { // 使用数组表达式
-            $operate = isset($where['_logic']) ? strtoupper($where['_logic']) : '';
+            $operate = isset($where['_logic']) && is_string($where['_logic']) ? strtoupper($where['_logic']) : '';
             if (\in_array($operate, ['AND', 'OR', 'XOR'], true)) {
                 // 定义逻辑运算规则 例如 OR XOR AND NOT
                 $operate = ' '.$operate.' ';
@@ -581,17 +574,17 @@ class Database
                 // 默认进行 AND 运算
                 $operate = ' AND ';
             }
-            foreach ($where as $key => $val) {
+            foreach ((array)$where as $key => $val) {
                 if (is_numeric($key)) {
                     $key = '_complex';
                 }
-                if (str_starts_with($key, '_')) {
+                if (is_string($key) && str_starts_with($key, '_')) {
                     // 解析特殊条件表达式
                     $whereStr .= $this->parseThinkWhere($key, $val);
                 } else {
                     // 多条件支持
                     $multi = \is_array($val) && isset($val['_multi']);
-                    $key = trim($key);
+                    $key = trim((string)$key);
                     if (strpos($key, '|')) { // 支持 name|title|nickname 方式定义查询字段
                         $array = explode('|', $key);
                         $str = [];
@@ -642,8 +635,11 @@ class Database
 
             case '_query':
                 // 字符串模式查询条件
-                parse_str($val, $where);
+                parse_str((string)$val, $where);
                 if (isset($where['_logic'])) {
+                    if (!is_string($where['_logic'])) {
+                        throw new \Exception('Logic is string.');
+                    }
                     $op = ' '.strtoupper($where['_logic']).' ';
                     unset($where['_logic']);
                 } else {
@@ -696,7 +692,7 @@ class Database
                         if (\is_string($val[1])) {
                             $val[1] = explode(',', $val[1]);
                         }
-                        $zone = implode(',', $this->parseValue($val[1]));
+                        $zone = implode(',', (array) $this->parseValue($val[1]));
                         $whereStr .= $key.' '.$this->exp[$exp].' ('.$zone.')';
                     }
                 } elseif (preg_match('/^(notbetween|not between|between)$/', $exp)) { // BETWEEN运算
@@ -789,7 +785,7 @@ class Database
             $str = 'UNION ';
         }
         $sql = [];
-        foreach ($union as $u) {
+        foreach ((array)$union as $u) {
             $sql[] = $str.(\is_array($u) ? $this->buildSelectSql($u) : $u);
         }
 
@@ -851,8 +847,9 @@ class Database
         if (!empty($this->bind)) {
             $that = $this;
             $this->queryStr = strtr($this->queryStr, array_map(function ($val) use ($that) {
-                return '\''.$that->escapeString($val).'\'';
+                return '\''.(is_string($val) ? $that->escapeString($val): $val).'\'';
             }, $this->bind));
         }
+        $this->bind = [];
     }
 }
