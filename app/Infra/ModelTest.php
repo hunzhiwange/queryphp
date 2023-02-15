@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infra;
 
+use App\Domain\Entity\Product\BaseBrandModel;
 use Leevel\Http\Request;
 use Tests\TestCase;
 
@@ -16,7 +17,7 @@ final class ModelTest extends TestCase
 {
     public function test2(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name|brand_num'] = 'QueryPHP';
         $result = $baseBrandModel
             ->where($map)
@@ -29,7 +30,7 @@ final class ModelTest extends TestCase
 
     public function testQuickQuery1(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name|brand_num'] = 'QueryPHP';
         $result = $baseBrandModel
             ->where($map)
@@ -42,7 +43,7 @@ final class ModelTest extends TestCase
 
     public function testQuickQuery1Sub1(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = 'QueryPHP';
         $map['brand_num'] = 'QueryPHP';
         $map['_logic'] = 'OR';
@@ -59,7 +60,7 @@ final class ModelTest extends TestCase
     {
         container()->instance('company_id', 0);
 
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name|brand_num'] = 'QueryPHP';
         $data = $baseBrandModel
             ->where($map)
@@ -97,7 +98,7 @@ final class ModelTest extends TestCase
 
     public function testQuickQuery2(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name&brand_num'] = ['品牌1', '品牌2', '_multi' => true];
         $result = $baseBrandModel
             ->where($map)
@@ -110,7 +111,7 @@ final class ModelTest extends TestCase
 
     public function testQuickQuery2Sub2(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = '品牌1';
         $map['brand_num'] = '品牌2';
         $result = $baseBrandModel
@@ -124,7 +125,7 @@ final class ModelTest extends TestCase
 
     public function testQuickQuery3(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['`brand_name`&brand_num&`brand_logo`'] = ['1', ['gt', '0'], 'QueryPHP', '_multi' => true];
         $result = $baseBrandModel
             ->where($map)
@@ -137,7 +138,7 @@ final class ModelTest extends TestCase
 
     public function testQuickQuery3Sub1(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = '1';
         $map['brand_num'] = ['gt', 0];
         $map['brand_logo'] = 'QueryPHP';
@@ -152,7 +153,7 @@ final class ModelTest extends TestCase
 
     public function testQuery1(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map = "brand_name='q' AND brand_num='y'";
         $result = $baseBrandModel
             ->where($map)
@@ -165,7 +166,7 @@ final class ModelTest extends TestCase
 
     public function testQuery2(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = 'h';
         $map['brand_num'] = 'y';
         $result = $baseBrandModel
@@ -179,7 +180,7 @@ final class ModelTest extends TestCase
 
     public function testQuery3(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = 'h';
         $map['brand_num'] = 'y';
         $map['_logic'] = 'OR';
@@ -194,7 +195,7 @@ final class ModelTest extends TestCase
 
     public function testQuery4(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map = new \stdClass();
         $map->brand_name = 'hello';
         $map->brand_num = 'world';
@@ -209,7 +210,7 @@ final class ModelTest extends TestCase
 
     public function testQuery5(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = 'h';
         $map['brand_num'] = 'y';
         $map['not_found_field'] = 'y';
@@ -224,7 +225,7 @@ final class ModelTest extends TestCase
 
     public function testQuery6(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = ['eq', 'h'];
         $result = $baseBrandModel
             ->where($map)
@@ -237,7 +238,7 @@ final class ModelTest extends TestCase
 
     public function testQuery7(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = ['neq', 'h'];
         $result = $baseBrandModel
             ->where($map)
@@ -250,7 +251,7 @@ final class ModelTest extends TestCase
 
     public function testQuery8(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = ['gt', 'h'];
         $result = $baseBrandModel
             ->where($map)
@@ -263,7 +264,7 @@ final class ModelTest extends TestCase
 
     public function testQuery9(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = ['egt', 'h'];
         $result = $baseBrandModel
             ->where($map)
@@ -276,7 +277,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub1(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = ['lt', 'h'];
         $result = $baseBrandModel
             ->where($map)
@@ -289,7 +290,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub3(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = ['elt', 'h'];
         $result = $baseBrandModel
             ->where($map)
@@ -302,7 +303,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub4(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = ['like', 'h%'];
         $result = $baseBrandModel
             ->where($map)
@@ -315,7 +316,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub5(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = ['notlike', 'h%'];
         $result = $baseBrandModel
             ->where($map)
@@ -328,7 +329,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub6(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = ['like', ['%thinkphp%', '%q'], 'OR'];
         $map['brand_num'] = ['notlike', ['%thinkphp%', '%q'], 'AND'];
         $result = $baseBrandModel
@@ -342,7 +343,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub7(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = ['between', '1,8'];
         $result = $baseBrandModel
             ->where($map)
@@ -355,7 +356,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub8(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = ['between', ['1', '8']];
         $result = $baseBrandModel
             ->where($map)
@@ -368,7 +369,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub9(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = ['notbetween', ['1', '8']];
         $result = $baseBrandModel
             ->where($map)
@@ -381,7 +382,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub10(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = ['notbetween', '1,8'];
         $result = $baseBrandModel
             ->where($map)
@@ -394,7 +395,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub11(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = ['not in', '1,5,8'];
         $result = $baseBrandModel
             ->where($map)
@@ -407,7 +408,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub12(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = ['in', '1,5,8'];
         $result = $baseBrandModel
             ->where($map)
@@ -420,7 +421,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub13(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = ['in', '1,5,8'];
         $result = $baseBrandModel
             ->where($map)
@@ -433,7 +434,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub14(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = ['in', '1,5,8'];
         $result = $baseBrandModel
             ->where($map)
@@ -446,7 +447,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub15(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = ['not in', ['1', '5', '8']];
         $result = $baseBrandModel
             ->where($map)
@@ -459,7 +460,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub16(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = ['in', ['1', '5', '8']];
         $result = $baseBrandModel
             ->where($map)
@@ -472,7 +473,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub17(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = ['exp', ' IN (1,3,8) '];
         $result = $baseBrandModel
             ->where($map)
@@ -485,7 +486,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub18(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         // 要修改的数据对象属性赋值
         $data['brand_name'] = 'ThinkPHP';
         $data['company_id'] = ['exp', 'company_id+1']; // 品牌的公司ID加1
@@ -498,7 +499,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub19(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = [['gt', 1], ['lt', 10]];
         $result = $baseBrandModel
             ->where($map)
@@ -511,7 +512,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub20(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = [['gt', 3], ['lt', 10], 'or'];
         $result = $baseBrandModel
             ->where($map)
@@ -524,7 +525,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub21(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = [['neq', 6], ['gt', 3], 'and'];
         $result = $baseBrandModel
             ->where($map)
@@ -537,7 +538,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub22(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = [['like', '%a%'], ['like', '%b%'], ['like', '%c%'], 'ThinkPHP', 'or'];
         $result = $baseBrandModel
             ->where($map)
@@ -550,7 +551,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub23(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = ['neq', 1];
         $map['brand_name'] = 'ok';
         $map['_string'] = 'company_id=1 AND order_num>10';
@@ -565,7 +566,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub24(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = ['gt', '100'];
         $map['_query'] = 'company_id=1&order_num=100&_logic=or';
         $result = $baseBrandModel
@@ -579,7 +580,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub25(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $where['brand_name'] = ['like', '%thinkphp%'];
         $where['order_num'] = ['like', '%thinkphp%'];
         $where['_logic'] = 'or';
@@ -596,7 +597,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub26(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_id'] = ['gt', 1];
         $map['_string'] = ' (`brand_name` like "%thinkphp%")  OR ( order_num like "%thinkphp") ';
         $result = $baseBrandModel
@@ -610,7 +611,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub27(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $count = $baseBrandModel
             ->count()
         ;
@@ -623,7 +624,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub28(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $count = $baseBrandModel
             ->count('brand_id')
         ;
@@ -636,7 +637,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub29(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $count = $baseBrandModel
             ->max('brand_id')
         ;
@@ -649,7 +650,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub30(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $count = $baseBrandModel
             ->where('brand_id>0')->min('brand_id');
         $result = $baseBrandModel->getLastSql();
@@ -661,7 +662,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub31(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id>0')->avg('brand_id');
         $result = $baseBrandModel->getLastSql();
@@ -672,7 +673,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub32(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id>0')
             ->sum('brand_id')
@@ -685,7 +686,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub33(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->query('select * from `base_brand` WHERE `brand_id`=83')
         ;
@@ -697,7 +698,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub34(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->execute("update `base_brand` set `brand_name`='hello' WHERE `brand_id`=83")
         ;
@@ -709,7 +710,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub35(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->getByBrandName('liu21st')
         ;
@@ -721,7 +722,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub36(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->getByBrandLogo('liu21st')
         ;
@@ -733,7 +734,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub37(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->getFieldByBrandName('Google', 'brand_id')
         ;
@@ -745,7 +746,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub38(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $subQuery = $baseBrandModel
             ->field('brand_id,brand_name')
             ->table('base_brand')
@@ -765,7 +766,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub39(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $subQuery = $baseBrandModel
             ->field('brand_id,brand_name')
             ->table('base_brand')
@@ -785,7 +786,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub40(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $subQuery = $baseBrandModel
             ->field('brand_id,brand_name')
             ->group('brand_id')
@@ -817,7 +818,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub41(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->forceMaster()
             ->select()
@@ -830,7 +831,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub42(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->limit('0,5')
             ->select()
@@ -843,7 +844,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub43(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->limit(1, 5)
             ->select()
@@ -856,7 +857,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub44(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->group('brand_id')
             ->select()
@@ -869,7 +870,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub45(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->order('brand_id DESC')
             ->select()
@@ -882,7 +883,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub46(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('brand_id')
             ->select()
@@ -895,7 +896,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub47(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->comment('注释')
             ->select()
@@ -908,7 +909,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub48(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->page(3, 5)
             ->select()
@@ -921,7 +922,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub49(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->page('3,5')
             ->select()
@@ -934,7 +935,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub50(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=1 AND `brand_name`=1')
             ->select()
@@ -947,7 +948,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub51(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where("brand_id=%d and `brand_name`='%s' and `brand_logo`='%f'", [1, 'hello', 0.5])
             ->select()
@@ -960,7 +961,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub52(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where("brand_id=%d and `brand_name`='%s' and `brand_logo`='%f'", 1, 'hello', 0.5)
             ->select()
@@ -973,7 +974,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub53(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = 'thinkphp';
         $map['brand_logo'] = '1';
         $baseBrandModel
@@ -988,7 +989,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub54(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = 'thinkphp';
         $map['brand_logo'] = 'thinkphp';
         $where['brand_logo'] = '1';
@@ -1005,7 +1006,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub55(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->table('base_brand')
             ->where('brand_id<2')
@@ -1019,7 +1020,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub56(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->table('base_brand')
             ->where('brand_id<2')
@@ -1033,7 +1034,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub57(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('brand.brand_name,p.name')
             ->table('base_brand brand,permission p')
@@ -1048,7 +1049,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub58(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('brand.`brand_name`,p.name')
             ->table(['`base_brand`' => 'brand', 'permission' => 'p'])
@@ -1063,7 +1064,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub59(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->alias('a')
             ->join('permission b ON b.id= a.brand_id')
@@ -1081,7 +1082,7 @@ final class ModelTest extends TestCase
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
         http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where(['brand_name' => 'hello'])
             ->delete()
@@ -1099,7 +1100,7 @@ final class ModelTest extends TestCase
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
         http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where(['brand_name' => 'hello'])
             ->delete()
@@ -1116,7 +1117,7 @@ final class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel->brand_name = 'helloworld';
         $baseBrandModel->add();
         $result = $baseBrandModel->getLastSql();
@@ -1129,7 +1130,7 @@ final class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = 'helloworld';
         $baseBrandModel->data($data)->add();
         $result = $baseBrandModel->getLastSql();
@@ -1142,7 +1143,7 @@ final class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = 'helloworld';
         $baseBrandModel->data()->add($data);
         $result = $baseBrandModel->getLastSql();
@@ -1155,7 +1156,7 @@ final class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data = new \stdClass();
         $data->brand_name = 'helloworld';
         $baseBrandModel->data($data)->add();
@@ -1169,7 +1170,7 @@ final class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data = 'brand_name=hi&brand_logo=hello';
         $baseBrandModel->data($data)->add();
         $result = $baseBrandModel->getLastSql();
@@ -1182,7 +1183,7 @@ final class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_id'] = 8;
         $data['brand_name'] = '流年';
         $data['brand_logo'] = 'thinkphp@qq.com';
@@ -1197,7 +1198,7 @@ final class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_id'] = 8;
         $data['brand_name'] = '流年';
         $data['brand_logo'] = 'thinkphp@qq.com';
@@ -1212,7 +1213,7 @@ final class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = '流年';
         $data['brand_logo'] = 'thinkphp@qq.com';
         $baseBrandModel
@@ -1229,7 +1230,7 @@ final class ModelTest extends TestCase
     {
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = '流年';
         $data['brand_logo'] = 'thinkphp@qq.com';
         $id = $baseBrandModel->add($data);
@@ -1238,7 +1239,7 @@ final class ModelTest extends TestCase
         $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('流年','thinkphp@qq.com')";
         static::assertSame($result, $sql);
 
-        $baseBrandModelNew = BaseBrandTestModel::make();
+        $baseBrandModelNew = BaseBrandModel::make();
         $map['brand_id'] = $id;
         $baseBrandModelNew
             ->where($map)
@@ -1252,7 +1253,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub72(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('`brand_id`,`brand_name`,`brand_logo`')
             ->select()
@@ -1265,7 +1266,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub73(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('`brand_id`,`brand_name`,`brand_logo` as logo')
             ->select()
@@ -1278,7 +1279,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub74(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('SUM(brand_id),`brand_name`,`brand_logo` as logo')
             ->select()
@@ -1291,7 +1292,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub75(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field(['brand_id', 'brand_name', 'brand_logo'])
             ->select()
@@ -1304,7 +1305,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub76(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field(['brand_id', 'brand_name', 'brand_logo' => 'logo2'])
             ->select()
@@ -1317,7 +1318,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub77(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field([
                 'brand_id',
@@ -1334,7 +1335,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub78(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field()
             ->select()
@@ -1347,7 +1348,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub79(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('*')
             ->select()
@@ -1360,7 +1361,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub80(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field(true)
             ->select()
@@ -1373,7 +1374,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub81(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('brand_id', true)
             ->select()
@@ -1386,7 +1387,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub82(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('brand_id,company_id', true)
             ->select()
@@ -1399,7 +1400,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub83(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field(['brand_id', 'company_id'], true)
             ->select()
@@ -1417,7 +1418,7 @@ final class ModelTest extends TestCase
         http_request()->request->set('status', 'F');
         http_request()->request->set('brand_name', 'hello');
         http_request()->request->set('brand_logo', 'yes');
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where(['brand_name' => 'hello'])
             ->delete()
@@ -1446,7 +1447,7 @@ final class ModelTest extends TestCase
     public function testQuerySub85(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('brand_logo,brand_name')
             ->where('brand_id=1')
@@ -1464,7 +1465,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub86(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status=1')
             ->order('brand_id desc')
@@ -1479,7 +1480,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub87(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status=1')
             ->order('brand_id desc,status')
@@ -1494,7 +1495,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub88(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status=1')
             ->order(['status', 'brand_id' => 'desc'])
@@ -1509,7 +1510,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub89(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
             ->limit(3)
@@ -1523,7 +1524,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub90(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
             ->limit('10,25')
@@ -1537,7 +1538,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub91(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
             ->limit(10, 25)
@@ -1551,7 +1552,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub92(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
             ->page('1,10')
@@ -1565,7 +1566,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub93(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
             ->page('2,10')
@@ -1579,7 +1580,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub94(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
             ->page(2, 10)
@@ -1593,7 +1594,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub95(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
             ->limit(25)
@@ -1608,7 +1609,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub96(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
             ->page('3,25')
@@ -1622,7 +1623,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub97(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
             ->field('brand_name,max(brand_id)')
@@ -1637,7 +1638,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub98(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
             ->field('`brand_name`,max(brand_id)')
@@ -1652,7 +1653,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub99(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
             ->field('`brand_name`,max(brand_id)')
@@ -1668,7 +1669,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub100(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->join('permission ON permission.id = `base_brand`.brand_id')
             ->join('role ON role.id = `base_brand`.brand_id')
@@ -1682,7 +1683,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub101(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->join([
                 'permission ON permission.id = `base_brand`.brand_id',
@@ -1698,7 +1699,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub102(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->join('LEFT JOIN permission ON permission.id = `base_brand`.brand_id')
             ->join('LEFT JOIN role ON role.id = `base_brand`.brand_id')
@@ -1712,7 +1713,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub103(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->join('RIGHT JOIN permission ON permission.id = `base_brand`.brand_id')
             ->join('RIGHT JOIN role ON role.id = `base_brand`.brand_id')
@@ -1726,7 +1727,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub104(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('`brand_name` as name')
             ->table('base_brand')
@@ -1742,7 +1743,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub105(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('`brand_name` as name')
             ->table('base_brand')
@@ -1758,7 +1759,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub106(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('`brand_name` as name')
             ->table('base_brand')
@@ -1773,7 +1774,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub107(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('`brand_name` as name')
             ->table('base_brand')
@@ -1789,7 +1790,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub108(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('`brand_name` as name')
             ->table('base_brand')
@@ -1804,7 +1805,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub109(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->distinct(true)
             ->field('brand_name')
@@ -1818,7 +1819,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub110(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->lock(true)
             ->field('brand_name')
@@ -1832,7 +1833,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub111(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=83')
             ->cache(true)
@@ -1846,7 +1847,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub112(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=83')
             ->cache(true, 60)
@@ -1860,7 +1861,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub113(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=83')
             ->cache('sql:hello', 60)
@@ -1874,7 +1875,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub114(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->comment('查询考试前十名分数')
             ->where('brand_id=83')
@@ -1888,7 +1889,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub115(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $sqlResult = $baseBrandModel
             ->find(1)
         ;
@@ -1904,7 +1905,7 @@ final class ModelTest extends TestCase
             'Error query express:[not_found_field=>y]'
         );
 
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $map['brand_name'] = 'h';
         $map['brand_num'] = 'y';
         $map['not_found_field'] = 'y';
@@ -1929,7 +1930,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub118(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->scope('normal')
             ->select()
@@ -1942,7 +1943,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub119(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->scope('latest')
             ->select()
@@ -1955,7 +1956,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub120(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->scope('normal')
             ->scope('latest')
@@ -1969,7 +1970,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub121(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->scope('normal,latest,new')
             ->select()
@@ -1982,7 +1983,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub122(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->scope()
             ->select()
@@ -1995,7 +1996,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub123(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->scope('default')
             ->select()
@@ -2008,7 +2009,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub124(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->scope('default', ['order' => 'brand_id DESC'])
             ->select()
@@ -2021,7 +2022,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub125(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->scope('normal,latest', ['order' => 'brand_id DESC'])
             ->select()
@@ -2034,7 +2035,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub126(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->scope([
                 'field' => '`brand_id`,`brand_name`',
@@ -2052,7 +2053,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub127(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->limit(8)
             ->scope('normal')
@@ -2067,7 +2068,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub128(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->normal(['limit' => 5])
             ->select()
@@ -2083,7 +2084,7 @@ final class ModelTest extends TestCase
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
         http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->create()
         ;
@@ -2110,7 +2111,7 @@ final class ModelTest extends TestCase
         http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         $data['brand_name'] = 'ThinkPHP';
         $data['brand_logo'] = 'ThinkPHP@gmail.com';
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->create($data)
         ;
@@ -2139,7 +2140,7 @@ final class ModelTest extends TestCase
         $data = new \stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->create($data)
         ;
@@ -2168,7 +2169,7 @@ final class ModelTest extends TestCase
         $data = new \stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->create($data)
         ;
@@ -2215,7 +2216,7 @@ final class ModelTest extends TestCase
         $data = new \stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->create($data, Model::MODEL_UPDATE)
         ;
@@ -2243,7 +2244,7 @@ final class ModelTest extends TestCase
         $data = new \stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->create($data, Model::MODEL_INSERT)
         ;
@@ -2272,7 +2273,7 @@ final class ModelTest extends TestCase
         $data = new \stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->create($data, Model::MODEL_BOTH)
         ;
@@ -2301,7 +2302,7 @@ final class ModelTest extends TestCase
         $data->brand_id = 1;
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->create($data, Model::MODEL_BOTH)
         ;
@@ -2331,7 +2332,7 @@ final class ModelTest extends TestCase
         $data->brand_id = 1;
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->create($data, Model::MODEL_INSERT)
         ;
@@ -2361,7 +2362,7 @@ final class ModelTest extends TestCase
         $data = new \stdClass();
         $data->brand_name = 'ThinkPHP';
         $data->brand_logo = 'ThinkPHP@gmail.com';
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->create($data, Model::MODEL_BOTH)
         ;
@@ -2395,7 +2396,7 @@ final class ModelTest extends TestCase
         );
 
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->create()
         ;
@@ -2404,7 +2405,7 @@ final class ModelTest extends TestCase
     public function testQuerySub139(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel->brand_name = 'ThinkPHP';
         $baseBrandModel->brand_logo = 'ThinkPHP@gmail.com';
         $data = $baseBrandModel->data();
@@ -2432,7 +2433,7 @@ final class ModelTest extends TestCase
     public function testQuerySub140(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = 'ThinkPHP';
         $data['brand_logo'] = 'ThinkPHP@gmail.com';
         $baseBrandModel
@@ -2454,7 +2455,7 @@ final class ModelTest extends TestCase
         $data['brand_logo'] = 'thinkphp@gmail.com';
         $data['status'] = 1;
         $data['test'] = 'test';
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('brand_name')
             ->create($data)
@@ -2478,7 +2479,7 @@ final class ModelTest extends TestCase
     public function testQuerySub142(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = 'ThinkPHP';
         $data['brand_logo'] = 'ThinkPHP@gmail.com';
         $baseBrandModel
@@ -2493,7 +2494,7 @@ final class ModelTest extends TestCase
     public function testQuerySub143(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = 'ThinkPHP';
         $data['brand_logo'] = 'ThinkPHP@gmail.com';
         $baseBrandModel
@@ -2508,7 +2509,7 @@ final class ModelTest extends TestCase
     public function testQuerySub144(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = '<b>ThinkPHP</b>';
         $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
         $baseBrandModel
@@ -2525,7 +2526,7 @@ final class ModelTest extends TestCase
     public function testQuerySub145(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $dataList[] = ['brand_name' => 'thinkphp', 'brand_logo' => 'thinkphp@gamil.com'];
         $dataList[] = ['brand_name' => 'onethink', 'brand_logo' => 'onethink@gamil.com'];
         $baseBrandModel
@@ -2540,7 +2541,7 @@ final class ModelTest extends TestCase
     public function testQuerySub146(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = '<b>ThinkPHP</b>';
         $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
         $id = $baseBrandModel
@@ -2560,7 +2561,7 @@ final class ModelTest extends TestCase
     public function testQuerySub147(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = '<b>ThinkPHP</b>';
         $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
         $id = $baseBrandModel
@@ -2581,7 +2582,7 @@ final class ModelTest extends TestCase
     public function testQuerySub148(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = '<b>ThinkPHP</b>';
         $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
         $id = $baseBrandModel
@@ -2601,7 +2602,7 @@ final class ModelTest extends TestCase
     public function testQuerySub149(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = '<b>ThinkPHP</b>';
         $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
         $id = $baseBrandModel
@@ -2621,7 +2622,7 @@ final class ModelTest extends TestCase
     public function testQuerySub150(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = '<b>ThinkPHP</b>';
         $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
         $id = $baseBrandModel
@@ -2641,7 +2642,7 @@ final class ModelTest extends TestCase
     public function testQuerySub151(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = '<b>ThinkPHP</b>';
         $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
         $id = $baseBrandModel
@@ -2676,7 +2677,7 @@ final class ModelTest extends TestCase
     public function testQuerySub152(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = '<b>ThinkPHP</b>';
         $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
         $id = $baseBrandModel
@@ -2707,7 +2708,7 @@ final class ModelTest extends TestCase
     public function testQuerySub153(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = '<b>ThinkPHP</b>';
         $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
         $id = $baseBrandModel
@@ -2738,7 +2739,7 @@ final class ModelTest extends TestCase
     public function testQuerySub154(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = '<b>ThinkPHP</b>';
         $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
         $id = $baseBrandModel
@@ -2769,7 +2770,7 @@ final class ModelTest extends TestCase
     public function testQuerySub155(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = 'ThinkPHP';
         $data['brand_logo'] = 'ThinkPHP@gmail.com';
         $id = $baseBrandModel
@@ -2785,7 +2786,7 @@ final class ModelTest extends TestCase
     public function testQuerySub156(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel->brand_name = 'ThinkPHP';
         $baseBrandModel->brand_logo = 'ThinkPHP@gmail.com';
         $baseBrandModel
@@ -2801,7 +2802,7 @@ final class ModelTest extends TestCase
     public function testQuerySub157(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel->brand_id = 3;
         $baseBrandModel->brand_name = 'ThinkPHP';
         $baseBrandModel->brand_logo = 'ThinkPHP@gmail.com';
@@ -2822,7 +2823,7 @@ final class ModelTest extends TestCase
         );
 
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel->brand_name = 'ThinkPHP';
         $baseBrandModel->brand_logo = 'ThinkPHP@gmail.com';
         $baseBrandModel
@@ -2833,7 +2834,7 @@ final class ModelTest extends TestCase
     public function testQuerySub159(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_id'] = 3;
         $data['brand_name'] = '<b>ThinkPHP</b>';
         $data['brand_logo'] = '<b>ThinkPHP@gmail.com</b>';
@@ -2851,7 +2852,7 @@ final class ModelTest extends TestCase
     public function testQuerySub160(): void
     {
         container()->instance('company_id', 999);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data['brand_name'] = 'ThinkPHP';
         $data['brand_logo'] = 'ThinkPHP@gmail.com';
         $baseBrandModel
@@ -2871,7 +2872,7 @@ final class ModelTest extends TestCase
         http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
         http_request()->request->set('brand_name', 'hello');
         http_request()->request->set('brand_id', 1);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where(['brand_name' => 'hello'])
             ->delete()
@@ -2886,7 +2887,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub162(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=5')
             ->setField('brand_name', 'ThinkPHP')
@@ -2900,7 +2901,7 @@ final class ModelTest extends TestCase
     public function testQuerySub163(): void
     {
         $data = ['brand_name' => 'ThinkPHP', 'brand_logo' => 'ThinkPHP@gmail.com'];
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=5')
             ->setField($data)
@@ -2913,7 +2914,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub164(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=5')
             ->setInc('order_num', 3)
@@ -2926,7 +2927,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub165(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=5')
             ->setInc('order_num')
@@ -2939,7 +2940,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub166(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=5')
             ->setDec('order_num', 7)
@@ -2952,7 +2953,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub167(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=5')
             ->setDec('order_num')
@@ -2965,7 +2966,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub168(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->delete(5)
         ;
@@ -2977,7 +2978,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub169(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('brand_id=5')
             ->delete()
@@ -2990,7 +2991,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub170(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->delete('1,2,5')
         ;
@@ -3002,7 +3003,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub171(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status=0')
             ->delete()
@@ -3015,7 +3016,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub172(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status=0')
             ->order('create_date')
@@ -3034,7 +3035,7 @@ final class ModelTest extends TestCase
         $this->expectExceptionMessage(
             'Invalid delete condition.'
         );
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->delete()
         ;
@@ -3042,7 +3043,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub174(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('1')
             ->delete()
@@ -3055,7 +3056,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub175(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->find(8)
         ;
@@ -3067,7 +3068,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub176(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->select('1,3,8')
         ;
@@ -3079,7 +3080,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub177(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->data(['brand_name' => 'hello'])
             ->add()
@@ -3094,7 +3095,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub178(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel->brand_id = 1;
         $baseBrandModel->brand_name = 'TOPThink';
         $baseBrandModel->save();
@@ -3105,7 +3106,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub179(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->data(['brand_name' => 'hello'])
             ->add()
@@ -3120,7 +3121,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub180(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel->delete('5,6');
         $result = $baseBrandModel->getLastSql();
         $result = trim($baseBrandModel->getLastSql());
@@ -3130,7 +3131,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub181(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->forceMaster()
             ->find('5,6')
@@ -3143,10 +3144,10 @@ final class ModelTest extends TestCase
 
     public function testQuerySub182(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = null;
         $baseBrandModel->transaction(function () use (&$id): void {
-            $baseBrandModel = BaseBrandTestModel::make();
+            $baseBrandModel = BaseBrandModel::make();
             $id = $baseBrandModel
                 ->data(['brand_name' => 'hello'])
                 ->add()
@@ -3167,12 +3168,12 @@ final class ModelTest extends TestCase
             'Error message'
         );
 
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = null;
 
         try {
             $baseBrandModel->transaction(function () use (&$id): void {
-                $baseBrandModel = BaseBrandTestModel::make();
+                $baseBrandModel = BaseBrandModel::make();
                 $id = $baseBrandModel
                     ->data(['brand_name' => 'hello'])
                     ->add()
@@ -3197,7 +3198,7 @@ final class ModelTest extends TestCase
             'Error message'
         );
 
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = null;
         $baseBrandModel->startTrans();
 
@@ -3225,7 +3226,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub185(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = null;
         $baseBrandModel->startTrans();
 
@@ -3255,7 +3256,7 @@ final class ModelTest extends TestCase
             'Data type invalid.'
         );
 
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->add()
         ;
@@ -3263,7 +3264,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub187(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->add([
                 'brand_name' => 'hello world',
@@ -3279,7 +3280,7 @@ final class ModelTest extends TestCase
             'Data type invalid.'
         );
 
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $affectedRow = $baseBrandModel
             ->save()
         ;
@@ -3287,7 +3288,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub189(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->add([
                 'brand_name' => 'hello world',
@@ -3308,7 +3309,7 @@ final class ModelTest extends TestCase
             'customer error'
         );
 
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel->defineError();
     }
 
@@ -3319,7 +3320,7 @@ final class ModelTest extends TestCase
             'Data type invalid.'
         );
 
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->addAll([])
         ;
@@ -3327,7 +3328,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub192(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->where('brand_id>2')
             ->field('brand_id,brand_name,5')
@@ -3348,7 +3349,7 @@ final class ModelTest extends TestCase
             'Email格式错误'
         );
 
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->create(['seo_keywords' => 'hello'])
             ->add()
@@ -3361,7 +3362,7 @@ final class ModelTest extends TestCase
         $this->expectExceptionMessage(
             'Email格式错误;URL 格式错误;'
         );
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->patchValidate()
             ->create(['seo_keywords' => 'hello', 'brand_letter' => 'logo'])
@@ -3372,7 +3373,7 @@ final class ModelTest extends TestCase
     public function testQuerySub195(): void
     {
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data = $baseBrandModel
             ->getList(['limit' => '0,5'])
         ;
@@ -3384,7 +3385,7 @@ final class ModelTest extends TestCase
 
     public function testQuerySub196(): void
     {
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->alias('a')
             ->where('a.brand_id=1')
@@ -3399,7 +3400,7 @@ final class ModelTest extends TestCase
     public function testQuerySub197(): void
     {
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->add([
                 'brand_name' => 'hello world',
@@ -3420,7 +3421,7 @@ final class ModelTest extends TestCase
     public function testQuerySub198(): void
     {
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->updateInfo([
                 'brand_name' => 'new2',
@@ -3440,7 +3441,7 @@ final class ModelTest extends TestCase
         );
 
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->trans1([
                 'first' => 'new1',
@@ -3457,7 +3458,7 @@ final class ModelTest extends TestCase
         );
 
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = transaction(fn () => $baseBrandModel
             ->trans2([
                 'first' => 'new1',
@@ -3473,7 +3474,7 @@ final class ModelTest extends TestCase
         );
 
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->trans2([
                 'first' => 'new1',
@@ -3485,7 +3486,7 @@ final class ModelTest extends TestCase
     public function testQuerySub202(): void
     {
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = transaction(fn () => $baseBrandModel
             ->trans3([
                 'first' => 'new1',
@@ -3501,7 +3502,7 @@ final class ModelTest extends TestCase
     public function testQuerySub203(): void
     {
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->add([
                 'brand_name' => 'hello world',
@@ -3520,7 +3521,7 @@ final class ModelTest extends TestCase
     public function testQuerySub204(): void
     {
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data = $baseBrandModel
             ->getInfo(['map' => ['brand_id' => 'not_found']])
         ;
@@ -3534,7 +3535,7 @@ final class ModelTest extends TestCase
     public function testQuerySub205(): void
     {
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data = $baseBrandModel
             ->getListSelect(['limit' => '0,5'])
         ;
@@ -3547,7 +3548,7 @@ final class ModelTest extends TestCase
     public function testQuerySub206(): void
     {
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $data = $baseBrandModel
             ->getBrandNum()
         ;
@@ -3557,7 +3558,7 @@ final class ModelTest extends TestCase
     public function testQuerySub207(): void
     {
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->add([
                 'brand_name' => 'hello world',
@@ -3575,7 +3576,7 @@ final class ModelTest extends TestCase
     public function testQuerySub208(): void
     {
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->add([
                 'brand_name' => 'hello world',
@@ -3598,7 +3599,7 @@ final class ModelTest extends TestCase
         );
 
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->delete()
         ;
@@ -3612,7 +3613,7 @@ final class ModelTest extends TestCase
         );
 
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->delete(['b_id' => 5])
         ;
@@ -3621,7 +3622,7 @@ final class ModelTest extends TestCase
     public function testQuerySub211(): void
     {
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->trans4([
                 'first' => 'new1',
@@ -3638,7 +3639,7 @@ final class ModelTest extends TestCase
     public function testQuerySub212(): void
     {
         container()->instance('company_id', 0);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $id = $baseBrandModel
             ->trans5([
                 'first' => 'new1',
@@ -3657,7 +3658,7 @@ final class ModelTest extends TestCase
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
         http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where(['brand_name' => ['IN', ['hello', 'world']]])
             ->delete()
@@ -3682,7 +3683,7 @@ final class ModelTest extends TestCase
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
         http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where(['brand_name' => ['IN', ['hello', 'world']]])
             ->delete()
@@ -3711,7 +3712,7 @@ final class ModelTest extends TestCase
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
         http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where(['brand_name' => ['IN', ['hello', 'world']]])
             ->delete()
@@ -3740,7 +3741,7 @@ final class ModelTest extends TestCase
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
         http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where(['brand_name' => ['IN', ['hello', 'world']]])
             ->delete()
@@ -3763,7 +3764,7 @@ final class ModelTest extends TestCase
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
         http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where(['brand_name' => ['IN', ['hello', 'world']]])
             ->delete()
@@ -3786,7 +3787,7 @@ final class ModelTest extends TestCase
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
         http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where(['brand_name' => ['IN', ['hello', 'world']]])
             ->delete()
@@ -3809,7 +3810,7 @@ final class ModelTest extends TestCase
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
         http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel->addAll(
             [
                 [
@@ -3836,7 +3837,7 @@ final class ModelTest extends TestCase
         container()->instance('company_id', 999);
         http_request()->request->set('brand_name', 'hello');
         http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
-        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel->addAll(
             [
                 [

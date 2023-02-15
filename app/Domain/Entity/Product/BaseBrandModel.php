@@ -252,6 +252,16 @@ class BaseBrandModel extends Model
         return 'yes';
     }
 
+    public function trans4(array $in): string
+    {
+        return (string) $this->transaction(fn () => $this->trans3($in));
+    }
+
+    public function trans5(array $in): string
+    {
+        return (string) transaction(fn () => $this->trans3($in));
+    }
+
     /**
      * 检查商品品牌编号是否可用.
      */
