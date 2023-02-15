@@ -3676,4 +3676,33 @@ final class ModelTest extends TestCase
         $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('hello','123'),('world','4')";
         static::assertSame($result, $sql);
     }
+
+    public function testQuerySub214(): void
+    {
+        container()->instance('company_id', 999);
+        http_request()->request->set('brand_name', 'hello');
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
+        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel
+            ->where(['brand_name' => ['IN', ['hello', 'world']]])
+            ->delete()
+        ;
+        $baseBrandModel->addAll(
+            [
+                [
+                    'brand_name' => 'hello',
+                    'brand_logo' => '123',
+                ],
+                [
+                    'brand_name' => 'world',
+                    'brand_logo' => '4',
+                ],
+            ],
+            [],
+            'brand_logo',
+        );
+        $result = trim($baseBrandModel->getLastSql());
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('hello','123'),('world','4') ON DUPLICATE KEY UPDATE `brand_logo`=VALUES(`brand_logo`)";
+        static::assertSame($result, $sql);
+    }
 }
