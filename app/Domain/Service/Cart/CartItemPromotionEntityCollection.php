@@ -31,10 +31,18 @@ class CartItemPromotionEntityCollection extends Collection
 
     /**
      * 获取活动.
+     *
+     * @throws \Exception
      */
-    public function get(int|string $promotionId): ?CartItemPromotionEntity
+    public function get(int|string $promotionId): CartItemPromotionEntity
     {
-        return $this->__get($promotionId);
+        $promotion = $this->__get($promotionId);
+        if (!$promotion) {
+            throw new \Exception(sprintf('Promotion %s was not found.', (string) $promotionId));
+        }
+
+        // @phpstan-ignore-next-line
+        return $promotion;
     }
 
     /**

@@ -11,6 +11,12 @@ use League\Csv\Reader;
  */
 class Csv
 {
+    public const HEADER_INDEX = [0];
+
+    public const NOTICE_INDEX = [1];
+
+    public const TITLE_INDEX = [2];
+
     /**
      * @throws \League\Csv\Exception
      * @throws \Exception
@@ -27,9 +33,10 @@ class Csv
         foreach ($csv->getRecords() as $index => $record) {
             // @phpstan-ignore-next-line
             foreach ($record as $key => $value) {
-                if (1 === $index) {
+                if (\in_array($index, self::HEADER_INDEX, true)) {
+                } elseif (\in_array($index, self::NOTICE_INDEX, true)) {
                     $notice[$key] = $value;
-                } elseif (2 === $index) {
+                } elseif (\in_array($index, self::TITLE_INDEX, true)) {
                     $title[$key] = $value;
                 } else {
                     $records[$index][$key] = $value;

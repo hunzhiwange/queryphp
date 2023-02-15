@@ -57,7 +57,10 @@ class CartEntity extends Dto
         return $this->cartItems->has($itemHash);
     }
 
-    public function increment(string $itemHash, float $step = 1.0): ?CartItemEntity
+    /**
+     * @throws \Exception
+     */
+    public function increment(string $itemHash, float $step = 1.0): CartItemEntity
     {
         $item = $this->getItem($itemHash);
         $item->addNumber($step);
@@ -65,7 +68,7 @@ class CartEntity extends Dto
         return $item;
     }
 
-    public function decrement(string $itemHash, float $step = 1.0): ?CartItemEntity
+    public function decrement(string $itemHash, float $step = 1.0): CartItemEntity
     {
         $item = $this->getItem($itemHash);
         if (1 === bccomp_compatibility($item->number, $step)) {
@@ -75,6 +78,8 @@ class CartEntity extends Dto
         }
 
         $this->removeItem($itemHash);
+
+        return $item;
     }
 
     public function removeItem(string $itemHash): void
@@ -183,7 +188,7 @@ class CartEntity extends Dto
             $cartItem->price->clearPrice();
         }
 
-        if (!$this->promotions) {
+        if (!$this->promotions->count()) {
             return;
         }
 

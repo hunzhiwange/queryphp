@@ -44,7 +44,7 @@ class CartItemEntity extends Dto
      */
     public bool $active = true;
 
-    protected ?string $itemHash = null;
+    protected string $itemHash = '';
 
     public function generateHash(bool $force = false): string
     {
@@ -61,6 +61,10 @@ class CartItemEntity extends Dto
 
     public function getHash(): string
     {
+        if (!$this->itemHash) {
+            return $this->generateHash();
+        }
+
         return $this->itemHash;
     }
 

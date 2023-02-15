@@ -24,7 +24,7 @@ class CartItemSpecialSecondHalfPricePromotionEntity extends CartItemSpecialPerce
             throw new \Exception('第二件半价必须是2的整倍数。');
         }
 
-        parent::discount($cartItemEntity);
+        return parent::discount($cartItemEntity);
     }
 
     public function displayValue(): string

@@ -30,15 +30,23 @@ class CartItemEntityCollection extends Collection
     }
 
     /**
-     * 获取购物车商品
+     * 获取购物车商品.
+     *
+     * @throws \Exception
      */
     public function get(string $itemHash): ?CartItemEntity
     {
-        return $this->__get($itemHash);
+        $cartItemEntity = $this->__get($itemHash);
+        if (!$cartItemEntity) {
+            throw new \Exception(sprintf('Cart item entity %s was not found.', $itemHash));
+        }
+
+        // @phpstan-ignore-next-line
+        return $cartItemEntity;
     }
 
     /**
-     * 设置购物车商品
+     * 设置购物车商品.
      */
     public function set(string $itemHash, CartItemEntity $cartItem): void
     {
@@ -46,7 +54,7 @@ class CartItemEntityCollection extends Collection
     }
 
     /**
-     * 删除购物车商品
+     * 删除购物车商品.
      */
     public function remove(string $itemHash): void
     {
@@ -54,7 +62,7 @@ class CartItemEntityCollection extends Collection
     }
 
     /**
-     * 是否存在购物车商品
+     * 是否存在购物车商品.
      */
     public function has(string $itemHash): bool
     {
