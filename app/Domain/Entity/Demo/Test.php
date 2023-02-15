@@ -134,6 +134,16 @@ final class Test extends Entity
         self::RELATION_SCOPE => 'role',
     ])]
     public ?string $updateAt = null;
+
+    #[Struct(
+        MANY_MANY: Role::class,
+        MIDDLE_ENTITY : UserRole::class,
+        SOURCE_KEY : 'id',
+        TARGET_KEY : new \stdClass(),
+        MIDDLE_SOURCE_KEY: 'user_id',
+        MIDDLE_TARGET_KEY : 'role_id',
+        RELATION_SCOPE: 'role',
+    )]
     public ?int $deleteAt = null;
     public ?int $createAccount = null;
     public ?int $updateAccount = null;
