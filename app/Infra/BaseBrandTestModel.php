@@ -114,7 +114,7 @@ class BaseBrandTestModel extends Model
             // 验证编码重复问题
             $obj = new self();
             $arrIn2 = [];
-            $arrIn2['map']['company_id'] = \get_company_id();
+            $arrIn2['map']['company_id'] = get_company_id();
             if (empty($arrData['brand_num'])) {
                 $this->brand_num = RandAlpha::handle(10);
             } else {
@@ -124,7 +124,7 @@ class BaseBrandTestModel extends Model
                 $count = $obj->where($arrIn2['map'])->count();
                 $this->brand_num = $count > 0 ? RandAlpha::handle(10) : $arrData['brand_num'];
             }
-            $this->company_id = \get_company_id();
+            $this->company_id = get_company_id();
             $this->brand_letter = strtoupper(RandAlpha::handle(5));
             $intID = $this->add();
         } else {
@@ -154,20 +154,20 @@ class BaseBrandTestModel extends Model
      */
     public function delInfo(array $arrIn): void
     {
-        $arrIn['company_id'] = \get_company_id();
+        $arrIn['company_id'] = get_company_id();
         $this->create($arrIn, self::MODEL_UPDATE);
         $arrData = $this->data();
-
         if (!$arrIn['brand_id']) {
             throw new \Exception('品牌 ID 未指定');
         }
+        // @phpstan-ignore-next-line
         $arrData['status'] = 'F';
         $this->save($arrData);
     }
 
     public function delInfoReal(array $arrIn): void
     {
-        $arrIn['company_id'] = \get_company_id();
+        $arrIn['company_id'] = get_company_id();
         $this->create($arrIn, self::MODEL_UPDATE);
         $arrData = $this->data();
 
@@ -188,7 +188,7 @@ class BaseBrandTestModel extends Model
         $arrIn['scope'] = 'list';
         $this->mergeScopeWhere($arrIn);
 
-        return $this->getField('brand_id,brand_name');
+        return (array) $this->getField('brand_id,brand_name');
     }
 
     /**
@@ -201,7 +201,7 @@ class BaseBrandTestModel extends Model
         $obj = new self();
 
         $arrIn = [];
-        $arrIn['map']['company_id'] = \get_company_id();
+        $arrIn['map']['company_id'] = get_company_id();
         $arrIn['map']['brand_num'] = $strNum;
         $arrLast = $obj->where($arrIn['map'])->field('brand_id')->order('brand_id DESC')->find();
         if (!empty($arrLast['brand_id'])) {
@@ -253,12 +253,12 @@ class BaseBrandTestModel extends Model
 
     public function trans4(array $in): string
     {
-        return $this->transaction(fn () => $this->trans3($in));
+        return (string) $this->transaction(fn () => $this->trans3($in));
     }
 
     public function trans5(array $in): string
     {
-        return transaction(fn () => $this->trans3($in));
+        return (string) transaction(fn () => $this->trans3($in));
     }
 
     /**
@@ -268,13 +268,13 @@ class BaseBrandTestModel extends Model
     {
         $arrIn = ['map' => []];
         $arrIn['map'] = [
-            'company_id' => \get_company_id(),
-            'brand_num' => \http_request_value('brand_num', '', 'trim'),
+            'company_id' => get_company_id(),
+            'brand_num' => http_request_value('brand_num', '', 'trim'),
             'status' => 'T',
         ];
 
-        if (\http_request_value('brand_id', '', 'intval')) {
-            $arrIn['map']['brand_id'] = ['neq', \http_request_value('brand_id', '', 'intval')];
+        if (http_request_value('brand_id', '', 'intval')) {
+            $arrIn['map']['brand_id'] = ['neq', http_request_value('brand_id', '', 'intval')];
         }
 
         return 0 === $this->where($arrIn['map'])->count();
@@ -288,13 +288,13 @@ class BaseBrandTestModel extends Model
         $arrIn = ['map' => []];
 
         $arrIn['map'] = [
-            'company_id' => \get_company_id(),
-            'brand_name' => \http_request_value('brand_name', '', 'trim'),
+            'company_id' => get_company_id(),
+            'brand_name' => http_request_value('brand_name', '', 'trim'),
             'status' => 'T',
         ];
 
-        if (\http_request_value('brand_id', '', 'intval')) {
-            $arrIn['map']['brand_id'] = ['neq', \http_request_value('brand_id', '', 'intval')];
+        if (http_request_value('brand_id', '', 'intval')) {
+            $arrIn['map']['brand_id'] = ['neq', http_request_value('brand_id', '', 'intval')];
         }
 
         return $this->where($arrIn['map'])->count() < 1;
