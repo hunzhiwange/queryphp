@@ -54,6 +54,21 @@ abstract class CartItemPromotionEntity extends Dto
         return $this->priority;
     }
 
+    public function addCartItems(CartItemEntity ...$moreCartItemEntity): void
+    {
+        foreach ($moreCartItemEntity as $v) {
+            $this->cartItems->set($v->getHash(), $v);
+        }
+    }
+
+    public function calculateCartItemsPrice(): void
+    {
+        /** @var CartItemEntity $cartItem */
+        foreach ($this->cartItems as $cartItem) {
+            $cartItem->calculatePrice();
+        }
+    }
+
     /**
      * 活动商品默认值
      */

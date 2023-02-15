@@ -171,9 +171,7 @@ class CartEntity extends Dto
 
     public function addPromotion(CartItemPromotionEntity $coupon, CartItemEntity ...$moreCartItemEntity): void
     {
-        foreach ($moreCartItemEntity as $v) {
-            $coupon->cartItems->set($v->getHash(), $v);
-        }
+        $coupon->addCartItems(...$moreCartItemEntity);
         $this->promotions->set($coupon->promotionId, $coupon);
     }
 
@@ -182,53 +180,17 @@ class CartEntity extends Dto
      */
     public function calculatePrice(bool $calculateIndependently = true): void
     {
-        // 清理一下价格信息
-        /** @var CartItemEntity $cartItem */
-        foreach ($this->cartItems as $cartItem) {
-            $cartItem->price->clearPrice();
-        }
+        $this->clearCartItemsPrice();
 
-        if (!$this->promotions->count()) {
-            return;
-        }
-
-        $newPromotions = [];
-
-        /** @var CartItemPromotionEntity $promotion */
-        foreach ($this->promotions as $promotion) {
-            if ($promotion->cartItems->count()) {
-                $newPromotions[$promotion->priority()][] = $promotion->promotionId;
-            }
-        }
-        if (!$newPromotions) {
-            return;
-        }
-
-        ksort($newPromotions);
-        foreach ($newPromotions as $promotionIds) {
-            foreach ($promotionIds as $promotionId) {
-                $promotion = $this->promotions->get($promotionId);
-                if ($promotion->cartItems->count()) {
-                    $promotion->calculatePrice();
-                    if (!$calculateIndependently) {
-                        // 通知价格更新
-                        /** @var CartItemEntity $cartItem */
-                        foreach ($promotion->cartItems as $cartItem) {
-                            // 遍历购物车项目计算价格
-                            $cartItem->calculatePrice();
-                        }
-                    }
-                }
+        foreach ($this->normalizeSortedPromotions($this->promotions) as $promotion) {
+            $promotion->calculatePrice();
+            if (!$calculateIndependently) {
+                $promotion->calculateCartItemsPrice();
             }
         }
 
         if ($calculateIndependently) {
-            // 通知价格更新
-            /** @var CartItemEntity $cartItem */
-            foreach ($this->cartItems as $cartItem) {
-                // 遍历购物车项目计算价格
-                $cartItem->calculatePrice();
-            }
+            $this->calculateCartItemsPrice();
         }
     }
 
@@ -240,5 +202,58 @@ class CartEntity extends Dto
     protected function promotionsDefaultValue(): CartItemPromotionEntityCollection
     {
         return new CartItemPromotionEntityCollection([]);
+    }
+
+    /**
+     * 清理一下价格信息.
+     */
+    protected function clearCartItemsPrice(): void
+    {
+        /** @var CartItemEntity $cartItem */
+        foreach ($this->cartItems as $cartItem) {
+            $cartItem->price->clearPrice();
+        }
+    }
+
+    /**
+     * 通知价格更新.
+     */
+    protected function calculateCartItemsPrice(): void
+    {
+        /** @var CartItemEntity $cartItem */
+        foreach ($this->cartItems as $cartItem) {
+            $cartItem->calculatePrice();
+        }
+    }
+
+    protected function normalizeSortedPromotions(CartItemPromotionEntityCollection $promotions): array
+    {
+        if (!$promotions->count()) {
+            return [];
+        }
+
+        $tempPromotionIds = [];
+
+        /** @var CartItemPromotionEntity $promotion */
+        foreach ($promotions as $promotion) {
+            if ($promotion->cartItems->count()) {
+                $tempPromotionIds[$promotion->priority()][] = $promotion->promotionId;
+            }
+        }
+
+        if (!$tempPromotionIds) {
+            return [];
+        }
+
+        ksort($tempPromotionIds);
+
+        $newPromotions = [];
+        foreach ($tempPromotionIds as $promotionIds) {
+            foreach ($promotionIds as $v) {
+                $newPromotions[] = $promotions->get($v);
+            }
+        }
+
+        return $newPromotions;
     }
 }
