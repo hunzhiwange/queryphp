@@ -3651,4 +3651,29 @@ final class ModelTest extends TestCase
         static::assertSame($result, $sql);
         static::assertSame($id, 'yes');
     }
+
+    public function testQuerySub213(): void
+    {
+        container()->instance('company_id', 999);
+        http_request()->request->set('brand_name', 'hello');
+        http_request()->server->set('REQUEST_METHOD', Request::METHOD_POST);
+        $baseBrandModel = BaseBrandTestModel::make();
+        $baseBrandModel
+            ->where(['brand_name' => ['IN', ['hello', 'world']]])
+            ->delete()
+        ;
+        $baseBrandModel->addAll([
+            [
+                'brand_name' => 'hello',
+                'brand_logo' => '123',
+            ],
+            [
+                'brand_name' => 'world',
+                'brand_logo' => '4',
+            ],
+        ]);
+        $result = trim($baseBrandModel->getLastSql());
+        $sql = "INSERT INTO `base_brand` (`brand_name`,`brand_logo`) VALUES ('hello','123'),('world','4')";
+        static::assertSame($result, $sql);
+    }
 }
