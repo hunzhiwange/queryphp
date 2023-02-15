@@ -123,6 +123,16 @@ final class Test extends Entity
         helo: 'world'
     )]
     public ?string $createAt = null;
+
+    #[Struct([
+        self::MANY_MANY => Role::class,
+        self::MIDDLE_ENTITY => UserRole::class,
+        self::SOURCE_KEY => 'id',
+        self::TARGET_KEY => new \stdClass(),
+        self::MIDDLE_SOURCE_KEY => 'user_id',
+        self::MIDDLE_TARGET_KEY => 'role_id',
+        self::RELATION_SCOPE => 'role',
+    ])]
     public ?string $updateAt = null;
     public ?int $deleteAt = null;
     public ?int $createAccount = null;
