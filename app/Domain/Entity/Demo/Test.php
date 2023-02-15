@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity\Demo;
 
+use App\Domain\Entity\User\Role;
+use App\Domain\Entity\User\UserRole;
 use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\Struct;
 
 /**
  * 测试.
@@ -98,4 +101,29 @@ final class Test extends Entity
      * Soft delete column.
      */
     public const DELETE_AT = 'delete_at';
+
+    public ?int $id = 0;
+
+    /**
+     * 用户名.
+     */
+    #[Msg('修改密码参数错误')]
+    public ?string $name = null;
+
+    #[Struct([
+        self::MANY_MANY => Role::class,
+        self::MIDDLE_ENTITY => UserRole::class,
+        self::SOURCE_KEY => 'id',
+        self::TARGET_KEY => new \stdClass(),
+        self::MIDDLE_SOURCE_KEY => 'user_id',
+        self::MIDDLE_TARGET_KEY => 'role_id',
+        self::RELATION_SCOPE => 'role',
+    ], helo: 'world'),
+    ]
+    public ?string $createAt = null;
+    public ?string $updateAt = null;
+    public ?int $deleteAt = null;
+    public ?int $createAccount = null;
+    public ?int $updateAccount = null;
+    public ?int $version = null;
 }
