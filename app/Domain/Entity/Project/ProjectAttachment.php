@@ -8,14 +8,14 @@ use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\Struct;
 
 /**
- * 项目.
+ * 项目附件.
  */
-final class Project extends Entity
+final class ProjectAttachment extends Entity
 {
     /**
      * Database table.
      */
-    public const TABLE = 'project';
+    public const TABLE = 'project_attachment';
 
     /**
      * Primary key.
@@ -43,6 +43,15 @@ final class Project extends Entity
     protected ?int $id = null;
 
     #[Struct([
+        self::COLUMN_NAME => '文件名称',
+        self::COLUMN_STRUCT => [
+            'type_name' => 'varchar',
+            'type_length' => 100,
+        ],
+    ])]
+    protected ?string $name = null;
+
+    #[Struct([
         self::COLUMN_NAME => '公司 ID',
         self::COLUMN_STRUCT => [
             'type_name' => 'bigint',
@@ -52,77 +61,58 @@ final class Project extends Entity
     protected ?int $companyId = null;
 
     #[Struct([
-        self::COLUMN_NAME => '项目名称',
+        self::COLUMN_NAME => '项目ID',
+        self::COLUMN_STRUCT => [
+            'type_name' => 'int',
+            'type_length' => 11,
+        ],
+    ])]
+    protected ?int $projectId = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '任务ID',
+        self::COLUMN_STRUCT => [
+            'type_name' => 'int',
+            'type_length' => 11,
+        ],
+    ])]
+    protected ?int $projectIssueId = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '文件大小(B)',
+        self::COLUMN_STRUCT => [
+            'type_name' => 'int',
+            'type_length' => 11,
+        ],
+    ])]
+    protected ?int $size = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '文件格式',
+        self::COLUMN_STRUCT => [
+            'type_name' => 'varchar',
+            'type_length' => 20,
+        ],
+    ])]
+    protected ?string $ext = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '文件地址',
         self::COLUMN_STRUCT => [
             'type_name' => 'varchar',
             'type_length' => 255,
         ],
     ])]
-    protected ?string $name = null;
+    protected ?string $path = null;
 
     #[Struct([
-        self::COLUMN_NAME => '编号',
-        self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 64,
-        ],
-    ])]
-    protected ?string $num = null;
-
-    #[Struct([
-        self::COLUMN_NAME => '状态 0=禁用;1=启用;',
-        self::ENUM_CLASS => ProjectStatusEnum::class,
-        self::COLUMN_STRUCT => [
-            'type_name' => 'tinyint',
-            'type_length' => 1,
-        ],
-    ])]
-    protected ?int $status = null;
-
-    #[Struct([
-        self::COLUMN_NAME => '进度条(最大值 10000，需要除以 100 表示实际进度)',
+        self::COLUMN_NAME => '下载次数',
         self::COLUMN_STRUCT => [
             'type_name' => 'int',
-            'type_length' => 5,
+            'type_length' => 11,
         ],
     ])]
-    protected ?int $progress = null;
-
-    #[Struct([
-        self::COLUMN_NAME => '项目所有者用户 ID',
-        self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
-        ],
-    ])]
-    protected ?int $ownerUserId = null;
-
-    #[Struct([
-        self::COLUMN_NAME => '已完成任务数量',
-        self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
-        ],
-    ])]
-    protected ?int $completedNumber = null;
-
-    #[Struct([
-        self::COLUMN_NAME => '未完成任务数量',
-        self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
-        ],
-    ])]
-    protected ?int $unfinishedNumber = null;
-
-    #[Struct([
-        self::COLUMN_NAME => '排序(ASC)',
-        self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
-        ],
-    ])]
-    protected ?int $sort = null;
+    protected ?int $downloadNumber = null;
 
     #[Struct([
         self::COLUMN_NAME => '创建时间',
