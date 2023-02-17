@@ -645,7 +645,7 @@ final class ModelTest extends TestCase
         $result = trim($baseBrandModel->getLastSql());
         $sql = 'SELECT  MAX(brand_id) AS max FROM `base_brand` LIMIT 1';
         static::assertSame($result, $sql);
-        static::assertIsInt($count);
+        static::assertTrue(null === $count || \is_int($count));
     }
 
     public function testQuerySub30(): void
@@ -657,7 +657,7 @@ final class ModelTest extends TestCase
         $result = trim($baseBrandModel->getLastSql());
         $sql = 'SELECT  MIN(brand_id) AS min FROM `base_brand` WHERE ( brand_id>0 ) LIMIT 1';
         static::assertSame($result, $sql);
-        static::assertIsInt($count);
+        static::assertTrue(null === $count || \is_int($count));
     }
 
     public function testQuerySub31(): void
@@ -1282,11 +1282,12 @@ final class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->field('SUM(brand_id),`brand_name`,`brand_logo` as logo')
+            ->group('brand_id')
             ->select()
         ;
         $result = $baseBrandModel->getLastSql();
         $result = trim($baseBrandModel->getLastSql());
-        $sql = 'SELECT  SUM(brand_id),`brand_name`,`brand_logo` as logo FROM `base_brand`';
+        $sql = 'SELECT  SUM(brand_id),`brand_name`,`brand_logo` as logo FROM `base_brand` GROUP BY brand_id';
         static::assertSame($result, $sql);
     }
 
@@ -1626,13 +1627,13 @@ final class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
-            ->field('brand_name,max(brand_id)')
-            ->group('brand_logo')
+            ->field('brand_logo,brand_name,max(brand_id)')
+            ->group('brand_logo,brand_name')
             ->select()
         ;
         $result = $baseBrandModel->getLastSql();
         $result = trim($baseBrandModel->getLastSql());
-        $sql = 'SELECT  `brand_name`,max(brand_id) FROM `base_brand` WHERE ( status>1 ) GROUP BY brand_logo';
+        $sql = 'SELECT  `brand_logo`,`brand_name`,max(brand_id) FROM `base_brand` WHERE ( status>1 ) GROUP BY brand_logo,brand_name';
         static::assertSame($result, $sql);
     }
 
@@ -1641,13 +1642,13 @@ final class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
-            ->field('`brand_name`,max(brand_id)')
-            ->group('`brand_logo`,status')
+            ->field('brand_logo,status,max(brand_id)')
+            ->group('brand_logo,status')
             ->select()
         ;
         $result = $baseBrandModel->getLastSql();
         $result = trim($baseBrandModel->getLastSql());
-        $sql = 'SELECT  `brand_name`,max(brand_id) FROM `base_brand` WHERE ( status>1 ) GROUP BY `brand_logo`,status';
+        $sql = 'SELECT  `brand_logo`,`status`,max(brand_id) FROM `base_brand` WHERE ( status>1 ) GROUP BY brand_logo,status';
         static::assertSame($result, $sql);
     }
 
@@ -1656,14 +1657,14 @@ final class ModelTest extends TestCase
         $baseBrandModel = BaseBrandModel::make();
         $baseBrandModel
             ->where('status>1')
-            ->field('`brand_name`,max(brand_id)')
-            ->group('`brand_logo`,status')
+            ->field('brand_logo,status,max(brand_id)')
+            ->group('brand_logo,status')
             ->having('count(status)>3')
             ->select()
         ;
         $result = $baseBrandModel->getLastSql();
         $result = trim($baseBrandModel->getLastSql());
-        $sql = 'SELECT  `brand_name`,max(brand_id) FROM `base_brand` WHERE ( status>1 ) GROUP BY `brand_logo`,status HAVING count(status)>3';
+        $sql = 'SELECT  `brand_logo`,`status`,max(brand_id) FROM `base_brand` WHERE ( status>1 ) GROUP BY brand_logo,status HAVING count(status)>3';
         static::assertSame($result, $sql);
     }
 

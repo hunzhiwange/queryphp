@@ -326,7 +326,7 @@ abstract class Model
     /**
      * 获取一条记录的某个字段值.
      */
-    public function getField(string $field, null|string|bool|int $separator = null): string|array|int|float
+    public function getField(string $field, null|string|bool|int $separator = null): string|array|int|float|null
     {
         $options['field'] = $field;
         $options = $this->_parseOptions($options);
@@ -418,17 +418,17 @@ abstract class Model
         return false;
     }
 
-    public function min(string $field = '*'): string|int|float
+    public function min(string $field = '*'): string|int|float|null
     {
         return $this->callStatisticalQuery('min', $field);
     }
 
-    public function max(string $field = '*'): string|int|float
+    public function max(string $field = '*'): string|int|float|null
     {
         return $this->callStatisticalQuery('max', $field);
     }
 
-    public function avg(string $field = '*'): string|int|float
+    public function avg(string $field = '*'): string|int|float|null
     {
         return $this->callStatisticalQuery('avg', $field);
     }
@@ -1415,7 +1415,7 @@ abstract class Model
         }
     }
 
-    protected function callStatisticalQuery(string $method, string $field): string|int|float
+    protected function callStatisticalQuery(string $method, string $field): string|int|float|null
     {
         try {
             $this->shouldCountSelect = true;
