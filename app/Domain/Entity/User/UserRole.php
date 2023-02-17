@@ -36,8 +36,8 @@ final class UserRole extends Entity
         self::COLUMN_NAME => 'ID',
         self::READONLY => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $id = null;
@@ -45,8 +45,8 @@ final class UserRole extends Entity
     #[Struct([
         self::COLUMN_NAME => '用户 ID',
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $userId = null;
@@ -54,8 +54,8 @@ final class UserRole extends Entity
     #[Struct([
         self::COLUMN_NAME => '角色 ID',
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $roleId = null;
@@ -63,8 +63,8 @@ final class UserRole extends Entity
     #[Struct([
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
-            'type_name' => 'datetime',
-            'type_length' => null,
+            'type' => 'datetime',
+            'length' => null,
         ],
     ])]
     protected ?string $createAt = null;
@@ -72,8 +72,8 @@ final class UserRole extends Entity
     #[Struct([
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
-            'type_name' => 'datetime',
-            'type_length' => null,
+            'type' => 'datetime',
+            'length' => null,
         ],
     ])]
     protected ?string $updateAt = null;
@@ -82,8 +82,8 @@ final class UserRole extends Entity
         self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $deleteAt = null;
@@ -92,8 +92,8 @@ final class UserRole extends Entity
         self::COLUMN_NAME => '创建账号',
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $createAccount = null;
@@ -102,8 +102,8 @@ final class UserRole extends Entity
         self::COLUMN_NAME => '更新账号',
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $updateAccount = null;
@@ -111,8 +111,8 @@ final class UserRole extends Entity
     #[Struct([
         self::COLUMN_NAME => '操作版本号',
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $version = null;

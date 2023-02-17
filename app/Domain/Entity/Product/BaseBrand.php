@@ -31,8 +31,8 @@ final class BaseBrand extends Entity
         self::COLUMN_NAME => 'ID',
         self::READONLY => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'int',
-            'type_length' => 10,
+            'type' => 'int',
+            'length' => 10,
         ],
     ])]
     protected ?int $brandId = null;
@@ -40,8 +40,8 @@ final class BaseBrand extends Entity
     #[Struct([
         self::COLUMN_NAME => '公司ID',
         self::COLUMN_STRUCT => [
-            'type_name' => 'int',
-            'type_length' => 10,
+            'type' => 'int',
+            'length' => 10,
         ],
     ])]
     protected ?int $companyId = null;
@@ -49,8 +49,8 @@ final class BaseBrand extends Entity
     #[Struct([
         self::COLUMN_NAME => '状态',
         self::COLUMN_STRUCT => [
-            'type_name' => 'enum',
-            'type_length' => ['T', 'F'],
+            'type' => 'enum',
+            'length' => ['T', 'F'],
         ],
     ])]
     protected ?string $status = null;
@@ -58,8 +58,8 @@ final class BaseBrand extends Entity
     #[Struct([
         self::COLUMN_NAME => '排序',
         self::COLUMN_STRUCT => [
-            'type_name' => 'int',
-            'type_length' => 8,
+            'type' => 'int',
+            'length' => 8,
         ],
     ])]
     protected ?int $orderNum = null;
@@ -67,8 +67,8 @@ final class BaseBrand extends Entity
     #[Struct([
         self::COLUMN_NAME => '编号',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 30,
+            'type' => 'varchar',
+            'length' => 30,
         ],
     ])]
     protected ?string $brandNum = null;
@@ -76,8 +76,8 @@ final class BaseBrand extends Entity
     #[Struct([
         self::COLUMN_NAME => '名称',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 30,
+            'type' => 'varchar',
+            'length' => 30,
         ],
     ])]
     protected ?string $brandName = null;
@@ -85,8 +85,8 @@ final class BaseBrand extends Entity
     #[Struct([
         self::COLUMN_NAME => 'LOGO',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 130,
+            'type' => 'varchar',
+            'length' => 130,
         ],
     ])]
     protected ?string $brandLogo = null;
@@ -94,8 +94,8 @@ final class BaseBrand extends Entity
     #[Struct([
         self::COLUMN_NAME => '介绍',
         self::COLUMN_STRUCT => [
-            'type_name' => 'text',
-            'type_length' => null,
+            'type' => 'text',
+            'length' => null,
         ],
     ])]
     protected ?string $brandAbout = null;
@@ -103,8 +103,8 @@ final class BaseBrand extends Entity
     #[Struct([
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
-            'type_name' => 'timestamp',
-            'type_length' => null,
+            'type' => 'timestamp',
+            'length' => null,
         ],
     ])]
     protected ?string $updateDate = null;
@@ -112,8 +112,8 @@ final class BaseBrand extends Entity
     #[Struct([
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
-            'type_name' => 'timestamp',
-            'type_length' => null,
+            'type' => 'timestamp',
+            'length' => null,
         ],
     ])]
     protected ?string $createDate = null;
@@ -121,8 +121,8 @@ final class BaseBrand extends Entity
     #[Struct([
         self::COLUMN_NAME => '品牌首字母',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 30,
+            'type' => 'varchar',
+            'length' => 30,
         ],
     ])]
     protected ?string $brandLetter = null;
@@ -130,8 +130,8 @@ final class BaseBrand extends Entity
     #[Struct([
         self::COLUMN_NAME => 'SEO关键字',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 30,
+            'type' => 'varchar',
+            'length' => 30,
         ],
     ])]
     protected ?string $seoKeywords = null;

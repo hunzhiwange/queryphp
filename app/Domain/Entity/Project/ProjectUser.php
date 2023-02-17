@@ -36,8 +36,8 @@ final class ProjectUser extends Entity
         self::COLUMN_NAME => 'ID',
         self::READONLY => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $id = null;
@@ -45,8 +45,8 @@ final class ProjectUser extends Entity
     #[Struct([
         self::COLUMN_NAME => '公司 ID',
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $companyId = null;
@@ -54,8 +54,8 @@ final class ProjectUser extends Entity
     #[Struct([
         self::COLUMN_NAME => '用户 ID',
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $userId = null;
@@ -64,8 +64,8 @@ final class ProjectUser extends Entity
         self::COLUMN_NAME => '类型 1=成员;2=收藏;3=关注;',
         self::ENUM_CLASS => ProjectUserTypeEnum::class,
         self::COLUMN_STRUCT => [
-            'type_name' => 'tinyint',
-            'type_length' => 1,
+            'type' => 'tinyint',
+            'length' => 1,
         ],
     ])]
     protected ?int $type = null;
@@ -74,8 +74,8 @@ final class ProjectUser extends Entity
         self::COLUMN_NAME => '扩展类型 1=成员;2=管理员;',
         self::ENUM_CLASS => ProjectUserExtendTypeEnum::class,
         self::COLUMN_STRUCT => [
-            'type_name' => 'tinyint',
-            'type_length' => 1,
+            'type' => 'tinyint',
+            'length' => 1,
         ],
     ])]
     protected ?int $extendType = null;
@@ -84,8 +84,8 @@ final class ProjectUser extends Entity
         self::COLUMN_NAME => '数据类型 1=项目;2=问题;',
         self::ENUM_CLASS => ProjectUserDataTypeEnum::class,
         self::COLUMN_STRUCT => [
-            'type_name' => 'tinyint',
-            'type_length' => 1,
+            'type' => 'tinyint',
+            'length' => 1,
         ],
     ])]
     protected ?int $dataType = null;
@@ -93,8 +93,8 @@ final class ProjectUser extends Entity
     #[Struct([
         self::COLUMN_NAME => '数据 ID',
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $dataId = null;
@@ -102,8 +102,8 @@ final class ProjectUser extends Entity
     #[Struct([
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
-            'type_name' => 'datetime',
-            'type_length' => null,
+            'type' => 'datetime',
+            'length' => null,
         ],
     ])]
     protected ?string $createAt = null;
@@ -111,8 +111,8 @@ final class ProjectUser extends Entity
     #[Struct([
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
-            'type_name' => 'datetime',
-            'type_length' => null,
+            'type' => 'datetime',
+            'length' => null,
         ],
     ])]
     protected ?string $updateAt = null;
@@ -121,8 +121,8 @@ final class ProjectUser extends Entity
         self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $deleteAt = null;
@@ -131,8 +131,8 @@ final class ProjectUser extends Entity
         self::COLUMN_NAME => '创建账号',
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $createAccount = null;
@@ -141,8 +141,8 @@ final class ProjectUser extends Entity
         self::COLUMN_NAME => '更新账号',
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $updateAccount = null;
@@ -150,8 +150,8 @@ final class ProjectUser extends Entity
     #[Struct([
         self::COLUMN_NAME => '操作版本号',
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $version = null;

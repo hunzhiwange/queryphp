@@ -36,8 +36,8 @@ final class ProjectAttachment extends Entity
         self::COLUMN_NAME => 'ID',
         self::READONLY => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $id = null;
@@ -45,8 +45,8 @@ final class ProjectAttachment extends Entity
     #[Struct([
         self::COLUMN_NAME => '文件名称',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 100,
+            'type' => 'varchar',
+            'length' => 100,
         ],
     ])]
     protected ?string $name = null;
@@ -54,8 +54,8 @@ final class ProjectAttachment extends Entity
     #[Struct([
         self::COLUMN_NAME => '公司 ID',
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $companyId = null;
@@ -63,8 +63,8 @@ final class ProjectAttachment extends Entity
     #[Struct([
         self::COLUMN_NAME => '项目ID',
         self::COLUMN_STRUCT => [
-            'type_name' => 'int',
-            'type_length' => 11,
+            'type' => 'int',
+            'length' => 11,
         ],
     ])]
     protected ?int $projectId = null;
@@ -72,8 +72,8 @@ final class ProjectAttachment extends Entity
     #[Struct([
         self::COLUMN_NAME => '任务ID',
         self::COLUMN_STRUCT => [
-            'type_name' => 'int',
-            'type_length' => 11,
+            'type' => 'int',
+            'length' => 11,
         ],
     ])]
     protected ?int $projectIssueId = null;
@@ -81,8 +81,8 @@ final class ProjectAttachment extends Entity
     #[Struct([
         self::COLUMN_NAME => '文件大小(B)',
         self::COLUMN_STRUCT => [
-            'type_name' => 'int',
-            'type_length' => 11,
+            'type' => 'int',
+            'length' => 11,
         ],
     ])]
     protected ?int $size = null;
@@ -90,8 +90,8 @@ final class ProjectAttachment extends Entity
     #[Struct([
         self::COLUMN_NAME => '文件格式',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 20,
+            'type' => 'varchar',
+            'length' => 20,
         ],
     ])]
     protected ?string $ext = null;
@@ -99,8 +99,8 @@ final class ProjectAttachment extends Entity
     #[Struct([
         self::COLUMN_NAME => '文件地址',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 255,
+            'type' => 'varchar',
+            'length' => 255,
         ],
     ])]
     protected ?string $path = null;
@@ -108,8 +108,8 @@ final class ProjectAttachment extends Entity
     #[Struct([
         self::COLUMN_NAME => '下载次数',
         self::COLUMN_STRUCT => [
-            'type_name' => 'int',
-            'type_length' => 11,
+            'type' => 'int',
+            'length' => 11,
         ],
     ])]
     protected ?int $downloadNumber = null;
@@ -117,8 +117,8 @@ final class ProjectAttachment extends Entity
     #[Struct([
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
-            'type_name' => 'datetime',
-            'type_length' => null,
+            'type' => 'datetime',
+            'length' => null,
         ],
     ])]
     protected ?string $createAt = null;
@@ -126,8 +126,8 @@ final class ProjectAttachment extends Entity
     #[Struct([
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
-            'type_name' => 'datetime',
-            'type_length' => null,
+            'type' => 'datetime',
+            'length' => null,
         ],
     ])]
     protected ?string $updateAt = null;
@@ -136,8 +136,8 @@ final class ProjectAttachment extends Entity
         self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $deleteAt = null;
@@ -146,8 +146,8 @@ final class ProjectAttachment extends Entity
         self::COLUMN_NAME => '创建账号',
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $createAccount = null;
@@ -156,8 +156,8 @@ final class ProjectAttachment extends Entity
         self::COLUMN_NAME => '更新账号',
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $updateAccount = null;
@@ -165,8 +165,8 @@ final class ProjectAttachment extends Entity
     #[Struct([
         self::COLUMN_NAME => '操作版本号',
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $version = null;

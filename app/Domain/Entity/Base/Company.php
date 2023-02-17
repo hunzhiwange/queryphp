@@ -36,8 +36,8 @@ final class Company extends Entity
         self::COLUMN_NAME => '公司 ID',
         self::READONLY => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $id = null;
@@ -45,8 +45,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '名称',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 50,
+            'type' => 'varchar',
+            'length' => 50,
         ],
     ])]
     protected ?string $name = null;
@@ -54,8 +54,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '编号',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 30,
+            'type' => 'varchar',
+            'length' => 30,
         ],
     ])]
     protected ?string $num = null;
@@ -63,8 +63,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '公司全称',
         self::COLUMN_STRUCT => [
-            'type_name' => 'char',
-            'type_length' => 20,
+            'type' => 'char',
+            'length' => 20,
         ],
     ])]
     protected ?string $fullName = null;
@@ -73,8 +73,8 @@ final class Company extends Entity
         self::COLUMN_NAME => '状态 0=禁用;1=启用;',
         self::ENUM_CLASS => CompanyStatusEnum::class,
         self::COLUMN_STRUCT => [
-            'type_name' => 'tinyint',
-            'type_length' => 1,
+            'type' => 'tinyint',
+            'length' => 1,
         ],
     ])]
     protected ?int $status = null;
@@ -82,8 +82,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '营业执照号',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 20,
+            'type' => 'varchar',
+            'length' => 20,
         ],
     ])]
     protected ?string $businessLicense = null;
@@ -91,8 +91,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '法人代表',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 20,
+            'type' => 'varchar',
+            'length' => 20,
         ],
     ])]
     protected ?string $legalPerson = null;
@@ -100,8 +100,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '法人手机',
         self::COLUMN_STRUCT => [
-            'type_name' => 'char',
-            'type_length' => 11,
+            'type' => 'char',
+            'length' => 11,
         ],
     ])]
     protected ?string $legalMobile = null;
@@ -109,8 +109,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '联系电话',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 50,
+            'type' => 'varchar',
+            'length' => 50,
         ],
     ])]
     protected ?string $phone = null;
@@ -118,8 +118,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '传真',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 20,
+            'type' => 'varchar',
+            'length' => 20,
         ],
     ])]
     protected ?string $fax = null;
@@ -127,8 +127,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '地区',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 50,
+            'type' => 'varchar',
+            'length' => 50,
         ],
     ])]
     protected ?string $address = null;
@@ -136,8 +136,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '网站',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 50,
+            'type' => 'varchar',
+            'length' => 50,
         ],
     ])]
     protected ?string $webUrl = null;
@@ -145,8 +145,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => 'logo',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 200,
+            'type' => 'varchar',
+            'length' => 200,
         ],
     ])]
     protected ?string $logo = null;
@@ -154,8 +154,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '介绍',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 1024,
+            'type' => 'varchar',
+            'length' => 1024,
         ],
     ])]
     protected ?string $about = null;
@@ -163,8 +163,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '开通时间',
         self::COLUMN_STRUCT => [
-            'type_name' => 'date',
-            'type_length' => null,
+            'type' => 'date',
+            'length' => null,
         ],
     ])]
     protected ?string $beginDate = null;
@@ -172,8 +172,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '到期时间',
         self::COLUMN_STRUCT => [
-            'type_name' => 'date',
-            'type_length' => null,
+            'type' => 'date',
+            'length' => null,
         ],
     ])]
     protected ?string $endDate = null;
@@ -181,8 +181,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '邮箱',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 30,
+            'type' => 'varchar',
+            'length' => 30,
         ],
     ])]
     protected ?string $email = null;
@@ -190,8 +190,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '联系人',
         self::COLUMN_STRUCT => [
-            'type_name' => 'varchar',
-            'type_length' => 30,
+            'type' => 'varchar',
+            'length' => 30,
         ],
     ])]
     protected ?string $contact = null;
@@ -199,8 +199,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '产品版本',
         self::COLUMN_STRUCT => [
-            'type_name' => 'tinyint',
-            'type_length' => 1,
+            'type' => 'tinyint',
+            'length' => 1,
         ],
     ])]
     protected ?int $productVersion = null;
@@ -208,8 +208,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '注册 IP 地址',
         self::COLUMN_STRUCT => [
-            'type_name' => 'char',
-            'type_length' => 15,
+            'type' => 'char',
+            'length' => 15,
         ],
     ])]
     protected ?string $registerIp = null;
@@ -217,8 +217,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '是否是测试公司 0=否;1=是;',
         self::COLUMN_STRUCT => [
-            'type_name' => 'tinyint',
-            'type_length' => 1,
+            'type' => 'tinyint',
+            'length' => 1,
         ],
     ])]
     protected ?int $isTestCompany = null;
@@ -226,8 +226,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '相对于 product_version 的细分扩展版本',
         self::COLUMN_STRUCT => [
-            'type_name' => 'tinyint',
-            'type_length' => 1,
+            'type' => 'tinyint',
+            'length' => 1,
         ],
     ])]
     protected ?int $extendedProductVersion = null;
@@ -235,8 +235,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
-            'type_name' => 'datetime',
-            'type_length' => null,
+            'type' => 'datetime',
+            'length' => null,
         ],
     ])]
     protected ?string $createAt = null;
@@ -244,8 +244,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
-            'type_name' => 'datetime',
-            'type_length' => null,
+            'type' => 'datetime',
+            'length' => null,
         ],
     ])]
     protected ?string $updateAt = null;
@@ -254,8 +254,8 @@ final class Company extends Entity
         self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $deleteAt = null;
@@ -264,8 +264,8 @@ final class Company extends Entity
         self::COLUMN_NAME => '创建账号',
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $createAccount = null;
@@ -274,8 +274,8 @@ final class Company extends Entity
         self::COLUMN_NAME => '更新账号',
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $updateAccount = null;
@@ -283,8 +283,8 @@ final class Company extends Entity
     #[Struct([
         self::COLUMN_NAME => '操作版本号',
         self::COLUMN_STRUCT => [
-            'type_name' => 'bigint',
-            'type_length' => 20,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
     protected ?int $version = null;
