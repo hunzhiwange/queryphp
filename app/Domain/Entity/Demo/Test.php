@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Entity\Demo;
 
 use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\Struct;
 
 /**
  * 测试.
