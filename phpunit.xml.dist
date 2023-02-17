@@ -1,42 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit
-    backupGlobals="false"
-    backupStaticAttributes="false"
-    bootstrap="tests/bootstrap.php"
-    colors="true"
-    convertErrorsToExceptions="true"
-    convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
-    processIsolation="false"
-    stopOnFailure="false">
-    <listeners>
-        <listener class="NunoMaduro\Collision\Adapters\Phpunit\Printer" />
-    </listeners>
-    <testsuites>
-        <testsuite name="Main Test Suite">
-            <directory>./tests/</directory>
-        </testsuite>
-        <testsuite name="App Test Suite">
-            <directory>./app/</directory>
-        </testsuite>
-        <testsuite name="Api Test Suite">
-            <directory>./api/</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">./app/</directory>
-            <exclude>
-                <directory suffix="Test.php">./app/</directory>
-            </exclude>
-        </whitelist>
-    </filter>
-    <groups>
-        <exclude>
-            <group>ignoredGroup</group>
-        </exclude>
-    </groups>
-    <php>
-        <env name="RUNTIME_ENVIRONMENT" value="env.phpunit"/>
-    </php>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" backupStaticAttributes="false" bootstrap="tests/bootstrap.php" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage>
+    <include>
+      <directory suffix=".php">./app/</directory>
+    </include>
+    <exclude>
+      <directory suffix="Test.php">./app/</directory>
+    </exclude>
+  </coverage>
+  <listeners>
+    <listener class="NunoMaduro\Collision\Adapters\Phpunit\Printer"/>
+  </listeners>
+  <testsuites>
+    <testsuite name="Main Test Suite">
+      <directory>./tests/</directory>
+    </testsuite>
+    <testsuite name="App Test Suite">
+      <directory>./app/</directory>
+    </testsuite>
+    <testsuite name="Api Test Suite">
+      <directory>./api/</directory>
+    </testsuite>
+  </testsuites>
+  <groups>
+    <exclude>
+      <group>ignoredGroup</group>
+    </exclude>
+  </groups>
+  <php>
+    <env name="RUNTIME_ENVIRONMENT" value="env.phpunit"/>
+  </php>
 </phpunit>
