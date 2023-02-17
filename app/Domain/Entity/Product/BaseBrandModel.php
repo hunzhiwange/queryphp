@@ -93,16 +93,6 @@ class BaseBrandModel extends Model
     ];
 
     /**
-     * 获取商品品牌列表.
-     */
-    public function getList(array $arrIn = []): array
-    {
-        $arrIn['scope'] = 'list';
-
-        return $this->findListAndCount($arrIn);
-    }
-
-    /**
      * 添加更新商品品牌信息.
      */
     public function updateInfo(array $arrIn): int
@@ -137,16 +127,6 @@ class BaseBrandModel extends Model
         }
 
         return $intID;
-    }
-
-    /**
-     * 获取商品品牌信息.
-     */
-    public function getInfo(array $arrIn): mixed
-    {
-        $arrIn['scope'] = 'one';
-
-        return $this->findOne($arrIn);
     }
 
     /**

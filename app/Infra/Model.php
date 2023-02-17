@@ -318,7 +318,7 @@ abstract class Model
         return $this;
     }
 
-    public function sum(string $field = '*'): string|int|float
+    public function sum(string $field = '*'): string|int|float|null
     {
         return $this->callStatisticalQuery('sum', $field);
     }
@@ -594,6 +594,26 @@ abstract class Model
         $this->mergeScopeWhere($in);
 
         return $this->find();
+    }
+
+    /**
+     * 获取信息.
+     */
+    public function getInfo(array $in, string $scope = 'one'): mixed
+    {
+        $in['scope'] = $scope;
+
+        return $this->findOne($in);
+    }
+
+    /**
+     * 获取列表.
+     */
+    public function getList(array $in = [], string $scope = 'list'): array
+    {
+        $in['scope'] = $scope;
+
+        return $this->findListAndCount($in);
     }
 
     /**
