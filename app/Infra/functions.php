@@ -5,6 +5,10 @@ declare(strict_types=1);
 use App\Infra\Proxy\Permission;
 use App\Infra\RoadRunnerDump;
 use Leevel\Database\IDatabase;
+use Leevel\Database\Proxy\Db;
+use Leevel\Di\Container;
+use Leevel\Http\Request;
+use Leevel\Support\Arr\Only;
 
 if (!function_exists('permission')) {
     /**
@@ -45,6 +49,228 @@ if (!function_exists('inject_company')) {
         }
 
         return $data;
+    }
+}
+
+if (!function_exists('get_company_id')) {
+    /**
+     * 获取公司 ID.
+     */
+    function get_company_id(): int
+    {
+        return (int) \App::make('company_id');
+    }
+}
+
+if (!function_exists('http_request_value')) {
+    /**
+     * 获取输入参数 支持过滤和默认值
+     *
+     * - ThinkPHP 3.2.3 大写 I 方法兼容性代码
+     *
+     * 使用方法:
+     * <code>
+     * http_request_value('id',0); 获取 id 参数 自动判断 get 或者 post
+     * http_request_value('post.name','','htmlspecialchars'); 获取 $_POST['name']
+     * http_request_value('get.'); 获取$_GET
+     * </code>
+     *
+     * @param string $name    变量的名称 支持指定类型
+     * @param mixed  $default 不存在的时候默认值
+     * @param mixed  $filter  参数过滤方法
+     * @param mixed  $datas   要获取的额外数据源
+     *
+     * @return mixed
+     */
+    function http_request_value($name, $default = '', $filter = null, $datas = null)
+    {
+        /** @phpstan-ignore-next-line */
+        $request = http_request();
+
+        if (strpos($name, '/')) { // 指定修饰符
+            [$name, $type] = explode('/', $name, 2);
+        }
+        if (strpos($name, '.')) { // 指定参数来源
+            [$method, $name] = explode('.', $name, 2);
+        } else { // 默认为自动判断
+            $method = 'param';
+        }
+
+        switch (strtolower($method)) {
+            case 'get'    :
+                /** @phpstan-ignore-next-line */
+                $input = $request->query->all();
+
+                break;
+
+            case 'post'    :
+                /** @phpstan-ignore-next-line */
+                $input = $request->request->all();
+
+                break;
+
+            case 'param'   :
+                // @phpstan-ignore-next-line
+                switch ($request->server->get('REQUEST_METHOD')) {
+                    case Request::METHOD_POST:
+                        /** @phpstan-ignore-next-line */
+                        $input = $request->request->all();
+
+                        break;
+
+                    default:
+                        /** @phpstan-ignore-next-line */
+                        $input = $request->query->all();
+                }
+
+                break;
+
+            case 'request' :
+                /** @phpstan-ignore-next-line */
+                $input = $request->request->all();
+
+                break;
+
+            case 'session' :
+                /** @phpstan-ignore-next-line */
+                $input = $request->getSession()->all();
+
+                break;
+
+            case 'cookie'  :
+                /** @phpstan-ignore-next-line */
+                $input = $request->cookies->all();
+
+                break;
+
+            case 'server'  :
+                /** @phpstan-ignore-next-line */
+                $input = $request->server->all();
+
+                break;
+
+            case 'data'    :
+                $input = $datas;
+
+                break;
+
+            default:
+                return null;
+        }
+        if ('' === $name) { // 获取全部变量
+            $data = $input;
+            $filters = $filter ?? [];
+            if ($filters) {
+                if (is_string($filters)) {
+                    $filters = explode(',', $filters);
+                }
+                foreach ((array) $filters as $filter) {
+                    /** @phpstan-ignore-next-line */
+                    $data = array_map_recursive($filter, $data); // 参数过滤
+                }
+            }
+        } elseif (isset($input[$name])) { // 取值操作
+            $data = $input[$name];
+            $filters = $filter ?? [];
+            if ($filters) {
+                if (is_string($filters)) {
+                    if (str_starts_with($filters, '/') && 1 !== preg_match($filters, (string) $data)) {
+                        // 支持正则验证
+                        return $default ?? null;
+                    }
+                    $filters = explode(',', $filters);
+                } elseif (is_int($filters)) {
+                    $filters = [$filters];
+                }
+
+                if (is_array($filters)) {
+                    foreach ($filters as $filter) {
+                        if (function_exists($filter)) {
+                            $data = is_array($data) ? array_map_recursive($filter, $data) : $filter($data); // 参数过滤
+                        } else {
+                            if (!is_int($filter)) {
+                                $filter = filter_id($filter);
+                                if (false === $filter) {
+                                    throw new \Exception('Filter does not exist.');
+                                }
+                            }
+                            $data = filter_var($data, $filter);
+                            if (false === $data) {
+                                return $default ?? null;
+                            }
+                        }
+                    }
+                }
+            }
+            if (!empty($type)) {
+                switch (strtolower($type)) {
+                    case 'a':	// 数组
+                        $data = (array) $data;
+
+                        break;
+
+                    case 'd':	// 数字
+                        $data = (int) $data;
+
+                        break;
+
+                    case 'f':	// 浮点
+                        $data = (float) $data;
+
+                        break;
+
+                    case 'b':	// 布尔
+                        $data = (bool) $data;
+
+                        break;
+
+                    case 's':   // 字符串
+                    default:
+                        $data = (string) $data;
+                }
+            }
+        } else { // 变量默认值
+            $data = $default ?? null;
+        }
+
+        return $data;
+    }
+}
+
+if (!function_exists('http_request')) {
+    /**
+     * 获取请求对象.
+     */
+    function http_request(): Request
+    {
+        // @phpstan-ignore-next-line
+        return container()->make(Request::class);
+    }
+}
+
+if (!function_exists('array_map_recursive')) {
+    /** @phpstan-ignore-next-line */
+    function array_map_recursive(callable $filter, array $data): array
+    {
+        $result = [];
+        foreach ($data as $key => $val) {
+            $result[$key] = is_array($val)
+                ? array_map_recursive($filter, $val)
+                : call_user_func($filter, $val);
+        }
+
+        return $result;
+    }
+}
+
+if (!function_exists('container')) {
+    /**
+     * 获取容器对象.
+     */
+    function container(): Container
+    {
+        // @phpstan-ignore-next-line
+        return Container::singletons();
     }
 }
 
@@ -93,5 +319,80 @@ if (!function_exists('rr_dump')) {
     function rr_dump(mixed $var, mixed ...$moreVars): mixed
     {
         return RoadRunnerDump::handle($var, ...$moreVars);
+    }
+}
+
+if (!function_exists('transaction')) {
+    /**
+     * 事务处理.
+     */
+    function transaction(Closure $businessLogic): mixed
+    {
+        return Db::transaction($businessLogic);
+    }
+}
+
+if (!function_exists('bcadd_compatibility')) {
+    function bcadd_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): float
+    {
+        return (float) bcadd((string) $num1, (string) $num2, $scale);
+    }
+}
+
+if (!function_exists('bcdiv_compatibility')) {
+    function bcdiv_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): float
+    {
+        return (float) bcdiv((string) $num1, (string) $num2, $scale);
+    }
+}
+
+if (!function_exists('bcmul_compatibility')) {
+    function bcmul_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): float
+    {
+        return (float) bcmul((string) $num1, (string) $num2, $scale);
+    }
+}
+
+if (!function_exists('bcsub_compatibility')) {
+    function bcsub_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): float
+    {
+        return (float) bcsub((string) $num1, (string) $num2, $scale);
+    }
+}
+
+if (!function_exists('bccomp_compatibility')) {
+    function bccomp_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): int
+    {
+        return bccomp((string) $num1, (string) $num2, $scale);
+    }
+}
+
+if (!function_exists('create_data_id')) {
+    function create_data_id(array $data, array $keys = []): string
+    {
+        if (empty($keys)) {
+            $keys = array_keys($data);
+        }
+
+        $data = Only::handle($data, $keys);
+        ksort($data);
+
+        return http_build_query($data);
+    }
+}
+
+if (!function_exists('array_key_sort')) {
+    /**
+     * 二维数组根据某个字段排序.
+     */
+    function array_key_sort(array $array, string $key, int $sort = SORT_DESC): array
+    {
+        $keyValue = [];
+        foreach ($array as $k => $v) {
+            $keyValue[$k] = $v[$key];
+        }
+        array_multisort($keyValue, $sort, $array);
+
+        return $array;
     }
 }

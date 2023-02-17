@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Entity\User;
+namespace App\Domain\Entity\Project;
 
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\Struct;
 
 /**
- * 资源.
+ * 项目附件.
  */
-final class Resource extends Entity
+final class ProjectAttachment extends Entity
 {
     /**
      * Database table.
      */
-    public const TABLE = 'resource';
+    public const TABLE = 'project_attachment';
 
     /**
      * Primary key.
@@ -43,32 +43,76 @@ final class Resource extends Entity
     protected ?int $id = null;
 
     #[Struct([
-        self::COLUMN_NAME => '资源名字',
+        self::COLUMN_NAME => '文件名称',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
-            'length' => 64,
+            'length' => 100,
         ],
     ])]
     protected ?string $name = null;
 
     #[Struct([
-        self::COLUMN_NAME => '编号',
+        self::COLUMN_NAME => '公司 ID',
         self::COLUMN_STRUCT => [
-            'type' => 'varchar',
-            'length' => 64,
+            'type' => 'bigint',
+            'length' => 20,
         ],
     ])]
-    protected ?string $num = null;
+    protected ?int $companyId = null;
 
     #[Struct([
-        self::COLUMN_NAME => '状态 0=禁用;1=启用;',
-        self::ENUM_CLASS => ResourceStatusEnum::class,
+        self::COLUMN_NAME => '项目ID',
         self::COLUMN_STRUCT => [
-            'type' => 'tinyint',
-            'length' => 1,
+            'type' => 'int',
+            'length' => 11,
         ],
     ])]
-    protected ?int $status = null;
+    protected ?int $projectId = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '任务ID',
+        self::COLUMN_STRUCT => [
+            'type' => 'int',
+            'length' => 11,
+        ],
+    ])]
+    protected ?int $projectIssueId = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '文件大小(B)',
+        self::COLUMN_STRUCT => [
+            'type' => 'int',
+            'length' => 11,
+        ],
+    ])]
+    protected ?int $size = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '文件格式',
+        self::COLUMN_STRUCT => [
+            'type' => 'varchar',
+            'length' => 20,
+        ],
+    ])]
+    protected ?string $ext = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '文件地址',
+        self::COLUMN_STRUCT => [
+            'type' => 'varchar',
+            'length' => 255,
+        ],
+    ])]
+    protected ?string $path = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '下载次数',
+        self::COLUMN_STRUCT => [
+            'type' => 'int',
+            'length' => 11,
+        ],
+    ])]
+    protected ?int $downloadNumber = null;
 
     #[Struct([
         self::COLUMN_NAME => '创建时间',

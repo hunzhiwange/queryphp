@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class ProjectAttachement extends AbstractMigration
+final class ProjectAttachment extends AbstractMigration
 {
     public function up(): void
     {
@@ -14,13 +14,13 @@ final class ProjectAttachement extends AbstractMigration
 
     public function down(): void
     {
-        $this->table('project_attachement')->drop()->save();
+        $this->table('project_attachment')->drop()->save();
     }
 
     private function struct(): void
     {
         $sql = <<<'EOT'
-            CREATE TABLE `project_attachement` (
+            CREATE TABLE `project_attachment` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
                 `name` varchar(100) NOT NULL DEFAULT '' COMMENT '文件名称',
                 `company_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '公司 ID',

@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Entity\Project;
 
 use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\Struct;
 
 /**
  * 项目.
  */
-class Project extends Entity
+final class Project extends Entity
 {
     /**
      * Database table.
@@ -27,115 +28,156 @@ class Project extends Entity
     public const AUTO = 'id';
 
     /**
-     * Entity struct.
-     *
-     * - id
-     *                      comment: ID  type: bigint(20) unsigned  null: false
-     *                      key: PRI  default: null  extra: auto_increment
-     * - company_id
-     *                      comment: 公司 ID  type: bigint(20) unsigned  null: false
-     *                      key: MUL  default: 1  extra:
-     * - name
-     *                      comment: 项目名称  type: varchar(255)  null: false
-     *                      key: MUL  default:   extra:
-     * - num
-     *                      comment: 编号  type: varchar(64)  null: false
-     *                      key: MUL  default:   extra:
-     * - status
-     *                      comment: 状态 0=禁用;1=启用;  type: tinyint(1) unsigned  null: false
-     *                      key:   default: 1  extra:
-     * - progress
-     *                      comment: 进度条(最大值 10000，需要除以 100 表示实际进度)  type: int(5) unsigned  null: false
-     *                      key:   default: 0  extra:
-     * - owner_user_id
-     *                      comment: 项目所有者用户 ID  type: bigint(20) unsigned  null: false
-     *                      key:   default: 0  extra:
-     * - completed_number
-     *                      comment: 已完成任务数量  type: bigint(20) unsigned  null: false
-     *                      key:   default: 0  extra:
-     * - unfinished_number
-     *                      comment: 未完成任务数量  type: bigint(20) unsigned  null: false
-     *                      key:   default: 0  extra:
-     * - sort
-     *                      comment: 排序(ASC)  type: bigint(20) unsigned  null: false
-     *                      key:   default: 0  extra:
-     * - create_at
-     *                      comment: 创建时间  type: datetime  null: false
-     *                      key:   default: CURRENT_TIMESTAMP  extra:
-     * - update_at
-     *                      comment: 更新时间  type: datetime  null: false
-     *                      key:   default: CURRENT_TIMESTAMP  extra: on update CURRENT_TIMESTAMP
-     * - delete_at
-     *                      comment: 删除时间 0=未删除;大于0=删除时间;  type: bigint(20) unsigned  null: false
-     *                      key:   default: 0  extra:
-     * - create_account
-     *                      comment: 创建账号  type: bigint(20) unsigned  null: false
-     *                      key:   default: 0  extra:
-     * - update_account
-     *                      comment: 更新账号  type: bigint(20) unsigned  null: false
-     *                      key:   default: 0  extra:
-     * - version
-     *                      comment: 操作版本号  type: bigint(20) unsigned  null: false
-     *                      key:   default: 0  extra:
-     */
-    public const STRUCT = [
-        'id' => [
-            self::COLUMN_NAME => 'ID',
-            self::READONLY => true,
-        ],
-        'company_id' => [
-            self::COLUMN_NAME => '公司 ID',
-        ],
-        'name' => [
-            self::COLUMN_NAME => '项目名称',
-        ],
-        'num' => [
-            self::COLUMN_NAME => '编号',
-        ],
-        'status' => [
-            self::COLUMN_NAME => '状态 0=禁用;1=启用;',
-            self::ENUM_CLASS => ProjectStatusEnum::class,
-        ],
-        'progress' => [
-            self::COLUMN_NAME => '进度条(最大值 10000，需要除以 100 表示实际进度)',
-        ],
-        'owner_user_id' => [
-            self::COLUMN_NAME => '项目所有者用户 ID',
-        ],
-        'completed_number' => [
-            self::COLUMN_NAME => '已完成任务数量',
-        ],
-        'unfinished_number' => [
-            self::COLUMN_NAME => '未完成任务数量',
-        ],
-        'sort' => [
-            self::COLUMN_NAME => '排序(ASC)',
-        ],
-        'create_at' => [
-            self::COLUMN_NAME => '创建时间',
-        ],
-        'update_at' => [
-            self::COLUMN_NAME => '更新时间',
-        ],
-        'delete_at' => [
-            self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
-            self::SHOW_PROP_BLACK => true,
-        ],
-        'create_account' => [
-            self::COLUMN_NAME => '创建账号',
-            self::SHOW_PROP_BLACK => true,
-        ],
-        'update_account' => [
-            self::COLUMN_NAME => '更新账号',
-            self::SHOW_PROP_BLACK => true,
-        ],
-        'version' => [
-            self::COLUMN_NAME => '操作版本号',
-        ],
-    ]; // END STRUCT
-
-    /**
      * Soft delete column.
      */
     public const DELETE_AT = 'delete_at';
+
+    #[Struct([
+        self::COLUMN_NAME => 'ID',
+        self::READONLY => true,
+        self::COLUMN_STRUCT => [
+            'type' => 'bigint',
+            'length' => 20,
+        ],
+    ])]
+    protected ?int $id = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '公司 ID',
+        self::COLUMN_STRUCT => [
+            'type' => 'bigint',
+            'length' => 20,
+        ],
+    ])]
+    protected ?int $companyId = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '项目名称',
+        self::COLUMN_STRUCT => [
+            'type' => 'varchar',
+            'length' => 255,
+        ],
+    ])]
+    protected ?string $name = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '编号',
+        self::COLUMN_STRUCT => [
+            'type' => 'varchar',
+            'length' => 64,
+        ],
+    ])]
+    protected ?string $num = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '状态 0=禁用;1=启用;',
+        self::ENUM_CLASS => ProjectStatusEnum::class,
+        self::COLUMN_STRUCT => [
+            'type' => 'tinyint',
+            'length' => 1,
+        ],
+    ])]
+    protected ?int $status = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '进度条(最大值 10000，需要除以 100 表示实际进度)',
+        self::COLUMN_STRUCT => [
+            'type' => 'int',
+            'length' => 5,
+        ],
+    ])]
+    protected ?int $progress = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '项目所有者用户 ID',
+        self::COLUMN_STRUCT => [
+            'type' => 'bigint',
+            'length' => 20,
+        ],
+    ])]
+    protected ?int $ownerUserId = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '已完成任务数量',
+        self::COLUMN_STRUCT => [
+            'type' => 'bigint',
+            'length' => 20,
+        ],
+    ])]
+    protected ?int $completedNumber = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '未完成任务数量',
+        self::COLUMN_STRUCT => [
+            'type' => 'bigint',
+            'length' => 20,
+        ],
+    ])]
+    protected ?int $unfinishedNumber = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '排序(ASC)',
+        self::COLUMN_STRUCT => [
+            'type' => 'bigint',
+            'length' => 20,
+        ],
+    ])]
+    protected ?int $sort = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '创建时间',
+        self::COLUMN_STRUCT => [
+            'type' => 'datetime',
+            'length' => null,
+        ],
+    ])]
+    protected ?string $createAt = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '更新时间',
+        self::COLUMN_STRUCT => [
+            'type' => 'datetime',
+            'length' => null,
+        ],
+    ])]
+    protected ?string $updateAt = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
+        self::SHOW_PROP_BLACK => true,
+        self::COLUMN_STRUCT => [
+            'type' => 'bigint',
+            'length' => 20,
+        ],
+    ])]
+    protected ?int $deleteAt = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '创建账号',
+        self::SHOW_PROP_BLACK => true,
+        self::COLUMN_STRUCT => [
+            'type' => 'bigint',
+            'length' => 20,
+        ],
+    ])]
+    protected ?int $createAccount = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '更新账号',
+        self::SHOW_PROP_BLACK => true,
+        self::COLUMN_STRUCT => [
+            'type' => 'bigint',
+            'length' => 20,
+        ],
+    ])]
+    protected ?int $updateAccount = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '操作版本号',
+        self::COLUMN_STRUCT => [
+            'type' => 'bigint',
+            'length' => 20,
+        ],
+    ])]
+    protected ?int $version = null;
 }
