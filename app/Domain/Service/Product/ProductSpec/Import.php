@@ -30,24 +30,6 @@ class Import
                 'spec_id',
                 'searching',
             ]);
-
-            if (!$lastInsertId) {
-                return;
-            }
-
-            // 获取所有分组
-            $groupIds = array_unique(array_column($data, 'group_id'));
-            foreach ($groupIds as $groupId) {
-                ProductSpec::select()
-                    ->where('group_id', $groupId)
-                    ->where('group_main', '!=', 1)
-                    ->limit(1)
-                    ->orderBy('id ASC')
-                    ->update([
-                        'group_main' => 1,
-                    ])
-                ;
-            }
         });
         $w->flush();
     }
@@ -57,14 +39,17 @@ class Import
         $groupField = ['category_id', 'group_id', 'group_name', 'group_sku_field', 'group_type', 'group_searching'];
         $groupIds = array_column($data, 'group_id');
         $groupData = [];
-        if ($groupField) {
+        if ($groupIds) {
             $groupData = ProductSpec::select()
                 ->whereIn('group_id', $groupIds)
+                ->where('group_main', 1)
                 ->setColumns($groupField)
                 ->asArray()
                 ->select()
-                ->toArray()
             ;
+
+            /** @phpstan-ignore-next-line */
+            $groupData = (array) $groupData->toArray();
             $groupData = array_column($groupData, null, 'group_id');
         }
 
@@ -78,17 +63,30 @@ class Import
                 throw new \Exception('商品规格编号不能为空');
             }
 
-            foreach ($groupField as $field) {
-                if ('' !== $item[$field]) {
-                    // 规格分组数据以最后一个为准
-                    $group[$item['group_id']][$field] = $item[$field];
+            if (!isset($groupData[$item['group_id']])) {
+                foreach ($groupField as $field) {
+                    if ('' !== $item[$field]) {
+                        // 规格分组数据以最后一个为准
+                        $group[$item['group_id']][$field] = $item[$field];
+                    }
                 }
             }
         }
         $group = array_merge($group, $groupData);
 
+        $groupMain = [];
         foreach ($data as &$item) {
-            $item = array_merge($item, $group[$item['group_id']]);
+            $groupId = $item['group_id'];
+            $item = array_merge($item, $group[$groupId]);
+
+            if (!isset($groupData[$groupId])) {
+                if (!isset($groupMain[$groupId])) {
+                    $item['group_main'] = 1;
+                    $groupMain[$groupId] = true;
+                } else {
+                    $item['group_main'] = 0;
+                }
+            }
         }
         unset($item);
 
