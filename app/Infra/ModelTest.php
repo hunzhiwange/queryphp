@@ -15,6 +15,13 @@ use Tests\TestCase;
  */
 final class ModelTest extends TestCase
 {
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->truncateDatabase(['base_brand']);
+        http_request()->request->replace();
+    }
+
     public function test2(): void
     {
         $baseBrandModel = BaseBrandModel::make();
@@ -3423,6 +3430,13 @@ final class ModelTest extends TestCase
     {
         container()->instance('company_id', 0);
         $baseBrandModel = BaseBrandModel::make();
+        $baseBrandModel
+            ->where([
+                'brand_name' => 'new2',
+            ])
+            ->delete()
+        ;
+
         $id = $baseBrandModel
             ->updateInfo([
                 'brand_name' => 'new2',
