@@ -18,9 +18,6 @@
     <testsuite name="App Test Suite">
       <directory>./app/</directory>
     </testsuite>
-    <testsuite name="Api Test Suite">
-      <directory>./api/</directory>
-    </testsuite>
   </testsuites>
   <groups>
     <exclude>

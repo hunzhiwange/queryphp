@@ -1,7 +1,6 @@
 parameters:
 	level: 9
 	paths:
-		- api
 		- app
 		- option
 		- assets/database
