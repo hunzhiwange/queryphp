@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Product\ProductSpec;
 
+use App\Domain\Entity\Product\ProductSpec;
 use App\Infra\Csv;
 use Tests\TestCase;
 
@@ -70,6 +71,24 @@ final class ImportTest extends TestCase
         // 商品多规格数据相同以最后一条为准
         $csv = new Csv();
         $data = $csv->read(__DIR__.'/Csv/product_spec5.csv');
+        $import = new Import();
+        $import->handle($data['data']);
+        static::assertSame(1, 1);
+    }
+
+    public function test6(): void
+    {
+        $s = new ProductSpec();
+        $s->groupId = 'color';
+        $s->groupName = '高级颜色';
+        $s->specId = 'default';
+        $s->categoryId = 'default';
+        $s->name = 'default';
+        $s->save()->flush();
+
+        // 商品多规格分组以数据库为主，数据库存在直接覆盖页面的数据
+        $csv = new Csv();
+        $data = $csv->read(__DIR__.'/Csv/product_spec6.csv');
         $import = new Import();
         $import->handle($data['data']);
         static::assertSame(1, 1);

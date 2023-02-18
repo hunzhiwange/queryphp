@@ -54,8 +54,21 @@ class Import
 
     protected function fillData(array $data): array
     {
-        $group = [];
         $groupField = ['category_id', 'group_id', 'group_name', 'group_sku_field', 'group_type', 'group_searching'];
+        $groupIds = array_column($data, 'group_id');
+        $groupData = [];
+        if ($groupField) {
+            $groupData = ProductSpec::select()
+                ->whereIn('group_id', $groupIds)
+                ->setColumns($groupField)
+                ->asArray()
+                ->select()
+                ->toArray()
+            ;
+            $groupData = array_column($groupData, null, 'group_id');
+        }
+
+        $group = [];
         foreach ($data as $item) {
             if (empty($item['group_id'])) {
                 throw new \Exception('商品规格分组编号不能为空');
@@ -72,6 +85,7 @@ class Import
                 }
             }
         }
+        $group = array_merge($group, $groupData);
 
         foreach ($data as &$item) {
             $item = array_merge($item, $group[$item['group_id']]);
