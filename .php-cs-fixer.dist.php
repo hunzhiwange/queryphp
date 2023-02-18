@@ -12,7 +12,6 @@ return (new PhpCsFixer\Config())
         '@PhpCsFixer:risky' => true,
         '@PHP81Migration' => true,
         '@PHP80Migration:risky' => true,
-        'heredoc_indentation' => true,
         'general_phpdoc_annotation_remove' => ['annotations' => ['expectedDeprecation']], // one should use PHPUnit built-in method instead
         'heredoc_indentation' => false, // TODO switch on when # of PR's is lower
         'modernize_strpos' => true, // needs PHP 8+ or polyfill
@@ -24,7 +23,6 @@ return (new PhpCsFixer\Config())
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->in(__DIR__.'/app')
-            ->in(__DIR__.'/api')
             ->append([__FILE__])
             ->in(__DIR__.'/tests')
             ->in(__DIR__.'/www')
