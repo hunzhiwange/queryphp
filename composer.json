@@ -69,9 +69,7 @@
             "/vendor/psr/",
             "/vendor/clio/",
             "/vendor/hunzhiwange/framework/src/**/Console/",
-            "/vendor/monolog/",
             "/vendor/codedungeon/",
-            "/vendor/league/",
             "/vendor/nikic/php-parser/",
             "/vendor/cakephp/",
             "/vendor/robmorgan/phinx/"
