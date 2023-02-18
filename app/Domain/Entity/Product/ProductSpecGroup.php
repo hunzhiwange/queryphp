@@ -8,14 +8,14 @@ use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\Struct;
 
 /**
- * 商品规格.
+ * 商品规格分组.
  */
-final class ProductSpec extends Entity
+final class ProductSpecGroup extends Entity
 {
     /**
      * Database table.
      */
-    public const TABLE = 'product_spec';
+    public const TABLE = 'product_spec_group';
 
     /**
      * Primary key.
@@ -52,6 +52,15 @@ final class ProductSpec extends Entity
     protected ?int $companyId = null;
 
     #[Struct([
+        self::COLUMN_NAME => '商品分类编号',
+        self::COLUMN_STRUCT => [
+            'type' => 'varchar',
+            'length' => 50,
+        ],
+    ])]
+    protected ?string $categoryId = null;
+
+    #[Struct([
         self::COLUMN_NAME => '商品规格分组编号',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
@@ -61,31 +70,40 @@ final class ProductSpec extends Entity
     protected ?string $groupId = null;
 
     #[Struct([
-        self::COLUMN_NAME => '商品规格名字',
+        self::COLUMN_NAME => '商品规格分组名字',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
             'length' => 50,
         ],
     ])]
-    protected ?string $name = null;
+    protected ?string $groupName = null;
 
     #[Struct([
-        self::COLUMN_NAME => '商品规格编号',
+        self::COLUMN_NAME => '商品规格分组对应的商品存储字段',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
             'length' => 50,
         ],
     ])]
-    protected ?string $specId = null;
+    protected ?string $groupSkuField = null;
 
     #[Struct([
-        self::COLUMN_NAME => '是否用于搜索过滤 0=否;1=是;',
+        self::COLUMN_NAME => '商品规格分组类型 0=SKU规格;1=SPU属性;2=基础展示类属性;3=自定义类属性;',
         self::COLUMN_STRUCT => [
             'type' => 'tinyint',
             'length' => 1,
         ],
     ])]
-    protected ?int $searching = null;
+    protected ?int $groupType = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '商品规格分组是否支持搜索 0=否;1=是;',
+        self::COLUMN_STRUCT => [
+            'type' => 'tinyint',
+            'length' => 1,
+        ],
+    ])]
+    protected ?int $groupSearching = null;
 
     #[Struct([
         self::COLUMN_NAME => '创建时间',
