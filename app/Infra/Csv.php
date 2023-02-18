@@ -33,8 +33,13 @@ class Csv
         foreach ($csv->getRecords() as $index => $record) {
             // @phpstan-ignore-next-line
             foreach ($record as $key => $value) {
-                if (\in_array($index, self::HEADER_INDEX, true)) {
-                } elseif (\in_array($index, self::NOTICE_INDEX, true)) {
+                /**
+                 * CSV 导入的数据都是字符串.
+                 *
+                 * @phpstan-ignore-next-line
+                 */
+                $value = trim($value);
+                if (\in_array($index, self::NOTICE_INDEX, true)) {
                     $notice[$key] = $value;
                 } elseif (\in_array($index, self::TITLE_INDEX, true)) {
                     $title[$key] = $value;
