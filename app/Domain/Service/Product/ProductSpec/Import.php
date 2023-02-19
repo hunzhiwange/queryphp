@@ -64,7 +64,6 @@ class Import
 
         $groupData = ProductSpecGroup::select()
             ->whereIn('group_id', $groupIds)
-            ->where('group_main', 1)
             ->setColumns(self::SPEC_GROUP_FIELD)
             ->findArray()
         ;
