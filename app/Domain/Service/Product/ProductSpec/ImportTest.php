@@ -17,7 +17,7 @@ final class ImportTest extends TestCase
 {
     protected function setUp(): void
     {
-        $this->truncateDatabase(['product_spec']);
+        $this->truncateDatabase(['product_spec', 'product_spec_group']);
     }
 
     public function test1(): void
