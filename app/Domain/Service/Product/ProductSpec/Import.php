@@ -6,6 +6,9 @@ namespace App\Domain\Service\Product\ProductSpec;
 
 use App\Domain\Entity\Product\ProductSpec;
 use App\Domain\Entity\Product\ProductSpecGroup;
+use App\Domain\Entity\Product\ProductSpecGroupGroupTypeEnum;
+use App\Domain\Entity\Product\ProductSpecGroupSearchingEnum;
+use App\Domain\Entity\Product\ProductSpecSearchingEnum;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Support\Arr\Only;
 
@@ -93,6 +96,8 @@ class Import
             if (empty($item['spec_id'])) {
                 throw new \Exception('商品规格编号不能为空');
             }
+
+            ProductSpecSearchingEnum::from((int) $item['searching']);
         }
     }
 
@@ -110,6 +115,15 @@ class Import
                     // 规格分组数据以最后一个为准
                     $group[$item['group_id']][$field] = $item[$field];
                 }
+            }
+        }
+
+        foreach ($group as $v) {
+            if (isset($v['group_type'])) {
+                ProductSpecGroupGroupTypeEnum::from((int) $v['group_type']);
+            }
+            if (isset($v['group_searching'])) {
+                ProductSpecGroupSearchingEnum::from((int) $v['group_searching']);
             }
         }
 

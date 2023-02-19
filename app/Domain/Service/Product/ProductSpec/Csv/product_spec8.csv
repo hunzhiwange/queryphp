@@ -1,0 +1,6 @@
+category_id,group_id,group_name,group_sku_field,group_type,group_searching,name,spec_id,searching
+分类与规格关联,,,,,,,,
+商品分类编号,,,,,,,,
+fuzhuang,color,颜色,spec1,0,1,红色,red,1
+,color,颜色,spec1,0,1,黑色,black,0
+,color,颜色,spec1,0,7,白色,red,0
