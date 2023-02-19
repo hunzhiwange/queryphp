@@ -41,7 +41,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis-phpredis/phpredis@5.3.7, igbinary, msgpack, lzf, zstd, lz4, memcached, gmp
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis-phpredis/phpredis@5.3.7, igbinary, msgpack, lzf, zstd, lz4, gmp
           ini-values: error_reporting=E_ALL
           tools: composer:v2
           coverage: xdebug3
@@ -70,6 +70,15 @@ jobs:
           timeout_minutes: 5
           max_attempts: 5
           command: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
+
+      - name: Run Scripts Before Test
+        run: |
+          mkdir -p logs
+          mkdir -p storage/app/tests
+          cp .env.phpunit.example .env.phpunit
+
+      - name: Migrate
+        run: php leevel migrate:migrate -e env.phpunit
 
       - name: Execute tests against PHPUnit
         run: php assets/build/phpunit --coverage-clover=coverage.xml
