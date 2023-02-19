@@ -35,10 +35,10 @@ class Import
         $data = $this->prepareData($data);
         $w = UnitOfWork::make();
         $w->persist(function () use ($data): void {
-            ProductSpec::select()->insertAll($data[0], [], static::SPEC_FIELD);
+            ProductSpec::select()->insertAll($data['spec_data'], [], static::SPEC_FIELD);
 
-            if ($data[1]) {
-                ProductSpecGroup::select()->insertAll($data[1]);
+            if ($data['group_data']) {
+                ProductSpecGroup::select()->insertAll($data['group_data']);
             }
         });
         $w->flush();
@@ -47,28 +47,16 @@ class Import
     protected function prepareData(array $data): array
     {
         $this->validateSpecItem($data);
+        $groupData = $this->prepareGroupData($data);
+        $specData = $this->prepareSpecData($data);
 
-        $groupIds = array_column($data, 'group_id');
-        $oldGroupData = $this->getGroupData($groupIds);
-        $group = [];
-        foreach ($data as $item) {
-            if (isset($oldGroupData[$item['group_id']])) {
-                continue;
-            }
-            foreach (static::SPEC_GROUP_FIELD as $field) {
-                if ('' !== $item[$field]) {
-                    // 规格分组数据以最后一个为准
-                    $group[$item['group_id']][$field] = $item[$field];
-                }
-            }
-        }
-
-        $specItem = $this->prepareSpecItem($data, $item);
-
-        return [$specItem, $group];
+        return [
+            'spec_data' => $specData,
+            'group_data' => $groupData,
+        ];
     }
 
-    protected function getGroupData(array $groupIds): array
+    protected function queryGroupData(array $groupIds): array
     {
         if (!$groupIds) {
             return [];
@@ -84,7 +72,7 @@ class Import
         return array_column($groupData, null, 'group_id');
     }
 
-    protected function prepareSpecItem(array $data): array
+    protected function prepareSpecData(array $data): array
     {
         foreach ($data as &$item) {
             $item = Only::handle($item, static::SPEC_FIELD);
@@ -107,5 +95,25 @@ class Import
                 throw new \Exception('商品规格编号不能为空');
             }
         }
+    }
+
+    protected function prepareGroupData(array $data): array
+    {
+        $groupIds = array_column($data, 'group_id');
+        $oldGroupData = $this->queryGroupData($groupIds);
+        $group = [];
+        foreach ($data as $item) {
+            if (isset($oldGroupData[$item['group_id']])) {
+                continue;
+            }
+            foreach (static::SPEC_GROUP_FIELD as $field) {
+                if ('' !== $item[$field]) {
+                    // 规格分组数据以最后一个为准
+                    $group[$item['group_id']][$field] = $item[$field];
+                }
+            }
+        }
+
+        return $group;
     }
 }
