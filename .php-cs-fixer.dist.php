@@ -18,6 +18,7 @@ return (new PhpCsFixer\Config())
         'no_useless_concat_operator' => false, // TODO switch back on when the `src/Console/Application.php` no longer needs the concat
         'use_arrow_functions' => false, // TODO switch on when # of PR's is lower
         'php_unit_strict' => false,
+        'php_unit_test_class_requires_covers' => false,
     ])
     ->setRiskyAllowed(true)
     ->setFinder(
