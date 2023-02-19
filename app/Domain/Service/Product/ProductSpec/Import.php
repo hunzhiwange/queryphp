@@ -10,7 +10,7 @@ use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Support\Arr\Only;
 
 /**
- * 项目多规格导入.
+ * 商品多规格导入.
  */
 class Import
 {
