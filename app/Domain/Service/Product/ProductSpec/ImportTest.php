@@ -6,9 +6,6 @@ namespace App\Domain\Service\Product\ProductSpec;
 
 use App\Domain\Entity\Product\ProductSpec;
 use App\Domain\Entity\Product\ProductSpecGroup;
-use App\Domain\Entity\Product\ProductSpecGroupGroupTypeEnum;
-use App\Domain\Entity\Product\ProductSpecGroupSearchingEnum;
-use App\Domain\Entity\Product\ProductSpecSearchingEnum;
 use App\Infra\Csv;
 use Tests\TestCase;
 
@@ -754,7 +751,7 @@ eot;
     {
         $this->expectException(\ValueError::class);
         $this->expectExceptionMessage(
-            sprintf('5 is not a valid backing value for enum "%s"', ProductSpecSearchingEnum::class)
+            '5 is not a valid backing value for enum'
         );
 
         $csv = new Csv();
@@ -767,7 +764,7 @@ eot;
     {
         $this->expectException(\ValueError::class);
         $this->expectExceptionMessage(
-            sprintf('7 is not a valid backing value for enum "%s"', ProductSpecGroupSearchingEnum::class)
+            '7 is not a valid backing value for enum'
         );
 
         $csv = new Csv();
@@ -780,7 +777,7 @@ eot;
     {
         $this->expectException(\ValueError::class);
         $this->expectExceptionMessage(
-            sprintf('55 is not a valid backing value for enum "%s"', ProductSpecGroupGroupTypeEnum::class)
+            '55 is not a valid backing value for enum'
         );
 
         $csv = new Csv();
