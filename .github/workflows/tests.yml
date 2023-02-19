@@ -1,3 +1,11 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *'
+
 jobs:
   linux_tests:
     runs-on: ubuntu-22.04
@@ -63,22 +71,8 @@ jobs:
           max_attempts: 5
           command: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
 
-      - name: Run Scripts Before Test
-        run: |
-          mkdir -p logs
-          mkdir -p storage/app/tests
-          cp .env.phpunit.example .env.phpunit
-
-      - name: Migrate
-      run: php leevel migrate:migrate -e env.phpunit
-
       - name: Execute tests against PHPUnit
         run: php assets/build/phpunit --coverage-clover=coverage.xml
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
           DB_USERNAME: root
-
-      - name: Send code coverage report to Codecov.io
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN_QUERYPHP }}
