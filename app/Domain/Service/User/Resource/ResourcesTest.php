@@ -8,11 +8,6 @@ use App\Domain\Entity\User\ResourceStatusEnum;
 use Leevel\Database\Proxy\Db;
 use Tests\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 final class ResourcesTest extends TestCase
 {
     protected function setUp(): void

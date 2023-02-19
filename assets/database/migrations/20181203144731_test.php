@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 final class Test extends AbstractMigration
 {
     public function up(): void

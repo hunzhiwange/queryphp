@@ -8,11 +8,6 @@ use App\Domain\Entity\Product\ProductSpecGroup;
 use App\Infra\Csv;
 use Tests\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 final class ImportGroupTest extends TestCase
 {
     protected function setUp(): void

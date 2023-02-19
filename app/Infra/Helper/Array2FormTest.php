@@ -6,11 +6,6 @@ namespace App\Infra\Helper;
 
 use Tests\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 final class Array2FormTest extends TestCase
 {
     public function testBaseUse(): void

@@ -8,11 +8,6 @@ use App\Domain\Entity\Product\BaseBrandModel;
 use Leevel\Http\Request;
 use Tests\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 final class ModelTest extends TestCase
 {
     protected function tearDown(): void

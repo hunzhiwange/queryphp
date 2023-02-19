@@ -6,11 +6,6 @@ namespace App\Infra;
 
 use Tests\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 final class CsvTest extends TestCase
 {
     public function test1(): void

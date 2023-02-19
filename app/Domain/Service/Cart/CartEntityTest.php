@@ -6,11 +6,6 @@ namespace App\Domain\Service\Cart;
 
 use Tests\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 final class CartEntityTest extends TestCase
 {
     public function test1(): void

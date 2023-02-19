@@ -16,13 +16,6 @@ namespace Tests\Example;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * 原生 PHPUnit 示例.
- *
- * @internal
- *
- * @coversNothing
- */
 final class PHPUnitTest extends TestCase
 {
     public function testBaseUse(): void

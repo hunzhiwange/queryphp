@@ -6,11 +6,6 @@ namespace App\Domain\Service\Search;
 
 use Tests\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 final class SearchTest extends TestCase
 {
     public function testBaseUse(): void
