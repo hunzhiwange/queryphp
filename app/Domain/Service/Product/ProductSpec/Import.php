@@ -35,7 +35,7 @@ class Import
         $data = $this->prepareData($data);
         $w = UnitOfWork::make();
         $w->persist(function () use ($data): void {
-            ProductSpec::select()->insertAll($data['spec_data'], [], static::SPEC_FIELD);
+            ProductSpec::select()->insertAll($data['spec_data'], [], self::SPEC_FIELD);
 
             if ($data['group_data']) {
                 ProductSpecGroup::select()->insertAll($data['group_data']);
@@ -65,7 +65,7 @@ class Import
         $groupData = ProductSpecGroup::select()
             ->whereIn('group_id', $groupIds)
             ->where('group_main', 1)
-            ->setColumns(static::SPEC_GROUP_FIELD)
+            ->setColumns(self::SPEC_GROUP_FIELD)
             ->findArray()
         ;
 
@@ -75,7 +75,7 @@ class Import
     protected function prepareSpecData(array $data): array
     {
         foreach ($data as &$item) {
-            $item = Only::handle($item, static::SPEC_FIELD);
+            $item = Only::handle($item, self::SPEC_FIELD);
         }
 
         return $data;
@@ -106,7 +106,7 @@ class Import
             if (isset($oldGroupData[$item['group_id']])) {
                 continue;
             }
-            foreach (static::SPEC_GROUP_FIELD as $field) {
+            foreach (self::SPEC_GROUP_FIELD as $field) {
                 if ('' !== $item[$field]) {
                     // 规格分组数据以最后一个为准
                     $group[$item['group_id']][$field] = $item[$field];
