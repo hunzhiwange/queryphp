@@ -26,7 +26,7 @@ class Import
         'group_searching',
     ];
 
-    private const  SPEC_FIELD = [
+    private const SPEC_FIELD = [
         'group_id',
         'name',
         'spec_id',
@@ -38,7 +38,9 @@ class Import
         $data = $this->prepareData($data);
         $w = UnitOfWork::make();
         $w->persist(function () use ($data): void {
-            ProductSpec::select()->insertAll($data['spec_data'], [], self::SPEC_FIELD);
+            if ($data['spec_data']) {
+                ProductSpec::select()->insertAll($data['spec_data'], [], self::SPEC_FIELD);
+            }
 
             if ($data['group_data']) {
                 ProductSpecGroup::select()->insertAll($data['group_data']);
@@ -52,6 +54,10 @@ class Import
         $this->validateSpecItem($data);
         $groupData = $this->prepareGroupData($data);
         $specData = $this->prepareSpecData($data);
+
+        if (!$specData) {
+            throw new \Exception('导入的规格数据不能为空');
+        }
 
         return [
             'spec_data' => $specData,
@@ -97,6 +103,10 @@ class Import
                 throw new \Exception('商品规格编号不能为空');
             }
 
+            if (empty($item['name'])) {
+                throw new \Exception('商品规格名字不能为空');
+            }
+
             ProductSpecSearchingEnum::from((int) $item['searching']);
         }
     }
@@ -124,6 +134,9 @@ class Import
             }
             if (isset($v['group_searching'])) {
                 ProductSpecGroupSearchingEnum::from((int) $v['group_searching']);
+            }
+            if (empty($item['group_name'])) {
+                throw new \Exception('商品规格分组名字不能为空');
             }
         }
 
