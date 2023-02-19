@@ -23,9 +23,9 @@ final class ProductSpecGroup extends AbstractMigration
             CREATE TABLE `product_spec_group` (
               `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
               `company_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '公司 ID',
-              `category_id` varchar(50) NOT NULL COMMENT '商品分类编号',
-              `group_id` varchar(50) NOT NULL COMMENT '商品规格分组编号',
-              `group_name` varchar(50) NOT NULL COMMENT '商品规格分组名字',
+              `category_id` varchar(50) NOT NULL DEFAULT '' COMMENT '商品分类编号',
+              `group_id` varchar(50) NOT NULL DEFAULT '' COMMENT '商品规格分组编号',
+              `group_name` varchar(50) NOT NULL DEFAULT '' COMMENT '商品规格分组名字',
               `group_sku_field` varchar(50) NOT NULL DEFAULT '' COMMENT '商品规格分组对应的商品存储字段',
               `group_type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '商品规格分组类型 0=SKU规格;1=SPU属性;2=基础展示类属性;3=自定义类属性;',
               `group_searching` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '商品规格分组是否支持搜索 0=否;1=是;',
