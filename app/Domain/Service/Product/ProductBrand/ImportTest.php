@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\Product\ProductBrand;
 
 use App\Domain\Entity\Product\ProductBrand;
+use App\Domain\Entity\Product\ProductBrandSearchingEnum;
 use App\Infra\Csv;
 use Tests\TestCase;
 
@@ -141,5 +142,18 @@ eot;
             ),
             $data,
         );
+    }
+
+    public function test3(): void
+    {
+        $this->expectException(\ValueError::class);
+        $this->expectExceptionMessage(
+            sprintf('4 is not a valid backing value for enum "%s"', ProductBrandSearchingEnum::class)
+        );
+
+        $s = new ProductBrand();
+        $s->brandId = 'mi';
+        $s->name = '高级小米';
+        $s->searching = 4;
     }
 }

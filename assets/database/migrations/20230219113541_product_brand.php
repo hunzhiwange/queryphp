@@ -22,7 +22,7 @@ final class ProductBrand extends AbstractMigration
         $sql = <<<'EOT'
             CREATE TABLE `product_brand` (
               `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-              `company_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '公司 ID',
+              `company_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '公司 ID',
               `brand_id` varchar(50) NOT NULL DEFAULT '' COMMENT '商品品牌编号',
               `name` varchar(50) NOT NULL DEFAULT '' COMMENT '商品品牌名字',
               `searching` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否用于搜索过滤 0=否;1=是;',

@@ -22,7 +22,7 @@ final class ProductSpecGroup extends AbstractMigration
         $sql = <<<'EOT'
             CREATE TABLE `product_spec_group` (
               `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-              `company_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '公司 ID',
+              `company_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '公司 ID',
               `category_id` varchar(50) NOT NULL DEFAULT '' COMMENT '商品分类编号',
               `group_id` varchar(50) NOT NULL DEFAULT '' COMMENT '商品规格分组编号',
               `group_name` varchar(50) NOT NULL DEFAULT '' COMMENT '商品规格分组名字',
