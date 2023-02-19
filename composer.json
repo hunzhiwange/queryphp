@@ -1,7 +1,7 @@
 {
     "name": "hunzhiwange/queryphp",
     "description": "The QueryPHP Application.",
-    "keywords": ["php", "framework", "queryphp", "vue", "iview"],
+    "keywords": ["php", "framework", "queryphp"],
     "license": "MIT",
     "homepage": "http://www.queryphp.com",
     "support": {
