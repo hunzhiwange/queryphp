@@ -82,11 +82,23 @@ class Import
 
     protected function prepareSpecData(array $data): array
     {
+        $defaultData = $this->defaultData();
         foreach ($data as &$item) {
+            $item = array_merge($defaultData, $item);
             $item = Only::handle($item, self::SPEC_FIELD);
         }
 
         return $data;
+    }
+
+    protected function defaultData(): array
+    {
+        return [
+            'group_id' => '',
+            'name' => '',
+            'spec_id' => '',
+            'searching' => ProductSpecSearchingEnum::YES->value,
+        ];
     }
 
     /**
@@ -128,7 +140,10 @@ class Import
             }
         }
 
+        $defaultData = $this->defaultGroupData();
         foreach ($group as $v) {
+            $v = array_merge($defaultData, $v);
+
             if (isset($v['group_type'])) {
                 ProductSpecGroupGroupTypeEnum::from((int) $v['group_type']);
             }
@@ -141,5 +156,17 @@ class Import
         }
 
         return $group;
+    }
+
+    protected function defaultGroupData(): array
+    {
+        return [
+            'category_id' => '',
+            'group_id' => '',
+            'group_name' => '',
+            'group_sku_field' => '',
+            'group_type' => ProductSpecGroupGroupTypeEnum::SKU->value,
+            'group_searching' => ProductSpecGroupSearchingEnum::YES->value,
+        ];
     }
 }

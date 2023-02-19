@@ -47,11 +47,25 @@ class ImportGroup
 
     protected function prepareSpecGroupData(array $data): array
     {
+        $defaultData = $this->defaultData();
         foreach ($data as &$item) {
+            $item = array_merge($defaultData, $item);
             $item = Only::handle($item, self::SPEC_GROUP_FIELD);
         }
 
         return $data;
+    }
+
+    protected function defaultData(): array
+    {
+        return [
+            'category_id' => '',
+            'group_id' => '',
+            'group_name' => '',
+            'group_sku_field' => '',
+            'group_type' => ProductSpecGroupGroupTypeEnum::SKU->value,
+            'group_searching' => ProductSpecGroupSearchingEnum::YES->value,
+        ];
     }
 
     /**

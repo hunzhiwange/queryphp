@@ -131,14 +131,6 @@ eot;
         $data = $csv->read(__DIR__.'/Csv/product_spec_group2.csv');
         $import = new ImportGroup();
         $import->handle($data['data']);
-        $specGroupField = [
-            'category_id',
-            'group_id',
-            'group_name',
-            'group_sku_field',
-            'group_type',
-            'group_searching',
-        ];
         $result = ProductSpecGroup::findMany(null, $specGroupField)->toArray();
         $data = <<<'eot'
 [
