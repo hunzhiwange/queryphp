@@ -80,6 +80,7 @@ final class ProductSpec extends Entity
 
     #[Struct([
         self::COLUMN_NAME => '是否用于搜索过滤 0=否;1=是;',
+        self::ENUM_CLASS => ProductSpecSearchingEnum::class,
         self::COLUMN_STRUCT => [
             'type' => 'tinyint',
             'length' => 1,

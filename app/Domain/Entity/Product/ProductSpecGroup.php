@@ -89,6 +89,7 @@ final class ProductSpecGroup extends Entity
 
     #[Struct([
         self::COLUMN_NAME => '商品规格分组类型 0=SKU规格;1=SPU属性;2=基础展示类属性;3=自定义类属性;',
+        self::ENUM_CLASS => ProductSpecGroupGroupTypeEnum::class,
         self::COLUMN_STRUCT => [
             'type' => 'tinyint',
             'length' => 1,
@@ -98,6 +99,7 @@ final class ProductSpecGroup extends Entity
 
     #[Struct([
         self::COLUMN_NAME => '商品规格分组是否支持搜索 0=否;1=是;',
+        self::ENUM_CLASS => ProductSpecGroupSearchingEnum::class,
         self::COLUMN_STRUCT => [
             'type' => 'tinyint',
             'length' => 1,
