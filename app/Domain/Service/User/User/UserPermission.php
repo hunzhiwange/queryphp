@@ -49,8 +49,10 @@ class UserPermission
     {
         $data = [];
         if (\count($roles = $user->role) > 0) {
+            /** @var \App\Domain\Entity\User\Role $r */
             foreach ($roles as $r) {
                 if (\count($permissions = $r->permission) > 0) {
+                    /** @var \App\Domain\Entity\User\Permission $p */
                     foreach ($permissions as $p) {
                         if (\count($resources = $p->resource) > 0) {
                             $resourceData = array_unique(array_column($resources->toArray(), 'num'));

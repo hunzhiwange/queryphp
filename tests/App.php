@@ -16,6 +16,7 @@ trait App
      */
     protected function createApp(): KernelApp
     {
+        // @phpstan-ignore-next-line
         return Container::singletons()->make('app');
     }
 }
