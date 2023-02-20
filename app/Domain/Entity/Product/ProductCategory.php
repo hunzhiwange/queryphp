@@ -89,6 +89,69 @@ final class ProductCategory extends Entity
     protected ?int $searching = null;
 
     #[Struct([
+        self::COLUMN_NAME => '排序(ASC)',
+        self::COLUMN_STRUCT => [
+            'type' => 'bigint',
+            'length' => 0,
+        ],
+    ])]
+    protected ?int $sort = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '分类品牌(公司内部多个主品牌)',
+        self::COLUMN_STRUCT => [
+            'type' => 'varchar',
+            'length' => 50,
+        ],
+    ])]
+    protected ?string $brandId = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '分类最大订购数量提醒',
+        self::COLUMN_STRUCT => [
+            'type' => 'bigint',
+            'length' => 0,
+        ],
+    ])]
+    protected ?int $maxOrderNumber = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '首字母',
+        self::COLUMN_STRUCT => [
+            'type' => 'char',
+            'length' => 1,
+        ],
+    ])]
+    protected ?string $letter = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '大LOGO',
+        self::COLUMN_STRUCT => [
+            'type' => 'varchar',
+            'length' => 255,
+        ],
+    ])]
+    protected ?string $logoLarge = null;
+
+    #[Struct([
+        self::COLUMN_NAME => 'LOGO',
+        self::COLUMN_STRUCT => [
+            'type' => 'varchar',
+            'length' => 255,
+        ],
+    ])]
+    protected ?string $logoDefault = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '小LOGO',
+        self::COLUMN_STRUCT => [
+            'type' => 'varchar',
+            'length' => 255,
+        ],
+    ])]
+    protected ?string $logoSmall = null;
+
+    #[Struct([
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
