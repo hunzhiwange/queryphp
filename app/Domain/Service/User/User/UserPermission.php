@@ -50,10 +50,10 @@ class UserPermission
         $data = [];
         if (\count($roles = $user->role) > 0) {
             /** @var \App\Domain\Entity\User\Role $r */
-            foreach ($roles as $r) {
+            foreach ($roles as $r) { // @phpstan-ignore-line
                 if (\count($permissions = $r->permission) > 0) {
                     /** @var \App\Domain\Entity\User\Permission $p */
-                    foreach ($permissions as $p) {
+                    foreach ($permissions as $p) { // @phpstan-ignore-line
                         if (\count($resources = $p->resource) > 0) {
                             $resourceData = array_unique(array_column($resources->toArray(), 'num'));
                             $data = array_merge($data, $resourceData);

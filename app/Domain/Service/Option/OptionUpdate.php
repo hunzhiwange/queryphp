@@ -53,7 +53,7 @@ class OptionUpdate
     /**
      * 组成实体.
      */
-    private function entity(string $name, mixed $value): OptionEntity
+    private function entity(string $name, string $value): OptionEntity
     {
         $option = new OptionEntity();
         $option->name = $name;
