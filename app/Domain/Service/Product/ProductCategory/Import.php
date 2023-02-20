@@ -21,6 +21,8 @@ class Import
         'searching',
     ];
 
+    private array $currentField = [];
+
     public function handle(array $data): void
     {
         $data = $this->prepareData($data);
@@ -33,11 +35,17 @@ class Import
 
     protected function prepareData(array $data): array
     {
-        $this->validateCategoryItem($data);
-        $data = $this->prepareCategoryData($data);
         if (!$data) {
             throw new \Exception('导入的分类数据不能为空');
         }
+
+        $this->currentField = array_values(array_intersect(self::CATEGORY_FIELD, array_keys($data[0])));
+        if (!$this->currentField) {
+            throw new \Exception('导入的字段全部不允许');
+        }
+
+        $data = $this->prepareCategoryData($data);
+        $this->validateCategoryItem($data);
 
         return $data;
     }
@@ -47,7 +55,7 @@ class Import
         $defaultData = $this->defaultData();
         foreach ($data as &$item) {
             $item = array_merge($defaultData, $item);
-            $item = Only::handle($item, self::CATEGORY_FIELD);
+            $item = Only::handle($item, $this->currentField);
         }
 
         return $data;
