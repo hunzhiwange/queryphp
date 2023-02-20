@@ -153,4 +153,58 @@ eot;
         $s->name = '高级小米';
         $s->searching = 4;
     }
+
+    public function test4(): void
+    {
+        $csv = new Csv();
+        $data = $csv->read(__DIR__.'/Csv/product_category3.csv');
+        $import = new Import();
+        $import->handle($data['data']);
+        $specGroupField = [
+            'category_id',
+            'parent_id',
+            'name',
+            'searching',
+        ];
+        $result = ProductCategory::findMany(null, $specGroupField)->toArray();
+        $data = <<<'eot'
+[
+    {
+        "category_id": "nk",
+        "parent_id": "",
+        "name": "男士内裤",
+        "searching": 1,
+        "searching_enum": "是"
+    },
+    {
+        "category_id": "nkbn",
+        "parent_id": "nk",
+        "name": "男士保暖内裤",
+        "searching": 1,
+        "searching_enum": "是"
+    },
+    {
+        "category_id": "sy",
+        "parent_id": "",
+        "name": "睡衣",
+        "searching": 1,
+        "searching_enum": "是"
+    },
+    {
+        "category_id": "ks",
+        "parent_id": "sy",
+        "name": "宽松",
+        "searching": 0,
+        "searching_enum": "否"
+    }
+]
+eot;
+
+        static::assertSame(
+            $this->varJson(
+                $result
+            ),
+            $data,
+        );
+    }
 }

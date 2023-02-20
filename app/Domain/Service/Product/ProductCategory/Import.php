@@ -14,8 +14,9 @@ use Leevel\Support\Arr\Only;
  */
 class Import
 {
-    private const BRAND_FIELD = [
+    private const CATEGORY_FIELD = [
         'category_id',
+        'parent_id',
         'name',
         'searching',
     ];
@@ -25,7 +26,7 @@ class Import
         $data = $this->prepareData($data);
         $w = UnitOfWork::make();
         $w->persist(function () use ($data): void {
-            ProductCategory::select()->insertAll($data, [], self::BRAND_FIELD);
+            ProductCategory::select()->insertAll($data, [], self::CATEGORY_FIELD);
         });
         $w->flush();
     }
@@ -46,7 +47,7 @@ class Import
         $defaultData = $this->defaultData();
         foreach ($data as &$item) {
             $item = array_merge($defaultData, $item);
-            $item = Only::handle($item, self::BRAND_FIELD);
+            $item = Only::handle($item, self::CATEGORY_FIELD);
         }
 
         return $data;
@@ -56,6 +57,7 @@ class Import
     {
         return [
             'category_id' => '',
+            'parent_id' => '',
             'name' => '',
             'searching' => ProductCategorySearchingEnum::YES->value,
         ];
