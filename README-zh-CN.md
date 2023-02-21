@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://queryphp.com">
-    <img src="./assets/images/queryphp.png" />
+    <img src="https://www.queryphp.com/hero-old.png" />
   </a>
 </p>
 
@@ -12,6 +12,7 @@
     <img alt="QueryPHP License" src="https://poser.pugx.org/hunzhiwange/queryphp/license.svg" /></a>
   <br />
   <a href='https://www.queryphp.com/docs/'><img src='https://img.shields.io/badge/docs-passing-green.svg?maxAge=2592000' alt='QueryPHP Doc' /></a>
+  <a href='https://github.com/hunzhiwange/queryphp/blob/master/.php-cs-fixer.dist.php'><img src='https://img.shields.io/badge/style-passing-green.svg?maxAge=2592000' alt='QueryPHP Style' /></a>
   <a href="https://travis-ci.org/hunzhiwange/queryphp">
     <img alt="Build Status" src="https://img.shields.io/travis/hunzhiwange/queryphp.svg" /></a>
   <a href="https://codecov.io/gh/hunzhiwange/queryphp">
