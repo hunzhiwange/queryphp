@@ -36,8 +36,13 @@ trait ImportBase
             throw new \Exception('导入的数据不能为空');
         }
 
+        if (!isset($data[0])) {
+            throw new \Exception('导入的数据异常');
+        }
+
         $fields = $this->parseFields($entityClass, $data[0]);
-        $data = $this->filterData($data, $this->defaultData(), $fields);
+        $defaultData = array_merge(get_entity_default_data($entityClass), $this->defaultData());
+        $data = $this->filterData($data, $defaultData, $fields);
         $this->validateItem($data);
 
         return [

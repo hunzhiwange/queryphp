@@ -20,16 +20,6 @@ class Import
         $this->handleBase(ProductSpec::class, $data);
     }
 
-    protected function defaultData(): array
-    {
-        return [
-            'group_id' => '',
-            'name' => '',
-            'spec_id' => '',
-            'searching' => ProductSpecSearchingEnum::YES->value,
-        ];
-    }
-
     /**
      * @throws \Exception
      */

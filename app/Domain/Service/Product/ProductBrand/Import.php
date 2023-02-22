@@ -20,15 +20,6 @@ class Import
         $this->handleBase(ProductBrand::class, $data);
     }
 
-    protected function defaultData(): array
-    {
-        return [
-            'brand_id' => '',
-            'name' => '',
-            'searching' => ProductBrandSearchingEnum::YES->value,
-        ];
-    }
-
     /**
      * @throws \Exception
      */

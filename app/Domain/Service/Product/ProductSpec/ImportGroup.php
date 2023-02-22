@@ -21,18 +21,6 @@ class ImportGroup
         $this->handleBase(ProductSpecGroup::class, $data);
     }
 
-    protected function defaultData(): array
-    {
-        return [
-            'category_id' => '',
-            'group_id' => '',
-            'group_name' => '',
-            'group_sku_field' => '',
-            'group_type' => ProductSpecGroupGroupTypeEnum::SKU->value,
-            'group_searching' => ProductSpecGroupSearchingEnum::YES->value,
-        ];
-    }
-
     /**
      * @throws \Exception
      */

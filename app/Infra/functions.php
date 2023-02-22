@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Infra\Proxy\Permission;
 use App\Infra\RoadRunnerDump;
+use Leevel\Database\Ddd\Entity;
 use Leevel\Database\IDatabase;
 use Leevel\Database\Proxy\Db;
 use Leevel\Di\Container;
@@ -459,5 +460,27 @@ if (!function_exists('format_by_default_data')) {
         }
 
         return $data;
+    }
+}
+
+if (!function_exists('get_entity_default_data')) {
+    /**
+     * 获取实体默认数据.
+     */
+    function get_entity_default_data(string $entityClass): array
+    {
+        if (!is_subclass_of($entityClass, \Leevel\Database\Ddd\Entity::class)) {
+            throw new \Exception(sprintf('Entity class %s is invalid.', $entityClass));
+        }
+
+        $defaultData = [];
+        foreach ($entityClass::fields() as $field => $v) {
+            if (isset($v[Entity::COLUMN_STRUCT])
+                && array_key_exists('default', $v[Entity::COLUMN_STRUCT])) {
+                $defaultData[$field] = $v[Entity::COLUMN_STRUCT]['default'];
+            }
+        }
+
+        return $defaultData;
     }
 }

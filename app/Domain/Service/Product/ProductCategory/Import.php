@@ -20,20 +20,6 @@ class Import
         $this->handleBase(ProductCategory::class, $data);
     }
 
-    protected function defaultData(): array
-    {
-        return [
-            'category_id' => '',
-            'parent_id' => '',
-            'name' => '',
-            'searching' => ProductCategorySearchingEnum::YES->value,
-            'logo_large' => '',
-            'brand_id' => '',
-            'max_order_number' => 0,
-            'sort' => 0,
-        ];
-    }
-
     /**
      * @throws \Exception
      */
