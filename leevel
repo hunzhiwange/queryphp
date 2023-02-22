@@ -13,6 +13,7 @@ use Leevel\Kernel\IApp;
 use Leevel\Kernel\Exceptions\IRuntime;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
+use Symfony\Component\Console\Input\ArgvInput;
 
 // 加载 Composer
 require __DIR__.'/vendor/autoload.php';
@@ -26,6 +27,17 @@ $container->alias('app', [IApp::class, App::class]);
 $container->singleton(IKernel::class, Kernel::class);
 $container->singleton(IKernelConsole::class, KernelConsole::class);
 $container->singleton(IRuntime::class, Runtime::class);
+
+// 载入环境
+$input = new ArgvInput();
+if ($input->hasParameterOption('-e')) {
+    $env = $input->getParameterOption('-e');
+} elseif ($input->hasParameterOption('--environment')) {
+    $env = $input->getParameterOption('--environment');
+} else {
+    $env = 'env';
+}
+putenv('RUNTIME_ENVIRONMENT='.$env);
 
 // 执行应用
 // 根据内核调度请求返回响应
