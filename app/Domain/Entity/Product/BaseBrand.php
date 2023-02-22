@@ -31,8 +31,8 @@ final class BaseBrand extends Entity
         self::COLUMN_NAME => 'ID',
         self::READONLY => true,
         self::COLUMN_STRUCT => [
-            'type' => 'int',
-            'length' => 10,
+            'type' => 'bigint',
+            'default' => null,
         ],
     ])]
     protected ?int $brandId = null;
@@ -40,8 +40,8 @@ final class BaseBrand extends Entity
     #[Struct([
         self::COLUMN_NAME => '公司ID',
         self::COLUMN_STRUCT => [
-            'type' => 'int',
-            'length' => 10,
+            'type' => 'bigint',
+            'default' => 0,
         ],
     ])]
     protected ?int $companyId = null;
@@ -50,7 +50,7 @@ final class BaseBrand extends Entity
         self::COLUMN_NAME => '状态',
         self::COLUMN_STRUCT => [
             'type' => 'enum',
-            'length' => ['T', 'F'],
+            'default' => 'T',
         ],
     ])]
     protected ?string $status = null;
@@ -58,8 +58,8 @@ final class BaseBrand extends Entity
     #[Struct([
         self::COLUMN_NAME => '排序',
         self::COLUMN_STRUCT => [
-            'type' => 'int',
-            'length' => 8,
+            'type' => 'bigint',
+            'default' => 500,
         ],
     ])]
     protected ?int $orderNum = null;
@@ -68,6 +68,7 @@ final class BaseBrand extends Entity
         self::COLUMN_NAME => '编号',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 30,
         ],
     ])]
@@ -77,6 +78,7 @@ final class BaseBrand extends Entity
         self::COLUMN_NAME => '名称',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 30,
         ],
     ])]
@@ -86,6 +88,7 @@ final class BaseBrand extends Entity
         self::COLUMN_NAME => 'LOGO',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 130,
         ],
     ])]
@@ -95,7 +98,7 @@ final class BaseBrand extends Entity
         self::COLUMN_NAME => '介绍',
         self::COLUMN_STRUCT => [
             'type' => 'text',
-            'length' => 0,
+            'default' => null,
         ],
     ])]
     protected ?string $brandAbout = null;
@@ -103,8 +106,8 @@ final class BaseBrand extends Entity
     #[Struct([
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
-            'type' => 'timestamp',
-            'length' => 0,
+            'type' => 'datetime',
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $updateDate = null;
@@ -112,8 +115,8 @@ final class BaseBrand extends Entity
     #[Struct([
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
-            'type' => 'timestamp',
-            'length' => 0,
+            'type' => 'datetime',
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $createDate = null;
@@ -122,6 +125,7 @@ final class BaseBrand extends Entity
         self::COLUMN_NAME => '品牌首字母',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 30,
         ],
     ])]
@@ -131,6 +135,7 @@ final class BaseBrand extends Entity
         self::COLUMN_NAME => 'SEO关键字',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 30,
         ],
     ])]

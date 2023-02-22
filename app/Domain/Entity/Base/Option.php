@@ -44,7 +44,7 @@ final class Option extends Entity
         self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => null,
         ],
     ])]
     protected ?int $id = null;
@@ -53,6 +53,7 @@ final class Option extends Entity
         self::COLUMN_NAME => '配置名',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 200,
         ],
     ])]
@@ -62,7 +63,7 @@ final class Option extends Entity
         self::COLUMN_NAME => '配置值',
         self::COLUMN_STRUCT => [
             'type' => 'text',
-            'length' => 0,
+            'default' => null,
         ],
     ])]
     protected ?string $value = null;
@@ -71,7 +72,7 @@ final class Option extends Entity
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $createAt = null;
@@ -80,7 +81,7 @@ final class Option extends Entity
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $updateAt = null;
@@ -90,7 +91,7 @@ final class Option extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $deleteAt = null;
@@ -100,7 +101,7 @@ final class Option extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $createAccount = null;
@@ -110,7 +111,7 @@ final class Option extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $updateAccount = null;
@@ -119,7 +120,7 @@ final class Option extends Entity
         self::COLUMN_NAME => '操作版本号',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $version = null;

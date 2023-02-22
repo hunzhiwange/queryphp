@@ -41,16 +41,16 @@ final class Test extends Entity
         self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => null,
         ],
     ])]
     protected ?int $id = null;
 
     #[Struct([
         self::COLUMN_NAME => '测试名',
-        self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 200,
         ],
     ])]
@@ -58,20 +58,18 @@ final class Test extends Entity
 
     #[Struct([
         self::COLUMN_NAME => '创建时间',
-        self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $createAt = null;
 
     #[Struct([
         self::COLUMN_NAME => '更新时间',
-        self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $updateAt = null;
@@ -79,10 +77,9 @@ final class Test extends Entity
     #[Struct([
         self::COLUMN_NAME => '删除时间 0=未删除;大于0=删除时间;',
         self::SHOW_PROP_BLACK => true,
-        self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $deleteAt = null;
@@ -90,10 +87,9 @@ final class Test extends Entity
     #[Struct([
         self::COLUMN_NAME => '创建账号',
         self::SHOW_PROP_BLACK => true,
-        self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $createAccount = null;
@@ -103,7 +99,7 @@ final class Test extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $updateAccount = null;
@@ -112,7 +108,7 @@ final class Test extends Entity
         self::COLUMN_NAME => '操作版本号',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $version = null;
