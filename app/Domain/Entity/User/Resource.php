@@ -37,7 +37,7 @@ final class Resource extends Entity
         self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => null,
         ],
     ])]
     protected ?int $id = null;
@@ -46,6 +46,7 @@ final class Resource extends Entity
         self::COLUMN_NAME => '资源名字',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 64,
         ],
     ])]
@@ -55,6 +56,7 @@ final class Resource extends Entity
         self::COLUMN_NAME => '编号',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 64,
         ],
     ])]
@@ -65,7 +67,7 @@ final class Resource extends Entity
         self::ENUM_CLASS => ResourceStatusEnum::class,
         self::COLUMN_STRUCT => [
             'type' => 'tinyint',
-            'length' => 1,
+            'default' => 1,
         ],
     ])]
     protected ?int $status = null;
@@ -74,7 +76,7 @@ final class Resource extends Entity
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $createAt = null;
@@ -83,7 +85,7 @@ final class Resource extends Entity
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $updateAt = null;
@@ -93,7 +95,7 @@ final class Resource extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $deleteAt = null;
@@ -103,7 +105,7 @@ final class Resource extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $createAccount = null;
@@ -113,7 +115,7 @@ final class Resource extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $updateAccount = null;
@@ -122,7 +124,7 @@ final class Resource extends Entity
         self::COLUMN_NAME => '操作版本号',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $version = null;
