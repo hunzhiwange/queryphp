@@ -37,7 +37,7 @@ final class ProductCategory extends Entity
         self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 0,
+            'default' => null,
         ],
     ])]
     protected ?int $id = null;
@@ -46,7 +46,7 @@ final class ProductCategory extends Entity
         self::COLUMN_NAME => '公司 ID',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 0,
+            'default' => 0,
         ],
     ])]
     protected ?int $companyId = null;
@@ -55,6 +55,7 @@ final class ProductCategory extends Entity
         self::COLUMN_NAME => '商品分类编号',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 50,
         ],
     ])]
@@ -64,6 +65,7 @@ final class ProductCategory extends Entity
         self::COLUMN_NAME => '父级分类 ID',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 50,
         ],
     ])]
@@ -73,6 +75,7 @@ final class ProductCategory extends Entity
         self::COLUMN_NAME => '商品分类名字',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 50,
         ],
     ])]
@@ -83,7 +86,7 @@ final class ProductCategory extends Entity
         self::ENUM_CLASS => ProductCategorySearchingEnum::class,
         self::COLUMN_STRUCT => [
             'type' => 'tinyint',
-            'length' => 0,
+            'default' => 0,
         ],
     ])]
     protected ?int $searching = null;
@@ -92,7 +95,7 @@ final class ProductCategory extends Entity
         self::COLUMN_NAME => '排序(ASC)',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 0,
+            'default' => 50000,
         ],
     ])]
     protected ?int $sort = null;
@@ -101,6 +104,7 @@ final class ProductCategory extends Entity
         self::COLUMN_NAME => '分类品牌(公司内部多个主品牌)',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 50,
         ],
     ])]
@@ -110,7 +114,7 @@ final class ProductCategory extends Entity
         self::COLUMN_NAME => '分类最大订购数量提醒',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 0,
+            'default' => 0,
         ],
     ])]
     protected ?int $maxOrderNumber = null;
@@ -119,6 +123,7 @@ final class ProductCategory extends Entity
         self::COLUMN_NAME => '首字母',
         self::COLUMN_STRUCT => [
             'type' => 'char',
+            'default' => '',
             'length' => 1,
         ],
     ])]
@@ -128,6 +133,7 @@ final class ProductCategory extends Entity
         self::COLUMN_NAME => '大LOGO',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 255,
         ],
     ])]
@@ -137,6 +143,7 @@ final class ProductCategory extends Entity
         self::COLUMN_NAME => 'LOGO',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 255,
         ],
     ])]
@@ -146,6 +153,7 @@ final class ProductCategory extends Entity
         self::COLUMN_NAME => '小LOGO',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 255,
         ],
     ])]
@@ -155,7 +163,7 @@ final class ProductCategory extends Entity
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $createAt = null;
@@ -164,7 +172,7 @@ final class ProductCategory extends Entity
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $updateAt = null;
@@ -174,7 +182,7 @@ final class ProductCategory extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 0,
+            'default' => 0,
         ],
     ])]
     protected ?int $deleteAt = null;
@@ -184,7 +192,7 @@ final class ProductCategory extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 0,
+            'default' => 0,
         ],
     ])]
     protected ?int $createAccount = null;
@@ -194,7 +202,7 @@ final class ProductCategory extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 0,
+            'default' => 0,
         ],
     ])]
     protected ?int $updateAccount = null;
@@ -203,7 +211,7 @@ final class ProductCategory extends Entity
         self::COLUMN_NAME => '操作版本号',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 0,
+            'default' => 0,
         ],
     ])]
     protected ?int $version = null;

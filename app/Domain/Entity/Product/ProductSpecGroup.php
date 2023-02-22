@@ -37,7 +37,7 @@ final class ProductSpecGroup extends Entity
         self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => null,
         ],
     ])]
     protected ?int $id = null;
@@ -46,7 +46,7 @@ final class ProductSpecGroup extends Entity
         self::COLUMN_NAME => '公司ID',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $companyId = null;
@@ -55,15 +55,37 @@ final class ProductSpecGroup extends Entity
         self::COLUMN_NAME => '商品分类编号',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 50,
         ],
     ])]
     protected ?string $categoryId = null;
 
     #[Struct([
+        self::COLUMN_NAME => '模板分类',
+        self::COLUMN_STRUCT => [
+            'type' => 'varchar',
+            'default' => '',
+            'length' => 50,
+        ],
+    ])]
+    protected ?string $template = null;
+
+    #[Struct([
+        self::COLUMN_NAME => '模板名字',
+        self::COLUMN_STRUCT => [
+            'type' => 'varchar',
+            'default' => '',
+            'length' => 50,
+        ],
+    ])]
+    protected ?string $templateName = null;
+
+    #[Struct([
         self::COLUMN_NAME => '商品规格分组编号',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 50,
         ],
     ])]
@@ -73,6 +95,7 @@ final class ProductSpecGroup extends Entity
         self::COLUMN_NAME => '商品规格分组名字',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 50,
         ],
     ])]
@@ -82,6 +105,7 @@ final class ProductSpecGroup extends Entity
         self::COLUMN_NAME => '商品规格分组对应的商品存储字段',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 50,
         ],
     ])]
@@ -92,7 +116,7 @@ final class ProductSpecGroup extends Entity
         self::ENUM_CLASS => ProductSpecGroupGroupTypeEnum::class,
         self::COLUMN_STRUCT => [
             'type' => 'tinyint',
-            'length' => 1,
+            'default' => 1,
         ],
     ])]
     protected ?int $groupType = null;
@@ -102,7 +126,7 @@ final class ProductSpecGroup extends Entity
         self::ENUM_CLASS => ProductSpecGroupSearchingEnum::class,
         self::COLUMN_STRUCT => [
             'type' => 'tinyint',
-            'length' => 1,
+            'default' => 0,
         ],
     ])]
     protected ?int $groupSearching = null;
@@ -111,7 +135,7 @@ final class ProductSpecGroup extends Entity
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $createAt = null;
@@ -120,7 +144,7 @@ final class ProductSpecGroup extends Entity
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $updateAt = null;
@@ -130,7 +154,7 @@ final class ProductSpecGroup extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $deleteAt = null;
@@ -140,7 +164,7 @@ final class ProductSpecGroup extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $createAccount = null;
@@ -150,7 +174,7 @@ final class ProductSpecGroup extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $updateAccount = null;
@@ -159,7 +183,7 @@ final class ProductSpecGroup extends Entity
         self::COLUMN_NAME => '操作版本号',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $version = null;
