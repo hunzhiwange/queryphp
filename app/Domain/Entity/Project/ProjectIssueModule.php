@@ -37,7 +37,7 @@ final class ProjectIssueModule extends Entity
         self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => null,
         ],
     ])]
     protected ?int $id = null;
@@ -46,7 +46,7 @@ final class ProjectIssueModule extends Entity
         self::COLUMN_NAME => '公司 ID',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 1,
         ],
     ])]
     protected ?int $companyId = null;
@@ -55,7 +55,7 @@ final class ProjectIssueModule extends Entity
         self::COLUMN_NAME => '项目问题 ID',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $projectIssueId = null;
@@ -64,7 +64,7 @@ final class ProjectIssueModule extends Entity
         self::COLUMN_NAME => '项目模块 ID',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $projectModuleId = null;
@@ -73,7 +73,7 @@ final class ProjectIssueModule extends Entity
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $createAt = null;
@@ -82,7 +82,7 @@ final class ProjectIssueModule extends Entity
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $updateAt = null;
@@ -92,7 +92,7 @@ final class ProjectIssueModule extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $deleteAt = null;
@@ -102,7 +102,7 @@ final class ProjectIssueModule extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $createAccount = null;
@@ -112,7 +112,7 @@ final class ProjectIssueModule extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $updateAccount = null;
@@ -121,7 +121,7 @@ final class ProjectIssueModule extends Entity
         self::COLUMN_NAME => '操作版本号',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $version = null;
