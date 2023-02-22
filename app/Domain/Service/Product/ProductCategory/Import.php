@@ -49,9 +49,11 @@ class Import
             if (empty($item['category_id'])) {
                 throw new \Exception('商品分类编号不能为空');
             }
+
             if (empty($item['name'])) {
                 throw new \Exception('商品分类名字不能为空');
             }
+
             if (isset($item['searching'])) {
                 ProductCategorySearchingEnum::from((int) $item['searching']);
             }
