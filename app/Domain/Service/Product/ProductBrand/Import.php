@@ -7,7 +7,6 @@ namespace App\Domain\Service\Product\ProductBrand;
 use App\Domain\Entity\Product\ProductBrand;
 use App\Domain\Entity\Product\ProductBrandSearchingEnum;
 use App\Domain\Service\Support\ImportBase;
-use Leevel\Database\Ddd\UnitOfWork;
 
 /**
  * 商品品牌导入.
@@ -18,12 +17,7 @@ class Import
 
     public function handle(array $data): void
     {
-        $data = $this->prepareData(ProductBrand::class, $data);
-        $w = UnitOfWork::make();
-        $w->persist(function () use ($data): void {
-            ProductBrand::select()->insertAll($data['data'], [], $data['fields']);
-        });
-        $w->flush();
+        $this->handleBase(ProductBrand::class, $data);
     }
 
     protected function defaultData(): array

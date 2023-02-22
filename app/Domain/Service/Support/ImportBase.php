@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Support;
 
+use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Support\Arr\Only;
 
 /**
@@ -11,6 +13,23 @@ use Leevel\Support\Arr\Only;
  */
 trait ImportBase
 {
+    public function handleBase(string $entityClass, array $data, bool $flush = true): UnitOfWork
+    {
+        $data = $this->prepareData($entityClass, $data);
+        $w = UnitOfWork::make();
+        $w->persist(function () use ($data, $entityClass): void {
+            if (!is_subclass_of($entityClass, Entity::class)) {
+                throw new \Exception(sprintf('Entity class %s is invalid.', $entityClass));
+            }
+            $entityClass::select()->insertAll($data['data'], [], $data['fields']);
+        });
+        if ($flush) {
+            $w->flush();
+        }
+
+        return $w;
+    }
+
     protected function prepareData(string $entityClass, array $data): array
     {
         if (!$data) {

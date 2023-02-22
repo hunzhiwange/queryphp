@@ -7,7 +7,6 @@ namespace App\Domain\Service\Product\ProductCategory;
 use App\Domain\Entity\Product\ProductCategory;
 use App\Domain\Entity\Product\ProductCategorySearchingEnum;
 use App\Domain\Service\Support\ImportBase;
-use Leevel\Database\Ddd\UnitOfWork;
 
 /**
  * 商品分类导入.
@@ -18,12 +17,7 @@ class Import
 
     public function handle(array $data): void
     {
-        $data = $this->prepareData(ProductCategory::class, $data);
-        $w = UnitOfWork::make();
-        $w->persist(function () use ($data): void {
-            ProductCategory::select()->insertAll($data['data'], [], $data['fields']);
-        });
-        $w->flush();
+        $this->handleBase(ProductCategory::class, $data);
     }
 
     protected function defaultData(): array
