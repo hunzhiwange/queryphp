@@ -49,7 +49,7 @@ jobs:
           cp .env.phpunit.example .env.phpunit
 
       - name: Migrate
-        run: php leevel migrate:migrate -env env.phpunit
+        run: php leevel migrate:migrate --env=env.phpunit
 
       - name: Execute tests against PHPUnit
         run: php assets/build/phpunit
@@ -101,7 +101,7 @@ jobs:
           cp .env.phpunit.example .env.phpunit
 
       - name: Migrate
-        run: php leevel migrate:migrate -env env.phpunit
+        run: php leevel migrate:migrate --env=env.phpunit
 
       - name: Execute tests against PHPUnit
         run: php assets/build/phpunit
@@ -153,7 +153,7 @@ jobs:
           cp .env.phpunit.example .env.phpunit
 
       - name: Migrate
-        run: php leevel migrate:migrate -env env.phpunit
+        run: php leevel migrate:migrate --env=env.phpunit
 
       - name: Execute tests against PHPUnit
         run: php assets/build/phpunit
