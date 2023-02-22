@@ -207,4 +207,78 @@ eot;
             $data,
         );
     }
+
+    public function test5(): void
+    {
+        $csv = new Csv();
+        $data = $csv->read(__DIR__.'/Csv/product_category4.csv');
+        $import = new Import();
+        $import->handle($data['data']);
+        $specGroupField = [
+            'category_id',
+            'parent_id',
+            'name',
+            'searching',
+            'logo_large',
+            'brand_id',
+            'max_order_number',
+            'sort',
+        ];
+        $result = ProductCategory::findMany(null, $specGroupField)->toArray();
+        $data = <<<'eot'
+[
+    {
+        "category_id": "nk",
+        "parent_id": "",
+        "name": "男士内裤",
+        "searching": 1,
+        "sort": 0,
+        "brand_id": "",
+        "max_order_number": 0,
+        "logo_large": "",
+        "searching_enum": "是"
+    },
+    {
+        "category_id": "nkbn",
+        "parent_id": "nk",
+        "name": "男士保暖内裤",
+        "searching": 1,
+        "sort": 0,
+        "brand_id": "nb1",
+        "max_order_number": 0,
+        "logo_large": "1.jpg",
+        "searching_enum": "是"
+    },
+    {
+        "category_id": "sy",
+        "parent_id": "",
+        "name": "睡衣",
+        "searching": 1,
+        "sort": 99,
+        "brand_id": "",
+        "max_order_number": 0,
+        "logo_large": "",
+        "searching_enum": "是"
+    },
+    {
+        "category_id": "ks",
+        "parent_id": "sy",
+        "name": "宽松",
+        "searching": 0,
+        "sort": 666,
+        "brand_id": "",
+        "max_order_number": 33,
+        "logo_large": "",
+        "searching_enum": "否"
+    }
+]
+eot;
+
+        static::assertSame(
+            $this->varJson(
+                $result
+            ),
+            $data,
+        );
+    }
 }

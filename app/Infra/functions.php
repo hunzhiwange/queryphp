@@ -396,3 +396,68 @@ if (!function_exists('array_key_sort')) {
         return $array;
     }
 }
+
+if (!function_exists('get_entity_import_fields')) {
+    /**
+     * 获取导入基础字段.
+     */
+    function get_entity_import_fields(string $entityClass): array
+    {
+        if (!is_subclass_of($entityClass, \Leevel\Database\Ddd\Entity::class)) {
+            throw new \Exception(sprintf('Entity class %s is invalid.', $entityClass));
+        }
+
+        $fields = array_keys($entityClass::fields());
+
+        $exceptFields = [
+            'id',
+            'company_id',
+            'create_at',
+            'update_at',
+            'delete_at',
+            'create_account',
+            'update_account',
+            'version',
+        ];
+
+        return array_diff($fields, $exceptFields);
+    }
+}
+
+if (!function_exists('format_by_default_data')) {
+    /**
+     * 根据默认值格式化数据.
+     */
+    function format_by_default_data(array $data, array $defaultData): array
+    {
+        $defaultType = [];
+        foreach ($data as &$item) {
+            foreach ($item as $field => &$value) {
+                if (!isset($defaultData[$field])) {
+                    continue;
+                }
+
+                if ('' === $value) {
+                    $value = $defaultData[$field];
+                } else {
+                    if (!isset($defaultType[$field])) {
+                        $defaultType[$field] = gettype($defaultData[$field]);
+                    }
+
+                    $value = match ($defaultType[$field]) {
+                        'NULL' => null,
+                        'boolean' => (bool) $value,
+                        'integer' => (int) $value,
+                        'double' => (float) $value,
+                        'string' => (string) $value,
+                        'array' => (array) $value,
+                        'object' => (object) $value,
+                        default => throw new \Exception('Unsupported default value type.'),
+                    };
+                }
+            }
+        }
+
+        return $data;
+    }
+}

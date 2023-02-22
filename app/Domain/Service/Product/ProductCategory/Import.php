@@ -14,21 +14,14 @@ use Leevel\Support\Arr\Only;
  */
 class Import
 {
-    private const CATEGORY_FIELD = [
-        'category_id',
-        'parent_id',
-        'name',
-        'searching',
-    ];
-
-    private array $currentField = [];
+    private array $currentFields = [];
 
     public function handle(array $data): void
     {
         $data = $this->prepareData($data);
         $w = UnitOfWork::make();
         $w->persist(function () use ($data): void {
-            ProductCategory::select()->insertAll($data, [], self::CATEGORY_FIELD);
+            ProductCategory::select()->insertAll($data, [], $this->currentFields);
         });
         $w->flush();
     }
@@ -39,8 +32,9 @@ class Import
             throw new \Exception('导入的分类数据不能为空');
         }
 
-        $this->currentField = array_values(array_intersect(self::CATEGORY_FIELD, array_keys($data[0])));
-        if (!$this->currentField) {
+        $importFields = get_entity_import_fields(ProductCategory::class);
+        $this->currentFields = array_values(array_intersect($importFields, array_keys($data[0])));
+        if (!$this->currentFields) {
             throw new \Exception('导入的字段全部不允许');
         }
 
@@ -52,13 +46,11 @@ class Import
 
     protected function prepareCategoryData(array $data): array
     {
-        $defaultData = $this->defaultData();
         foreach ($data as &$item) {
-            $item = array_merge($defaultData, $item);
-            $item = Only::handle($item, $this->currentField);
+            $item = Only::handle($item, $this->currentFields);
         }
 
-        return $data;
+        return format_by_default_data($data, $this->defaultData());
     }
 
     protected function defaultData(): array
@@ -68,6 +60,10 @@ class Import
             'parent_id' => '',
             'name' => '',
             'searching' => ProductCategorySearchingEnum::YES->value,
+            'logo_large' => '',
+            'brand_id' => '',
+            'max_order_number' => 0,
+            'sort' => 0,
         ];
     }
 
