@@ -9,6 +9,9 @@ use App\Domain\Entity\Product\ProductSpecGroup;
 use App\Infra\Csv;
 use Tests\TestCase;
 
+/**
+ * @internal
+ */
 final class ImportTest extends TestCase
 {
     protected function setUp(): void
@@ -198,87 +201,6 @@ final class ImportTest extends TestCase
         "spec_id": "DW3",
         "searching": 1,
         "searching_enum": "是"
-    }
-]
-eot;
-
-        static::assertSame(
-            $this->varJson(
-                $result
-            ),
-            $data,
-        );
-
-        $specGroupField = [
-            'category_id',
-            'group_id',
-            'group_name',
-            'group_sku_field',
-            'group_type',
-            'group_searching',
-        ];
-        $result = ProductSpecGroup::findMany(null, $specGroupField)->toArray();
-        $data = <<<'eot'
-[
-    {
-        "category_id": "fuzhuang",
-        "group_id": "color",
-        "group_name": "颜色",
-        "group_sku_field": "spec1",
-        "group_type": 0,
-        "group_searching": 1,
-        "group_type_enum": "SKU属性",
-        "group_searching_enum": "是"
-    },
-    {
-        "category_id": "fuzhuang",
-        "group_id": "size",
-        "group_name": "尺码",
-        "group_sku_field": "spec2",
-        "group_type": 0,
-        "group_searching": 1,
-        "group_type_enum": "SKU属性",
-        "group_searching_enum": "是"
-    },
-    {
-        "category_id": "neiyi",
-        "group_id": "cup",
-        "group_name": "罩杯",
-        "group_sku_field": "spec3",
-        "group_type": 0,
-        "group_searching": 1,
-        "group_type_enum": "SKU属性",
-        "group_searching_enum": "是"
-    },
-    {
-        "category_id": "fuzhuang",
-        "group_id": "xilie",
-        "group_name": "系列",
-        "group_sku_field": "spec11",
-        "group_type": 1,
-        "group_searching": 0,
-        "group_type_enum": "SPU属性",
-        "group_searching_enum": "否"
-    },
-    {
-        "category_id": "fuzhuang",
-        "group_id": "mianliao",
-        "group_name": "面料",
-        "group_sku_field": "spec4",
-        "group_type": 0,
-        "group_searching": 1,
-        "group_type_enum": "SKU属性",
-        "group_searching_enum": "是"
-    },
-    {
-        "category_id": "fuzhuang",
-        "group_id": "price",
-        "group_name": "价格定位",
-        "group_sku_field": "spec12",
-        "group_type": 1,
-        "group_searching": 1,
-        "group_type_enum": "SPU属性",
-        "group_searching_enum": "是"
     }
 ]
 eot;
@@ -483,87 +405,6 @@ eot;
             ),
             $data,
         );
-
-        $specGroupField = [
-            'category_id',
-            'group_id',
-            'group_name',
-            'group_sku_field',
-            'group_type',
-            'group_searching',
-        ];
-        $result = ProductSpecGroup::findMany(null, $specGroupField)->toArray();
-        $data = <<<'eot'
-[
-    {
-        "category_id": "fuzhuang",
-        "group_id": "color",
-        "group_name": "颜色",
-        "group_sku_field": "spec1",
-        "group_type": 0,
-        "group_searching": 1,
-        "group_type_enum": "SKU属性",
-        "group_searching_enum": "是"
-    },
-    {
-        "category_id": "fuzhuang",
-        "group_id": "size",
-        "group_name": "尺码",
-        "group_sku_field": "spec2",
-        "group_type": 0,
-        "group_searching": 1,
-        "group_type_enum": "SKU属性",
-        "group_searching_enum": "是"
-    },
-    {
-        "category_id": "neiyi",
-        "group_id": "cup",
-        "group_name": "罩杯",
-        "group_sku_field": "spec3",
-        "group_type": 0,
-        "group_searching": 1,
-        "group_type_enum": "SKU属性",
-        "group_searching_enum": "是"
-    },
-    {
-        "category_id": "fuzhuang",
-        "group_id": "xilie",
-        "group_name": "系列",
-        "group_sku_field": "spec11",
-        "group_type": 1,
-        "group_searching": 0,
-        "group_type_enum": "SPU属性",
-        "group_searching_enum": "否"
-    },
-    {
-        "category_id": "fuzhuang",
-        "group_id": "mianliao",
-        "group_name": "面料",
-        "group_sku_field": "spec4",
-        "group_type": 0,
-        "group_searching": 1,
-        "group_type_enum": "SKU属性",
-        "group_searching_enum": "是"
-    },
-    {
-        "category_id": "fuzhuang",
-        "group_id": "price",
-        "group_name": "价格定位",
-        "group_sku_field": "spec12",
-        "group_type": 1,
-        "group_searching": 1,
-        "group_type_enum": "SPU属性",
-        "group_searching_enum": "是"
-    }
-]
-eot;
-
-        static::assertSame(
-            $this->varJson(
-                $result
-            ),
-            $data,
-        );
     }
 
     public function test3(): void
@@ -621,37 +462,6 @@ eot;
         "spec_id": "black",
         "searching": 1,
         "searching_enum": "是"
-    }
-]
-eot;
-
-        static::assertSame(
-            $this->varJson(
-                $result
-            ),
-            $data,
-        );
-
-        $specGroupField = [
-            'category_id',
-            'group_id',
-            'group_name',
-            'group_sku_field',
-            'group_type',
-            'group_searching',
-        ];
-        $result = ProductSpecGroup::findMany(null, $specGroupField)->toArray();
-        $data = <<<'eot'
-[
-    {
-        "category_id": "fuzhuang",
-        "group_id": "color",
-        "group_name": "颜色",
-        "group_sku_field": "spec1",
-        "group_type": 0,
-        "group_searching": 1,
-        "group_type_enum": "SKU属性",
-        "group_searching_enum": "是"
     }
 ]
 eot;

@@ -32,7 +32,7 @@ class Import
     /**
      * @throws \Exception
      */
-    protected function validateBrandItem(array $data): void
+    protected function validateItem(array $data): void
     {
         foreach ($data as $item) {
             if (empty($item['brand_id'])) {
