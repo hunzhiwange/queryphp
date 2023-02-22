@@ -164,7 +164,7 @@ final class Company extends Entity
         self::COLUMN_NAME => '开通时间',
         self::COLUMN_STRUCT => [
             'type' => 'date',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $beginDate = null;
@@ -173,7 +173,7 @@ final class Company extends Entity
         self::COLUMN_NAME => '到期时间',
         self::COLUMN_STRUCT => [
             'type' => 'date',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $endDate = null;
@@ -236,7 +236,7 @@ final class Company extends Entity
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $createAt = null;
@@ -245,7 +245,7 @@ final class Company extends Entity
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $updateAt = null;

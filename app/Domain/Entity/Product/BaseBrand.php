@@ -95,7 +95,7 @@ final class BaseBrand extends Entity
         self::COLUMN_NAME => '介绍',
         self::COLUMN_STRUCT => [
             'type' => 'text',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $brandAbout = null;
@@ -104,7 +104,7 @@ final class BaseBrand extends Entity
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
             'type' => 'timestamp',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $updateDate = null;
@@ -113,7 +113,7 @@ final class BaseBrand extends Entity
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
             'type' => 'timestamp',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $createDate = null;

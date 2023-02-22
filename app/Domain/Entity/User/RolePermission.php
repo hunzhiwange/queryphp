@@ -64,7 +64,7 @@ final class RolePermission extends Entity
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $createAt = null;
@@ -73,7 +73,7 @@ final class RolePermission extends Entity
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $updateAt = null;

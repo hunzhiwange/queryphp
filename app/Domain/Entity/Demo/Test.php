@@ -61,7 +61,7 @@ final class Test extends Entity
         self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $createAt = null;
@@ -71,7 +71,7 @@ final class Test extends Entity
         self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $updateAt = null;

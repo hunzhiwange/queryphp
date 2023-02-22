@@ -170,7 +170,7 @@ final class ProjectIssue extends Entity
         self::COLUMN_NAME => '完成时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $completedDate = null;
@@ -179,7 +179,7 @@ final class ProjectIssue extends Entity
         self::COLUMN_NAME => '子任务列表',
         self::COLUMN_STRUCT => [
             'type' => 'text',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $subTask = null;
@@ -188,7 +188,7 @@ final class ProjectIssue extends Entity
         self::COLUMN_NAME => '关注人列表',
         self::COLUMN_STRUCT => [
             'type' => 'text',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $follower = null;
@@ -206,7 +206,7 @@ final class ProjectIssue extends Entity
         self::COLUMN_NAME => '计划开始时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $startDate = null;
@@ -215,7 +215,7 @@ final class ProjectIssue extends Entity
         self::COLUMN_NAME => '计划结束时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $endDate = null;
@@ -233,7 +233,7 @@ final class ProjectIssue extends Entity
         self::COLUMN_NAME => '归档时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $archivedDate = null;
@@ -260,7 +260,7 @@ final class ProjectIssue extends Entity
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $createAt = null;
@@ -269,7 +269,7 @@ final class ProjectIssue extends Entity
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => null,
+            'length' => 0,
         ],
     ])]
     protected ?string $updateAt = null;
