@@ -36,7 +36,7 @@ parameters:
 		- '#Method [\S\s]+ should return Leevel\\Support\\Collection but returns array|Leevel\\Support\\Collection\\.#'
 		- '#Cannot call method toArray\(\) on[\S\s]+\\.#'
 		- '#Parameter [\S\s]+ [\S\s]+ of function count expects array|Countable, [\S\s]+ given\\.#'
-		- '#has [\S\s]+ in PHPDoc @throws tag but it\'s not thrown\\.#'
+		- '#has [\S\s]+ in PHPDoc @throws tag but it[\S\s]+ not thrown\\.#'
 	exceptions:
 		uncheckedExceptionClasses:
 			- 'PHPStan\ShouldNotHappenException'
