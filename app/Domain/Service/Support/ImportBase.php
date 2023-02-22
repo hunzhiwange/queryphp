@@ -60,9 +60,6 @@ trait ImportBase
         return [];
     }
 
-    /**
-     * @throws \Exception
-     */
     protected function validateItem(array $data): void
     {
     }
