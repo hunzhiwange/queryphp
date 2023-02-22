@@ -24,6 +24,8 @@ final class ProductSpecGroup extends AbstractMigration
               `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
               `company_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '公司 ID',
               `category_id` varchar(50) NOT NULL DEFAULT '' COMMENT '商品分类编号',
+              `template` varchar(50) NOT NULL DEFAULT '' COMMENT '模板分类',
+              `template_name` varchar(50) NOT NULL DEFAULT '' COMMENT '模板名字',
               `group_id` varchar(50) NOT NULL DEFAULT '' COMMENT '商品规格分组编号',
               `group_name` varchar(50) NOT NULL DEFAULT '' COMMENT '商品规格分组名字',
               `group_sku_field` varchar(50) NOT NULL DEFAULT '' COMMENT '商品规格分组对应的商品存储字段',
