@@ -38,7 +38,7 @@ final class ProjectRelease extends Entity
         self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => null,
         ],
     ])]
     protected ?int $id = null;
@@ -47,7 +47,7 @@ final class ProjectRelease extends Entity
         self::COLUMN_NAME => '公司 ID',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 1,
         ],
     ])]
     protected ?int $companyId = null;
@@ -56,6 +56,7 @@ final class ProjectRelease extends Entity
         self::COLUMN_NAME => '发行名称',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 255,
         ],
     ])]
@@ -65,7 +66,7 @@ final class ProjectRelease extends Entity
         self::COLUMN_NAME => '排序(ASC)',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $sort = null;
@@ -75,7 +76,7 @@ final class ProjectRelease extends Entity
         self::ENUM_CLASS => ProjectReleaseStatusEnum::class,
         self::COLUMN_STRUCT => [
             'type' => 'tinyint',
-            'length' => 1,
+            'default' => 1,
         ],
     ])]
     protected ?int $status = null;
@@ -84,7 +85,7 @@ final class ProjectRelease extends Entity
         self::COLUMN_NAME => '进度条(最大值 10000，需要除以 100 表示实际进度)',
         self::COLUMN_STRUCT => [
             'type' => 'int',
-            'length' => 5,
+            'default' => 0,
         ],
     ])]
     protected ?int $progress = null;
@@ -93,17 +94,16 @@ final class ProjectRelease extends Entity
         self::COLUMN_NAME => '项目 ID',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $projectId = null;
 
     #[Struct([
         self::COLUMN_NAME => '是否完成：1=未开始;2=进行中;3=延期发布;4=已发布;',
-        self::ENUM_CLASS => ProjectReleaseCompletedEnum::class,
         self::COLUMN_STRUCT => [
             'type' => 'tinyint',
-            'length' => 1,
+            'default' => 1,
         ],
     ])]
     protected ?int $completed = null;
@@ -112,7 +112,7 @@ final class ProjectRelease extends Entity
         self::COLUMN_NAME => '完成时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => null,
         ],
     ])]
     protected ?string $completedDate = null;
@@ -121,7 +121,7 @@ final class ProjectRelease extends Entity
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $createAt = null;
@@ -130,7 +130,7 @@ final class ProjectRelease extends Entity
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $updateAt = null;
@@ -140,7 +140,7 @@ final class ProjectRelease extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $deleteAt = null;
@@ -150,7 +150,7 @@ final class ProjectRelease extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $createAccount = null;
@@ -160,7 +160,7 @@ final class ProjectRelease extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $updateAccount = null;
@@ -169,7 +169,7 @@ final class ProjectRelease extends Entity
         self::COLUMN_NAME => '操作版本号',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $version = null;
