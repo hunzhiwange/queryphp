@@ -16,10 +16,10 @@ $app = new App($container, realpath(__DIR__));
 
 // 载入环境
 $input = new ArgvInput();
-if ($input->hasParameterOption('-e')) {
-    $env = $input->getParameterOption('-e');
-} elseif ($input->hasParameterOption('--environment')) {
-    $env = $input->getParameterOption('--environment');
+if ($input->hasParameterOption('-env')) {
+    $env = $input->getParameterOption('-env');
+} elseif ($input->hasParameterOption('--runtime_environment')) {
+    $env = $input->getParameterOption('--runtime_environment');
 } else {
     $env = 'env';
 }
