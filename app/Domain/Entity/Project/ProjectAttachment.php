@@ -37,7 +37,7 @@ final class ProjectAttachment extends Entity
         self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => null,
         ],
     ])]
     protected ?int $id = null;
@@ -46,6 +46,7 @@ final class ProjectAttachment extends Entity
         self::COLUMN_NAME => '文件名称',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 100,
         ],
     ])]
@@ -55,7 +56,7 @@ final class ProjectAttachment extends Entity
         self::COLUMN_NAME => '公司 ID',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 1,
         ],
     ])]
     protected ?int $companyId = null;
@@ -64,7 +65,7 @@ final class ProjectAttachment extends Entity
         self::COLUMN_NAME => '项目ID',
         self::COLUMN_STRUCT => [
             'type' => 'int',
-            'length' => 11,
+            'default' => 0,
         ],
     ])]
     protected ?int $projectId = null;
@@ -73,7 +74,7 @@ final class ProjectAttachment extends Entity
         self::COLUMN_NAME => '任务ID',
         self::COLUMN_STRUCT => [
             'type' => 'int',
-            'length' => 11,
+            'default' => 0,
         ],
     ])]
     protected ?int $projectIssueId = null;
@@ -82,7 +83,7 @@ final class ProjectAttachment extends Entity
         self::COLUMN_NAME => '文件大小(B)',
         self::COLUMN_STRUCT => [
             'type' => 'int',
-            'length' => 11,
+            'default' => 0,
         ],
     ])]
     protected ?int $size = null;
@@ -91,6 +92,7 @@ final class ProjectAttachment extends Entity
         self::COLUMN_NAME => '文件格式',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 20,
         ],
     ])]
@@ -100,6 +102,7 @@ final class ProjectAttachment extends Entity
         self::COLUMN_NAME => '文件地址',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 255,
         ],
     ])]
@@ -109,7 +112,7 @@ final class ProjectAttachment extends Entity
         self::COLUMN_NAME => '下载次数',
         self::COLUMN_STRUCT => [
             'type' => 'int',
-            'length' => 11,
+            'default' => 0,
         ],
     ])]
     protected ?int $downloadNumber = null;
@@ -118,7 +121,7 @@ final class ProjectAttachment extends Entity
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $createAt = null;
@@ -127,7 +130,7 @@ final class ProjectAttachment extends Entity
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $updateAt = null;
@@ -137,7 +140,7 @@ final class ProjectAttachment extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $deleteAt = null;
@@ -147,7 +150,7 @@ final class ProjectAttachment extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $createAccount = null;
@@ -157,7 +160,7 @@ final class ProjectAttachment extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $updateAccount = null;
@@ -166,7 +169,7 @@ final class ProjectAttachment extends Entity
         self::COLUMN_NAME => '操作版本号',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 1,
         ],
     ])]
     protected ?int $version = null;
