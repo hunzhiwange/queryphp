@@ -37,7 +37,7 @@ final class ProjectType extends Entity
         self::READONLY => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => null,
         ],
     ])]
     protected ?int $id = null;
@@ -46,7 +46,7 @@ final class ProjectType extends Entity
         self::COLUMN_NAME => '公司 ID',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 1,
         ],
     ])]
     protected ?int $companyId = null;
@@ -55,6 +55,7 @@ final class ProjectType extends Entity
         self::COLUMN_NAME => '类型名称',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 255,
         ],
     ])]
@@ -64,17 +65,18 @@ final class ProjectType extends Entity
         self::COLUMN_NAME => '编号',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 64,
         ],
     ])]
     protected ?string $num = null;
 
     #[Struct([
-        self::COLUMN_NAME => '内容类型 1=BUG;2=任务;3=需求;4=故事;5=文档;6=流程图;7=思维导图;',
+        self::COLUMN_NAME => '内容类型 1=BUG;2=任务;3=需求;4=故事;5=文档;6=流程图;7=思维导图;8=Swagger内容;9=Swagger网址;',
         self::ENUM_CLASS => ProjectTypeContentTypeEnum::class,
         self::COLUMN_STRUCT => [
             'type' => 'tinyint',
-            'length' => 3,
+            'default' => 1,
         ],
     ])]
     protected ?int $contentType = null;
@@ -83,6 +85,7 @@ final class ProjectType extends Entity
         self::COLUMN_NAME => '颜色',
         self::COLUMN_STRUCT => [
             'type' => 'char',
+            'default' => '',
             'length' => 7,
         ],
     ])]
@@ -93,7 +96,7 @@ final class ProjectType extends Entity
         self::ENUM_CLASS => ProjectTypeStatusEnum::class,
         self::COLUMN_STRUCT => [
             'type' => 'tinyint',
-            'length' => 1,
+            'default' => 1,
         ],
     ])]
     protected ?int $status = null;
@@ -102,7 +105,7 @@ final class ProjectType extends Entity
         self::COLUMN_NAME => '排序(ASC)',
         self::COLUMN_STRUCT => [
             'type' => 'tinyint',
-            'length' => 3,
+            'default' => 0,
         ],
     ])]
     protected ?int $sort = null;
@@ -111,6 +114,7 @@ final class ProjectType extends Entity
         self::COLUMN_NAME => '类型图标',
         self::COLUMN_STRUCT => [
             'type' => 'varchar',
+            'default' => '',
             'length' => 255,
         ],
     ])]
@@ -120,7 +124,7 @@ final class ProjectType extends Entity
         self::COLUMN_NAME => '创建时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $createAt = null;
@@ -129,7 +133,7 @@ final class ProjectType extends Entity
         self::COLUMN_NAME => '更新时间',
         self::COLUMN_STRUCT => [
             'type' => 'datetime',
-            'length' => 0,
+            'default' => 'CURRENT_TIMESTAMP',
         ],
     ])]
     protected ?string $updateAt = null;
@@ -139,7 +143,7 @@ final class ProjectType extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $deleteAt = null;
@@ -149,7 +153,7 @@ final class ProjectType extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $createAccount = null;
@@ -159,7 +163,7 @@ final class ProjectType extends Entity
         self::SHOW_PROP_BLACK => true,
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $updateAccount = null;
@@ -168,7 +172,7 @@ final class ProjectType extends Entity
         self::COLUMN_NAME => '操作版本号',
         self::COLUMN_STRUCT => [
             'type' => 'bigint',
-            'length' => 20,
+            'default' => 0,
         ],
     ])]
     protected ?int $version = null;
