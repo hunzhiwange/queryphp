@@ -70,7 +70,7 @@ final class ProductSpec extends Entity
             'length' => 50,
         ],
         self::COLUMN_VALIDATOR => [
-            self::VALIDATOR_SCENES => 'required|alpha_dash|max_length:20',
+            self::VALIDATOR_SCENES => 'required|chinese_alpha_num|max_length:20',
             ':update_name' => IValidator::OPTIONAL,
         ],
     ])]
@@ -84,9 +84,10 @@ final class ProductSpec extends Entity
             'length' => 50,
         ],
         self::COLUMN_VALIDATOR => [
-            self::VALIDATOR_SCENES => 'required|chinese|max_length:1',
+            self::VALIDATOR_SCENES => 'required|alpha_dash|max_length:20',
             ':update' => IValidator::OPTIONAL,
-            'update_by_spec_id',
+            'update_by_spec_id' => null,
+            'update_by_new' => 'required',
         ],
     ])]
     protected ?string $specId = null;
