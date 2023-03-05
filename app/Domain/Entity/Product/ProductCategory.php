@@ -6,6 +6,7 @@ namespace App\Domain\Entity\Product;
 
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\Struct;
+use Leevel\Validate\IValidator;
 
 /**
  * 产品分类.
@@ -58,6 +59,12 @@ final class ProductCategory extends Entity
             'default' => '',
             'length' => 50,
         ],
+        self::COLUMN_VALIDATOR => [
+            self::VALIDATOR_SCENES => 'required|alpha_dash|max_length:20',
+            ':update' => IValidator::OPTIONAL,
+            'update_by_category_id' => null,
+            'update_by_new' => 'required',
+        ],
     ])]
     protected ?string $categoryId = null;
 
@@ -77,6 +84,10 @@ final class ProductCategory extends Entity
             'type' => 'varchar',
             'default' => '',
             'length' => 50,
+        ],
+        self::COLUMN_VALIDATOR => [
+            self::VALIDATOR_SCENES => 'required|max_length:20',
+            ':update_name' => IValidator::OPTIONAL,
         ],
     ])]
     protected ?string $name = null;

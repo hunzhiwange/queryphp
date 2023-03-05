@@ -6,6 +6,7 @@ namespace App\Domain\Entity\Product;
 
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\Struct;
+use Leevel\Validate\IValidator;
 
 /**
  * 商品品牌.
@@ -58,6 +59,12 @@ final class ProductBrand extends Entity
             'default' => '',
             'length' => 50,
         ],
+        self::COLUMN_VALIDATOR => [
+            self::VALIDATOR_SCENES => 'required|alpha_dash|max_length:20',
+            ':update' => IValidator::OPTIONAL,
+            'update_by_brand_id' => null,
+            'update_by_new' => 'required',
+        ],
     ])]
     protected ?string $brandId = null;
 
@@ -67,6 +74,10 @@ final class ProductBrand extends Entity
             'type' => 'varchar',
             'default' => '',
             'length' => 50,
+        ],
+        self::COLUMN_VALIDATOR => [
+            self::VALIDATOR_SCENES => 'required|max_length:20',
+            ':update_name' => IValidator::OPTIONAL,
         ],
     ])]
     protected ?string $name = null;

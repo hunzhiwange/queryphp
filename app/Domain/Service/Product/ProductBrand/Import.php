@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Service\Product\ProductBrand;
 
 use App\Domain\Entity\Product\ProductBrand;
-use App\Domain\Entity\Product\ProductBrandSearchingEnum;
 use App\Domain\Service\Support\ImportBase;
 
 /**
@@ -18,25 +17,5 @@ class Import
     public function handle(array $data): void
     {
         $this->handleBase(ProductBrand::class, $data);
-    }
-
-    /**
-     * @throws \Exception
-     */
-    protected function validateItem(array $data): void
-    {
-        foreach ($data as $item) {
-            if (empty($item['brand_id'])) {
-                throw new \Exception('商品品牌编号不能为空');
-            }
-
-            if (empty($item['name'])) {
-                throw new \Exception('商品品牌名字不能为空');
-            }
-
-            if (isset($item['searching'])) {
-                ProductBrandSearchingEnum::from((int) $item['searching']);
-            }
-        }
     }
 }
