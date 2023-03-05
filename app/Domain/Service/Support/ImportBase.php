@@ -47,6 +47,7 @@ trait ImportBase
         $defaultData = array_merge(get_entity_default_data($entityClass), $this->defaultData());
         $data = $this->filterData($data, $defaultData, $fields);
         $this->validateEntity($entityClass, $data);
+        $this->validateItem($entityClass, $data);
 
         return [
             'data' => $data,
@@ -66,6 +67,10 @@ trait ImportBase
     protected function defaultData(): array
     {
         return [];
+    }
+
+    protected function validateItem(string $entityClass, array $data): void
+    {
     }
 
     protected function validateEntity(string $entityClass, array $data): void

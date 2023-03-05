@@ -590,4 +590,30 @@ eot;
         $import = new Import();
         $import->handle($data['data']);
     }
+
+    public function test10(): void
+    {
+        $this->expectException(\App\Exceptions\TimeBusinessException::class);
+        $this->expectExceptionMessage(
+            '{"name":["商品规格名字 不能为空"]}'
+        );
+
+        $csv = new Csv();
+        $data = $csv->read(__DIR__.'/Csv/product_spec10.csv');
+        $import = new Import();
+        $import->handle($data['data']);
+    }
+
+    public function test11(): void
+    {
+        $this->expectException(\App\Exceptions\TimeBusinessException::class);
+        $this->expectExceptionMessage(
+            '{"spec_id":["商品规格编号 不能为空","商品规格编号 只能是字母、数字、短横线和下划线"]}'
+        );
+
+        $csv = new Csv();
+        $data = $csv->read(__DIR__.'/Csv/product_spec11.csv');
+        $import = new Import();
+        $import->handle($data['data']);
+    }
 }

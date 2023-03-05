@@ -18,24 +18,4 @@ class Import
     {
         $this->handleBase(ProductSpec::class, $data);
     }
-
-    /**
-     * @throws \Exception
-     */
-    protected function validateItem(array $data): void
-    {
-        foreach ($data as $item) {
-            if (empty($item['group_id'])) {
-                throw new \Exception('商品规格分组编号不能为空');
-            }
-
-            if (empty($item['spec_id'])) {
-                throw new \Exception('商品规格编号不能为空');
-            }
-
-            if (empty($item['name'])) {
-                throw new \Exception('商品规格名字不能为空');
-            }
-        }
-    }
 }
