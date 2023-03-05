@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Service\Product\ProductSpec;
 
 use App\Domain\Entity\Product\ProductSpec;
-use App\Domain\Entity\Product\ProductSpecSearchingEnum;
 use App\Domain\Service\Support\ImportBase;
 
 /**
@@ -36,10 +35,6 @@ class Import
 
             if (empty($item['name'])) {
                 throw new \Exception('商品规格名字不能为空');
-            }
-
-            if (isset($item['searching'])) {
-                ProductSpecSearchingEnum::from((int) $item['searching']);
             }
         }
     }

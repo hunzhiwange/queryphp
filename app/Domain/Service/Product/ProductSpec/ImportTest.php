@@ -409,9 +409,9 @@ eot;
 
     public function test3(): void
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(\App\Exceptions\TimeBusinessException::class);
         $this->expectExceptionMessage(
-            '商品规格编号不能为空'
+            '{"spec_id":["商品规格编号 不能为空","商品规格编号 只能是字母、数字、短横线和下划线"]}'
         );
 
         $csv = new Csv();
@@ -422,9 +422,9 @@ eot;
 
     public function test4(): void
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(\App\Exceptions\TimeBusinessException::class);
         $this->expectExceptionMessage(
-            '商品规格分组编号不能为空'
+            '{"group_id":["商品规格分组编号 不能为空"]}'
         );
 
         $csv = new Csv();
@@ -554,9 +554,9 @@ eot;
 
     public function test7(): void
     {
-        $this->expectException(\ValueError::class);
+        $this->expectException(\App\Exceptions\TimeBusinessException::class);
         $this->expectExceptionMessage(
-            '5 is not a valid backing value for enum'
+            '{"searching":["是否用于搜索过滤 0=否;1=是; 必须在 0,1 范围内"]}'
         );
 
         $csv = new Csv();
@@ -567,9 +567,9 @@ eot;
 
     public function test8(): void
     {
-        $this->expectException(\ValueError::class);
+        $this->expectException(\App\Exceptions\TimeBusinessException::class);
         $this->expectExceptionMessage(
-            '7 is not a valid backing value for enum'
+            '{"searching":["是否用于搜索过滤 0=否;1=是; 必须在 0,1 范围内"]}'
         );
 
         $csv = new Csv();
@@ -580,9 +580,9 @@ eot;
 
     public function test9(): void
     {
-        $this->expectException(\ValueError::class);
+        $this->expectException(\App\Exceptions\TimeBusinessException::class);
         $this->expectExceptionMessage(
-            '55 is not a valid backing value for enum'
+            '{"searching":["是否用于搜索过滤 0=否;1=是; 必须在 0,1 范围内"]}'
         );
 
         $csv = new Csv();

@@ -59,6 +59,9 @@ final class ProductSpec extends Entity
             'default' => '',
             'length' => 50,
         ],
+        self::COLUMN_VALIDATOR => [
+            self::VALIDATOR_SCENES => 'required|max_length:20',
+        ],
     ])]
     protected ?string $groupId = null;
 
@@ -70,7 +73,7 @@ final class ProductSpec extends Entity
             'length' => 50,
         ],
         self::COLUMN_VALIDATOR => [
-            self::VALIDATOR_SCENES => 'required|chinese_alpha_num|max_length:20',
+            self::VALIDATOR_SCENES => 'required|max_length:20',
             ':update_name' => IValidator::OPTIONAL,
         ],
     ])]
