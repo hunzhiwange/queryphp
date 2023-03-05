@@ -8,6 +8,9 @@ use App\Domain\Entity\Product\ProductSpecGroup;
 use App\Infra\Csv;
 use Tests\TestCase;
 
+/**
+ * @internal
+ */
 final class ImportGroupTest extends TestCase
 {
     protected function setUp(): void
@@ -158,5 +161,44 @@ eot;
             ),
             $data,
         );
+    }
+
+    public function test3(): void
+    {
+        $this->expectException(\App\Exceptions\TimeBusinessException::class);
+        $this->expectExceptionMessage(
+            '{"group_name":["商品规格分组名字 不能为空"]}'
+        );
+
+        $csv = new Csv();
+        $data = $csv->read(__DIR__.'/Csv/product_spec_group3.csv');
+        $import = new ImportGroup();
+        $import->handle($data['data']);
+    }
+
+    public function test4(): void
+    {
+        $this->expectException(\App\Exceptions\TimeBusinessException::class);
+        $this->expectExceptionMessage(
+            '{"group_id":["商品规格分组编号 不能为空","商品规格分组编号 只能是字母、数字、短横线和下划线"]}'
+        );
+
+        $csv = new Csv();
+        $data = $csv->read(__DIR__.'/Csv/product_spec_group4.csv');
+        $import = new ImportGroup();
+        $import->handle($data['data']);
+    }
+
+    public function test5(): void
+    {
+        $this->expectException(\App\Exceptions\TimeBusinessException::class);
+        $this->expectExceptionMessage(
+            '{"group_type":["商品规格分组类型 0=SKU规格;1=SPU属性;2=基础展示类属性;3=自定义类属性; 必须在 0,1,2,3 范围内"],"group_searching":["商品规格分组是否支持搜索 0=否;1=是; 必须在 0,1 范围内"]}'
+        );
+
+        $csv = new Csv();
+        $data = $csv->read(__DIR__.'/Csv/product_spec_group5.csv');
+        $import = new ImportGroup();
+        $import->handle($data['data']);
     }
 }

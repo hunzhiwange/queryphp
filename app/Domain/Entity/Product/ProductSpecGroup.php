@@ -6,6 +6,7 @@ namespace App\Domain\Entity\Product;
 
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\Struct;
+use Leevel\Validate\IValidator;
 
 /**
  * 商品规格分组.
@@ -88,6 +89,12 @@ final class ProductSpecGroup extends Entity
             'default' => '',
             'length' => 50,
         ],
+        self::COLUMN_VALIDATOR => [
+            self::VALIDATOR_SCENES => 'required|alpha_dash|max_length:20',
+            ':update' => IValidator::OPTIONAL,
+            'update_by_group_id' => null,
+            'update_by_new' => 'required',
+        ],
     ])]
     protected ?string $groupId = null;
 
@@ -97,6 +104,10 @@ final class ProductSpecGroup extends Entity
             'type' => 'varchar',
             'default' => '',
             'length' => 50,
+        ],
+        self::COLUMN_VALIDATOR => [
+            self::VALIDATOR_SCENES => 'required|max_length:20',
+            ':update_name' => IValidator::OPTIONAL,
         ],
     ])]
     protected ?string $groupName = null;
