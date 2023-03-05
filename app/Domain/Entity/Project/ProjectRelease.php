@@ -101,6 +101,7 @@ final class ProjectRelease extends Entity
 
     #[Struct([
         self::COLUMN_NAME => '是否完成：1=未开始;2=进行中;3=延期发布;4=已发布;',
+        self::ENUM_CLASS => ProjectReleaseCompletedEnum::class,
         self::COLUMN_STRUCT => [
             'type' => 'tinyint',
             'default' => 1,
