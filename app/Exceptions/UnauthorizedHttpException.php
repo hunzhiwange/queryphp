@@ -17,7 +17,7 @@ class UnauthorizedHttpException extends BaseUnauthorizedHttpException
      */
     public function __construct(
         int|object $code = 0,
-        string $message = '',
+        string|array $message = '',
         bool $overrideMessage = false,
         \Throwable $previous = null
     ) {

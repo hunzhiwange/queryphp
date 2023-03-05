@@ -21,7 +21,7 @@ class LockException extends HttpException
      */
     public function __construct(
         int|object $code = 0,
-        string $message = '',
+        string|message $message = '',
         bool $overrideMessage = false,
         \Throwable $previous = null
     ) {

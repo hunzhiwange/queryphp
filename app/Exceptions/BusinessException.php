@@ -21,7 +21,7 @@ class BusinessException extends BaseBusinessException
      */
     public function __construct(
         int|object $code = 0,
-        string $message = '',
+        string|array $message = '',
         bool $overrideMessage = false,
         \Throwable $previous = null
     ) {
@@ -43,6 +43,36 @@ class BusinessException extends BaseBusinessException
     public function reportable(): bool
     {
         return $this->getImportance() > self::DEFAULT_LEVEL;
+    }
+
+    public function render()
+    {
+        if (\App::isDebug()) {
+            return false;
+        }
+
+        $jsonMessage = $this->jsonStringToArray($this->message);
+        if (!\is_array($jsonMessage)) {
+            return false;
+        }
+
+        return [
+            'error' => [
+                'type' => self::class,
+                'message' => $this->message,
+                'json' => $jsonMessage,
+            ],
+            'code' => $this->code,
+        ];
+    }
+
+    protected function jsonStringToArray(string $value): mixed
+    {
+        try {
+            return json_decode($value, true, 512, JSON_THROW_ON_ERROR);
+        } catch (\Throwable) {
+            return false;
+        }
     }
 
     /**
