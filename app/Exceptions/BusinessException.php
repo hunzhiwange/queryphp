@@ -45,7 +45,10 @@ class BusinessException extends BaseBusinessException
         return $this->getImportance() > self::DEFAULT_LEVEL;
     }
 
-    public function render()
+    /**
+     * @deprecated
+     */
+    public function renderNot(): array|false
     {
         if (\App::isDebug()) {
             return false;
