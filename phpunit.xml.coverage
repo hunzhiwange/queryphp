@@ -11,9 +11,6 @@
       <html outputDirectory="storage/app/tests/report"/>
     </report>
   </coverage>
-  <listeners>
-    <listener class="NunoMaduro\Collision\Adapters\Phpunit\Printer"/>
-  </listeners>
   <testsuites>
     <testsuite name="Main Test Suite">
       <directory>./tests/</directory>

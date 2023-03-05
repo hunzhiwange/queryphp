@@ -8,9 +8,6 @@
       <directory suffix="Test.php">./app/</directory>
     </exclude>
   </coverage>
-  <listeners>
-    <listener class="NunoMaduro\Collision\Adapters\Phpunit\Printer"/>
-  </listeners>
   <testsuites>
     <testsuite name="Main Test Suite">
       <directory>./tests/</directory>
