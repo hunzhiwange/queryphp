@@ -1,9 +1,0 @@
-category_id,group_id,group_name,group_sku_field,group_type,group_searching
-分类与规格关联,,,,,
-商品分类编号,,,,,
-fuzhuang,color,颜色,spec1,0,1
-fuzhuang,size,尺码,spec2,0,1
-fuzhuang,size,尺码,spec2,0,1
-neiyi,cup,罩杯,spec3,0,1
-neiyi,cup,罩杯,spec3,0,1
-fuzhuang,xilie,系列,spec11,1,0
