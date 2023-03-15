@@ -44,6 +44,7 @@ class Auth extends BaseAuth
      * 忽略路由.
      */
     private array $ignorePathInfo = [
+        'login/logout',
         'login/code',
         'login/validate',
     ];
@@ -84,14 +85,18 @@ class Auth extends BaseAuth
      */
     public function handle(\Closure $next, Request $request): Response
     {
-        if ($request::METHOD_OPTIONS === $request->getMethod()
-            || $this->isIgnoreRouter($request)) {
+        if ($request::METHOD_OPTIONS === $request->getMethod()) {
+            return $next($request);
+        }
+
+        $token = $this->normalizeToken($request);
+        $this->manager->setTokenName($token);
+
+        if ($this->isIgnoreRouter($request)) {
             return $next($request);
         }
 
         try {
-            $token = $this->normalizeToken($request);
-            $this->manager->setTokenName($token);
             if ($this->manager->isLogin()) {
                 $this->validateLock($request, $token);
                 if (!$this->isIgnorePermission($request)) {
