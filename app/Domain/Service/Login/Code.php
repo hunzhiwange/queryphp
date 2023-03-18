@@ -21,17 +21,15 @@ class Code
      */
     public function handle(CodeParams $params): string
     {
-        // Mac 自带 PHP 有问题
-        if (!\function_exists('imagettftext')) {
-            return file_get_contents(\Leevel::path('assets/captcha/code.png')) ?: '';
-        }
-
-        $numFirst = random_int(11, 99);
-        $numSecond = random_int(11, 99);
+        $numFirst = random_int(11, 20);
+        $numSecond = random_int(11, 20);
         $numResult = $numFirst + $numSecond;
         $numPhrase = $numFirst.'+'.$numSecond;
 
         $builder = new Builder($numPhrase);
+        $builder->distort = false;
+        $builder->interpolate = false;
+        $builder->applyEffects = false;
         $builder->build(120, 36);
 
         if ($params->id) {
