@@ -20,7 +20,7 @@ return [
      * 默认为 info
      */
     'level' => [
-        \Leevel\Log\ILog::DEFAULT_MESSAGE_CATEGORY => Leevel::env('LOG_DEFAULT_LEVEL', \Leevel\Log\ILog::LEVEL_INFO),
+        \Leevel\Log\ILog::DEFAULT_MESSAGE_CATEGORY => Leevel::env('LOG_DEFAULT_LEVEL', \Psr\Log\LogLevel::INFO),
     ],
 
     /*
@@ -31,24 +31,6 @@ return [
      * 隔离不同环境的日志
      */
     'channel' => Leevel::env('ENVIRONMENT', 'development'),
-
-    /*
-     * ---------------------------------------------------------------
-     * 是否启用缓冲
-     * ---------------------------------------------------------------
-     *
-     * 启用缓冲可以降低磁盘或网络的 IO 请求以提升性能
-     */
-    'buffer' => true,
-
-    /*
-     * ---------------------------------------------------------------
-     * 缓冲数量
-     * ---------------------------------------------------------------
-     *
-     * 日志数量达到缓冲数量会执行一次 IO 操作
-     */
-    'buffer_size' => 100,
 
     /*
      * ---------------------------------------------------------------
