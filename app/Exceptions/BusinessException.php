@@ -96,7 +96,6 @@ class BusinessException extends BaseBusinessException
             /** @var \Leevel\Log\ILog $log */
             $log = \App::make('log');
             $log->error($this->getMessage(), ['exception' => (string) $this]);
-            $log->flush();
         } catch (Throwable) {
         }
     }
