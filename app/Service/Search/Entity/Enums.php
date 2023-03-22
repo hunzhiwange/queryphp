@@ -42,6 +42,6 @@ class Enums
 
         $enumClass = $entityFields[$field][Entity::ENUM_CLASS];
 
-        return $enumClass::valueDescriptionMap();
+        return $enumClass::valueDescription();
     }
 }
