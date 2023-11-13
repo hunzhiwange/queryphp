@@ -44,6 +44,7 @@ parameters:
 		- '#[\S\s]+is unused\.#'
 		- '#[\S\s]+is never read, only written\.#'
 		- '#Cannot call method get\(\) on string\.#'
+		- '#Call to function method_exists\(\) with [\S\s]+ and [\S\s]+ will always evaluate to false\.#'
 	exceptions:
 		uncheckedExceptionClasses:
 			- 'PHPStan\ShouldNotHappenException'

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Infra\Repository\Base;
+namespace App\Base\Repository;
 
-use App\Infra\Entity\Base\AppStatusEnum;
-use App\Exceptions\BusinessException;
-use App\Exceptions\ErrorCode;
+use App\Company\Entity\AppStatusEnum;
+use App\Infra\Exceptions\BusinessException;
+use App\Infra\Exceptions\ErrorCode;
 use Leevel\Database\Ddd\Repository;
 
 /**
@@ -17,7 +17,7 @@ class App extends Repository
     /**
      * 根据应用 KEY 查找应用秘钥.
      *
-     * @throws \App\Exceptions\BusinessException|\Exception
+     * @throws \App\Infra\Exceptions\BusinessException
      */
     public function findAppSecretByKey(string $appKey): string
     {

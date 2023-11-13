@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Project\Service\ProjectIssue;
 
-use App\Exceptions\ProjectBusinessException;
-use App\Exceptions\ProjectErrorCode;
 use App\Project\Entity\ProjectIssue;
+use App\Project\Exceptions\ProjectBusinessException;
+use App\Project\Exceptions\ProjectErrorCode;
 use Leevel\Database\Condition;
 use Leevel\Database\Ddd\UnitOfWork;
 
@@ -31,7 +31,7 @@ class Sort
     }
 
     /**
-     * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \App\Project\Exceptions\ProjectBusinessException
      * @throws \Exception
      */
     public function sort(SortParams $params): void

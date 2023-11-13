@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Project\Service\Project;
 
-use App\Infra\Validate\Validate;
-use App\Exceptions\ProjectBusinessException;
-use App\Exceptions\ProjectErrorCode;
 use App\Infra\Validate\Project\ProjectUser as ProjectProjectUser;
+use App\Infra\Validate\Validate;
 use App\Project\Entity\ProjectUser;
+use App\Project\Exceptions\ProjectBusinessException;
+use App\Project\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
 
 /**
@@ -56,7 +56,7 @@ class SetAdministrator
     }
 
     /**
-     * @throws \App\Exceptions\ProjectBusinessException|\Exception
+     * @throws \App\Project\Exceptions\ProjectBusinessException|\Exception
      */
     private function findProjectUser(SetAdministratorParams $params): \App\Project\Entity\ProjectUser
     {
@@ -99,7 +99,7 @@ class SetAdministrator
     /**
      * 校验基本参数.
      *
-     * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \App\Project\Exceptions\ProjectBusinessException
      * @throws \Exception
      */
     private function validateArgs(SetAdministratorParams $params): void

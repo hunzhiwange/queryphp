@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infra\Repository\Project;
+namespace App\Project\Repository;
 
 use Leevel\Database\Ddd\Repository;
 

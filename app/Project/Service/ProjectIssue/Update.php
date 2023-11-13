@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Project\Service\ProjectIssue;
 
-use App\Exceptions\ProjectBusinessException;
 use App\Project\Entity\ProjectContent;
 use App\Project\Entity\ProjectIssue;
 use App\Project\Entity\ProjectIssueCompletedEnum;
 use App\Project\Entity\ProjectIssueModule;
 use App\Project\Entity\ProjectIssueRelease;
 use App\Project\Entity\ProjectIssueTag;
+use App\Project\Exceptions\ProjectBusinessException;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
 use function get_current_date;
@@ -85,21 +85,23 @@ class Update
             $now = $params->tags->toArray();
             $del = array_diff($old, $now);
             $updateData = [];
-            foreach ($params->tags as $projectTagId) {
-                if (\in_array($projectTagId, $old, true)) {
-                    $updateData[] = [
-                        'id' => $oldIds[$projectTagId],
-                        'project_issue_id' => $params->id,
-                        'project_tag_id' => $projectTagId,
-                        'delete_at' => 0,
-                    ];
-                } else {
-                    $updateData[] = [
-                        'id' => 0,
-                        'project_issue_id' => $params->id,
-                        'project_tag_id' => $projectTagId,
-                        'delete_at' => 0,
-                    ];
+            if ($params->tags) {
+                foreach ($params->tags as $projectTagId) {
+                    if (\in_array($projectTagId, $old, true)) {
+                        $updateData[] = [
+                            'id' => $oldIds[$projectTagId],
+                            'project_issue_id' => $params->id,
+                            'project_tag_id' => $projectTagId,
+                            'delete_at' => 0,
+                        ];
+                    } else {
+                        $updateData[] = [
+                            'id' => 0,
+                            'project_issue_id' => $params->id,
+                            'project_tag_id' => $projectTagId,
+                            'delete_at' => 0,
+                        ];
+                    }
                 }
             }
             foreach ($del as $id) {
@@ -128,21 +130,23 @@ class Update
             $now = $params->releases->toArray();
             $del = array_diff($old, $now);
             $updateData = [];
-            foreach ($params->releases as $projectReleaseId) {
-                if (\in_array($projectReleaseId, $old, true)) {
-                    $updateData[] = [
-                        'id' => $oldIds[$projectReleaseId],
-                        'project_issue_id' => $params->id,
-                        'project_release_id' => $projectReleaseId,
-                        'delete_at' => 0,
-                    ];
-                } else {
-                    $updateData[] = [
-                        'id' => 0,
-                        'project_issue_id' => $params->id,
-                        'project_release_id' => $projectReleaseId,
-                        'delete_at' => 0,
-                    ];
+            if ($params->releases) {
+                foreach ($params->releases as $projectReleaseId) {
+                    if (\in_array($projectReleaseId, $old, true)) {
+                        $updateData[] = [
+                            'id' => $oldIds[$projectReleaseId],
+                            'project_issue_id' => $params->id,
+                            'project_release_id' => $projectReleaseId,
+                            'delete_at' => 0,
+                        ];
+                    } else {
+                        $updateData[] = [
+                            'id' => 0,
+                            'project_issue_id' => $params->id,
+                            'project_release_id' => $projectReleaseId,
+                            'delete_at' => 0,
+                        ];
+                    }
                 }
             }
             foreach ($del as $id) {
@@ -171,21 +175,23 @@ class Update
             $now = $params->modules->toArray();
             $del = array_diff($old, $now);
             $updateData = [];
-            foreach ($params->modules as $projectModuleId) {
-                if (\in_array($projectModuleId, $old, true)) {
-                    $updateData[] = [
-                        'id' => $oldIds[$projectModuleId],
-                        'project_issue_id' => $params->id,
-                        'project_module_id' => $projectModuleId,
-                        'delete_at' => 0,
-                    ];
-                } else {
-                    $updateData[] = [
-                        'id' => 0,
-                        'project_issue_id' => $params->id,
-                        'project_module_id' => $projectModuleId,
-                        'delete_at' => 0,
-                    ];
+            if ($params->modules) {
+                foreach ($params->modules as $projectModuleId) {
+                    if (\in_array($projectModuleId, $old, true)) {
+                        $updateData[] = [
+                            'id' => $oldIds[$projectModuleId],
+                            'project_issue_id' => $params->id,
+                            'project_module_id' => $projectModuleId,
+                            'delete_at' => 0,
+                        ];
+                    } else {
+                        $updateData[] = [
+                            'id' => 0,
+                            'project_issue_id' => $params->id,
+                            'project_module_id' => $projectModuleId,
+                            'delete_at' => 0,
+                        ];
+                    }
                 }
             }
             foreach ($del as $id) {

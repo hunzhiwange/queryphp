@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Project\Service\ProjectLabel;
 
 use App\Infra\Dto\ParamsDto;
-use App\Exceptions\ProjectBusinessException;
-use App\Exceptions\ProjectErrorCode;
+use App\Project\Exceptions\ProjectBusinessException;
+use App\Project\Exceptions\ProjectErrorCode;
 use Leevel\Support\VectorInt;
 
 /**
@@ -26,7 +26,7 @@ class SortParams extends ParamsDto
     /**
      * {@inheritDoc}
      *
-     * @throws \Exception
+     * @throws ProjectBusinessException
      */
     protected function beforeValidate(): void
     {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Project\Entity;
 
 use App\Infra\Entity\PlatformCompanyEntityTable;
-use App\Infra\Repository\Project\ProjectIssue as ProjectProjectIssue;
 use App\Infra\Service\Support\ReadParams;
+use App\Project\Repository\ProjectIssue as ProjectProjectIssue;
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\EntityCollection;
 use Leevel\Database\Ddd\Relation\HasOne;

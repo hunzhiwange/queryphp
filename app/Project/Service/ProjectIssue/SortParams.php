@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Project\Service\ProjectIssue;
 
 use App\Infra\Dto\ParamsDto;
-use App\Exceptions\ProjectBusinessException;
-use App\Exceptions\ProjectErrorCode;
+use App\Project\Exceptions\ProjectBusinessException;
+use App\Project\Exceptions\ProjectErrorCode;
 
 /**
  * 任务排序参数.

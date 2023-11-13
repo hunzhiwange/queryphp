@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Project\Service\Project;
 
-use App\Infra\Validate\Validate;
-use App\Exceptions\ProjectBusinessException;
-use App\Exceptions\ProjectErrorCode;
 use App\Infra\Validate\Project\ProjectUser as ProjectProjectUser;
+use App\Infra\Validate\Validate;
 use App\Project\Entity\Project;
 use App\Project\Entity\ProjectUser;
 use App\Project\Entity\ProjectUserTypeEnum;
+use App\Project\Exceptions\ProjectBusinessException;
+use App\Project\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
 
 /**
@@ -23,9 +23,6 @@ class SetMember
     ) {
     }
 
-    /**
-     * @throws \Exception
-     */
     public function handle(SetMemberParams $params): array
     {
         $this->validateArgs($params);
@@ -35,8 +32,6 @@ class SetMember
 
     /**
      * 保存.
-     *
-     * @throws \Exception
      */
     private function save(SetMemberParams $params): ProjectUser
     {
@@ -47,9 +42,6 @@ class SetMember
         return $entity;
     }
 
-    /**
-     * @throws \Exception
-     */
     private function entity(SetMemberParams $params): ProjectUser
     {
         $this->findProject($params->projectId);
@@ -58,7 +50,7 @@ class SetMember
     }
 
     /**
-     * @throws \App\Exceptions\ProjectBusinessException|\Exception
+     * @throws \App\Project\Exceptions\ProjectBusinessException
      */
     private function findProjectUser(SetMemberParams $params): ProjectUser
     {
@@ -101,7 +93,7 @@ class SetMember
     /**
      * 校验基本参数.
      *
-     * @throws \App\Exceptions\ProjectBusinessException|\Exception
+     * @throws \App\Project\Exceptions\ProjectBusinessException|\Exception
      */
     private function validateArgs(SetMemberParams $params): void
     {

@@ -6,6 +6,7 @@ namespace App\Project\Service\Project;
 
 use App\Infra\Service\Support\Store as CommonStore;
 use App\Project\Entity\Project;
+use App\Project\Entity\ProjectLabel;
 use function inject_snowflake_id;
 
 /**
@@ -30,7 +31,7 @@ class Store
                         'project_id' => $entity->id,
                         'name' => $item['title'],
                         'sort' => $key,
-                    ]));
+                    ], ProjectLabel::class));
                     $this->w->persist($projectLabel);
                 }
             });

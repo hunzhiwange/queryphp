@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Project\Service\Project;
 
-use App\Infra\Entity\User\User;
-use App\Exceptions\ProjectBusinessException;
-use App\Exceptions\ProjectErrorCode;
 use App\Project\Entity\Project;
 use App\Project\Entity\ProjectUser;
 use App\Project\Entity\ProjectUserDataTypeEnum;
+use App\Project\Exceptions\ProjectBusinessException;
+use App\Project\Exceptions\ProjectErrorCode;
+use App\User\Entity\User;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Support\VectorInt;
 
@@ -23,8 +23,7 @@ class AddUsers
     }
 
     /**
-     * @throws \App\Exceptions\ProjectBusinessException
-     * @throws \Exception
+     * @throws \App\Project\Exceptions\ProjectBusinessException
      */
     public function handle(AddUsersParams $params): array
     {

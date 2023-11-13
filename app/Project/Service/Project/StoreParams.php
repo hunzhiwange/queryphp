@@ -8,7 +8,7 @@ use App\Infra\Service\Support\StoreParams as CommonStoreParams;
 use App\Infra\Dto\Project\Template;
 use App\Infra\Dto\Project\TemplateData;
 use App\Project\Entity\Project;
-use Leevel\Support\TypedDtoArray;
+use Leevel\Support\VectorDto;
 
 /**
  * 项目保存参数.
@@ -29,7 +29,7 @@ class StoreParams extends CommonStoreParams
         if (!isset($value['data']) || !\is_array($value['data'])) {
             throw new \InvalidArgumentException('Template data struct error');
         }
-        $value['data'] = TypedDtoArray::fromRequest($value['data'], TemplateData::class);
+        $value['data'] = VectorDto::fromRequest($value['data'], TemplateData::class);
 
         return new Template($value);
     }

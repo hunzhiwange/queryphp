@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Project\Service\Project;
 
-use App\Infra\Validate\Validate;
-use App\Exceptions\ProjectBusinessException;
-use App\Exceptions\ProjectErrorCode;
 use App\Infra\Validate\Project\ProjectUser as ProjectProjectUser;
+use App\Infra\Validate\Validate;
 use App\Project\Entity\ProjectUser;
 use App\Project\Entity\ProjectUserDataTypeEnum;
 use App\Project\Entity\ProjectUserTypeEnum;
+use App\Project\Exceptions\ProjectBusinessException;
+use App\Project\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
 
 /**
@@ -59,7 +59,7 @@ class CancelFavor
     }
 
     /**
-     * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \App\Project\Exceptions\ProjectBusinessException
      * @throws \Exception
      */
     private function findProjectUser(CancelFavorParams $params): ProjectUser
@@ -97,7 +97,7 @@ class CancelFavor
     /**
      * 校验基本参数.
      *
-     * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \App\Project\Exceptions\ProjectBusinessException
      * @throws \Exception
      */
     private function validateArgs(CancelFavorParams $params): void

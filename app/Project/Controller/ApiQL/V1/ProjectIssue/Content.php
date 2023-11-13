@@ -7,7 +7,6 @@ namespace App\Project\Controller\ApiQL\V1\ProjectIssue;
 use App\Controller\Support\Controller;
 use App\Project\Service\ProjectIssue\Update as Service;
 use Leevel\Http\Request;
-use function success;
 
 /**
  * 项目问题内容更新.

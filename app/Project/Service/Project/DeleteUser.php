@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Project\Service\Project;
 
-use App\Infra\Validate\Validate;
-use App\Exceptions\ProjectBusinessException;
-use App\Exceptions\ProjectErrorCode;
 use App\Infra\Validate\Project\ProjectUser as ProjectProjectUser;
+use App\Infra\Validate\Validate;
 use App\Project\Entity\ProjectUser;
 use App\Project\Entity\ProjectUserDataTypeEnum;
 use App\Project\Entity\ProjectUserTypeEnum;
+use App\Project\Exceptions\ProjectBusinessException;
+use App\Project\Exceptions\ProjectErrorCode;
 use Leevel\Database\Ddd\UnitOfWork;
 
 /**
@@ -23,9 +23,6 @@ class DeleteUser
     ) {
     }
 
-    /**
-     * @throws \Exception
-     */
     public function handle(DeleteUserParams $params): array
     {
         $this->validateArgs($params);
@@ -59,7 +56,7 @@ class DeleteUser
     }
 
     /**
-     * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \App\Project\Exceptions\ProjectBusinessException
      * @throws \Exception
      */
     private function findProjectUser(DeleteUserParams $params): ProjectUser
@@ -97,7 +94,7 @@ class DeleteUser
     /**
      * 校验基本参数.
      *
-     * @throws \App\Exceptions\ProjectBusinessException
+     * @throws \App\Project\Exceptions\ProjectBusinessException
      * @throws \Exception
      */
     private function validateArgs(DeleteUserParams $params): void
