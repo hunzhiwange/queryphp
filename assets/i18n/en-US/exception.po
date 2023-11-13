@@ -1,0 +1,69 @@
+# exception
+#
+msgid ""
+msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en-US\n"
+"Language-Team: \n"
+"Last-Translator: \n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2021-02-12 11:30:01\n"
+"POT-Creation-Date: 2021-02-12 11:30:01\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Project-Id-Version: exception\n"
+"X-Generator: php leevel i18n:generate\n"
+
+msgid "错误请求"
+msgstr "Bad Request"
+
+msgid "服务器不理解请求的语法"
+msgstr "The server does not understand the syntax of the request"
+
+msgid "未授权"
+msgstr "Unauthorized"
+
+msgid "对于需要登录的网页，服务器可能返回此响应"
+msgstr "For web pages that need to be logged in, the server may return this response"
+
+msgid "禁止"
+msgstr "Forbidden"
+
+msgid "服务器拒绝请求"
+msgstr "Server refusal the request"
+
+msgid "页面未找到"
+msgstr "Page Not Found"
+
+msgid "用户发出的请求针对的是不存在的页面"
+msgstr "The user’s request is for a page that does not exist"
+
+msgid "方法禁用"
+msgstr "Method Not Allowed"
+
+msgid "禁用请求中指定的方法"
+msgstr "Disable the method specified in the request"
+
+msgid "无法处理的实体"
+msgstr "Unprocessable Entity"
+
+msgid "请求格式正确，但是由于含有语义错误，无法响应"
+msgstr "The request format is correct, but because of semantic errors, it cannot respond"
+
+msgid "太多请求"
+msgstr "Too Many Requests"
+
+msgid "用户在给定的时间内发送了太多的请求"
+msgstr "The user sends too many requests within a given time"
+
+msgid "服务器内部错误"
+msgstr "Internal Server Error"
+
+msgid "服务器遇到错误，无法完成请求"
+msgstr "Could not complete request"
+
+msgid "首页"
+msgstr "Home"
+
+msgid "重试"
+msgstr "Retry"

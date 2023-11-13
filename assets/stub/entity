@@ -1,0 +1,29 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{namespace}}\Domain\Entity{{sub_dir}};
+
+use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\Struct;
+
+{{file_comment}}
+final class {{file_name}} extends Entity
+{
+    /**
+     * Database table.
+     */
+    public const TABLE = '{{table_name}}';
+
+    /**
+     * Primary key.
+     */
+    public const ID = {{primary_key}};
+
+    /**
+     * Auto increment.
+     */
+    public const AUTO = {{auto_increment}};{{const_extend}}
+
+{{struct}}
+}

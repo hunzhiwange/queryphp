@@ -1,0 +1,52 @@
+{
+  "stub": "www/index.php",
+  "main": false,
+  "base_path": null,
+  "output": "dist",
+  "chmod": null,
+  "algorithm": null,
+  "private_key_file": null,
+  "alias": null,
+  "file_name": "leevel.phar",
+  "finder": [
+    {
+      "notName": "/LICENSE|.*\\.md|.*\\.dist|Makefile|.editorconfig|.gitignore|composer\\.lock/",
+      "exclude": [
+        "doc",
+        "test",
+        "test_old",
+        "tests",
+        "Tests",
+        "vendor-bin",
+        ".github",
+        ".git",
+        ".idea",
+        ".setting"
+      ],
+      "in": [
+        "app",
+        "option",
+        "storage/app/themes",
+        "storage/bootstrap",
+        "vendor",
+        "assets/exceptions",
+        "assets/i18n",
+        "assets/themes"
+      ],
+      "append": [
+        "www/index.php",
+        ".env",
+        ".rr.yaml",
+        "box.json",
+        "composer.json",
+        "leevel",
+        "phinx.php",
+        "rr.php"
+      ]
+    }
+  ],
+  "blacklist": [],
+  "exclude-composer-files": false,
+  "exclude-dev-files": true,
+  "dump-autoload": true
+}

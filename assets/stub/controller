@@ -1,0 +1,24 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{namespace}}\{{controller_dir}}{{sub_dir}};
+
+{{file_comment}}
+class {{file_name}}
+{
+    /**
+     * 构造函数.
+     */
+    public function __construct()
+    {
+    }
+
+    /**
+     * 默认方法.
+     */
+    public function {{action}}(): array
+    {
+        return ['hello' => 'world'];
+    }
+}

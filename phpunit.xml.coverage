@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" backupStaticAttributes="false" bootstrap="tests/bootstrap.php" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage>
+    <include>
+      <directory suffix=".php">./app/</directory>
+    </include>
+    <exclude>
+      <directory suffix="Test.php">./app/</directory>
+    </exclude>
+    <report>
+      <html outputDirectory="storage/app/tests/report"/>
+    </report>
+  </coverage>
+  <testsuites>
+    <testsuite name="Main Test Suite">
+      <directory>./tests/</directory>
+    </testsuite>
+    <testsuite name="App Test Suite">
+      <directory>./app/</directory>
+    </testsuite>
+  </testsuites>
+  <groups>
+    <exclude>
+      <group>ignoredGroup</group>
+    </exclude>
+  </groups>
+  <logging/>
+  <php>
+    <env name="RUNTIME_ENVIRONMENT" value="env.phpunit"/>
+  </php>
+</phpunit>

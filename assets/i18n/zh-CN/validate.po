@@ -1,0 +1,210 @@
+# validate
+#
+msgid ""
+msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: zh-CN\n"
+"Language-Team: \n"
+"Last-Translator: \n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2021-02-10 19:03:11\n"
+"POT-Creation-Date: 2021-02-10 19:03:11\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Project-Id-Version: validate\n"
+"X-Generator: php leevel i18n:generate\n"
+
+msgid "{field} 不能为空"
+msgstr ""
+
+msgid "{field} 必须是数字"
+msgstr ""
+
+msgid "{field} 必须是浮点数"
+msgstr ""
+
+msgid "{field} 必须是双精度浮点数"
+msgstr ""
+
+msgid "{field} 必须是布尔值"
+msgstr ""
+
+msgid "{field} 必须是数组"
+msgstr ""
+
+msgid "{field} 必须是 yes、on、true 或者 1"
+msgstr ""
+
+msgid "{field} 不是正确的日期格式"
+msgstr ""
+
+msgid "{field} 必须使用日期格式 {rule}"
+msgstr ""
+
+msgid "{field} 不是正确的时区"
+msgstr ""
+
+msgid "{field} 只能是字母"
+msgstr ""
+
+msgid "{field} 只能是大写字母"
+msgstr ""
+
+msgid "{field} 只能是小写字母"
+msgstr ""
+
+msgid "{field} 只能是字母和数字"
+msgstr ""
+
+msgid "{field} 只能是字母、数字、短横线和下划线"
+msgstr ""
+
+msgid "{field} 只能是汉字"
+msgstr ""
+
+msgid "{field} 只能是汉字、字母、数字"
+msgstr ""
+
+msgid "{field} 只能是汉字、字母、数字、短横线和下划线"
+msgstr ""
+
+msgid "{field} 不是有效的 URL 地址"
+msgstr ""
+
+msgid "{field} 不是有效的域名或者 IP"
+msgstr ""
+
+msgid "{field} 不是有效的 IP 地址"
+msgstr ""
+
+msgid "{field} 不是有效的 IPV4 地址"
+msgstr ""
+
+msgid "{field} 不是有效的 IPV6 地址"
+msgstr ""
+
+msgid "{field} 必须在 {rule} 范围内"
+msgstr ""
+
+msgid "{field} 不能在 {rule} 范围内"
+msgstr ""
+
+msgid "{field} 只能在 {rule} 和 {rule1} 之间，不包含等于"
+msgstr ""
+
+msgid "{field} 不在 {rule} 和 {rule1} 之间，不包含等于"
+msgstr ""
+
+msgid "{field} 只能在 {rule} 和 {rule1} 之间，包含等于"
+msgstr ""
+
+msgid "{field} 不在 {rule} 和 {rule1} 之间，包含等于"
+msgstr ""
+
+msgid "{field} 必须大于 {rule}"
+msgstr ""
+
+msgid "{field} 必须大于等于 {rule}"
+msgstr ""
+
+msgid "{field} 必须小于 {rule}"
+msgstr ""
+
+msgid "{field} 必须小于等于 {rule}"
+msgstr ""
+
+msgid "{field} 必须等于 {rule}"
+msgstr ""
+
+msgid "{field} 不能等于 {rule}"
+msgstr ""
+
+msgid "{field} 必须等于字段 {rule}"
+msgstr ""
+
+msgid "{field} 不能等于字段 {rule}"
+msgstr ""
+
+msgid "{field} 必须完全等于 {rule}"
+msgstr ""
+
+msgid "{field} 不能完全等于 {rule}"
+msgstr ""
+
+msgid "{field} 必须为空"
+msgstr ""
+
+msgid "{field} 必须 null"
+msgstr ""
+
+msgid "{field} 不能为 null"
+msgstr ""
+
+msgid "{field} 长度不符合要求 {rule}"
+msgstr ""
+
+msgid "{field} 值不能超过 {rule}"
+msgstr ""
+
+msgid "{field} 值不能小于 {rule}"
+msgstr ""
+
+msgid "{field} 字符串中的字符必须都是数字"
+msgstr ""
+
+msgid "{field} 类型不符合要求 {rule}"
+msgstr ""
+
+msgid "{field} 必须全部是小写"
+msgstr ""
+
+msgid "{field} 必须全部是大写"
+msgstr ""
+
+msgid "{field} 不满足最小长度 {rule}"
+msgstr ""
+
+msgid "{field} 不满足最大长度 {rule}"
+msgstr ""
+
+msgid "{field} 必须是有效的中国大陆身份证"
+msgstr ""
+
+msgid "{field} 必须是有效的中国邮政编码"
+msgstr ""
+
+msgid "{field} 必须是有效的 QQ 号码"
+msgstr ""
+
+msgid "{field} 必须是有效的电话号码或者手机号"
+msgstr ""
+
+msgid "{field} 必须是有效的手机号"
+msgstr ""
+
+msgid "{field} 必须是有效的电话号码"
+msgstr ""
+
+msgid "{field} 必须为正确的电子邮件格式"
+msgstr ""
+
+msgid "{field} 必须为正确的符合 luhn 格式算法银行卡"
+msgstr ""
+
+msgid "{field} 日期不能小于 {rule}"
+msgstr ""
+
+msgid "{field} 日期不能超过 {rule}"
+msgstr ""
+
+msgid "{field} 不允许的 IP 访问 {rule}"
+msgstr ""
+
+msgid "{field} 禁止的 IP 访问 {rule}"
+msgstr ""
+
+msgid "{field} 不是有效的 JSON"
+msgstr ""
+
+msgid "{field} 不能出现重复值"
+msgstr ""

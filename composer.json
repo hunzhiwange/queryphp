@@ -1,0 +1,168 @@
+{
+    "name": "hunzhiwange/queryphp",
+    "description": "The QueryPHP Application.",
+    "keywords": ["php", "framework", "queryphp"],
+    "license": "MIT",
+    "homepage": "http://www.queryphp.com",
+    "support": {
+        "issues": "https://github.com/hunzhiwange/queryphp/issues",
+        "source": "https://github.com/hunzhiwange/queryphp"
+    },
+    "authors": [{
+        "name": "Xiangmin Liu",
+        "email": "635750556@qq.com"
+    }],
+    "require": {
+        "php": ">=8.1",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "composer-runtime-api": ">=2.1",
+        "godruoyi/php-snowflake": "^2.2",
+        "hunzhiwange/framework": "^1.1.33",
+        "league/csv": "^9.8",
+        "nesbot/carbon": "^2.66",
+        "nyholm/psr7": "^1.5",
+        "s1syphos/php-simple-captcha": "^2.2",
+        "spiral/dumper": "^2.14.1",
+        "spiral/roadrunner": "^2.12.1",
+        "symfony/psr-http-message-bridge": "^2.0",
+        "symfony/workflow": "^6.2"
+    },
+    "require-dev": {
+        "codedungeon/php-cli-colors": "^1.12.2",
+        "robmorgan/phinx": "^0.12.4",
+        "zircote/swagger-php": "^3.1.0"
+    },
+    "autoload": {
+        "files": [
+            "app/Infra/functions.php"
+        ],
+        "psr-4": {
+            "App\\" : "app"
+        },
+        "exclude-from-classmap": [
+            "/tests/",
+            "/**/Tests/",
+            "/**/*Test.php",
+            "/**/Fixtures/",
+            "/vendor/symfony/var-dumper",
+            "/vendor/symfony/polyfill-php72",
+            "/vendor/symfony/polyfill-php73",
+            "/vendor/symfony/polyfill-mbstring",
+            "/vendor/symfony/var-dumper",
+            "/vendor/symfony/console",
+            "/vendor/symfony/translation-contracts",
+            "/vendor/symfony/translation",
+            "/vendor/symfony/service-contracts",
+            "/vendor/symfony/config",
+            "/vendor/symfony/psr-http-message-bridge",
+            "/vendor/symfony/yaml",
+            "/vendor/symfony/string",
+            "/vendor/zircote/",
+            "/vendor/filp/",
+            "/vendor/spiral/",
+            "/vendor/maximebf/",
+            "/vendor/vlucas/",
+            "/vendor/nunomaduro/",
+            "/vendor/gettext/",
+            "/vendor/doctrine/",
+            "/vendor/egulias/",
+            "/vendor/hunzhiwange/framework/src/Leevel/Debug/",
+            "/vendor/psr/",
+            "/vendor/clio/",
+            "/vendor/hunzhiwange/framework/src/**/Console/",
+            "/vendor/codedungeon/",
+            "/vendor/nikic/php-parser/",
+            "/vendor/cakephp/",
+            "/vendor/robmorgan/phinx/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.1-dev"
+        },
+        "leevel": {
+            "@providers": "The prividers",
+            "providers": [
+                "App\\Infra\\Provider\\App",
+                "App\\Infra\\Provider\\Event",
+                "App\\Infra\\Provider\\Router"
+            ],
+            "@ignores": "Ignore the automatic discovery prividers",
+            "ignores": [
+            ],
+            "@commands": "The commands",
+            "commands": [
+                "App\\Infra\\Console"
+            ],
+            "@options": "The extend options",
+            "options": {
+            },
+            "@i18ns": "The extend i18ns",
+            "i18ns": [
+            ],
+            "i18n-paths": {
+                "exception": [
+                    "assets/exceptions"
+                ],
+                "app": [
+                    "app"
+                ]
+            },
+            "@metas": "The metas",
+            "metas": {
+            }
+        },
+        "leevel-console" : {
+            "view-cache": {
+                "paths": [
+                    "app",
+                    "assets/themes"
+                ]
+            },
+            "database-entity": {
+                "show_prop_black": [
+                    "delete_at",
+                    "create_account",
+                    "update_account"
+                ],
+                "delete_at": "delete_at"
+            }
+        }
+    },
+    "scripts": {
+        "test": "@php assets/build/phpunit --colors=always",
+        "test-coverage": "@php assets/build/phpunit --colors=always -c phpunit.xml.coverage",
+        "php-cs-fixer": "@php assets/build/php-cs-fixer fix",
+        "phpstan": "@php assets/build/phpstan analyse",
+        "migrate": "@php leevel migrate:migrate",
+        "migrate-common": "@php leevel migrate:migrate --database=development_common",
+        "migrate-phpunit": "@php leevel migrate:migrate --env=env.phpunit",
+        "migrate-phpunit-common": "@php leevel migrate:migrate --env=env.phpunit --database=development_common",
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php -r \"file_exists('.env.phpunit') || copy('.env.phpunit.example', '.env.phpunit');\"",
+            "@php -r \"file_exists('.rr.yaml') || copy('.example.rr.yaml', '.rr.yaml');\""
+        ],
+        "post-create-project-cmd": [
+            "@php leevel links"
+        ],
+        "post-autoload-dump": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php -r \"file_exists('.env.phpunit') || copy('.env.phpunit.example', '.env.phpunit');\"",
+            "@php -r \"file_exists('.rr.yaml') || copy('.example.rr.yaml', '.rr.yaml');\""
+        ]
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
