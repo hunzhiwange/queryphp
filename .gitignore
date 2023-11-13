@@ -25,4 +25,7 @@ www/debugbar
 /apis
 /attachments
 .php-cs-fixer.cache
+.rr.yaml
 storage/phpstan
+workflow.svg
+/temp-app
