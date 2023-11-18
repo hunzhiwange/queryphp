@@ -48,6 +48,9 @@ class RoadRunnerServer
             try {
                 $symfonyRequest = $httpFoundationFactory->createRequest($req);
                 $request = Request::createFromSymfonyRequest($symfonyRequest);
+                // 修复 RoadRunner 升级后，请求对象中多了一个 rr_parsed_body 属性
+                // 这会造成后续的请求出现无法识别属性的问题
+                $request->attributes->remove('rr_parsed_body');
                 $response = $kernel->handle($request);
                 $rsp = $psrHttpFactory->createResponse($response);
                 $worker->respond($rsp);

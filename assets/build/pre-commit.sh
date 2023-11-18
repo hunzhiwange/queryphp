@@ -41,17 +41,20 @@ then
 
     isCheck=""
 
+    file_list=""
     for FILE in $SFILES
     do
-        result=`php $phpstan_path analyse $FILE`
-        if [[ $result == *"[OK] No errors"* ]]
-        then
-            isCheck=""
-        else
-            echo $result
-            isCheck=$result
-        fi
+       file_list="$file_list $FILE"
     done
+
+    result=`php $phpstan_path analyse $file_list`
+    if [[ $result == *"[OK] No errors"* ]]
+    then
+        isCheck=""
+    else
+        echo $result
+        isCheck=$result
+    fi
 
     if [ "$isCheck" != "" ]
     then

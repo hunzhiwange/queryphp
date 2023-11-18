@@ -28,7 +28,7 @@ return [
      *
      * API 认证驱动连接
      */
-    'api_default' => 'token',
+    'api_default' => 'jwt',
 
     /*
      * ---------------------------------------------------------------
@@ -75,6 +75,32 @@ return [
 
             // 默认过期时间
             'expire' => null,
+        ],
+
+        'jwt' => [
+            // driver
+            'driver' => 'jwt',
+
+            // 驱动类
+            'driver_class' => \Leevel\Auth\Jwt::class,
+
+            // token，需要从接口传入进来
+            'token' => null,
+
+            // 默认过期时间
+            'expire' => null,
+
+            // 签发人
+            'iss' => null,
+
+            // 受众
+            'aud' => null,
+
+            // 加密 key
+            'auth_key' => Leevel::env('JWT_AUTH_KEY'),
+
+            // 签名算法
+            'alg' => 'HS256',
         ],
     ],
 ];

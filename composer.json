@@ -17,17 +17,19 @@
         "ext-mbstring": "*",
         "ext-openssl": "*",
         "composer-runtime-api": ">=2.1",
-        "hunzhiwange/framework": "^1.1.17",
+        "godruoyi/php-snowflake": "^2.2",
+        "hunzhiwange/framework": "^1.1.34",
         "league/csv": "^9.8",
         "nesbot/carbon": "^2.66",
         "nyholm/psr7": "^1.5",
         "s1syphos/php-simple-captcha": "^2.2",
         "spiral/dumper": "^2.14.1",
         "spiral/roadrunner": "^2.12.1",
-        "symfony/psr-http-message-bridge": "^2.0"
+        "symfony/psr-http-message-bridge": "^2.0",
+        "symfony/workflow": "^6.2"
     },
     "require-dev": {
-        "codedungeon/php-cli-colors": "^1.12.0",
+        "codedungeon/php-cli-colors": "^1.12.2",
         "robmorgan/phinx": "^0.12.4",
         "zircote/swagger-php": "^3.1.0"
     },
@@ -96,7 +98,7 @@
             ],
             "@commands": "The commands",
             "commands": [
-                "App\\Console"
+                "App\\Infra\\Console"
             ],
             "@options": "The extend options",
             "options": {
@@ -109,7 +111,7 @@
                     "assets/exceptions"
                 ],
                 "app": [
-                    "apps"
+                    "app"
                 ]
             },
             "@metas": "The metas",
@@ -139,17 +141,21 @@
         "php-cs-fixer": "@php assets/build/php-cs-fixer fix",
         "phpstan": "@php assets/build/phpstan analyse",
         "migrate": "@php leevel migrate:migrate",
-        "migrate-phpunit": "@php leevel migrate:migrate -e env.phpunit",
+        "migrate-common": "@php leevel migrate:migrate --database=development_common",
+        "migrate-phpunit": "@php leevel migrate:migrate --env=env.phpunit",
+        "migrate-phpunit-common": "@php leevel migrate:migrate --env=env.phpunit --database=development_common",
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "@php -r \"file_exists('.env.phpunit') || copy('.env.phpunit.example', '.env.phpunit');\""
+            "@php -r \"file_exists('.env.phpunit') || copy('.env.phpunit.example', '.env.phpunit');\"",
+            "@php -r \"file_exists('.rr.yaml') || copy('.example.rr.yaml', '.rr.yaml');\""
         ],
         "post-create-project-cmd": [
             "@php leevel links"
         ],
         "post-autoload-dump": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "@php -r \"file_exists('.env.phpunit') || copy('.env.phpunit.example', '.env.phpunit');\""
+            "@php -r \"file_exists('.env.phpunit') || copy('.env.phpunit.example', '.env.phpunit');\"",
+            "@php -r \"file_exists('.rr.yaml') || copy('.example.rr.yaml', '.rr.yaml');\""
         ]
     },
     "config": {

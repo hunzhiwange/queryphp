@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><?php echo $title; ?></title>
+<title><?php echo $title ?? ''; ?></title>
 
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300' rel='stylesheet' type='text/css'>
 
@@ -79,25 +79,25 @@ a.button:hover {
 </head>
 
 <body>
-    
+
     <div>
         <div id="header">
             <div id="status-code">
-                <?php echo $status_code ?? 500; ?>
+                <?php echo $statusCode ?? 500; ?>
             </div>
         </div>
-        
+
         <div id="content">
             <div>
-                <p id="title"><?php echo $title; ?></p>
-                <p id="sub-title"><?php echo $code; ?> <?php echo $message; ?></p>
+                <p id="title"><?php echo $title ?? ''; ?></p>
+                <p id="sub-title"><?php echo $code ?? 0; ?> <?php echo $message ?? ''; ?></p>
                 <div class="button">
-                    <a class="button" href="/"><?php echo __('首页'); ?></a> 
+                    <a class="button" href="/"><?php echo __('首页'); ?></a>
                     <a class="button" href="javascript:;" onclick="window.location.reload();"><?php echo __('重试'); ?></a>
                 </div>
-            </div>     
+            </div>
             <div class="clear"></div>
-        </div>     
+        </div>
     </div>
 
 </body>

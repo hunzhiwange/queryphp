@@ -13,10 +13,15 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: test
+          MYSQL_DATABASE: test1
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      redis:
+        image: redis:7.0
+        ports:
+          - 6379:6379
+        options: --entrypoint redis-server
 
     strategy:
       fail-fast: true
@@ -51,6 +56,9 @@ jobs:
       - name: Migrate
         run: php leevel migrate:migrate --env=env.phpunit
 
+      - name: Migrate common database
+        run: php leevel migrate:migrate --env=env.phpunit --database=development_common
+
       - name: Execute tests against PHPUnit
         run: php assets/build/phpunit
         env:
@@ -65,10 +73,15 @@ jobs:
         image: mysql:8
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: test
+          MYSQL_DATABASE: test1
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      redis:
+        image: redis:7.0
+        ports:
+          - 6379:6379
+        options: --entrypoint redis-server
 
     strategy:
       fail-fast: true
@@ -103,6 +116,9 @@ jobs:
       - name: Migrate
         run: php leevel migrate:migrate --env=env.phpunit
 
+      - name: Migrate common database
+        run: php leevel migrate:migrate --env=env.phpunit --database=development_common
+
       - name: Execute tests against PHPUnit
         run: php assets/build/phpunit
         env:
@@ -117,10 +133,15 @@ jobs:
         image: mariadb:10
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: test
+          MYSQL_DATABASE: test1
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      redis:
+        image: redis:7.0
+        ports:
+          - 6379:6379
+        options: --entrypoint redis-server
 
     strategy:
       fail-fast: true
@@ -154,6 +175,9 @@ jobs:
 
       - name: Migrate
         run: php leevel migrate:migrate --env=env.phpunit
+
+      - name: Migrate common database
+        run: php leevel migrate:migrate --env=env.phpunit --database=development_common
 
       - name: Execute tests against PHPUnit
         run: php assets/build/phpunit

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
-use App\Domain\Entity\Demo\Test;
+use App\Base\Entity\Test;
 
 /**
  * 实体使用.

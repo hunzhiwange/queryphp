@@ -13,9 +13,30 @@ use Leevel\Router\IRouter;
  */
 trait Controller
 {
+    protected array $remainingInput = [
+        'key',
+        'status',
+        'page',
+        'page_size',
+        'column',
+        'key_column',
+        'where',
+        'order_by',
+        'group_by',
+        'relation',
+    ];
+
     private function input(Request $request): array
     {
-        $input = $request->only($this->allowedInput);
+        if (!empty($this->allowedInput)) {
+            if (Request::METHOD_GET === $request->getMethod()) {
+                $this->allowedInput = array_merge($this->allowedInput, $this->remainingInput);
+            }
+            $input = $request->only($this->allowedInput);
+        } else {
+            $input = $request->all();
+        }
+
         if (!method_exists($this, 'extendInput')) {
             return $input;
         }

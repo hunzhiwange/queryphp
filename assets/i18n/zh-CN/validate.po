@@ -143,10 +143,10 @@ msgstr ""
 msgid "{field} 长度不符合要求 {rule}"
 msgstr ""
 
-msgid "{field} 长度不能超过 {rule}"
+msgid "{field} 值不能超过 {rule}"
 msgstr ""
 
-msgid "{field} 长度不能小于 {rule}"
+msgid "{field} 值不能小于 {rule}"
 msgstr ""
 
 msgid "{field} 字符串中的字符必须都是数字"

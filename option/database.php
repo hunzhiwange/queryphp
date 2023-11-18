@@ -67,5 +67,24 @@ return [
             // 分布式服务部署模式中，附属服务器列表
             'slave' => [],
         ],
+        'common' => [
+            // driver
+            'driver' => 'mysql',
+
+            // 数据库 host，默认为 localhost
+            'host' => Leevel::env('DATABASE_COMMON_HOST', 'localhost'),
+
+            // 端口
+            'port' => (int) Leevel::env('DATABASE_COMMON_PORT', 3306),
+
+            // 数据库名字
+            'name' => Leevel::env('DATABASE_COMMON_NAME', ''),
+
+            // 数据库用户名
+            'user' => Leevel::env('DATABASE_COMMON_USER', 'root'),
+
+            // 数据库密码
+            'password' => Leevel::env('DATABASE_COMMON_PASSWORD', ''),
+        ],
     ],
 ];

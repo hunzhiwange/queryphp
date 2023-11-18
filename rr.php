@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Exceptions\Runtime;
+use App\Infra\Exceptions\Runtime;
 use App\Infra\RoadRunnerServer;
 use App\Kernel;
 use Leevel\Di\Container;

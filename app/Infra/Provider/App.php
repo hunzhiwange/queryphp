@@ -6,6 +6,9 @@ namespace App\Infra\Provider;
 
 use App\Infra\Permission;
 use App\Infra\PermissionCache;
+use Godruoyi\Snowflake\RedisSequenceResolver;
+use Godruoyi\Snowflake\Snowflake;
+use Leevel\Cache\Redis\PhpRedis;
 use Leevel\Di\IContainer;
 use Leevel\Di\Provider;
 
@@ -20,6 +23,8 @@ class App extends Provider
     public function register(): void
     {
         $this->permission();
+        $this->redisSequence();
+        $this->snowflake();
     }
 
     /**
@@ -29,6 +34,8 @@ class App extends Provider
     {
         return [
             'permission',
+            'redis_sequence',
+            'snowflake',
         ];
     }
 
@@ -59,6 +66,37 @@ class App extends Provider
 
             // @phpstan-ignore-next-line
             return new Permission($container->make(PermissionCache::class), $token);
+        });
+    }
+
+    private function redisSequence(): void
+    {
+        $this->container->singleton('redis_sequence', function (IContainer $container): RedisSequenceResolver {
+            /** @var PhpRedis $phpRedis */
+            $phpRedis = $container->make('redis');
+
+            /** @var \Redis $redis */
+            $redis = $phpRedis->handle();
+
+            return (new RedisSequenceResolver($redis))->setCachePrefix('redis_sequence:');
+        });
+    }
+
+    private function snowflake(): void
+    {
+        $this->container->singleton('snowflake', function (IContainer $container): Snowflake {
+            /** @var PhpRedis $phpRedis */
+            $phpRedis = $container->make('redis');
+
+            /** @var \Redis $redis */
+            $redis = $phpRedis->handle();
+            $redisSequence = (new RedisSequenceResolver($redis))->setCachePrefix('snowflake_redis_sequence:');
+
+            return (new Snowflake(1, 1))
+                // 1678032000000 = 2023-03-06
+                ->setStartTimeStamp(1678032000000)
+                ->setSequenceResolver($redisSequence)
+            ;
         });
     }
 }

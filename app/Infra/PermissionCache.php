@@ -16,7 +16,8 @@ class PermissionCache
      */
     public function set(string $id, array $permission): void
     {
-        Cache::set('permission:'.$id, $permission);
+        // JWT 生成的 token 很长，使用 md5 压缩一下
+        Cache::set('permission:'.md5($id), $permission);
     }
 
     /**
@@ -24,13 +25,14 @@ class PermissionCache
      */
     public function get(string $id): array
     {
+        $id = md5($id);
         $permission = (array) Cache::get('permission:'.$id) ?: ['static' => [], 'dynamic' => []];
 
-        if (!\is_array($permission['static'])) {
+        if (!isset($permission['static']) || !\is_array($permission['static'])) {
             $permission['static'] = [];
         }
 
-        if (!\is_array($permission['dynamic'])) {
+        if (!isset($permission['dynamic']) || !\is_array($permission['dynamic'])) {
             $permission['dynamic'] = [];
         }
 

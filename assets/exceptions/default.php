@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-$title = isset($type) ? $type : 'Whoops!';
+$title = $type ?? 'Whoops!';
 
-if (!isset($message)) {
-    $message = 'Unknown error.';
+if (!isset($messageDefault)) {
+    $messageDefault = 'Unknown error.';
 }
 
 if (isset($file, $line)) {

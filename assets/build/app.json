@@ -1,0 +1,85 @@
+{
+  "common": {
+    "name": "公共代码",
+    "dir": [
+      "app/Controller",
+      "app/Infra",
+      "app/Kernel.php",
+      "app/KernelConsole.php",
+      "assets/exceptions",
+      "assets/i18n",
+      "option",
+      "storage",
+      "www/index.php",
+      "www/.htaccess",
+      ".env.example",
+      ".env.phpunit.example",
+      ".gitignore",
+      ".rr.yaml",
+      "composer.json",
+      "leevel",
+      "phinx.php",
+      "rr.php"
+    ]
+  },
+  "attachment": {
+    "name": "上传服务",
+    "dir": [
+      "app/Attachment"
+    ]
+  },
+  "auth": {
+    "name": "认证服务",
+    "dir": [
+      "app/Auth"
+    ]
+  },
+  "base": {
+    "name": "基础服务",
+    "dir": [
+      "app/Base"
+    ]
+  },
+  "client": {
+    "name": "客户服务",
+    "dir": [
+      "app/Client"
+    ]
+  },
+  "company": {
+    "name": "公司服务",
+    "dir": [
+      "app/Company"
+    ]
+  },
+  "config": {
+    "name": "配置服务",
+    "dir": [
+      "app/Config"
+    ]
+  },
+  "doc": {
+    "name": "单据服务",
+    "dir": [
+      "app/Doc"
+    ]
+  },
+  "job": {
+    "name": "任务服务",
+    "dir": [
+      "app/Job"
+    ]
+  },
+  "product": {
+    "name": "商品服务",
+    "dir": [
+      "app/Product"
+    ]
+  },
+  "user": {
+    "name": "账号服务",
+    "dir": [
+      "app/User"
+    ]
+  }
+}

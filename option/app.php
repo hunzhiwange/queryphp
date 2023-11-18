@@ -67,7 +67,7 @@ return [
      *
      * 加密数据附加的生成签名
      */
-    'auth_rsa_private' => file_get_contents(Leevel::path('assets/rsa/rsa_private_key.pem')),
+    'auth_rsa_private' => Leevel::env('AUTH_RSA_PRIVATE_KEY'),
 
     /*
      * ---------------------------------------------------------------
@@ -76,7 +76,7 @@ return [
      *
      * 解密数据附加的校验签名
      */
-    'auth_rsa_public' => file_get_contents(Leevel::path('assets/rsa/rsa_public_key.pem')),
+    'auth_rsa_public' => Leevel::env('AUTH_RSA_PUBLIC_KEY'),
 
     /*
      * ---------------------------------------------------------------

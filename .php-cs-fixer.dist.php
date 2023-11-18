@@ -19,17 +19,17 @@ return (new PhpCsFixer\Config())
         'use_arrow_functions' => false, // TODO switch on when # of PR's is lower
         'php_unit_strict' => false,
         'php_unit_test_class_requires_covers' => false,
+        'strict_comparison' => false,
+        'strict_param' => false,
     ])
     ->setRiskyAllowed(true)
     ->setFinder(
         PhpCsFixer\Finder::create()
-            ->in(__DIR__.'/app')
             ->append([__FILE__])
+            ->in(__DIR__.'/app')
             ->in(__DIR__.'/tests')
             ->in(__DIR__.'/www')
             ->in(__DIR__.'/option')
             ->in(__DIR__.'/assets/database')
-            ->exclude(__DIR__.'/vendor')
-            ->exclude(__DIR__.'/storage')
     )
 ;

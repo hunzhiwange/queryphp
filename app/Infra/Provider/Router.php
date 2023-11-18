@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infra\Provider;
 
-use App\Middleware\Auth;
+use App\Auth\Middleware\Auth;
 use Leevel\Router\RouterProvider;
 use Leevel\Session\Middleware\Session;
 
@@ -17,6 +17,11 @@ class Router extends RouterProvider
      * 控制器相对目录.
      */
     protected ?string $controllerDir = 'Controller';
+
+    /**
+     * 应用是否带有默认应用命名空间.
+     */
+    protected bool $withDefaultAppNamespace = true;
 
     /**
      * 中间件分组.
@@ -48,10 +53,13 @@ class Router extends RouterProvider
      * 基础路径.
      */
     protected array $basePaths = [
-        'api/test' => [
+        'api/demo' => [
             'middlewares' => 'api',
         ],
-        'api/v*' => [
+        'apiQL/v*' => [
+            'middlewares' => 'auth',
+        ],
+        '/app:*/apiQL/v*' => [
             'middlewares' => 'auth',
         ],
     ];
@@ -63,10 +71,10 @@ class Router extends RouterProvider
         'pet' => [],
         'store' => [],
         'user' => [],
-        '/api/v1' => [
+        '/apiQL/v1' => [
             'middlewares' => 'api',
         ],
-        'api/v2' => [
+        'apiQL/v2' => [
             'middlewares' => 'api',
         ],
         '/web/v1' => [

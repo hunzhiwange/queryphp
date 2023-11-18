@@ -21,16 +21,22 @@ class Csv
      * @throws \League\Csv\Exception
      * @throws \Exception
      */
-    public function read(string $filePath): array
+    public function read(string $filePathOrContent, bool $isContent = false): array
     {
-        if (!is_file($filePath)) {
-            throw new \Exception(sprintf('File %s was not found.', $filePath));
+        if (!$isContent) {
+            if (!is_file($filePathOrContent)) {
+                throw new \Exception(sprintf('File %s was not found.', $filePathOrContent));
+            }
+
+            $csv = Reader::createFromPath($filePathOrContent);
+        } else {
+            $csv = Reader::createFromString($filePathOrContent);
         }
 
-        $csv = Reader::createFromPath($filePath);
         $csv->setHeaderOffset(0);
         $records = $notice = $title = [];
         foreach ($csv->getRecords() as $index => $record) {
+            $emptyRecord = true;
             // @phpstan-ignore-next-line
             foreach ($record as $key => $value) {
                 /**
@@ -44,8 +50,15 @@ class Csv
                 } elseif (\in_array($index, self::TITLE_INDEX, true)) {
                     $title[$key] = $value;
                 } else {
+                    if ($emptyRecord && '' !== $value) {
+                        $emptyRecord = false;
+                    }
                     $records[$index][$key] = $value;
                 }
+            }
+
+            if ($emptyRecord && isset($records[$index])) {
+                unset($records[$index]);
             }
         }
 

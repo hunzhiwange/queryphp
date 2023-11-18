@@ -67,3 +67,10 @@ php leevel server <Visite http://127.0.0.1:9527/>
 ## 版权协议
 
 QueryPHP 是一个基于 [MIT license](http://opensource.org/licenses/MIT) 授权许可协议的开源软件.
+
+##
+
+```
+php leevel make:entity print:print_template_content  --env=env.phpunit
+php leevel migrate:create PrintTemplateContent
+```

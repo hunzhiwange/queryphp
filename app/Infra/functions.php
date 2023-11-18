@@ -2,14 +2,32 @@
 
 declare(strict_types=1);
 
+use App\Company\Service\PlatformCompany;
+use App\Infra\Entity\AccountField;
+use App\Infra\Exceptions\BusinessException;
+use App\Infra\Exceptions\ErrorCode;
+use App\Infra\GenerateDocument;
 use App\Infra\Proxy\Permission;
 use App\Infra\RoadRunnerDump;
+use App\Infra\Service\ApiQL\ApiQL;
+use App\Infra\Service\ApiQL\ApiQLBatch;
+use App\Infra\Service\ApiQL\ApiQLBatchParams;
+use App\Infra\Service\ApiQL\ApiQLParams;
+use App\Infra\Service\ApiQL\ApiQLStore;
+use App\Infra\Service\ApiQL\ApiQLStoreParams;
+use App\Infra\Service\ApiQL\ApiQLUpdate;
+use App\Infra\Service\ApiQL\ApiQLUpdateParams;
+use App\Infra\Service\Support\ReadParams;
 use Leevel\Database\Ddd\Entity;
+use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Database\IDatabase;
-use Leevel\Database\Proxy\Db;
 use Leevel\Di\Container;
 use Leevel\Http\Request;
+use Leevel\Option\Proxy\Option;
 use Leevel\Support\Arr\Only;
+use Leevel\Support\Str\UnCamelize;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 if (!function_exists('permission')) {
     /**
@@ -36,17 +54,194 @@ if (!function_exists('sql_listener')) {
     }
 }
 
+if (!function_exists('batch_inject_company')) {
+    /**
+     * 批量注入公司信息.
+     */
+    function batch_inject_company(array $data): array
+    {
+        $baseData = [
+            'company_id' => get_company_id(),
+        ];
+        foreach ($data as &$v) {
+            $v = array_merge($baseData, $v);
+        }
+
+        return $data;
+    }
+}
+
+if (!function_exists('batch_inject_platform')) {
+    /**
+     * 批量注入平台信息.
+     */
+    function batch_inject_platform(array $data): array
+    {
+        $baseData = [
+            'platform_id' => get_platform_id(),
+        ];
+        foreach ($data as &$v) {
+            $v = array_merge($baseData, $v);
+        }
+
+        return $data;
+    }
+}
+
+if (!function_exists('batch_inject_account')) {
+    /**
+     * 批量注入账号信息.
+     */
+    function batch_inject_account(array $data, array $injectFields): array
+    {
+        $accountId = get_account_id();
+        $accountName = get_account_name();
+
+        $injectData = [];
+        if (in_array(AccountField::CREATE_ACCOUNT, $injectFields, true)) {
+            $injectData[AccountField::CREATE_ACCOUNT] = $accountId;
+        }
+
+        if (in_array(AccountField::UPDATE_ACCOUNT, $injectFields, true)) {
+            $injectData[AccountField::UPDATE_ACCOUNT] = $accountId;
+        }
+
+        if (in_array(AccountField::CREATE_ACCOUNT_NAME, $injectFields, true)) {
+            $injectData[AccountField::CREATE_ACCOUNT_NAME] = $accountName;
+        }
+
+        if (in_array(AccountField::UPDATE_ACCOUNT_NAME, $injectFields, true)) {
+            $injectData[AccountField::UPDATE_ACCOUNT_NAME] = $accountName;
+        }
+
+        foreach ($data as &$v) {
+            $v = array_merge($injectData, $v);
+        }
+
+        return $data;
+    }
+}
+
+if (!function_exists('inject_account')) {
+    /**
+     * 注入账号信息.
+     */
+    function inject_account(array $data, array $injectFields): array
+    {
+        return batch_inject_account([$data], $injectFields)[0];
+    }
+}
+
 if (!function_exists('inject_company')) {
     /**
      * 注入公司信息.
      */
-    function inject_company(array &$data): array
+    function inject_company(array $data): array
     {
-        $companyId = \App::make('company_id');
+        return batch_inject_company([$data])[0];
+    }
+}
+
+if (!function_exists('inject_platform')) {
+    /**
+     * 注入平台信息.
+     */
+    function inject_platform(array $data): array
+    {
+        return batch_inject_platform([$data])[0];
+    }
+}
+
+if (!function_exists('inject_platform_company')) {
+    /**
+     * 注入平台和公司信息.
+     */
+    function inject_platform_company(array $data): array
+    {
+        return batch_inject_platform_company([$data])[0];
+    }
+}
+
+if (!function_exists('batch_inject_platform_company')) {
+    /**
+     * 批量注入平台和公司信息.
+     */
+    function batch_inject_platform_company(array $data): array
+    {
+        $baseData = [
+            'platform_id' => get_platform_id(),
+            'company_id' => get_company_id(),
+        ];
         foreach ($data as &$v) {
-            if (!isset($v['company_id'])) {
-                $v['company_id'] = $companyId;
+            $v = array_merge($baseData, $v);
+        }
+
+        return $data;
+    }
+}
+
+if (!function_exists('batch_inject_common_data')) {
+    /**
+     * 批量注入通用信息.
+     */
+    function batch_inject_common_data(string $entityClass, array $data): array
+    {
+        if (!is_subclass_of($entityClass, Entity::class)) {
+            return $data;
+        }
+
+        // 公司信息
+        if ($entityClass::hasField('company_id')) {
+            $data = batch_inject_company($data);
+        }
+
+        // 平台信息
+        if ($entityClass::hasField('platform_id')) {
+            $data = batch_inject_platform($data);
+        }
+
+        // 账号信息
+        $injectAccountField = [];
+        foreach ([
+            AccountField::CREATE_ACCOUNT_NAME,
+            AccountField::UPDATE_ACCOUNT_NAME,
+            AccountField::CREATE_ACCOUNT,
+            AccountField::UPDATE_ACCOUNT,
+        ] as $field) {
+            if ($entityClass::hasField($field)) {
+                $injectAccountField[] = $field;
             }
+        }
+        if ($injectAccountField) {
+            $data = batch_inject_account($data, $injectAccountField);
+        }
+
+        return $data;
+    }
+}
+
+if (!function_exists('batch_inject_common_update_data')) {
+    /**
+     * 批量注入通用更新信息.
+     */
+    function batch_inject_common_update_data(string $entityClass, array $data): array
+    {
+        if (!is_subclass_of($entityClass, Entity::class)) {
+            return $data;
+        }
+
+        // 账号信息
+        $injectAccountField = [];
+        foreach ([
+            AccountField::UPDATE_ACCOUNT_NAME,
+            AccountField::UPDATE_ACCOUNT,
+        ] as $field) {
+            if ($entityClass::hasField($field)) {
+                $injectAccountField[] = $field;
+            }
+        }
+        if ($injectAccountField) {
+            $data = batch_inject_account($data, $injectAccountField);
         }
 
         return $data;
@@ -60,6 +255,46 @@ if (!function_exists('get_company_id')) {
     function get_company_id(): int
     {
         return (int) \App::make('company_id');
+    }
+}
+
+if (!function_exists('get_platform_id')) {
+    /**
+     * 获取平台 ID.
+     */
+    function get_platform_id(): int
+    {
+        return (int) \App::make('platform_id');
+    }
+}
+
+if (!function_exists('get_client_id')) {
+    /**
+     * 获取客户 ID.
+     */
+    function get_client_id(): int
+    {
+        return (int) \App::make('client_id');
+    }
+}
+
+if (!function_exists('get_account_id')) {
+    /**
+     * 获取账号ID.
+     */
+    function get_account_id(): int
+    {
+        return (int) \App::make('account_id');
+    }
+}
+
+if (!function_exists('get_account_name')) {
+    /**
+     * 获取账号名字.
+     */
+    function get_account_name(): string
+    {
+        return (string) \App::make('account_name');
     }
 }
 
@@ -244,8 +479,12 @@ if (!function_exists('http_request')) {
      */
     function http_request(): Request
     {
-        // @phpstan-ignore-next-line
-        return container()->make(Request::class);
+        $request = container()->make(Request::class);
+        if (!$request instanceof Request) {
+            throw new \Exception('Request is invalid.');
+        }
+
+        return $request;
     }
 }
 
@@ -285,11 +524,11 @@ if (!function_exists('get_current_date')) {
     }
 }
 
-if (!function_exists('success')) {
+if (!function_exists('success_message')) {
     /**
      * 正确消息.
      */
-    function success(array $data, string $message = '', int $code = 0, array $extend = []): array
+    function success_message(array $data, string $message = '', int $code = 0, array $extend = []): array
     {
         // 非空索引数组不支持写入 success
         if ($data && array_values($data) === $data) {
@@ -323,48 +562,223 @@ if (!function_exists('rr_dump')) {
     }
 }
 
-if (!function_exists('transaction')) {
+if (!function_exists('bc_add')) {
+    function bc_add(float|int|string $num1, float|int|string $num2, int $scale = 6): float
+    {
+        return (float) bcadd(bc_quantity($num1), bc_quantity($num2), $scale);
+    }
+}
+
+if (!function_exists('bc_div')) {
+    function bc_div(float|int|string $num1, float|int|string $num2, int $scale = 6): float
+    {
+        return (float) bcdiv(bc_quantity($num1), bc_quantity($num2), $scale);
+    }
+}
+
+if (!function_exists('bc_mul')) {
+    function bc_mul(float|int|string $num1, float|int|string $num2, int $scale = 6): float
+    {
+        return (float) bcmul(bc_quantity($num1), bc_quantity($num2), $scale);
+    }
+}
+
+if (!function_exists('bc_sub')) {
+    function bc_sub(float|int|string $num1, float|int|string $num2, int $scale = 6): float
+    {
+        return (float) bcsub(bc_quantity($num1), bc_quantity($num2), $scale);
+    }
+}
+
+if (!function_exists('bc_mod')) {
+    function bc_mod(float|int|string $num1, float|int|string $num2, int $scale = 6): float
+    {
+        return (float) bcmod(bc_quantity($num1), bc_quantity($num2), $scale);
+    }
+}
+
+if (!function_exists('bc_comp')) {
+    function bc_comp(float|int|string $num1, float|int|string $num2, int $scale = 6): int
+    {
+        return bccomp(bc_quantity($num1), bc_quantity($num2), $scale);
+    }
+}
+
+if (!function_exists('bc_abs')) {
+    function bc_abs(float|int|string $num1, int $scale = 6): float
+    {
+        if (1 === bc_comp($num1, 0)) {
+            return bc_add($num1, 0, $scale);
+        }
+
+        return bc_mul($num1, -1, $scale);
+    }
+}
+
+if (!function_exists('format_decimal')) {
+    function format_decimal(float|int|string $num): float
+    {
+        return (float) bc_quantity($num, 8, false);
+    }
+}
+
+if (!function_exists('format_images')) {
+    function format_images(string $images): string
+    {
+        if (!$images) {
+            return '';
+        }
+
+        return Option::get('attachments_url').'/'.$images;
+    }
+}
+
+if (!function_exists('format_images_list')) {
+    function format_images_list(string $images): string
+    {
+        if (!$images) {
+            return '';
+        }
+
+        $imagesList = explode(',', $images);
+        $attachmentsUrl = Option::get('attachments_url');
+        $imagesList = array_map(fn (string $v): string => $attachmentsUrl.'/'.$v, $imagesList);
+
+        return implode(',', $imagesList);
+    }
+}
+
+if (!function_exists('bc_quantity')) {
+    function bc_quantity(float|int|string $num, int $scale = 6, bool $forceWithoutDecimalZero = true): string
+    {
+        if (!is_float($num)) {
+            $num = (float) $num;
+        }
+
+        $result = number_format($num, $scale, '.', '');
+        if ($forceWithoutDecimalZero) {
+            return $result;
+        }
+
+        $withoutDecimalZero = container()->has('without_decimal_zero') ? (bool) container()->make('without_decimal_zero') : true;
+        if (!$withoutDecimalZero) {
+            return $result;
+        }
+
+        return (string) (float) $result;
+    }
+}
+
+if (!function_exists('bc_comp_quantity')) {
+    function bc_comp_quantity(float|int|string $num1, float|int|string $num2): int
+    {
+        return bc_comp($num1, $num2, quantity_scale());
+    }
+}
+
+if (!function_exists('bc_comp_price')) {
+    function bc_comp_price(float|int|string $num1, float|int|string $num2): int
+    {
+        return bc_comp($num1, $num2, price_scale());
+    }
+}
+
+if (!function_exists('bc_comp_pay_price')) {
+    function bc_comp_pay_price(float|int|string $num1, float|int|string $num2): int
+    {
+        return bc_comp($num1, $num2, pay_price_scale());
+    }
+}
+
+if (!function_exists('quantity_scale')) {
+    function quantity_scale(): int
+    {
+        return container()->has('quantity_scale') ? (int) container()->make('quantity_scale') : 2;
+    }
+}
+
+if (!function_exists('price_scale')) {
+    function price_scale(): int
+    {
+        return container()->has('price_scale') ? (int) container()->make('price_scale') : 2;
+    }
+}
+
+if (!function_exists('pay_price_scale')) {
+    function pay_price_scale(): int
+    {
+        return container()->has('pay_price_scale') ? (int) container()->make('pay_price_scale') : 2;
+    }
+}
+
+if (!function_exists('format_quantity')) {
     /**
-     * 事务处理.
+     * 格式化数量.
+     *
+     * - 存入数据库不做任何处理，仅仅读取的时候进行格式化
      */
-    function transaction(Closure $businessLogic): mixed
+    function format_quantity(float|int|string $quantity): string
     {
-        return Db::transaction($businessLogic);
+        return bc_quantity($quantity, quantity_scale(), false);
     }
 }
 
-if (!function_exists('bcadd_compatibility')) {
-    function bcadd_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): float
+if (!function_exists('format_price')) {
+    /**
+     * 格式化价格.
+     *
+     * - 存入数据库不做任何处理，仅仅读取的时候进行格式化
+     */
+    function format_price(float|int|string $price): string
     {
-        return (float) bcadd((string) $num1, (string) $num2, $scale);
+        return bc_quantity($price, price_scale(), false);
     }
 }
 
-if (!function_exists('bcdiv_compatibility')) {
-    function bcdiv_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): float
+if (!function_exists('format_pay_price')) {
+    /**
+     * 格式化支付价格.
+     *
+     * - 支付只能进行两位小数判断
+     * - 存入数据库不做任何处理，仅仅读取的时候进行格式化
+     */
+    function format_pay_price(float|int|string $price): string
     {
-        return (float) bcdiv((string) $num1, (string) $num2, $scale);
+        return bc_quantity($price, pay_price_scale(), false);
     }
 }
 
-if (!function_exists('bcmul_compatibility')) {
-    function bcmul_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): float
+if (!function_exists('allocation_price')) {
+    /**
+     * 分摊价格.
+     */
+    function allocation_price(array &$proportionData, float $totalQuantity): array
     {
-        return (float) bcmul((string) $num1, (string) $num2, $scale);
+        return \App\Infra\Helper\Allocation::handle($proportionData, $totalQuantity, price_scale());
     }
 }
 
-if (!function_exists('bcsub_compatibility')) {
-    function bcsub_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): float
+if (!function_exists('allocation_pay_price')) {
+    /**
+     * 分摊支付价格.
+     *
+     * - 一般价格分摊的精度直接取两位即可，与支付精度保持一致
+     */
+    function allocation_pay_price(array &$proportionData, float $totalQuantity): array
     {
-        return (float) bcsub((string) $num1, (string) $num2, $scale);
+        return \App\Infra\Helper\Allocation::handle($proportionData, $totalQuantity, pay_price_scale());
     }
 }
 
-if (!function_exists('bccomp_compatibility')) {
-    function bccomp_compatibility(float|int|string $num1, float|int|string $num2, int $scale = 2): int
+if (!function_exists('allocation_quantity')) {
+    /**
+     * 分摊数量.
+     *
+     * - 数量分摊的精度直接取设置即可
+     */
+    function allocation_quantity(array &$proportionData, float $totalQuantity): array
     {
-        return bccomp((string) $num1, (string) $num2, $scale);
+        return \App\Infra\Helper\Allocation::handle($proportionData, $totalQuantity, quantity_scale());
     }
 }
 
@@ -404,20 +818,19 @@ if (!function_exists('get_entity_import_fields')) {
      */
     function get_entity_import_fields(string $entityClass): array
     {
-        if (!is_subclass_of($entityClass, \Leevel\Database\Ddd\Entity::class)) {
-            throw new \Exception(sprintf('Entity class %s is invalid.', $entityClass));
-        }
+        check_entity_class($entityClass);
 
         $fields = array_keys($entityClass::fields());
 
         $exceptFields = [
-            'id',
             'company_id',
             'create_at',
             'update_at',
             'delete_at',
-            'create_account',
-            'update_account',
+            AccountField::CREATE_ACCOUNT,
+            AccountField::UPDATE_ACCOUNT,
+            AccountField::CREATE_ACCOUNT_NAME,
+            AccountField::UPDATE_ACCOUNT_NAME,
             'version',
         ];
 
@@ -434,12 +847,19 @@ if (!function_exists('format_by_default_data')) {
         $defaultType = [];
         foreach ($data as &$item) {
             foreach ($item as $field => &$value) {
-                if (!isset($defaultData[$field])) {
+                // 过滤掉值为 null 的字段
+                // 去掉没有默认值的字段
+                if (null === $value || !isset($defaultData[$field])) {
                     continue;
                 }
 
                 if ('' === $value) {
                     $value = $defaultData[$field];
+
+                    // 处理特殊时间
+                    if ('CURRENT_TIMESTAMP' === $value) {
+                        $value = date('Y-m-d H:i:s');
+                    }
                 } else {
                     if (!isset($defaultType[$field])) {
                         $defaultType[$field] = gettype($defaultData[$field]);
@@ -469,9 +889,7 @@ if (!function_exists('get_entity_default_data')) {
      */
     function get_entity_default_data(string $entityClass): array
     {
-        if (!is_subclass_of($entityClass, \Leevel\Database\Ddd\Entity::class)) {
-            throw new \Exception(sprintf('Entity class %s is invalid.', $entityClass));
-        }
+        check_entity_class($entityClass);
 
         $defaultData = [];
         foreach ($entityClass::fields() as $field => $v) {
@@ -482,5 +900,460 @@ if (!function_exists('get_entity_default_data')) {
         }
 
         return $defaultData;
+    }
+}
+
+if (!function_exists('check_entity_class')) {
+    /**
+     * 判断是否为实体类.
+     */
+    function check_entity_class(string $entityClass): void
+    {
+        if (!is_subclass_of($entityClass, \Leevel\Database\Ddd\Entity::class)) {
+            throw new \Exception(sprintf('Entity class %s is invalid.', $entityClass));
+        }
+    }
+}
+
+if (!function_exists('get_date_rand')) {
+    /**
+     * 获取时间随机码.
+     */
+    function get_date_rand(bool $nextSequence = false): string
+    {
+        $time = date('YmdHis');
+        $microTime = substr(explode(' ', microtime())[0], 2, 2);
+        $currentTime = $time.$microTime;
+        if (!$nextSequence) {
+            return $currentTime;
+        }
+
+        /** @var \Godruoyi\Snowflake\RedisSequenceResolver $redisSequence */
+        $redisSequence = \App::make('redis_sequence');
+        $nextSequence = $redisSequence->sequence((int) $currentTime);
+
+        return $currentTime.($nextSequence ?: '');
+    }
+}
+
+if (!function_exists('snowflake')) {
+    /**
+     * 获取雪花算法唯一键.
+     */
+    function snowflake(): int
+    {
+        /** @var \Godruoyi\Snowflake\Snowflake $snowflake */
+        $snowflake = \App::make('snowflake');
+
+        return (int) $snowflake->id();
+    }
+}
+
+if (!function_exists('generate_document')) {
+    /**
+     * 获取编号.
+     */
+    function generate_document(array $option = [], Closure $sourceNext = null): string
+    {
+        return (new GenerateDocument($option))->handle($sourceNext);
+    }
+}
+
+if (!function_exists('switch_database')) {
+    /**
+     * 切换数据库.
+     */
+    function switch_database(int $platformId, int $companyId): void
+    {
+        // 注册平台到容器
+        $platformDbAndTable = PlatformCompany::getPlatformDbAndTable($platformId);
+        \App::instance('platform_id', $platformId);
+        \App::container()->instance('platform_db', $platformDbAndTable['db']);
+        \App::container()->instance('platform_table', $platformDbAndTable['table']);
+
+        // 注册公司到容器
+        $companyDbAndTable = PlatformCompany::getCompanyDbAndTable($companyId);
+        \App::instance('company_id', $companyId);
+        \App::container()->instance('company_db', $companyDbAndTable['db']);
+        \App::container()->instance('company_table', $companyDbAndTable['table']);
+
+        // 设置平台和公司连接
+        PlatformCompany::setPlatformCompanyConnect(
+            $platformDbAndTable['db'],
+            $companyDbAndTable['db'],
+            (string) Leevel::env('DATABASE_NAME_PREFIX', ''),
+            (string) Leevel::env('DATABASE_COMMON_NAME_PREFIX', ''),
+        );
+    }
+}
+
+if (!function_exists('get_platform_company_entity_table')) {
+    /**
+     * 获取平台公司实体分表名字.
+     *
+     * - 表数据量非常大，按照平台和公司同时分表
+     */
+    function get_platform_company_entity_table(string $table): string
+    {
+        $platformTable = (int) \App::make('platform_table');
+        $companyTable = (int) \App::make('company_table');
+
+        return ($platformTable ? 'plat'.$platformTable.'_' : '').$table.($companyTable ?: '');
+    }
+}
+
+if (!function_exists('get_company_entity_table')) {
+    /**
+     * 获取公司实体分表名字.
+     *
+     * - 不区分平台，仅仅按照公司分表
+     */
+    function get_company_entity_table(string $table): string
+    {
+        $companyTable = (int) \App::make('company_table');
+
+        return $table.($companyTable ?: '');
+    }
+}
+
+if (!function_exists('get_platform_entity_table')) {
+    /**
+     * 获取平台实体分表名字.
+     *
+     * - 不区分公司，仅仅按照平台分表
+     */
+    function get_platform_entity_table(string $table): string
+    {
+        $platformTable = (int) \App::make('platform_table');
+
+        return ($platformTable ? 'plat'.$platformTable.'_' : '').$table;
+    }
+}
+
+if (!function_exists('inject_snowflake_id')) {
+    /**
+     * 注入雪花算法主键.
+     */
+    function inject_snowflake_id(array $data, string $entityClass): array
+    {
+        return batch_inject_snowflake_id([$data], $entityClass)[0];
+    }
+}
+
+if (!function_exists('batch_inject_snowflake_id')) {
+    /**
+     * 批量注入雪花算法主键.
+     */
+    function batch_inject_snowflake_id(array $data, string $entityClass): array
+    {
+        $shouldInjectId = true;
+        $singlePrimaryKey = null;
+        check_entity_class($entityClass);
+
+        try {
+            if (1 !== count($entityClass::primaryKey())) {
+                $shouldInjectId = false;
+            } else {
+                $singlePrimaryKey = $entityClass::primaryKey()[0];
+            }
+        } catch (\Throwable) {
+            $shouldInjectId = false;
+            $singlePrimaryKey = null;
+        }
+
+        if (!$shouldInjectId) {
+            return $data;
+        }
+
+        foreach ($data as &$v) {
+            if (!isset($v[$singlePrimaryKey])) {
+                $v[$singlePrimaryKey] = snowflake();
+            }
+        }
+
+        return $data;
+    }
+}
+
+if (!function_exists('debug')) {
+    /**
+     * 数据调试 (仅调试使用，合并代码请删除调用).
+     */
+    function debug(mixed $data, string $debugTag = '', bool $varDumpPattern = false, string $endSeparation = PHP_EOL): void
+    {
+        /** @phpstan-ignore-next-line */
+        $request = http_request();
+        // @phpstan-ignore-next-line
+        if ($debugTag && $request->get('debug') !== md5($debugTag)) {
+            return;
+        }
+
+        $backtrace = debug_backtrace();
+
+        // debug_die 调用位置信息
+        if (isset($backtrace[1])
+            && 'debug_die' === $backtrace[1]['function']
+            && !isset($backtrace[1]['class'])) {
+            $callInfo = $backtrace[1];
+            $callClassInfo = $backtrace[2] ?? null;
+        } else {
+            // debug 调用位置信息
+            $callInfo = $backtrace[0];
+            $callClassInfo = $backtrace[1] ?? null;
+        }
+
+        // 调试信息
+        $debugInfo = [];
+        if (isset($callClassInfo)) {
+            if (isset($callClassInfo['file'], $callClassInfo['line'])) {
+                // @phpstan-ignore-next-line
+                $debugInfo['line'] = '['.$callClassInfo['file'].':'.$callClassInfo['line'].']';
+            }
+            // @phpstan-ignore-next-line
+            if (isset($callClassInfo['class'])) {
+                // @phpstan-ignore-next-line
+                $debugInfo['class'] = '\\'.$callClassInfo['class'].'::'.$callClassInfo['function'].'()';
+            } else {
+                // @phpstan-ignore-next-line
+                $debugInfo['function'] = $callClassInfo['function'];
+            }
+        }
+        // @phpstan-ignore-next-line
+        $debugInfo['debug'] = '['.$callInfo['file'].':'.$callInfo['line'].']';
+        $debugInfo['data'] = $data;
+
+        $varDumpPattern ? var_dump($debugInfo) : print_r($debugInfo);
+        print_r($endSeparation);
+    }
+}
+
+if (!function_exists('get_field_data')) {
+    /**
+     * 获取字段数据.
+     */
+    function get_field_data(array $data, string $field): array
+    {
+        return array_values(array_unique(array_column($data, $field)));
+    }
+}
+
+if (!function_exists('api_ql_batch')) {
+    /**
+     * API批量查询语言.
+     *
+     * @todo 内部调用不走接口权限
+     */
+    function api_ql_batch(array $apis, array $params, bool $withoutDebug = true): array
+    {
+        /** @phpstan-ignore-next-line */
+        $currentRequest = http_request();
+        $request = new Request();
+        $request->query->add([
+            'apis' => $apis,
+            'params' => $params,
+            'token' => $currentRequest->get('token'),
+        ]);
+
+        // 关闭调试
+        $closeDebug = $withoutDebug && \Leevel::isDebug();
+        if ($closeDebug) {
+            Option::set('debug', false);
+        }
+
+        $batchParams = new ApiQLBatchParams($request->all());
+
+        /** @phpstan-ignore-next-line */
+        $response = (new ApiQLBatch())->handle($batchParams, $request);
+        if ($response instanceof JsonResponse) {
+            $data = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
+            if (!is_array($data)) {
+                throw new BusinessException(ErrorCode::ID2023051617254261);
+            }
+        } else {
+            $data = ['content' => $response->getContent()];
+        }
+
+        // 恢复调试
+        if ($closeDebug) {
+            Option::set('debug', true);
+        }
+
+        return $data;
+    }
+}
+
+if (!function_exists('response_add_cors_headers')) {
+    function response_add_cors_headers(Response $response): Response
+    {
+        $headers = [
+            'Access-Control-Allow-Origin' => '*',
+            'Access-Control-Allow-Methods' => 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers' => 'Origin, X-Requested-With, Content-Type, Accept, token',
+            'Access-Control-Allow-Credentials' => 'true',
+        ];
+        $response->headers->add($headers);
+
+        return $response;
+    }
+}
+
+if (!function_exists('get_entity_class_name')) {
+    function get_entity_class_name(string $entityClass): string
+    {
+        $entityClass = substr($entityClass, 4);
+        $entityClass = str_replace('\\Entity\\', '\\', $entityClass);
+        $entityClass = str_replace('\\', ':', $entityClass);
+
+        return UnCamelize::handle($entityClass);
+    }
+}
+
+if (!function_exists('api_ql')) {
+    /**
+     * API查询语言.
+     */
+    function api_ql(string $entity, array $input, bool $parseEntity = true, string $type = 'list_only'): array
+    {
+        $input['entity_class'] = $parseEntity ? get_entity_class_name($entity) : $entity;
+        $inputWhere = ReadParams::exceptInput($input);
+        if (isset($input['where'])) {
+            $inputWhere = array_merge($inputWhere, $input['where']);
+        }
+        $input['where'] = $inputWhere;
+        $params = new ApiQLParams($input);
+
+        if ('list_only' === $type) {
+            $params->listOnly = true;
+        } elseif ('list_page' === $type) {
+            $params->listPage = true;
+        }
+
+        $w = new UnitOfWork();
+        $service = new ApiQL($w);
+
+        return $service->handle($params);
+    }
+}
+
+if (!function_exists('api_ql_list_only')) {
+    /**
+     * API查询语言列表（只查询列表）.
+     */
+    function api_ql_list_only(string $entity, array $input, bool $parseEntity = true): array
+    {
+        return api_ql($entity, $input, $parseEntity);
+    }
+}
+
+if (!function_exists('api_ql_list_page')) {
+    /**
+     * API查询语言列表查询某页数据（不查询总记录）.
+     */
+    function api_ql_list_page(string $entity, array $input, bool $parseEntity = true): array
+    {
+        return api_ql($entity, $input, $parseEntity, 'list_page');
+    }
+}
+
+if (!function_exists('api_ql_store')) {
+    /**
+     * API查询语言保存.
+     */
+    function api_ql_store(string $entity, array $input, bool $parseEntity = true): Entity
+    {
+        $w = new UnitOfWork();
+        $service = new ApiQLStore($w);
+        $input['entity_class'] = $parseEntity ? get_entity_class_name($entity) : $entity;
+        $inputEntity = ApiQLStoreParams::exceptInput($input);
+        $input['entity_data'] = $inputEntity;
+        $params = new ApiQLStoreParams($input);
+
+        return $service->handle($params);
+    }
+}
+
+if (!function_exists('api_ql_update')) {
+    /**
+     * API查询语言更新.
+     */
+    function api_ql_update(string $entity, int $id, array $input, string $validatorScene = 'update', bool $parseEntity = true): Entity
+    {
+        $w = new UnitOfWork();
+        $service = new ApiQLUpdate($w);
+        $input['entity_class'] = $parseEntity ? get_entity_class_name($entity) : $entity;
+        $input['id'] = $id;
+        $inputEntity = ApiQLUpdateParams::exceptInput($input);
+        $input['entity_data'] = $inputEntity;
+        $params = new ApiQLUpdateParams($input);
+        $params->validatorScene = $validatorScene;
+
+        return $service->handle($params);
+    }
+}
+
+if (!function_exists('api_ql_prepare')) {
+    /**
+     * API查询通用预处理.
+     *
+     * - 原本可以通过关联模型一次性查询数据
+     * - 如果已经获得原数据，可以快速解决表数据IN查询
+     */
+    function api_ql_prepare(
+        array $data,
+        string $entity,
+        string $sourceKey,
+        string $targetKey,
+        array $fields,
+        string $prefix = '',
+        bool $keepColumns = true,
+        array $condition = [],
+        bool $parseEntity = true
+    ): array {
+        if (!$data) {
+            return $data;
+        }
+
+        $result = [];
+        $targetData = array_values(array_filter(array_column($data, $sourceKey)));
+        $sourceFields = $fields;
+        if ($targetData) {
+            $fields[] = $targetKey;
+            $result = api_ql_list_only($entity, array_merge($condition, [
+                'column' => array_values($fields),
+                $targetKey => [
+                    'in' => $targetData,
+                ],
+            ]), $parseEntity);
+            if (!empty($result['data'])) {
+                $result = array_column($result['data'], null, $targetKey);
+            } else {
+                $result = [];
+            }
+        }
+
+        foreach ($data as &$v) {
+            $itemData = [];
+            $targetItem = [];
+            if (isset($result[$v[$sourceKey]])) {
+                $targetItem = $result[$v[$sourceKey]];
+            }
+
+            foreach ($sourceFields as $alias => $field) {
+                $alias = is_string($alias) ? $alias : $field;
+                if (isset($targetItem[$field])) {
+                    $itemData[$prefix.$alias] = $targetItem[$field];
+                } else {
+                    $itemData[$prefix.$alias] = $v[$prefix.$alias] ?? null;
+                }
+            }
+
+            if ($keepColumns) {
+                $v = array_merge($v, $itemData);
+            } else {
+                $v[$prefix] = $itemData;
+            }
+        }
+
+        return $data;
     }
 }

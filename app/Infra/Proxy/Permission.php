@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infra\Proxy;
 
-use App\Infra\Permission as AdminPermisson;
+use App\Infra\Permission as AdminPermission;
 use Leevel\Di\Container;
 
 /**
@@ -27,7 +27,7 @@ class Permission
     /**
      * 代理服务.
      */
-    public static function proxy(): AdminPermisson
+    public static function proxy(): AdminPermission
     {
         // @phpstan-ignore-next-line
         return Container::singletons()->make('permission');

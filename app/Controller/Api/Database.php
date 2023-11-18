@@ -18,6 +18,6 @@ class Database
      */
     public function handle(): array
     {
-        return ['count' => Db::table('test')->findCount()];
+        return ['count' => Db::connect('common')->table('test')->findCount()];
     }
 }

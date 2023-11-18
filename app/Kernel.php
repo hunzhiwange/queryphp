@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Middleware\Cors;
-use App\Middleware\Filter;
+use App\Infra\Bootstrap\CorsHeaders;
+use App\Infra\Middleware\Cors;
+use App\Infra\Middleware\Filter;
 use Leevel\Debug\Middleware\Debug;
 use Leevel\Kernel\IApp;
 use Leevel\Kernel\Kernel as Kernels;
@@ -19,6 +20,13 @@ class Kernel extends Kernels
     protected array $middlewares = [
         Cors::class,
         Filter::class,
+    ];
+
+    /**
+     * 应用扩展初始化执行.
+     */
+    protected array $extendBootstraps = [
+        CorsHeaders::class,
     ];
 
     /**
