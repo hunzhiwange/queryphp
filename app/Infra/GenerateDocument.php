@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infra;
 
+use Leevel\Cache\Manager;
 use Leevel\Cache\Redis;
 use Leevel\Support\Dto;
 
@@ -74,11 +75,7 @@ class GenerateDocument extends Dto
 
     protected function getRedisSequence(): RedisSequence
     {
-        /** @var Redis $phpRedis */
-        $phpRedis = \App::make('caches')->connect('redis');
-
-        /** @var \Redis $redis */
-        $redis = $phpRedis->getHandle();
+        $redis = redis_cache();
 
         return (new RedisSequence($redis))->setCachePrefix('redis_sequence:'.$this->guid.':');
     }

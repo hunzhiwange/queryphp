@@ -18,6 +18,8 @@ use App\Infra\Service\ApiQL\ApiQLStoreParams;
 use App\Infra\Service\ApiQL\ApiQLUpdate;
 use App\Infra\Service\ApiQL\ApiQLUpdateParams;
 use App\Infra\Service\Support\ReadParams;
+use Leevel\Cache\Manager;
+use Leevel\Cache\Redis;
 use Leevel\Config\Proxy\Config;
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\UnitOfWork;
@@ -1366,5 +1368,22 @@ if (!function_exists('api_ql_prepare')) {
         }
 
         return $data;
+    }
+}
+
+if (!function_exists('redis_cache')) {
+    /**
+     * 获取 redis.
+     */
+    function redis_cache(): \Redis
+    {
+        /** @var Manager $manager */
+        $manager = \App::make('caches');
+
+        /** @var Redis $phpRedis */
+        $phpRedis = $manager->connect('redis');
+
+        // @phpstan-ignore-next-line
+        return $phpRedis->getHandle();
     }
 }

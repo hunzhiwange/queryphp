@@ -8,6 +8,7 @@ use App\Infra\Permission;
 use App\Infra\PermissionCache;
 use Godruoyi\Snowflake\RedisSequenceResolver;
 use Godruoyi\Snowflake\Snowflake;
+use Leevel\Cache\Manager;
 use Leevel\Cache\Redis;
 use Leevel\Di\IContainer;
 use Leevel\Di\Provider;
@@ -72,11 +73,7 @@ class App extends Provider
     private function redisSequence(): void
     {
         $this->container->singleton('redis_sequence', function (IContainer $container): RedisSequenceResolver {
-            /** @var Redis $phpRedis */
-            $phpRedis = \App::make('caches')->connect('redis');
-
-            /** @var \Redis $redis */
-            $redis = $phpRedis->getHandle();
+            $redis = redis_cache();
 
             return (new RedisSequenceResolver($redis))->setCachePrefix('redis_sequence:');
         });
@@ -85,12 +82,7 @@ class App extends Provider
     private function snowflake(): void
     {
         $this->container->singleton('snowflake', function (IContainer $container): Snowflake {
-            /** @var Redis $phpRedis */
-            $phpRedis = \App::make('caches')->connect('redis');
-
-            /** @var \Redis $redis */
-            $redis = $phpRedis->getHandle();
-
+            $redis = redis_cache();
             $redisSequence = (new RedisSequenceResolver($redis))->setCachePrefix('snowflake_redis_sequence:');
 
             return (new Snowflake(1, 1))
