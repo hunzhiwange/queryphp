@@ -33,36 +33,6 @@ do
     FILES="$FILES $PROJECT/$FILE"
 done
 
-phpstan_path=$(cd `dirname $0`; pwd)"/../../assets/build/phpstan"
-
-if [ "$FILES" != "" ]
-then
-    echo "Running Code PHPstan Check..."
-
-    isCheck=""
-
-    file_list=""
-    for FILE in $SFILES
-    do
-       file_list="$file_list $FILE"
-    done
-
-    result=`php $phpstan_path analyse $file_list`
-    if [[ $result == *"[OK] No errors"* ]]
-    then
-        isCheck=""
-    else
-        echo $result
-        isCheck=$result
-    fi
-
-    if [ "$isCheck" != "" ]
-    then
-        echo "PHPstan error found."
-        exit 1
-    fi
-fi
-
 phpcsfixer_path=$(cd `dirname $0`; pwd)"/../../assets/build/php-cs-fixer"
 
 # format code style
@@ -107,5 +77,35 @@ then
 fi
 
 git update-index -g
+
+phpstan_path=$(cd `dirname $0`; pwd)"/../../assets/build/phpstan"
+
+if [ "$FILES" != "" ]
+then
+    echo "Running Code PHPstan Check..."
+
+    isCheck=""
+
+    file_list=""
+    for FILE in $SFILES
+    do
+       file_list="$file_list $FILE"
+    done
+
+    result=`php $phpstan_path analyse $file_list`
+    if [[ $result == *"[OK] No errors"* ]]
+    then
+        isCheck=""
+    else
+        echo $result
+        isCheck=$result
+    fi
+
+    if [ "$isCheck" != "" ]
+    then
+        echo "PHPstan error found."
+        exit 1
+    fi
+fi
 
 exit $?

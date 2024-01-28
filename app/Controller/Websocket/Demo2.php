@@ -1,0 +1,288 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controller\Websocket;
+
+class Demo2
+{
+    public function handle(): string
+    {
+        return <<<HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>基于 Swoole 的聊天室</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/layer/3.1.1/layer.min.js"></script>
+  <link rel="shortcut icon" href="data:image/png;base64,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" type="image/x-icon" />
+  <!-- From http://www.cnblogs.com/felixnet/p/8019446.html -->
+  <!-- From https://www.jianshu.com/p/f75abbc684d8 -->
+  <style type="text/css">
+  body{
+    background-color: #fff;
+    font-family: -apple-system;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+  }
+  #main {
+      width: 400px;
+      margin:15px auto;
+  }
+  #msg {
+    height:400px;
+    overflow-y:auto;
+    background-color: #ebebeb;
+    border: 1px solid #eee;
+    padding: 10px;
+  }
+  .chat-sender{
+    clear:both;
+    font-size: 80%;
+  }
+  .chat-sender div:nth-of-type(1){
+    float: left;
+  }
+  .chat-sender div:nth-of-type(2){
+    margin: 0 50px 2px 50px;
+    padding: 0px;
+    color: #848484;
+    font-size: 70%;
+    text-align: left;
+  }
+  .chat-sender div:nth-of-type(3){
+    background-color: white;
+    /*float: left;*/
+    margin: 0 50px 10px 50px;
+    padding: 10px 10px 10px 10px;
+    border-radius:7px;
+    text-indent: -12px;
+  }
+
+  .chat-receiver{
+    clear:both;
+    font-size: 80%;
+  }
+  .chat-receiver div:nth-of-type(1){
+    float: right;
+  }
+  .chat-receiver div:nth-of-type(2){
+    margin: 0px 50px 2px 50px;
+    padding: 0px;
+    color: #848484;
+    font-size: 70%;
+    text-align: right;
+  }
+  .chat-receiver div:nth-of-type(3){
+    background-color: #b2e281;
+    margin: 0px 50px 10px 50px;
+    padding: 10px 10px 10px 10px;
+    border-radius:7px;
+  }
+
+  .chat-receiver div:first-child img,
+  .chat-sender div:first-child img{
+    width: 40px;
+    height: 40px;
+  }
+
+  .chat-left_triangle{
+    height: 0px;
+    width: 0px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent white transparent transparent;
+    position: relative;
+    left: -22px;
+    top: 3px;
+  }
+  .chat-right_triangle{
+    height: 0px;
+    width: 0px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent transparent #b2e281;
+    position: relative;
+    right:-22px;
+    top:3px;
+  }
+
+  .chat-notice{
+    clear: both;
+    font-size: 70%;
+    color: white;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .chat-notice span{
+    background-color: #cecece;
+    line-height: 25px;
+    border-radius: 5px;
+    padding: 5px 10px;
+  }
+  </style>
+</head>
+<body>
+
+<div id="main">
+
+        <div id="msg">
+</div>
+
+    <div class="action" style="margin-top: 15px">
+        <textarea style="width: 100%;height:80px;" type="text" id="text"></textarea>
+        <div style="margin-top:10px;">
+            <button type="button" style="" onclick="send()">发送</button>
+            <button type="button"  style="margin-left: 10px;" onclick="closeChat()">断开</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+Date.prototype.Format = function (fmt) { //author: meizz
+    var o = {
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "h+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
+var msg = document.getElementById("msg");
+var wsServer = 'ws://0.0.0.0:9502/websocket-demo2';
+//调用websocket对象建立连接：
+//参数：ws/wss(加密)：//ip:port （字符串）
+var websocket = new WebSocket(wsServer);
+
+// onopen 监听连接打开
+websocket.onopen = function (evt) {
+    //msg.innerHTML = websocket.readyState;
+    msg.innerHTML = '<div class="chat-notice">'+
+    '<span>欢迎光临聊天室</span>'+
+    '</div>';
+};
+
+function send(){
+    if (3 === websocket.readyState) {
+        layer.msg('聊天室已经断开,请刷新重现连接');
+        return;
+    }
+
+    var text = document.getElementById('text').value;
+
+    if (!text) {
+        layer.msg('请输入聊天消息');
+        return;
+    }
+
+    document.getElementById('text').value = '';
+    var date = new Date().Format("MM-dd hh:mm:ss");
+
+    msg.innerHTML += '<div class="chat-notice">'+
+        '<span>'+date+'</span>'+
+        '</div>';
+
+    msg.innerHTML += '<div class="chat-receiver">'+
+        '<div><img src="data:image/jpeg;base64,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"></div>'+
+        '<div>我</div>'+
+        '<div>'+
+        '<div class="chat-right_triangle"></div>'+
+        '<span>'+ text+'</span>'+
+        '</div>'+
+        '</div>';
+
+    //向服务器发送数据
+    websocket.send(text);
+
+    scroll();
+}
+
+function isJSON(str) {
+    if (typeof str == 'string') {
+        try {
+            JSON.parse(str);
+            return true;
+        } catch(e) {
+            return false;
+        }
+    }
+}
+
+function closeChat()
+{
+    if (3 === websocket.readyState) {
+        layer.msg('聊天室已经断开,请刷新重现连接');
+        return;
+    }
+
+    websocket.close();
+    layer.msg('聊天室已经断开');
+}
+
+function scroll()
+{
+    $("#msg").animate({"scrollTop":$("#msg")[0].scrollHeight},400);
+}
+
+//监听连接关闭
+websocket.onclose = function (evt) {
+    console.log("Disconnected");
+};
+
+//onmessage 监听服务器数据推送
+websocket.onmessage = function (evt) {
+    if (3 === websocket.readyState) {
+        layer.msg('聊天室已经断开,请刷新重现连接');
+        return;
+    }
+    
+    layer.msg('您有新消息啦！');
+    var date = new Date().Format("MM-dd hh:mm:ss");
+
+    if (isJSON(evt.data)) {
+        var result = JSON.parse(evt.data);
+
+        msg.innerHTML += '<div class="chat-notice">'+
+            '<span>'+date+'</span>'+
+            '</div>';
+
+        msg.innerHTML += '<div class="chat-sender">'+
+            '<div><img src="data:image/jpeg;base64,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"></div>'+
+            '<div>'+result.fd+'</div>'+
+            '<div>'+
+            '<div class="chat-left_triangle"></div>'+
+            '<span>'+result.data+'</span>'+
+            '</div>'+
+        '</div>';
+    } else {
+        msg.innerHTML += '<div class="chat-notice">'+
+            '<span>'+evt.data+'</span>'+
+            '</div>'; 
+    }
+
+    scroll();
+};
+
+//监听连接错误信息
+websocket.onerror = function (evt, e) {
+    console.log('Error occured: ' + evt.data);
+};
+
+$(window).unload(function(){ 
+    closeChat();
+}); 
+</script>
+</body>
+</html>
+HTML;
+    }
+}

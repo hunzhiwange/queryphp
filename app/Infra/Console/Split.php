@@ -48,7 +48,7 @@ class Split extends Command
 
         [$services, $commonServiceDir] = $this->getServices($jsonFile);
 
-        $options = ['overwrite' => true];
+        $configs = ['overwrite' => true];
 
         // 创建目录并复制文件
         foreach ($services as $serviceKey => $service) {
@@ -61,7 +61,7 @@ class Split extends Command
             // 目标目录
             $serviceDir = $destinationDir.$serviceName.'/';
 
-            $this->copyDirectories($directories, $filesystem, $serviceDir, $options);
+            $this->copyDirectories($directories, $filesystem, $serviceDir, $configs);
 
             $this->info("已成功处理 {$serviceName} 目录。");
         }
@@ -81,9 +81,9 @@ class Split extends Command
         return true;
     }
 
-    private function getFilterIterator(array $options, string $directory): \RecursiveIteratorIterator
+    private function getFilterIterator(array $configs, string $directory): \RecursiveIteratorIterator
     {
-        $copyOnWindows = $options['copy_on_windows'] ?? false;
+        $copyOnWindows = $configs['copy_on_windows'] ?? false;
         $flags = $copyOnWindows ? \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS : \FilesystemIterator::SKIP_DOTS;
         $innerIterator = new \RecursiveDirectoryIterator($directory, $flags);
 
@@ -130,16 +130,16 @@ class Split extends Command
         return [$services, $commonServiceDir];
     }
 
-    private function copyDirectories(array $directories, Filesystem $filesystem, string $serviceDir, array $options): void
+    private function copyDirectories(array $directories, Filesystem $filesystem, string $serviceDir, array $configs): void
     {
         foreach ($directories as $directory) {
             if (is_file($directory)) {
                 if ($this->notMatchExcludedPatterns($directory)) {
-                    $filesystem->copy($directory, $serviceDir.$directory, $options['overwrite']);
+                    $filesystem->copy($directory, $serviceDir.$directory, $configs['overwrite']);
                 }
             } else {
-                $iterator = $this->getFilterIterator($options, $directory);
-                $filesystem->mirror($directory, $serviceDir.$directory, $iterator, $options);
+                $iterator = $this->getFilterIterator($configs, $directory);
+                $filesystem->mirror($directory, $serviceDir.$directory, $iterator, $configs);
             }
         }
     }

@@ -22,7 +22,7 @@ trait ImportBase
 {
     use ParseEntityClass;
 
-    public function handleBase(string $entityClass, array $data, ?UnitOfWork $w = null, ?EntityPersistEnum $persist = null, \Closure $on = null): void
+    public function handleBase(string $entityClass, array $data, ?UnitOfWork $w = null, ?EntityPersistEnum $persist = null, ?\Closure $on = null): void
     {
         if (!$persist) {
             $persist = EntityPersistEnum::STORE;
@@ -36,53 +36,48 @@ trait ImportBase
 
         $data = $this->prepareData($entityClass, $data);
         $entity = $this->entityClassName($entityClass);
-        $w->persist(function () use ($data, $entity, $persist, $on): void {
-            $baseData = [
-                'entity_class' => $entity,
-            ];
-
-            $saveData = [];
-            foreach ($data['data'] as $item) {
-                $saveData[] = array_merge($baseData, $item);
-            }
-
-            $w = new UnitOfWork();
-
-            switch ($persist) {
-                case EntityPersistEnum::STORE:
-                    foreach ($saveData as $item) {
-                        $entity = $this->storeAnEntity($item, new ApiQLStore($w));
-                        if ($on) {
-                            $on($entity);
-                        }
-                    }
-
-                    break;
-
-                case EntityPersistEnum::UPDATE:
-                    foreach ($saveData as $item) {
-                        $entity = $this->updateAnEntity($item, new ApiQLUpdate($w));
-                        if ($on) {
-                            $on($entity);
-                        }
-                    }
-
-                    break;
-
-                case EntityPersistEnum::REPLACE:
-                    foreach ($saveData as $item) {
-                        $entity = $this->storeAnEntity($item, new ApiQLStore($w));
-                        if ($on) {
-                            $on($entity);
-                        }
-                    }
-
-                    break;
-            }
-        });
+        $this->persist($w, $data, $entity, $persist, $on);
 
         if ($flush) {
             $w->flush();
+        }
+    }
+
+    protected function persist(UnitOfWork $w, array $data, string $entity, EntityPersistEnum $persist, ?\Closure $on): void
+    {
+        $baseData = [
+            'entity_class' => $entity,
+            'entity_auto_flush' => false,
+        ];
+
+        $saveData = [];
+        foreach ($data['data'] as $item) {
+            $saveData[] = array_merge($baseData, $item);
+        }
+
+        switch ($persist) {
+            // @todo replace 还不支持
+            case EntityPersistEnum::REPLACE:
+            case EntityPersistEnum::STORE:
+                foreach ($saveData as $item) {
+                    $entity = $this->storeAnEntity($item, new ApiQLStore($w));
+                    if ($on) {
+                        $on($entity);
+                    }
+                }
+
+                break;
+
+            case EntityPersistEnum::UPDATE:
+                foreach ($saveData as $item) {
+                    $entity = $this->updateAnEntity($item, new ApiQLUpdate($w));
+                    if ($on) {
+                        $on($entity);
+                    }
+                }
+
+                break;
+
         }
     }
 

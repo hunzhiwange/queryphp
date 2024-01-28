@@ -4,12 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><?php echo $title ?? ''; ?></title>
 
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300' rel='stylesheet' type='text/css'>
-
 <style type="text/css">
 body {
     background-color:#4F3542;
-    font-family:'Open Sans',sans-serif;
     margin:0;
     padding:0;
     text-align:center;

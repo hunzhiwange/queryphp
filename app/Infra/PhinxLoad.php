@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Infra;
 
 use Dotenv\Dotenv;
+use Leevel\Config\Env;
 use Leevel\Kernel\IApp;
-use Leevel\Option\Env;
 
 /**
  * 载入 Phinx 配置.

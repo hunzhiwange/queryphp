@@ -29,7 +29,7 @@ return (new PhpCsFixer\Config())
             ->in(__DIR__.'/app')
             ->in(__DIR__.'/tests')
             ->in(__DIR__.'/www')
-            ->in(__DIR__.'/option')
+            ->in(__DIR__.'/config')
             ->in(__DIR__.'/assets/database')
     )
 ;

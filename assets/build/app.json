@@ -8,7 +8,7 @@
       "app/KernelConsole.php",
       "assets/exceptions",
       "assets/i18n",
-      "option",
+      "config",
       "storage",
       "www/index.php",
       "www/.htaccess",

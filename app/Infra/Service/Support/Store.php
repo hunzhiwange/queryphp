@@ -42,12 +42,15 @@ trait Store
             $entity::event(Entity::BEFORE_CREATE_EVENT, fn () => $entity->beforeCreateEvent());
         }
 
-        $this->validateEntityDuplicateKey($entity, function () use ($entity): void {
-            $this->w
-                ->create($entity)
-                ->flush()
-            ;
+        $this->w->create(function() use($entity): void {
+            $this->validateEntityDuplicateKey($entity, function () use ($entity): void {
+                $entity->create()->flush();
+            });
         });
+
+        if ($params->entityAutoFlush) {
+            $this->w->flush();
+        }
 
         return $entity;
     }

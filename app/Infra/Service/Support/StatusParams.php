@@ -6,6 +6,7 @@ namespace App\Infra\Service\Support;
 
 use App\Infra\Dto\ParamsDto;
 use Leevel\Support\VectorInt;
+use App\Infra\Validate\Support\Status;
 
 class StatusParams extends ParamsDto
 {
@@ -13,7 +14,12 @@ class StatusParams extends ParamsDto
 
     public int $status = 0;
 
-    public string $validatorClass = \App\Infra\Validate\Support\Status::class;
+    public string $validatorClass = Status::class;
+
+    /**
+     * 实体自动保存.
+     */
+    public bool $entityAutoFlush = true;
 
     protected function idsDefaultValue(): VectorInt
     {

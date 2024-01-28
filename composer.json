@@ -18,7 +18,7 @@
         "ext-openssl": "*",
         "composer-runtime-api": ">=2.1",
         "godruoyi/php-snowflake": "^2.2",
-        "hunzhiwange/framework": "^1.1.34",
+        "hunzhiwange/framework": "^1.1.35",
         "league/csv": "^9.8",
         "nesbot/carbon": "^2.66",
         "nyholm/psr7": "^1.5",
@@ -31,7 +31,8 @@
     "require-dev": {
         "codedungeon/php-cli-colors": "^1.12.2",
         "robmorgan/phinx": "^0.12.4",
-        "zircote/swagger-php": "^3.1.0"
+        "zircote/swagger-php": "^3.1.0",
+        "swoole/ide-helper": "^5.1.1"
     },
     "autoload": {
         "files": [

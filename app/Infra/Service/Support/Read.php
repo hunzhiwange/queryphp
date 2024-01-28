@@ -79,7 +79,7 @@ trait Read
     {
         $entity = $this->repository->entity();
         foreach ($value->toArray() as $k => $v) {
-            if ($this->isNotWhereConditionField($entity, $k)) {
+            if (null === $v || $this->isNotWhereConditionField($entity, $k)) {
                 continue;
             }
             $this->parseWhereCondition($select, $k, $v);
@@ -129,13 +129,85 @@ trait Read
             return;
         }
 
-        $value = str_replace(' ', '%', $value);
-        $select->where(function (Condition $select) use ($value, $params): void {
+        // 如果你想在Google搜索中组合多个关键词，你可以使用引号来确保搜索结果中包含特定短语或词组
+        // `关键词1 关键词2`表示这将返回包含同时包含"关键词1"和"关键词2"的结果
+        // 商品名字，商品编号任意一个满足条件同时包含"关键词1"和"关键词2"即可
+        // `关键词1 OR 关键词2`或者`关键词1 | 关键词2`表示这将返回包含"关键词1"或"关键词2"的结果。
+        // 商品名字，商品编号任意一个满足"关键词1"或"关键词2"即可
+        // `关键词1 - 关键词2`或者`关键词1 NOT 关键词2`表示这将返回包含"关键词1"但不包含"关键词2"的结果
+        // 商品名字，商品编号任意一个满足"关键词1",但是任意一个字段都不能包含"关键词2"
+        $conditions = $this->parseSearchSyntax($value);
+
+        if (!empty($conditions['and'])) {
+            $select->where(function (Condition $select) use ($conditions, $params): void {
+                // @phpstan-ignore-next-line
+                foreach ($params->keyColumn as $v) {
+                    $select->orWhere($v, 'like', '%' . implode('%', $conditions['and']) . '%');
+                }
+            });
+        }
+
+        if (!empty($conditions['not'])) {
             // @phpstan-ignore-next-line
             foreach ($params->keyColumn as $v) {
-                $select->orWhere($v, 'like', '%'.$value.'%');
+                foreach ($conditions['not'] as $notValue) {
+                    $select->where($v, 'not like', '%' . $notValue . '%');
+                }
             }
-        });
+        }
+
+        if (!empty($conditions['or'])) {
+            // @phpstan-ignore-next-line
+            foreach ($params->keyColumn as $v) {
+                foreach ($conditions['or'] as $orValue) {
+                    $select->orWhere($v, 'like', '%' . $orValue . '%');
+                }
+            }
+        }
+    }
+
+    private function parseSearchSyntax(string $searchString): array
+    {
+        // 移除多余的空格
+        $searchString = preg_replace('/\s+/', ' ', $searchString);
+
+        // 切分搜索字符串
+        $keywords = explode(' ', $searchString);
+
+        // 构建查询条件
+        $conditions = [
+            'and' => [],
+            'or' => [],
+            'not' => [],
+        ];
+
+        $excludeNext = false;
+        $orNext = false;
+        foreach ($keywords as $keyword) {
+            // 检查是否为 OR 操作符
+            if (strtolower($keyword) == 'or' || $keyword == '|') {
+                $orNext = true;
+            } elseif (strtolower($keyword) == 'not' || $keyword == '-') {
+                $excludeNext = true;
+            } else {
+                if ($orNext) {
+                    $conditions['or'][] = $keyword;
+                } elseif ($excludeNext) {
+                    $conditions['not'][] = $keyword;
+                }else {
+                    if ($keyword[0] == '-') {
+                        $conditions['not'][] = substr($keyword, 1);
+                    } else {
+                        $conditions['and'][] = $keyword;
+                    }
+                }
+
+                $excludeNext = false;
+                $orNext = false;
+            }
+        }
+
+        return $conditions;
     }
 
     /**

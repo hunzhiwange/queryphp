@@ -35,8 +35,8 @@ class ApiQL
     protected function setSearchKeyColumn(string $entity, ReadParams $params): void
     {
         $searchKeyColumn = [];
-        foreach ($entity::fields() as $field => $options) {
-            $searchKeyColumnValue = $options[Entity::META][ReadParams::SEARCH_KEY_COLUMN] ?? null;
+        foreach ($entity::fields() as $field => $configs) {
+            $searchKeyColumnValue = $configs[Entity::META][ReadParams::SEARCH_KEY_COLUMN] ?? null;
             if (true === $searchKeyColumnValue) {
                 $searchKeyColumn[] = $field;
             }

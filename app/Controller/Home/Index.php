@@ -18,6 +18,17 @@ class Index
      */
     public function handle(): string
     {
+//        go(function() {
+//            //sleep(100);
+//            //sleep(10);
+////            $fp = fopen('data.txt', 'a');//opens file in append mode
+////            fwrite($fp, '23424');
+////            fclose($fp);
+//
+//           // echo "File appended successfully";
+//        });
+//        return '3332222223';
+
         return View::display('home');
     }
 }

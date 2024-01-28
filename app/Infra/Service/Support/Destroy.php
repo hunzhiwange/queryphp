@@ -31,7 +31,7 @@ trait Destroy
             $entity::event(Entity::BEFORE_DELETE_EVENT, fn () => $entity->beforeDeleteEvent());
         }
 
-        $this->remove($entity);
+        $this->remove($entity, $params);
 
         return [];
     }
@@ -39,13 +39,16 @@ trait Destroy
     /**
      * 删除实体.
      */
-    private function remove(Entity $entity): void
+    private function remove(Entity $entity, DestroyParams $params): void
     {
         $this->w
             ->persist($entity)
             ->delete($entity)
-            ->flush()
         ;
+
+        if ($params->entityAutoFlush) {
+            $this->w->flush();
+        }
     }
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infra;
 
-use Leevel\Cache\Redis\PhpRedis;
+use Leevel\Cache\Redis;
 use Leevel\Support\Dto;
 
 class GenerateDocument extends Dto
@@ -74,18 +74,18 @@ class GenerateDocument extends Dto
 
     protected function getRedisSequence(): RedisSequence
     {
-        /** @var PhpRedis $phpRedis */
-        $phpRedis = \App::make('redis');
+        /** @var Redis $phpRedis */
+        $phpRedis = \App::make('caches')->connect('redis');
 
         /** @var \Redis $redis */
-        $redis = $phpRedis->handle();
+        $redis = $phpRedis->getHandle();
 
         return (new RedisSequence($redis))->setCachePrefix('redis_sequence:'.$this->guid.':');
     }
 
     protected function getNextSequenceClosure(\Closure $sourceNext): \Closure
     {
-        return function () use ($sourceNext) {
+        return function () use ($sourceNext): int {
             $sourceNext = (string) $sourceNext();
 
             $next = (int) substr($sourceNext, -$this->serialLength);

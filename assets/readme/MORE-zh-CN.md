@@ -180,7 +180,7 @@ $vim .env.phpunit # modify database redis and other
 
 ### 关闭调试
 
-修改 .env 或者 bootstrap/option.php.
+修改 .env 或者 bootstrap/config.php.
 
 ```
 // Environment production、testing and development
@@ -199,7 +199,7 @@ DEBUG_JAVASCRIPT = false
 
 ```
 php leevel router:cache
-php leevel option:cache
+php leevel config:cache
 php leevel i18n:cache
 php leevel view:cache
 php leevel autoload (Equivalent to `composer dump-autoload --optimize --no-dev`)
@@ -215,7 +215,7 @@ php leevel production
 
 ### 打开调试
 
-修改 .env 或者 bootstrap/option.php.
+修改 .env 或者 bootstrap/config.php.
 
 ```
 // Environment production、testing and development
@@ -233,7 +233,7 @@ DEBUG_JAVASCRIPT = true
 ```
 php leevel i18n:clear
 php leevel log:clear
-php leevel option:clear
+php leevel config:clear
 php leevel router:clear
 php leevel session:clear
 php leevel view:clear

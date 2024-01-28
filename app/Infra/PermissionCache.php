@@ -22,20 +22,11 @@ class PermissionCache
 
     /**
      * 获取权限.
-     *
-     * @throws \RuntimeException
      */
-    public function get(string $id): array|false
+    public function get(string $id): array
     {
         $id = md5($id);
-        $permission = Cache::get('permission:'.$id);
-        if (false === $permission) {
-            return false;
-        }
-
-        if (!\is_array($permission)) {
-            throw new \RuntimeException('Permission cache was invalid.');
-        }
+        $permission = (array) Cache::get('permission:'.$id) ?: ['static' => [], 'dynamic' => []];
 
         if (!isset($permission['static']) || !\is_array($permission['static'])) {
             $permission['static'] = [];

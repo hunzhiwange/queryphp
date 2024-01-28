@@ -28,6 +28,7 @@ class ParamsDto extends Dto
         'entity_data',
         'entity_class',
         'entity_method',
+        'entity_auto_flush',
         'validator_scene',
         'validator_class',
     ];

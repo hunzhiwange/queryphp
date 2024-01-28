@@ -107,12 +107,15 @@ trait Update
             $entity::event(Entity::BEFORE_UPDATE_EVENT, fn (...$args) => $entity->beforeUpdateEvent(...$args));
         }
 
-        $this->validateEntityDuplicateKey($entity, function () use ($entity): void {
-            $this->w
-                ->update($entity)
-                ->flush()
-            ;
+        $this->w->create(function() use($entity): void {
+            $this->validateEntityDuplicateKey($entity, function () use ($entity): void {
+                $entity->update()->flush();
+            });
         });
+
+        if ($params->entityAutoFlush) {
+            $this->w->flush();
+        }
 
         return $entity;
     }

@@ -18,16 +18,26 @@ use App\Infra\Service\ApiQL\ApiQLStoreParams;
 use App\Infra\Service\ApiQL\ApiQLUpdate;
 use App\Infra\Service\ApiQL\ApiQLUpdateParams;
 use App\Infra\Service\Support\ReadParams;
+use Leevel\Config\Proxy\Config;
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Database\IDatabase;
 use Leevel\Di\Container;
 use Leevel\Http\Request;
-use Leevel\Option\Proxy\Option;
 use Leevel\Support\Arr\Only;
 use Leevel\Support\Str\UnCamelize;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+
+if (!function_exists('enabled_co')) {
+    /**
+     * 是否起用协程.
+     */
+    function enabledCoroutine(): bool
+    {
+        return container()->enabledCoroutine();
+    }
+}
 
 if (!function_exists('permission')) {
     /**
@@ -629,7 +639,7 @@ if (!function_exists('format_images')) {
             return '';
         }
 
-        return Option::get('attachments_url').'/'.$images;
+        return Config::get('attachments_url').'/'.$images;
     }
 }
 
@@ -641,7 +651,7 @@ if (!function_exists('format_images_list')) {
         }
 
         $imagesList = explode(',', $images);
-        $attachmentsUrl = Option::get('attachments_url');
+        $attachmentsUrl = Config::get('attachments_url');
         $imagesList = array_map(fn (string $v): string => $attachmentsUrl.'/'.$v, $imagesList);
 
         return implode(',', $imagesList);
@@ -660,7 +670,7 @@ if (!function_exists('bc_quantity')) {
             return $result;
         }
 
-        $withoutDecimalZero = container()->has('without_decimal_zero') ? (bool) container()->make('without_decimal_zero') : true;
+        $withoutDecimalZero = !container()->has('without_decimal_zero') || (bool) container()->make('without_decimal_zero');
         if (!$withoutDecimalZero) {
             return $result;
         }
@@ -953,9 +963,9 @@ if (!function_exists('generate_document')) {
     /**
      * 获取编号.
      */
-    function generate_document(array $option = [], Closure $sourceNext = null): string
+    function generate_document(array $config = [], Closure $sourceNext = null): string
     {
-        return (new GenerateDocument($option))->handle($sourceNext);
+        return (new GenerateDocument($config))->handle($sourceNext);
     }
 }
 
@@ -1157,7 +1167,7 @@ if (!function_exists('api_ql_batch')) {
         // 关闭调试
         $closeDebug = $withoutDebug && \Leevel::isDebug();
         if ($closeDebug) {
-            Option::set('debug', false);
+            Config::set('debug', false);
         }
 
         $batchParams = new ApiQLBatchParams($request->all());
@@ -1175,7 +1185,7 @@ if (!function_exists('api_ql_batch')) {
 
         // 恢复调试
         if ($closeDebug) {
-            Option::set('debug', true);
+            Config::set('debug', true);
         }
 
         return $data;
@@ -1188,7 +1198,8 @@ if (!function_exists('response_add_cors_headers')) {
         $headers = [
             'Access-Control-Allow-Origin' => '*',
             'Access-Control-Allow-Methods' => 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers' => 'Origin, X-Requested-With, Content-Type, Accept, token',
+            // UniApp 开源项目添加 Platform 头部
+            'Access-Control-Allow-Headers' => 'Origin, X-Requested-With, Content-Type, Accept, token, Platform',
             'Access-Control-Allow-Credentials' => 'true',
         ];
         $response->headers->add($headers);

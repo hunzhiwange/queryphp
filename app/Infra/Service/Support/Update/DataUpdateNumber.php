@@ -14,7 +14,7 @@ abstract class DataUpdateNumber
      */
     public const SUPPORTED_UPDATE_FIELD = [];
 
-    public const MAX_RETRY_NUMBER = 3;
+    public const MAX_RETRY_NUMBER = 2;
 
     public const VERSION_FIELD = 'version';
 
@@ -118,18 +118,20 @@ abstract class DataUpdateNumber
     protected function checkNumberGreaterThanZero(string $field, float $number): void
     {
         if (bc_comp($number, 0) < 1) {
-            $errorMessage = sprintf('数据`%s`变更数量必须大于0', $this->dataEntity::columnName($field));
-
-            throw new BusinessException(ErrorCode::ID2023033017412773, $errorMessage);
+            throw new BusinessException(
+                ErrorCode::ID2023033017412773,
+                sprintf('数据`%s`变更数量必须大于0', $this->dataEntity::columnName($field))
+            );
         }
     }
 
     protected function checkNumberGreaterThanOrEqualToZero(string $field, float $number): void
     {
         if (bc_comp($number, 0) < 0) {
-            $errorMessage = sprintf('数据`%s`变更数量必须大于等于0', $this->dataEntity::columnName($field));
-
-            throw new BusinessException(ErrorCode::ID2023033017452060, $errorMessage);
+            throw new BusinessException(
+                ErrorCode::ID2023033017452060,
+                sprintf('数据`%s`变更数量必须大于等于0', $this->dataEntity::columnName($field))
+            );
         }
     }
 }

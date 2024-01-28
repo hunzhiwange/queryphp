@@ -26,7 +26,7 @@ trait Status
     public function handle(StatusParams $params): array
     {
         $params->validate();
-        $this->save($this->findAll($params->ids, $params), $params->status);
+        $this->save($this->findAll($params->ids, $params), $params->status, $params);
 
         return [];
     }
@@ -34,20 +34,22 @@ trait Status
     /**
      * 保存状态
      */
-    private function save(Collection $entities, int $status): void
+    private function save(Collection $entities, int $status, StatusParams $params): void
     {
         foreach ($entities as $entity) {
             $entity->status = $status;
             $this->w->persist($entity);
         }
 
-        $this->w->flush();
+        if ($params->entityAutoFlush) {
+            $this->w->flush();
+        }
     }
 
     /**
      * 查询符合条件的数据.
      *
-     * @throws \App\Infra\Exceptions\BusinessException
+     * @throws \App\Infra\Exceptions\BusinessException|\Exception
      */
     private function findAll(VectorInt $ids, StatusParams $params): Collection
     {

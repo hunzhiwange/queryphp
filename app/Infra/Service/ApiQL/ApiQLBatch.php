@@ -7,6 +7,8 @@ namespace App\Infra\Service\ApiQL;
 use Leevel\Http\Request;
 use Leevel\Kernel\IKernel;
 use Symfony\Component\HttpFoundation\Response;
+use Swoole\Coroutine\WaitGroup;
+use Swoole\Coroutine;
 
 /**
  * API批量查询语言.
@@ -27,7 +29,16 @@ class ApiQLBatch
         $responseAll = [];
         $errorResponse = null;
         $firstResponse = null;
-        foreach ($params->apis as $key => $api) {
+
+        // 非协程模式
+        $call = function(string $key, string $api) use(
+            $baseRequest,
+            $params,
+            $kernel,
+            &$firstResponse,
+            &$errorResponse,
+            &$responseAll,
+        )  {
             $request = clone $baseRequest;
             $request->query->add($params->params[$key]);
             $request->setPathInfo('/apiQL/v1:'.$api);
@@ -35,19 +46,43 @@ class ApiQLBatch
             $responseAll[$key] = $response;
             if (!$response->isOk()) {
                 $errorResponse = $response;
-
-                break;
             }
+
             if (!$firstResponse) {
                 $firstResponse = $response;
             }
 
             $kernel->terminate($request, $response);
+        };
+
+        // 协程模式
+        $enabledCoroutine = \enabledCoroutine();
+        if ($enabledCoroutine) {
+            $wg = new WaitGroup();
+            $call = function(string $key, string $api) use($call, $wg) :void {
+                // 启动一个协程
+                $wg->add();
+                Coroutine::create(function() use($key, $api, $call, $wg):void {
+                    $call($key, $api);
+                    // 标记协程完成
+                    $wg->done();
+                });
+            };
+        }
+
+        foreach ($params->apis as $key => $api) {
+            $call($key, $api);
+        }
+
+        if ($enabledCoroutine) {
+            // 挂起当前协程，等待所有任务完成后恢复
+            $wg->wait();
         }
 
         if ($errorResponse) {
             return $errorResponse;
         }
+
         if (!$firstResponse) {
             throw new \RuntimeException('Response is empty.');
         }

@@ -8,10 +8,10 @@ use Leevel\Database\Condition;
 
 class ForceMaster
 {
-    public function terminate(\Closure $next, Condition $condition, array $middlewaresOptions, array $makeSql): array
+    public function terminate(\Closure $next, Condition $condition, array $middlewaresConfigs, array $makeSql): array
     {
         $makeSql = array_merge(['force_master' => '/*FORCE_MASTER*/'], $makeSql);
 
-        return $next($condition, $middlewaresOptions, $makeSql);
+        return $next($condition, $middlewaresConfigs, $makeSql);
     }
 }

@@ -17,6 +17,11 @@ class UpdateParams extends ParamsDto
     public string $validatorScene = 'update';
 
     /**
+     * 实体自动保存.
+     */
+    public bool $entityAutoFlush = true;
+
+    /**
      * {@inheritDoc}
      */
     protected function validatorArgs(): array

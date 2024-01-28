@@ -27,12 +27,7 @@ class Permission
             return $this->getPermission($params->token, $params->id);
         }
 
-        $cacheData = $this->permissionCache->get($params->token);
-        if (false === $cacheData) {
-            return $this->getPermission($params->token, $params->id);
-        }
-
-        return $cacheData;
+        return $this->permissionCache->get($params->token);
     }
 
     /**

@@ -1,0 +1,86 @@
+[32m_____________                           _______________
+ ______/     \__  _____  ____  ______  / /_  _________
+  ____/ __   / / / / _ \/ __`\/ / __ \/ __ \/ __ \___
+   __/ / /  / /_/ /  __/ /  \  / /_/ / / / / /_/ /__
+     \_\ \_/\____/\___/_/   / / .___/_/ /_/ .___/
+        \_\                /_/_/         /_/[39m
+[33m
+                     HTTP SERVER
+[39m
++---------------------------+-------------------------------------------------------------+
+|[32m Item                      [39m|[32m Value                                                       [39m|
++---------------------------+-------------------------------------------------------------+
+| QueryPHP                  | v1.1.35                                                     |
+| Swoole                    | 5.0.3                                                       |
+| host                      | 0.0.0.0                                                     |
+| port                      | 9527                                                        |
+| ssl                       |                                                             |
+| process_name              | SERVER.HTTP                                                 |
+| pid_path                  | /Users/xiongjiaojiao/code/ApiQL/storage/server/http.pid     |
+| worker_num                | 3                                                           |
+| daemonize                 | 1                                                           |
+| enable_static_handler     | 1                                                           |
+| document_root             | /Users/xiongjiaojiao/code/ApiQL                             |
+| processes                 | array (                                                     |
+|                           | )                                                           |
+| max_request               | 1110                                                        |
+| max_wait_time             | 30                                                          |
+| settings                  | array (                                                     |
+|                           | )                                                           |
+| driver                    | http                                                        |
+| hotoverload_delay_count   | 0                                                           |
+| hotoverload_time_interval | 20                                                          |
+| hotoverload_watch         | array (                                                     |
+|                           |   0 => '/Users/xiongjiaojiao/code/ApiQL',                   |
+|                           |   1 => '/Users/xiongjiaojiao/code/ApiQL/option',            |
+|                           |   2 => '/Users/xiongjiaojiao/code/ApiQL/storage/bootstrap', |
+|                           | )                                                           |
+| task_worker_num           | 4                                                           |
+| processes_dev             | array (                                                     |
+|                           | )                                                           |
++---------------------------+-------------------------------------------------------------+
+[32m_____________                           _______________
+ ______/     \__  _____  ____  ______  / /_  _________
+  ____/ __   / / / / _ \/ __`\/ / __ \/ __ \/ __ \___
+   __/ / /  / /_/ /  __/ /  \  / /_/ / / / / /_/ /__
+     \_\ \_/\____/\___/_/   / / .___/_/ /_/ .___/
+        \_\                /_/_/         /_/[39m
+[33m
+                     HTTP SERVER
+[39m
+
+[33mIn Server.php line 82:[39m
+[37;41m                                                             [39;49m
+[37;41m  The port has been used *:9527,the port process ID is 9107  [39;49m
+[37;41m                                                             [39;49m
+
+[32mserver:http [-d|--daemonize] [--env [ENV]][39m
+
+The Swoole server is start reloading.
+[2024-01-13 15:27:54 #9082.0]	WARNING	ProcessPool::wait(): worker#2 abnormal exit, status=0, signal=9
+[2024-01-13 15:27:54 #9082.0]	WARNING	ProcessPool::wait(): worker#1 abnormal exit, status=0, signal=9
+[2024-01-13 15:27:54 #9082.0]	WARNING	ProcessPool::wait(): worker#0 abnormal exit, status=0, signal=9
+The Swoole server is start reloading.
+[2024-01-13 15:28:03 #9082.0]	WARNING	ProcessPool::wait(): worker#0 abnormal exit, status=0, signal=9
+[2024-01-13 15:28:03 #9082.0]	WARNING	ProcessPool::wait(): worker#1 abnormal exit, status=0, signal=9
+[2024-01-13 15:28:03 #9082.0]	WARNING	ProcessPool::wait(): worker#2 abnormal exit, status=0, signal=9
+The Swoole server is start reloading.
+[2024-01-13 15:28:12 #9082.0]	WARNING	ProcessPool::wait(): worker#2 abnormal exit, status=0, signal=9
+[2024-01-13 15:28:12 #9082.0]	WARNING	ProcessPool::wait(): worker#1 abnormal exit, status=0, signal=9
+[2024-01-13 15:28:12 #9082.0]	WARNING	ProcessPool::wait(): worker#0 abnormal exit, status=0, signal=9
+The Swoole server is start reloading.
+[2024-01-13 15:28:18 #9082.0]	WARNING	ProcessPool::wait(): worker#0 abnormal exit, status=0, signal=9
+[2024-01-13 15:28:18 #9082.0]	WARNING	ProcessPool::wait(): worker#1 abnormal exit, status=0, signal=9
+[2024-01-13 15:28:18 #9082.0]	WARNING	ProcessPool::wait(): worker#2 abnormal exit, status=0, signal=9
+The Swoole server is start reloading.
+[2024-01-13 15:28:59 #9082.0]	WARNING	ProcessPool::wait(): worker#2 abnormal exit, status=0, signal=9
+[2024-01-13 15:28:59 #9082.0]	WARNING	ProcessPool::wait(): worker#1 abnormal exit, status=0, signal=9
+[2024-01-13 15:28:59 #9082.0]	WARNING	ProcessPool::wait(): worker#0 abnormal exit, status=0, signal=9
+The Swoole server is start reloading.
+[2024-01-13 15:29:22 #9082.0]	WARNING	ProcessPool::wait(): worker#0 abnormal exit, status=0, signal=9
+[2024-01-13 15:29:22 #9082.0]	WARNING	ProcessPool::wait(): worker#1 abnormal exit, status=0, signal=9
+[2024-01-13 15:29:22 #9082.0]	WARNING	ProcessPool::wait(): worker#2 abnormal exit, status=0, signal=9
+The Swoole server is start reloading.
+[2024-01-13 15:33:27 #9082.0]	WARNING	ProcessPool::wait(): worker#2 abnormal exit, status=0, signal=9
+[2024-01-13 15:33:27 #9082.0]	WARNING	ProcessPool::wait(): worker#1 abnormal exit, status=0, signal=9
+[2024-01-13 15:33:27 #9082.0]	WARNING	ProcessPool::wait(): worker#0 abnormal exit, status=0, signal=9

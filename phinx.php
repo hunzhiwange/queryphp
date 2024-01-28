@@ -25,9 +25,9 @@ putenv('RUNTIME_ENVIRONMENT='.$env);
 
 // 选择数据库
 if ($input->hasParameterOption('--database')) {
-    $database = $input->getParameterOption('--database');
+    $development = $input->getParameterOption('--database');
 } else {
-    $database = 'development';
+    $development = 'development';
 }
 
 if ($input->hasParameterOption('--database-index')) {
@@ -36,7 +36,7 @@ if ($input->hasParameterOption('--database-index')) {
     $databaseIndex = '';
 }
 
-if (!in_array($database, [
+if (!in_array($development, [
     'production',
     'production_common',
     'development',
@@ -48,7 +48,7 @@ if (!in_array($database, [
 // 读取配置
 (new PhinxLoad())->handle($app);
 
-$migrationPath = str_contains($database, '_common') ? 'common' : 'data';
+$migrationPath = str_contains($development, '_common') ? 'common' : 'data';
 
 return [
     'paths' => [
@@ -57,7 +57,7 @@ return [
     ],
     'environments' => [
         'default_migration_table' => 'phinx_log',
-        'default_database' => $database,
+        'default_environment' => $development,
         'production' => [
             'adapter' => 'mysql',
             'host' => Leevel::env('DATABASE_HOST', 'localhost'),

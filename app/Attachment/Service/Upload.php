@@ -6,8 +6,8 @@ namespace App\Attachment\Service;
 
 use App\Attachment\Exceptions\UploadBusinessException;
 use App\Attachment\Exceptions\UploadErrorCode;
+use Leevel\Config\Proxy\Config;
 use Leevel\Filesystem\Proxy\Filesystem;
-use Leevel\Option\Proxy\Option;
 use Leevel\Support\Str;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -81,6 +81,6 @@ class Upload
      */
     private function savePathForUrl(string $savePath): string
     {
-        return Option::get('attachments_url').'/'.$savePath;
+        return Config::get('attachments_url').'/'.$savePath;
     }
 }

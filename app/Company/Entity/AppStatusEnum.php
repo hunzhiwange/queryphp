@@ -14,9 +14,9 @@ enum AppStatusEnum: int
 {
     use Enum;
 
-    #[Msg('启用')]
-    case ENABLE = 1;
-
     #[Msg('禁用')]
     case DISABLE = 0;
+
+    #[Msg('启用')]
+    case ENABLE = 1;
 }

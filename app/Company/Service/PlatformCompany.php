@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Company\Service;
 
-use Leevel\Option\Proxy\Option;
+use Leevel\Config\Proxy\Config;
 
 class PlatformCompany
 {
@@ -58,12 +58,12 @@ class PlatformCompany
     {
         // 业务库
         $database = ($platformDb ? 'plat'.$platformDb.'_' : '').$dbPrefix.($companyDb ?: '');
-        Option::set('database\\connect.mysql.name', $database);
+        Config::set('database\\connect.mysql.name', $database);
 
         // 公共库
         if ($platformDb) {
             $commonDatabase = 'plat'.$platformDb.'_'.$commonDbPrefix;
-            Option::set('database\\connect.common.name', $commonDatabase);
+            Config::set('database\\connect.common.name', $commonDatabase);
         }
     }
 }

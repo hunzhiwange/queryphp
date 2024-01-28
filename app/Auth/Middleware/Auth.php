@@ -44,6 +44,14 @@ class Auth extends BaseAuth
         'app:auth/login/logout',
         'app:auth/login/code',
         'app:auth/login/validate',
+        'app:auth/apiQL/v1/login/validate',
+        'app:config/apiQL/v1/init',
+        'apiQL/v1:product:product_category/list-only',
+        'apiQL/v1:product:product',
+        'apiQL/v1:product:product/list-only',
+        'apiQL/v1:product:product_content/list-only',
+        'apiQL/v1:batch',
+        'apiQL/v1:product:product_extend/list-only',
     ];
 
     /**
@@ -57,6 +65,7 @@ class Auth extends BaseAuth
         'app:user/user/change-password',
         'app:user/user/permission',
         'app:user/user/info',
+        'apiQL/v1:batch',
     ];
 
     /**
@@ -77,10 +86,14 @@ class Auth extends BaseAuth
     /**
      * 请求.
      *
-     * @throws \App\Infra\Exceptions\UnauthorizedHttpException
+     * @throws \App\Infra\Exceptions\UnauthorizedHttpException|\Exception
      */
     public function handle(\Closure $next, Request $request): Response
     {
+        // 注入公司 ID
+        $this->setPlatformCompanyId();
+        $this->setAccountNotLogin();
+
         if ($request::METHOD_OPTIONS === $request->getMethod()) {
             return $next($request);
         }
@@ -93,19 +106,10 @@ class Auth extends BaseAuth
         }
 
         try {
-            if ($this->manager->isLogin()) {
-                // 注入公司 ID
-                $this->setPlatformCompanyId();
-
-                // 注入账号信息
-                $this->setAccount();
-
-                // 注入公共信息
-                $this->injectCommonData();
-
+            if ($isLogin = $this->manager->isLogin()) {
                 $this->validateLock($request, $token);
                 if (!$this->isIgnorePermission($request)) {
-                    static::validatePermission($request);
+                    //static::validatePermission($request);
                 }
             }
 
@@ -126,6 +130,14 @@ class Auth extends BaseAuth
                 $this->validateSignature($request, $this->appSecret);
             }
 
+            // 注入账号信息
+            if ($isLogin) {
+                $this->setAccount();
+            }
+
+            // 注入公共信息
+            $this->injectCommonData();
+
             return parent::handle($next, $request);
         } catch (AuthException) {
             throw new UnauthorizedHttpException(AuthErrorCode::PERMISSION_AUTHENTICATION_FAILED);
@@ -135,7 +147,7 @@ class Auth extends BaseAuth
     /**
      * 权限校验.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException
+     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
      */
     public static function validatePermission(Request $request): void
     {
@@ -177,10 +189,19 @@ class Auth extends BaseAuth
         (new InjectAccount())->handle($user['id'], $user['name']);
     }
 
+    private function setAccountNotLogin(): void
+    {
+        $user = [
+            'id' =>  0,
+            'name' => '游客',
+        ];
+        (new InjectAccount())->handle($user['id'], $user['name']);
+    }
+
     /**
      * 校验格式化.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException
+     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
      */
     private function validateFormat(Request $request): void
     {
@@ -197,7 +218,7 @@ class Auth extends BaseAuth
     /**
      * 校验应用 KEY.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException
+     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
      */
     private function validateAppKey(Request $request): void
     {
@@ -243,7 +264,7 @@ class Auth extends BaseAuth
     /**
      * 校验是否过期.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException
+     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
      */
     private function validateExpired(Request $request): void
     {
@@ -261,7 +282,7 @@ class Auth extends BaseAuth
     /**
      * 校验签名.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException
+     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
      */
     private function validateSignature(Request $request, string $appSecret): void
     {
@@ -317,7 +338,7 @@ class Auth extends BaseAuth
     /**
      * 验证是否锁定.
      *
-     * @throws \App\Infra\Exceptions\LockException
+     * @throws \App\Infra\Exceptions\LockException|\Exception
      */
     private function validateLock(Request $request, string $token): void
     {
