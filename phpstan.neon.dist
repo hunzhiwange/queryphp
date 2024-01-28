@@ -45,6 +45,7 @@ parameters:
 		- '#[\S\s]+is unused\.#'
 		- '#[\S\s]+is never read, only written\.#'
 		- '#Cannot call method get\(\) on string\.#'
+		- '#[\S\s]+Swoole[\S\s]+\.#'
 	exceptions:
 		uncheckedExceptionClasses:
 			- 'PHPStan\ShouldNotHappenException'

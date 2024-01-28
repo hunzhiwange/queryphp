@@ -103,6 +103,7 @@ trait Update
         $entity = $this->entity($params);
 
         // 更新前置操作
+        // @phpstan-ignore-next-line
         if (method_exists($entity, 'beforeUpdateEvent')) {
             $entity::event(Entity::BEFORE_UPDATE_EVENT, fn (...$args) => $entity->beforeUpdateEvent(...$args));
         }
