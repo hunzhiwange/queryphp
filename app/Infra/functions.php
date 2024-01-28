@@ -29,7 +29,7 @@ use Leevel\Support\Str\UnCamelize;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-if (!function_exists('enabled_co')) {
+if (!function_exists('enabledCoroutine')) {
     /**
      * 是否起用协程.
      */
