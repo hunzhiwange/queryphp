@@ -19,6 +19,7 @@ class Permission
     {
         $params = new PermissionParams($request->all());
         $params->id = get_account_id();
+        $params->refresh = 1;
 
         return $service->handle($params);
     }

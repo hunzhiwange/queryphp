@@ -82,7 +82,7 @@ class SetMember
     /**
      * 查找实体.
      */
-    private function findProject(int $id): \App\Project\Entity\Project
+    private function findProject(int $id): Project
     {
         return $this->w
             ->repository(Project::class)
@@ -93,7 +93,7 @@ class SetMember
     /**
      * 校验基本参数.
      *
-     * @throws \App\Project\Exceptions\ProjectBusinessException|\Exception
+     * @throws \App\Project\Exceptions\ProjectBusinessException
      */
     private function validateArgs(SetMemberParams $params): void
     {

@@ -117,7 +117,7 @@ class Login
     /**
      * 校验验证码.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
+     * @throws \App\Auth\Exceptions\AuthBusinessException
      */
     private function validateCode(LoginParams $params): void
     {

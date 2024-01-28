@@ -46,7 +46,7 @@ class User extends Repository
     /**
      * 通过条件查找可用用户.
      *
-     * @throws \App\User\Exceptions\UserBusinessException|\Exception
+     * @throws \App\User\Exceptions\UserBusinessException
      */
     public function findValidUserByCondition(\Closure $condition, string $column = '*'): EntityUser
     {
@@ -68,7 +68,7 @@ class User extends Repository
     /**
      * 校验密码.
      *
-     * @throws \App\User\Exceptions\UserBusinessException|\Exception
+     * @throws \App\User\Exceptions\UserBusinessException
      */
     public function verifyPassword(string $password, string $hash): void
     {
@@ -88,7 +88,7 @@ class User extends Repository
     /**
      * 校验用户.
      *
-     * @throws \App\User\Exceptions\UserBusinessException|\Exception
+     * @throws \App\User\Exceptions\UserBusinessException
      */
     public function verifyUsersByIds(array $userIds, ?\Closure $condition = null): void
     {

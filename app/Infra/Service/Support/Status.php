@@ -47,7 +47,7 @@ trait Status
     /**
      * 查询符合条件的数据.
      *
-     * @throws \App\Infra\Exceptions\BusinessException|\Exception
+     * @throws \App\Infra\Exceptions\BusinessException
      */
     private function findAll(VectorInt $ids, StatusParams $params): Collection
     {

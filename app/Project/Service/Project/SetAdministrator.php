@@ -36,7 +36,7 @@ class SetAdministrator
      *
      * @throws \Exception
      */
-    private function save(SetAdministratorParams $params): \App\Project\Entity\ProjectUser
+    private function save(SetAdministratorParams $params): ProjectUser
     {
         $this->w->persist($entity = $this->entity($params));
         $this->w->flush();
@@ -56,9 +56,9 @@ class SetAdministrator
     }
 
     /**
-     * @throws \App\Project\Exceptions\ProjectBusinessException|\Exception
+     * @throws \App\Project\Exceptions\ProjectBusinessException
      */
-    private function findProjectUser(SetAdministratorParams $params): \App\Project\Entity\ProjectUser
+    private function findProjectUser(SetAdministratorParams $params): ProjectUser
     {
         $map = [
             'user_id' => $params->userId,

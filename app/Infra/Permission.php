@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infra;
 
+use App\User\Service\User\Permission as PermissionService;
+use App\User\Service\User\PermissionParams;
+
 /**
  * 校验权限.
  */
@@ -65,7 +68,22 @@ class Permission
 
     protected function getPermissionData(): array
     {
-        return $this->permissionCache->get($this->token);
+        $cacheData = $this->permissionCache->get($this->token);
+        // 尝试重新生成权限缓存
+        if (false === $cacheData) {
+            $params = new PermissionParams([
+                'refresh' => 1,
+                'token' => $this->token,
+            ]);
+            $params->id = get_account_id();
+
+            /** @var PermissionService $service */
+            $service = \App::make(PermissionService::class);
+
+            return $service->handle($params);
+        }
+
+        return $cacheData;
     }
 
     /**

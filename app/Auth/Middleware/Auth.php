@@ -77,7 +77,7 @@ class Auth extends BaseAuth
     /**
      * 请求.
      *
-     * @throws \App\Infra\Exceptions\UnauthorizedHttpException|\Exception
+     * @throws \App\Infra\Exceptions\UnauthorizedHttpException
      */
     public function handle(\Closure $next, Request $request): Response
     {
@@ -93,7 +93,16 @@ class Auth extends BaseAuth
         }
 
         try {
-            if ($isLogin = $this->manager->isLogin()) {
+            if ($this->manager->isLogin()) {
+                // 注入公司 ID
+                $this->setPlatformCompanyId();
+
+                // 注入账号信息
+                $this->setAccount();
+
+                // 注入公共信息
+                $this->injectCommonData();
+
                 $this->validateLock($request, $token);
                 if (!$this->isIgnorePermission($request)) {
                     static::validatePermission($request);
@@ -117,17 +126,6 @@ class Auth extends BaseAuth
                 $this->validateSignature($request, $this->appSecret);
             }
 
-            // 注入公司 ID
-            $this->setPlatformCompanyId();
-
-            // 注入账号信息
-            if ($isLogin) {
-                $this->setAccount();
-            }
-
-            // 注入公共信息
-            $this->injectCommonData();
-
             return parent::handle($next, $request);
         } catch (AuthException) {
             throw new UnauthorizedHttpException(AuthErrorCode::PERMISSION_AUTHENTICATION_FAILED);
@@ -137,7 +135,7 @@ class Auth extends BaseAuth
     /**
      * 权限校验.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
+     * @throws \App\Auth\Exceptions\AuthBusinessException
      */
     public static function validatePermission(Request $request): void
     {
@@ -182,7 +180,7 @@ class Auth extends BaseAuth
     /**
      * 校验格式化.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
+     * @throws \App\Auth\Exceptions\AuthBusinessException
      */
     private function validateFormat(Request $request): void
     {
@@ -199,7 +197,7 @@ class Auth extends BaseAuth
     /**
      * 校验应用 KEY.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
+     * @throws \App\Auth\Exceptions\AuthBusinessException
      */
     private function validateAppKey(Request $request): void
     {
@@ -245,7 +243,7 @@ class Auth extends BaseAuth
     /**
      * 校验是否过期.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
+     * @throws \App\Auth\Exceptions\AuthBusinessException
      */
     private function validateExpired(Request $request): void
     {
@@ -263,7 +261,7 @@ class Auth extends BaseAuth
     /**
      * 校验签名.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
+     * @throws \App\Auth\Exceptions\AuthBusinessException
      */
     private function validateSignature(Request $request, string $appSecret): void
     {
@@ -319,7 +317,7 @@ class Auth extends BaseAuth
     /**
      * 验证是否锁定.
      *
-     * @throws \App\Infra\Exceptions\LockException|\Exception
+     * @throws \App\Infra\Exceptions\LockException
      */
     private function validateLock(Request $request, string $token): void
     {
