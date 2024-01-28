@@ -102,7 +102,7 @@ return [
             // 监听端口
             // see https://wiki.swoole.com/wiki/page/p-server.html
             // see https://wiki.swoole.com/wiki/page/327.html
-            'port' => 9529,
+            'port' => 9530,
 
             // Swoole 进程名称
             'process_name' => 'SERVER.HTTP',
