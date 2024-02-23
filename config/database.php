@@ -61,7 +61,10 @@ return [
             // 是否采用分布式
             'distributed' => false,
 
-            // 如果该配置项设置为 true 的话，在同一个请求生命周期中，写入的数据会被立刻读取到
+            // 如果该配置项设置为 true 的话，在同一个事务中，写入的数据会被立刻读取到
+            // 同时，该配置也兼容阿里云 RDS MySQL
+            // RDS MySQL 读写分离如何确保数据读取的时效性
+            // https://help.aliyun.com/zh/rds/support/how-do-i-ensure-the-timeliness-of-reading-data-on-an-apsaradb-rds-for-mysql-instance-when-the-read-or-write-splitting-feature-is-enabled
             'strict' => true,
 
             // 分布式服务部署主服务器
