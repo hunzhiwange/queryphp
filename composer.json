@@ -18,7 +18,7 @@
         "ext-openssl": "*",
         "composer-runtime-api": ">=2.1",
         "godruoyi/php-snowflake": "^2.2",
-        "hunzhiwange/framework": "^1.1.36",
+        "hunzhiwange/framework": "^1.1.38",
         "league/csv": "^9.8",
         "nesbot/carbon": "^2.66",
         "nyholm/psr7": "^1.5",
@@ -32,7 +32,7 @@
         "codedungeon/php-cli-colors": "^1.12.2",
         "robmorgan/phinx": "^0.12.4",
         "zircote/swagger-php": "^3.1.0",
-        "swoole/ide-helper": "^5.1.1"
+        "swoole/ide-helper": "^5.1.2"
     },
     "autoload": {
         "files": [
@@ -123,7 +123,7 @@
             "view-cache": {
                 "paths": [
                     "app",
-                    "assets/themes"
+                    "assets/views"
                 ]
             },
             "database-entity": {
@@ -137,10 +137,10 @@
         }
     },
     "scripts": {
-        "test": "@php assets/build/phpunit --colors=always",
-        "test-coverage": "@php assets/build/phpunit --colors=always -c phpunit.xml.coverage",
-        "php-cs-fixer": "@php assets/build/php-cs-fixer fix",
-        "phpstan": "@php assets/build/phpstan analyse",
+        "test": "@php build/phpunit --colors=always",
+        "test-coverage": "@php build/phpunit --colors=always -c phpunit.xml.coverage",
+        "php-cs-fixer": "@php build/php-cs-fixer fix",
+        "phpstan": "@php build/phpstan analyse",
         "migrate": "@php leevel migrate:migrate",
         "migrate-common": "@php leevel migrate:migrate --database=development_common",
         "migrate-phpunit": "@php leevel migrate:migrate --env=env.phpunit",
