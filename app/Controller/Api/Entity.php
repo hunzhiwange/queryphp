@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
-use App\Base\Entity\Test;
+use App\User\Entity\User;
 
 /**
  * 实体使用.
@@ -18,6 +18,6 @@ class Entity
      */
     public function handle(): array
     {
-        return ['count' => Test::select()->findCount()];
+        return ['count' => User::select()->findCount()];
     }
 }

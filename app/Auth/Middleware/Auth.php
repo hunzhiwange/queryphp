@@ -45,13 +45,7 @@ class Auth extends BaseAuth
         'app:auth/login/code',
         'app:auth/login/validate',
         'app:auth/apiQL/v1/login/validate',
-        'app:config/apiQL/v1/init',
-        'apiQL/v1:product:product_category/list-only',
-        'apiQL/v1:product:product',
-        'apiQL/v1:product:product/list-only',
-        'apiQL/v1:product:product_content/list-only',
         'apiQL/v1:batch',
-        'apiQL/v1:product:product_extend/list-only',
     ];
 
     /**

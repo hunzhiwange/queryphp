@@ -13,12 +13,12 @@
         "email": "635750556@qq.com"
     }],
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.3",
         "ext-mbstring": "*",
         "ext-openssl": "*",
         "composer-runtime-api": ">=2.1",
         "godruoyi/php-snowflake": "^2.2",
-        "hunzhiwange/framework": "^1.1.38",
+        "hunzhiwange/framework": "^1.1.39",
         "league/csv": "^9.8",
         "nesbot/carbon": "^2.66",
         "nyholm/psr7": "^1.5",
@@ -26,7 +26,7 @@
         "spiral/dumper": "^2.14.1",
         "spiral/roadrunner": "^2.12.1",
         "symfony/psr-http-message-bridge": "^2.0",
-        "symfony/workflow": "^6.2"
+        "symfony/workflow": "^7.0.7"
     },
     "require-dev": {
         "codedungeon/php-cli-colors": "^1.12.2",

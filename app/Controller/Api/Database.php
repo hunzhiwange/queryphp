@@ -20,7 +20,7 @@ class Database
     {
         return [
             'count' => Db::connect('common')
-                ->table('test')
+                ->table('user')
                 ->findCount()
         ];
     }
