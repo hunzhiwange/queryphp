@@ -171,7 +171,7 @@ $cd /data/codes/queryphp/
 $vim .env.phpunit # modify database redis and other
 - $php leevel migrate:migrate -e env.phpunit
 + $composer migrate-phpunit
-+ $php assets/build/phpunit 
++ $php build/phpunit 
 + $composer test
 + $composer test-coverage
 ```
@@ -308,7 +308,7 @@ It can be used without installation,we download a version for you.
 ```diff
 $cd /data/codes/queryphp
 - $php-cs-fixer fix --config=.php_cs.dist
-+ $php assets/build/php-cs-fixer fix --config=.php_cs.dist
++ $php build/php-cs-fixer fix --config=.php_cs.dist
 + $composer php-cs-fixer
 ```
 
@@ -317,7 +317,7 @@ $cd /data/codes/queryphp
 Add a pre-commit for it.
 
 ```
-cp assets/build/pre-commit.sh .git/hooks/pre-commit
+cp build/pre-commit.sh .git/hooks/pre-commit
 chmod 777 .git/hooks/pre-commit
 ```
 
@@ -331,7 +331,7 @@ Pass hook
 ## PHPStan 
 
 ```diff
-- $php assets/build/phpstan analyse
+- $php build/phpstan analyse
 + $composer phpstan
 ```
 

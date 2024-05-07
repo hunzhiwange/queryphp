@@ -171,7 +171,7 @@ $cd /data/codes/queryphp/
 $vim .env.phpunit # modify database redis and other
 - $php leevel migrate:migrate -e env.phpunit
 + $composer migrate-phpunit
-+ $php assets/build/phpunit
++ $php build/phpunit
 + $composer test
 + $composer test-coverage
 ```
@@ -308,7 +308,7 @@ root@vagrant-ubuntu-10-0-2-5:/data/codes/queryphp# /data/server/roadrunner-2.12.
 ```diff
 $cd /data/codes/queryphp
 - $php-cs-fixer fix --config=.php_cs.dist
-+ $php assets/build/php-cs-fixer fix --config=.php_cs.dist
++ $php build/php-cs-fixer fix --config=.php_cs.dist
 + $composer php-cs-fixer
 ```
 
@@ -317,7 +317,7 @@ $cd /data/codes/queryphp
 添加一个 pre-commit 钩子.
 
 ```
-cp assets/build/pre-commit.sh .git/hooks/pre-commit
+cp build/pre-commit.sh .git/hooks/pre-commit
 chmod 777 .git/hooks/pre-commit
 ```
 
@@ -331,7 +331,7 @@ chmod 777 .git/hooks/pre-commit
 ## PHPStan 静态分析
 
 ```diff
-- $php assets/build/phpstan analyse
+- $php build/phpstan analyse
 + $composer phpstan
 ```
 
