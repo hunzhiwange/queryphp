@@ -17,7 +17,7 @@
         "ext-mbstring": "*",
         "ext-openssl": "*",
         "composer-runtime-api": ">=2.1",
-        "godruoyi/php-snowflake": "^3.1.0",
+        "godruoyi/php-snowflake": "^3.0.0",
         "hunzhiwange/framework": "^1.1.40",
         "league/csv": "^9.15.0",
         "nesbot/carbon": "^3.3.1",
