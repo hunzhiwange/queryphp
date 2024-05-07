@@ -94,6 +94,7 @@ abstract class StatusWorkflow
             throw new \RuntimeException(sprintf('Enum %s not found', $statusEnum));
         }
 
+        // @phpstan-ignore-next-line
         return $statusEnum::names();
     }
 }
