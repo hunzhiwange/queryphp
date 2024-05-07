@@ -24,9 +24,9 @@ $container = Container::singletons();
 $container->singleton(IContainer::class, $container);
 
 // 应用路径
-$path = str_starts_with(__DIR__, 'phar://') ?
-     Phar::running() :
-     realpath(__DIR__);
+$path = str_starts_with(__DIR__, 'phar://')
+     ? Phar::running()
+     : realpath(__DIR__);
 $container->singleton('app', $app = new App($container, $path));
 
 // PHAR 缓存路径不能是 phar 内部路径，因为 phar 内部路径是只读的

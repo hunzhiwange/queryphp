@@ -34,4 +34,4 @@ jobs:
           command: composer update --prefer-stable --prefer-dist --no-interaction --no-progress
 
       - name: Execute type checking
-        run: php assets/phpstan analyse
+        run: php build/phpstan analyse

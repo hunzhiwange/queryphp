@@ -69,7 +69,7 @@ jobs:
         run: php leevel migrate:migrate --env=env.phpunit --database=development_common
 
       - name: Execute tests against PHPUnit
-        run: php assets/phpunit --coverage-clover=coverage.xml
+        run: php build/phpunit --coverage-clover=coverage.xml
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
           DB_USERNAME: root
