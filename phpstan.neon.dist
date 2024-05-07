@@ -3,7 +3,7 @@ parameters:
 	paths:
 		- app
 		- config
-		- assets/database
+		- database
 		- tests
 	bootstrapFiles:
 		- %currentWorkingDirectory%/assets/phpstan/bootstrap.php
@@ -14,7 +14,6 @@ parameters:
 	checkGenericClassInNonGenericObjectType: false
 	excludePaths:
 		- %currentWorkingDirectory%/*Test.php
-		- %currentWorkingDirectory%/app/X
 	ignoreErrors:
 		- '#Access to an undefined property [\S\s]+::\$[\S\s]+\.#'
 		- '#should return [\S\s]+ but returns Leevel\\Database\\Ddd\\Entity\.#'
