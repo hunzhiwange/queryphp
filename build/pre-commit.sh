@@ -4,7 +4,7 @@
 # https://blog.csdn.net/xsgnzb/article/details/52222366?locationNum=4&fps=1
 # https://blog.csdn.net/ljihe/article/details/80826071
 # =================== how to use ====================
-# cp ./assets/build/pre-commit.sh ./.git/hooks/pre-commit
+# cp ./build/pre-commit.sh ./.git/hooks/pre-commit
 # chmod 777 ./.git/hooks/pre-commit
 # git commit -h
 # git commit -n -m 'pass hook' #bypass pre-commit and commit-msg hooks
@@ -33,7 +33,7 @@ do
     FILES="$FILES $PROJECT/$FILE"
 done
 
-phpcsfixer_path=$(cd `dirname $0`; pwd)"/../../assets/build/php-cs-fixer"
+phpcsfixer_path=$(cd `dirname $0`; pwd)"/../../build/php-cs-fixer"
 
 # format code style
 if [ "$FILES" != "" ]
@@ -55,7 +55,7 @@ then
             then
                 echo "Ignore file of "${IGNORE_ITEM}
                 continue 2
-            fi 
+            fi
         done
 
         #result=`~/.composer/vendor/bin/php-cs-fixer fix $FILE`
@@ -78,7 +78,7 @@ fi
 
 git update-index -g
 
-phpstan_path=$(cd `dirname $0`; pwd)"/../../assets/build/phpstan"
+phpstan_path=$(cd `dirname $0`; pwd)"/../../build/phpstan"
 
 if [ "$FILES" != "" ]
 then
