@@ -43,38 +43,6 @@ return [
             'path' => Leevel::storagePath('attachments/filesystem.zip'),
         ],
 
-        'ftp' => [
-            // driver
-            'driver' => 'ftp',
-
-            // 驱动类
-            'driver_class' => \Leevel\Filesystem\Ftp::class,
-
-            // 主机
-            'host' => Leevel::env('FILESYSTEM_FTP_HOST', 'ftp.example.com'),
-
-            // 端口
-            'port' => (int) Leevel::env('FILESYSTEM_FTP_PORT', 21),
-
-            // 用户名
-            'username' => Leevel::env('FILESYSTEM_FTP_USERNAME', 'your-username'),
-
-            // 密码
-            'password' => Leevel::env('FILESYSTEM_FTP_PASSWORD', 'your-password'),
-
-            // 根目录
-            'root' => '',
-
-            // 被动、主动
-            'passive' => true,
-
-            // 加密传输
-            'ssl' => false,
-
-            // 超时设置
-            'timeout' => 20,
-        ],
-
         'sftp' => [
             // driver
             'driver' => 'sftp',
