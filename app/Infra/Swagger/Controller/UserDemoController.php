@@ -28,7 +28,7 @@ class UserDemoController
             ),
         ]
     )]
-    public function getUserByName(string $username)
+    public function getUserByName(string $username): void
     {
     }
 }

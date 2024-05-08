@@ -19,19 +19,19 @@ class ApiResponseDemoModel
         title: 'Code',
         format: 'int32'
     )]
-    private $code;
+    public int $code;
 
     #[OA\Property(
         type: 'string',
         description: 'Type',
         title: 'Type'
     )]
-    private $type;
+    public string $type;
 
     #[OA\Property(
         type: 'string',
         description: 'Message',
         title: 'Message'
     )]
-    private $message;
+    public string $message;
 }

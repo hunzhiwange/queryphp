@@ -14,10 +14,10 @@ class UserDemoModel
     #[OA\Property(
         type: 'string'
     )]
-    private $username;
+    public string $username;
 
     #[OA\Property(
         type: 'string'
     )]
-    private $uuid;
+    public string $uuid;
 }

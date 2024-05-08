@@ -760,18 +760,6 @@ if (!function_exists('format_pay_price')) {
     }
 }
 
-if (!function_exists('allocation_quantity')) {
-    /**
-     * 分摊数量.
-     *
-     * - 数量分摊的精度直接取设置即可
-     */
-    function allocation_quantity(array &$proportionData, float $totalQuantity): array
-    {
-        return \App\Infra\Helper\Allocation::handle($proportionData, $totalQuantity, quantity_scale());
-    }
-}
-
 if (!function_exists('create_data_id')) {
     function create_data_id(array $data, array $keys = []): string
     {
