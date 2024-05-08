@@ -109,7 +109,7 @@
             ],
             "i18n-paths": {
                 "exception": [
-                    "assets/exceptions"
+                    "themes/exceptions"
                 ],
                 "app": [
                     "app"
@@ -123,7 +123,7 @@
             "view-cache": {
                 "paths": [
                     "app",
-                    "assets/views"
+                    "themes"
                 ]
             },
             "database-entity": {
