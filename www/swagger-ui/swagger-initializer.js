@@ -6,7 +6,7 @@ window.onload = function() {
         window.location.href = window.location.href+'/';
     }
 
-    fetch('/swagger/apis',{
+    fetch('/swagger',{
         cache: 'no-cache',
         headers: {
             'user-agent': 'Mozilla/4.0 MDN Example',

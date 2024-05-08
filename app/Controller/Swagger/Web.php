@@ -12,7 +12,7 @@ namespace App\Controller\Swagger;
  *
  * @codeCoverageIgnore
  */
-class Web extends Index
+class Web extends Api
 {
     /**
      * 扫描路径.
