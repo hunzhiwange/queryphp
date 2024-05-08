@@ -6,7 +6,7 @@ parameters:
 		- database
 		- tests
 	bootstrapFiles:
-		- %currentWorkingDirectory%/assets/phpstan/bootstrap.php
+		- %currentWorkingDirectory%/phpstan-bootstrap.php
 	cache:
 		nodesByStringCountMax: 128
 	checkUninitializedProperties: true
