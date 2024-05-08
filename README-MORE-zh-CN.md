@@ -8,7 +8,7 @@ _____________                           _______________
 ```
 
 <p align="center">
-    <a href="./MORE.md">English</a> | <a href="./MORE-zh-CN.md">中文</a>
+    <a href="./README-MORE.md">English</a> | <a href="./README-MORE-zh-CN.md">中文</a>
 </p>
 
 ## 如何安装

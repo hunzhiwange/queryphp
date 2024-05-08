@@ -52,8 +52,8 @@ $migrationPath = str_contains($development, '_common') ? 'common' : 'data';
 
 return [
     'paths' => [
-        'migrations' => "assets/database/{$migrationPath}/migrations",
-        'seeds' => "assets/database/{$migrationPath}/seeds",
+        'migrations' => "database/{$migrationPath}/migrations",
+        'seeds' => "database/{$migrationPath}/seeds",
     ],
     'environments' => [
         'default_migration_table' => 'phinx_log',
