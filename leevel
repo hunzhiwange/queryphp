@@ -4,8 +4,8 @@
 declare(strict_types=1);
 
 use App\Infra\Exceptions\Runtime;
-use App\Kernel;
-use App\KernelConsole;
+use App\Infra\Kernel;
+use App\Infra\KernelConsole;
 use Leevel\Di\Container;
 use Leevel\Di\IContainer;
 use Leevel\Kernel\App;

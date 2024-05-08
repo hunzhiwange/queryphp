@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Infra\Exceptions\Runtime;
-use App\Kernel;
+use App\Infra\Kernel;
 use Leevel\Di\Container;
 use Leevel\Di\IContainer;
 use Leevel\Http\Request;

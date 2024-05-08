@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Infra;
 
 use App\Infra\Bootstrap\CorsHeaders;
 use Leevel\Kernel\KernelConsole as KernelConsoles;

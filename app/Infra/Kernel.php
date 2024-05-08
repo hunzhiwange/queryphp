@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Infra;
 
 use App\Infra\Bootstrap\CorsHeaders;
 use App\Infra\Middleware\Cors;

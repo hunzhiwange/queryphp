@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Swagger;
 
 use Leevel\Router\Route;
+use OpenApi\Annotations as OA;
 
 /**
  * @codeCoverageIgnore
@@ -12,7 +13,7 @@ use Leevel\Router\Route;
 class WebDemo
 {
     /**
-     * @OA\Get(
+     * @OA\PathItem(
      *     path="/swagger/web/v1/demo/{name}/",
      *     summary="Just test the router",
      *

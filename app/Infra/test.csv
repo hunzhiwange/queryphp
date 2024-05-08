@@ -1,4 +1,0 @@
-pos_id,inventory,replenishment,total,errors_message
-必须,,,,
-POS门店号,授权库存牌额额度,授权库存补货额度,额度合计,错误原因
-50090221,3,4,7,
