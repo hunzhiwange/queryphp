@@ -24,21 +24,15 @@ window.onload = function() {
         }
 
         var primaryName = '';
-        var apisResult = [];
         for (var i=0;i<apis.length;i++) {
-            // 排除掉接口调试追踪 :trace 项
-            if (!apis[i]['url']) {
-                continue;
-            }
             if (apis[i]['url'].indexOf(url) != -1) {
                 primaryName = apis[i]['name'];
             }
-            apisResult.push(apis[i]);
         }
 
         // Build a system
         const ui = SwaggerUIBundle({
-            urls: apisResult,
+            urls: apis,
             'urls.primaryName': primaryName,
             dom_id: '#swagger-ui',
             deepLinking: true,
