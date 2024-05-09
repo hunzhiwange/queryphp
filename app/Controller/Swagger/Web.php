@@ -20,7 +20,7 @@ class Web extends Api
     protected function path(): array
     {
         return [
-           // \Leevel::appPath('app/Controller/Swagger2/WebDemo.php'),
+            \Leevel::appPath('app/Controller/Swagger/WebDemo.php'),
         ];
     }
 }

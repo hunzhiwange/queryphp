@@ -5,35 +5,33 @@ declare(strict_types=1);
 namespace App\Controller\Swagger;
 
 use Leevel\Router\Route;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 
 /**
  * @codeCoverageIgnore
  */
 class ApiDemo
 {
-    /**
-     * @OA\PathItem(
-     *     path="/swagger/api/v1/demo/{name}/",
-     *     summary="Just test the router",
-     *
-     *     @OA\Parameter(
-     *         name="name",
-     *         in="path",
-     *         description="name test",
-     *         required=true,
-     *
-     *         @OA\Schema(
-     *             type="string",
-     *         )
-     *     ),
-     *
-     *     @OA\Response(
-     *         response=405,
-     *         description="Invalid input"
-     *     ),
-     * )
-     */
+    #[OA\Get(
+        path: '/swagger/api/v1/demo/{name}/',
+        summary: 'Just test the router',
+        tags: ['Api Demo'],
+        parameters: [
+            new OA\Parameter(
+                name: 'name',
+                in: 'path',
+                required: true,
+                description: 'name test',
+                schema: new OA\Schema(type: 'string')
+            ),
+        ],
+        responses: [
+            new OA\Response(
+                response: 405,
+                description: 'Invalid input',
+            ),
+        ]
+    )]
     #[Route(
         path: '/swagger/api/v1/demo/{name:[A-Za-z]+}/',
     )]

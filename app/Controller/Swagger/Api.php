@@ -42,7 +42,7 @@ class Api
     protected function path(): array
     {
         return [
-            //\Leevel::appPath('app/Controller'),
+            \Leevel::appPath('app/Controller/Swagger/ApiDemo.php'),
         ];
     }
 
