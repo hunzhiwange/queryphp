@@ -1,9 +1,11 @@
 <?php
 
 declare(strict_types=1);
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
 
 // https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/v3.14.3/.php-cs-fixer.dist.php
-return (new PhpCsFixer\Config())
+return (new Config())
     ->setRules([
         '@PHP74Migration' => true,
         '@PHP74Migration:risky' => true,
@@ -21,15 +23,16 @@ return (new PhpCsFixer\Config())
         'php_unit_test_class_requires_covers' => false,
         'strict_comparison' => false,
         'strict_param' => false,
+        'php_unit_internal_class' => false,
     ])
     ->setRiskyAllowed(true)
     ->setFinder(
-        PhpCsFixer\Finder::create()
+        Finder::create()
             ->append([__FILE__])
             ->in(__DIR__.'/app')
             ->in(__DIR__.'/tests')
             ->in(__DIR__.'/www')
             ->in(__DIR__.'/config')
-            ->in(__DIR__.'/assets/database')
+            ->in(__DIR__.'/database')
     )
 ;

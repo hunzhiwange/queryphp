@@ -42,7 +42,7 @@ trait Helper
 
         $migrationPath = $commonDatabase ? 'common' : 'data';
 
-        $file = \dirname(__DIR__)."/assets/database/{$migrationPath}/seeds/".$seed.'.php';
+        $file = \dirname(__DIR__)."/database/{$migrationPath}/seeds/".$seed.'.php';
         if (!is_file($file)) {
             // 创建 seed
             $createCommand = sprintf(
@@ -60,7 +60,7 @@ trait Helper
         }
 
         // 执行 seed
-        include_once \dirname(__DIR__)."/assets/database/{$migrationPath}/seeds/SeedBase.php";
+        include_once \dirname(__DIR__)."/database/{$migrationPath}/seeds/SeedBase.php";
 
         include_once $file;
         if (!class_exists($seed)) {
