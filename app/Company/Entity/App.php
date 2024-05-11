@@ -13,27 +13,27 @@ use Leevel\Database\Ddd\Struct;
  */
 final class App extends Entity
 {
-    public const CONNECT = 'common';
+    public const string CONNECT = 'common';
 
     /**
      * Database table.
      */
-    public const TABLE = 'app';
+    public const string TABLE = 'app';
 
     /**
      * Database table name.
      */
-    public const TABLE_NAME = '应用';
+    public const string TABLE_NAME = '应用';
 
     /**
      * Primary key.
      */
-    public const ID = 'id';
+    public const string ID = 'id';
 
     /**
      * Unique Index.
      */
-    public const UNIQUE_INDEX = [
+    public const array UNIQUE_INDEX = [
         'PRIMARY' => [
             'field' => ['id'],
             'comment' => 'ID',
@@ -51,12 +51,12 @@ final class App extends Entity
     /**
      * Auto increment.
      */
-    public const AUTO = 'id';
+    public const string AUTO = 'id';
 
     /**
      * Soft delete column.
      */
-    public const DELETE_AT = 'delete_at';
+    public const string DELETE_AT = 'delete_at';
 
     /**
      * 仓储.

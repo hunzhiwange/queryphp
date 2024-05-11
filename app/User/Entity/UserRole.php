@@ -12,27 +12,27 @@ use Leevel\Database\Ddd\Struct;
  */
 final class UserRole extends Entity
 {
-    public const CONNECT = 'common';
+    public const string CONNECT = 'common';
 
     /**
      * Database table.
      */
-    public const TABLE = 'user_role';
+    public const string TABLE = 'user_role';
 
     /**
      * Database table name.
      */
-    public const TABLE_NAME = '用户角色关联';
+    public const string TABLE_NAME = '用户角色关联';
 
     /**
      * Primary key.
      */
-    public const ID = 'id';
+    public const string ID = 'id';
 
     /**
      * Unique Index.
      */
-    public const UNIQUE_INDEX = [
+    public const array UNIQUE_INDEX = [
         'PRIMARY' => [
             'field' => ['id'],
             'comment' => 'ID',
@@ -46,12 +46,12 @@ final class UserRole extends Entity
     /**
      * Auto increment.
      */
-    public const AUTO = 'id';
+    public const string AUTO = 'id';
 
     /**
      * Soft delete column.
      */
-    public const DELETE_AT = 'delete_at';
+    public const string DELETE_AT = 'delete_at';
 
     #[Struct([
         self::COLUMN_NAME => 'ID',
