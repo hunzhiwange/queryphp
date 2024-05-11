@@ -15,11 +15,7 @@ final class SearchPlan extends Entity
     /**
      * Database table.
      */
-<<<<<<< HEAD
     public const string TABLE = 'search_plan';
-=======
-    public const string TABLE = 'search_plan';
->>>>>>> master
 
     /**
      * Database table name.
@@ -34,11 +30,7 @@ final class SearchPlan extends Entity
     /**
      * Unique Index.
      */
-<<<<<<< HEAD
     public const array UNIQUE_INDEX = [
-=======
-    public const array UNIQUE_INDEX = [
->>>>>>> master
         'PRIMARY' => [
             'field' => ['id'],
             'comment' => 'ID',
@@ -48,20 +40,12 @@ final class SearchPlan extends Entity
     /**
      * Auto increment.
      */
-<<<<<<< HEAD
     public const string AUTO = 'id';
-=======
-    public const string AUTO = 'id';
->>>>>>> master
 
     /**
      * Soft delete column.
      */
-<<<<<<< HEAD
     public const string DELETE_AT = 'delete_at';
-=======
-    public const string DELETE_AT = 'delete_at';
->>>>>>> master
 
     #[Struct([
         self::COLUMN_NAME => 'ID',
