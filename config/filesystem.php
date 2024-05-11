@@ -29,7 +29,7 @@ return [
             'driver_class' => \Leevel\Filesystem\Local::class,
 
             // path
-            'path' => Leevel::storagePath('attachments'),
+            'path' => Leevel::path('www/attachments'),
         ],
 
         'zip' => [
@@ -40,7 +40,7 @@ return [
             'driver_class' => \Leevel\Filesystem\Zip::class,
 
             // path
-            'path' => Leevel::storagePath('attachments/filesystem.zip'),
+            'path' => Leevel::path('www/attachments/filesystem.zip'),
         ],
 
         'sftp' => [
