@@ -15,22 +15,22 @@ final class ProjectIssueTag extends Entity
     /**
      * Database table.
      */
-    public const TABLE = 'project_issue_tag';
+    public const string TABLE = 'project_issue_tag';
 
     /**
      * Primary key.
      */
-    public const ID = 'id';
+    public const string ID = 'id';
 
     /**
      * Auto increment.
      */
-    public const AUTO = 'id';
+    public const string AUTO = 'id';
 
     /**
      * Soft delete column.
      */
-    public const DELETE_AT = 'delete_at';
+    public const string DELETE_AT = 'delete_at';
 
     #[Struct([
         self::COLUMN_NAME => 'ID',

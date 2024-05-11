@@ -15,22 +15,30 @@ final class SearchPlan extends Entity
     /**
      * Database table.
      */
-    public const TABLE = 'search_plan';
+<<<<<<< HEAD
+    public const string TABLE = 'search_plan';
+=======
+    public const string TABLE = 'search_plan';
+>>>>>>> master
 
     /**
      * Database table name.
      */
-    public const TABLE_NAME = '常用搜索';
+    public const string TABLE_NAME = '常用搜索';
 
     /**
      * Primary key.
      */
-    public const ID = 'id';
+    public const string ID = 'id';
 
     /**
      * Unique Index.
      */
-    public const UNIQUE_INDEX = [
+<<<<<<< HEAD
+    public const array UNIQUE_INDEX = [
+=======
+    public const array UNIQUE_INDEX = [
+>>>>>>> master
         'PRIMARY' => [
             'field' => ['id'],
             'comment' => 'ID',
@@ -40,12 +48,20 @@ final class SearchPlan extends Entity
     /**
      * Auto increment.
      */
-    public const AUTO = 'id';
+<<<<<<< HEAD
+    public const string AUTO = 'id';
+=======
+    public const string AUTO = 'id';
+>>>>>>> master
 
     /**
      * Soft delete column.
      */
-    public const DELETE_AT = 'delete_at';
+<<<<<<< HEAD
+    public const string DELETE_AT = 'delete_at';
+=======
+    public const string DELETE_AT = 'delete_at';
+>>>>>>> master
 
     #[Struct([
         self::COLUMN_NAME => 'ID',

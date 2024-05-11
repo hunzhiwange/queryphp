@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+<<<<<<< HEAD
 namespace database\data\migrations;
 
+=======
+>>>>>>> master
 use Phinx\Migration\AbstractMigration;
 
 final class PrintTemplateContent extends AbstractMigration

@@ -15,22 +15,22 @@ final class Job extends Entity
     /**
      * Database table.
      */
-    public const TABLE = 'job';
+    public const string TABLE = 'job';
 
     /**
      * Database table name.
      */
-    public const TABLE_NAME = '任务管理';
+    public const string TABLE_NAME = '任务管理';
 
     /**
      * Primary key.
      */
-    public const ID = 'id';
+    public const string ID = 'id';
 
     /**
      * Unique Index.
      */
-    public const UNIQUE_INDEX = [
+    public const array UNIQUE_INDEX = [
         'PRIMARY' => [
             'field' => ['id'],
             'comment' => 'ID',
@@ -40,12 +40,12 @@ final class Job extends Entity
     /**
      * Auto increment.
      */
-    public const AUTO = 'id';
+    public const string AUTO = 'id';
 
     /**
      * Soft delete column.
      */
-    public const DELETE_AT = 'delete_at';
+    public const string DELETE_AT = 'delete_at';
 
     #[Struct([
         self::COLUMN_NAME => 'ID',

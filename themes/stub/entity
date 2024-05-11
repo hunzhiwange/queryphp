@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace {{namespace}}\Domain\Entity{{sub_dir}};
+namespace {{namespace}}\{{app_name}}\Entity;
 
 use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\Struct;
@@ -13,17 +13,23 @@ final class {{file_name}} extends Entity
     /**
      * Database table.
      */
-    public const TABLE = '{{table_name}}';
+    public const string TABLE = '{{table_name}}';
+
+    /**
+     * Database table name.
+     */
+    public const string TABLE_NAME = '{{file_title}}';
 
     /**
      * Primary key.
      */
-    public const ID = {{primary_key}};
+    public const {{primary_key_type}} ID = {{primary_key}};
 
+{{unique_index}}
     /**
      * Auto increment.
      */
-    public const AUTO = {{auto_increment}};{{const_extend}}
+    public const string AUTO = {{auto_increment}};{{const_extend}}
 
 {{struct}}
 }

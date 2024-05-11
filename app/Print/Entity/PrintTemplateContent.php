@@ -15,22 +15,38 @@ final class PrintTemplateContent extends Entity
     /**
      * Database table.
      */
-    public const TABLE = 'print_template_content';
+<<<<<<< HEAD
+    public const string TABLE = 'print_template_content';
+=======
+    public const string TABLE = 'print_template_content';
+>>>>>>> master
 
     /**
      * Database table name.
      */
-    public const TABLE_NAME = '打印模板内容';
+<<<<<<< HEAD
+    public const string TABLE_NAME = '打印模板内容';
+=======
+    public const string TABLE_NAME = '打印模板内容';
+>>>>>>> master
 
     /**
      * Primary key.
      */
-    public const ID = 'id';
+<<<<<<< HEAD
+    public const string ID = 'id';
+=======
+    public const string ID = 'id';
+>>>>>>> master
 
     /**
      * Unique Index.
      */
-    public const UNIQUE_INDEX = [
+<<<<<<< HEAD
+    public const array UNIQUE_INDEX = [
+=======
+    public const array UNIQUE_INDEX = [
+>>>>>>> master
         'PRIMARY' => [
             'field' => ['id'],
             'comment' => 'ID',
@@ -40,12 +56,20 @@ final class PrintTemplateContent extends Entity
     /**
      * Auto increment.
      */
-    public const AUTO = 'id';
+<<<<<<< HEAD
+    public const string AUTO = 'id';
+=======
+    public const string AUTO = 'id';
+>>>>>>> master
 
     /**
      * Soft delete column.
      */
-    public const DELETE_AT = 'delete_at';
+<<<<<<< HEAD
+    public const string DELETE_AT = 'delete_at';
+=======
+    public const string DELETE_AT = 'delete_at';
+>>>>>>> master
 
     public const UPDATE_PROP = 'template_id';
 
