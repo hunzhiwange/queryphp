@@ -1,6 +1,9 @@
 <?php
 
 declare(strict_types=1);
+use Leevel\Filesystem\Local;
+use Leevel\Filesystem\Sftp;
+use Leevel\Filesystem\Zip;
 
 return [
     /*
@@ -26,10 +29,10 @@ return [
             'driver' => 'local',
 
             // 驱动类
-            'driver_class' => \Leevel\Filesystem\Local::class,
+            'driver_class' => Local::class,
 
             // path
-            'path' => Leevel::storagePath('attachments'),
+            'path' => Leevel::path('www/attachments'),
         ],
 
         'zip' => [
@@ -37,10 +40,10 @@ return [
             'driver' => 'zip',
 
             // 驱动类
-            'driver_class' => \Leevel\Filesystem\Zip::class,
+            'driver_class' => Zip::class,
 
             // path
-            'path' => Leevel::storagePath('attachments/filesystem.zip'),
+            'path' => Leevel::path('www/attachments/filesystem.zip'),
         ],
 
         'sftp' => [
@@ -48,7 +51,7 @@ return [
             'driver' => 'sftp',
 
             // 驱动类
-            'driver_class' => \Leevel\Filesystem\Sftp::class,
+            'driver_class' => Sftp::class,
 
             // 主机
             'host' => Leevel::env('FILESYSTEM_SFTP_HOST', 'sftp.example.com'),
