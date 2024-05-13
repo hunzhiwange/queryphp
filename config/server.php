@@ -1,155 +1,128 @@
 <?php
 
 declare(strict_types=1);
+use Leevel\Server\Http;
+use Leevel\Server\Process\HotOverload;
+use Leevel\Server\Process\MaxRequest;
+use Leevel\Server\Websocket;
 
 return [
     /*
      * ---------------------------------------------------------------
-     * 默认 Swoole 服务延迟重启计数器
+     * 默认服务驱动
      * ---------------------------------------------------------------
      *
-     * Swoole 服务延迟重启计数器，单位为次
-     * 总延迟时间等于 hotoverload_delay_count*hotoverload_time_interval
-     */
-    'hotoverload_delay_count' => 0,
-
-    /*
-     * ---------------------------------------------------------------
-     * 默认 Swoole 检测间隔时间
-     * ---------------------------------------------------------------
-     *
-     * Swoole 检测间隔时间，单位为毫秒
-     */
-    'hotoverload_time_interval' => 20,
-
-    /*
-     * ---------------------------------------------------------------
-     * 默认 Swoole 源代码监听目录
-     * ---------------------------------------------------------------
-     *
-     * 使用 HotOverload 监听 PHP 源码默认目录
-     * 程序文件更新时自动重启 Swoole 服务端
-     */
-    'hotoverload_watch' => [
-        Leevel::appPath('app'),
-        Leevel::configPath(),
-        Leevel::storagePath('bootstrap'),
-    ],
-
-    /*
-     * ---------------------------------------------------------------
-     * 默认视图驱动
-     * ---------------------------------------------------------------
-     *
-     * 系统为所有视图提供了统一的接口，在使用上拥有一致性
+     * 系统为所有服务提供了统一的接口，在使用上拥有一致性
      */
     'default' => Leevel::env('SERVER_DRIVER', 'http'),
 
     /*
      * ---------------------------------------------------------------
-     * Swoole Server
+     * 设置启动的 worker 进程数
      * ---------------------------------------------------------------
      *
-     * Swoole 基础服务器配置参数
-     * see https://wiki.swoole.com/wiki/page/274.html
-     * see https://wiki.swoole.com/wiki/page/p-server.html
+     * 可以启动CPU核心数量数，充分利用多核
+     * 开发阶段可以只启动一个即可
      */
-    // 监听 IP 地址
-    // see https://wiki.swoole.com/wiki/page/p-server.html
-    // see https://wiki.swoole.com/wiki/page/327.html22222
-    'host' => '0.0.0.0',
+    'worker_num' => (int) Leevel::env('SERVER_WORKER_NUM', 1),
 
-    // 监听端口
-    // see https://wiki.swoole.com/wiki/page/p-server.html
-    // see https://wiki.swoole.com/wiki/page/327.html
-    'port' => 9500,
+    /*
+     * ---------------------------------------------------------------
+     * PHP 内置服务器
+     * ---------------------------------------------------------------
+     *
+     * 仅可用于开发环境，不可用于生产
+     */
+    'build_in_port' => (int) Leevel::env('SERVER_BUILD_IN_PORT', 9527),
 
-    // 设置启动的 worker 进程数
-    // see https://wiki.swoole.com/wiki/page/275.html
-    'worker_num' => 1,
+    /*
+     * ---------------------------------------------------------------
+     * 自定义进程
+     * ---------------------------------------------------------------
+     *
+     * 可以启动CPU核心数量数，充分利用多核
+     */
+    'custom_process' => [
+        HotOverload::class => [
+            // 是否启用
+            'enabled' => Leevel::env('SERVER_CUSTOM_PROCESS_HOT_OVERLOAD_ENABLED', false),
 
-    // 设置启动的 task worker 进程数
-    // https://wiki.swoole.com/wiki/page/276.html
-    'task_worker_num' => 4,
+            // 默认服务延迟重启计数器
+            'delay_count' => (int) Leevel::env('SERVER_CUSTOM_PROCESS_HOT_OVERLOAD_DELAY_COUNT', 0),
 
-    // 自定义进程
-    'processes' => [],
+            // 默认检测间隔时间
+            // Swoole 检测间隔时间，单位为毫秒
+            'time_interval' => (int) Leevel::env('SERVER_CUSTOM_PROCESS_HOT_OVERLOAD_TIME_INTERVAL', 20),
 
-    // 开发阶段自定义进程
-    'processes_dev' => [
-        // 'Leevel\\Protocol\\Process\\HotOverload',
+            // 默认源代码监听目录
+            // 使用 HotOverload 监听 PHP 源码默认目录
+            // 程序文件更新时自动重启 Swoole 服务端
+            'hot_overload_watch' => [
+                Leevel::appPath('app'),
+                Leevel::configPath(),
+                Leevel::storagePath('bootstrap'),
+            ],
+        ],
+        MaxRequest::class => [
+            // 是否启用
+            'enabled' => Leevel::env('SERVER_CUSTOM_PROCESS_MAX_REQUEST_ENABLED', true),
+
+            // 设置 worker 进程的最大任务数
+            // 默认值：0 即不会退出进程
+            // https://wiki.swoole.com/#/server/setting?id=max_request
+            'max_request' => (int) Leevel::env('SERVER_CUSTOM_PROCESS_MAX_REQUEST_MAX_REQUEST', 0),
+
+            // 设置 Worker 进程收到停止服务通知后最大等待时间【默认值：3】
+            // https://wiki.swoole.com/#/server/setting?id=max_wait_time
+            'max_wait_time' => (int) Leevel::env('SERVER_CUSTOM_PROCESS_MAX_REQUEST_MAX_WAIT_TIME', 3),
+        ],
     ],
 
-    // 设置 worker 进程的最大任务数。【默认值：0 即不会退出进程】
-    'max_request' => 90000000,
-
-    'max_wait_time' => 30,
-
+    /*
+     * ---------------------------------------------------------------
+     * 服务连接配置
+     * ---------------------------------------------------------------
+     */
     'connect' => [
-        /*
-         * ---------------------------------------------------------------
-         * Swoole HTTP Server
-         * ---------------------------------------------------------------
-         *
-         * Swoole HTTP 服务器配置参数
-         * https://wiki.swoole.com/wiki/page/274.html
-         * https://wiki.swoole.com/wiki/page/620.html
-         */
+        // HTTP 服务器配置参数
         'http' => [
             // driver
             'driver' => 'http',
 
-            // 监听端口
-            // see https://wiki.swoole.com/wiki/page/p-server.html
-            // see https://wiki.swoole.com/wiki/page/327.html
-            'port' => 9530,
+            // 驱动类
+            'driver_class' => Http::class,
 
-            // Swoole 进程名称
+            // 监听地址
+            'host' => (string) Leevel::env('SERVER_HTTP_HOST', '127.0.0.1'),
+
+            // 监听端口
+            'port' => (int) Leevel::env('SERVER_HTTP_PORT', 9527),
+
+            // 进程名称
             'process_name' => 'SERVER.HTTP',
 
-            // Swoole 进程保存路径
+            // 进程保存路径
             'pid_path' => Leevel::storagePath('server/http.pid'),
-
-            // 开启静态路径
-            // 配合 Nginx 可以设置这里为 false,nginx 解析静态路径,只将动态路由转发给 Swoole
-            'enable_static_handler' => true,
-
-            // 开启静态路径目录
-            'document_root' => Leevel::path(),
         ],
 
-        /*
-         * ---------------------------------------------------------------
-         * Swoole WebSocket Server
-         * ---------------------------------------------------------------
-         *
-         * Swoole websocket 服务器配置参数
-         * https://wiki.swoole.com/wiki/page/274.html
-         * https://wiki.swoole.com/wiki/page/620.html
-         * https://wiki.swoole.com/wiki/page/397.html
-         */
+        // Websocket 服务器配置参数
         'websocket' => [
             // driver
             'driver' => 'websocket',
 
-            // 监听 IP 地址
-            // see https://wiki.swoole.com/wiki/page/p-server.html
-            // see https://wiki.swoole.com/wiki/page/327.html
-            'host' => '127.0.0.1',
+            // 驱动类
+            'driver_class' => Websocket::class,
+
+            // 监听地址
+            'host' => (string) Leevel::env('SERVER_WEBSOCKET_HOST', '127.0.0.1'),
 
             // 监听端口
-            // see https://wiki.swoole.com/wiki/page/p-server.html
-            // see https://wiki.swoole.com/wiki/page/327.html
-            'port' => 9502,
+            'port' => (int) Leevel::env('SERVER_WEBSOCKET_PORT', 9528),
 
-            // 设置启动的 task worker 进程数
-            // https://wiki.swoole.com/wiki/page/276.html
-            // 'task_worker_num' => 4,
-
-            // Swoole 进程名称
+            // 进程名称
             'process_name' => 'SERVER.WEBSOCKET',
 
-            // Swoole 进程保存路径
+            // 进程保存路径
             'pid_path' => Leevel::storagePath('server/websocket.pid'),
         ],
     ],
