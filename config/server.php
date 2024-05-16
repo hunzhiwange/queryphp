@@ -117,7 +117,7 @@ return [
             'host' => (string) Leevel::env('SERVER_WEBSOCKET_HOST', '127.0.0.1'),
 
             // 监听端口
-            'port' => (int) Leevel::env('SERVER_WEBSOCKET_PORT', 9528),
+            'port' => (int) Leevel::env('SERVER_WEBSOCKET_PORT', 9527),
 
             // 进程名称
             'process_name' => 'SERVER.WEBSOCKET',
