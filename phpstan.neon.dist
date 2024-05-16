@@ -45,6 +45,7 @@ parameters:
 		- '#[\S\s]+is never read, only written\.#'
 		- '#Cannot call method get\(\) on string\.#'
 		- '#[\S\s]+Swoole[\S\s]+\.#'
+		- '#[\S\s]+throws checked exception ValueError but it\''s missing from the PHPDoc @throws tag\.#'
 	exceptions:
 		uncheckedExceptionClasses:
 			- 'PHPStan\ShouldNotHappenException'
