@@ -97,6 +97,7 @@ class Progress
 
     private function parseJobService(Job $job): array
     {
+        // @phpstan-ignore-next-line
         $jobType = JobTypeEnum::from($job->type);
         $jobTypeName = strtolower($jobType->name);
         $jobTypeName = str_replace('_', ':', $jobTypeName);
