@@ -2,11 +2,6 @@
 
 declare(strict_types=1);
 
-<<<<<<< HEAD
-namespace database\data\migrations;
-
-=======
->>>>>>> master
 use Phinx\Migration\AbstractMigration;
 
 final class SearchPlan extends AbstractMigration
@@ -46,11 +41,5 @@ EOT;
         $this->execute($sql);
     }
 
-<<<<<<< HEAD
-    private function seed(): void
-    {
-    }
-=======
     private function seed(): void {}
->>>>>>> master
 }

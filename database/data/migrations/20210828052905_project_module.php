@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace database\data\migrations;
-
 use Phinx\Migration\AbstractMigration;
 
 final class ProjectModule extends AbstractMigration
