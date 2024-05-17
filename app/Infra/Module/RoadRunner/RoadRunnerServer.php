@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infra;
+namespace App\Infra\Module\RoadRunner;
 
 use Leevel\Http\Request;
 use Leevel\Kernel\IApp;

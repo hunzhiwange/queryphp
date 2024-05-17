@@ -13,7 +13,7 @@ use App\Company\Service\InjectPlatformCompany;
 use App\Infra\Exceptions\LockException;
 use App\Infra\Exceptions\UnauthorizedHttpException;
 use App\Infra\Helper\CreateSignature;
-use App\Infra\Lock;
+use App\Infra\Module\Auth\Lock;
 use App\Infra\Proxy\Permission;
 use Leevel\Auth\AuthException;
 use Leevel\Auth\Manager;

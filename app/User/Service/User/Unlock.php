@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Service\User;
 
-use App\Infra\Lock;
+use App\Infra\Module\Auth\Lock;
 use App\User\Entity\User;
 use Leevel\Database\Ddd\UnitOfWork;
 

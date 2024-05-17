@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Service\User;
 
-use App\Infra\Lock as CacheLock;
+use App\Infra\Module\Auth\Lock as CacheLock;
 
 /**
  * 锁定管理面板.

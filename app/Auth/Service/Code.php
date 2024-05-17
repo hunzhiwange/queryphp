@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\Service;
 
-use App\Infra\Code as Codes;
+use App\Infra\Module\Auth\Code as Codes;
 use SimpleCaptcha\Builder;
 
 /**

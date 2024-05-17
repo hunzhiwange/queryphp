@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Infra;
+namespace App\Infra\Module\Document;
 
-use Leevel\Cache\Manager;
-use Leevel\Cache\Redis;
 use Leevel\Support\Dto;
+use function redis_cache;
 
 class GenerateDocument extends Dto
 {

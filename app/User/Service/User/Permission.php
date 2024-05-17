@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Service\User;
 
-use App\Infra\PermissionCache;
+use App\Infra\Module\Auth\PermissionCache;
 
 /**
  * 用户权限数据.

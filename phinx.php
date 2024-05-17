@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Infra\PhinxLoad;
+use App\Infra\Module\Phinx\PhinxLoad;
 use Leevel\Di\Container;
 use Leevel\Kernel\App;
 use Symfony\Component\Console\Input\ArgvInput;
