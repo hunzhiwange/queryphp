@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Infra\Provider;
 
-use App\Infra\Permission;
-use App\Infra\PermissionCache;
+use App\Infra\Module\Auth\Permission;
+use App\Infra\Module\Auth\PermissionCache;
 use Godruoyi\Snowflake\RedisSequenceResolver;
 use Godruoyi\Snowflake\Snowflake;
-use Leevel\Cache\Manager;
-use Leevel\Cache\Redis;
 use Leevel\Di\IContainer;
 use Leevel\Di\Provider;
 

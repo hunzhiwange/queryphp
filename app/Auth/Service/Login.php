@@ -7,7 +7,7 @@ namespace App\Auth\Service;
 use App\Auth\Exceptions\AuthBusinessException;
 use App\Auth\Exceptions\AuthErrorCode;
 use App\Company\Entity\App;
-use App\Infra\Code;
+use App\Infra\Module\Auth\Code;
 use App\User\Entity\User;
 use Leevel\Auth\Proxy\Auth;
 use Leevel\Database\Ddd\UnitOfWork;

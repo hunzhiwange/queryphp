@@ -25,6 +25,7 @@
         "s1syphos/php-simple-captcha": "^2.3.0",
         "spiral/dumper": "^2.14.1",
         "spiral/roadrunner": "^2.12.1",
+        "symfony/lock": "v7.0.7",
         "symfony/psr-http-message-bridge": "^7.0.7",
         "symfony/workflow": "^7.0.7"
     },
@@ -36,7 +37,7 @@
     },
     "autoload": {
         "files": [
-            "app/Infra/functions.php"
+            "app/Infra/Helper/functions.php"
         ],
         "psr-4": {
             "App\\" : "app"

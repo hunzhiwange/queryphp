@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Infra;
+namespace App\Infra\Service\ApiQL;
 
 use Tests\TestCase;
+use function api_ql_batch;
 
 final class ApiQlBatchTest extends TestCase
 {
