@@ -46,6 +46,7 @@ parameters:
 		- '#Cannot call method get\(\) on string\.#'
 		- '#[\S\s]+Swoole[\S\s]+\.#'
 		- '#[\S\s]+throws checked exception ValueError but it\''s missing from the PHPDoc @throws tag\.#'
+		- '#Constructor of class [\S\s]+ has an unused parameter [\S\s]+\.#'
 	exceptions:
 		uncheckedExceptionClasses:
 			- 'PHPStan\ShouldNotHappenException'
