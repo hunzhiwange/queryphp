@@ -18,7 +18,7 @@
         "ext-openssl": "*",
         "composer-runtime-api": ">=2.1",
         "godruoyi/php-snowflake": "^3.0.0",
-        "hunzhiwange/framework": "^1.1.46",
+        "hunzhiwange/framework": "^1.1.49",
         "league/csv": "^9.15.0",
         "nesbot/carbon": "^3.3.1",
         "nyholm/psr7": "^1.8.1",
