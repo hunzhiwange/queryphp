@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infra\Provider;
 
-use App\Auth\Middleware\Auth;
 use Leevel\Router\RouterProvider;
 use Leevel\Session\Middleware\Session;
 
@@ -45,7 +44,6 @@ class Router extends RouterProvider
      * - 例外在应用执行结束后响应环节也会调用 HTTP 中间件.
      */
     protected array $middlewareAlias = [
-        'auth' => Auth::class,
         'session' => Session::class,
     ];
 
@@ -56,12 +54,6 @@ class Router extends RouterProvider
         'api/demo' => [
             'middlewares' => 'api',
         ],
-        'apiQL/v*' => [
-            'middlewares' => 'auth',
-        ],
-        '/app:*/apiQL/v*' => [
-            'middlewares' => 'auth',
-        ],
     ];
 
     /**
@@ -71,10 +63,10 @@ class Router extends RouterProvider
         'pet' => [],
         'store' => [],
         'user' => [],
-        '/apiQL/v1' => [
+        '/api/v1' => [
             'middlewares' => 'api',
         ],
-        'apiQL/v2' => [
+        'api/v2' => [
             'middlewares' => 'api',
         ],
         '/web/v1' => [
