@@ -10,7 +10,7 @@ return [
      *
      * 系统为所有日志提供了统一的接口，在使用上拥有一致性
      */
-    'default' => Leevel::env('LOG_DRIVER', 'file'),
+    'default' => App::proxy()->env('LOG_DRIVER', 'file'),
 
     /*
      * ---------------------------------------------------------------
@@ -20,7 +20,7 @@ return [
      * 默认为 info
      */
     'level' => [
-        \Leevel\Log\ILog::DEFAULT_MESSAGE_CATEGORY => Leevel::env('LOG_DEFAULT_LEVEL', \Psr\Log\LogLevel::INFO),
+        \Leevel\Log\ILog::DEFAULT_MESSAGE_CATEGORY => App::proxy()->env('LOG_DEFAULT_LEVEL', \Psr\Log\LogLevel::INFO),
     ],
 
     /*
@@ -30,7 +30,7 @@ return [
      *
      * 隔离不同环境的日志
      */
-    'channel' => Leevel::env('ENVIRONMENT', 'development'),
+    'channel' => App::proxy()->env('ENVIRONMENT', 'development'),
 
     /*
      * ---------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
             'name' => 'Y-m-d',
 
             // 默认的日志路径
-            'path' => Leevel::storagePath('logs'),
+            'path' => App::proxy()->storagePath('logs'),
 
             // 日志行时间格式化，支持微秒
             'format' => 'Y-m-d H:i:s u',

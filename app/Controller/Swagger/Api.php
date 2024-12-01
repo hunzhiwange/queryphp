@@ -42,7 +42,7 @@ class Api
     protected function path(): array
     {
         return [
-            \Leevel::appPath('app/Controller/Swagger/ApiDemo.php'),
+            \App::proxy()->appPath('app/Controller/Swagger/ApiDemo.php'),
         ];
     }
 
@@ -52,7 +52,7 @@ class Api
     protected function basePath(): array
     {
         return [
-            \Leevel::path('app/Infra/Swagger'),
+            \App::proxy()->path('app/Infra/Swagger'),
         ];
     }
 

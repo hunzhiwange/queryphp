@@ -35,7 +35,7 @@ class Runtime extends ExceptionRuntime
      */
     public function getHttpExceptionView(HttpException $e): string
     {
-        return \Leevel::path(sprintf('themes/exceptions/%d.php', $e->getStatusCode()));
+        return \App::proxy()->path(sprintf('themes/exceptions/%d.php', $e->getStatusCode()));
     }
 
     /**
@@ -43,7 +43,7 @@ class Runtime extends ExceptionRuntime
      */
     public function getDefaultHttpExceptionView(): string
     {
-        return \Leevel::path('themes/exceptions/default.php');
+        return \App::proxy()->path('themes/exceptions/default.php');
     }
 
     /**
@@ -51,7 +51,7 @@ class Runtime extends ExceptionRuntime
      */
     public function getJsonExceptionView(HttpException $e): string
     {
-        return \Leevel::path(sprintf('themes/exceptions/%d.php', $e->getStatusCode()));
+        return \App::proxy()->path(sprintf('themes/exceptions/%d.php', $e->getStatusCode()));
     }
 
     /**

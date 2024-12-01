@@ -140,9 +140,10 @@
         "php-cs-fixer": "@php build/php-cs-fixer fix",
         "phpstan": "@php build/phpstan analyse",
         "migrate": "@php leevel migrate:migrate",
-        "migrate-common": "@php leevel migrate:migrate --database=development_common",
+        "migrate-data": "@php leevel migrate:migrate --environment=data",
+        "migrate-common": "@php leevel migrate:migrate --environment=common",
         "migrate-phpunit": "@php leevel migrate:migrate --env=env.phpunit",
-        "migrate-phpunit-common": "@php leevel migrate:migrate --env=env.phpunit --database=development_common",
+        "migrate-phpunit-common": "@php leevel migrate:migrate --env=env.phpunit --environment=common",
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php -r \"file_exists('.env.phpunit') || copy('.env.phpunit.example', '.env.phpunit');\"",

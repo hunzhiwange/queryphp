@@ -11,7 +11,7 @@ return [
      * 根据不同的阶段设置不同的开发环境
      * 可以为 production : 生产环境 testing : 测试环境 development : 开发环境
      */
-    'environment' => Leevel::env('ENVIRONMENT', 'development'),
+    'environment' => App::proxy()->env('ENVIRONMENT', 'development'),
 
     /*
      * ---------------------------------------------------------------
@@ -20,7 +20,7 @@ return [
      *
      * 打开调试模式可以显示更多精确的错误信息
      */
-    'debug' => Leevel::env('DEBUG', false),
+    'debug' => App::proxy()->env('DEBUG', false),
 
     /*
      * ---------------------------------------------------------------
@@ -49,7 +49,7 @@ return [
      * 请妥善保管此安全 key,防止密码被人破解
      * \Leevel\Encryption\Encryption 安全 key
      */
-    'auth_key' => Leevel::env('AUTH_KEY'),
+    'auth_key' => App::proxy()->env('AUTH_KEY'),
 
     /*
      * ---------------------------------------------------------------
@@ -67,7 +67,7 @@ return [
      *
      * 加密数据附加的生成签名
      */
-    'auth_rsa_private' => Leevel::env('AUTH_RSA_PRIVATE_KEY'),
+    'auth_rsa_private' => App::proxy()->env('AUTH_RSA_PRIVATE_KEY'),
 
     /*
      * ---------------------------------------------------------------
@@ -76,7 +76,7 @@ return [
      *
      * 解密数据附加的校验签名
      */
-    'auth_rsa_public' => Leevel::env('AUTH_RSA_PUBLIC_KEY'),
+    'auth_rsa_public' => App::proxy()->env('AUTH_RSA_PUBLIC_KEY'),
 
     /*
      * ---------------------------------------------------------------
@@ -86,7 +86,7 @@ return [
      * 设置静态资源 URL 地址
      * php leevel link:static
      */
-    'static_url' => Leevel::env('STATIC_URL', 'http://127.0.0.1:9527/static'),
+    'static_url' => App::proxy()->env('STATIC_URL', 'http://127.0.0.1:9527/static'),
 
     /*
      * ---------------------------------------------------------------
@@ -96,5 +96,5 @@ return [
      * 设置上传附件 URL 地址
      * php leevel link:attachments
      */
-    'attachments_url' => Leevel::env('ATTACHMENTS_URL', 'http://127.0.0.1:9527/attachments'),
+    'attachments_url' => App::proxy()->env('ATTACHMENTS_URL', 'http://127.0.0.1:9527/attachments'),
 ];

@@ -38,7 +38,7 @@ return [
      * 设置好过期时间，超过这个时间系统会重新要求认证, 小与等于 0 表示永不过期
      * 过期时间为当前时间加上以秒为单位的数量
      */
-    'expire' => (int) Leevel::env('AUTH_EXPIRE', 2592000),
+    'expire' => (int) App::proxy()->env('AUTH_EXPIRE', 2592000),
 
     /*
      * ---------------------------------------------------------------
@@ -97,7 +97,7 @@ return [
             'aud' => null,
 
             // 加密 key
-            'auth_key' => Leevel::env('JWT_AUTH_KEY'),
+            'auth_key' => App::proxy()->env('JWT_AUTH_KEY'),
 
             // 签名算法
             'alg' => 'HS256',

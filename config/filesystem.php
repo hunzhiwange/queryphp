@@ -13,7 +13,7 @@ return [
      *
      * 采用什么方式发送邮件数据
      */
-    'default' => Leevel::env('FILESYSTEM_DRIVER', 'local'),
+    'default' => App::proxy()->env('FILESYSTEM_DRIVER', 'local'),
 
     /*
      * ---------------------------------------------------------------
@@ -32,7 +32,7 @@ return [
             'driver_class' => Local::class,
 
             // path
-            'path' => Leevel::path('www/attachments'),
+            'path' => App::proxy()->path('www/attachments'),
         ],
 
         'zip' => [
@@ -43,7 +43,7 @@ return [
             'driver_class' => Zip::class,
 
             // path
-            'path' => Leevel::path('www/attachments/filesystem.zip'),
+            'path' => App::proxy()->path('www/attachments/filesystem.zip'),
         ],
 
         'sftp' => [
@@ -54,16 +54,16 @@ return [
             'driver_class' => Sftp::class,
 
             // 主机
-            'host' => Leevel::env('FILESYSTEM_SFTP_HOST', 'sftp.example.com'),
+            'host' => App::proxy()->env('FILESYSTEM_SFTP_HOST', 'sftp.example.com'),
 
             // 端口
-            'port' => (int) Leevel::env('FILESYSTEM_SFTP_PORT', 22),
+            'port' => (int) App::proxy()->env('FILESYSTEM_SFTP_PORT', 22),
 
             // 用户名
-            'username' => Leevel::env('FILESYSTEM_SFTP_USERNAME', 'your-username'),
+            'username' => App::proxy()->env('FILESYSTEM_SFTP_USERNAME', 'your-username'),
 
             // 密码
-            'password' => Leevel::env('FILESYSTEM_SFTP_PASSWORD', 'your-password'),
+            'password' => App::proxy()->env('FILESYSTEM_SFTP_PASSWORD', 'your-password'),
 
             // 根目录
             'root' => '',
