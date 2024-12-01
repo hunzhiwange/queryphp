@@ -28,7 +28,6 @@
     },
     "require-dev": {
         "codedungeon/php-cli-colors": "^1.12.2",
-        "robmorgan/phinx": "^0.16.0",
         "zircote/swagger-php": "^4.9.2",
         "swoole/ide-helper": "^5.1.2"
     },

@@ -87,6 +87,13 @@ return [
             // 连接的存活时间(单位为秒)
             'keep_alive_duration' => (int) App::proxy()->env('DATABASE_MYSQL_POOL_KEEP_ALIVE_DURATION', 60),
         ],
+        'data' => [
+            // driver
+            'driver' => 'mysql',
+
+            // 数据库名字
+            'name' => App::proxy()->env('DATABASE_NAME_PREFIX', ''),
+        ],
         'common' => [
             // driver
             'driver' => 'mysql',

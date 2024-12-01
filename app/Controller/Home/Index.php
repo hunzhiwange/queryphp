@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Home;
 
+use App\Infra\Entity\Platform;
+use App\Infra\Entity\SearchPlan;
 use Leevel\View\Proxy\View;
 
 /**
