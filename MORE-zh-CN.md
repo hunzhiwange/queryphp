@@ -68,8 +68,8 @@ DATABASE_COMMON_PASSWORD = 123456
 
 ```diff
 - $php leevel migrate:migrate
-- $php php leevel migrate:migrate --environment=data
-- php leevel migrate:migrate --environment=common
+- $php leevel migrate:migrate --environment=data
+- $php leevel migrate:migrate --environment=common
 + $composer migrate
 + $composer migrate-data
 + $composer migrate-common
@@ -114,9 +114,9 @@ DATABASE_COMMON_PASSWORD = 123456
 ### 执行数据库迁移命令
 
 ```diff
-- php leevel migrate:migrate --env=env.phpunit
+- $php leevel migrate:migrate --env=env.phpunit
 + $composer migrate-phpunit
-- php leevel migrate:migrate --env=env.phpunit --environment=common
+- $php leevel migrate:migrate --env=env.phpunit --environment=common
 + $composer migrate-phpunit-common
 ```
 
