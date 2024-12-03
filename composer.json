@@ -19,12 +19,12 @@
         "composer-runtime-api": ">=2.1",
         "godruoyi/php-snowflake": "^3.1.1",
         "guzzlehttp/guzzle": "^7.9.2",
-        "hunzhiwange/framework": "^2.0.2",
+        "hunzhiwange/framework": "dev-master",
         "nesbot/carbon": "^3.8.2",
         "nyholm/psr7": "^1.8.2",
         "spiral/dumper": "^2.14.1",
         "spiral/roadrunner": "^2.12.1",
-        "symfony/psr-http-message-bridge": "^7.1.6"
+        "symfony/psr-http-message-bridge": "^7.2.0"
     },
     "require-dev": {
         "codedungeon/php-cli-colors": "^1.12.2",
