@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Company\Service\InjectCommonData;
 use App\Infra\Exceptions\Runtime;
 use App\Infra\Kernel\Kernel;
 use App\Infra\Kernel\KernelConsole;
@@ -38,9 +37,6 @@ if (!class_exists('Tests\\TestCase')) {
         php leevel development');
 }
 
-// 注册 PHPUNIT 友好提示
-(new \NunoMaduro\Collision\Provider())->register();
-
 $container = Container::singletons();
 $container->singleton(IContainer::class, $container);
 
@@ -56,12 +52,3 @@ $container->instance('request', Request::createFromGlobals());
 $container->alias('request', [Request::class, Request::class]);
 // @phpstan-ignore-next-line
 $container->make(IKernelConsole::class)->bootstrap();
-
-// 注入平台和公司信息
-(new \App\Company\Service\InjectPlatformCompany())->handle(100000, 100100);
-
-// 注入账号信息
-(new \App\Company\Service\InjectAccount())->handle(4145731145437184, 'admin');
-
-// 注入公共信息
-(new InjectCommonData())->handle();

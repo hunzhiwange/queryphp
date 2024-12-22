@@ -50,7 +50,6 @@
             "/vendor/symfony/translation-contracts",
             "/vendor/symfony/translation",
             "/vendor/symfony/service-contracts",
-            "/vendor/symfony/config",
             "/vendor/symfony/psr-http-message-bridge",
             "/vendor/symfony/yaml",
             "/vendor/symfony/string",
@@ -58,6 +57,7 @@
             "/vendor/filp/",
             "/vendor/spiral/",
             "/vendor/maximebf/",
+            "/vendor/leevel/debugbar/",
             "/vendor/vlucas/",
             "/vendor/nunomaduro/",
             "/vendor/gettext/",
@@ -65,9 +65,7 @@
             "/vendor/psr/",
             "/vendor/hunzhiwange/framework/src/**/Console/",
             "/vendor/codedungeon/",
-            "/vendor/nikic/php-parser/",
-            "/vendor/cakephp/",
-            "/vendor/robmorgan/phinx/"
+            "/vendor/nikic/php-parser/"
         ]
     },
     "autoload-dev": {
