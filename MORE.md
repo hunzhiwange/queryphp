@@ -7,10 +7,6 @@ _____________                           _______________
         \_\                /_/_/         /_/
 ```
 
-<p align="center">
-    <a href="./MORE.md">English</a> | <a href="./MORE-zh-CN.md">中文</a>
-</p>
-
 ## How to install
 
 ## Base use
