@@ -15,7 +15,7 @@
   <a href='https://www.queryphp.com/docs/'><img src='https://img.shields.io/badge/docs-passing-green.svg?maxAge=2592000' alt='QueryPHP Doc' /></a>
   <a href='https://github.com/hunzhiwange/queryphp/blob/master/.php-cs-fixer.dist.php'><img src='https://img.shields.io/badge/style-passing-green.svg?maxAge=2592000' alt='QueryPHP Style' /></a>
   <a href="https://github.com/hunzhiwange/queryphp/actions">
-    <img alt="Build Status" src="https://github.com/hunzhiwange/queryphp/workflows/tests/badge.svg" /></a>
+    <img alt="Build Status" src="https://github.com/hunzhiwange/queryphp/actions/workflows/tests.yml/badge.svg?branch=master" /></a>
   <a href="https://codecov.io/gh/hunzhiwange/queryphp">
     <img src="https://codecov.io/gh/hunzhiwange/queryphp/branch/master/graph/badge.svg?token=D4WV1IC2R3"/>
   </a>
@@ -25,7 +25,7 @@
   <a href="https://github.com/hunzhiwange/framework"><b>The Core Framework</b></a>
   <br />
   <a href="https://github.com/hunzhiwange/framework/actions">
-    <img alt="Build Status" src="https://github.com/hunzhiwange/framework/workflows/tests/badge.svg" /></a>
+    <img alt="Build Status" src="https://github.com/hunzhiwange/framework/actions/workflows/tests.yml/badge.svg?branch=master" /></a>
   <a href="https://codecov.io/gh/hunzhiwange/framework">
     <img src="https://codecov.io/gh/hunzhiwange/framework/branch/master/graph/badge.svg?token=GMWV1X9F7T"/>
   </a>
