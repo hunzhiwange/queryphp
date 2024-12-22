@@ -19,7 +19,7 @@
         "composer-runtime-api": ">=2.1",
         "godruoyi/php-snowflake": "^3.1.1",
         "guzzlehttp/guzzle": "^7.9.2",
-        "hunzhiwange/framework": "dev-master",
+        "hunzhiwange/framework": "^2.0.6",
         "nesbot/carbon": "^3.8.2",
         "nyholm/psr7": "^1.8.2",
         "spiral/dumper": "^2.14.1",
