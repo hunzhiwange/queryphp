@@ -23,7 +23,7 @@ class BusinessException extends BaseBusinessException
         int|object $code = 0,
         string|array $message = '',
         bool $overrideMessage = false,
-        \Throwable $previous = null,
+        ?\Throwable $previous = null,
         float $duration = 5,
     ) {
         [$code, $message] = $this->prepareCodeAndMessage($code, $message, $overrideMessage);
@@ -53,7 +53,7 @@ class BusinessException extends BaseBusinessException
     {
         try {
             /** @var \Leevel\Log\ILog $log */
-            $log = \App::make('log');
+            $log = \App::proxy()->make('log');
             $log->error($this->getMessage(), ['exception' => (string) $this]);
         } catch (Throwable) {
         }

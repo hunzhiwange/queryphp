@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Infra\Service;
 
-class Page
+class Demo
 {
     public function handle(DemoParams $params): array
     {
         $params->validate();
-        
+
         return [
             'hello' => 'world',
         ];

@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Infra\Module\RoadRunner\RoadRunnerDump;
-use App\Infra\Proxy\Permission;
 use Leevel\Cache\Manager;
 use Leevel\Cache\Redis;
 use Leevel\Database\IDatabase;
@@ -19,16 +18,6 @@ if (!function_exists('enabledCoroutine')) {
     function enabledCoroutine(): bool
     {
         return container()->enabledCoroutine();
-    }
-}
-
-if (!function_exists('permission')) {
-    /**
-     * 校验权限.
-     */
-    function permission(string $resource, ?string $method = null): bool
-    {
-        return Permission::handle($resource, $method);
     }
 }
 
@@ -241,7 +230,7 @@ if (!function_exists('redis_cache')) {
     function redis_cache(): \Redis
     {
         /** @var Manager $manager */
-        $manager = \App::make('caches');
+        $manager = \App::proxy()->make('caches');
 
         /** @var Redis $phpRedis */
         $phpRedis = $manager->connect('redis');

@@ -28,7 +28,7 @@ class ForceCloseDebug
 
     public static function restore(): void
     {
-        Config::set('debug', static::$debug);
+        Config::proxy()->set('debug', static::$debug);
 
         $debugBar = static::getDebugBar();
         if (static::$debugBar) {
