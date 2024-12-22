@@ -29,7 +29,7 @@
     "require-dev": {
         "codedungeon/php-cli-colors": "^1.12.2",
         "zircote/swagger-php": "^4.9.2",
-        "swoole/ide-helper": "^5.1.2"
+        "swoole/ide-helper": "^6.0.0"
     },
     "autoload": {
         "files": [
@@ -44,8 +44,6 @@
             "/**/*Test.php",
             "/**/Fixtures/",
             "/vendor/symfony/var-dumper",
-            "/vendor/symfony/polyfill-php72",
-            "/vendor/symfony/polyfill-php73",
             "/vendor/symfony/polyfill-mbstring",
             "/vendor/symfony/var-dumper",
             "/vendor/symfony/console",
@@ -63,11 +61,8 @@
             "/vendor/vlucas/",
             "/vendor/nunomaduro/",
             "/vendor/gettext/",
-            "/vendor/doctrine/",
-            "/vendor/egulias/",
             "/vendor/hunzhiwange/framework/src/Leevel/Debug/",
             "/vendor/psr/",
-            "/vendor/clio/",
             "/vendor/hunzhiwange/framework/src/**/Console/",
             "/vendor/codedungeon/",
             "/vendor/nikic/php-parser/",
