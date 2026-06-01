@@ -8,11 +8,9 @@ class RedisSequence
 {
     protected string $prefix;
 
-    public function __construct(protected \Redis $redis)
-    {
-    }
+    public function __construct(protected \Redis $redis) {}
 
-    public function sequence(PipelineCycleEnum $pipelineCycle, int $step = 1, int $beginNumber = 1, \Closure $sourceNext = null): int
+    public function sequence(PipelineCycleEnum $pipelineCycle, int $step = 1, int $beginNumber = 1, ?\Closure $sourceNext = null): int
     {
         $lua = <<<'LUA'
 if redis.call('set', KEYS[1], ARGV[1], "EX", ARGV[2], "NX") then

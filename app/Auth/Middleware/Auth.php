@@ -80,7 +80,7 @@ class Auth extends BaseAuth
     /**
      * 请求.
      *
-     * @throws \App\Infra\Exceptions\UnauthorizedHttpException|\Exception
+     * @throws \Exception|UnauthorizedHttpException
      */
     public function handle(\Closure $next, Request $request): Response
     {
@@ -103,7 +103,7 @@ class Auth extends BaseAuth
             if ($isLogin = $this->manager->isLogin()) {
                 $this->validateLock($request, $token);
                 if (!$this->isIgnorePermission($request)) {
-                    //static::validatePermission($request);
+                    // static::validatePermission($request);
                 }
             }
 
@@ -141,7 +141,7 @@ class Auth extends BaseAuth
     /**
      * 权限校验.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
+     * @throws AuthBusinessException|\Exception
      */
     public static function validatePermission(Request $request): void
     {
@@ -186,7 +186,7 @@ class Auth extends BaseAuth
     private function setAccountNotLogin(): void
     {
         $user = [
-            'id' =>  0,
+            'id' => 0,
             'name' => '游客',
         ];
         (new InjectAccount())->handle($user['id'], $user['name']);
@@ -195,7 +195,7 @@ class Auth extends BaseAuth
     /**
      * 校验格式化.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
+     * @throws AuthBusinessException|\Exception
      */
     private function validateFormat(Request $request): void
     {
@@ -212,7 +212,7 @@ class Auth extends BaseAuth
     /**
      * 校验应用 KEY.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
+     * @throws AuthBusinessException|\Exception
      */
     private function validateAppKey(Request $request): void
     {
@@ -223,7 +223,7 @@ class Auth extends BaseAuth
 
         // 如果 app_key 很长，表示这是为客户端生成的临时 app_key 需要解密
         if (\strlen($appKey) > 32) {
-            $appKey = Encryption::decrypt($appKey);
+            $appKey = Encryption::proxy()->decrypt($appKey);
             if (false === $appKey) {
                 throw new AuthBusinessException(AuthErrorCode::AUTH_APP_KEY_INVALID);
             }
@@ -239,7 +239,7 @@ class Auth extends BaseAuth
 
         // 如果传递了 app_secret，表示这是为客户端生成的临时 app_secret 需要解密
         $this->appSecret = (string) $appSecret;
-        $appSecret = Encryption::decrypt($appSecret);
+        $appSecret = Encryption::proxy()->decrypt($appSecret);
         if (false === $appSecret) {
             throw new AuthBusinessException(AuthErrorCode::AUTH_APP_SECRET_INVALID);
         }
@@ -258,7 +258,7 @@ class Auth extends BaseAuth
     /**
      * 校验是否过期.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
+     * @throws AuthBusinessException|\Exception
      */
     private function validateExpired(Request $request): void
     {
@@ -276,7 +276,7 @@ class Auth extends BaseAuth
     /**
      * 校验签名.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
+     * @throws AuthBusinessException|\Exception
      */
     private function validateSignature(Request $request, string $appSecret): void
     {
@@ -316,6 +316,7 @@ class Auth extends BaseAuth
         // 兼容 header，也可以通过 get 或者 post 来设置 token
         if ($token = $request->headers->get('token')) {
             $request->query->set('token', $token);
+
             // @phpstan-ignore-next-line
             return $token;
         }
@@ -332,7 +333,7 @@ class Auth extends BaseAuth
     /**
      * 验证是否锁定.
      *
-     * @throws \App\Infra\Exceptions\LockException|\Exception
+     * @throws \Exception|LockException
      */
     private function validateLock(Request $request, string $token): void
     {

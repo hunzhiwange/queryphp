@@ -1,6 +1,10 @@
 <?php
 
 declare(strict_types=1);
+use Leevel\Log\File;
+use Leevel\Log\ILog;
+use Leevel\Log\Syslog;
+use Psr\Log\LogLevel;
 
 return [
     /*
@@ -10,7 +14,7 @@ return [
      *
      * 系统为所有日志提供了统一的接口，在使用上拥有一致性
      */
-    'default' => Leevel::env('LOG_DRIVER', 'file'),
+    'default' => App::proxy()->env('LOG_DRIVER', 'file'),
 
     /*
      * ---------------------------------------------------------------
@@ -20,7 +24,7 @@ return [
      * 默认为 info
      */
     'level' => [
-        \Leevel\Log\ILog::DEFAULT_MESSAGE_CATEGORY => Leevel::env('LOG_DEFAULT_LEVEL', \Psr\Log\LogLevel::INFO),
+        ILog::DEFAULT_MESSAGE_CATEGORY => App::proxy()->env('LOG_DEFAULT_LEVEL', LogLevel::INFO),
     ],
 
     /*
@@ -30,7 +34,7 @@ return [
      *
      * 隔离不同环境的日志
      */
-    'channel' => Leevel::env('ENVIRONMENT', 'development'),
+    'channel' => App::proxy()->env('ENVIRONMENT', 'development'),
 
     /*
      * ---------------------------------------------------------------
@@ -46,7 +50,7 @@ return [
             'driver' => 'file',
 
             // 驱动类
-            'driver_class' => \Leevel\Log\File::class,
+            'driver_class' => File::class,
 
             // 频道
             'channel' => null,
@@ -56,7 +60,7 @@ return [
             'name' => 'Y-m-d',
 
             // 默认的日志路径
-            'path' => Leevel::storagePath('logs'),
+            'path' => App::proxy()->storagePath('logs'),
 
             // 日志行时间格式化，支持微秒
             'format' => 'Y-m-d H:i:s u',
@@ -73,7 +77,7 @@ return [
             'driver' => 'syslog',
 
             // 驱动类
-            'driver_class' => \Leevel\Log\Syslog::class,
+            'driver_class' => Syslog::class,
 
             // 频道
             'channel' => null,

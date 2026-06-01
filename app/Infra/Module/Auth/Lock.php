@@ -16,7 +16,7 @@ class Lock
      */
     public function set(string $id): void
     {
-        Cache::set('lock_'.$id, '1');
+        Cache::proxy()->set('lock_'.$id, '1');
     }
 
     /**
@@ -24,7 +24,7 @@ class Lock
      */
     public function delete(string $id): void
     {
-        Cache::delete('lock_'.$id);
+        Cache::proxy()->delete('lock_'.$id);
     }
 
     /**
@@ -32,6 +32,6 @@ class Lock
      */
     public function has(string $id): bool
     {
-        return false !== Cache::get('lock_'.$id);
+        return false !== Cache::proxy()->get('lock_'.$id);
     }
 }

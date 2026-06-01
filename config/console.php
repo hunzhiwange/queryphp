@@ -26,7 +26,7 @@ return [
      *
      * 基于单元测试的文档自动生成
      */
-    'framework_doc_outputdir' => Leevel::env('FRAMEWORK_DOC_OUTPUTDIR', ''),
+    'framework_doc_outputdir' => App::proxy()->env('FRAMEWORK_DOC_OUTPUTDIR', ''),
 
     /*
      * ---------------------------------------------------------------
@@ -35,7 +35,7 @@ return [
      *
      * 在文档中标注来源 Git 地址
      */
-    'framework_doc_git' => Leevel::env('FRAMEWORK_DOC_GIT', ''),
+    'framework_doc_git' => App::proxy()->env('FRAMEWORK_DOC_GIT', ''),
 
     /*
      * ---------------------------------------------------------------
@@ -44,7 +44,7 @@ return [
      *
      * 文档生成日志
      */
-    'framework_doc_logdir' => Leevel::env('FRAMEWORK_DOC_LOGDIR', ''),
+    'framework_doc_logdir' => App::proxy()->env('FRAMEWORK_DOC_LOGDIR', ''),
 
     /*
      * ---------------------------------------------------------------
@@ -53,7 +53,7 @@ return [
      *
      * 语言设置
      */
-    'framework_doc_i18n' => Leevel::env('FRAMEWORK_DOC_I18N', ',zh-CN,zh-TW'),
+    'framework_doc_i18n' => App::proxy()->env('FRAMEWORK_DOC_I18N', ',zh-CN,zh-TW'),
 
     /*
      * ---------------------------------------------------------------
@@ -62,5 +62,5 @@ return [
      *
      * 语言设置
      */
-    'app_i18n' => Leevel::env('APP_I18N', 'zh-CN,zh-TW,en-US'),
+    'app_i18n' => App::proxy()->env('APP_I18N', 'zh-CN,zh-TW,en-US'),
 ];

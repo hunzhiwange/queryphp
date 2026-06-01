@@ -18,10 +18,11 @@ trait ValidateParams
         ?string $exceptionClass = null,
         ?object $code = null
     ): void {
-        $validator = Validate::make($validator, $scene, $this->toArray())->getValidator();
+        $validator = Validate::proxy()->make($validator, $scene, $this->toArray())->getValidator();
         if ($validator->fail()) {
             $e = json_encode($validator->error(), JSON_UNESCAPED_UNICODE);
             $exceptionClass ??= BusinessException::class;
+
             // @phpstan-ignore-next-line
             throw new $exceptionClass($code ?? ErrorCode::BASE_INVALID_ARGUMENT, $e, true);
         }

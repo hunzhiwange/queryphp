@@ -24,8 +24,7 @@ class Login
         private Request $request,
         private Code $code,
         private UnitOfWork $w
-    ) {
-    }
+    ) {}
 
     /**
      * @throws \Exception
@@ -36,7 +35,7 @@ class Login
         $this->validateCode($params);
         $appSecret = $this->findAppSecret($params->appKey);
         $user = $this->validateUser($params->name, $params->password);
-        Auth::setTokenName($this->createToken($params, $appSecret));
+        Auth::proxy()->setTokenName($this->createToken($params, $appSecret));
         $tmpAppSecret = $this->makeTmpAppSecret($params->appKey, $appSecret);
 
         $id = $user->id;
@@ -51,7 +50,7 @@ class Login
         ])->toArray();
         $userData['id'] = $id;
 
-        $token = Auth::login($userData);
+        $token = Auth::proxy()->login($userData);
 
         return array_merge($tmpAppSecret, [
             'token' => $token,
@@ -65,28 +64,28 @@ class Login
     {
         $token = substr(
             md5(
-                $this->request->server->get('HTTP_USER_AGENT').
-                $this->request->server->get('SERVER_ADDR').
-                $params->appKey.
-                $params->name.
-                $params->password.
-                substr((string) time(), 0, 6)
+                $this->request->server->get('HTTP_USER_AGENT')
+                .$this->request->server->get('SERVER_ADDR')
+                .$params->appKey
+                .$params->name
+                .$params->password
+                .substr((string) time(), 0, 6)
             ),
             8,
             6
-        ).
-        Str::randAlphaNum(10);
+        )
+        .Str::randAlphaNum(10);
 
         return 'token:'.hash_hmac('sha256', $token, $appSecret);
     }
 
     private function makeTmpAppSecret(string $appKey, string $appSecret): array
     {
-        $authExpire = (int) \Leevel::env('AUTH_EXPIRE', 2592000);
+        $authExpire = (int) \App::proxy()->env('AUTH_EXPIRE', 2592000);
 
         return [
-            'tmp_app_key' => Encryption::encrypt($appKey, $authExpire),
-            'tmp_app_secret' => Encryption::encrypt($appSecret, $authExpire),
+            'tmp_app_key' => Encryption::proxy()->encrypt($appKey, $authExpire),
+            'tmp_app_secret' => Encryption::proxy()->encrypt($appSecret, $authExpire),
         ];
     }
 
@@ -117,7 +116,7 @@ class Login
     /**
      * 校验验证码.
      *
-     * @throws \App\Auth\Exceptions\AuthBusinessException|\Exception
+     * @throws AuthBusinessException|\Exception
      */
     private function validateCode(LoginParams $params): void
     {

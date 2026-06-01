@@ -16,7 +16,7 @@ trait ValidateEntity
     {
         [$validatorRules, $validatorMessages] = $entityClass::columnValidators($validatorScenes);
 
-        $validator = Validate::make(
+        $validator = Validate::proxy()->make(
             $data,
             $validatorRules,
             $entityClass::columnNames(),

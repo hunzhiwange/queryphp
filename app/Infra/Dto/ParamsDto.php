@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infra\Dto;
 
+use App\Infra\Validate\IValidator;
 use App\Infra\Validate\ValidateParams;
 use Leevel\Support\Arr\Except;
 use Leevel\Support\Dto;
@@ -61,8 +62,8 @@ class ParamsDto extends Dto
         if ($this->validatorClass) {
             $validatorClass = $this->validatorClass;
 
-            /** @var \App\Infra\Validate\IValidator $validator */
-            $validator = \Leevel::make($validatorClass, $this->validatorArgs());
+            /** @var IValidator $validator */
+            $validator = \App::proxy()->make($validatorClass, $this->validatorArgs());
 
             $this->baseValidate(
                 $validator,
@@ -73,9 +74,6 @@ class ParamsDto extends Dto
         $this->afterValidate();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function toArray(): array
     {
         $data = parent::toArray();
@@ -93,16 +91,12 @@ class ParamsDto extends Dto
     /**
      * 验证前.
      */
-    protected function beforeValidate(): void
-    {
-    }
+    protected function beforeValidate(): void {}
 
     /**
      * 验证后.
      */
-    protected function afterValidate(): void
-    {
-    }
+    protected function afterValidate(): void {}
 
     /**
      * 验证器初始化参数.

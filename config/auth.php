@@ -1,6 +1,9 @@
 <?php
 
 declare(strict_types=1);
+use Leevel\Auth\Jwt;
+use Leevel\Auth\Session;
+use Leevel\Auth\Token;
 
 return [
     /*
@@ -38,7 +41,7 @@ return [
      * 设置好过期时间，超过这个时间系统会重新要求认证, 小与等于 0 表示永不过期
      * 过期时间为当前时间加上以秒为单位的数量
      */
-    'expire' => (int) Leevel::env('AUTH_EXPIRE', 2592000),
+    'expire' => (int) App::proxy()->env('AUTH_EXPIRE', 2592000),
 
     /*
      * ---------------------------------------------------------------
@@ -54,7 +57,7 @@ return [
             'driver' => 'session',
 
             // 驱动类
-            'driver_class' => \Leevel\Auth\Session::class,
+            'driver_class' => Session::class,
 
             // token
             'token' => 'token',
@@ -68,7 +71,7 @@ return [
             'driver' => 'token',
 
             // 驱动类
-            'driver_class' => \Leevel\Auth\Token::class,
+            'driver_class' => Token::class,
 
             // token，需要从接口传入进来
             'token' => null,
@@ -82,7 +85,7 @@ return [
             'driver' => 'jwt',
 
             // 驱动类
-            'driver_class' => \Leevel\Auth\Jwt::class,
+            'driver_class' => Jwt::class,
 
             // token，需要从接口传入进来
             'token' => null,
@@ -97,7 +100,7 @@ return [
             'aud' => null,
 
             // 加密 key
-            'auth_key' => Leevel::env('JWT_AUTH_KEY'),
+            'auth_key' => App::proxy()->env('JWT_AUTH_KEY'),
 
             // 签名算法
             'alg' => 'HS256',

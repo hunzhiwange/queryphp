@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Infra\Exceptions;
 
 use Leevel\Kernel\Exceptions\BusinessException as BaseBusinessException;
-use Throwable;
+use Leevel\Log\ILog;
 
 /**
  * 通用业务操作异常.
@@ -21,9 +21,9 @@ class BusinessException extends BaseBusinessException
      */
     public function __construct(
         int|object $code = 0,
-        string|array $message = '',
+        array|string $message = '',
         bool $overrideMessage = false,
-        \Throwable $previous = null,
+        ?\Throwable $previous = null,
         float $duration = 5,
     ) {
         [$code, $message] = $this->prepareCodeAndMessage($code, $message, $overrideMessage);
@@ -52,10 +52,10 @@ class BusinessException extends BaseBusinessException
     protected function reportToLog(): void
     {
         try {
-            /** @var \Leevel\Log\ILog $log */
-            $log = \App::make('log');
+            /** @var ILog $log */
+            $log = \App::proxy()->make('log');
             $log->error($this->getMessage(), ['exception' => (string) $this]);
-        } catch (Throwable) {
+        } catch (\Throwable) {
         }
     }
 }

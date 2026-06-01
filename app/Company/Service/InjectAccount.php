@@ -12,7 +12,7 @@ class InjectAccount
     public function handle(int $accountId, string $accountName): void
     {
         // 设置数据精度
-        \App::instance('account_id', $accountId);
-        \App::instance('account_name', $accountName);
+        \App::proxy()->instance('account_id', $accountId);
+        \App::proxy()->instance('account_name', $accountName);
     }
 }

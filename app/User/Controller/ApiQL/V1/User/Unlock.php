@@ -23,7 +23,7 @@ class Unlock
     {
         $params = new UnlockParams($request->all());
         $params->id = get_account_id();
-        $params->token = Auth::getTokenName();
+        $params->token = Auth::proxy()->getTokenName();
 
         return $service->handle($params);
     }

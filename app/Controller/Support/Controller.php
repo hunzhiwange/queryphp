@@ -56,6 +56,6 @@ trait Controller
      */
     private function userId(): int
     {
-        return Auth::getLogin()['id'];
+        return Auth::proxy()->getLogin()['id'];
     }
 }

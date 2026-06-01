@@ -10,7 +10,7 @@ return [
      *
      * 返回接口中显示系统注入的调试信息
      */
-    'json' => Leevel::env('DEBUG_JSON', true),
+    'json' => App::proxy()->env('DEBUG_JSON', true),
 
     /*
      * ---------------------------------------------------------------
@@ -19,5 +19,5 @@ return [
      *
      * 浏览器控制台中显示系统注入的调试信息
      */
-    'console' => Leevel::env('DEBUG_CONSOLE', true),
+    'console' => App::proxy()->env('DEBUG_CONSOLE', true),
 ];

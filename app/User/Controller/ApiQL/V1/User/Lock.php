@@ -19,7 +19,7 @@ class Lock
     public function handle(Request $request, Service $service): array
     {
         $params = new LockParams($request->all());
-        $params->token = Auth::getTokenName();
+        $params->token = Auth::proxy()->getTokenName();
 
         return $service->handle($params);
     }

@@ -58,12 +58,12 @@ class PlatformCompany
     {
         // 业务库
         $database = ($platformDb ? 'plat'.$platformDb.'_' : '').$dbPrefix.($companyDb ?: '');
-        Config::set('database\\connect.mysql.name', $database);
+        Config::proxy()->set('database\connect.mysql.name', $database);
 
         // 公共库
         if ($platformDb) {
             $commonDatabase = 'plat'.$platformDb.'_'.$commonDbPrefix;
-            Config::set('database\\connect.common.name', $commonDatabase);
+            Config::proxy()->set('database\connect.common.name', $commonDatabase);
         }
     }
 }

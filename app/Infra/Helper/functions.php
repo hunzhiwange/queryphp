@@ -18,6 +18,8 @@ use App\Infra\Service\ApiQL\ApiQLStoreParams;
 use App\Infra\Service\ApiQL\ApiQLUpdate;
 use App\Infra\Service\ApiQL\ApiQLUpdateParams;
 use App\Infra\Service\Support\ReadParams;
+use Godruoyi\Snowflake\RedisSequenceResolver;
+use Godruoyi\Snowflake\Snowflake;
 use Leevel\Cache\Manager;
 use Leevel\Cache\Redis;
 use Leevel\Config\Proxy\Config;
@@ -58,8 +60,8 @@ if (!function_exists('sql_listener')) {
     function sql_listener(Closure $call): void
     {
         // @phpstan-ignore-next-line
-        \App::make('event')
-            ->register(IDatabase::SQL_EVENT, function (string $event, string $sql) use ($call): void {
+        App::proxy()->make('event')
+            ->register(IDatabase::SQL_EVENT, static function (string $event, string $sql) use ($call): void {
                 $call($event, $sql);
             })
         ;
@@ -266,7 +268,7 @@ if (!function_exists('get_company_id')) {
      */
     function get_company_id(): int
     {
-        return (int) \App::make('company_id');
+        return (int) App::proxy()->make('company_id');
     }
 }
 
@@ -276,7 +278,7 @@ if (!function_exists('get_platform_id')) {
      */
     function get_platform_id(): int
     {
-        return (int) \App::make('platform_id');
+        return (int) App::proxy()->make('platform_id');
     }
 }
 
@@ -286,7 +288,7 @@ if (!function_exists('get_client_id')) {
      */
     function get_client_id(): int
     {
-        return (int) \App::make('client_id');
+        return (int) App::proxy()->make('client_id');
     }
 }
 
@@ -296,7 +298,7 @@ if (!function_exists('get_account_id')) {
      */
     function get_account_id(): int
     {
-        return (int) \App::make('account_id');
+        return (int) App::proxy()->make('account_id');
     }
 }
 
@@ -306,7 +308,7 @@ if (!function_exists('get_account_name')) {
      */
     function get_account_name(): string
     {
-        return (string) \App::make('account_name');
+        return (string) App::proxy()->make('account_name');
     }
 }
 
@@ -439,7 +441,7 @@ if (!function_exists('http_request_value')) {
                             if (!is_int($filter)) {
                                 $filter = filter_id($filter);
                                 if (false === $filter) {
-                                    throw new \Exception('Filter does not exist.');
+                                    throw new Exception('Filter does not exist.');
                                 }
                             }
                             $data = filter_var($data, $filter);
@@ -493,7 +495,7 @@ if (!function_exists('http_request')) {
     {
         $request = container()->make(Request::class);
         if (!$request instanceof Request) {
-            throw new \Exception('Request is invalid.');
+            throw new Exception('Request is invalid.');
         }
 
         return $request;
@@ -641,7 +643,7 @@ if (!function_exists('format_images')) {
             return '';
         }
 
-        return Config::get('attachments_url').'/'.$images;
+        return Config::proxy()->get('attachments_url').'/'.$images;
     }
 }
 
@@ -653,8 +655,8 @@ if (!function_exists('format_images_list')) {
         }
 
         $imagesList = explode(',', $images);
-        $attachmentsUrl = Config::get('attachments_url');
-        $imagesList = array_map(fn (string $v): string => $attachmentsUrl.'/'.$v, $imagesList);
+        $attachmentsUrl = Config::proxy()->get('attachments_url');
+        $imagesList = array_map(static fn (string $v): string => $attachmentsUrl.'/'.$v, $imagesList);
 
         return implode(',', $imagesList);
     }
@@ -851,7 +853,7 @@ if (!function_exists('format_by_default_data')) {
                         'string' => (string) $value,
                         'array' => (array) $value,
                         'object' => (object) $value,
-                        default => throw new \Exception('Unsupported default value type.'),
+                        default => throw new Exception('Unsupported default value type.'),
                     };
                 }
             }
@@ -887,8 +889,8 @@ if (!function_exists('check_entity_class')) {
      */
     function check_entity_class(string $entityClass): void
     {
-        if (!is_subclass_of($entityClass, \Leevel\Database\Ddd\Entity::class)) {
-            throw new \Exception(sprintf('Entity class %s is invalid.', $entityClass));
+        if (!is_subclass_of($entityClass, Entity::class)) {
+            throw new Exception(sprintf('Entity class %s is invalid.', $entityClass));
         }
     }
 }
@@ -906,8 +908,8 @@ if (!function_exists('get_date_rand')) {
             return $currentTime;
         }
 
-        /** @var \Godruoyi\Snowflake\RedisSequenceResolver $redisSequence */
-        $redisSequence = \App::make('redis_sequence');
+        /** @var RedisSequenceResolver $redisSequence */
+        $redisSequence = App::proxy()->make('redis_sequence');
         $nextSequence = $redisSequence->sequence((int) $currentTime);
 
         return $currentTime.($nextSequence ?: '');
@@ -920,8 +922,8 @@ if (!function_exists('snowflake')) {
      */
     function snowflake(): int
     {
-        /** @var \Godruoyi\Snowflake\Snowflake $snowflake */
-        $snowflake = \App::make('snowflake');
+        /** @var Snowflake $snowflake */
+        $snowflake = App::proxy()->make('snowflake');
 
         return (int) $snowflake->id();
     }
@@ -931,7 +933,7 @@ if (!function_exists('generate_document')) {
     /**
      * 获取编号.
      */
-    function generate_document(array $config = [], Closure $sourceNext = null): string
+    function generate_document(array $config = [], ?Closure $sourceNext = null): string
     {
         return (new GenerateDocument($config))->handle($sourceNext);
     }
@@ -945,22 +947,22 @@ if (!function_exists('switch_database')) {
     {
         // 注册平台到容器
         $platformDbAndTable = PlatformCompany::getPlatformDbAndTable($platformId);
-        \App::instance('platform_id', $platformId);
-        \App::container()->instance('platform_db', $platformDbAndTable['db']);
-        \App::container()->instance('platform_table', $platformDbAndTable['table']);
+        App::proxy()->instance('platform_id', $platformId);
+        App::proxy()->container()->instance('platform_db', $platformDbAndTable['db']);
+        App::proxy()->container()->instance('platform_table', $platformDbAndTable['table']);
 
         // 注册公司到容器
         $companyDbAndTable = PlatformCompany::getCompanyDbAndTable($companyId);
-        \App::instance('company_id', $companyId);
-        \App::container()->instance('company_db', $companyDbAndTable['db']);
-        \App::container()->instance('company_table', $companyDbAndTable['table']);
+        App::proxy()->instance('company_id', $companyId);
+        App::proxy()->container()->instance('company_db', $companyDbAndTable['db']);
+        App::proxy()->container()->instance('company_table', $companyDbAndTable['table']);
 
         // 设置平台和公司连接
         PlatformCompany::setPlatformCompanyConnect(
             $platformDbAndTable['db'],
             $companyDbAndTable['db'],
-            (string) Leevel::env('DATABASE_NAME_PREFIX', ''),
-            (string) Leevel::env('DATABASE_COMMON_NAME_PREFIX', ''),
+            (string) App::proxy()->env('DATABASE_NAME_PREFIX', ''),
+            (string) App::proxy()->env('DATABASE_COMMON_NAME_PREFIX', ''),
         );
     }
 }
@@ -973,8 +975,8 @@ if (!function_exists('get_platform_company_entity_table')) {
      */
     function get_platform_company_entity_table(string $table): string
     {
-        $platformTable = (int) \App::make('platform_table');
-        $companyTable = (int) \App::make('company_table');
+        $platformTable = (int) App::proxy()->make('platform_table');
+        $companyTable = (int) App::proxy()->make('company_table');
 
         return ($platformTable ? 'plat'.$platformTable.'_' : '').$table.($companyTable ?: '');
     }
@@ -988,7 +990,7 @@ if (!function_exists('get_company_entity_table')) {
      */
     function get_company_entity_table(string $table): string
     {
-        $companyTable = (int) \App::make('company_table');
+        $companyTable = (int) App::proxy()->make('company_table');
 
         return $table.($companyTable ?: '');
     }
@@ -1002,7 +1004,7 @@ if (!function_exists('get_platform_entity_table')) {
      */
     function get_platform_entity_table(string $table): string
     {
-        $platformTable = (int) \App::make('platform_table');
+        $platformTable = (int) App::proxy()->make('platform_table');
 
         return ($platformTable ? 'plat'.$platformTable.'_' : '').$table;
     }
@@ -1034,7 +1036,7 @@ if (!function_exists('batch_inject_snowflake_id')) {
             } else {
                 $singlePrimaryKey = $entityClass::primaryKey()[0];
             }
-        } catch (\Throwable) {
+        } catch (Throwable) {
             $shouldInjectId = false;
             $singlePrimaryKey = null;
         }
@@ -1133,9 +1135,9 @@ if (!function_exists('api_ql_batch')) {
         ]);
 
         // 关闭调试
-        $closeDebug = $withoutDebug && \Leevel::isDebug();
+        $closeDebug = $withoutDebug && App::proxy()->isDebug();
         if ($closeDebug) {
-            Config::set('debug', false);
+            Config::proxy()->set('debug', false);
         }
 
         $batchParams = new ApiQLBatchParams($request->all());
@@ -1153,7 +1155,7 @@ if (!function_exists('api_ql_batch')) {
 
         // 恢复调试
         if ($closeDebug) {
-            Config::set('debug', true);
+            Config::proxy()->set('debug', true);
         }
 
         return $data;
@@ -1180,7 +1182,7 @@ if (!function_exists('get_entity_class_name')) {
     function get_entity_class_name(string $entityClass): string
     {
         $entityClass = substr($entityClass, 4);
-        $entityClass = str_replace('\\Entity\\', '\\', $entityClass);
+        $entityClass = str_replace('\Entity\\', '\\', $entityClass);
         $entityClass = str_replace('\\', ':', $entityClass);
 
         return UnCamelize::handle($entityClass);
@@ -1344,7 +1346,7 @@ if (!function_exists('redis_cache')) {
     function redis_cache(): \Redis
     {
         /** @var Manager $manager */
-        $manager = \App::make('caches');
+        $manager = App::proxy()->make('caches');
 
         /** @var Redis $phpRedis */
         $phpRedis = $manager->connect('redis');

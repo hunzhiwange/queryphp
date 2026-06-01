@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Infra\Module\Document;
 
 use Leevel\Support\Dto;
-use function redis_cache;
 
 class GenerateDocument extends Dto
 {
@@ -49,7 +48,7 @@ class GenerateDocument extends Dto
      */
     public string $format = '';
 
-    public function handle(\Closure $sourceNext = null): string
+    public function handle(?\Closure $sourceNext = null): string
     {
         if ($sourceNext) {
             $sourceNext = $this->getNextSequenceClosure($sourceNext);
@@ -60,7 +59,7 @@ class GenerateDocument extends Dto
         if (\strlen((string) $next) < $this->serialLength) {
             $next = str_pad((string) ($next + $this->step), $this->serialLength, '0', STR_PAD_LEFT);
         } else {
-            $next = $next + $this->step;
+            $next += $this->step;
         }
 
         $currentTime = date($this->format ?: $this->pipelineCycle->value);
@@ -74,7 +73,7 @@ class GenerateDocument extends Dto
 
     protected function getRedisSequence(): RedisSequence
     {
-        $redis = redis_cache();
+        $redis = \redis_cache();
 
         return (new RedisSequence($redis))->setCachePrefix('redis_sequence:'.$this->guid.':');
     }
@@ -85,7 +84,7 @@ class GenerateDocument extends Dto
             $sourceNext = (string) $sourceNext();
 
             $next = (int) substr($sourceNext, -$this->serialLength);
-            $next = $next + $this->step;
+            $next += $this->step;
 
             $time = substr($sourceNext, 0, -$this->serialLength - 1);
             $time = (string) preg_replace('/[^0-9]/i', '', $time);

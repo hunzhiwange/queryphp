@@ -6,9 +6,9 @@
 
 <p align="center">
   <a href='https://packagist.org/packages/hunzhiwange/queryphp'><img src='http://img.shields.io/packagist/v/hunzhiwange/queryphp.svg' alt='Latest Stable Version' /></a>
-  <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-%3E%3D%208.1.0-8892BF.svg" alt="Minimum PHP Version"></a>
+  <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-%3E%3D%208.5.6-8892BF.svg" alt="Minimum PHP Version"></a>
   <a href="https://github.com/spiral/roadrunner"><img alt="RoadRunner Version" src="https://img.shields.io/badge/RoadRunner-%3E=2.12.1-brightgreen.svg" /></a>
-  <a href="https://github.com/swoole/swoole-src"><img alt="Swoole Version" src="https://img.shields.io/badge/Swoole-%3E=5.1.2-brightgreen.svg" /></a>
+  <a href="https://github.com/swoole/swoole-src"><img alt="Swoole Version" src="https://img.shields.io/badge/Swoole-%3E=6.2.1-brightgreen.svg" /></a>
   <a href="http://opensource.org/licenses/MIT">
     <img alt="QueryPHP License" src="https://poser.pugx.org/hunzhiwange/queryphp/license.svg" /></a>
   <br />

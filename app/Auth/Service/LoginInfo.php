@@ -13,6 +13,6 @@ class LoginInfo
 {
     public function handle(): array
     {
-        return Auth::getLogin();
+        return Auth::proxy()->getLogin();
     }
 }

@@ -13,7 +13,7 @@ class Logout
 {
     public function handle(): array
     {
-        Auth::logout();
+        Auth::proxy()->logout();
 
         return [];
     }

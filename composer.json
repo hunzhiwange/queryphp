@@ -1,7 +1,7 @@
 {
     "name": "hunzhiwange/queryphp",
     "description": "The QueryPHP Application.",
-    "keywords": ["php", "framework", "queryphp"],
+    "keywords": ["php", "framework", "queryphp", "swoole"],
     "license": "MIT",
     "homepage": "http://www.queryphp.com",
     "support": {
@@ -13,27 +13,26 @@
         "email": "635750556@qq.com"
     }],
     "require": {
-        "php": ">=8.3",
+        "php": ">=8.5.6",
         "ext-mbstring": "*",
         "ext-openssl": "*",
         "composer-runtime-api": ">=2.1",
-        "godruoyi/php-snowflake": "^3.0.0",
-        "hunzhiwange/framework": "^1.1.46",
-        "league/csv": "^9.15.0",
-        "nesbot/carbon": "^3.3.1",
-        "nyholm/psr7": "^1.8.1",
+        "godruoyi/php-snowflake": "^3.2.3",
+        "hunzhiwange/framework": "^2.1.2",
+        "league/csv": "^9.28.0",
+        "nesbot/carbon": "^3.11.4",
+        "nyholm/psr7": "^1.8.2",
         "s1syphos/php-simple-captcha": "^2.3.0",
-        "spiral/dumper": "^2.14.1",
-        "spiral/roadrunner": "^2.12.1",
-        "symfony/lock": "v7.0.7",
-        "symfony/psr-http-message-bridge": "^7.0.7",
-        "symfony/workflow": "^7.0.7"
+        "spiral/dumper": "dev-master",
+        "spiral/roadrunner": "^2025.1.14",
+        "symfony/lock": "^8.1.0",
+        "symfony/psr-http-message-bridge": "^8.1.0",
+        "symfony/workflow": "^8.1.0"
     },
     "require-dev": {
         "codedungeon/php-cli-colors": "^1.12.2",
-        "robmorgan/phinx": "^0.16.0",
-        "zircote/swagger-php": "^4.9.2",
-        "swoole/ide-helper": "^5.1.2"
+        "robmorgan/phinx": "^0.16.11",
+        "zircote/swagger-php": "^6.1.2"
     },
     "autoload": {
         "files": [

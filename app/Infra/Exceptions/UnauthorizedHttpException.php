@@ -17,9 +17,9 @@ class UnauthorizedHttpException extends BaseUnauthorizedHttpException
      */
     public function __construct(
         int|object $code = 0,
-        string|array $message = '',
+        array|string $message = '',
         bool $overrideMessage = false,
-        \Throwable $previous = null
+        ?\Throwable $previous = null
     ) {
         [$code, $message] = $this->prepareCodeAndMessage($code, $message, $overrideMessage);
         parent::__construct($message, $code, $previous);

@@ -13,6 +13,6 @@ trait CloseDebug
 {
     private function closeDebug(): void
     {
-        Config::set('debug', false);
+        Config::proxy()->set('debug', false);
     }
 }

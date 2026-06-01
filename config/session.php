@@ -1,6 +1,9 @@
 <?php
 
 declare(strict_types=1);
+use Leevel\Session\File;
+use Leevel\Session\Redis;
+use Leevel\Session\Test;
 
 return [
     /*
@@ -10,7 +13,7 @@ return [
      *
      * 采用什么源保存 session 数据，默认采用文件
      */
-    'default' => Leevel::env('SESSION_DRIVER', 'file'),
+    'default' => App::proxy()->env('SESSION_DRIVER', 'file'),
 
     /*
      * ---------------------------------------------------------------
@@ -56,10 +59,10 @@ return [
             'driver' => 'file',
 
             // 驱动类
-            'driver_class' => \Leevel\Session\File::class,
+            'driver_class' => File::class,
 
             // 文件缓存驱动
-            'file_driver' => Leevel::env('SESSION_FILE_DRIVER', 'file_session'),
+            'file_driver' => App::proxy()->env('SESSION_FILE_DRIVER', 'file_session'),
         ],
 
         'redis' => [
@@ -67,10 +70,10 @@ return [
             'driver' => 'redis',
 
             // 驱动类
-            'driver_class' => \Leevel\Session\Redis::class,
+            'driver_class' => Redis::class,
 
             // Redis 缓存驱动
-            'redis_driver' => Leevel::env('SESSION_REDIS_DRIVER', 'redis_session'),
+            'redis_driver' => App::proxy()->env('SESSION_REDIS_DRIVER', 'redis_session'),
         ],
 
         'test' => [
@@ -78,7 +81,7 @@ return [
             'driver' => 'test',
 
             // 驱动类
-            'driver_class' => \Leevel\Session\Test::class,
+            'driver_class' => Test::class,
         ],
     ],
 ];

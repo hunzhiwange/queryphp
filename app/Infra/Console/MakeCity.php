@@ -41,7 +41,7 @@ class MakeCity extends Command
         foreach ($data as $v) {
             $result[] = [(string) $v['city_id'], (string) $v['parent_id'], $v['name']];
         }
-        CreateFile::handle(\Leevel::path('storage/city.js'), ConvertJson::handle($result));
+        CreateFile::handle(\App::proxy()->path('storage/city.js'), ConvertJson::handle($result));
 
         return self::SUCCESS;
     }

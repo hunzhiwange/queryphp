@@ -1,6 +1,8 @@
 <?php
 
 declare(strict_types=1);
+use Leevel\View\Html;
+use Leevel\View\Phpui;
 
 return [
     /*
@@ -10,7 +12,7 @@ return [
      *
      * 系统为所有视图提供了统一的接口，在使用上拥有一致性
      */
-    'default' => Leevel::env('VIEW_DRIVER', 'html'),
+    'default' => App::proxy()->env('VIEW_DRIVER', 'html'),
 
     /*
      * ---------------------------------------------------------------
@@ -44,7 +46,7 @@ return [
             'driver' => 'html',
 
             // 驱动类
-            'driver_class' => \Leevel\View\Html::class,
+            'driver_class' => Html::class,
 
             // 后缀
             'suffix' => '.html',
@@ -55,7 +57,7 @@ return [
             'driver' => 'phpui',
 
             // 驱动类
-            'driver_class' => \Leevel\View\Phpui::class,
+            'driver_class' => Phpui::class,
 
             // 后缀
             'suffix' => '.php',

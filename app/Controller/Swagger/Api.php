@@ -21,9 +21,9 @@ class Api
      */
     public function handle(): string
     {
-        if (!\class_exists(Generator::class)) {
-            throw new \Exception('Swagger PHP do not support `composer dump-autoload --no-dev`, '.
-                'because `zircote/swagger-php` is in `require-dev` of  composer.json');
+        if (!class_exists(Generator::class)) {
+            throw new \Exception('Swagger PHP do not support `composer dump-autoload --no-dev`, '
+                .'because `zircote/swagger-php` is in `require-dev` of  composer.json');
         }
 
         // 扫描路径
@@ -42,7 +42,7 @@ class Api
     protected function path(): array
     {
         return [
-            \Leevel::appPath('app/Controller/Swagger/ApiDemo.php'),
+            \App::proxy()->appPath('app/Controller/Swagger/ApiDemo.php'),
         ];
     }
 
@@ -52,7 +52,7 @@ class Api
     protected function basePath(): array
     {
         return [
-            \Leevel::path('app/Infra/Swagger'),
+            \App::proxy()->path('app/Infra/Swagger'),
         ];
     }
 

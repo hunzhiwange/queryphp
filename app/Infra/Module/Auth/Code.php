@@ -16,7 +16,7 @@ class Code
      */
     public function set(string $id, string $code): void
     {
-        Cache::set('captcha:'.$id, $code);
+        Cache::proxy()->set('captcha:'.$id, $code);
     }
 
     /**
@@ -25,6 +25,6 @@ class Code
     public function get(string $id): string
     {
         // @phpstan-ignore-next-line
-        return Cache::get('captcha:'.$id) ?: '';
+        return Cache::proxy()->get('captcha:'.$id) ?: '';
     }
 }

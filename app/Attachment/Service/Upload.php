@@ -27,7 +27,7 @@ class Upload
     /**
      * 保存文件.
      *
-     * @throws \App\Attachment\Exceptions\UploadBusinessException
+     * @throws UploadBusinessException
      * @throws \Exception
      */
     private function save(UploadedFile $file, ?string $name = null): array
@@ -56,14 +56,14 @@ class Upload
             return $name.'.'.$ext;
         }
 
-        return date('Y-m-d').'/'.date('H').'/'.
-            md5(uniqid().Str::randAlpha(32)).'.'.$ext;
+        return date('Y-m-d').'/'.date('H').'/'
+            .md5(uniqid().Str::randAlpha(32)).'.'.$ext;
     }
 
     /**
      * 保存文件到服务器.
      *
-     * @throws \App\Attachment\Exceptions\UploadBusinessException
+     * @throws UploadBusinessException
      * @throws \Exception
      */
     private function saveFile(string $sourcePath, string $savePath): void
@@ -81,6 +81,6 @@ class Upload
      */
     private function savePathForUrl(string $savePath): string
     {
-        return Config::get('attachments_url').'/'.$savePath;
+        return Config::proxy()->get('attachments_url').'/'.$savePath;
     }
 }

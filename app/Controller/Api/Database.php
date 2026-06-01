@@ -19,9 +19,9 @@ class Database
     public function handle(): array
     {
         return [
-            'count' => Db::connect('common')
+            'count' => Db::proxy()->connect('common')
                 ->table('user')
-                ->findCount()
+                ->findCount(),
         ];
     }
 }

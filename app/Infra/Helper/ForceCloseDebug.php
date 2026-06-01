@@ -14,10 +14,10 @@ class ForceCloseDebug
 {
     public static function handle(): void
     {
-        Config::set('debug', false);
+        Config::proxy()->set('debug', false);
 
         /** @var Debug $debug */
-        $debug = \App::make(Debug::class);
+        $debug = \App::proxy()->make(Debug::class);
         $debug->disable();
     }
 }
