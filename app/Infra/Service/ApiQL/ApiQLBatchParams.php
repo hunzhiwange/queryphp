@@ -7,7 +7,7 @@ namespace App\Infra\Service\ApiQL;
 use App\Infra\Exceptions\BusinessException;
 use App\Infra\Exceptions\ErrorCode;
 use Leevel\Support\Dto;
-use Leevel\Support\Type;
+use Leevel\Support\Type\Arr;
 
 /**
  * API查询语言列表参数.
@@ -30,7 +30,7 @@ class ApiQLBatchParams extends Dto
             throw new BusinessException(ErrorCode::API_QL_BATCH_APIS_EMPTY);
         }
 
-        if (!Type::arr($this->apis, ['string:string'])) {
+        if (!Arr::handle($this->apis, ['string:string'])) {
             throw new BusinessException(ErrorCode::API_QL_BATCH_APIS_INVALID);
         }
     }
@@ -41,7 +41,7 @@ class ApiQLBatchParams extends Dto
             throw new BusinessException(ErrorCode::API_QL_BATCH_PARAMS_EMPTY);
         }
 
-        if (!Type::arr($this->params, ['string:array'])) {
+        if (!Arr::handle($this->params, ['string:array'])) {
             throw new BusinessException(ErrorCode::API_QL_BATCH_PARAMS_INVALID);
         }
 

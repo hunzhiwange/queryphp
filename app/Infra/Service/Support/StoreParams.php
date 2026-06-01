@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Infra\Service\Support;
 
 use App\Infra\Dto\ParamsDto;
-use Leevel\Validate\UniqueRule;
+use Leevel\Validate\Helper\Unique;
 
 /**
  * 通用保存参数.
@@ -19,12 +19,9 @@ class StoreParams extends ParamsDto
      */
     public bool $entityAutoFlush = true;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function validatorArgs(): array
     {
-        $uniqueRule = UniqueRule::rule(
+        $uniqueRule = Unique::rule(
             $this->entityClass,
         );
 

@@ -28,6 +28,6 @@ class Store
         $params = new ApiQLStoreParams($input);
         $entity = $service->handle($params);
 
-        return $entity->id() ?: [];
+        return $entity->getId() ?: [];
     }
 }

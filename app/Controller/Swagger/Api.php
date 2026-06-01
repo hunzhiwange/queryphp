@@ -28,7 +28,7 @@ class Api
 
         // 扫描路径
         $path = array_merge($this->basePath(), $this->path());
-        $openApi = Generator::scan($path, ['validate' => false]);
+        $openApi = (new Generator())->generate($path, validate: false);
 
         // 关闭调试模式
         $this->forceCloseDebug();

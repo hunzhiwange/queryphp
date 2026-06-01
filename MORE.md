@@ -256,15 +256,15 @@ You can download the binary file.
 
 ```
 cd /data/server
-wget https://github.com/spiral/roadrunner/releases/download/2.12.1/roadrunner-1.8.2-darwin-amd64.zip
-unzip roadrunner-2.12.1-darwin-amd64.zip
+wget https://github.com/spiral/roadrunner/releases/download/x.y.z/roadrunner-1.8.2-darwin-amd64.zip
+unzip roadrunner-x.y.z-darwin-amd64.zip
 cd /data/codes/queryphp
 ```
 
 Install dependency package
 
 ```          
-composer require spiral/roadrunner ^2.12.1              
+composer require spiral/roadrunner ^x.y.z              
 composer require spiral/dumper ^2.14.1.                 
 composer require symfony/psr-http-message-bridge ^2.0  
 composer require nyholm/psr7 ^1.5  
@@ -273,16 +273,16 @@ composer require nyholm/psr7 ^1.5
 ### RoadRunner server
 
 ```
-/data/server/roadrunner-2.12.1-darwin-amd64/rr serve
-/data/server/roadrunner-2.12.1-darwin-amd64/rr http:reset
+/data/server/roadrunner-x.y.z-darwin-amd64/rr serve
+/data/server/roadrunner-x.y.z-darwin-amd64/rr http:reset
 ```
 
 The same with php-fpm
 
 ```
-root@vagrant-ubuntu-10-0-2-5:/data/codes/queryphp# /data/server/roadrunner-2.12.1-darwin-amd64/rr serve
+root@vagrant-ubuntu-10-0-2-5:/data/codes/queryphp# /data/server/roadrunner-x.y.z-darwin-amd64/rr serve
 2022-12-10T16:43:30.226+0800	DEBUG	rpc         	plugin was started	{"address": "tcp://127.0.0.1:6001", "list of the plugins with RPC methods:": ["app", "informer", "resetter"]}
-[INFO] RoadRunner server started; version: 2.12.1, buildtime: 2022-12-01T12:41:50+0000
+[INFO] RoadRunner server started; version: x.y.z, buildtime: 2022-12-01T12:41:50+0000
 2022-12-10T16:43:30.524+0800	DEBUG	server      	worker is allocated	{"pid": 9522, "internal_event_name": "EventWorkerConstruct"}
 2022-12-10T16:43:30.524+0800	DEBUG	server      	worker is allocated	{"pid": 9525, "internal_event_name": "EventWorkerConstruct"}
 2022-12-10T16:43:30.524+0800	DEBUG	server      	worker is allocated	{"pid": 9523, "internal_event_name": "EventWorkerConstruct"}

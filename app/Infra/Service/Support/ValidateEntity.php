@@ -14,12 +14,12 @@ trait ValidateEntity
 {
     private function validateEntity(string $entityClass, array $data, string $validatorScenes): void
     {
-        [$validatorRules, $validatorMessages] = $entityClass::columnValidators($validatorScenes);
+        [$validatorRules, $validatorMessages] = $entityClass::getColumnValidators($validatorScenes);
 
         $validator = Validate::proxy()->make(
             $data,
             $validatorRules,
-            $entityClass::columnNames(),
+            $entityClass::getColumnNames(),
             $validatorMessages,
         );
 
@@ -38,17 +38,19 @@ trait ValidateEntity
             $call();
         } catch (DuplicateKeyException $e) {
             $tableName = '';
-            if ($entity::definedEntityConstant('TABLE_NAME')) {
-                $tableName = '『'.$entity::entityConstant('TABLE_NAME').'』';
+            if ($entity::isDefinedEntityConstant('TABLE_NAME')) {
+                $tableName = '『'.(string) $entity::getEntityConstant('TABLE_NAME').'』';
             }
 
-            $errorMessage = __('数据');
-            if ($entity::definedEntityConstant('UNIQUE_INDEX')) {
-                $uniqueIndex = $entity::entityConstant('UNIQUE_INDEX');
-                $errorMessage = $uniqueIndex[$e->getUniqueIndex()]['comment'] ?? $errorMessage;
+            $errorMessage = (string) __('数据');
+            if ($entity::isDefinedEntityConstant('UNIQUE_INDEX')) {
+                $uniqueIndex = $entity::getEntityConstant('UNIQUE_INDEX');
+                if (\is_array($uniqueIndex)) {
+                    $errorMessage = (string) ($uniqueIndex[$e->getUniqueIndex()]['comment'] ?? $errorMessage);
+                }
             }
 
-            throw new BusinessException(ErrorCode::ID2023052616455333, $tableName.$errorMessage.__('已存在'));
+            throw new BusinessException(ErrorCode::ID2023052616455333, $tableName.$errorMessage.(string) __('已存在'));
         }
     }
 }

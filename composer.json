@@ -25,6 +25,8 @@
         "s1syphos/php-simple-captcha": "^2.3.0",
         "spiral/dumper": "dev-master",
         "spiral/roadrunner": "^2025.1.14",
+        "spiral/roadrunner-http": "^4.4",
+        "spiral/roadrunner-worker": "^3.6",
         "symfony/lock": "^8.1.0",
         "symfony/psr-http-message-bridge": "^8.1.0",
         "symfony/workflow": "^8.1.0"

@@ -8,7 +8,7 @@ use App\Attachment\Exceptions\UploadBusinessException;
 use App\Attachment\Exceptions\UploadErrorCode;
 use Leevel\Config\Proxy\Config;
 use Leevel\Filesystem\Proxy\Filesystem;
-use Leevel\Support\Str;
+use Leevel\Support\Str\RandAlpha;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -57,7 +57,7 @@ class Upload
         }
 
         return date('Y-m-d').'/'.date('H').'/'
-            .md5(uniqid().Str::randAlpha(32)).'.'.$ext;
+            .md5(uniqid().RandAlpha::handle(32)).'.'.$ext;
     }
 
     /**
@@ -81,6 +81,6 @@ class Upload
      */
     private function savePathForUrl(string $savePath): string
     {
-        return Config::proxy()->get('attachments_url').'/'.$savePath;
+        return (string) Config::proxy()->get('attachments_url').'/'.$savePath;
     }
 }

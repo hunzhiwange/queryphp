@@ -6,6 +6,7 @@ namespace App\Infra\Validate\User;
 
 use App\Infra\Validate\IValidator;
 use App\User\Entity\User as UserUser;
+use App\User\Entity\UserStatusEnum;
 use Leevel\Validate\IValidator as ValidateIValidator;
 
 /**
@@ -13,13 +14,8 @@ use Leevel\Validate\IValidator as ValidateIValidator;
  */
 class User implements IValidator
 {
-    public function __construct(private string $uniqueRule = '')
-    {
-    }
+    public function __construct(private string $uniqueRule = '') {}
 
-    /**
-     * {@inheritDoc}
-     */
     public function scenes(): array
     {
         return [
@@ -46,12 +42,9 @@ class User implements IValidator
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function names(): array
     {
-        $baseNames = UserUser::columnNames();
+        $baseNames = UserUser::getColumnNames();
 
         return array_merge($baseNames, [
             'old_pwd' => __('旧密码'),
@@ -62,17 +55,11 @@ class User implements IValidator
         ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function messages(): array
     {
         return [];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function rules(): array
     {
         return [
@@ -81,7 +68,7 @@ class User implements IValidator
             'num' => ['required|alpha_dash', $this->uniqueRule],
             'password' => 'required|min_length:6,max_length:30',
             'status' => [
-                ['in', \App\User\Entity\UserStatusEnum::values()],
+                ['in', UserStatusEnum::values()],
             ],
             'email' => 'email|'.ValidateIValidator::OPTIONAL,
             'mobile' => 'mobile|'.ValidateIValidator::OPTIONAL,

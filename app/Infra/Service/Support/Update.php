@@ -15,13 +15,9 @@ trait Update
 {
     use ValidateEntity;
 
-    public function __construct(private UnitOfWork $w)
-    {
-    }
+    public function __construct(private UnitOfWork $w) {}
 
-    public function beforeHandle(UpdateParams $params): void
-    {
-    }
+    public function beforeHandle(UpdateParams $params): void {}
 
     public function handle(UpdateParams $params): Entity
     {
@@ -33,17 +29,15 @@ trait Update
         return $this->save($params);
     }
 
-    private function validate(UpdateParams $params): void
-    {
-    }
+    private function validate(UpdateParams $params): void {}
 
     /**
      * 更新实体.
      */
     private function entity(UpdateParams $params): Entity
     {
-        if ($params->entityClass::definedEntityConstant('UPDATE_PROP')) {
-            $updateProp = $params->entityClass::entityConstant('UPDATE_PROP');
+        if ($params->entityClass::isDefinedEntityConstant('UPDATE_PROP')) {
+            $updateProp = $params->entityClass::getEntityConstant('UPDATE_PROP');
             $entity = $this->findUpdateEntity($updateProp, $params->entityData[$updateProp], $params);
         } else {
             $primaryId = $params->entityClass::ID;
@@ -54,11 +48,11 @@ trait Update
         // 如果不做转换会导致很多校验无法通过
         // 过滤掉null值，不然验证器会无法校验可选规则
         $data = $this->data($params);
-        $data = array_filter($data, function ($v) {
+        $data = array_filter($data, static function ($v) {
             return null !== $v;
         });
 
-        $entity->withProps($data);
+        $entity->setProps($data);
         $this->validateEntity($params->entityClass, $entity->except()->toArray(), $params->validatorScene);
 
         return $entity;
@@ -68,7 +62,7 @@ trait Update
     {
         return $this->w
             ->repository($params->entityClass)
-            ->findOrFail(function (Condition $select) use ($updateProp, $updatePropData): void {
+            ->findOrFail(static function (Condition $select) use ($updateProp, $updatePropData): void {
                 $select->where($updateProp, $updatePropData);
             }, [$params->entityClass::ID])
         ;
@@ -105,11 +99,11 @@ trait Update
         // 更新前置操作
         // @phpstan-ignore-next-line
         if (method_exists($entity, 'beforeUpdateEvent')) {
-            $entity::event(Entity::BEFORE_UPDATE_EVENT, fn (...$args) => $entity->beforeUpdateEvent(...$args));
+            $entity::event(Entity::BEFORE_UPDATE_EVENT, static fn (...$args) => $entity->beforeUpdateEvent(...$args));
         }
 
-        $this->w->create(function() use($entity): void {
-            $this->validateEntityDuplicateKey($entity, function () use ($entity): void {
+        $this->w->create(function () use ($entity): void {
+            $this->validateEntityDuplicateKey($entity, static function () use ($entity): void {
                 $entity->update()->flush();
             });
         });

@@ -28,6 +28,6 @@ class Update
         $params = new ApiQLUpdateParams($input);
         $entity = $service->handle($params);
 
-        return $entity->id() ?: [];
+        return $entity->getId() ?: [];
     }
 }

@@ -7,7 +7,7 @@
 <p align="center">
   <a href='https://packagist.org/packages/hunzhiwange/queryphp'><img src='http://img.shields.io/packagist/v/hunzhiwange/queryphp.svg' alt='Latest Stable Version' /></a>
   <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-%3E%3D%208.5.6-8892BF.svg" alt="Minimum PHP Version"></a>
-  <a href="https://github.com/spiral/roadrunner"><img alt="RoadRunner Version" src="https://img.shields.io/badge/RoadRunner-%3E=2.12.1-brightgreen.svg" /></a>
+  <a href="https://github.com/spiral/roadrunner"><img alt="RoadRunner Version" src="https://img.shields.io/badge/RoadRunner-%3E=v2025.1.14-brightgreen.svg" /></a>
   <a href="https://github.com/swoole/swoole-src"><img alt="Swoole Version" src="https://img.shields.io/badge/Swoole-%3E=6.2.1-brightgreen.svg" /></a>
   <a href="http://opensource.org/licenses/MIT">
     <img alt="QueryPHP License" src="https://poser.pugx.org/hunzhiwange/queryphp/license.svg" /></a>
@@ -61,17 +61,10 @@ php leevel server <Visite http://127.0.0.1:9527/>
 ### Go RoadRunner 服务 
 
 ```
-/data/server/roadrunner-2.12.1-darwin-amd64/rr serve
-/data/server/roadrunner-2.12.1-darwin-amd64/rr http:reset
+/data/server/roadrunner/rr serve
+/data/server/roadrunner/rr http:reset
 ```
 
 ## 版权协议
 
 QueryPHP 是一个基于 [MIT license](http://opensource.org/licenses/MIT) 授权许可协议的开源软件.
-
-##
-
-```
-php leevel make:entity print:print_template_content  --env=env.phpunit
-php leevel migrate:create PrintTemplateContent
-```

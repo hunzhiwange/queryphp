@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Infra\Console;
 
 use Leevel\Console\Command;
-use Leevel\Support\Str;
+use Leevel\Support\Str\RandAlphaNum;
+use Leevel\Support\Str\RandNum;
 
 /**
  * 生成应用秘钥.
@@ -28,10 +29,10 @@ class MakeAppSecret extends Command
     public function handle(): int
     {
         $this->info('APP_KEY');
-        $this->info(Str::randNum(6));
+        $this->info(RandNum::handle(6));
 
         $this->info('APP_SECRET');
-        $this->info($appSecret = Str::randAlphaNum(10));
+        $this->info($appSecret = RandAlphaNum::handle(10));
 
         return self::SUCCESS;
     }

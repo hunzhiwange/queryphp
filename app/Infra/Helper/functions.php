@@ -27,6 +27,7 @@ use Leevel\Database\Ddd\Entity;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Database\IDatabase;
 use Leevel\Di\Container;
+use Leevel\Event\Proxy\Event;
 use Leevel\Http\Request;
 use Leevel\Support\Arr\Only;
 use Leevel\Support\Str\UnCamelize;
@@ -59,8 +60,7 @@ if (!function_exists('sql_listener')) {
      */
     function sql_listener(Closure $call): void
     {
-        // @phpstan-ignore-next-line
-        App::proxy()->make('event')
+        Event::proxy()
             ->register(IDatabase::SQL_EVENT, static function (string $event, string $sql) use ($call): void {
                 $call($event, $sql);
             })
@@ -643,7 +643,7 @@ if (!function_exists('format_images')) {
             return '';
         }
 
-        return Config::proxy()->get('attachments_url').'/'.$images;
+        return (string) Config::proxy()->get('attachments_url').'/'.$images;
     }
 }
 
@@ -655,7 +655,7 @@ if (!function_exists('format_images_list')) {
         }
 
         $imagesList = explode(',', $images);
-        $attachmentsUrl = Config::proxy()->get('attachments_url');
+        $attachmentsUrl = (string) Config::proxy()->get('attachments_url');
         $imagesList = array_map(static fn (string $v): string => $attachmentsUrl.'/'.$v, $imagesList);
 
         return implode(',', $imagesList);

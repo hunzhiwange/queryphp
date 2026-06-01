@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Infra\Service\Support;
 
 use App\Infra\Dto\ParamsDto;
-use Leevel\Validate\UniqueRule;
+use Leevel\Validate\Helper\Unique;
 
 /**
  * 通用更新参数.
@@ -21,14 +21,11 @@ class UpdateParams extends ParamsDto
      */
     public bool $entityAutoFlush = true;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function validatorArgs(): array
     {
         $primaryId = $this->entityClass::ID;
 
-        $uniqueRule = UniqueRule::rule(
+        $uniqueRule = Unique::rule(
             $this->entityClass,
             exceptId: $this->{$primaryId},
         );

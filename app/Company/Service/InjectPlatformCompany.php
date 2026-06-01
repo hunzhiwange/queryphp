@@ -42,7 +42,7 @@ class InjectPlatformCompany
             $beforeCreateData = batch_inject_common_data($entityClass, [[]]);
             if ($beforeCreateData[0]) {
                 $entityClass::event(Entity::BEFORE_CREATE_EVENT, static function (string $event, Entity $entity) use ($beforeCreateData): void {
-                    $entity->withProps($beforeCreateData[0]);
+                    $entity->setProps($beforeCreateData[0]);
                 });
             }
 
@@ -50,7 +50,7 @@ class InjectPlatformCompany
             $beforeUpdateData = batch_inject_common_update_data($entityClass, [[]]);
             if ($beforeUpdateData[0]) {
                 $entityClass::event(Entity::BEFORE_UPDATE_EVENT, static function (string $event, Entity $entity) use ($beforeUpdateData): void {
-                    $entity->withProps($beforeUpdateData[0]);
+                    $entity->setProps($beforeUpdateData[0]);
                 });
             }
         });

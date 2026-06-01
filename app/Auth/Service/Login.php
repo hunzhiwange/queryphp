@@ -13,7 +13,7 @@ use Leevel\Auth\Proxy\Auth;
 use Leevel\Database\Ddd\UnitOfWork;
 use Leevel\Encryption\Proxy\Encryption;
 use Leevel\Http\Request;
-use Leevel\Support\Str;
+use Leevel\Support\Str\RandAlphaNum;
 
 /**
  * 验证登录.
@@ -64,8 +64,8 @@ class Login
     {
         $token = substr(
             md5(
-                $this->request->server->get('HTTP_USER_AGENT')
-                .$this->request->server->get('SERVER_ADDR')
+                (string) $this->request->server->get('HTTP_USER_AGENT')
+                .(string) $this->request->server->get('SERVER_ADDR')
                 .$params->appKey
                 .$params->name
                 .$params->password
@@ -74,7 +74,7 @@ class Login
             8,
             6
         )
-        .Str::randAlphaNum(10);
+        .RandAlphaNum::handle(10);
 
         return 'token:'.hash_hmac('sha256', $token, $appSecret);
     }

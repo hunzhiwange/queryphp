@@ -11,10 +11,13 @@ parameters:
 		nodesByStringCountMax: 128
 	checkUninitializedProperties: true
 	checkMissingCallableSignature: true
-	checkGenericClassInNonGenericObjectType: false
 	excludePaths:
 		- %currentWorkingDirectory%/*Test.php
 	ignoreErrors:
+		-
+			identifier: missingType.generics
+		-
+			identifier: trait.unused
 		- '#Access to an undefined property [\S\s]+::\$[\S\s]+\.#'
 		- '#should return [\S\s]+ but returns Leevel\\Database\\Ddd\\Entity\.#'
 		- '#should return [\S\s]+ but returns Leevel\\Database\\Ddd\\Repository\.#'

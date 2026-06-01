@@ -340,7 +340,7 @@ final class User extends Entity
 
     public function beforeCreateEvent(): void
     {
-        $this->withProp('password', self::repository()->createPassword($this->password));
+        $this->setProp('password', self::repository()->createPassword($this->password));
     }
 
     public function beforeUpdateEvent(): void
