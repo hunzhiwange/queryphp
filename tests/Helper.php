@@ -61,9 +61,6 @@ trait Helper
         if ($commonDatabase) {
             $seedObject->commonDatabase = true;
         }
-        if (!\is_callable([$seedObject, 'handle'])) {
-            throw new \Exception(\sprintf('Seed \%s->handle() was not found.', $seed));
-        }
         $seedObject->handle();
 
         if ($debug) {
