@@ -27,8 +27,6 @@ $vendorDir = __DIR__.'/../vendor';
 
 require_once __DIR__.'/function.php';
 
-require_once __DIR__.'/Redis.php';
-
 if (false === is_file($vendorDir.'/autoload.php')) {
     throw new Exception('You must set up the app dependencies, run the following commands:
         wget http://getcomposer.org/composer.phar
