@@ -6,6 +6,4 @@ namespace App\Infra\Service\Support\Update;
 
 use App\Infra\Exceptions\BusinessException;
 
-class DataNotChangedException extends BusinessException
-{
-}
+class DataNotChangedException extends BusinessException {}

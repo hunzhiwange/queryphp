@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Company\Service\InjectAccount;
 use App\Company\Service\InjectCommonData;
+use App\Company\Service\InjectPlatformCompany;
 use App\Infra\Exceptions\Runtime;
 use App\Infra\Kernel\Kernel;
 use App\Infra\Kernel\KernelConsole;
@@ -14,6 +16,7 @@ use Leevel\Kernel\Exceptions\IRuntime;
 use Leevel\Kernel\IApp;
 use Leevel\Kernel\IKernel;
 use Leevel\Kernel\IKernelConsole;
+use NunoMaduro\Collision\Provider;
 
 error_reporting(E_ALL);
 
@@ -24,6 +27,8 @@ $vendorDir = __DIR__.'/../vendor';
 
 require_once __DIR__.'/function.php';
 
+require_once __DIR__.'/Redis.php';
+
 if (false === is_file($vendorDir.'/autoload.php')) {
     throw new Exception('You must set up the app dependencies, run the following commands:
         wget http://getcomposer.org/composer.phar
@@ -33,13 +38,13 @@ if (false === is_file($vendorDir.'/autoload.php')) {
 include $vendorDir.'/autoload.php';
 
 // 检查是否为开发环境，生产环境无法运行测试用例
-if (!class_exists('Tests\\TestCase')) {
-    throw new \Exception('You must set up the app dependencies, run the following commands:
+if (!class_exists('Tests\TestCase')) {
+    throw new Exception('You must set up the app dependencies, run the following commands:
         php leevel development');
 }
 
 // 注册 PHPUNIT 友好提示
-(new \NunoMaduro\Collision\Provider())->register();
+(new Provider())->register();
 
 $container = Container::singletons();
 $container->singleton(IContainer::class, $container);
@@ -58,10 +63,10 @@ $container->alias('request', [Request::class, Request::class]);
 $container->make(IKernelConsole::class)->bootstrap();
 
 // 注入平台和公司信息
-(new \App\Company\Service\InjectPlatformCompany())->handle(100000, 100100);
+(new InjectPlatformCompany())->handle(100000, 100100);
 
 // 注入账号信息
-(new \App\Company\Service\InjectAccount())->handle(4145731145437184, 'admin');
+(new InjectAccount())->handle(4145731145437184, 'admin');
 
 // 注入公共信息
 (new InjectCommonData())->handle();

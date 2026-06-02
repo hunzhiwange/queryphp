@@ -71,11 +71,11 @@ class RoadRunnerServer
         if (!class_exists(RoadRunner\Http\PSR7Worker::class)
             || !class_exists(HttpFoundationFactory::class)
             || !class_exists(Psr17Factory::class)) {
-            $message = 'Go RoadRunner needs the following packages'.PHP_EOL.
-                'composer require spiral/roadrunner ^2.14.1'.PHP_EOL.
-                'composer require spiral/dumper ^2.12.1.'.PHP_EOL.
-                'composer require nyholm/psr7 ^1.5.'.PHP_EOL.
-                'composer require symfony/psr-http-message-bridge ^2.0';
+            $message = 'Go RoadRunner needs the following packages'.PHP_EOL
+                .'composer require spiral/roadrunner ^2.14.1'.PHP_EOL
+                .'composer require spiral/dumper ^2.12.1.'.PHP_EOL
+                .'composer require nyholm/psr7 ^1.5.'.PHP_EOL
+                .'composer require symfony/psr-http-message-bridge ^2.0';
 
             throw new \Exception($message);
         }

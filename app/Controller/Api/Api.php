@@ -17,7 +17,7 @@ class Api
     )]
     public function demo1(string $name): string
     {
-        return sprintf('Hi you, you name is %s in version 1', $name);
+        return \sprintf('Hi you, you name is %s in version 1', $name);
     }
 
     #[Route(
@@ -26,6 +26,6 @@ class Api
     )]
     public function demo2(string $name): string
     {
-        return sprintf('Hi you,your name is %s in version 2', $name);
+        return \sprintf('Hi you,your name is %s in version 2', $name);
     }
 }

@@ -6,6 +6,4 @@ namespace App\Infra\Exceptions;
 
 use Leevel\Kernel\Exceptions\InternalServerErrorHttpException as BaseInternalServerErrorHttpException;
 
-class InternalServerErrorHttpException extends BaseInternalServerErrorHttpException
-{
-}
+class InternalServerErrorHttpException extends BaseInternalServerErrorHttpException {}

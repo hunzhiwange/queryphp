@@ -43,16 +43,16 @@ class WorkflowDump extends Command
     {
         $workflowClass = $this->getArgument('class');
         if (!class_exists($workflowClass)) {
-            throw new \Exception(sprintf('OutStorageWorkflow class `%s` not exists.', $workflowClass));
+            throw new \Exception(\sprintf('OutStorageWorkflow class `%s` not exists.', $workflowClass));
         }
 
         if (!\is_callable([$workflowObject = new $workflowClass(), 'handle'])) {
-            throw new \Exception(sprintf('OutStorageWorkflow class `%s:%s` must be callable.', $workflowClass, 'handle'));
+            throw new \Exception(\sprintf('OutStorageWorkflow class `%s:%s` must be callable.', $workflowClass, 'handle'));
         }
 
         $workflow = $workflowObject->handle();
         if (!$workflow instanceof Workflow) {
-            throw new \Exception(sprintf('OutStorageWorkflow class `%s` must be subclass of `%s`.', $workflowClass, Workflow::class));
+            throw new \Exception(\sprintf('OutStorageWorkflow class `%s` must be subclass of `%s`.', $workflowClass, Workflow::class));
         }
 
         $dumper = new MermaidDumper(MermaidDumper::TRANSITION_TYPE_STATEMACHINE);

@@ -2,24 +2,13 @@
 
 declare(strict_types=1);
 
-use Phinx\Migration\AbstractMigration;
+use Leevel\Database\Migrations\Migration;
 
-final class JobContent extends AbstractMigration
+final class JobContent extends Migration
 {
-    public function up(): void
+    protected function sql(): string
     {
-        $this->struct();
-        $this->seed();
-    }
-
-    public function down(): void
-    {
-        $this->table('job_content')->drop()->save();
-    }
-
-    private function struct(): void
-    {
-        $sql = <<<'EOT'
+        return <<<'EOT'
 CREATE TABLE `job_content` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `platform_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '平台ID',
@@ -34,8 +23,5 @@ CREATE TABLE `job_content` (
   KEY `idx_platform_company` (`platform_id`,`company_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='任务管理内容';
 EOT;
-        $this->execute($sql);
     }
-
-    private function seed(): void {}
 }

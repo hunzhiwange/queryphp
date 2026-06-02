@@ -2,24 +2,13 @@
 
 declare(strict_types=1);
 
-use Phinx\Migration\AbstractMigration;
+use Leevel\Database\Migrations\Migration;
 
-final class UserRole extends AbstractMigration
+final class UserRole extends Migration
 {
-    public function up(): void
+    protected function sql(): string
     {
-        $this->struct();
-        $this->seed();
-    }
-
-    public function down(): void
-    {
-        $this->table('user_role')->drop()->save();
-    }
-
-    private function struct(): void
-    {
-        $sql = <<<'EOT'
+        return <<<'EOT'
             CREATE TABLE `user_role` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
                 `platform_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '平台ID',
@@ -34,17 +23,10 @@ final class UserRole extends AbstractMigration
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `uniq_user_role` (`platform_id`,`user_id`,`role_id`,`delete_at`) USING BTREE COMMENT '用户角色关联'
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色关联';
-            EOT;
-        $this->execute($sql);
-    }
 
-    private function seed(): void
-    {
-        $sql = <<<'EOT'
 INSERT INTO `user_role`(`id`, `platform_id`, `user_id`, `role_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7550830970540032, 100000, 4145731145437184, 4144257686306816, '2019-01-31 01:14:34', '2023-03-26 12:04:46', 0, 0, 0, 0);
 INSERT INTO `user_role`(`id`, `platform_id`, `user_id`, `role_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7550830983122944, 100000, 4145731162214400, 4144257719861248, '2019-01-31 01:51:47', '2023-03-26 12:04:46', 0, 0, 0, 0);
 INSERT INTO `user_role`(`id`, `platform_id`, `user_id`, `role_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7550831008288768, 100000, 4145731174797312, 4144257707278336, '2019-01-31 01:51:40', '2023-03-26 12:04:46', 0, 0, 0, 0);
 EOT;
-        $this->execute($sql);
     }
 }

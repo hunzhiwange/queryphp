@@ -2,24 +2,13 @@
 
 declare(strict_types=1);
 
-use Phinx\Migration\AbstractMigration;
+use Leevel\Database\Migrations\Migration;
 
-final class User extends AbstractMigration
+final class User extends Migration
 {
-    public function up(): void
+    protected function sql(): string
     {
-        $this->struct();
-        $this->seed();
-    }
-
-    public function down(): void
-    {
-        $this->table('user')->drop()->save();
-    }
-
-    private function struct(): void
-    {
-        $sql = <<<'EOT'
+        return <<<'EOT'
 CREATE TABLE `user` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `platform_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '平台ID',
@@ -48,13 +37,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `uniq_num` (`platform_id`,`num`,`delete_at`,`type`) USING BTREE COMMENT '编号',
   UNIQUE KEY `uniq_name` (`platform_id`,`name`,`delete_at`,`type`) USING BTREE COMMENT '登陆用户'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户';
-EOT;
-        $this->execute($sql);
-    }
 
-    private function seed(): void
-    {
-        $sql = <<<'EOT'
 INSERT INTO `user`(`id`, `platform_id`, `type`, `sub_type`, `name`, `full_name`, `short_name`, `num`, `password`, `email`, `mobile`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`, `contact`, `remark`, `phone`, `city_id`, `address`) VALUES (4145731145437184, 100000, 1, 1, 'admin', '', '', 'admin', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:14:34', '2023-03-26 11:53:51', 0, 0, 0, 0, '', '', '', 0, '');
 INSERT INTO `user`(`id`, `platform_id`, `type`, `sub_type`, `name`, `full_name`, `short_name`, `num`, `password`, `email`, `mobile`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`, `contact`, `remark`, `phone`, `city_id`, `address`) VALUES (4145731162214400, 100000, 1, 1, 'user', '', '', 'user', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:47:27', '2023-03-26 11:53:52', 0, 0, 0, 0, '', '', '', 0, '');
 INSERT INTO `user`(`id`, `platform_id`, `type`, `sub_type`, `name`, `full_name`, `short_name`, `num`, `password`, `email`, `mobile`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`, `contact`, `remark`, `phone`, `city_id`, `address`) VALUES (4145731174797312, 100000, 1, 1, 'manager', '', '', 'manager', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2019-01-31 01:51:09', '2023-03-26 11:53:53', 0, 0, 0, 0, '', '', '', 0, '');
@@ -62,6 +45,5 @@ INSERT INTO `user`(`id`, `platform_id`, `type`, `sub_type`, `name`, `full_name`,
 INSERT INTO `user`(`id`, `platform_id`, `type`, `sub_type`, `name`, `full_name`, `short_name`, `num`, `password`, `email`, `mobile`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`, `contact`, `remark`, `phone`, `city_id`, `address`) VALUES (4145731174797314, 100000, 2, 1, '2005444', '成都温江区光华路5444店', '', '2005444', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2023-03-20 06:35:20', '2023-03-26 11:53:54', 0, 0, 0, 0, '高启强', '', '', 0, '');
 INSERT INTO `user`(`id`, `platform_id`, `type`, `sub_type`, `name`, `full_name`, `short_name`, `num`, `password`, `email`, `mobile`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`, `contact`, `remark`, `phone`, `city_id`, `address`) VALUES (4145731174797315, 100000, 2, 1, '2005244', '成都温江区慕华路5244店', '', '2005244', '$2y$10$yD8V8Urr00CyZpmYaH7gce3jUDY/r5e7p5lyYqLpBgb7Ml8USwdd2', '', '', 1, '2023-03-20 06:35:20', '2023-03-26 11:53:54', 0, 0, 0, 0, '高启盛', '', '', 0, '');
 EOT;
-        $this->execute($sql);
     }
 }

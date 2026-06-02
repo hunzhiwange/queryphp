@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\User\Service\User;
 
+use App\User\Entity\Permission;
+use App\User\Entity\Role;
 use App\User\Entity\User;
 use App\User\Entity\UserStatusEnum;
 use Leevel\Database\Ddd\UnitOfWork;
@@ -13,9 +15,7 @@ use Leevel\Database\Ddd\UnitOfWork;
  */
 class UserPermission
 {
-    public function __construct(private UnitOfWork $w)
-    {
-    }
+    public function __construct(private UnitOfWork $w) {}
 
     public function handle(UserPermissionParams $params): array
     {
@@ -49,10 +49,10 @@ class UserPermission
     {
         $data = [];
         if (\count($roles = $user->role) > 0) {
-            /** @var \App\User\Entity\Role $r */
+            /** @var Role $r */
             foreach ($roles as $r) { // @phpstan-ignore-line
                 if (\count($permissions = $r->permission) > 0) {
-                    /** @var \App\User\Entity\Permission $p */
+                    /** @var Permission $p */
                     foreach ($permissions as $p) { // @phpstan-ignore-line
                         if (\count($resources = $p->resource) > 0) {
                             $resourceData = array_unique(array_column($resources->toArray(), 'num'));
@@ -72,7 +72,7 @@ class UserPermission
     private function findUser(int $id): User
     {
         return $this->w
-            ->repository(\App\User\Entity\User::class)
+            ->repository(User::class)
             ->eager(['role.permission.resource'])
             ->where('status', UserStatusEnum::ENABLE->value)
             ->findOrFail($id)

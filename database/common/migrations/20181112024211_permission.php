@@ -2,24 +2,13 @@
 
 declare(strict_types=1);
 
-use Phinx\Migration\AbstractMigration;
+use Leevel\Database\Migrations\Migration;
 
-final class Permission extends AbstractMigration
+final class Permission extends Migration
 {
-    public function up(): void
+    protected function sql(): string
     {
-        $this->struct();
-        $this->seed();
-    }
-
-    public function down(): void
-    {
-        $this->table('permission')->drop()->save();
-    }
-
-    private function struct(): void
-    {
-        $sql = <<<'EOT'
+        return <<<'EOT'
             CREATE TABLE `permission` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
                 `platform_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '平台ID',
@@ -38,13 +27,7 @@ final class Permission extends AbstractMigration
                 UNIQUE KEY `uniq_name` (`platform_id`,`name`,`delete_at`) USING BTREE COMMENT '名字',
                 KEY `idx_parent_id` (`parent_id`) USING BTREE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限';
-            EOT;
-        $this->execute($sql);
-    }
 
-    private function seed(): void
-    {
-        $sql = <<<'EOT'
 INSERT INTO `permission`(`id`, `platform_id`, `parent_id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (4146175016046592, 100000, 0, '超级管理员', 'super_administrator', 1, '2019-01-31 01:14:34', '2023-03-17 03:33:48', 0, 0, 0, 0);
 INSERT INTO `permission`(`id`, `platform_id`, `parent_id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (4146175032823808, 100000, 0, '权限管理分组', 'permission', 1, '2019-01-31 01:31:11', '2023-03-17 03:33:48', 0, 0, 0, 0);
 INSERT INTO `permission`(`id`, `platform_id`, `parent_id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (4146175041212416, 100000, 4146175032823808, '用户管理', 'user_manager', 1, '2019-01-31 01:31:24', '2023-03-17 03:33:48', 0, 0, 0, 0);
@@ -59,6 +42,5 @@ INSERT INTO `permission`(`id`, `platform_id`, `parent_id`, `name`, `num`, `statu
 INSERT INTO `permission`(`id`, `platform_id`, `parent_id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (4146175154458624, 100000, 4146175141875712, '下级菜单1', 'three1_index', 1, '2021-01-13 15:27:31', '2023-03-17 03:33:48', 0, 0, 0, 0);
 INSERT INTO `permission`(`id`, `platform_id`, `parent_id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (4146175167041536, 100000, 4146175141875712, '下级菜单2', 'three2_index', 1, '2021-01-13 15:27:48', '2023-03-17 03:33:48', 0, 0, 0, 0);
 EOT;
-        $this->execute($sql);
     }
 }

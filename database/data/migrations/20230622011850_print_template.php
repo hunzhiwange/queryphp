@@ -2,24 +2,13 @@
 
 declare(strict_types=1);
 
-use Phinx\Migration\AbstractMigration;
+use Leevel\Database\Migrations\Migration;
 
-final class PrintTemplate extends AbstractMigration
+final class PrintTemplate extends Migration
 {
-    public function up(): void
+    protected function sql(): string
     {
-        $this->struct();
-        $this->seed();
-    }
-
-    public function down(): void
-    {
-        $this->table('print_template')->drop()->save();
-    }
-
-    private function struct(): void
-    {
-        $sql = <<<'EOT'
+        return <<<'EOT'
 CREATE TABLE `print_template` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `platform_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '平台ID',
@@ -35,16 +24,9 @@ CREATE TABLE `print_template` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_platform_company` (`platform_id`,`company_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='打印模板';
-EOT;
-        $this->execute($sql);
-    }
 
-    private function seed(): void
-    {
-        $sql = <<<'EOT'
 INSERT INTO `print_template` (`id`, `platform_id`, `company_id`, `name`, `is_default`, `type`, `remark`, `create_at`, `delete_at`, `create_account`, `version`) VALUES (39455653869260800, 100000, 100100, '默认模板', 1, 0, '', '2023-06-22 13:03:13', 0, 4145731145437184, 0);
 INSERT INTO `print_template` (`id`, `platform_id`, `company_id`, `name`, `is_default`, `type`, `remark`, `create_at`, `delete_at`, `create_account`, `version`) VALUES (39455683602681856, 100000, 100100, '小票模板', 0, 0, '', '2023-06-22 13:03:20', 0, 4145731145437184, 0);
 EOT;
-        $this->execute($sql);
     }
 }

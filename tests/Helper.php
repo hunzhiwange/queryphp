@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Tests;
 
 use Codedungeon\PHPCliColors\Color;
-use Symfony\Component\Process\PhpExecutableFinder;
+use Leevel\Database\Migrations\Seed;
+use Leevel\Filesystem\Helper\CreateFile;
 
 /**
  * 助手方法.
@@ -37,26 +38,14 @@ trait Helper
         $seed = str_replace('\\', '', $seed);
         $command = $debug ? ' -vvv' : '';
         if ($commonDatabase) {
-            $command .= ' --database=development_common';
+            $command .= ' --environment=common';
         }
 
         $migrationPath = $commonDatabase ? 'common' : 'data';
 
         $file = \dirname(__DIR__)."/database/{$migrationPath}/seeds/".$seed.'.php';
         if (!is_file($file)) {
-            // 创建 seed
-            $createCommand = sprintf(
-                '%s leevel migrate:seedcreate %s --env=env.phpunit'.$command,
-                escapeshellarg((new PhpExecutableFinder())->find(false) ?: ''),
-                $seed
-            );
-
-            $result = exec($createCommand);
-
-            if ($debug) {
-                echo Color::LIGHT_WHITE, $createCommand, Color::LIGHT_WHITE, PHP_EOL;
-                echo Color::GREEN, $result, Color::RESET, PHP_EOL;
-            }
+            CreateFile::handle($file, '<?php');
         }
 
         // 执行 seed
@@ -64,19 +53,21 @@ trait Helper
 
         include_once $file;
         if (!class_exists($seed)) {
-            throw new \Exception(sprintf('Seed %s was not found.', $seed));
+            throw new \Exception(\sprintf('Seed %s was not found.', $seed));
         }
+
+        /** @var Seed $seedObject */
         $seedObject = new $seed();
         if ($commonDatabase) {
             $seedObject->commonDatabase = true;
         }
-        if (!\is_callable([$seedObject, 'run'])) {
-            throw new \Exception(sprintf('Seed \%s->run() was not found.', $seed));
+        if (!\is_callable([$seedObject, 'handle'])) {
+            throw new \Exception(\sprintf('Seed \%s->handle() was not found.', $seed));
         }
-        $seedObject->run();
+        $seedObject->handle();
 
         if ($debug) {
-            echo Color::LIGHT_WHITE, sprintf('%s->%s()', $seed, 'run'), Color::LIGHT_WHITE, PHP_EOL;
+            echo Color::LIGHT_WHITE, \sprintf('%s->%s()', $seed, 'handle'), Color::LIGHT_WHITE, PHP_EOL;
             echo Color::GREEN, 'Success', Color::RESET, PHP_EOL;
         }
     }
@@ -86,18 +77,14 @@ trait Helper
      */
     protected function seedClear(string $test, bool $commonDatabase = false, bool $debug = false): void
     {
-        putenv('RUNTIME_SEED_CLEAR=clear');
-
         if ($debug) {
             echo Color::RED, 'Seed clear start', Color::RED, PHP_EOL;
         }
 
-        $this->seedRun($test, $commonDatabase, $debug);
+        $this->seedRun($test.'SeedClear', $commonDatabase, $debug);
 
         if ($debug) {
             echo Color::RED, 'Seed clear end', Color::RED, PHP_EOL;
         }
-
-        putenv('RUNTIME_SEED_CLEAR');
     }
 }

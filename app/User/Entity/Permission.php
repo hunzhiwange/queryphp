@@ -218,7 +218,7 @@ final class Permission extends Entity
 
     public function beforeDeleteEvent(): void
     {
-        if (static::repository()->hasChildren($this->id)) {
+        if (self::repository()->hasChildren($this->id)) {
             throw new UserBusinessException(UserErrorCode::PERMISSION_CONTAINS_SUB_KEY_AND_CANNOT_BE_DELETED);
         }
     }

@@ -13,9 +13,7 @@ use Leevel\Database\Ddd\UnitOfWork;
  */
 class Unlock
 {
-    public function __construct(private UnitOfWork $w, private Lock $lock)
-    {
-    }
+    public function __construct(private UnitOfWork $w, private Lock $lock) {}
 
     /**
      * @throws \Exception

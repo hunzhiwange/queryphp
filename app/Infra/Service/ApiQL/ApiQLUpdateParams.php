@@ -9,6 +9,4 @@ use App\Infra\Service\Support\UpdateParams;
 /**
  * API查询语言更新参数.
  */
-class ApiQLUpdateParams extends UpdateParams
-{
-}
+class ApiQLUpdateParams extends UpdateParams {}

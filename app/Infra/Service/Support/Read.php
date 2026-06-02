@@ -22,9 +22,7 @@ trait Read
 {
     protected Repository $repository;
 
-    public function __construct(private UnitOfWork $w)
-    {
-    }
+    public function __construct(private UnitOfWork $w) {}
 
     public function handle(ReadParams $params): array
     {
@@ -91,7 +89,7 @@ trait Read
         return \in_array($field, ReadParams::REMAINED_FIELD, true) || !$entity->hasField($field);
     }
 
-    private function parseWhereCondition(Select $select, string $field, array|string|int $condition): void
+    private function parseWhereCondition(Select $select, string $field, array|int|string $condition): void
     {
         if (!\is_array($condition)) {
             $select->where($field, $condition);
@@ -116,9 +114,7 @@ trait Read
     /**
      * 初始化规约.
      */
-    private function initializationSpec(Select $select, bool $value, ReadParams $params): void
-    {
-    }
+    private function initializationSpec(Select $select, bool $value, ReadParams $params): void {}
 
     /**
      * 关键字条件.
@@ -139,10 +135,10 @@ trait Read
         $conditions = $this->parseSearchSyntax($value);
 
         if (!empty($conditions['and'])) {
-            $select->where(function (Condition $select) use ($conditions, $params): void {
+            $select->where(static function (Condition $select) use ($conditions, $params): void {
                 // @phpstan-ignore-next-line
                 foreach ($params->keyColumn as $v) {
-                    $select->orWhere($v, 'like', '%' . implode('%', $conditions['and']) . '%');
+                    $select->orWhere($v, 'like', '%'.implode('%', $conditions['and']).'%');
                 }
             });
         }
@@ -151,7 +147,7 @@ trait Read
             // @phpstan-ignore-next-line
             foreach ($params->keyColumn as $v) {
                 foreach ($conditions['not'] as $notValue) {
-                    $select->where($v, 'not like', '%' . $notValue . '%');
+                    $select->where($v, 'not like', '%'.$notValue.'%');
                 }
             }
         }
@@ -160,7 +156,7 @@ trait Read
             // @phpstan-ignore-next-line
             foreach ($params->keyColumn as $v) {
                 foreach ($conditions['or'] as $orValue) {
-                    $select->orWhere($v, 'like', '%' . $orValue . '%');
+                    $select->orWhere($v, 'like', '%'.$orValue.'%');
                 }
             }
         }
@@ -185,17 +181,17 @@ trait Read
         $orNext = false;
         foreach ($keywords as $keyword) {
             // 检查是否为 OR 操作符
-            if (strtolower($keyword) == 'or' || $keyword == '|') {
+            if ('or' == strtolower($keyword) || '|' == $keyword) {
                 $orNext = true;
-            } elseif (strtolower($keyword) == 'not' || $keyword == '-') {
+            } elseif ('not' == strtolower($keyword) || '-' == $keyword) {
                 $excludeNext = true;
             } else {
                 if ($orNext) {
                     $conditions['or'][] = $keyword;
                 } elseif ($excludeNext) {
                     $conditions['not'][] = $keyword;
-                }else {
-                    if ($keyword[0] == '-') {
+                } else {
+                    if ('-' == $keyword[0]) {
                         $conditions['not'][] = substr($keyword, 1);
                     } else {
                         $conditions['and'][] = $keyword;
@@ -239,7 +235,7 @@ trait Read
      */
     private function limitSpec(Select $select, array $value): void
     {
-        $value = array_map(function ($v) {
+        $value = array_map(static function ($v) {
             return (int) $v;
         }, $value);
         $select->limit(...$value);
@@ -319,7 +315,7 @@ trait Read
     {
         $relation = $params->relation;
         if (!$relation) {
-            return function (): void {};
+            return static function (): void {};
         }
 
         $relations = [];
@@ -331,7 +327,7 @@ trait Read
             $relations[$relation] = $relationScope;
         }
 
-        return fn (Select $select) => $select->eager($relations);
+        return static fn (Select $select) => $select->eager($relations);
     }
 
     private function baseCondition(ReadParams $params, \Closure $call): \Closure

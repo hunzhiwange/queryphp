@@ -85,17 +85,11 @@ class Router extends RouterProvider
         ],
     ];
 
-    /**
-     * {@inheritDoc}
-     */
     public function bootstrap(): void
     {
         parent::bootstrap();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getRouters(): array
     {
         return parent::getRouters();

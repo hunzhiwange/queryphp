@@ -28,12 +28,12 @@
         "spiral/roadrunner-http": "^4.4",
         "spiral/roadrunner-worker": "^3.6",
         "symfony/lock": "^8.1.0",
+        "symfony/polyfill-php83": "^1.30.0",
         "symfony/psr-http-message-bridge": "^8.1.0",
         "symfony/workflow": "^8.1.0"
     },
     "require-dev": {
         "codedungeon/php-cli-colors": "^1.12.2",
-        "robmorgan/phinx": "^0.16.11",
         "zircote/swagger-php": "^6.1.2"
     },
     "autoload": {
@@ -76,8 +76,7 @@
             "/vendor/hunzhiwange/framework/src/**/Console/",
             "/vendor/codedungeon/",
             "/vendor/nikic/php-parser/",
-            "/vendor/cakephp/",
-            "/vendor/robmorgan/phinx/"
+            "/vendor/cakephp/"
         ]
     },
     "autoload-dev": {
@@ -144,9 +143,10 @@
         "php-cs-fixer": "@php build/php-cs-fixer fix",
         "phpstan": "@php build/phpstan analyse",
         "migrate": "@php leevel migrate:migrate",
-        "migrate-common": "@php leevel migrate:migrate --database=development_common",
+        "migrate-data": "@php leevel migrate:migrate --environment=data",
+        "migrate-common": "@php leevel migrate:migrate --environment=common",
         "migrate-phpunit": "@php leevel migrate:migrate --env=env.phpunit",
-        "migrate-phpunit-common": "@php leevel migrate:migrate --env=env.phpunit --database=development_common",
+        "migrate-phpunit-common": "@php leevel migrate:migrate --env=env.phpunit --environment=common",
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php -r \"file_exists('.env.phpunit') || copy('.env.phpunit.example', '.env.phpunit');\"",

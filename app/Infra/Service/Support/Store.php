@@ -14,9 +14,7 @@ trait Store
 {
     use ValidateEntity;
 
-    public function __construct(private UnitOfWork $w)
-    {
-    }
+    public function __construct(private UnitOfWork $w) {}
 
     public function handle(StoreParams $params): Entity
     {
@@ -26,9 +24,7 @@ trait Store
         return $this->save($params);
     }
 
-    private function validate(StoreParams $params): void
-    {
-    }
+    private function validate(StoreParams $params): void {}
 
     /**
      * 保存.
@@ -39,11 +35,11 @@ trait Store
 
         // 保存前置操作
         if (method_exists($entity, 'beforeCreateEvent')) {
-            $entity::event(Entity::BEFORE_CREATE_EVENT, fn () => $entity->beforeCreateEvent());
+            $entity::event(Entity::BEFORE_CREATE_EVENT, static fn () => $entity->beforeCreateEvent());
         }
 
-        $this->w->create(function() use($entity): void {
-            $this->validateEntityDuplicateKey($entity, function () use ($entity): void {
+        $this->w->create(function () use ($entity): void {
+            $this->validateEntityDuplicateKey($entity, static function () use ($entity): void {
                 $entity->create()->flush();
             });
         });
@@ -67,7 +63,7 @@ trait Store
         // 过滤掉null值，不然验证器会无法校验可选规则
         $data = $this->data($params);
         $data = inject_snowflake_id($data, $entityClass);
-        $data = array_filter($data, function ($v) {
+        $data = array_filter($data, static function ($v) {
             return null !== $v;
         });
 
@@ -88,7 +84,7 @@ trait Store
     private function newEntity(string $entityClass, array $data): Entity
     {
         if (!is_subclass_of($entityClass, Entity::class)) {
-            throw new \Exception(sprintf('Entity %s is not exists.', $entityClass));
+            throw new \Exception(\sprintf('Entity %s is not exists.', $entityClass));
         }
 
         // @var Entity $entity

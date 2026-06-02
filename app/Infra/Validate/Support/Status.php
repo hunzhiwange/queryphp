@@ -12,9 +12,6 @@ use App\Infra\Validate\IValidator;
  */
 class Status implements IValidator
 {
-    /**
-     * {@inheritDoc}
-     */
     public function scenes(): array
     {
         return [
@@ -25,9 +22,6 @@ class Status implements IValidator
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function names(): array
     {
         return [
@@ -36,17 +30,11 @@ class Status implements IValidator
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function messages(): array
     {
         return [];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function rules(): array
     {
         return [

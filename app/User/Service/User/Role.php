@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Service\User;
 
+use App\User\Entity\User;
 use App\User\Entity\UserRole as EntityUserRole;
 use Leevel\Database\Ddd\Select;
 use Leevel\Database\Ddd\UnitOfWork;
@@ -15,9 +16,7 @@ use Leevel\Support\VectorInt;
  */
 class Role
 {
-    public function __construct(private UnitOfWork $w)
-    {
-    }
+    public function __construct(private UnitOfWork $w) {}
 
     public function handle(RoleParams $params): array
     {
@@ -27,7 +26,7 @@ class Role
     /**
      * 保存.
      */
-    private function save(RoleParams $params): \App\User\Entity\User
+    private function save(RoleParams $params): User
     {
         $entity = $this->entity($params->id);
         $this->setUserRole($params->id, $params->roleId);
@@ -43,7 +42,7 @@ class Role
     {
         return $this->w
             ->repository(EntityUserRole::class)
-            ->findAll(function (Select $select) use ($userId): void {
+            ->findAll(static function (Select $select) use ($userId): void {
                 $select->where('user_id', $userId);
             })
         ;
@@ -52,7 +51,7 @@ class Role
     /**
      * 验证参数.
      */
-    private function entity(int $userId): \App\User\Entity\User
+    private function entity(int $userId): User
     {
         return $this->find($userId);
     }
@@ -60,9 +59,9 @@ class Role
     /**
      * 查找实体.
      */
-    private function find(int $id): \App\User\Entity\User
+    private function find(int $id): User
     {
-        return $this->w->repository(\App\User\Entity\User::class)->findOrFail($id);
+        return $this->w->repository(User::class)->findOrFail($id);
     }
 
     /**

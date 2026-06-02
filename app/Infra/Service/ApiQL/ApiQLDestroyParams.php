@@ -9,6 +9,4 @@ use App\Infra\Service\Support\DestroyParams;
 /**
  * API查询语言删除参数.
  */
-class ApiQLDestroyParams extends DestroyParams
-{
-}
+class ApiQLDestroyParams extends DestroyParams {}

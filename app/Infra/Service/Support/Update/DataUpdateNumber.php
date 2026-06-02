@@ -98,9 +98,7 @@ abstract class DataUpdateNumber
         $this->afterUpdateDataItem($condition, $saveData, $currentData, $oldData, ...$args);
     }
 
-    protected function afterUpdateDataItem(array $condition, array $saveData, array $currentData, array $oldData, mixed ...$args): void
-    {
-    }
+    protected function afterUpdateDataItem(array $condition, array $saveData, array $currentData, array $oldData, mixed ...$args): void {}
 
     protected function parseChangedData(array $currentData, array $oldData): array
     {
@@ -120,7 +118,7 @@ abstract class DataUpdateNumber
         if (bc_comp($number, 0) < 1) {
             throw new BusinessException(
                 ErrorCode::ID2023033017412773,
-                sprintf('数据`%s`变更数量必须大于0', $this->dataEntity::columnName($field))
+                \sprintf('数据`%s`变更数量必须大于0', $this->dataEntity::columnName($field))
             );
         }
     }
@@ -130,7 +128,7 @@ abstract class DataUpdateNumber
         if (bc_comp($number, 0) < 0) {
             throw new BusinessException(
                 ErrorCode::ID2023033017452060,
-                sprintf('数据`%s`变更数量必须大于等于0', $this->dataEntity::columnName($field))
+                \sprintf('数据`%s`变更数量必须大于等于0', $this->dataEntity::columnName($field))
             );
         }
     }

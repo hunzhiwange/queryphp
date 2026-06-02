@@ -2,24 +2,13 @@
 
 declare(strict_types=1);
 
-use Phinx\Migration\AbstractMigration;
+use Leevel\Database\Migrations\Migration;
 
-final class Apps extends AbstractMigration
+final class Apps extends Migration
 {
-    public function up(): void
+    protected function sql(): string
     {
-        $this->struct();
-        $this->seed();
-    }
-
-    public function down(): void
-    {
-        $this->table('app')->drop()->save();
-    }
-
-    private function struct(): void
-    {
-        $sql = <<<'EOT'
+        return <<<'EOT'
             CREATE TABLE `app` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
                 `platform_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '平台ID',
@@ -37,15 +26,8 @@ final class Apps extends AbstractMigration
                 UNIQUE KEY `uniq_num` (`platform_id`,`num`,`delete_at`) USING BTREE COMMENT '应用ID',
                 UNIQUE KEY `uniq_key` (`platform_id`,`key`,`delete_at`) USING BTREE COMMENT '应用KEY'
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='应用';
-            EOT;
-        $this->execute($sql);
-    }
 
-    private function seed(): void
-    {
-        $sql = <<<'EOT'
             INSERT INTO `app`(`id`, `platform_id`, `num`, `key`, `secret`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7550183223201792, 100000, 'admin', '785436', 'Wb9KITjDkv', 1, '2019-04-14 22:26:25', '2023-03-26 12:05:28', 0, 0, 0, 0);
-            EOT;
-        $this->execute($sql);
+EOT;
     }
 }

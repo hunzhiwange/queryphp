@@ -2,24 +2,13 @@
 
 declare(strict_types=1);
 
-use Phinx\Migration\AbstractMigration;
+use Leevel\Database\Migrations\Migration;
 
-final class PermissionResource extends AbstractMigration
+final class PermissionResource extends Migration
 {
-    public function up(): void
+    protected function sql(): string
     {
-        $this->struct();
-        $this->seed();
-    }
-
-    public function down(): void
-    {
-        $this->table('permission_resource')->drop()->save();
-    }
-
-    private function struct(): void
-    {
-        $sql = <<<'EOT'
+        return <<<'EOT'
             CREATE TABLE `permission_resource` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
                 `platform_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '平台ID',
@@ -34,13 +23,7 @@ final class PermissionResource extends AbstractMigration
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `uniq_permission_resource` (`platform_id`,`permission_id`,`resource_id`,`delete_at`) USING BTREE COMMENT '权限资源关联'
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限资源关联';
-            EOT;
-        $this->execute($sql);
-    }
 
-    private function seed(): void
-    {
-        $sql = <<<'EOT'
 INSERT INTO `permission_resource`(`id`, `platform_id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7566731648307200, 100000, 4146175016046592, 4145944266412032, '2019-01-31 01:14:34', '2023-03-26 13:08:00', 0, 0, 0, 0);
 INSERT INTO `permission_resource`(`id`, `platform_id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7566731665084416, 100000, 4146175032823808, 4145944388046848, '2019-01-31 09:22:11', '2023-03-26 13:08:00', 0, 0, 0, 0);
 INSERT INTO `permission_resource`(`id`, `platform_id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7566731677667328, 100000, 4146175041212416, 4145944027336704, '2019-01-31 01:54:59', '2023-03-26 13:08:00', 0, 0, 0, 0);
@@ -104,6 +87,5 @@ INSERT INTO `permission_resource`(`id`, `platform_id`, `permission_id`, `resourc
 INSERT INTO `permission_resource`(`id`, `platform_id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7566732759797760, 100000, 4146175041212416, 4145944778117120, '2021-07-22 07:38:07', '2023-03-26 13:08:00', 0, 0, 0, 0);
 INSERT INTO `permission_resource`(`id`, `platform_id`, `permission_id`, `resource_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7566732772380672, 100000, 4146175041212416, 4145944790700032, '2021-08-14 06:30:47', '2023-03-26 13:08:00', 0, 0, 0, 0);
 EOT;
-        $this->execute($sql);
     }
 }

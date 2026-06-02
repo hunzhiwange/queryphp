@@ -82,7 +82,7 @@ class ReadParams extends ParamsDto
         }
     }
 
-    protected function limitTransformValue(array|string|int $value): array
+    protected function limitTransformValue(array|int|string $value): array
     {
         if (\is_array($value)) {
             return $value;

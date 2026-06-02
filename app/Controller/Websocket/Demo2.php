@@ -8,7 +8,7 @@ class Demo2
 {
     public function handle(): string
     {
-        return <<<HTML
+        return <<<'HTML'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -244,7 +244,7 @@ websocket.onmessage = function (evt) {
         layer.msg('聊天室已经断开,请刷新重现连接');
         return;
     }
-    
+
     layer.msg('您有新消息啦！');
     var date = new Date().Format("MM-dd hh:mm:ss");
 
@@ -266,7 +266,7 @@ websocket.onmessage = function (evt) {
     } else {
         msg.innerHTML += '<div class="chat-notice">'+
             '<span>'+evt.data+'</span>'+
-            '</div>'; 
+            '</div>';
     }
 
     scroll();
@@ -277,9 +277,9 @@ websocket.onerror = function (evt, e) {
     console.log('Error occured: ' + evt.data);
 };
 
-$(window).unload(function(){ 
+$(window).unload(function(){
     closeChat();
-}); 
+});
 </script>
 </body>
 </html>

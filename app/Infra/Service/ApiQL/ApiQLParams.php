@@ -9,6 +9,4 @@ use App\Infra\Service\Support\ReadParams;
 /**
  * API查询语言列表参数.
  */
-class ApiQLParams extends ReadParams
-{
-}
+class ApiQLParams extends ReadParams {}

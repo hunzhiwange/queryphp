@@ -6,6 +6,4 @@ namespace App\Infra\Exceptions;
 
 use Leevel\Kernel\Exceptions\TooManyRequestsHttpException as BaseTooManyRequestsHttpException;
 
-class TooManyRequestsHttpException extends BaseTooManyRequestsHttpException
-{
-}
+class TooManyRequestsHttpException extends BaseTooManyRequestsHttpException {}

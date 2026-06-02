@@ -2,22 +2,11 @@
 
 declare(strict_types=1);
 
-use Phinx\Migration\AbstractMigration;
+use Leevel\Database\Migrations\Migration;
 
-final class City extends AbstractMigration
+final class City extends Migration
 {
-    public function up(): void
-    {
-        $this->struct();
-        $this->seed();
-    }
-
-    public function down(): void
-    {
-        $this->table('city')->drop()->save();
-    }
-
-    private function struct(): void
+    protected function sql(): string
     {
         $sql = <<<'EOT'
 CREATE TABLE `city` (
@@ -40,12 +29,7 @@ CREATE TABLE `city` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='城市表';
 EOT;
-        $this->execute($sql);
-    }
 
-    private function seed(): void
-    {
-        $sql = file_get_contents(__DIR__ . '/../sql/city.sql');
-        $this->execute($sql);
+        return $sql.PHP_EOL.(file_get_contents(__DIR__.'/../sql/city.sql') ?: '');
     }
 }

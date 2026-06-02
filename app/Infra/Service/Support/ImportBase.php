@@ -43,6 +43,24 @@ trait ImportBase
         }
     }
 
+    public function storeAnEntity(array $input, ApiQLStore $service): Entity
+    {
+        $inputEntity = ApiQLStoreParams::exceptInput($input);
+        $input['entity_data'] = $inputEntity;
+        $params = new ApiQLStoreParams($input);
+
+        return $service->handle($params);
+    }
+
+    public function updateAnEntity(array $input, ApiQLUpdate $service): Entity
+    {
+        $inputEntity = ApiQLUpdateParams::exceptInput($input);
+        $input['entity_data'] = $inputEntity;
+        $params = new ApiQLUpdateParams($input);
+
+        return $service->handle($params);
+    }
+
     protected function persist(UnitOfWork $w, array $data, string $entity, EntityPersistEnum $persist, ?\Closure $on): void
     {
         $baseData = [
@@ -77,26 +95,7 @@ trait ImportBase
                 }
 
                 break;
-
         }
-    }
-
-    public function storeAnEntity(array $input, ApiQLStore $service): Entity
-    {
-        $inputEntity = ApiQLStoreParams::exceptInput($input);
-        $input['entity_data'] = $inputEntity;
-        $params = new ApiQLStoreParams($input);
-
-        return $service->handle($params);
-    }
-
-    public function updateAnEntity(array $input, ApiQLUpdate $service): Entity
-    {
-        $inputEntity = ApiQLUpdateParams::exceptInput($input);
-        $input['entity_data'] = $inputEntity;
-        $params = new ApiQLUpdateParams($input);
-
-        return $service->handle($params);
     }
 
     protected function prepareData(string $entityClass, array $data): array
@@ -134,9 +133,7 @@ trait ImportBase
         return [];
     }
 
-    protected function validateItem(array $data): void
-    {
-    }
+    protected function validateItem(array $data): void {}
 
     protected function parseFields(string $entityClass, array $data): array
     {
@@ -172,7 +169,7 @@ trait ImportBase
 
             throw new BusinessException(
                 ErrorCode::ID2023032511361029,
-                sprintf(
+                \sprintf(
                     '字段`%s`的取值错误，正确的值范围为`%s`，给定的值为`%s`',
                     $fieldKey,
                     implode(',', $description),

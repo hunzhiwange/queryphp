@@ -9,6 +9,4 @@ use App\Infra\Exceptions\BusinessException;
 /**
  * 认证业务操作异常.
  */
-class AuthBusinessException extends BusinessException
-{
-}
+class AuthBusinessException extends BusinessException {}

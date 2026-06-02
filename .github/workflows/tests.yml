@@ -66,7 +66,7 @@ jobs:
         run: php leevel migrate:migrate --env=env.phpunit
 
       - name: Migrate common database
-        run: php leevel migrate:migrate --env=env.phpunit --database=development_common
+        run: php leevel migrate:migrate --env=env.phpunit --environment=common
 
       - name: Execute tests against PHPUnit
         run: php build/phpunit --coverage-clover=coverage.xml

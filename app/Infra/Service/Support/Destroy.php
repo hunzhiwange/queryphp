@@ -12,9 +12,7 @@ use Leevel\Database\Ddd\UnitOfWork;
  */
 trait Destroy
 {
-    public function __construct(private UnitOfWork $w)
-    {
-    }
+    public function __construct(private UnitOfWork $w) {}
 
     public function handle(DestroyParams $params): array
     {
@@ -28,7 +26,7 @@ trait Destroy
 
         // 删除前置操作
         if (method_exists($entity, 'beforeDeleteEvent')) {
-            $entity::event(Entity::BEFORE_DELETE_EVENT, fn () => $entity->beforeDeleteEvent());
+            $entity::event(Entity::BEFORE_DELETE_EVENT, static fn () => $entity->beforeDeleteEvent());
         }
 
         $this->remove($entity, $params);

@@ -21,7 +21,7 @@ class ResourceParams extends Dto
         return new VectorInt([]);
     }
 
-    protected function resourceIdTransformValue(string|array $value): VectorInt
+    protected function resourceIdTransformValue(array|string $value): VectorInt
     {
         return VectorInt::fromRequest($value);
     }

@@ -34,6 +34,6 @@ class CreateSignature
                 return base64_encode(hash_hmac('sha256', implode('', $tmpParams), $appSecret, true));
         }
 
-        throw new \UnexpectedValueException(sprintf('Signature method (%s) not supported.', $signatureMethod));
+        throw new \UnexpectedValueException(\sprintf('Signature method (%s) not supported.', $signatureMethod));
     }
 }

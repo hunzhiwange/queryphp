@@ -11,7 +11,7 @@ trait PrepareCodeAndMessage
      */
     public function prepareCodeAndMessage(
         int|object $code = 0,
-        string|array $message = '',
+        array|string $message = '',
         bool $overrideMessage = false
     ): array {
         $baseMessage = !\is_int($code) ? $this->getErrorMessage($code) : '';
@@ -23,7 +23,7 @@ trait PrepareCodeAndMessage
 
         if (\is_object($code)) {
             if (!enum_exists($codeEnumClass = $code::class)) {
-                throw new \Exception(sprintf('Enum %s is not exists.', $codeEnumClass));
+                throw new \Exception(\sprintf('Enum %s is not exists.', $codeEnumClass));
             }
             $code = $code->value;
         }

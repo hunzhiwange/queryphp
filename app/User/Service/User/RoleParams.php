@@ -21,7 +21,7 @@ class RoleParams extends Dto
         return new VectorInt([]);
     }
 
-    protected function roleIdTransformValue(string|array $value): VectorInt
+    protected function roleIdTransformValue(array|string $value): VectorInt
     {
         return VectorInt::fromRequest($value);
     }

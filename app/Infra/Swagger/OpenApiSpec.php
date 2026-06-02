@@ -15,6 +15,4 @@ use OpenApi\Attributes as OA;
         email: 'support@example.com'
     )
 )]
-class OpenApiSpec
-{
-}
+class OpenApiSpec {}

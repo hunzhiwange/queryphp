@@ -9,6 +9,4 @@ use App\Infra\Service\Support\StoreParams;
 /**
  * API查询语言保存参数.
  */
-class ApiQLStoreParams extends StoreParams
-{
-}
+class ApiQLStoreParams extends StoreParams {}

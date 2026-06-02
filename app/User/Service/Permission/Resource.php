@@ -16,9 +16,7 @@ use Leevel\Support\VectorInt;
  */
 class Resource
 {
-    public function __construct(private UnitOfWork $w)
-    {
-    }
+    public function __construct(private UnitOfWork $w) {}
 
     public function handle(ResourceParams $params): array
     {
@@ -46,7 +44,7 @@ class Resource
     {
         return $this->w
             ->repository(EntityPermissionResource::class)
-            ->findAll(function (Select $select) use ($permissionId): void {
+            ->findAll(static function (Select $select) use ($permissionId): void {
                 $select->where('permission_id', $permissionId);
             })
         ;

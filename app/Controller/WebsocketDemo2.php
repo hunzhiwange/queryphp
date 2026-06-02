@@ -49,7 +49,7 @@ class WebsocketDemo2
      * 监听连接关闭事件
      * 每个浏览器连接关闭时执行一次, reload 时连接不会断开, 也就不会触发该事件.
      */
-    public function close(Websocket $server, Request $request, Response $response, string|false|Frame|CloseFrame $frame, int $workerId): void
+    public function close(Websocket $server, Request $request, Response $response, CloseFrame|false|Frame|string $frame, int $workerId): void
     {
         $message = "`用户 {$request->fd}` 退出了聊天室";
 

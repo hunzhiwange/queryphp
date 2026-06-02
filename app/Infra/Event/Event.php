@@ -7,6 +7,4 @@ namespace App\Infra\Event;
 /**
  * 事件抽象.
  */
-abstract class Event
-{
-}
+abstract class Event {}

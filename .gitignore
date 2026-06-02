@@ -19,3 +19,4 @@ logs/
 .rr.yaml
 storage/phpstan
 workflow.svg
+.phpunit.cache

@@ -2,24 +2,13 @@
 
 declare(strict_types=1);
 
-use Phinx\Migration\AbstractMigration;
+use Leevel\Database\Migrations\Migration;
 
-final class Company extends AbstractMigration
+final class Company extends Migration
 {
-    public function up(): void
+    protected function sql(): string
     {
-        $this->struct();
-        $this->seed();
-    }
-
-    public function down(): void
-    {
-        $this->table('company')->drop()->save();
-    }
-
-    private function struct(): void
-    {
-        $sql = <<<'EOT'
+        return <<<'EOT'
 CREATE TABLE `company` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '公司ID',
   `platform_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '平台ID',
@@ -54,15 +43,8 @@ CREATE TABLE `company` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_company_id` (`company_id`) USING BTREE COMMENT '公司编号'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公司';
-EOT;
-        $this->execute($sql);
-    }
 
-    private function seed(): void
-    {
-        $sql = <<<'EOT'
 INSERT INTO `company`(`id`, `platform_id`, `company_id`, `num`, `name`, `full_name`, `status`, `business_license`, `legal_person`, `legal_mobile`, `phone`, `fax`, `address`, `web_url`, `logo`, `about`, `begin_date`, `end_date`, `email`, `contact`, `product_version`, `register_ip`, `is_test_company`, `extended_product_version`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7550450018684928, 100000, 100100, 'hunzhiwange', '魂之挽歌', '四川魂之挽歌信息技术公司', 1, '', '', '', '', '', '', '', '', '', '2021-08-28', '2099-08-28', '', '', 1, '0.0.0.0', 0, 1, '2021-08-28 12:51:49', '2023-03-26 12:05:21', 0, 0, 0, 0);
 EOT;
-        $this->execute($sql);
     }
 }

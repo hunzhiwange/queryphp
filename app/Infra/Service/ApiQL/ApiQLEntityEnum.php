@@ -24,7 +24,7 @@ class ApiQLEntityEnum
         $field = $params->prop;
         $entityFields = $entityClass::fields();
         if (empty($entityFields[$field][Entity::ENUM_CLASS])) {
-            throw new \Exception(sprintf('The field `%s` of entity `%s` has no enum.', $field, $entityClass));
+            throw new \Exception(\sprintf('The field `%s` of entity `%s` has no enum.', $field, $entityClass));
         }
 
         $enumClass = $entityFields[$field][Entity::ENUM_CLASS];

@@ -10,7 +10,7 @@ use Leevel\Di\Container;
 /**
  * 代理 Permission.
  *
- *  @method static bool  handle(string $resource, ?string $method = null)
+ * @method static bool handle(string $resource, ?string $method = null)
  */
 class Permission
 {

@@ -11,9 +11,7 @@ use App\Infra\Module\Auth\Lock as CacheLock;
  */
 class Lock
 {
-    public function __construct(private CacheLock $lock)
-    {
-    }
+    public function __construct(private CacheLock $lock) {}
 
     public function handle(LockParams $params): array
     {

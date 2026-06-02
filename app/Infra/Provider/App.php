@@ -10,15 +10,13 @@ use Godruoyi\Snowflake\RedisSequenceResolver;
 use Godruoyi\Snowflake\Snowflake;
 use Leevel\Di\IContainer;
 use Leevel\Di\Provider;
+use Leevel\Http\Request;
 
 /**
  * 应用服务提供者.
  */
 class App extends Provider
 {
-    /**
-     * {@inheritDoc}
-     */
     public function register(): void
     {
         $this->permission();
@@ -26,9 +24,6 @@ class App extends Provider
         $this->snowflake();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function providers(): array
     {
         return [
@@ -38,9 +33,6 @@ class App extends Provider
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function isDeferred(): bool
     {
         return true;
@@ -49,17 +41,15 @@ class App extends Provider
     /**
      * bootstrap.
      */
-    public function bootstrap(): void
-    {
-    }
+    public function bootstrap(): void {}
 
     /**
      * 注册 permission 服务.
      */
     private function permission(): void
     {
-        $this->container->bind('permission', function (IContainer $container): Permission {
-            /** @var \Leevel\Http\Request $request */
+        $this->container->bind('permission', static function (IContainer $container): Permission {
+            /** @var Request $request */
             $request = $container->make('request');
             $token = $request->query->get('token', $request->request->get('token', ''));
 
@@ -70,7 +60,7 @@ class App extends Provider
 
     private function redisSequence(): void
     {
-        $this->container->singleton('redis_sequence', function (IContainer $container): RedisSequenceResolver {
+        $this->container->singleton('redis_sequence', static function (IContainer $container): RedisSequenceResolver {
             $redis = redis_cache();
 
             return (new RedisSequenceResolver($redis))->setCachePrefix('redis_sequence:');
@@ -79,7 +69,7 @@ class App extends Provider
 
     private function snowflake(): void
     {
-        $this->container->singleton('snowflake', function (IContainer $container): Snowflake {
+        $this->container->singleton('snowflake', static function (IContainer $container): Snowflake {
             $redis = redis_cache();
             $redisSequence = (new RedisSequenceResolver($redis))->setCachePrefix('snowflake_redis_sequence:');
 

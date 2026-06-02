@@ -13,7 +13,7 @@ trait PrepareEnumDescriptionTrait
         $result = [];
 
         if (!method_exists($enumClass, 'descriptions')) {
-            throw new \Exception(sprintf('The enum `%s` must has method `descriptions`.', $enumClass));
+            throw new \Exception(\sprintf('The enum `%s` must has method `descriptions`.', $enumClass));
         }
         $descriptions = $enumClass::descriptions();
         if (!$descriptions['value']) {
@@ -26,11 +26,11 @@ trait PrepareEnumDescriptionTrait
             foreach ($groups as $group) {
                 $groupMethod = Camelize::handle($group);
                 if (!method_exists($enumClass, $groupMethod)) {
-                    throw new \Exception(sprintf('The enum `%s` has no method `%s`.', $enumClass, $groupMethod));
+                    throw new \Exception(\sprintf('The enum `%s` has no method `%s`.', $enumClass, $groupMethod));
                 }
 
                 $groupEnum = $enumClass::{$groupMethod}();
-                $values = array_merge($values, array_filter($descriptions['value'], function (object $value) use ($groupEnum) {
+                $values = array_merge($values, array_filter($descriptions['value'], static function (object $value) use ($groupEnum) {
                     return \in_array($value, $groupEnum, true);
                 }));
             }

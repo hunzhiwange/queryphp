@@ -8,7 +8,7 @@ class Index
 {
     public function handle(): string
     {
-        return <<<HTML
+        return <<<'HTML'
 <html lang="en">
 <head>
   <meta charset="UTF-8">

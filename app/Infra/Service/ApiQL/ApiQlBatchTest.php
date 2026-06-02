@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Infra\Service\ApiQL;
 
 use Tests\TestCase;
-use function api_ql_batch;
 
 final class ApiQlBatchTest extends TestCase
 {
@@ -34,11 +33,11 @@ final class ApiQlBatchTest extends TestCase
         ]; // 输入有效的参数数组
         $withoutDebug = true; // 输入true或false
 
-        $result = api_ql_batch($apis, $params, $withoutDebug);
+        $result = \api_ql_batch($apis, $params, $withoutDebug);
 
-        static::assertIsArray($result);
+        self::assertIsArray($result);
         // 进一步根据实际情况添加断言
-        static::assertTrue(isset($result['content']));
+        self::assertTrue(isset($result['content']));
     }
 
     /**
@@ -66,11 +65,11 @@ final class ApiQlBatchTest extends TestCase
         ]; // 输入有效的参数数组
         $withoutDebug = false; // 输入true或false
 
-        $result = api_ql_batch($apis, $params, $withoutDebug);
+        $result = \api_ql_batch($apis, $params, $withoutDebug);
 
-        static::assertIsArray($result);
+        self::assertIsArray($result);
         // 进一步根据实际情况添加断言
-        static::assertTrue(isset($result['content']));
-        static::assertStringContainsString('Token name was not set', $result['content']);
+        self::assertTrue(isset($result['content']));
+        self::assertStringContainsString('Token name was not set', $result['content']);
     }
 }

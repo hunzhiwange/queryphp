@@ -12,9 +12,7 @@ use SimpleCaptcha\Builder;
  */
 class Code
 {
-    public function __construct(private Codes $code)
-    {
-    }
+    public function __construct(private Codes $code) {}
 
     /**
      * @throws \Exception

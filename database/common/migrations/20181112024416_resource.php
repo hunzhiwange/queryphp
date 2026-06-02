@@ -2,24 +2,13 @@
 
 declare(strict_types=1);
 
-use Phinx\Migration\AbstractMigration;
+use Leevel\Database\Migrations\Migration;
 
-final class Resource extends AbstractMigration
+final class Resource extends Migration
 {
-    public function up(): void
+    protected function sql(): string
     {
-        $this->struct();
-        $this->seed();
-    }
-
-    public function down(): void
-    {
-        $this->table('resource')->drop()->save();
-    }
-
-    private function struct(): void
-    {
-        $sql = <<<'EOT'
+        return <<<'EOT'
             CREATE TABLE `resource` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
                 `platform_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '平台ID',
@@ -36,13 +25,7 @@ final class Resource extends AbstractMigration
                 UNIQUE KEY `uniq_num` (`platform_id`,`num`,`delete_at`) USING BTREE COMMENT '编号',
                 UNIQUE KEY `uniq_name` (`platform_id`,`name`,`delete_at`) USING BTREE COMMENT '名字'
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资源';
-            EOT;
-        $this->execute($sql);
-    }
 
-    private function seed(): void
-    {
-        $sql = <<<'EOT'
 INSERT INTO `resource`(`id`, `platform_id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (4145943985393664, 100000, '资源列表', 'get:resource', 1, '2018-12-08 13:00:38', '2023-03-17 03:46:43', 0, 0, 0, 0);
 INSERT INTO `resource`(`id`, `platform_id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (4145944002170880, 100000, '权限列表', 'get:permission', 1, '2018-12-08 13:00:52', '2023-03-17 03:46:43', 0, 0, 0, 0);
 INSERT INTO `resource`(`id`, `platform_id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (4145944014753792, 100000, '角色列表', 'get:role', 1, '2018-12-08 13:01:18', '2023-03-17 03:46:43', 0, 0, 0, 0);
@@ -105,6 +88,5 @@ INSERT INTO `resource`(`id`, `platform_id`, `name`, `num`, `status`, `create_at`
 INSERT INTO `resource`(`id`, `platform_id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (4145944778117120, 100000, '用户角色授权按钮', 'user_role_button', 1, '2021-07-22 07:36:44', '2023-03-17 03:46:43', 0, 0, 0, 0);
 INSERT INTO `resource`(`id`, `platform_id`, `name`, `num`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (4145944790700032, 100000, '用户角色授权', 'post:user/role', 1, '2021-08-14 06:30:28', '2023-03-17 03:46:43', 0, 0, 0, 0);
 EOT;
-        $this->execute($sql);
     }
 }

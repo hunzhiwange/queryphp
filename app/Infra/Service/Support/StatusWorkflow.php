@@ -28,7 +28,7 @@ abstract class StatusWorkflow
         }
 
         return array_map(
-            fn (string|object $item) => \is_object($item) ? $item->name : $item,
+            static fn (object|string $item) => \is_object($item) ? $item->name : $item,
             \is_array($place) ? $place : [$place],
         );
     }
@@ -91,7 +91,7 @@ abstract class StatusWorkflow
     {
         $statusEnum = static::STATUS_ENUM;
         if (!enum_exists($statusEnum)) {
-            throw new \RuntimeException(sprintf('Enum %s not found', $statusEnum));
+            throw new \RuntimeException(\sprintf('Enum %s not found', $statusEnum));
         }
 
         // @phpstan-ignore-next-line

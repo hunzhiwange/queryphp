@@ -16,9 +16,7 @@ use Leevel\Support\VectorInt;
  */
 trait Status
 {
-    public function __construct(private UnitOfWork $w)
-    {
-    }
+    public function __construct(private UnitOfWork $w) {}
 
     /**
      * @throws \Exception
@@ -49,14 +47,14 @@ trait Status
     /**
      * 查询符合条件的数据.
      *
-     * @throws \App\Infra\Exceptions\BusinessException|\Exception
+     * @throws BusinessException|\Exception
      */
     private function findAll(VectorInt $ids, StatusParams $params): Collection
     {
-        /** @var \Leevel\Support\Collection $entities */
+        /** @var Collection $entities */
         $entities = $this->w
             ->repository($params->entityClass)
-            ->findAll(function (Select $select) use ($ids, $params): void {
+            ->findAll(static function (Select $select) use ($ids, $params): void {
                 $primaryId = $params->entityClass::ID;
                 $select->whereIn($primaryId, $ids->toArray());
             })

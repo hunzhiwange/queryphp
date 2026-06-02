@@ -2,24 +2,13 @@
 
 declare(strict_types=1);
 
-use Phinx\Migration\AbstractMigration;
+use Leevel\Database\Migrations\Migration;
 
-final class Platform extends AbstractMigration
+final class Platform extends Migration
 {
-    public function up(): void
+    protected function sql(): string
     {
-        $this->struct();
-        $this->seed();
-    }
-
-    public function down(): void
-    {
-        $this->table('platform')->drop()->save();
-    }
-
-    private function struct(): void
-    {
-        $sql = <<<'EOT'
+        return <<<'EOT'
 CREATE TABLE `platform` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '平台ID',
   `platform_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '平台编号 自增ID+3位数据库+2位表名',
@@ -36,15 +25,8 @@ CREATE TABLE `platform` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_platform_id` (`platform_id`) USING BTREE COMMENT '平台编号'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='平台';
-EOT;
-        $this->execute($sql);
-    }
 
-    private function seed(): void
-    {
-        $sql = <<<'EOT'
 INSERT INTO `platform`(`id`, `platform_id`, `num`, `name`, `full_name`, `status`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7550678834745344, 100000, 'jrdh', '今日订货', '今日订货平台', 1, '2023-03-26 04:29:12', '2023-03-26 04:32:11', 0, 0, 0, 0);
 EOT;
-        $this->execute($sql);
     }
 }

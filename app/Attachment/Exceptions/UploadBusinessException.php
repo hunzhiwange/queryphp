@@ -9,6 +9,4 @@ use App\Infra\Exceptions\BusinessException;
 /**
  * 上传业务操作异常.
  */
-class UploadBusinessException extends BusinessException
-{
-}
+class UploadBusinessException extends BusinessException {}

@@ -12,9 +12,7 @@ use Leevel\Database\Ddd\UnitOfWork;
  */
 class ChangePassword
 {
-    public function __construct(private UnitOfWork $w)
-    {
-    }
+    public function __construct(private UnitOfWork $w) {}
 
     /**
      * @throws \Exception
@@ -73,7 +71,7 @@ class ChangePassword
     private function find(int $id): User
     {
         return $this->w
-            ->repository(\App\User\Entity\User::class)
+            ->repository(User::class)
             ->findOrFail($id)
         ;
     }

@@ -2,24 +2,13 @@
 
 declare(strict_types=1);
 
-use Phinx\Migration\AbstractMigration;
+use Leevel\Database\Migrations\Migration;
 
-final class RolePermission extends AbstractMigration
+final class RolePermission extends Migration
 {
-    public function up(): void
+    protected function sql(): string
     {
-        $this->struct();
-        $this->seed();
-    }
-
-    public function down(): void
-    {
-        $this->table('role_permission')->drop()->save();
-    }
-
-    private function struct(): void
-    {
-        $sql = <<<'EOT'
+        return <<<'EOT'
 CREATE TABLE `role_permission` (
     `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
     `platform_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '平台ID',
@@ -34,13 +23,7 @@ CREATE TABLE `role_permission` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `uniq_role_permission` (`platform_id`,`role_id`,`permission_id`,`delete_at`) USING BTREE COMMENT '角色权限关联'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限关联';
-EOT;
-        $this->execute($sql);
-    }
 
-    private function seed(): void
-    {
-        $sql = <<<'EOT'
 INSERT INTO `role_permission`(`id`, `platform_id`, `role_id`, `permission_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7549899847634944, 100000, 4144257686306816, 4146175016046592, '2019-01-31 01:14:34', '2023-03-26 12:01:04', 0, 0, 0, 0);
 INSERT INTO `role_permission`(`id`, `platform_id`, `role_id`, `permission_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7549899876995072, 100000, 4144257707278336, 4146175032823808, '2019-01-31 09:46:31', '2023-03-26 12:01:04', 0, 0, 0, 0);
 INSERT INTO `role_permission`(`id`, `platform_id`, `role_id`, `permission_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7549899889577984, 100000, 4144257707278336, 4146175041212416, '2019-01-31 09:46:31', '2023-03-26 12:01:04', 0, 0, 0, 0);
@@ -56,6 +39,5 @@ INSERT INTO `role_permission`(`id`, `platform_id`, `role_id`, `permission_id`, `
 INSERT INTO `role_permission`(`id`, `platform_id`, `role_id`, `permission_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7549900086710272, 100000, 4144257707278336, 4146175154458624, '2021-01-13 15:31:25', '2023-03-26 12:01:04', 0, 0, 0, 0);
 INSERT INTO `role_permission`(`id`, `platform_id`, `role_id`, `permission_id`, `create_at`, `update_at`, `delete_at`, `create_account`, `update_account`, `version`) VALUES (7549900099293184, 100000, 4144257707278336, 4146175167041536, '2021-01-13 15:31:25', '2023-03-26 12:01:04', 0, 0, 0, 0);
 EOT;
-        $this->execute($sql);
     }
 }

@@ -21,7 +21,7 @@ class PermissionParams extends Dto
         return new VectorInt([]);
     }
 
-    protected function permissionIdTransformValue(string|array $value): VectorInt
+    protected function permissionIdTransformValue(array|string $value): VectorInt
     {
         return VectorInt::fromRequest($value);
     }

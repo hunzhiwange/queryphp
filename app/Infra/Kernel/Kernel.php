@@ -29,9 +29,6 @@ class Kernel extends Kernels
         CorsHeaders::class,
     ];
 
-    /**
-     * {@inheritDoc}
-     */
     public function __construct(IApp $app, IRouter $router)
     {
         if ($app->isDebug()) {

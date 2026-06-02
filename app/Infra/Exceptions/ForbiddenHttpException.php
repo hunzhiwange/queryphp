@@ -6,6 +6,4 @@ namespace App\Infra\Exceptions;
 
 use Leevel\Kernel\Exceptions\ForbiddenHttpException as BaseForbiddenHttpException;
 
-class ForbiddenHttpException extends BaseForbiddenHttpException
-{
-}
+class ForbiddenHttpException extends BaseForbiddenHttpException {}

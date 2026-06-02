@@ -12,9 +12,7 @@ use Leevel\Database\Ddd\UnitOfWork;
  */
 trait Show
 {
-    public function __construct(private UnitOfWork $w)
-    {
-    }
+    public function __construct(private UnitOfWork $w) {}
 
     public function handle(ShowParams $params): array
     {
@@ -26,9 +24,7 @@ trait Show
         return $result;
     }
 
-    private function prepareData(Entity $entity, array &$result): void
-    {
-    }
+    private function prepareData(Entity $entity, array &$result): void {}
 
     /**
      * 查找实体.

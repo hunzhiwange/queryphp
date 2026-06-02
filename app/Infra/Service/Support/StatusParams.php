@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Infra\Service\Support;
 
 use App\Infra\Dto\ParamsDto;
-use Leevel\Support\VectorInt;
 use App\Infra\Validate\Support\Status;
+use Leevel\Support\VectorInt;
 
 class StatusParams extends ParamsDto
 {
@@ -26,7 +26,7 @@ class StatusParams extends ParamsDto
         return new VectorInt([]);
     }
 
-    protected function idsTransformValue(string|array $value): VectorInt
+    protected function idsTransformValue(array|string $value): VectorInt
     {
         return VectorInt::fromRequest($value);
     }

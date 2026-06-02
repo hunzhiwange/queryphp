@@ -11,9 +11,7 @@ class Demo2 extends Listener
      *
      * - 支持依赖注入.
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * 监听器响应.

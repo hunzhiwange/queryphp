@@ -13,6 +13,6 @@ final class ExampleTest extends TestCase
 {
     public function testBaseUse(): void
     {
-        static::assertSame('QueryPHP', 'QueryPHP');
+        self::assertSame('QueryPHP', 'QueryPHP');
     }
 }

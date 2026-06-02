@@ -11,7 +11,5 @@ class WildcardsDemo extends Event
      *
      * - 支持依赖注入.
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 }

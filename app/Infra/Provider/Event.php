@@ -27,7 +27,7 @@ class Event extends EventProvider
             Demo3::class => 2,
         ],
 
-        'App\\Infra\\Event\\Wildcards*' => [
+        'App\Infra\Event\Wildcards*' => [
             Demo::class,
         ],
 

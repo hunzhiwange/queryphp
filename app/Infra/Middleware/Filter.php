@@ -8,7 +8,6 @@ use Leevel\Http\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Response;
-use Throwable;
 
 /**
  * 过滤输入中间件.
@@ -47,7 +46,7 @@ class Filter
 
         try {
             return json_decode($value, true, 512, JSON_THROW_ON_ERROR);
-        } catch (Throwable) {
+        } catch (\Throwable) {
             return false;
         }
     }
@@ -71,7 +70,7 @@ class Filter
     {
         array_walk(
             $data,
-            fn (mixed & $value, string $key) => $value = $this->transformValue($value, $key, $keepEmptyString),
+            fn (mixed &$value, string $key) => $value = $this->transformValue($value, $key, $keepEmptyString),
         );
 
         return $data;

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Infra\Module\Phinx;
+namespace App\Infra\Module\Migrations;
 
 use Dotenv\Dotenv;
 use Leevel\Config\Env;
 use Leevel\Kernel\IApp;
 
 /**
- * 载入 Phinx 配置.
+ * 载入迁移配置.
  */
-class PhinxLoad
+class Migration
 {
     use Env;
 
@@ -49,7 +49,7 @@ class PhinxLoad
 
         $file = '.'.getenv('RUNTIME_ENVIRONMENT');
         if (!is_file($fullFile = $app->envPath().'/'.$file)) {
-            throw new \RuntimeException(sprintf('Env file `%s` was not found.', $fullFile));
+            throw new \RuntimeException(\sprintf('Env file `%s` was not found.', $fullFile));
         }
 
         $app->setEnvFile($file);

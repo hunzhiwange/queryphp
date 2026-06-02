@@ -6,9 +6,9 @@ namespace App\Infra\Service\ApiQL;
 
 use Leevel\Http\Request;
 use Leevel\Kernel\IKernel;
-use Symfony\Component\HttpFoundation\Response;
-use Swoole\Coroutine\WaitGroup;
 use Swoole\Coroutine;
+use Swoole\Coroutine\WaitGroup;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * API批量查询语言.
@@ -19,7 +19,7 @@ class ApiQLBatch
     {
         $params->validate();
 
-        /** @var \Leevel\Kernel\IKernel $kernel */
+        /** @var IKernel $kernel */
         $kernel = container()->make(IKernel::class);
         $baseRequest->query->remove('apis');
         $baseRequest->query->remove('params');
@@ -31,14 +31,14 @@ class ApiQLBatch
         $firstResponse = null;
 
         // 非协程模式
-        $call = function(string $key, string $api) use(
+        $call = static function (string $key, string $api) use (
             $baseRequest,
             $params,
             $kernel,
             &$firstResponse,
             &$errorResponse,
             &$responseAll,
-        )  {
+        ): void {
             $request = clone $baseRequest;
             $request->query->add($params->params[$key]);
             $request->setPathInfo('/apiQL/v1:'.$api);
@@ -56,13 +56,13 @@ class ApiQLBatch
         };
 
         // 协程模式
-        $enabledCoroutine = \enabledCoroutine();
+        $enabledCoroutine = enabledCoroutine();
         if ($enabledCoroutine) {
             $wg = new WaitGroup();
-            $call = function(string $key, string $api) use($call, $wg) :void {
+            $call = static function (string $key, string $api) use ($call, $wg): void {
                 // 启动一个协程
                 $wg->add();
-                Coroutine::create(function() use($key, $api, $call, $wg):void {
+                Coroutine::create(static function () use ($key, $api, $call, $wg): void {
                     $call($key, $api);
                     // 标记协程完成
                     $wg->done();

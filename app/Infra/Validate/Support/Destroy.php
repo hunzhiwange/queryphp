@@ -11,9 +11,6 @@ use App\Infra\Validate\IValidator;
  */
 class Destroy implements IValidator
 {
-    /**
-     * {@inheritDoc}
-     */
     public function scenes(): array
     {
         return [
@@ -23,9 +20,6 @@ class Destroy implements IValidator
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function names(): array
     {
         return [
@@ -33,17 +27,11 @@ class Destroy implements IValidator
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function messages(): array
     {
         return [];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function rules(): array
     {
         return [

@@ -6,6 +6,4 @@ namespace App\Infra\Exceptions;
 
 use Leevel\Kernel\Exceptions\HttpException as BaseHttpException;
 
-class HttpException extends BaseHttpException
-{
-}
+class HttpException extends BaseHttpException {}

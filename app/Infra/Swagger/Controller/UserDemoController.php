@@ -28,7 +28,5 @@ class UserDemoController
             ),
         ]
     )]
-    public function getUserByName(string $username): void
-    {
-    }
+    public function getUserByName(string $username): void {}
 }
